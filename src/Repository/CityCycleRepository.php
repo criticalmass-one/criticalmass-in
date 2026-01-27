@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,8 +18,8 @@ class CityCycleRepository extends ServiceEntityRepository
 
     public function findByCity(
         City $city,
-        ?\DateTimeInterface $startDateTime = null,
-        ?\DateTimeInterface $endDateTime = null
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null
     ): array {
         $builder = $this->createQueryBuilder('cc');
 
@@ -59,8 +60,8 @@ class CityCycleRepository extends ServiceEntityRepository
     public function findForApi(
         ?City $city = null,
         ?Region $region = null,
-        ?\DateTimeInterface $startDateTime = null,
-        ?\DateTimeInterface $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?bool $validNow = null,
         ?int $dayOfWeek = null,
         ?int $weekOfMonth = null

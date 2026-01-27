@@ -9,6 +9,7 @@ use App\Entity\Location;
 use App\Entity\Region;
 use App\Entity\Ride;
 use App\Entity\CitySlug;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,7 +23,7 @@ class RideRepository extends ServiceEntityRepository
 
     public function findCurrentRideForCity(City $city, bool $cycleMandatory = false, bool $slugsAllowed = true): ?Ride
     {
-        $dateTime = \DateTime::createFromFormat('U', (string)time()); // this will allow to mock the clock in functional tests
+        $dateTime = Carbon::createFromTimestamp(time()); // this will allow to mock the clock in functional tests
 
         $builder = $this->createQueryBuilder('r');
 
@@ -110,13 +111,9 @@ class RideRepository extends ServiceEntityRepository
 
     public function findCurrentRides($order = 'ASC'): array
     {
-        $startDateTime = new \DateTime();
-        $startDateTimeInterval = new \DateInterval('P4W'); // four weeks ago
-        $startDateTime->add($startDateTimeInterval);
+        $startDateTime = Carbon::now()->addWeeks(4); // four weeks ahead
 
-        $endDateTime = new \DateTime();
-        $endDateTimeInterval = new \DateInterval('P1W'); // one week after
-        $endDateTime->sub($endDateTimeInterval);
+        $endDateTime = Carbon::now()->subWeek(); // one week ago
 
         $builder = $this->createQueryBuilder('r');
 
@@ -133,7 +130,7 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findByCityAndMonth(City $city, \DateTime $monthDateTime): array
+    public function findByCityAndMonth(City $city, Carbon $monthDateTime): array
     {
         $startDateTime = DateTimeUtil::getMonthStartDateTime($monthDateTime);
         $endDateTime = DateTimeUtil::getMonthEndDateTime($monthDateTime);
@@ -154,7 +151,7 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findByDate(\DateTime $date): array
+    public function findByDate(Carbon $date): array
     {
         $startDateTime = DateTimeUtil::getDayStartDateTime($date);
         $endDateTime = DateTimeUtil::getDayEndDateTime($date);
@@ -208,13 +205,9 @@ class RideRepository extends ServiceEntityRepository
 
     public function findFrontpageRides(): array
     {
-        $startDateTime = new \DateTime();
-        $startDateTimeInterval = new \DateInterval('P8W');
-        $startDateTime->add($startDateTimeInterval);
+        $startDateTime = Carbon::now()->addWeeks(8);
 
-        $endDateTime = new \DateTime();
-        $endDateTimeInterval = new \DateInterval('P1D');
-        $endDateTime->sub($endDateTimeInterval);
+        $endDateTime = Carbon::now()->subDay();
 
         $builder = $this->createQueryBuilder('r');
 
@@ -255,16 +248,14 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findRidesInInterval(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null)
+    public function findRidesInInterval(?Carbon $startDateTime = null, ?Carbon $endDateTime = null)
     {
         if (!$startDateTime) {
-            $startDateTime = new \DateTime();
+            $startDateTime = Carbon::now();
         }
 
         if (!$endDateTime) {
-            $endDate = new \DateTime();
-            $dayInterval = new \DateInterval('P1M');
-            $endDateTime = $endDate->add($dayInterval);
+            $endDateTime = Carbon::now()->addMonth();
         }
 
         $builder = $this->createQueryBuilder('ride');
@@ -282,7 +273,7 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findRidesByDateTimeMonth(\DateTime $dateTime): array
+    public function findRidesByDateTimeMonth(Carbon $dateTime): array
     {
         $startDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
         $endDateTime = DateTimeUtil::getMonthEndDateTime($dateTime);
@@ -290,7 +281,7 @@ class RideRepository extends ServiceEntityRepository
         return $this->findRidesInInterval($startDateTime, $endDateTime);
     }
 
-    public function findCityRideByDate(City $city, \DateTime $dateTime): ?Ride
+    public function findCityRideByDate(City $city, Carbon $dateTime): ?Ride
     {
         $fromDateTime = DateTimeUtil::getDayStartDateTime($dateTime);
         $untilDateTime = DateTimeUtil::getDayEndDateTime($dateTime);
@@ -314,7 +305,7 @@ class RideRepository extends ServiceEntityRepository
 
     public function findByCitySlugAndRideDate(string $citySlug, string $rideDate): ?Ride
     {
-        $rideDateTime = new \DateTime($rideDate);
+        $rideDateTime = Carbon::parse($rideDate);
         $fromDateTime = DateTimeUtil::getDayStartDateTime($rideDateTime);
         $untilDateTime = DateTimeUtil::getDayEndDateTime($rideDateTime);
 
@@ -409,17 +400,15 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findRidesWithFacebookInInterval(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null
     ): array {
         if (!$startDateTime) {
-            $startDateTime = new \DateTime();
+            $startDateTime = Carbon::now();
         }
 
         if (!$endDateTime) {
-            $endDate = new \DateTime();
-            $dayInterval = new \DateInterval('P1M');
-            $endDateTime = $endDate->add($dayInterval);
+            $endDateTime = Carbon::now()->addMonth();
         }
 
         $builder = $this->createQueryBuilder('r');
@@ -452,7 +441,7 @@ class RideRepository extends ServiceEntityRepository
         $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
 
         if ($pastOnly) {
-            $dateTime = new \DateTime();
+            $dateTime = Carbon::now();
 
             $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''));
         }
@@ -464,8 +453,8 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findRides(
-        ?\DateTimeInterface $fromDateTime = null,
-        ?\DateTimeInterface $untilDateTime = null,
+        ?Carbon $fromDateTime = null,
+        ?Carbon $untilDateTime = null,
         ?City $city = null,
         ?Region $region = null
     ): array {
@@ -521,8 +510,8 @@ class RideRepository extends ServiceEntityRepository
 
     public function findRidesInRegionInInterval(
         Region $region,
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null
     ): array {
         $builder = $this->createQueryBuilder('ride');
 
@@ -550,8 +539,8 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRideEditCollector(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('r');
@@ -587,8 +576,8 @@ class RideRepository extends ServiceEntityRepository
 
     public function findRidesByCycleInInterval(
         CityCycle $cityCycle,
-        \DateTime $startDateTime,
-        \DateTime $endDateTime
+        Carbon $startDateTime,
+        Carbon $endDateTime
     ): array {
         $builder = $this->createQueryBuilder('r');
 

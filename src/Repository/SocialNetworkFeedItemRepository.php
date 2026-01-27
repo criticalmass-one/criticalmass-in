@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,7 +16,7 @@ class SocialNetworkFeedItemRepository extends ServiceEntityRepository
         parent::__construct($registry, SocialNetworkFeedItem::class);
     }
 
-    public function findForTimelineSocialNetworkFeedItemCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, ?int $limit = null): array
+    public function findForTimelineSocialNetworkFeedItemCollector(?Carbon $startDateTime = null, ?Carbon $endDateTime = null, ?int $limit = null): array
     {
         $builder = $this->createQueryBuilder('fi');
 
