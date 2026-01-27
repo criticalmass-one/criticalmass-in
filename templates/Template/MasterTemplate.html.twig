@@ -3,7 +3,7 @@
 {% endif %}
 
 <!DOCTYPE html>
-<html {{ sonata_seo_html_attributes() }}>
+<html {{ sonata_seo_html_attributes() }} data-bs-theme="light">
 <head {{ sonata_seo_head_attributes() }}>
 
     {% if block('title') %}
@@ -13,9 +13,16 @@
     {% endif %}
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width"/>
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width,viewport-fit=cover"/>
     <meta name="mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+    <meta name="theme-color" content="#667eea" media="(prefers-color-scheme: light)"/>
+    <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
     {{ sonata_seo_metadatas() }}
     {{ sonata_seo_link_canonical() }}
@@ -29,11 +36,31 @@
 
 </head>
 
-<body class="{% if app.user %}logged-in{% else %}not-logged-in{% endif %} {% block bodyClass %}{% endblock %} with-top-navbar">
+<body class="{% if app.user %}logged-in{% else %}not-logged-in{% endif %} {% block bodyClass %}{% endblock %}">
 
 {% block masterContent %}{% endblock %}
 
 {{ encore_entry_script_tags(entrypoint) }}
+
+<script>
+(function() {
+    // Auto-detect dark mode preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-bs-theme', 'dark');
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        document.documentElement.setAttribute('data-bs-theme', e.matches ? 'dark' : 'light');
+    });
+
+    // Add 'scrolled' class to app-header on scroll
+    var header = document.querySelector('.app-header');
+    if (header) {
+        window.addEventListener('scroll', function() {
+            header.classList.toggle('scrolled', window.scrollY > 8);
+        }, { passive: true });
+    }
+})();
+</script>
 
 {% block additionalFooterElements %}{% endblock %}
 </body>
