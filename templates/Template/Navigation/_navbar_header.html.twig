@@ -2,8 +2,28 @@
     {% trans %}criticalmass.logoname{% endtrans %}
 </a>
 
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#main-navbar-collapse" aria-controls="main-navbar-collapse"
-        aria-expanded="false" aria-label="Toggle navigation">
+{# Dark mode toggle #}
+<button class="theme-toggle d-lg-none order-lg-last ms-auto me-2"
+        type="button"
+        aria-label="Dark Mode umschalten"
+        onclick="var t=document.documentElement;t.setAttribute('data-bs-theme',t.getAttribute('data-bs-theme')==='dark'?'light':'dark')">
+    <i class="fas fa-adjust"></i>
+</button>
+
+{# Mobile hamburger opens offcanvas #}
+<button class="navbar-toggler border-0" type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mobileMenu"
+        aria-controls="mobileMenu"
+        aria-expanded="false"
+        aria-label="Navigation anzeigen">
     <span class="navbar-toggler-icon"></span>
+</button>
+
+{# Desktop dark mode toggle #}
+<button class="theme-toggle d-none d-lg-inline-flex order-lg-last"
+        type="button"
+        aria-label="Dark Mode umschalten"
+        onclick="var t=document.documentElement;t.setAttribute('data-bs-theme',t.getAttribute('data-bs-theme')==='dark'?'light':'dark')">
+    <i class="fas fa-adjust"></i>
 </button>
