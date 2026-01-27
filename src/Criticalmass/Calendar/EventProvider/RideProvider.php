@@ -15,7 +15,7 @@ readonly class RideProvider implements ProviderInterface
     {
     }
 
-    public function getEvents(Carbon $begin, Carbon $end, array $options = []): array
+    public function getEvents(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): array
     {
         $rideList = $this->findRides($begin, $end);
         $eventList = [];
@@ -27,7 +27,7 @@ readonly class RideProvider implements ProviderInterface
         return $eventList;
     }
 
-    protected function findRides(Carbon $begin, Carbon $end): array
+    protected function findRides(\DateTimeInterface $begin, \DateTimeInterface $end): array
     {
         return $this->doctrine->getRepository(Ride::class)->findRides($begin, $end);
     }

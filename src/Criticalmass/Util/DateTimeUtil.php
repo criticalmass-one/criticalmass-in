@@ -6,43 +6,43 @@ use Carbon\Carbon;
 
 class DateTimeUtil
 {
-    public static function getYearStartDateTime(Carbon $year): Carbon
+    public static function getYearStartDateTime(\DateTimeInterface $year): Carbon
     {
-        return $year->copy()->startOfYear();
+        return Carbon::instance($year)->startOfYear();
     }
 
-    public static function getYearEndDateTime(Carbon $year): Carbon
+    public static function getYearEndDateTime(\DateTimeInterface $year): Carbon
     {
-        return $year->copy()->endOfYear();
+        return Carbon::instance($year)->endOfYear();
     }
 
-    public static function getMonthStartDateTime(Carbon $month): Carbon
+    public static function getMonthStartDateTime(\DateTimeInterface $month): Carbon
     {
-        return $month->copy()->startOfMonth();
+        return Carbon::instance($month)->startOfMonth();
     }
 
-    public static function getMonthEndDateTime(Carbon $month): Carbon
+    public static function getMonthEndDateTime(\DateTimeInterface $month): Carbon
     {
-        return $month->copy()->endOfMonth();
+        return Carbon::instance($month)->endOfMonth();
     }
 
-    public static function getDayStartDateTime(Carbon $day): Carbon
+    public static function getDayStartDateTime(\DateTimeInterface $day): Carbon
     {
-        return $day->copy()->startOfDay();
+        return Carbon::instance($day)->startOfDay();
     }
 
-    public static function getDayEndDateTime(Carbon $day): Carbon
+    public static function getDayEndDateTime(\DateTimeInterface $day): Carbon
     {
-        return $day->copy()->endOfDay();
+        return Carbon::instance($day)->endOfDay();
     }
 
-    public static function recreateAsUtc(Carbon $dateTime): Carbon
+    public static function recreateAsUtc(\DateTimeInterface $dateTime): Carbon
     {
-        return Carbon::create($dateTime->format('Y-m-d H:i:s'), 'UTC');
+        return Carbon::parse($dateTime->format('Y-m-d H:i:s'), 'UTC');
     }
 
-    public static function recreateAsTimeZone(Carbon $dateTime, \DateTimeZone $dateTimeZone): Carbon
+    public static function recreateAsTimeZone(\DateTimeInterface $dateTime, \DateTimeZone $dateTimeZone): Carbon
     {
-        return Carbon::create($dateTime->format('Y-m-d H:i:s'), $dateTimeZone);
+        return Carbon::parse($dateTime->format('Y-m-d H:i:s'), $dateTimeZone);
     }
 }

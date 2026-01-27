@@ -116,7 +116,7 @@ class UnixTimestampDateTimeNormalizer implements NormalizerInterface, Denormaliz
 
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        return ($type === \DateTime::class || $type === \DateTimeInterface::class || $type === \DateTimeImmutable::class)
+        return ($type === \DateTime::class || $type === \DateTimeInterface::class || $type === \DateTimeImmutable::class || $type === Carbon::class)
             && ($data === null || is_int($data) || is_string($data));
     }
 
@@ -140,6 +140,7 @@ class UnixTimestampDateTimeNormalizer implements NormalizerInterface, Denormaliz
             \DateTime::class => true,
             \DateTimeInterface::class => true,
             \DateTimeImmutable::class => true,
+            Carbon::class => true,
         ];
     }
 }
