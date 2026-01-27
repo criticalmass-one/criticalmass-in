@@ -3301,11 +3301,6 @@ parameters:
 			path: src/Repository/PostRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\PostRepository\\:\\:findByCrawled\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Repository/PostRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\PostRepository\\:\\:findForTimelinePhotoCommentCollector\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Repository/PostRepository.php
