@@ -32,7 +32,7 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.0",
     "bootstrap-slider": "^10.6.2",
-    "chart.js": "^2.9.4",
+    "chart.js": "^4.4.0",
     "datatables.net-bs5": "^2.1.0",
     "dateformat": "^3.0.3",
     "dropzone": "^5.7.2",

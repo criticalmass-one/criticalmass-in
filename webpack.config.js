@@ -57,10 +57,7 @@ Encore
 
     // enables Sass/SCSS support
     .enableSassLoader((options) => {
-        options.api = 'modern-compiler';
-        options.sassOptions = {
-            silenceDeprecations: ['import', 'global-builtin', 'color-functions'],
-        };
+        options.api = 'modern';
     })
 
     // uncomment if you use TypeScript
