@@ -46,7 +46,7 @@
         "flagception/flagception-bundle": "^6.0",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
-        "symfony/webpack-encore-bundle": "^2.0",
+        "symfony/webpack-encore-bundle": "^2.4",
         "ext-json": "*",
         "ext-zip": "*",
         "doctrine/annotations": "^2.0",
