@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
+use Carbon\Carbon;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -106,7 +107,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
-    protected \DateTime $dateTime;
+    protected Carbon $dateTime;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
@@ -158,11 +159,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
-    protected \DateTime $createdAt;
+    protected Carbon $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
@@ -250,8 +251,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
-        $this->createdAt = new \DateTime();
+        $this->dateTime = Carbon::now();
+        $this->createdAt = Carbon::now();
 
         $this->weathers = new ArrayCollection();
         $this->estimates = new ArrayCollection();
@@ -294,17 +295,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this;
     }
 
-    public function setDateTime(?\DateTime $dateTime = null): Ride
+    public function setDateTime(?Carbon $dateTime = null): Ride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getDateTime(): ?\DateTime
+    public function getDateTime(): ?Carbon
     {
         return $this->dateTime;
     }
@@ -463,30 +461,30 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     }
 
     /** @deprecated */
-    public function getDate(): \DateTime
+    public function getDate(): Carbon
     {
         return $this->dateTime;
     }
 
     /** @deprecated */
-    public function getTime(): \DateTime
+    public function getTime(): Carbon
     {
         return $this->dateTime;
     }
 
     /** @deprecated */
-    public function setDate(\DateTime $date): Ride
+    public function setDate(Carbon $date): Ride
     {
-        $this->dateTime = new \DateTime($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'),
+        $this->dateTime = Carbon::parse($date->format('Y-m-d') . ' ' . $this->dateTime->format('H:i:s'),
             $date->getTimezone());
 
         return $this;
     }
 
     /** @deprecated */
-    public function setTime(\DateTime $time): Ride
+    public function setTime(Carbon $time): Ride
     {
-        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'),
+        $this->dateTime = Carbon::parse($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'),
             $time->getTimezone());
 
         return $this;
@@ -620,24 +618,24 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): Ride
+    public function setCreatedAt(Carbon $createdAt): Ride
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt): Ride
+    public function setUpdatedAt(Carbon $updatedAt): Ride
     {
         $this->updatedAt = $updatedAt;
 
@@ -834,7 +832,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         $this->imageFile = $image;
 
         if ($image) {
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = Carbon::now();
         }
 
         return $this;

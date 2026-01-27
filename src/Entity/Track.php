@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
+use Carbon\Carbon;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Attribute as Routing;
@@ -66,18 +67,18 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
-    protected ?\DateTime $creationDateTime = null;
+    protected ?Carbon $creationDateTime = null;
 
     /**
      * @OE\Order(direction="asc")
      */
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
-    protected ?\DateTime $startDateTime = null;
+    protected ?Carbon $startDateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
-    protected ?\DateTime $endDateTime = null;
+    protected ?Carbon $endDateTime = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
@@ -148,7 +149,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     /**
      * $source must be nullable du to legacy tracks without source attribution
@@ -391,26 +392,26 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return 0;
     }
 
-    public function getStartTime(): \DateTime
+    public function getStartTime(): Carbon
     {
         return $this->startDateTime;
     }
 
-    public function setStartTime(\DateTime $time): Track
+    public function setStartTime(Carbon $time): Track
     {
-        $this->startDateTime = new \DateTime($this->startDateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
+        $this->startDateTime = Carbon::parse($this->startDateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
 
         return $this;
     }
 
-    public function getStartDate(): \DateTime
+    public function getStartDate(): Carbon
     {
         return $this->startDateTime;
     }
 
-    public function setStartDate(\DateTime $date): Track
+    public function setStartDate(Carbon $date): Track
     {
-        $newDate = new \DateTime($this->startDateTime->format('Y-m-d') . ' 00:00:00');
+        $newDate = Carbon::parse($this->startDateTime->format('Y-m-d') . ' 00:00:00');
 
         $this->startDateTime = $newDate->add($newDate->diff($date));
 

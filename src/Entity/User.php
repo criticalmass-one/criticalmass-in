@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Carbon\Carbon;
 
 #[Vich\Uploadable]
 #[ORM\Table(name: 'user')]
@@ -72,15 +73,15 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
-    protected ?\DateTime $createdAt = null;
+    protected ?Carbon $createdAt = null;
 
     #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
     #[Ignore]
-    protected ?\DateTime $lastLogin = null;
+    protected ?Carbon $lastLogin = null;
 
     #[ORM\Column(name: 'facebook_id', type: 'string', length: 255, nullable: true)]
     #[Ignore]
@@ -134,7 +135,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         $this->colorRed = rand(0, 255);
         $this->colorGreen = rand(0, 255);
         $this->colorBlue = rand(0, 255);
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
 
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
@@ -285,24 +286,24 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->tracks;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): User
+    public function setCreatedAt(Carbon $createdAt): User
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt): User
+    public function setUpdatedAt(Carbon $updatedAt): User
     {
         $this->updatedAt = $updatedAt;
 
@@ -312,8 +313,8 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\PrePersist]
     public function prePersist(): User
     {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->createdAt = Carbon::now();
+        $this->updatedAt = Carbon::now();
 
         return $this;
     }
@@ -321,7 +322,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\PreUpdate]
     public function preUpdate(): User
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = Carbon::now();
 
         return $this;
     }
@@ -451,7 +452,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         $this->imageFile = $image;
 
         if ($image) {
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = Carbon::now();
         }
 
         return $this;
@@ -618,12 +619,12 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
-    public function getLastLogin(): ?\DateTime
+    public function getLastLogin(): ?Carbon
     {
         return $this->lastLogin;
     }
 
-    public function setLastLogin(?\DateTime $lastLogin = null): self
+    public function setLastLogin(?Carbon $lastLogin = null): self
     {
         $this->lastLogin = $lastLogin;
 

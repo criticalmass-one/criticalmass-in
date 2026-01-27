@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Geo\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -23,17 +24,17 @@ class Track
     /**
      * @ORM\Column(type="datetime")
      */
-    protected ?\DateTime $creationDateTime = null;
+    protected ?Carbon $creationDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected ?\DateTime $startDateTime = null;
+    protected ?Carbon $startDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected ?\DateTime $endDateTime = null;
+    protected ?Carbon $endDateTime = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -100,11 +101,11 @@ class Track
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     public function __construct()
     {
-        $this->setCreationDateTime(new \DateTime());
+        $this->setCreationDateTime(Carbon::now());
     }
 
     public function getId(): ?int
@@ -112,45 +113,45 @@ class Track
         return $this->id;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime): Track
+    public function setCreationDateTime(Carbon $creationDateTime): Track
     {
         $this->creationDateTime = $creationDateTime;
 
         return $this;
     }
 
-    public function getCreationDateTime(): \DateTime
+    public function getCreationDateTime(): Carbon
     {
         return $this->creationDateTime;
     }
 
-    public function setStartDateTime(\DateTime $startDateTime): Track
+    public function setStartDateTime(Carbon $startDateTime): Track
     {
         $this->startDateTime = $startDateTime;
 
         return $this;
     }
 
-    public function getStartDateTime(): ?\DateTime
+    public function getStartDateTime(): ?Carbon
     {
         if ($this->startDateTime) {
-            return $this->startDateTime->setTimezone(new \DateTimeZone('UTC'));
+            return $this->startDateTime->setTimezone('UTC');
         }
 
         return null;
     }
 
-    public function setEndDateTime(\DateTime $endDateTime): Track
+    public function setEndDateTime(Carbon $endDateTime): Track
     {
         $this->endDateTime = $endDateTime;
 
         return $this;
     }
 
-    public function getEndDateTime(): ?\DateTime
+    public function getEndDateTime(): ?Carbon
     {
         if ($this->endDateTime) {
-            return $this->endDateTime->setTimezone(new \DateTimeZone('UTC'));
+            return $this->endDateTime->setTimezone('UTC');
         }
 
         return null;
@@ -185,7 +186,7 @@ class Track
         $this->trackFile = $track;
 
         if ($track) {
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = Carbon::now();
         }
 
         return $this;
@@ -232,14 +233,14 @@ class Track
         return $this->endPoint;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt): Track
+    public function setUpdatedAt(Carbon $updatedAt): Track
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }

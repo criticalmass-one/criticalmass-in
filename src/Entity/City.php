@@ -22,6 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
+use Carbon\Carbon;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
@@ -146,12 +147,12 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
-    private ?\DateTime $updatedAt = null;
+    private ?Carbon $updatedAt = null;
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
-    protected ?\DateTime $createdAt = null;
+    protected ?Carbon $createdAt = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
@@ -205,7 +206,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         $this->cycles = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
 
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
     }
 
     public function setRegion(Region $region): City
@@ -453,7 +454,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     public function getCurrentRide(): ?Ride
     {
         $currentRide = null;
-        $dateTime = new \DateTime();
+        $dateTime = Carbon::now();
 
         foreach ($this->getRides() as $ride) {
             if ($ride && !$currentRide && $ride->getDateTime() > $dateTime) {
@@ -495,7 +496,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         $this->imageFile = $image;
 
         if ($image) {
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = Carbon::now();
         }
 
         return $this;
@@ -571,12 +572,12 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->timezone;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): City
+    public function setCreatedAt(Carbon $createdAt): City
     {
         $this->createdAt = $createdAt;
 
@@ -633,14 +634,14 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null): City
+    public function setUpdatedAt(?Carbon $updatedAt = null): City
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }
@@ -734,7 +735,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return null;
     }
 
-    public function getDateTime(): ?\DateTime
+    public function getDateTime(): ?Carbon
     {
         return null;
     }
