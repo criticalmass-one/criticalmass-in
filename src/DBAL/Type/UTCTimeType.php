@@ -2,6 +2,7 @@
 
 namespace App\DBAL\Type;
 
+use Carbon\Carbon;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\TimeType;
@@ -17,8 +18,8 @@ class UTCTimeType extends TimeType
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        if ($value instanceof \DateTime) {
-            $value->setTimezone(self::getUtc());
+        if ($value instanceof \DateTimeInterface) {
+            $value = Carbon::instance($value)->setTimezone(self::getUtc());
         }
 
         return parent::convertToDatabaseValue($value, $platform);
@@ -26,8 +27,16 @@ class UTCTimeType extends TimeType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        if (null === $value || $value instanceof \DateTime) {
+        if (null === $value) {
             return $value;
+        }
+
+        if ($value instanceof Carbon) {
+            return $value;
+        }
+
+        if ($value instanceof \DateTimeInterface) {
+            return Carbon::instance($value);
         }
 
         $converted = \DateTime::createFromFormat(
@@ -44,6 +53,6 @@ class UTCTimeType extends TimeType
             );
         }
 
-        return $converted;
+        return Carbon::instance($converted);
     }
 }
