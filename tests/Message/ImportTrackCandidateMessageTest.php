@@ -9,7 +9,7 @@ class ImportTrackCandidateMessageTest extends TestCase
 {
     public function testCreateMessage(): void
     {
-        $startDateTime = new \DateTime('2024-01-15 18:00:00');
+        $startDateTime = new \Carbon\Carbon('2024-01-15 18:00:00');
 
         $message = new ImportTrackCandidateMessage(
             userId: 42,
@@ -49,7 +49,7 @@ class ImportTrackCandidateMessageTest extends TestCase
             distance: 0.0,
             elapsedTime: 0,
             type: 'Ride',
-            startDateTime: new \DateTime(),
+            startDateTime: new \Carbon\Carbon(),
             startLatitude: 0.0,
             startLongitude: 0.0,
             endLatitude: 0.0,
@@ -72,7 +72,7 @@ class ImportTrackCandidateMessageTest extends TestCase
             distance: 10.0,
             elapsedTime: 3600,
             type: 'Ride',
-            startDateTime: new \DateTime(),
+            startDateTime: new \Carbon\Carbon(),
             startLatitude: -33.8688,  // Sydney
             startLongitude: 151.2093,
             endLatitude: -33.8788,
@@ -88,7 +88,7 @@ class ImportTrackCandidateMessageTest extends TestCase
 
     public function testMessageIsImmutable(): void
     {
-        $startDateTime = new \DateTime('2024-01-15 18:00:00');
+        $startDateTime = new \Carbon\Carbon('2024-01-15 18:00:00');
 
         $message = new ImportTrackCandidateMessage(
             userId: 42,
@@ -123,7 +123,7 @@ class ImportTrackCandidateMessageTest extends TestCase
             distance: 10.0,
             elapsedTime: 3600,
             type: $type,
-            startDateTime: new \DateTime(),
+            startDateTime: new \Carbon\Carbon(),
             startLatitude: 50.0,
             startLongitude: 10.0,
             endLatitude: 51.0,

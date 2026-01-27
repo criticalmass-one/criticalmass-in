@@ -9,7 +9,7 @@ class CountViewMessageTest extends TestCase
 {
     public function testCreateMessageWithoutUser(): void
     {
-        $dateTime = new \DateTime('2024-01-15 14:30:00');
+        $dateTime = new \Carbon\Carbon('2024-01-15 14:30:00');
 
         $message = new CountViewMessage(
             entityId: 42,
@@ -26,7 +26,7 @@ class CountViewMessageTest extends TestCase
 
     public function testCreateMessageWithUser(): void
     {
-        $dateTime = new \DateTime('2024-01-15 14:30:00');
+        $dateTime = new \Carbon\Carbon('2024-01-15 14:30:00');
 
         $message = new CountViewMessage(
             entityId: 123,
@@ -43,7 +43,7 @@ class CountViewMessageTest extends TestCase
 
     public function testMessageIsImmutable(): void
     {
-        $dateTime = new \DateTime('2024-01-15 14:30:00');
+        $dateTime = new \Carbon\Carbon('2024-01-15 14:30:00');
 
         $message = new CountViewMessage(
             entityId: 1,
@@ -67,7 +67,7 @@ class CountViewMessageTest extends TestCase
             entityId: 1,
             entityClassName: $entityClassName,
             userId: null,
-            dateTime: new \DateTime()
+            dateTime: new \Carbon\Carbon()
         );
 
         $this->assertSame($entityClassName, $message->getEntityClassName());

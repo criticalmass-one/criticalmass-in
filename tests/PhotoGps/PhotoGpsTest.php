@@ -52,7 +52,7 @@ class PhotoGpsTest extends TestCase
     public function testPhotoTrackCoords(): void
     {
         $exif = $this->createMock(Exif::class);
-        $exif->method('getCreationDate')->willReturn(new \DateTime('2019-06-24 19:25:00'));
+        $exif->method('getCreationDate')->willReturn(new \Carbon\Carbon('2019-06-24 19:25:00'));
 
         $exifWrapper = $this->createMock(ExifWrapper::class);
         $exifWrapper->method('getExifData')->willReturn($exif);

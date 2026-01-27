@@ -22,7 +22,7 @@ class DayTest extends TestCase
 
     public function testConstructor(): void
     {
-        $dateTime = new \DateTime('2024-06-28');
+        $dateTime = new \Carbon\Carbon('2024-06-28');
         $day = new Day($dateTime);
 
         $this->assertSame($dateTime, $day->getDateTime());
@@ -30,7 +30,7 @@ class DayTest extends TestCase
 
     public function testAddRide(): void
     {
-        $day = new Day(new \DateTime('2024-06-28'));
+        $day = new Day(new \Carbon\Carbon('2024-06-28'));
         $ride = $this->createRide('Hamburg');
 
         $result = $day->addRide($ride);
@@ -40,7 +40,7 @@ class DayTest extends TestCase
 
     public function testIteratorWithNoRides(): void
     {
-        $day = new Day(new \DateTime('2024-06-28'));
+        $day = new Day(new \Carbon\Carbon('2024-06-28'));
 
         $rides = [];
         foreach ($day as $ride) {
@@ -52,7 +52,7 @@ class DayTest extends TestCase
 
     public function testIteratorWithRides(): void
     {
-        $day = new Day(new \DateTime('2024-06-28'));
+        $day = new Day(new \Carbon\Carbon('2024-06-28'));
         $ride1 = $this->createRide('Hamburg');
         $ride2 = $this->createRide('Berlin');
 
@@ -71,7 +71,7 @@ class DayTest extends TestCase
 
     public function testSortByCity(): void
     {
-        $day = new Day(new \DateTime('2024-06-28'));
+        $day = new Day(new \Carbon\Carbon('2024-06-28'));
 
         $day->addRide($this->createRide('München'));
         $day->addRide($this->createRide('Berlin'));
@@ -90,7 +90,7 @@ class DayTest extends TestCase
 
     public function testSortWithSingleRide(): void
     {
-        $day = new Day(new \DateTime('2024-06-28'));
+        $day = new Day(new \Carbon\Carbon('2024-06-28'));
         $day->addRide($this->createRide('Hamburg'));
 
         $day->sort();
@@ -105,7 +105,7 @@ class DayTest extends TestCase
 
     public function testSortWithEmptyList(): void
     {
-        $day = new Day(new \DateTime('2024-06-28'));
+        $day = new Day(new \Carbon\Carbon('2024-06-28'));
 
         $day->sort();
 
@@ -119,12 +119,12 @@ class DayTest extends TestCase
 
     public function testIteratorInterface(): void
     {
-        $this->assertInstanceOf(\Iterator::class, new Day(new \DateTime()));
+        $this->assertInstanceOf(\Iterator::class, new Day(new \Carbon\Carbon()));
     }
 
     public function testValidReturnsFalseForEmptyDay(): void
     {
-        $day = new Day(new \DateTime('2024-06-28'));
+        $day = new Day(new \Carbon\Carbon('2024-06-28'));
 
         $day->rewind();
         $this->assertFalse($day->valid());
@@ -132,7 +132,7 @@ class DayTest extends TestCase
 
     public function testValidReturnsTrueWithRides(): void
     {
-        $day = new Day(new \DateTime('2024-06-28'));
+        $day = new Day(new \Carbon\Carbon('2024-06-28'));
         $day->addRide($this->createRide('Hamburg'));
 
         $day->rewind();

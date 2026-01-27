@@ -49,7 +49,7 @@ class RouterTest extends KernelTestCase
 
         $ride = new Ride();
         $ride
-            ->setDateTime(new \DateTime('2018-01-01'))
+            ->setDateTime(new \Carbon\Carbon('2018-01-01'))
             ->setCity($city);
 
         $city->addRide($ride);

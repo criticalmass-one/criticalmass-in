@@ -19,7 +19,7 @@ class SocialNetworkProfileFactoryTest extends TestCase
         $this->assertEquals(true, $socialNetworkProfile->isEnabled());
         $this->assertEquals(false, $socialNetworkProfile->isMainNetwork());
 
-        $this->assertEqualsWithDelta(new \DateTime(), $socialNetworkProfile->getCreatedAt(), 0.01);
+        $this->assertEqualsWithDelta(new \Carbon\Carbon(), $socialNetworkProfile->getCreatedAt(), 0.01);
         $this->assertNull($socialNetworkProfile->getCreatedBy());
 
         $this->assertNull($socialNetworkProfile->getCity());

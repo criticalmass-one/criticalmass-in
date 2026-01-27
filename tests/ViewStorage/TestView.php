@@ -4,6 +4,7 @@ namespace Tests\ViewStorage;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use App\Entity\User;
+use Carbon\Carbon;
 
 class TestView implements ViewEntity
 {
@@ -13,7 +14,7 @@ class TestView implements ViewEntity
     /** @var User $user */
     protected $user;
 
-    /** @var \DateTime $dateTime */
+    /** @var Carbon $dateTime */
     protected $dateTime;
 
     /** @var TestClass $testClass */
@@ -43,14 +44,14 @@ class TestView implements ViewEntity
         return $this->user;
     }
 
-    public function setDateTime(\DateTime $dateTime): ViewEntity
+    public function setDateTime(Carbon $dateTime): ViewEntity
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }

@@ -15,7 +15,7 @@ class VelocityExtensionTest extends TestCase
         $this->extension = new VelocityExtension();
     }
 
-    private function createTrack(?float $distance, ?\DateTime $start, ?\DateTime $end): Track
+    private function createTrack(?float $distance, ?\Carbon\Carbon $start, ?\Carbon\Carbon $end): Track
     {
         $track = $this->createMock(Track::class);
         $track->method('getDistance')->willReturn($distance);
@@ -29,8 +29,8 @@ class VelocityExtensionTest extends TestCase
     {
         $track = $this->createTrack(
             15.0,
-            new \DateTime('2024-01-15 19:00:00'),
-            new \DateTime('2024-01-15 21:00:00')
+            new \Carbon\Carbon('2024-01-15 19:00:00'),
+            new \Carbon\Carbon('2024-01-15 21:00:00')
         );
 
         $velocity = $this->extension->averageVelocity($track);
@@ -43,8 +43,8 @@ class VelocityExtensionTest extends TestCase
     {
         $track = $this->createTrack(
             20.0,
-            new \DateTime('2024-01-15 19:00:00'),
-            new \DateTime('2024-01-15 20:00:00')
+            new \Carbon\Carbon('2024-01-15 19:00:00'),
+            new \Carbon\Carbon('2024-01-15 20:00:00')
         );
 
         $velocity = $this->extension->averageVelocity($track);
@@ -57,7 +57,7 @@ class VelocityExtensionTest extends TestCase
         $track = $this->createTrack(
             15.0,
             null,
-            new \DateTime('2024-01-15 21:00:00')
+            new \Carbon\Carbon('2024-01-15 21:00:00')
         );
 
         $this->assertNull($this->extension->averageVelocity($track));
@@ -67,7 +67,7 @@ class VelocityExtensionTest extends TestCase
     {
         $track = $this->createTrack(
             15.0,
-            new \DateTime('2024-01-15 19:00:00'),
+            new \Carbon\Carbon('2024-01-15 19:00:00'),
             null
         );
 
@@ -78,8 +78,8 @@ class VelocityExtensionTest extends TestCase
     {
         $track = $this->createTrack(
             null,
-            new \DateTime('2024-01-15 19:00:00'),
-            new \DateTime('2024-01-15 21:00:00')
+            new \Carbon\Carbon('2024-01-15 19:00:00'),
+            new \Carbon\Carbon('2024-01-15 21:00:00')
         );
 
         $this->assertNull($this->extension->averageVelocity($track));

@@ -23,7 +23,7 @@ class RideApiWriteTest extends AbstractApiControllerTestCase
 
         // Use a random date far in the future to avoid conflicts with existing rides
         $randomDays = random_int(3650, 7300); // 10-20 years in the future
-        $futureDate = (new \DateTime())->modify("+$randomDays days")->format('Y-m-d');
+        $futureDate = (new \Carbon\Carbon())->modify("+$randomDays days")->format('Y-m-d');
 
         $rideData = [
             'title' => 'Test API Ride',
@@ -31,7 +31,7 @@ class RideApiWriteTest extends AbstractApiControllerTestCase
             'latitude' => 53.5511,
             'longitude' => 9.9937,
             'location' => 'Test Location',
-            'date_time' => (new \DateTime($futureDate . ' 19:00:00'))->getTimestamp(),
+            'date_time' => (new \Carbon\Carbon($futureDate . ' 19:00:00'))->getTimestamp(),
         ];
 
         $this->client->request(
@@ -68,12 +68,12 @@ class RideApiWriteTest extends AbstractApiControllerTestCase
 
         // Use a random date far in the future
         $randomDays = random_int(7301, 10950); // 20-30 years in the future
-        $futureDate = (new \DateTime())->modify("+$randomDays days")->format('Y-m-d');
+        $futureDate = (new \Carbon\Carbon())->modify("+$randomDays days")->format('Y-m-d');
 
         // Empty title should fail validation
         $rideData = [
             'title' => '', // Invalid: empty title
-            'date_time' => (new \DateTime($futureDate . ' 19:00:00'))->getTimestamp(),
+            'date_time' => (new \Carbon\Carbon($futureDate . ' 19:00:00'))->getTimestamp(),
         ];
 
         $this->client->request(
@@ -173,7 +173,7 @@ class RideApiWriteTest extends AbstractApiControllerTestCase
     #[TestDox('PUT /api/{invalidCity}/{rideIdentifier} returns 404')]
     public function testCreateRideForInvalidCityReturns404(): void
     {
-        $futureDate = (new \DateTime())->modify('+12 years')->format('Y-m-d');
+        $futureDate = (new \Carbon\Carbon())->modify('+12 years')->format('Y-m-d');
 
         $this->client->request(
             'PUT',

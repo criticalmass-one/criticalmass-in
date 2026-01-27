@@ -29,9 +29,9 @@ class PositionTest extends TestCase
     {
         $position = new Position(57.5, 10.5);
 
-        $position->setDateTime(new \DateTime('2011-06-24 19:00:00'));
+        $position->setDateTime(new \Carbon\Carbon('2011-06-24 19:00:00'));
 
-        $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $position->getDateTime());
+        $this->assertEquals(new \Carbon\Carbon('2011-06-24 19:00:00'), $position->getDateTime());
     }
 
     public function testAccuracy()

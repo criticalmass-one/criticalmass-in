@@ -20,7 +20,7 @@ class PhotoUploadControllerTest extends AbstractControllerTestCase
             ->where('cs.slug = :citySlug')
             ->andWhere('r.dateTime < :now')
             ->setParameter('citySlug', $citySlug)
-            ->setParameter('now', new \DateTime())
+            ->setParameter('now', new \Carbon\Carbon())
             ->orderBy('r.dateTime', 'DESC')
             ->setMaxResults(1)
             ->getQuery()

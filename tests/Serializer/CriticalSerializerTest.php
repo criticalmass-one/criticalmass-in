@@ -81,7 +81,7 @@ class CriticalSerializerTest extends TestCase
     public function testDateTimeSerialization(): void
     {
         $object = new TestModelWithDateTime();
-        $dateTime = new \DateTime('2024-06-15 14:30:00', new \DateTimeZone('Europe/Berlin'));
+        $dateTime = new \Carbon\Carbon('2024-06-15 14:30:00', new \DateTimeZone('Europe/Berlin'));
         $object->setCreatedAt($dateTime);
 
         $json = $this->serializer->serialize($object);

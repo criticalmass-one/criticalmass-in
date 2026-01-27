@@ -13,7 +13,7 @@ class ParticipationYearTest extends TestCase
     private function createParticipation(string $dateTime): Participation
     {
         $ride = $this->createMock(Ride::class);
-        $ride->method('getDateTime')->willReturn(new \DateTime($dateTime));
+        $ride->method('getDateTime')->willReturn(new \Carbon\Carbon($dateTime));
 
         $participation = $this->createMock(Participation::class);
         $participation->method('getRide')->willReturn($ride);

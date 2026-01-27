@@ -12,7 +12,7 @@ class CountViewMessageHandlerTest extends TestCase
 {
     public function testHandleMessageWithoutUser(): void
     {
-        $dateTime = new \DateTime('2024-01-15 14:30:00');
+        $dateTime = new \Carbon\Carbon('2024-01-15 14:30:00');
 
         $message = new CountViewMessage(
             entityId: 42,
@@ -41,7 +41,7 @@ class CountViewMessageHandlerTest extends TestCase
 
     public function testHandleMessageWithUser(): void
     {
-        $dateTime = new \DateTime('2024-01-15 14:30:00');
+        $dateTime = new \Carbon\Carbon('2024-01-15 14:30:00');
 
         $message = new CountViewMessage(
             entityId: 123,
@@ -77,7 +77,7 @@ class CountViewMessageHandlerTest extends TestCase
             entityId: 1,
             entityClassName: $entityClassName,
             userId: null,
-            dateTime: new \DateTime()
+            dateTime: new \Carbon\Carbon()
         );
 
         $viewStoragePersister = $this->createMock(ViewStoragePersisterInterface::class);
@@ -112,7 +112,7 @@ class CountViewMessageHandlerTest extends TestCase
             entityId: 1,
             entityClassName: 'Photo',
             userId: null,
-            dateTime: new \DateTime()
+            dateTime: new \Carbon\Carbon()
         );
 
         $viewStoragePersister = $this->createMock(ViewStoragePersisterInterface::class);

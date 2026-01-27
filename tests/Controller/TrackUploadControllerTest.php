@@ -21,7 +21,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             ->where('cs.slug = :citySlug')
             ->andWhere('r.dateTime < :now')
             ->setParameter('citySlug', $citySlug)
-            ->setParameter('now', new \DateTime())
+            ->setParameter('now', new \Carbon\Carbon())
             ->orderBy('r.dateTime', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
@@ -46,7 +46,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
         $gpx .= '<gpx version="1.1" creator="test">' . "\n";
         $gpx .= '<trk><name>Test Track</name><trkseg>' . "\n";
 
-        $dateTime = new \DateTime($startTime);
+        $dateTime = new \Carbon\Carbon($startTime);
 
         for ($i = 0; $i < $pointCount; $i++) {
             $angle = 2 * M_PI * $i / $pointCount;

@@ -25,7 +25,7 @@ class RideIcalGeneratorTest extends TestCase
     public function testEmptyRide(): void
     {
         $ride = new Ride();
-        $ride->setDateTime(new \DateTime());
+        $ride->setDateTime(new \Carbon\Carbon());
 
         $rideIcalGenerator = $this->createRideIcalGenerator();
         $rideIcalGenerator->generateForRide($ride);
@@ -45,7 +45,7 @@ class RideIcalGeneratorTest extends TestCase
 
         $ride = new Ride();
         $ride
-            ->setDateTime(new \DateTime('2011-06-24 19:00:00'))
+            ->setDateTime(new \Carbon\Carbon('2011-06-24 19:00:00'))
             ->setCity($city);
 
         $rideIcalGenerator = $this->createRideIcalGenerator();
@@ -60,7 +60,7 @@ class RideIcalGeneratorTest extends TestCase
     public function testRideWithCityDateTime(): void
     {
         $timezoneSpec = 'Europe/Berlin';
-        $rideDateTime = new \DateTime('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
+        $rideDateTime = new \Carbon\Carbon('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
 
         $city = new City();
         $city
@@ -85,7 +85,7 @@ class RideIcalGeneratorTest extends TestCase
     public function testRideWithCityDateTimeTitle(): void
     {
         $timezoneSpec = 'Europe/Berlin';
-        $rideDateTime = new \DateTime('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
+        $rideDateTime = new \Carbon\Carbon('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
 
         $city = new City();
         $city
@@ -109,7 +109,7 @@ class RideIcalGeneratorTest extends TestCase
     public function testRideWithCityDateTimeLocation(): void
     {
         $timezoneSpec = 'Europe/Berlin';
-        $rideDateTime = new \DateTime('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
+        $rideDateTime = new \Carbon\Carbon('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
 
         $city = new City();
         $city
@@ -133,7 +133,7 @@ class RideIcalGeneratorTest extends TestCase
     public function testRideWithCityDateTimeLocationLatitudeLongitude(): void
     {
         $timezoneSpec = 'Europe/Berlin';
-        $rideDateTime = new \DateTime('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
+        $rideDateTime = new \Carbon\Carbon('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
 
         $city = new City();
         $city
@@ -160,7 +160,7 @@ class RideIcalGeneratorTest extends TestCase
     public function testRideWithCityDateTimeDescription(): void
     {
         $timezoneSpec = 'Europe/Berlin';
-        $rideDateTime = new \DateTime('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
+        $rideDateTime = new \Carbon\Carbon('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
 
         $city = new City();
         $city

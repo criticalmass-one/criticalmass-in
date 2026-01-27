@@ -28,7 +28,7 @@ class RobustViewStorageCacheTest extends TestCase
         $expectedPersistedClass = new TestClassView();
         $expectedPersistedClass
             ->setId(1)
-            ->setDateTime(new \DateTime())
+            ->setDateTime(new \Carbon\Carbon())
             ->setTestClass($testClass);
 
         $viewStoragePersisterRepository = $this->createMock(ObjectRepository::class);
@@ -47,7 +47,7 @@ class RobustViewStorageCacheTest extends TestCase
                     && $persistedEntity->getId() === $expectedPersistedClass->getId()
                     && $persistedEntity->getTestClass() === $expectedPersistedClass->getTestClass()
                     && $persistedEntity->getUser() === $expectedPersistedClass->getUser()
-                    && $persistedEntity->getDateTime() instanceof \DateTime;
+                    && $persistedEntity->getDateTime() instanceof \Carbon\Carbon;
             }));
 
         $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);
@@ -108,7 +108,7 @@ class RobustViewStorageCacheTest extends TestCase
         $expectedPersistedClass
             ->setId(1)
             ->setUser($user)
-            ->setDateTime(new \DateTime())
+            ->setDateTime(new \Carbon\Carbon())
             ->setTestClass($testClass);
 
         $viewStoragePersisterRepository = $this->createMock(ObjectRepository::class);
@@ -127,7 +127,7 @@ class RobustViewStorageCacheTest extends TestCase
                     && $persistedEntity->getId() === $expectedPersistedClass->getId()
                     && $persistedEntity->getTestClass() === $expectedPersistedClass->getTestClass()
                     && $persistedEntity->getUser() === $expectedPersistedClass->getUser()
-                    && $persistedEntity->getDateTime() instanceof \DateTime;
+                    && $persistedEntity->getDateTime() instanceof \Carbon\Carbon;
             }));
 
         $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);

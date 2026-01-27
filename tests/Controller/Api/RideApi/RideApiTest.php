@@ -17,7 +17,7 @@ class RideApiTest extends AbstractApiControllerTestCase
     {
         ClockMock::register(RideRepository::class);
         // Set time to one week ago to ensure we get the future Hamburg ride
-        ClockMock::withClockMock((new \DateTime('-7 days'))->format('U'));
+        ClockMock::withClockMock((new \Carbon\Carbon('-7 days'))->format('U'));
 
         $this->client->request('GET', '/api/hamburg/current');
 
@@ -83,7 +83,7 @@ class RideApiTest extends AbstractApiControllerTestCase
     public function testCurrentRideWithoutSlugs(): void
     {
         ClockMock::register(RideRepository::class);
-        ClockMock::withClockMock((new \DateTime('2026-02-20 11:00:00'))->format('U'));
+        ClockMock::withClockMock((new \Carbon\Carbon('2026-02-20 11:00:00'))->format('U'));
 
         $this->client->request('GET', '/api/hamburg/current?slugsAllowed=false');
 
@@ -102,7 +102,7 @@ class RideApiTest extends AbstractApiControllerTestCase
     public function testCurrentRideWithMandatoryCycles(): void
     {
         ClockMock::register(RideRepository::class);
-        ClockMock::withClockMock((new \DateTime('2026-02-20 11:00:00'))->format('U'));
+        ClockMock::withClockMock((new \Carbon\Carbon('2026-02-20 11:00:00'))->format('U'));
 
         $this->client->request('GET', '/api/hamburg/current?cycleMandatory=true');
 
@@ -118,7 +118,7 @@ class RideApiTest extends AbstractApiControllerTestCase
     public function testCurrentRideWithoutMandatoryCycles(): void
     {
         ClockMock::register(RideRepository::class);
-        ClockMock::withClockMock((new \DateTime('2026-02-20 11:00:00'))->format('U'));
+        ClockMock::withClockMock((new \Carbon\Carbon('2026-02-20 11:00:00'))->format('U'));
 
         $this->client->request('GET', '/api/hamburg/current?cycleMandatory=false');
 
@@ -136,7 +136,7 @@ class RideApiTest extends AbstractApiControllerTestCase
     public function testCurrentRideWithSlugs(): void
     {
         ClockMock::register(RideRepository::class);
-        ClockMock::withClockMock((new \DateTime('2026-02-20 11:00:00'))->format('U'));
+        ClockMock::withClockMock((new \Carbon\Carbon('2026-02-20 11:00:00'))->format('U'));
 
         $this->client->request('GET', '/api/hamburg/current?slugsAllowed=true');
 

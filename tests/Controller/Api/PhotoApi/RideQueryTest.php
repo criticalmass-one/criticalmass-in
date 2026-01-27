@@ -10,7 +10,7 @@ class RideQueryTest extends AbstractApiControllerTestCase
     #[TestDox('Querying for Hamburg with past ride date will only return Hamburg photos.')]
     public function testPhotoListWithRideQueryForHamburg(): void
     {
-        $rideDate = (new \DateTime('-1 month last friday'))->format('Y-m-d');
+        $rideDate = (new \Carbon\Carbon('-1 month last friday'))->format('Y-m-d');
         $this->client->request('GET', '/api/photo?citySlug=hamburg&rideIdentifier=' . $rideDate);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -30,7 +30,7 @@ class RideQueryTest extends AbstractApiControllerTestCase
     #[TestDox('Querying for Berlin with past ride date will only return Berlin photos.')]
     public function testPhotoListWithRideQueryForBerlin(): void
     {
-        $rideDate = (new \DateTime('-1 month last friday'))->format('Y-m-d');
+        $rideDate = (new \Carbon\Carbon('-1 month last friday'))->format('Y-m-d');
         $this->client->request('GET', '/api/photo?citySlug=berlin&rideIdentifier=' . $rideDate);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());

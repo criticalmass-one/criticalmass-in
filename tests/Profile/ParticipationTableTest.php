@@ -19,7 +19,7 @@ class ParticipationTableTest extends KernelTestCase
         return static::getContainer()->get(TableGeneratorInterface::class);
     }
 
-    protected function createRide(\DateTime $dateTime): Ride
+    protected function createRide(\Carbon\Carbon $dateTime): Ride
     {
         $ride = new Ride();
         $ride->setDateTime($dateTime);
@@ -27,7 +27,7 @@ class ParticipationTableTest extends KernelTestCase
         return $ride;
     }
 
-    protected function createParticipation(\DateTime $dateTime): Participation
+    protected function createParticipation(\Carbon\Carbon $dateTime): Participation
     {
         $participation = new Participation();
         $participation->setRide($this->createRide($dateTime));
@@ -46,7 +46,7 @@ class ParticipationTableTest extends KernelTestCase
     {
         $table = $this->getTableGenerator()->getTable();
 
-        $table->addParticipation($this->createParticipation(new \DateTime('2018-01-01')));
+        $table->addParticipation($this->createParticipation(new \Carbon\Carbon('2018-01-01')));
 
         $this->assertEquals(1, count($table));
     }
@@ -56,8 +56,8 @@ class ParticipationTableTest extends KernelTestCase
         $table = $this->getTableGenerator()->getTable();
 
         $table
-            ->addParticipation($this->createParticipation(new \DateTime('2018-01-01')))
-            ->addParticipation($this->createParticipation(new \DateTime('2018-02-01')));
+            ->addParticipation($this->createParticipation(new \Carbon\Carbon('2018-01-01')))
+            ->addParticipation($this->createParticipation(new \Carbon\Carbon('2018-02-01')));
 
         $this->assertEquals(2, count($table));
     }
@@ -67,10 +67,10 @@ class ParticipationTableTest extends KernelTestCase
         $table = $this->getTableGenerator()->getTable();
 
         $table
-            ->addParticipation($this->createParticipation(new \DateTime('2015-01-01')))
-            ->addParticipation($this->createParticipation(new \DateTime('2016-01-01')))
-            ->addParticipation($this->createParticipation(new \DateTime('2017-01-01')))
-            ->addParticipation($this->createParticipation(new \DateTime('2018-01-01')));
+            ->addParticipation($this->createParticipation(new \Carbon\Carbon('2015-01-01')))
+            ->addParticipation($this->createParticipation(new \Carbon\Carbon('2016-01-01')))
+            ->addParticipation($this->createParticipation(new \Carbon\Carbon('2017-01-01')))
+            ->addParticipation($this->createParticipation(new \Carbon\Carbon('2018-01-01')));
 
         $this->assertEquals(4, count($table));
     }
@@ -80,8 +80,8 @@ class ParticipationTableTest extends KernelTestCase
         $table = $this->getTableGenerator()->getTable();
 
         $table
-            ->addParticipation($this->createParticipation(new \DateTime('2015-01-01 15:00:00')))
-            ->addParticipation($this->createParticipation(new \DateTime('2015-01-01 19:00:00')));
+            ->addParticipation($this->createParticipation(new \Carbon\Carbon('2015-01-01 15:00:00')))
+            ->addParticipation($this->createParticipation(new \Carbon\Carbon('2015-01-01 19:00:00')));
 
         $this->assertEquals(2, count($table));
     }

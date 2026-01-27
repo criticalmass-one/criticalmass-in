@@ -21,7 +21,7 @@ class StartValueParameterTest extends AbstractApiControllerTestCase
     #[DataProvider('apiClassProvider')]
     public function testResultListWithStartValueAndOrderByParameterAscending(string $fqcn, string $orderByProperty, string $jsonProperty, string $direction, $startValue): void
     {
-        if ($startValue instanceof \DateTime) {
+        if ($startValue instanceof \Carbon\Carbon) {
             $this->client->request('GET', sprintf('%s?orderBy=%s&orderDirection=%s&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $orderByProperty, $direction, $startValue->format('Y-m-d')));
         } else {
             $this->client->request('GET', sprintf('%s?orderBy=%s&orderDirection=%s&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $orderByProperty, $direction, $startValue));
@@ -43,10 +43,10 @@ class StartValueParameterTest extends AbstractApiControllerTestCase
             $value = $result[$jsonProperty];
 
             // For DateTime comparison, convert timestamp to comparable value
-            if ($startValue instanceof \DateTime) {
+            if ($startValue instanceof \Carbon\Carbon) {
                 if (is_int($value)) {
                     // Unix timestamp
-                    $resultDateTime = (new \DateTime())->setTimestamp($value);
+                    $resultDateTime = (new \Carbon\Carbon())->setTimestamp($value);
                     if ($direction === 'ASC') {
                         $this->assertGreaterThanOrEqual($startValue, $resultDateTime);
                     } else {
@@ -74,11 +74,11 @@ class StartValueParameterTest extends AbstractApiControllerTestCase
             [City::class, 'city', 'name', 'ASC', 'Berlin'],
             [City::class, 'city', 'name', 'DESC', 'Munich'],
             // Rides: Nov 2025 to March 2026 exist in fixtures
-            [Ride::class, 'dateTime', 'date_time', 'ASC', new \DateTime('2025-11-01 19:00:00')],
-            [Ride::class, 'dateTime', 'date_time', 'DESC', new \DateTime('2026-04-01 19:00:00')],
+            [Ride::class, 'dateTime', 'date_time', 'ASC', new \Carbon\Carbon('2025-11-01 19:00:00')],
+            [Ride::class, 'dateTime', 'date_time', 'DESC', new \Carbon\Carbon('2026-04-01 19:00:00')],
             // Photos: Nov-Dec 2025 exist in fixtures
-            [Photo::class, 'exifCreationDate', 'exif_creation_date', 'ASC', new \DateTime('2025-11-01 19:00:00')],
-            [Photo::class, 'exifCreationDate', 'exif_creation_date', 'DESC', new \DateTime('2025-12-31 19:00:00')],
+            [Photo::class, 'exifCreationDate', 'exif_creation_date', 'ASC', new \Carbon\Carbon('2025-11-01 19:00:00')],
+            [Photo::class, 'exifCreationDate', 'exif_creation_date', 'DESC', new \Carbon\Carbon('2025-12-31 19:00:00')],
         ];
     }
 }
