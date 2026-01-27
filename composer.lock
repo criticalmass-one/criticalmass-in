@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e005b008a44ab84c3c328901fb0ef11",
+    "content-hash": "fd9ce43d2034740dd624585e8e302072",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -4021,16 +4021,16 @@
         },
         {
             "name": "maltehuebner/dataquery-bundle",
-            "version": "0.8.2",
+            "version": "0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/dataquery-bundle.git",
-                "reference": "0b4489e59c373305fd5a43cf17004e899f321c36"
+                "reference": "4ac20b5d07789de10466beddf9eca75d39ad7763"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/0b4489e59c373305fd5a43cf17004e899f321c36",
-                "reference": "0b4489e59c373305fd5a43cf17004e899f321c36",
+                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/4ac20b5d07789de10466beddf9eca75d39ad7763",
+                "reference": "4ac20b5d07789de10466beddf9eca75d39ad7763",
                 "shasum": ""
             },
             "require": {
@@ -4040,6 +4040,9 @@
                 "symfony/validator": "^4.0|^5.0|^6.0|^7.0"
             },
             "require-dev": {
+                "doctrine/orm": "^3.6",
+                "doctrine/persistence": "^4.1",
+                "phpstan/phpstan": "^1.12",
                 "phpunit/phpunit": "^9.5",
                 "rector/rector": "^1.2"
             },
@@ -4063,9 +4066,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maltehuebner/dataquery-bundle/issues",
-                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.8.2"
+                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.9"
             },
-            "time": "2025-12-02T12:28:40+00:00"
+            "time": "2026-01-27T19:54:05+00:00"
         },
         {
             "name": "maltehuebner/ordered-entities-bundle",
