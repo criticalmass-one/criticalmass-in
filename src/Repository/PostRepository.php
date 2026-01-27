@@ -16,23 +16,6 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function findByCrawled(bool $crawled, ?int $limit = null): array
-    {
-        $qb = $this->createQueryBuilder('p');
-
-        $qb
-            ->where($qb->expr()->eq('p.crawled', ':crawled'))
-            ->setParameter('crawled', $crawled);
-
-        if ($limit) {
-            $qb->setMaxResults($limit);
-        }
-
-        $query = $qb->getQuery();
-
-        return $query->getResult();
-    }
-
     public function getPostsForRide(Ride $ride): array
     {
         $builder = $this->createQueryBuilder('p');
