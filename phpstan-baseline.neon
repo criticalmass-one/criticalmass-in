@@ -2041,46 +2041,6 @@ parameters:
 			path: src/Criticalmass/Timeline/TimelineInterface.php
 
 		-
-			message: "#^Dead catch \\- Exception is never thrown in the try block\\.$#"
-			count: 1
-			path: src/Criticalmass/UploadValidator/TrackValidator.php
-
-		-
-			message: "#^Expression \"\\$this\\-\\>simpleXml\\-\\>trk\\-\\>trkseg\\-\\>trkpt\\[0\\]\" on a separate line does not do anything\\.$#"
-			count: 1
-			path: src/Criticalmass/UploadValidator/TrackValidator.php
-
-		-
-			message: "#^Property App\\\\Criticalmass\\\\UploadValidator\\\\UploadValidatorException\\\\TrackValidatorException\\\\NoDateTimeException\\:\\:\\$message has no type specified\\.$#"
-			count: 1
-			path: src/Criticalmass/UploadValidator/UploadValidatorException/TrackValidatorException/NoDateTimeException.php
-
-		-
-			message: "#^Property App\\\\Criticalmass\\\\UploadValidator\\\\UploadValidatorException\\\\TrackValidatorException\\\\NoLatitudeLongitudeException\\:\\:\\$message has no type specified\\.$#"
-			count: 1
-			path: src/Criticalmass/UploadValidator/UploadValidatorException/TrackValidatorException/NoLatitudeLongitudeException.php
-
-		-
-			message: "#^Property App\\\\Criticalmass\\\\UploadValidator\\\\UploadValidatorException\\\\TrackValidatorException\\\\NoValidGpxStructureException\\:\\:\\$message has no type specified\\.$#"
-			count: 1
-			path: src/Criticalmass/UploadValidator/UploadValidatorException/TrackValidatorException/NoValidGpxStructureException.php
-
-		-
-			message: "#^Property App\\\\Criticalmass\\\\UploadValidator\\\\UploadValidatorException\\\\TrackValidatorException\\\\NoXmlException\\:\\:\\$message has no type specified\\.$#"
-			count: 1
-			path: src/Criticalmass/UploadValidator/UploadValidatorException/TrackValidatorException/NoXmlException.php
-
-		-
-			message: "#^Property App\\\\Criticalmass\\\\UploadValidator\\\\UploadValidatorException\\\\TrackValidatorException\\\\NotEnoughCoordsException\\:\\:\\$message has no type specified\\.$#"
-			count: 1
-			path: src/Criticalmass/UploadValidator/UploadValidatorException/TrackValidatorException/NotEnoughCoordsException.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\UploadValidator\\\\UploadValidatorInterface\\:\\:validate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Criticalmass/UploadValidator/UploadValidatorInterface.php
-
-		-
 			message: "#^Method App\\\\Criticalmass\\\\UploadableDataHandler\\\\UploadableDataHandler\\:\\:assignPropertyWithoutMapping\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: src/Criticalmass/UploadableDataHandler/UploadableDataHandler.php

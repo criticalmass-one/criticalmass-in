@@ -5,9 +5,6 @@ namespace App\Controller\Track;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackUploadedEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormInterface;
-use App\Criticalmass\UploadValidator\TrackValidator;
-use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\Track;
@@ -25,7 +22,7 @@ class TrackUploadController extends AbstractController
         name: 'caldera_criticalmass_track_upload',
         priority: 270
     )]
-    public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackValidator $trackValidator): Response
+    public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride): Response
     {
         $track = new Track();
 
@@ -35,60 +32,32 @@ class TrackUploadController extends AbstractController
             ->getForm();
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->uploadPostAction($request, $eventDispatcher, $objectRouter, $track, $ride, $form, $trackValidator);
-        } else {
-            return $this->uploadGetAction($request, $eventDispatcher, $objectRouter, $ride, $form, $trackValidator);
-        }
-    }
+            $form->handleRequest($request);
 
-    protected function uploadGetAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
-    {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->managerRegistry->getManager();
+
+                /** @var Track $track */
+                $track = $form->getData();
+
+                $track
+                    ->setRide($ride)
+                    ->setUser($this->getUser())
+                    ->setUsername($this->getUser()->getUsername())
+                    ->setSource(Track::TRACK_SOURCE_GPX);
+
+                $em->persist($track);
+                $em->flush();
+
+                $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
+
+                return $this->redirect($objectRouter->generate($track));
+            }
+        }
+
         return $this->render('Track/upload.html.twig', [
             'form' => $form->createView(),
             'ride' => $ride,
-            'errorMessage' => null,
         ]);
-    }
-
-    public function uploadPostAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Track $track, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
-    {
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->managerRegistry->getManager();
-
-            /** @var Track $track */
-            $track = $form->getData();
-
-            /* Save the track so the Uploader will place the file at the file system */
-            $em->persist($track);
-
-            $trackValidator->loadTrack($track);
-
-            try {
-                $trackValidator->validate();
-            } catch (TrackValidatorException $e) {
-                return $this->render('Track/upload.html.twig', [
-                    'form' => $form->createView(),
-                    'ride' => $ride,
-                    'errorMessage' => $e->getMessage(),
-                ]);
-            }
-
-            $track
-                ->setRide($ride)
-                ->setUser($this->getUser())
-                ->setUsername($this->getUser()->getUsername())
-                ->setSource(Track::TRACK_SOURCE_GPX);
-
-            $em->persist($track);
-            $em->flush();
-
-            $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
-
-            return $this->redirect($objectRouter->generate($track));
-        }
-
-        return $this->uploadGetAction($request, $eventDispatcher, $objectRouter, $ride, $form, $trackValidator);
     }
 }
