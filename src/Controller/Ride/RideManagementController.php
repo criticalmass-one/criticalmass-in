@@ -8,6 +8,7 @@ use App\Entity\City;
 use App\Entity\Ride;
 use App\Form\Type\RideDisableType;
 use App\Form\Type\RideSocialPreviewType;
+use Carbon\Carbon;
 use App\Form\Type\RideType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -51,7 +52,7 @@ class RideManagementController extends AbstractController
             'ride' => $ride,
             'form' => $form->createView(),
             'city' => $city,
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
         ]);
     }
 
@@ -87,7 +88,7 @@ class RideManagementController extends AbstractController
             'ride' => $ride,
             'form' => $form->createView(),
             'city' => $city,
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
         ]);
     }
 
@@ -118,7 +119,7 @@ class RideManagementController extends AbstractController
             'ride' => $ride,
             'city' => $city,
             'form' => $form->createView(),
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
         ]);
     }
 
@@ -134,7 +135,7 @@ class RideManagementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $ride
-                ->setUpdatedAt(new \DateTime())
+                ->setUpdatedAt(Carbon::now())
                 ->setUser($user);
 
             if ($ride->isEnabled()) {
@@ -152,7 +153,7 @@ class RideManagementController extends AbstractController
             'ride' => $ride,
             'city' => $city,
             'form' => $form->createView(),
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
         ]);
     }
 
@@ -200,7 +201,7 @@ class RideManagementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $ride
-                ->setUpdatedAt(new \DateTime())
+                ->setUpdatedAt(Carbon::now())
                 ->setUser($user);
 
             $entityManager->flush();

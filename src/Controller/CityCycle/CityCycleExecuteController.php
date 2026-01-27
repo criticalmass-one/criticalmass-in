@@ -91,8 +91,8 @@ class CityCycleExecuteController extends AbstractController
         ) {
             $executeable = new CycleExecutable();
             $executeable
-                ->setFromDate((new \DateTime())->setTimestamp($request->request->getInt('fromDate')))
-                ->setUntilDate((new \DateTime())->setTimestamp((int) $request->request->get('untilDate')))
+                ->setFromDate(Carbon::createFromTimestamp($request->request->getInt('fromDate')))
+                ->setUntilDate(Carbon::createFromTimestamp((int) $request->request->get('untilDate')))
                 ->setCityCycle($cityCycle);
 
             $json = $serializer->serialize($executeable, 'json');

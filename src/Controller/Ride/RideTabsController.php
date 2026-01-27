@@ -4,6 +4,7 @@ namespace App\Controller\Ride;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use Carbon\Carbon;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Weather;
@@ -28,7 +29,7 @@ class RideTabsController extends AbstractController
         return $this->render('RideTabs/GalleryTab.html.twig', [
             'ride' => $ride,
             'photos' => $photos,
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
         ]);
     }
 
@@ -41,7 +42,7 @@ class RideTabsController extends AbstractController
         return $this->render('RideTabs/TracksTab.html.twig', [
             'ride' => $ride,
             'tracks' => $tracks,
-            'dateTime' => new \DateTime()
+            'dateTime' => Carbon::now()
         ]);
     }
 
@@ -61,7 +62,7 @@ class RideTabsController extends AbstractController
         return $this->render('RideTabs/SubridesTab.html.twig', [
             'ride' => $ride,
             'subrides' => $subrides,
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
         ]);
     }
 
@@ -69,7 +70,7 @@ class RideTabsController extends AbstractController
     {
         return $this->render('RideTabs/StatisticTab.html.twig', [
             'ride' => $ride,
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
         ]);
     }
 
@@ -105,7 +106,7 @@ class RideTabsController extends AbstractController
 
         return $this->render('RideTabs/DetailsTab.html.twig', [
             'ride' => $ride,
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
             'estimateForm' => $estimateForm->createView(),
             'weatherForecast' => $weatherForecast,
             'location' => $location,

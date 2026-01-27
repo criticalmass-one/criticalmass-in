@@ -4,6 +4,8 @@ namespace App\Controller\Statistic;
 
 use App\Controller\AbstractController;
 use App\Repository\RideRepository;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -19,27 +21,25 @@ class MonthlyStatsController extends AbstractController
         ?int $year = null,
         ?int $month = null
     ): Response {
-        $now = new \DateTime();
+        $now = Carbon::now();
 
         if (!$year || !$month) {
-            $dateTime = new \DateTimeImmutable();
+            $dateTime = CarbonImmutable::now();
 
             $year = (int) $dateTime->format('Y');
             $month = (int) $dateTime->format('m');
         } else {
             $dateTimeSpec = sprintf('%d-%d-01', $year, $month);
-            $dateTime = new \DateTimeImmutable($dateTimeSpec);
+            $dateTime = CarbonImmutable::parse($dateTimeSpec);
         }
 
         $rides = $rideRepository->findEstimatedRides($year, $month);
 
-        $month = new \DateInterval('P1M');
-
         return $this->render('Statistic/list_rides.html.twig', [
             'rides' => $rides,
             'dateTime' => $dateTime,
-            'previousDateTime' => $dateTime->sub($month),
-            'nextDateTime' => $dateTime->add($month) <= $now ? $dateTime->add($month) : null,
+            'previousDateTime' => $dateTime->subMonth(),
+            'nextDateTime' => $dateTime->addMonth() <= $now ? $dateTime->addMonth() : null,
         ]);
     }
 }

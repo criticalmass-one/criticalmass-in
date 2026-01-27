@@ -53,7 +53,7 @@ class StravaMassImportController extends AbstractController
     public function tokenAction(Request $request, SessionInterface $session, RouterInterface $router): Response
     {
         $error = $request->get('error');
-        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+        $year = $request->query->getInt('year', (Carbon::now())->format('Y'));
 
         if ($error) {
             return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_auth'));
@@ -80,7 +80,7 @@ class StravaMassImportController extends AbstractController
     #[Route('/trackimport/stravamassimport', name: 'caldera_criticalmass_trackmassimport_massimport', priority: 310)]
     public function massImportAction(Request $request, MassTrackImporterInterface $massTrackImporter): Response
     {
-        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+        $year = $request->query->getInt('year', (Carbon::now())->format('Y'));
 
         $carbon = Carbon::createFromDate($year);
         $startCarbon = $carbon->startOfYear();
@@ -148,7 +148,7 @@ class StravaMassImportController extends AbstractController
 
     protected function initOauth(Request $request, RouterInterface $router): OAuth
     {
-        $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));
+        $year = $request->query->getInt('year', (int) (Carbon::now())->format('Y'));
 
         $redirectUri = $request->getUriForPath($router->generate('caldera_criticalmass_trackmassimport_token', [
             'year' => $year,

@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
+use Carbon\Carbon;
 use App\Entity\SocialNetworkFeedItem;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use OpenApi\Attributes as OA;
@@ -67,7 +68,7 @@ class SocialNetworkFeedItemController extends BaseController
     {
         $newSocialNetworkFeedItem = $this->serializer->deserialize($request->getContent(), SocialNetworkFeedItem::class, 'json');
 
-        $newSocialNetworkFeedItem->setCreatedAt(new \DateTime());
+        $newSocialNetworkFeedItem->setCreatedAt(Carbon::now());
 
         try {
             $manager = $this->managerRegistry->getManager();

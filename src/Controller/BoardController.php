@@ -13,6 +13,7 @@ use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
+use Carbon\Carbon;
 use Malenki\Slug;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -148,7 +149,7 @@ class BoardController extends AbstractController
             $post->setUser($this->getUser());
             $post->setMessage($data['message']);
             $post->setThread($thread);
-            $post->setDateTime(new \DateTime());
+            $post->setDateTime(Carbon::now());
 
             $em = $this->managerRegistry->getManager();
 

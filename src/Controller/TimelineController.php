@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Criticalmass\Timeline\TimelineInterface;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,15 +18,15 @@ class TimelineController extends AbstractController
     )]
     public function yearmonthAction(TimelineInterface $cachedTimeline, int $year, int $month): Response
     {
-        $lowerLimitDateTime = new \DateTime('2010-01-01');
+        $lowerLimitDateTime = Carbon::parse('2010-01-01');
 
-        $startDateTime = new \DateTime($year . '-' . $month . '-01');
+        $startDateTime = Carbon::parse($year . '-' . $month . '-01');
 
         if ($startDateTime < $lowerLimitDateTime) {
-            $startDateTime = new \DateTime();
+            $startDateTime = Carbon::now();
         }
 
-        $endDateTime = new \DateTime($year . '-' . $month . '-' . $startDateTime->format('t'));
+        $endDateTime = Carbon::parse($year . '-' . $month . '-' . $startDateTime->format('t'));
 
         $timelineContentList = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
@@ -35,7 +36,7 @@ class TimelineController extends AbstractController
         $nextDateTime = $this->getNextDateTime($startDateTime);
         $previousDateTime = $this->getPreviousDateTime($startDateTime);
 
-        if ($nextDateTime > new \DateTime()) {
+        if ($nextDateTime > Carbon::now()) {
             $nextDateTime = null;
         }
 
@@ -52,18 +53,14 @@ class TimelineController extends AbstractController
         ]);
     }
 
-    protected function getNextDateTime(\DateTime $dateTime): \DateTime
+    protected function getNextDateTime(Carbon $dateTime): Carbon
     {
-        $nextDateTime = clone $dateTime;
-        $dateInterval = new \DateInterval('P1M');
-        return $nextDateTime->add($dateInterval);
+        return (clone $dateTime)->addMonth();
     }
 
-    protected function getPreviousDateTime(\DateTime $dateTime): \DateTime
+    protected function getPreviousDateTime(Carbon $dateTime): Carbon
     {
-        $previousDateTime = clone $dateTime;
-        $dateInterval = new \DateInterval('P1M');
-        return $previousDateTime->sub($dateInterval);
+        return (clone $dateTime)->subMonth();
     }
 
     #[Route(
@@ -73,7 +70,7 @@ class TimelineController extends AbstractController
     )]
     public function indexAction(): RedirectResponse
     {
-        $dateTime = new \DateTime();
+        $dateTime = Carbon::now();
 
         return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth', [
             'year' => $dateTime->format('Y'),

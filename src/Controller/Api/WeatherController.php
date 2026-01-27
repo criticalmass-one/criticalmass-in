@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Ride;
 use App\Entity\Weather;
+use Carbon\Carbon;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +48,7 @@ class WeatherController extends BaseController
 
         $weather
             ->setRide($ride)
-            ->setCreationDateTime(new \DateTime());
+            ->setCreationDateTime(Carbon::now());
 
         $manager = $this->managerRegistry->getManager();
         $manager->persist($weather);
