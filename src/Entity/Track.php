@@ -10,6 +10,7 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
+use App\Validator\Constraint\ValidGpxFile;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -132,6 +133,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     protected ?string $reducedPolyline = null;
 
     #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
+    #[ValidGpxFile]
     protected ?File $trackFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
