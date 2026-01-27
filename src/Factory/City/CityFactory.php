@@ -5,6 +5,7 @@ namespace App\Factory\City;
 use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Entity\City;
 use App\Entity\Region;
+use Carbon\Carbon;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class CityFactory implements CityFactoryInterface
@@ -88,7 +89,7 @@ class CityFactory implements CityFactoryInterface
         return $this;
     }
 
-    public function withCreatedAt(\DateTime $createdAt): CityFactoryInterface
+    public function withCreatedAt(Carbon $createdAt): CityFactoryInterface
     {
         $this->city->setCreatedAt($createdAt);
 

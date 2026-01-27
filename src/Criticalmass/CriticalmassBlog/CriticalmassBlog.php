@@ -3,6 +3,7 @@
 namespace App\Criticalmass\CriticalmassBlog;
 
 use App\Criticalmass\CriticalmassBlog\Model\BlogArticle;
+use Carbon\Carbon;
 
 class CriticalmassBlog implements CriticalmassBlogInterface
 {
@@ -23,7 +24,7 @@ class CriticalmassBlog implements CriticalmassBlogInterface
         foreach ($xml->channel->item as $entry) {
             $title = (string) $entry->title;
             $link = (string) $entry->link;
-            $pubDate = new \DateTime((string) $entry->pubDate);
+            $pubDate = Carbon::parse((string) $entry->pubDate);
 
             $articleList[] = new BlogArticle($title, $link, $pubDate);
         }

@@ -2,13 +2,15 @@
 
 namespace App\Criticalmass\Profile\Streak;
 
+use Carbon\Carbon;
+
 class Streak
 {
     protected $startDateTime;
     protected $endDateTime;
     protected $rideList = [];
 
-    public function __construct(\DateTime $startDateTime, \DateTime $endDateTime, array $rideList)
+    public function __construct(Carbon $startDateTime, Carbon $endDateTime, array $rideList)
     {
         $this->startDateTime = $startDateTime;
         $this->endDateTime = $endDateTime;
@@ -16,12 +18,12 @@ class Streak
         $this->rideList = $rideList;
     }
 
-    public function getStartDateTime(): \DateTime
+    public function getStartDateTime(): Carbon
     {
         return $this->startDateTime;
     }
 
-    public function getEndDateTime(): \DateTime
+    public function getEndDateTime(): Carbon
     {
         return $this->endDateTime;
     }

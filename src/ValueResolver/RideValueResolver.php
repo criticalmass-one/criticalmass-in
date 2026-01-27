@@ -4,6 +4,7 @@ namespace App\ValueResolver;
 
 use App\Entity\CitySlug;
 use App\Entity\Ride;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -36,13 +37,13 @@ class RideValueResolver implements ValueResolverInterface
         return [$ride];
     }
 
-    private function guessDateTime(string $rideDate): ?\DateTimeInterface
+    private function guessDateTime(string $rideDate): ?Carbon
     {
         $parts = explode('-', $rideDate);
 
         return match (count($parts)) {
-            2 => new \DateTime("{$parts[0]}-{$parts[1]}-01"),
-            3 => new \DateTime("{$parts[0]}-{$parts[1]}-{$parts[2]}"),
+            2 => Carbon::parse("{$parts[0]}-{$parts[1]}-01"),
+            3 => Carbon::parse("{$parts[0]}-{$parts[1]}-{$parts[2]}"),
             default => null,
         };
     }

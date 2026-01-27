@@ -3,21 +3,22 @@
 namespace App\Criticalmass\Timeline\Collector;
 
 use App\Criticalmass\Timeline\Item\ItemInterface;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
     protected string $entityClass;
     protected array $items = [];
-    protected ?\DateTime $startDateTime = null;
-    protected ?\DateTime $endDateTime = null;
+    protected ?Carbon $startDateTime = null;
+    protected ?Carbon $endDateTime = null;
 
     public function __construct(protected readonly ManagerRegistry $doctrine)
     {
 
     }
 
-    public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): TimelineCollectorInterface
+    public function setDateRange(Carbon $startDateTime, Carbon $endDateTime): TimelineCollectorInterface
     {
         $this->startDateTime = $startDateTime;
         $this->endDateTime = $endDateTime;

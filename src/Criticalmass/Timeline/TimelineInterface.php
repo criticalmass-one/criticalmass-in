@@ -3,14 +3,15 @@
 namespace App\Criticalmass\Timeline;
 
 use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
+use Carbon\Carbon;
 
 interface TimelineInterface
 {
     const MAX_ITEMS = 100;
-    
+
     public function addCollector(AbstractTimelineCollector $collector): TimelineInterface;
 
-    public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): TimelineInterface;
+    public function setDateRange(Carbon $startDateTime, Carbon $endDateTime): TimelineInterface;
 
     public function execute(): TimelineInterface;
 

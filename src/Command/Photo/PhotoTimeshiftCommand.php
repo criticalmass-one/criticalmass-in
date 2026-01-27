@@ -7,6 +7,8 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use App\Event\Photo\PhotoUpdatedEvent;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -88,9 +90,9 @@ class PhotoTimeshiftCommand extends Command
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            $dateTimeImmutable = \DateTimeImmutable::createFromMutable($photo->getExifCreationDate());
+            $dateTimeImmutable = CarbonImmutable::instance($photo->getExifCreationDate());
             $dateTimeImmutable = $dateTimeImmutable->$modificationMethodName($interval);
-            $photo->setExifCreationDate(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
+            $photo->setExifCreationDate(Carbon::createFromTimestamp($dateTimeImmutable->getTimestamp()));
 
             $this->eventDispatcher->dispatch(new PhotoUpdatedEvent($photo, false), PhotoUpdatedEvent::NAME);
 

@@ -5,6 +5,7 @@ namespace App\Criticalmass\Calendar\EventProvider;
 use CalendR\Event\Provider\ProviderInterface;
 use App\Entity\Ride;
 use App\Criticalmass\Calendar\Event\RideEvent;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 
 readonly class RideProvider implements ProviderInterface
@@ -14,7 +15,7 @@ readonly class RideProvider implements ProviderInterface
     {
     }
 
-    public function getEvents(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): array
+    public function getEvents(Carbon $begin, Carbon $end, array $options = []): array
     {
         $rideList = $this->findRides($begin, $end);
         $eventList = [];
@@ -26,7 +27,7 @@ readonly class RideProvider implements ProviderInterface
         return $eventList;
     }
 
-    protected function findRides(\DateTimeInterface $begin, \DateTimeInterface $end): array
+    protected function findRides(Carbon $begin, Carbon $end): array
     {
         return $this->doctrine->getRepository(Ride::class)->findRides($begin, $end);
     }

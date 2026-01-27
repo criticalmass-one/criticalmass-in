@@ -2,6 +2,7 @@
 
 namespace App\Twig\Extension;
 
+use Carbon\Carbon;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
@@ -44,8 +45,8 @@ class SiteTwigExtension extends AbstractExtension
 
     public function daysSince($dateTimeString): float
     {
-        $dateTime = new \DateTime($dateTimeString);
-        $now = new \DateTime();
+        $dateTime = Carbon::parse($dateTimeString);
+        $now = Carbon::now();
 
         $diffSeconds = $now->getTimestamp() - $dateTime->getTimestamp();
 
@@ -59,9 +60,9 @@ class SiteTwigExtension extends AbstractExtension
         return $var instanceof $instance;
     }
 
-    public function today(\DateTime $dateTime): bool
+    public function today(Carbon $dateTime): bool
     {
-        $today = new \DateTime();
+        $today = Carbon::now();
 
         return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
     }

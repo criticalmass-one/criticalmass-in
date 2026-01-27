@@ -6,6 +6,7 @@ use App\Criticalmass\RideDuplicates\DuplicateFinder\DuplicateFinderInterface;
 use App\Criticalmass\RideDuplicates\RideMerger\RideMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -39,7 +40,7 @@ class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
         /** @var City $city */
         $city = $duplicateRides[$firstKey]->getCity();
 
-        /** @var \DateTime $dateTime */
+        /** @var Carbon $dateTime */
         $dateTime = $duplicateRides[$firstKey]->getDateTime();
 
         $output->writeln(sprintf('Duplicates found for <info>%s</info> in <comment>%s</comment>', $city->getCity(), $dateTime->format('Y-m-d')));

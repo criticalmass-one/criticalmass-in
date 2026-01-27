@@ -7,6 +7,7 @@ use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Criticalmass\Router\Attribute as Routing;
+use Carbon\Carbon;
 
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_board_listthreads')]
 #[ORM\Table(name: 'board')]
@@ -47,7 +48,7 @@ class Board implements BoardInterface, RouteableInterface
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
+        $this->dateTime = Carbon::now();
     }
 
     public function getId(): ?int

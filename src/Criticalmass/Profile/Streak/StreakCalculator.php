@@ -3,16 +3,17 @@
 namespace App\Criticalmass\Profile\Streak;
 
 use App\Entity\Ride;
+use Carbon\Carbon;
 
 class StreakCalculator implements StreakCalculatorInterface
 {
     /** @var array $list */
     protected $list = [];
 
-    /** @var \DateTime $earliestDateTime */
+    /** @var Carbon $earliestDateTime */
     protected $earliestDateTime = null;
 
-    /** @var \DateTime $latestDateTime */
+    /** @var Carbon $latestDateTime */
     protected $latestDateTime = null;
 
     public function addRide(Ride $ride): StreakCalculatorInterface
@@ -26,7 +27,7 @@ class StreakCalculator implements StreakCalculatorInterface
         return $this;
     }
 
-    protected function expandList(\DateTime $dateTime): StreakCalculator
+    protected function expandList(Carbon $dateTime): StreakCalculator
     {
         if (!$this->earliestDateTime || $this->earliestDateTime > $dateTime) {
             $this->earliestDateTime = $dateTime;
@@ -43,7 +44,7 @@ class StreakCalculator implements StreakCalculatorInterface
 
     protected function fillGaps(): StreakCalculator
     {
-        $current = new \DateTime(sprintf('%s-01 00:00:00', $this->earliestDateTime->format('Y-m')));
+        $current = Carbon::parse(sprintf('%s-01 00:00:00', $this->earliestDateTime->format('Y-m')));
         $month = new \DateInterval('P1M');
 
         while ($current->format('Y-m') < $this->latestDateTime->format('Y-m')) {
@@ -59,10 +60,10 @@ class StreakCalculator implements StreakCalculatorInterface
         return $this;
     }
     
-    public function calculateCurrentStreak(?\DateTime $dateTime = null, bool $includeCurrentMonth = false): ?Streak
+    public function calculateCurrentStreak(?Carbon $dateTime = null, bool $includeCurrentMonth = false): ?Streak
     {
         if (!$dateTime) {
-            $dateTime = new \DateTime();
+            $dateTime = Carbon::now();
         }
 
         krsort($this->list);
@@ -81,10 +82,10 @@ class StreakCalculator implements StreakCalculatorInterface
         foreach ($this->list as $month => $rides) {
             if (count($rides) > 0) {
                 if (!$endDateTime) {
-                    $endDateTime = new \DateTime(sprintf('%s-01', $month));
+                    $endDateTime = Carbon::parse(sprintf('%s-01', $month));
                 }
 
-                $startDateTime = new \DateTime(sprintf('%s-01', $month));
+                $startDateTime = Carbon::parse(sprintf('%s-01', $month));
 
                 $rideList = array_merge($rideList, $rides);
             } else {
@@ -99,7 +100,7 @@ class StreakCalculator implements StreakCalculatorInterface
         return null;
     }
 
-    protected function checkCurrentStreakMonth(?\DateTime $dateTime = null, bool $includeCurrentMonth = false): bool
+    protected function checkCurrentStreakMonth(?Carbon $dateTime = null, bool $includeCurrentMonth = false): bool
     {
         $monthKeys = array_keys($this->list);
 
@@ -126,7 +127,7 @@ class StreakCalculator implements StreakCalculatorInterface
 
         foreach ($this->list as $month => $rides) {
             if (!$startDateTime) {
-                $startDateTime = new \DateTime(sprintf('%s-01', $month));
+                $startDateTime = Carbon::parse(sprintf('%s-01', $month));
             }
 
             if (count($rides) > 0) {
@@ -134,7 +135,7 @@ class StreakCalculator implements StreakCalculatorInterface
 
                 $rideList = array_merge($rideList, $rides);
 
-                $endDateTime = new \DateTime(sprintf('%s-01', $month));
+                $endDateTime = Carbon::parse(sprintf('%s-01', $month));
 
                 if ($longestStreakCounter === null || $counter >= $longestStreakCounter) {
                     $longestStreakCounter = $counter;

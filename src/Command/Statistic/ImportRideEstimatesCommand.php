@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -41,7 +42,7 @@ class ImportRideEstimatesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dateTimeSpec = sprintf('%d-%d-01', $input->getArgument('year'), $input->getArgument('month'));
-        $dateTime = new \DateTime($dateTimeSpec);
+        $dateTime = Carbon::parse($dateTimeSpec);
 
         $this->citySlugs = $this->registry->getRepository(CitySlug::class)->findAllIndexed();
 
@@ -98,7 +99,7 @@ class ImportRideEstimatesCommand extends Command
         return $lines;
     }
 
-    protected function parse(string $line, \DateTime $dateTime, InputInterface $input, OutputInterface $output): ?RideEstimate
+    protected function parse(string $line, Carbon $dateTime, InputInterface $input, OutputInterface $output): ?RideEstimate
     {
         $pattern = '/([\sA-Za-z\-.]+[a-z])(?:[\s\-–—:]+)([0-9.]+)/';
         preg_match($pattern, $line, $matches);
@@ -148,7 +149,7 @@ class ImportRideEstimatesCommand extends Command
         return null;
     }
 
-    protected function findRide(string $citySlug, \DateTime $dateTime): ?Ride
+    protected function findRide(string $citySlug, Carbon $dateTime): ?Ride
     {
         if ($city = $this->findCityBySlug($citySlug)) {
             $rides = $this->registry->getRepository(Ride::class)->findByCityAndMonth($city, $dateTime);

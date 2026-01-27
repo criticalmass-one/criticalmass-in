@@ -5,13 +5,14 @@ namespace App\Criticalmass\Calendar\Event;
 use App\Entity\Ride;
 use CalendR\Event\EventInterface;
 use CalendR\Event\EventTrait;
+use Carbon\Carbon;
 
 class RideEvent implements EventInterface
 {
     use EventTrait;
 
-    private \DateTime $begin;
-    private \DateTime $end;
+    private Carbon $begin;
+    private Carbon $end;
     private Ride $ride;
 
     public function __construct(Ride $ride)
@@ -33,12 +34,12 @@ class RideEvent implements EventInterface
         return $uid;
     }
 
-    public function getBegin(): \DateTime
+    public function getBegin(): Carbon
     {
         return $this->begin;
     }
 
-    public function getEnd(): \DateTime
+    public function getEnd(): Carbon
     {
         return $this->end;
     }

@@ -6,6 +6,7 @@ use App\Criticalmass\RideDuplicates\DuplicateFinder\DuplicateFinderInterface;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -64,7 +65,7 @@ class ListDuplicateRidesCommand extends Command
         /** @var City $city */
         $city = $duplicateRides[$firstKey]->getCity();
 
-        /** @var \DateTime $dateTime */
+        /** @var Carbon $dateTime */
         $dateTime = $duplicateRides[$firstKey]->getDateTime();
 
         $output->writeln(sprintf('Duplicates found for <info>%s</info> in <comment>%s</comment>', $city->getCity(), $dateTime->format('Y-m-d')));

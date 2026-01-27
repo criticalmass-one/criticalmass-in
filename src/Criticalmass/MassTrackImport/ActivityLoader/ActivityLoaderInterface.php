@@ -2,11 +2,13 @@
 
 namespace App\Criticalmass\MassTrackImport\ActivityLoader;
 
+use Carbon\Carbon;
+
 interface ActivityLoaderInterface
 {
     public function load(): array;
 
-    public function setStartDateTime(\DateTime $startDateTime): ActivityLoaderInterface;
+    public function setStartDateTime(Carbon $startDateTime): ActivityLoaderInterface;
 
-    public function setEndDateTime(\DateTime $endDateTime): ActivityLoaderInterface;
+    public function setEndDateTime(Carbon $endDateTime): ActivityLoaderInterface;
 }

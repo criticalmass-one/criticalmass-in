@@ -2,13 +2,15 @@
 
 namespace App\Message;
 
+use Carbon\Carbon;
+
 class CountViewMessage
 {
     public function __construct(
         private readonly int $entityId,
         private readonly string $entityClassName,
         private readonly ?int $userId,
-        private readonly \DateTimeInterface $dateTime
+        private readonly Carbon $dateTime
     ) {
     }
 
@@ -27,7 +29,7 @@ class CountViewMessage
         return $this->userId;
     }
 
-    public function getDateTime(): \DateTimeInterface
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }

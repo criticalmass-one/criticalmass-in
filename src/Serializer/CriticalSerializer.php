@@ -2,6 +2,7 @@
 
 namespace App\Serializer;
 
+use Carbon\Carbon;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
@@ -98,13 +99,13 @@ class UnixTimestampDateTimeNormalizer implements NormalizerInterface, Denormaliz
         }
 
         if (is_int($data) || (is_string($data) && ctype_digit($data))) {
-            return (new \DateTime())->setTimestamp((int) $data);
+            return Carbon::createFromTimestamp((int) $data);
         }
 
         // Handle ISO 8601 strings
         if (is_string($data)) {
             try {
-                return new \DateTime($data);
+                return Carbon::parse($data);
             } catch (\Exception) {
                 return null;
             }

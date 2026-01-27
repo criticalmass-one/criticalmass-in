@@ -6,6 +6,7 @@ use App\Criticalmass\MassTrackImport\ActivityLoader\ActivityLoaderInterface;
 use App\Criticalmass\MassTrackImport\Converter\StravaActivityConverter;
 use App\Entity\User;
 use App\Message\ImportTrackCandidateMessage;
+use Carbon\Carbon;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -18,14 +19,14 @@ class MassTrackImporter implements MassTrackImporterInterface
     ) {
     }
 
-    public function setStartDateTime(\DateTime $startDateTime): MassTrackImporterInterface
+    public function setStartDateTime(Carbon $startDateTime): MassTrackImporterInterface
     {
         $this->activityLoader->setStartDateTime($startDateTime);
 
         return $this;
     }
 
-    public function setEndDateTime(\DateTime $endDateTime): MassTrackImporterInterface
+    public function setEndDateTime(Carbon $endDateTime): MassTrackImporterInterface
     {
         $this->activityLoader->setEndDateTime($endDateTime);
 

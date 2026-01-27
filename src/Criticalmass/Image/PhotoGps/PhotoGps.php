@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Image\PhotoGps;
 
+use Carbon\Carbon;
 use PHPExif\Exif;
 
 class PhotoGps extends AbstractPhotoGps
@@ -34,12 +35,12 @@ class PhotoGps extends AbstractPhotoGps
         return $this;
     }
 
-    protected function getExifDateTime(): ?\DateTime
+    protected function getExifDateTime(): ?Carbon
     {
         $exif = $this->readExifData();
 
         if ($exif && $dateTime = $exif->getCreationDate()) {
-            $dateTime = new \DateTime(sprintf($dateTime->format('Y-m-d H:i:s')), new \DateTimeZone('Europe/Berlin'));
+            $dateTime = Carbon::parse(sprintf($dateTime->format('Y-m-d H:i:s')), new \DateTimeZone('Europe/Berlin'));
 
             $dateTime->setTimezone(new \DateTimeZone('UTC'))->getTimezone();
 

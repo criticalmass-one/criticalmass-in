@@ -2,9 +2,11 @@
 
 namespace App\Model;
 
+use Carbon\Carbon;
+
 class CreateEstimateModel
 {
-    protected ?\DateTime $dateTime = null;
+    protected ?Carbon $dateTime = null;
 
     protected ?string $citySlug = null;
 
@@ -18,7 +20,7 @@ class CreateEstimateModel
 
     public function __construct(
         int $estimation,
-        ?\DateTime $dateTime = null,
+        ?Carbon $dateTime = null,
         ?string $citySlug = null,
         ?float $latitude = null,
         ?float $longitude = null
@@ -30,14 +32,14 @@ class CreateEstimateModel
         $this->longitude = $longitude;
     }
 
-    public function setDateTime(\DateTime $dateTime): CreateEstimateModel
+    public function setDateTime(Carbon $dateTime): CreateEstimateModel
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getDateTime(): ?\DateTime
+    public function getDateTime(): ?Carbon
     {
         return $this->dateTime;
     }

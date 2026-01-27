@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -50,7 +51,7 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
             }
 
             $monthOffset = $i > 0 ? "+{$i}" : (string) $i;
-            $date = new \DateTime("{$monthOffset} months last friday 19:00");
+            $date = Carbon::parse("{$monthOffset} months last friday 19:00");
             $participantIndex = $i + 3;
             if ($i > 0) {
                 $participantIndex--;
@@ -85,7 +86,7 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
             }
 
             $monthOffset = $i > 0 ? "+{$i}" : (string) $i;
-            $date = new \DateTime("{$monthOffset} months last friday 19:00");
+            $date = Carbon::parse("{$monthOffset} months last friday 19:00");
             $participantIndex = $i + 3;
             if ($i > 0) {
                 $participantIndex--;
@@ -120,7 +121,7 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
             }
 
             $monthOffset = $i > 0 ? "+{$i}" : (string) $i;
-            $date = new \DateTime("{$monthOffset} months last friday 19:00");
+            $date = Carbon::parse("{$monthOffset} months last friday 19:00");
             $participantIndex = $i + 3;
             if ($i > 0) {
                 $participantIndex--;
@@ -153,7 +154,7 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
             }
 
             $monthOffset = $i > 0 ? "+{$i}" : (string) $i;
-            $date = new \DateTime("{$monthOffset} months last friday 18:00");
+            $date = Carbon::parse("{$monthOffset} months last friday 18:00");
             $participantIndex = $i + 3;
             if ($i > 0) {
                 $participantIndex--;
@@ -185,7 +186,7 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
         City $city,
         CityCycle $cycle,
         User $user,
-        \DateTime $dateTime,
+        Carbon $dateTime,
         string $title,
         string $location,
         float $latitude,

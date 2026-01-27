@@ -10,6 +10,7 @@ use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Iamstuartwilson\StravaApi;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -95,13 +96,13 @@ class TrackImporter implements TrackImporterInterface
         return StreamFactory::build($response);
     }
 
-    protected function getStartDateTime(): \DateTime
+    protected function getStartDateTime(): Carbon
     {
         $activity = $this->getActivity();
 
         [$offset, $timezoneIdentifier] = explode(' ', (string) $activity->timezone);
 
-        $startDateTime = new \DateTime($activity->start_date);
+        $startDateTime = Carbon::parse($activity->start_date);
         $startDateTime->setTimezone(new \DateTimeZone($timezoneIdentifier));
 
         return $startDateTime;

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -104,7 +105,7 @@ class TrackFixtures extends Fixture implements DependentFixtureInterface
             ->setPoints($points)
             ->setStartDateTime($startDateTime)
             ->setEndDateTime($endDateTime)
-            ->setCreationDateTime(new \DateTime())
+            ->setCreationDateTime(Carbon::now())
             ->setEnabled(true)
             ->setDeleted(false)
             ->setReviewed(true)

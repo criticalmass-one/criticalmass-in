@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -122,7 +123,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             ->setEnabled(true)
             ->setAutoPublish(true)
             ->setAutoFetch(true)
-            ->setCreatedAt(new \DateTime());
+            ->setCreatedAt(Carbon::now());
     }
 
     public function getDependencies(): array

@@ -2,13 +2,15 @@
 
 namespace App\Criticalmass\CriticalmassBlog\Model;
 
+use Carbon\Carbon;
+
 class BlogArticle
 {
     protected string $title;
     protected string $permalink;
-    protected \DateTime $dateTime;
+    protected Carbon $dateTime;
 
-    public function __construct(string $title, string $permalink, \DateTime $dateTime)
+    public function __construct(string $title, string $permalink, Carbon $dateTime)
     {
         $this->title = $title;
         $this->permalink = $permalink;
@@ -25,7 +27,7 @@ class BlogArticle
         return $this->permalink;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }

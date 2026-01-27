@@ -5,6 +5,7 @@ namespace App\Criticalmass\Timeline;
 use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
 use Twig\Environment;
@@ -17,9 +18,9 @@ class Timeline implements TimelineInterface
 
     protected array $contentList = [];
 
-    protected ?\DateTime $startDateTime = null;
+    protected ?Carbon $startDateTime = null;
 
-    protected ?\DateTime $endDateTime = null;
+    protected ?Carbon $endDateTime = null;
 
     public function __construct(
         protected readonly ManagerRegistry $doctrine,
@@ -37,7 +38,7 @@ class Timeline implements TimelineInterface
         return $this;
     }
 
-    public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): TimelineInterface
+    public function setDateRange(Carbon $startDateTime, Carbon $endDateTime): TimelineInterface
     {
         $this->startDateTime = $startDateTime;
         $this->endDateTime = $endDateTime;
@@ -74,7 +75,7 @@ class Timeline implements TimelineInterface
 
     protected function paginate(): Timeline
     {
-        $lastDateTime = new \DateTime();
+        $lastDateTime = Carbon::now();
         $threeMonthDateInterval = new \DateInterval('P3M');
         $lastDateTime->sub($threeMonthDateInterval);
 
