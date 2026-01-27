@@ -8,6 +8,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegionRouter extends AbstractDelegatedRouter
 {
+    protected static function getEntityFqcn(): string
+    {
+        return Region::class;
+    }
+
     /** @param Region $region */
     public function generate(
         RouteableInterface $region,
@@ -15,28 +20,27 @@ class RegionRouter extends AbstractDelegatedRouter
         array $parameters = [],
         int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ): string {
-        if ($region->getParent() == null) {
-            return $this->router->generate('caldera_criticalmass_region_world', [], $referenceType);
-        } elseif ($region->getParent()->getParent() == null) {
-            return $this->router->generate('caldera_criticalmass_region_world_region_1', [
-                'slug1' => $region->getSlug()
-            ],
-                $referenceType);
-        } elseif ($region->getParent()->getParent()->getParent() == null) {
-            return $this->router->generate('caldera_criticalmass_region_world_region_2', [
-                'slug1' => $region->getParent()->getSlug(),
-                'slug2' => $region->getSlug()
-            ],
-                $referenceType);
-        } elseif ($region->getParent()->getParent()->getParent()->getParent() == null) {
-            return $this->router->generate('caldera_criticalmass_region_world_region_3', [
-                'slug1' => $region->getParent()->getParent()->getSlug(),
-                'slug2' => $region->getParent()->getSlug(),
-                'slug3' => $region->getSlug()
-            ],
-                $referenceType);
+        $slugs = [];
+        $current = $region;
+
+        while ($current->getParent() !== null) {
+            array_unshift($slugs, $current->getSlug());
+            $current = $current->getParent();
         }
 
-        return '';
+        $depth = count($slugs);
+
+        if ($depth === 0) {
+            return $this->router->generate('caldera_criticalmass_region_world', [], $referenceType);
+        }
+
+        $routeName = sprintf('caldera_criticalmass_region_world_region_%d', $depth);
+        $routeParameters = [];
+
+        foreach ($slugs as $index => $slug) {
+            $routeParameters[sprintf('slug%d', $index + 1)] = $slug;
+        }
+
+        return $this->router->generate($routeName, $routeParameters, $referenceType);
     }
 }

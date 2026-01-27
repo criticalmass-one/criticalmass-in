@@ -8,6 +8,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RideRouter extends AbstractDelegatedRouter
 {
+    protected static function getEntityFqcn(): string
+    {
+        return Ride::class;
+    }
+
     /** @param Ride $ride */
     public function generate(
         RouteableInterface $ride,

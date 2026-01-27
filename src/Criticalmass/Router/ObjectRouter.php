@@ -36,19 +36,23 @@ class ObjectRouter extends AbstractRouter implements ObjectRouterInterface
             return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
         }
 
-        if ($routeName) {
-            $parameterList = array_merge($this->generateParameterList($routeable, $routeName), $parameters);
-
-            try {
-                return $this->router->generate($routeName, $parameterList, $referenceType);
-            } catch (InvalidParameterException $exception) {
-                $delegatedRouter = $this->delegatedRouterManager->findDelegatedRouter($routeable);
-
-                return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
-            }
+        if (!$routeName) {
+            throw new \RuntimeException(sprintf('Cannot generate route for %s: no route name given and no #[DefaultRoute] attribute found.', get_class($routeable)));
         }
 
-        return '';
+        $parameterList = array_merge($this->generateParameterList($routeable, $routeName), $parameters);
+
+        try {
+            return $this->router->generate($routeName, $parameterList, $referenceType);
+        } catch (InvalidParameterException $exception) {
+            $delegatedRouter = $this->delegatedRouterManager->findDelegatedRouter($routeable);
+
+            if (!$delegatedRouter) {
+                throw $exception;
+            }
+
+            return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
+        }
     }
 
     protected function getDefaultRouteName(RouteableInterface $routeable): ?string

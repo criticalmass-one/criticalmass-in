@@ -16,6 +16,10 @@ class DelegatedRouterManager implements DelegatedRouterManagerInterface
     {
         $this->objectRouter = $objectRouter;
 
+        foreach ($this->delegatedRouterList as $delegatedRouter) {
+            $delegatedRouter->setObjectRouter($objectRouter);
+        }
+
         return $this;
     }
 
@@ -23,15 +27,18 @@ class DelegatedRouterManager implements DelegatedRouterManagerInterface
     {
         $this->delegatedRouterList[] = $delegatedRouter;
 
+        if ($this->objectRouter) {
+            $delegatedRouter->setObjectRouter($this->objectRouter);
+        }
+
         return $this;
     }
 
     public function findDelegatedRouter(RouteableInterface $routeable): ?DelegatedRouterInterface
     {
-        /** @var DelegatedRouterInterface $delegatedRouter */
         foreach ($this->delegatedRouterList as $delegatedRouter) {
             if ($delegatedRouter->supports($routeable)) {
-                return $delegatedRouter->setObjectRouter($this->objectRouter);
+                return $delegatedRouter;
             }
         }
 
