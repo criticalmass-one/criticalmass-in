@@ -2,57 +2,47 @@
 
 namespace App\Criticalmass\Util;
 
+use Carbon\Carbon;
+
 class DateTimeUtil
 {
-    public static function getYearStartDateTime(\DateTime $year): \DateTime
+    public static function getYearStartDateTime(Carbon $year): Carbon
     {
-        $dateTime = sprintf('%d-01-01 00:00:00', $year->format('Y'));
-
-        return new \DateTime($dateTime);
+        return $year->copy()->startOfYear();
     }
 
-    public static function getYearEndDateTime(\DateTime $year): \DateTime
+    public static function getYearEndDateTime(Carbon $year): Carbon
     {
-        $dateTime = sprintf('%d-12-31 23:59:59', $year->format('Y'));
-
-        return new \DateTime($dateTime);
+        return $year->copy()->endOfYear();
     }
 
-    public static function getMonthStartDateTime(\DateTime $month): \DateTime
+    public static function getMonthStartDateTime(Carbon $month): Carbon
     {
-        $dateTime = sprintf('%d-%d-01 00:00:00', $month->format('Y'), $month->format('m'));
-
-        return new \DateTime($dateTime);
+        return $month->copy()->startOfMonth();
     }
 
-    public static function getMonthEndDateTime(\DateTime $month): \DateTime
+    public static function getMonthEndDateTime(Carbon $month): Carbon
     {
-        $dateTime = sprintf('%d-%d-%d 23:59:59', $month->format('Y'), $month->format('m'), $month->format('t'));
-
-        return new \DateTime($dateTime);
+        return $month->copy()->endOfMonth();
     }
 
-    public static function getDayStartDateTime(\DateTime $day): \DateTime
+    public static function getDayStartDateTime(Carbon $day): Carbon
     {
-        $dateTime = sprintf('%d-%d-%d 00:00:00', $day->format('Y'), $day->format('m'), $day->format('d'));
-
-        return new \DateTime($dateTime);
+        return $day->copy()->startOfDay();
     }
 
-    public static function getDayEndDateTime(\DateTime $day): \DateTime
+    public static function getDayEndDateTime(Carbon $day): Carbon
     {
-        $dateTime = sprintf('%d-%d-%d 23:59:59', $day->format('Y'), $day->format('m'), $day->format('d'));
-
-        return new \DateTime($dateTime);
+        return $day->copy()->endOfDay();
     }
 
-    public static function recreateAsUtc(\DateTime $dateTime): \DateTime
+    public static function recreateAsUtc(Carbon $dateTime): Carbon
     {
-        return new \DateTime($dateTime->format('Y-m-d H:i:s'), new \DateTimeZone('UTC'));
+        return Carbon::create($dateTime->format('Y-m-d H:i:s'), 'UTC');
     }
 
-    public static function recreateAsTimeZone(\DateTime $dateTime, \DateTimeZone $dateTimeZone): \DateTime
+    public static function recreateAsTimeZone(Carbon $dateTime, \DateTimeZone $dateTimeZone): Carbon
     {
-        return new \DateTime($dateTime->format('Y-m-d H:i:s'), $dateTimeZone);
+        return Carbon::create($dateTime->format('Y-m-d H:i:s'), $dateTimeZone);
     }
 }
