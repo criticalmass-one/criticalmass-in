@@ -2466,11 +2466,6 @@ parameters:
 			path: src/Entity/FrontpageTeaserButton.php
 
 		-
-			message: "#^Method App\\\\Entity\\\\Location\\:\\:setTitle\\(\\) has parameter \\$title with no type specified\\.$#"
-			count: 1
-			path: src/Entity/Location.php
-
-		-
 			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\ManyToOne constructor expects class\\-string\\|null, string given\\.$#"
 			count: 1
 			path: src/Entity/Location.php
@@ -3281,11 +3276,6 @@ parameters:
 			path: src/Repository/PhotoRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\PhotoRepository\\:\\:findForTimelineRidePhotoCollector\\(\\) has parameter \\$limit with no type specified\\.$#"
-			count: 1
-			path: src/Repository/PhotoRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\PhotoRepository\\:\\:findPhotosByRide\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Repository/PhotoRepository.php
@@ -3356,27 +3346,12 @@ parameters:
 			path: src/Repository/PostRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\PostRepository\\:\\:findForTimelinePhotoCommentCollector\\(\\) has parameter \\$limit with no type specified\\.$#"
-			count: 1
-			path: src/Repository/PostRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\PostRepository\\:\\:findForTimelinePhotoCommentCollector\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Repository/PostRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\PostRepository\\:\\:findForTimelineRideCommentCollector\\(\\) has parameter \\$limit with no type specified\\.$#"
-			count: 1
-			path: src/Repository/PostRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\PostRepository\\:\\:findForTimelineRideCommentCollector\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Repository/PostRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\PostRepository\\:\\:findForTimelineThreadPostCollector\\(\\) has parameter \\$limit with no type specified\\.$#"
 			count: 1
 			path: src/Repository/PostRepository.php
 
@@ -3417,11 +3392,6 @@ parameters:
 
 		-
 			message: "#^Class App\\\\Repository\\\\RideEstimateRepository extends generic class Doctrine\\\\Bundle\\\\DoctrineBundle\\\\Repository\\\\ServiceEntityRepository but does not specify its types\\: T$#"
-			count: 1
-			path: src/Repository/RideEstimateRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\RideEstimateRepository\\:\\:findForTimelineRideParticipationEstimateCollector\\(\\) has parameter \\$limit with no type specified\\.$#"
 			count: 1
 			path: src/Repository/RideEstimateRepository.php
 
@@ -3671,11 +3641,6 @@ parameters:
 			path: src/Repository/ThreadRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\ThreadRepository\\:\\:findForTimelineThreadCollector\\(\\) has parameter \\$limit with no type specified\\.$#"
-			count: 1
-			path: src/Repository/ThreadRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\ThreadRepository\\:\\:findForTimelineThreadCollector\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Repository/ThreadRepository.php
@@ -3717,11 +3682,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Repository\\\\TrackRepository\\:\\:findByUser\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Repository/TrackRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\TrackRepository\\:\\:findForTimelineRideTrackCollector\\(\\) has parameter \\$limit with no type specified\\.$#"
 			count: 1
 			path: src/Repository/TrackRepository.php
 

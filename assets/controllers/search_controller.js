@@ -6,7 +6,7 @@ export default class extends Controller {
         prefetchUrl: { type: String, default: '/search/prefetch' }
     }
 
-    data = [];
+    searchResults = [];
     selectedIndex = -1;
 
     connect() {
@@ -23,7 +23,7 @@ export default class extends Controller {
     async loadData() {
         try {
             const response = await fetch(this.prefetchUrlValue);
-            this.data = await response.json();
+            this.searchResults = await response.json();
         } catch (err) {
             console.warn('Search prefetch failed:', err);
         }
@@ -37,7 +37,7 @@ export default class extends Controller {
             return;
         }
 
-        const matches = this.data.filter(item =>
+        const matches = this.searchResults.filter(item =>
             item.value.toLowerCase().includes(query)
         ).slice(0, 10);
 
