@@ -12,6 +12,12 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api:
+            pattern:    ^/api
+            stateless:  true
+            provider: users
+            oauth2: true
+
         main:
             login_link:
                 check_route: login_check
@@ -30,17 +36,12 @@ security:
                 oauth_user_provider:
                     service: App\Security\UserProvider\UserProvider
 
-        api:
-            pattern:    ^/api
-            stateless:  true
-            security: false
-
     access_control:
-        # URL of FOSUserBundle which need to be available to anonymous users
+        - { path: ^/authorize, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/token, role: PUBLIC_ACCESS }
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/register, role: PUBLIC_ACCESS }
         - { path: ^/resetting, role: PUBLIC_ACCESS }
-
 
     role_hierarchy:
         ROLE_USER: []
