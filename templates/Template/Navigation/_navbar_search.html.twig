@@ -1,13 +1,13 @@
-<form class="d-flex ms-auto position-relative" role="search"
+<form class="search-autocomplete" role="search"
       action="{{ path('caldera_criticalmass_search_query') }}"
       data-controller="search">
-    <input id="search-input" type="text" class="form-control me-2"
+    <i class="far fa-search search-autocomplete__icon"></i>
+    <input type="text"
+           class="form-control search-autocomplete__input"
            placeholder="{% trans %}criticalmass.navigation.search.search{% endtrans %}"
            name="query"
            data-search-target="input"
-           autocomplete="off"/>
-    <div class="dropdown-menu position-absolute w-100 d-none" style="top: 100%;" data-search-target="results"></div>
-    <button type="submit" class="btn btn-success">
-        {% trans %}criticalmass.navigation.search.search{% endtrans %}
-    </button>
+           autocomplete="off"
+           aria-label="{% trans %}criticalmass.navigation.search.search{% endtrans %}"/>
+    <div class="search-autocomplete__results" data-search-target="results"></div>
 </form>
