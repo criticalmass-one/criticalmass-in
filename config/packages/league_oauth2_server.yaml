@@ -3,11 +3,14 @@ league_oauth2_server:
         private_key: '%kernel.project_dir%/config/jwt/private.pem'
         private_key_passphrase: null
         encryption_key: '%env(OAUTH2_ENCRYPTION_KEY)%'
-        enable_grant_types:
-            - authorization_code
-            - refresh_token
+        enable_auth_code_grant: true
+        enable_refresh_token_grant: true
+        enable_client_credentials_grant: false
+        enable_password_grant: false
+        enable_implicit_grant: false
         access_token_ttl: PT1H
         refresh_token_ttl: P1M
+        require_code_challenge_for_public_clients: true
     resource_server:
         public_key: '%kernel.project_dir%/config/jwt/public.pem'
     scopes:
