@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
@@ -27,4 +27,5 @@ return [
     MalteHuebner\DataQueryBundle\MalteHuebnerDataQueryBundle::class => ['all' => true],
     CalendR\Bridge\Symfony\Bundle\CalendRBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    League\Bundle\OAuth2ServerBundle\LeagueOAuth2ServerBundle::class => ['all' => true],
 ];

@@ -1,0 +1,53 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Autorisierung{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Autorisierung</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <strong>{{ client.name }}</strong> möchte auf dein Konto zugreifen.
+                        </p>
+
+                        {% if scopes|length > 0 %}
+                            <p>Folgende Berechtigungen werden angefragt:</p>
+                            <ul>
+                                {% for scope in scopes %}
+                                    <li>
+                                        {% if scope|string == 'track:read' %}
+                                            Tracks lesen
+                                        {% elseif scope|string == 'track:write' %}
+                                            Tracks erstellen und bearbeiten
+                                        {% else %}
+                                            {{ scope }}
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <form method="post" action="{{ path('oauth2_consent') }}">
+                            <input type="hidden" name="client_id" value="{{ client.identifier }}">
+                            <input type="hidden" name="authorize_url" value="{{ authorize_url }}">
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" name="consent" value="approve" class="btn btn-success">
+                                    Erlauben
+                                </button>
+                                <button type="submit" name="consent" value="deny" class="btn btn-outline-secondary">
+                                    Ablehnen
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
