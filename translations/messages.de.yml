@@ -57,6 +57,37 @@ cycle:
 '{1} 1 month ago |]1,Inf[ %months months ago': 'vor einem Monat|]1,Inf[v or %months Monaten'
 '{1} 1 year ago |]1,Inf[ %years years ago':  'vor einem Jahr|]1,Inf[ vor %years Jahren'
 
+frontpage:
+    heading: Hej, wir fahren Fahrrad!
+    lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
+    learn_more: Erfahre mehr über criticalmass.in
+    ride_list_title: Bald unterwegs
+
+search:
+    title: Suchergebnisse
+    heading: Deine Suchergebnisse
+    panel_title: Suche
+    query_label: Deine Suchanfrage
+    query_placeholder: Deine Suchanfrage
+    submit: Finden
+    tab_cities: Städte
+    tab_rides: Touren
+    no_cities: Zu deiner Suchanfrage wurden leider keine Städte gefunden.
+    no_rides: Zu deiner Suchanfrage wurden leider keine Touren gefunden.
+
+calendar:
+    title: Kalender
+    breadcrumb: Critical-Mass-Kalender
+    heading: Dein weltweiter Critical-Mass-Kalender
+    lead: Hier siehst du eine Übersicht über alle in unserer Datenbank vorhandenen Critical-Mass-Touren.
+    monday: Montag
+    tuesday: Dienstag
+    wednesday: Mittwoch
+    thursday: Donnerstag
+    friday: Freitag
+    saturday: Sonnabend
+    sunday: Sonntag
+
 # Modal hints
 hint_modal:
     ride:

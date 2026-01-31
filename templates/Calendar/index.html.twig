@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Kalender{% endblock %}
+{% block title %}{{ 'calendar.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Critical-Mass-Kalender') }}
+    {{ breadcrumb.active('calendar.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -14,11 +14,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Dein weltweiter Critical-Mass-Kalender
+                    {{ 'calendar.heading'|trans }}
                 </h1>
 
                 <p class="lead">
-                    Hier siehst du eine Übersicht über alle in unserer Datenbank vorhandenen Critical-Mass-Touren.
+                    {{ 'calendar.lead'|trans }}
                 </p>
             </div>
         </div>
@@ -41,13 +41,13 @@
 
                     <thead>
                     <tr>
-                        <th width="14%">Montag</th>
-                        <th width="14%">Dienstag</th>
-                        <th width="14%">Mittwoch</th>
-                        <th width="14%">Donnerstag</th>
-                        <th width="14%">Freitag</th>
-                        <th width="14%">Sonnabend</th>
-                        <th width="14%">Sonntag</th>
+                        <th width="14%">{{ 'calendar.monday'|trans }}</th>
+                        <th width="14%">{{ 'calendar.tuesday'|trans }}</th>
+                        <th width="14%">{{ 'calendar.wednesday'|trans }}</th>
+                        <th width="14%">{{ 'calendar.thursday'|trans }}</th>
+                        <th width="14%">{{ 'calendar.friday'|trans }}</th>
+                        <th width="14%">{{ 'calendar.saturday'|trans }}</th>
+                        <th width="14%">{{ 'calendar.sunday'|trans }}</th>
                     </tr>
                     </thead>
 
