@@ -31,9 +31,9 @@
                     <ul>
                         {% for cycle in city.cycles %}
                         <li>
-                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', city.timezone) }} Uhr
+                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', city.timezone) }} {{ 'common.time_suffix'|trans }}
                             {% if cycle.location %}
-                                <br />Treffpunkt: {{ cycle.location }}
+                                <br />{{ 'search.label_location'|trans }} {{ cycle.location }}
                             {% endif %}
                         </li>
                         {% endfor %}

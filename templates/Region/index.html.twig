@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Critical Mass in {{ region.name }}{% endblock %}
+{% block title %}{{ 'region.title'|trans({'%region_name%': region.name}) }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
+    {{ breadcrumb.item('region.breadcrumb_directory'|trans, path('caldera_criticalmass_region_world')) }}
     {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
         {{ breadcrumb.item(region.parent.parent.parent.name, object_path(region.parent.parent.parent)) }}
     {% endif %}
@@ -25,14 +25,14 @@
                     <a href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
                        class="btn btn-success margin-top-medium pull-right">
                         <i class="far fa-plus"></i>
-                        Stadt hinzufügen
+                        {{ 'region.add_city'|trans }}
                     </a>
                 {% endif %}
                 <h1>
                     {% if region.isWorld() %}
-                        Critical Mass weltweit
+                        {{ 'region.worldwide'|trans }}
                     {% else %}
-                        Critical Mass in {{ region.name }}
+                        {{ 'region.title'|trans({'%region_name%': region.name}) }}
                     {% endif %}
                 </h1>
             </div>
@@ -57,9 +57,9 @@
                 <div class="col-md-12">
                     <h2>
                         {% if region.isWorld() %}
-                            Kontinente
+                            {{ 'region.continents'|trans }}
                         {% else %}
-                            Unterregionen in {{ region.name }}
+                            {{ 'region.subregions'|trans({'%region_name%': region.name}) }}
                         {% endif %}
                     </h2>
                 </div>
@@ -83,7 +83,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
-                                    <small>{{ cityCounter[region2.id] }} Städte in dieser Region</small>
+                                    <small>{{ 'region.cities_in_region'|trans({'%count%': cityCounter[region2.id]}) }}</small>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2>
-                        Städte in {{ region.name }}
+                        {{ 'region.cities_in'|trans({'%region_name%': region.name}) }}
                     </h2>
                 </div>
             </div>

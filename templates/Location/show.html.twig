@@ -1,16 +1,16 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Übersicht zum Treffpunkt {{ location.title }} der {{ location.city.title }}{% endblock %}
+{% block title %}{{ 'location.title'|trans({'%location%': location.title, '%city_title%': location.city.title}) }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(location.city.city, object_path(location.city)) }}
     {% if ride %}
         {{ breadcrumb.item(ride.title, object_path(ride)) }}
-        {{ breadcrumb.active('Informationen zum Treffpunkt') }}
+        {{ breadcrumb.active('location.breadcrumb_location_info'|trans) }}
     {% else %}
-        {{ breadcrumb.item('Treffpunkte', '#') }}
+        {{ breadcrumb.item('location.breadcrumb_locations'|trans, '#') }}
         {{ breadcrumb.active(location.title) }}
     {% endif %}
 {% endblock %}
@@ -59,7 +59,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                Touren von diesem Treffpunkt
+                                {{ 'location.rides_panel_title'|trans }}
                             </h3>
                         </div>
                         <div class="panel-body">
@@ -78,7 +78,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            Andere Treffpunkte dieser Stadt
+                            {{ 'location.other_locations_panel_title'|trans }}
                         </h3>
                     </div>
                     <div class="panel-body">

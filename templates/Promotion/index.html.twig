@@ -41,11 +41,11 @@
                 <table class="table" id="ride-table" data-controller="datatable">
                     <thead>
                     <tr>
-                        <th>Datum</th>
-                        <th>Uhrzeit</th>
-                        <th>Stadt</th>
-                        <th>Titel</th>
-                        <th>Treffpunkt</th>
+                        <th>{{ 'promotion.col_date'|trans }}</th>
+                        <th>{{ 'promotion.col_time'|trans }}</th>
+                        <th>{{ 'promotion.col_city'|trans }}</th>
+                        <th>{{ 'promotion.col_title'|trans }}</th>
+                        <th>{{ 'promotion.col_location'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,17 +56,17 @@
                             </td>
 
                             <td>
-                                {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
+                                {{ ride.dateTime|date('H:i') }}&nbsp;{{ 'common.time_suffix'|trans }}
                             </td>
 
                             <td>
-                                <a href="{{ object_path(ride.city) }}" title="zur Seite der Stadt {{ ride.city.city }}">
+                                <a href="{{ object_path(ride.city) }}" title="{{ 'promotion.to_city_page'|trans({'%city_name%': ride.city.city}) }}">
                                     {{ ride.city.city }}
                                 </a>
                             </td>
 
                             <td>
-                                <a href="{{ object_path(ride) }}" title="zur Seite der Tour">
+                                <a href="{{ object_path(ride) }}" title="{{ 'promotion.to_ride_page'|trans }}">
                                     {{ ride.title }}
                                 </a>
                             </td>
@@ -102,4 +102,3 @@
 </template>
 {% endverbatim %}
 {% endblock %}
-

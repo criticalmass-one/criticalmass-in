@@ -44,7 +44,7 @@
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <dl>
                     <dt>
-                        Datum:
+                        {{ 'search.label_date'|trans }}
                     </dt>
 
                     <dd>
@@ -56,11 +56,11 @@
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <dl>
                     <dt>
-                        Uhrzeit:
+                        {{ 'search.label_time'|trans }}
                     </dt>
 
                     <dd>
-                        {{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr
+                        {{ ride.dateTime|date('H:i', ride.city.timezone) }} {{ 'common.time_suffix'|trans }}
                     </dd>
                 </dl>
             </div>
@@ -69,7 +69,7 @@
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     <dl>
                         <dt>
-                            Treffpunkt:
+                            {{ 'search.label_location'|trans }}
                         </dt>
 
                         <dd>

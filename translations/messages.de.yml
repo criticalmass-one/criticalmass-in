@@ -665,6 +665,113 @@ hint_modal:
             title: Kommentar verfassen
             text: '<p>Gefällt dir dieses Foto? Hast du etwas lustiges während der Tour erlebt? Mit einem criticalmass.in-Benutzerkonto kannst du an dieser Stelle einen Kommentar verfassen.</p>'
 
+board:
+    overview_title: Diskussionen
+    col_description: Beschreibung
+    col_topics: Themen
+    col_posts: Beiträge
+    col_last_post: letzter Beitrag
+    by_author: 'von <strong>%username%</strong>'
+    section_general: Allgemeines
+    section_cities: Städte
+    add_reply: Antwort hinzufügen
+
+modal:
+    city:
+        date: 'Datum:'
+        time: 'Uhrzeit:'
+        location: 'Treffpunkt:'
+        weather: 'Wettervorhersage:'
+        glympse_email: 'E-Mail für Glympse-Einladungen:'
+        no_rides: 'Schade — zu dieser Stadt sind uns keine Fahrten bekannt :( Aber wenn du mehr weißt als wir: Schreib uns bitte unter <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>!'
+        to_city: Zur Stadt
+        to_location: Zum Treffpunkt
+        to_position: Zur neusten Position
+
+region:
+    title: Critical Mass in %region_name%
+    breadcrumb_directory: Verzeichnis
+    add_city: Stadt hinzufügen
+    worldwide: Critical Mass weltweit
+    continents: Kontinente
+    subregions: Unterregionen in %region_name%
+    cities_in_region: '%count% Städte in dieser Region'
+    cities_in: Städte in %region_name%
+
+promotion:
+    col_date: Datum
+    col_time: Uhrzeit
+    col_city: Stadt
+    col_title: Titel
+    col_location: Treffpunkt
+    to_city_page: zur Seite der Stadt %city_name%
+    to_ride_page: zur Seite der Tour
+
+ride:
+    details_title: Details
+    details_date: Datum
+    details_time: Uhrzeit
+    details_time_unknown: die Uhrzeit ist noch nicht bekannt
+    details_location: Treffpunkt
+    details_location_unknown: noch nicht bekannt
+    details_weather: Wetter
+    details_ical: Kalendereintrag merken
+
+search:
+    label_date: 'Datum:'
+    label_time: 'Uhrzeit:'
+    label_location: 'Treffpunkt:'
+
+track:
+    col_city: Stadt
+    col_participant: Teilnehmer
+    col_date: Datum
+    col_distance: Länge
+    col_start: Beginn
+    col_end: Ende
+    time_title: Zeit anpassen
+    breadcrumb_account: Dein Benutzerkonto
+    breadcrumb_tracks: Deine Tracks
+    time_lead: Falls dein Aufzeichnungsgerät aus irgendeinem Grunde eine falsche Uhrzeit bei deinem GPX-Track angegeben haben sollte, kannst du hier den Start-Zeitpunkt deines Tracks verschieben.
+    time_old: Alte Uhrzeit
+    time_new: Neue Uhrzeit
+    time_label_date: 'Datum:'
+    time_label_time: 'Uhrzeit:'
+    time_label_timezone: 'Zeitzone:'
+
+strava:
+    title: Track von Strava importieren
+    breadcrumb_import: Track importieren
+    select_activity: Wähle eine Aktivität
+    activity_intro: Am <strong>%date%</strong> hast du die folgenden Aktivitäten mit Strava aufgezeichnet. Bitte wähle die Aktivität aus, die du als Track importieren möchtest.
+    label_distance: 'Distanz:'
+    label_start: 'Start:'
+    label_duration: 'Dauer:'
+    minutes: Minuten
+    import_track: Track importieren
+    no_activities: '<strong>Keine Touren gefunden!</strong> Offenbar hast du mit Strava am %date% keine Touren aufgezeichnet.'
+    error: '<strong>Hoppla!</strong> Leider können wir momentan keine Touren von Strava auslesen — bitte versuche es später noch einmal.'
+
+timeline:
+    track_uploaded: 'hat einen Track hochgeladen:'
+    label_date: 'Datum:'
+    label_distance: 'Länge:'
+    label_duration: 'Dauer:'
+
+track_mass_import:
+    title: Tracks importieren
+    select_activity: Wähle eine Aktivität
+    label_ride: 'Tour:'
+    label_date: 'Datum:'
+    label_time: 'Uhrzeit:'
+    label_city: 'Stadt:'
+    label_distance: 'Distanz:'
+    label_start: 'Start:'
+    label_duration: 'Dauer:'
+    minutes: Minuten
+    import: Importieren
+    reject: Ablehnen
+
 common:
     save: Speichern
     cancel: Abbrechen
