@@ -5,15 +5,15 @@
             <thead>
             <tr>
                 <th>
-                    Tour
+                    {{ 'participation.col_ride'|trans }}
                 </th>
 
                 <th>
-                    Stadt
+                    {{ 'participation.col_city'|trans }}
                 </th>
 
                 <th>
-                    Datum
+                    {{ 'participation.col_date'|trans }}
                 </th>
 
                 <th>
@@ -37,22 +37,22 @@
                     </td>
 
                     <td>
-                        {{ participation.ride.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
+                        {{ participation.ride.dateTime|date('d.m.Y H:i') }}&nbsp;{{ 'participation.time_suffix'|trans }}
                     </td>
 
                     <td class="btn-group btn-group-xs">
-                        <a href="{{ path('criticalmass_user_participation_delete', { id: participation.id }) }}" class="btn btn-secondary" title="Diesen Eintrag komplett löschen">
+                        <a href="{{ path('criticalmass_user_participation_delete', { id: participation.id }) }}" class="btn btn-secondary" title="{{ 'participation.delete_title'|trans }}">
                             <i class="far fa-trash-alt"></i>
                         </a>
 
                         {% if not participation.goingYes %}
-                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'yes' }) }}" class="btn btn-success" title="Deine Teilnahme speichern">
+                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'yes' }) }}" class="btn btn-success" title="{{ 'participation.confirm_title'|trans }}">
                             <i class="far fa-check"></i>
                         </a>
                         {% endif %}
 
                         {% if not participation.goingNo %}
-                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'no' }) }}" class="btn btn-danger" title="Deine Teilnahme zurückziehen">
+                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'no' }) }}" class="btn btn-danger" title="{{ 'participation.reject_title'|trans }}">
                             <i class="far fa-times"></i>
                         </a>
                         {% endif %}
@@ -63,7 +63,7 @@
         </table>
         {% else %}
             <div class="alert alert-info">
-                Für diese Liste wurden keine Datensätze gefunden.
+                {{ 'participation.no_entries'|trans }}
             </div>
         {% endif %}
     </div>

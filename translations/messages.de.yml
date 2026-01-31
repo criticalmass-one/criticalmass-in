@@ -146,6 +146,33 @@ email:
         ignore_notice: Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.
         expiration: Der Link ist %expiration% gültig.
 
+participation:
+    title: Deine Touren
+    breadcrumb: Deine Touren
+    tab_overview: Übersicht
+    tab_participated: Teilgenommen
+    tab_undecided: Unentschieden
+    tab_cancelled: Abgesagt
+    tab_cities: Städte
+    yes_description: Hier siehst du eine Liste von Critical-Mass-Touren, zu denen du deine Teilnahme bestätigt hast. Du kannst deine Teilnahme nachträglich zurückziehen oder den Eintrag aus unserer Datenbank löschen.
+    maybe_description: Bei diesen Touren hast du bislang nicht angegeben, ob du teilgenommen hast oder nicht. Du kannst deine Teilnahme nachträglich bestätigen, zurückziehen oder den Datensatz aus unserer Datenbank löschen.
+    no_description: Hier siehst du eine Liste von Critical-Mass-Touren, zu deren Teilnahme du abgesagt hast. Du kannst deine Teilnahme nachträglich bestätigen oder den Eintrag aus unserer Datenbank löschen.
+    col_ride: Tour
+    col_city: Stadt
+    col_date: Datum
+    col_count: Anzahl
+    time_suffix: Uhr
+    delete_title: Diesen Eintrag komplett löschen
+    confirm_title: Deine Teilnahme speichern
+    reject_title: Deine Teilnahme zurückziehen
+    no_entries: Für diese Liste wurden keine Datensätze gefunden.
+
+estimate:
+    heading: Teilnehmerzahl ergänzen
+    question: Wie viele Teilnehmer sind an der Critical Mass in <strong>%city%</strong> am <strong>%date%</strong> mitgefahren?
+    label: 'Teilnehmerzahl:'
+    submit: Absenden
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.

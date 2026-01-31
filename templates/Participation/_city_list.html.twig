@@ -5,11 +5,11 @@
             <thead>
             <tr>
                 <th>
-                    Stadt
+                    {{ 'participation.col_city'|trans }}
                 </th>
 
                 <th>
-                    Anzahl
+                    {{ 'participation.col_count'|trans }}
                 </th>
             </tr>
             </thead>
@@ -31,7 +31,7 @@
         </table>
         {% else %}
             <div class="alert alert-info">
-                Für diese Liste wurden keine Datensätze gefunden.
+                {{ 'participation.no_entries'|trans }}
             </div>
         {% endif %}
     </div>
