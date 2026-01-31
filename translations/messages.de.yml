@@ -94,6 +94,57 @@ hint_modal:
             title: Kommentar verfassen
             text: '<p>Gefällt dir dieses Foto? Hast du etwas lustiges während der Tour erlebt? Mit einem criticalmass.in-Benutzerkonto kannst du an dieser Stelle einen Kommentar verfassen.</p>'
 
+common:
+    save: Speichern
+    cancel: Abbrechen
+    delete: Löschen
+    edit: Bearbeiten
+    close: Schließen
+    loading: Laden…
+
+footer:
+    days_in_saddle: Seit %days% Tagen im Sattel
+    impress: Impressum
+    privacy: Datenschutz
+    private_data: Deine privaten Daten
+    status: Status
+    github_repository: GitHub-Repository
+    from_blog: Aus dem Blog
+    to_blog: zum Critical-Mass-Weblog
+    to_blog_post: zum Blog-Beitrag
+    cm_actions: Critical-Mass-Aktionen
+    cm_cities: Critical-Mass-Städte
+    to_startpage: zur Startseite von criticalmass.in
+    to_city_list: zur Liste der Städte mit einer Critical-Mass-Radtour
+    city_list: Städteliste
+    osm_attribution: 'Kartendaten und Geocoding von <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <span class="text-nowrap">&copy; OpenStreetMap-Mitwirkende</span>, <a href="https://www.openstreetmap.org/copyright">lizensiert unter <span class="text-nowrap">CC BY-SA 2.0</span></a>'
+    weather_attribution: 'Wetterdaten von <a href="https://openweathermap.org">OpenWeatherMap</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">lizensiert unter <span class="text-nowrap">CC BY-SA 4.0</span></a>'
+    luft_title: 'Aktuelle Luftmesswerte aus deiner Umgebung: Feinstaub, Stickoxide und Ozon'
+    radverkehrsforum_title: Diskussionen und Informationen rund um den Radverkehr in Deutschland
+    sternfahrt_title: Fahrradsternfahrt Hamburg — die größte Fahrrad-Demonstaton in Norddeutschland
+    luenedrohne_title: LüneDrohne — Drohnenfotos aus Lüneburg
+
+modal:
+    about:
+        title: Willkommen auf criticalmass.in!
+        tab_about: Über uns
+        tab_contact: Kontakt
+        tab_impress: Impressum
+        jumbotron_heading: Hej, wir fahren Fahrrad!
+        jumbotron_sub: Und wir lieben es. Seit 2011.
+        about_text: 'Auf den Sattel, fertig, los: criticalmass.in zeigt dir, wo'
+        impress_intro: criticalmass.in ist ein Projekt an der Fachhochschule Wedel.
+        impress_address: 'Fachhochschule Wedel<br/>Feldstraße 143<br/>22880 Wedel'
+        impress_request: Eine Bitte: Wir sind weder an Newslettern, Produktempfehlungen, Partnerprogrammen und ähnlichen Angeboten interessiert. Schickt uns bitte diesbezüglich keine E-Mails und ruft uns auch nicht an. Wir vermitteln auch wirklich keine Pressekontakte zu einzelnen Critical-Mass-Touren.
+        contact_text: 'Am besten erreichst du uns per E-Mail oder über <a href="https://www.facebook.com/criticalmass.in">unsere Seite auf facebook</a> (Vorsicht, der Link führt zu facebook). Allgemeine Hinweise, Vorschläge und Tipps lesen wir wirklich gerne unter <a href="mailto:mail@criticalmass.in">mail@criticalmass.in</a>.'
+        contact_ride_data: 'Wegen <strong>fehlerhafter Daten</strong> von Critical-Mass-Touren und <strong>neuen Städten</strong> schreibe uns bitte unter <a href="mailto:ride@criticalmass.in">ride@criticalmass.in</a>.'
+        contact_bugs: '<strong>Fehlermeldungen</strong> nehmen wir gerne, aber auch ein ganz bisschen zähneknirschend, unter <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> entgegen. Schreibe uns bitte in einer solchen Mail, was passiert ist, welchen Browser du benutzt und wenn möglich die genaue Fehlermeldung. Falls du nicht genau weißt, was passiert ist, schreib uns bitte trotzdem: Wir kriegen das schon irgendwie zusammen hin!'
+    login:
+        title: Login
+        tab_login: Anmelden
+        tab_register: Registrieren
+        tab_password: Kennwort vergessen
+
 track:
     draw_page:
         title: Track zeichnen

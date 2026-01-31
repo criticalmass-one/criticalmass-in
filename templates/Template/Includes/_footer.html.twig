@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-3">
                 <h5>
-                    <a href="{{ path('caldera_criticalmass_frontpage') }}" title="zur Startseite von criticalmass.in">
-                        Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
+                    <a href="{{ path('caldera_criticalmass_frontpage') }}" title="{{ 'footer.to_startpage'|trans }}">
+                        {{ 'footer.days_in_saddle'|trans({'%days%': daysSince('2011-06-24 19:00:00')}) }}
                     </a>
                 </h5>
 
@@ -12,21 +12,21 @@
                     <li>
                         <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}"
                            id="footer-impress-link">
-                            Impressum
+                            {{ 'footer.impress'|trans }}
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}"
                            id="footer-privacy-link">
-                            Datenschutz
+                            {{ 'footer.privacy'|trans }}
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}"
                            id="footer-gdpr-link">
-                            Deine privaten Daten
+                            {{ 'footer.private_data'|trans }}
                         </a>
                     </li>
 
@@ -50,13 +50,13 @@
 
                     <li>
                         <a href="https://status.caldera.cc/" id="footer-status-link">
-                            Status
+                            {{ 'footer.status'|trans }}
                         </a>
                     </li>
 
                     <li>
                         <a href="https://github.com/criticalmass-one/criticalmass-in">
-                            GitHub-Repository
+                            {{ 'footer.github_repository'|trans }}
                         </a>
                     </li>
                 </ul>
@@ -64,8 +64,8 @@
 
             <div class="col-md-3">
                 <h5>
-                    <a href="https://criticalmass.blog/" title="zum Critical-Mass-Weblog">
-                        Aus dem Blog
+                    <a href="https://criticalmass.blog/" title="{{ 'footer.to_blog'|trans }}">
+                        {{ 'footer.from_blog'|trans }}
                     </a>
                 </h5>
 
@@ -74,7 +74,7 @@
                 <ul class="list-unstyled">
                     {% for blog_article in blog_article_list %}
                         <li>
-                            <a href="{{ blog_article.permalink }}" title="zum Blog-Beitrag">
+                            <a href="{{ blog_article.permalink }}" title="{{ 'footer.to_blog_post'|trans }}">
                                 {{ blog_article.title }}
                             </a>
 
@@ -86,7 +86,7 @@
 
             <div class="col-md-3">
                 <h5>
-                    Critical-Mass-Aktionen
+                    {{ 'footer.cm_actions'|trans }}
                 </h5>
 
                 <ul class="list-unstyled">
@@ -97,8 +97,8 @@
             <div class="col-md-3">
                 <h5>
                     <a href="{{ path('caldera_criticalmass_city_list') }}"
-                       title="zur Liste der Städte mit einer Critical-Mass-Radtour">
-                        Critical-Mass-Städte
+                       title="{{ 'footer.to_city_list'|trans }}">
+                        {{ 'footer.cm_cities'|trans }}
                     </a>
                 </h5>
 
@@ -107,7 +107,7 @@
 
                     <li>
                         <a href="{{ path('caldera_criticalmass_city_list') }}" id="footer-citylist-link">
-                            Städteliste
+                            {{ 'footer.city_list'|trans }}
                         </a>
                     </li>
                 </ul>
@@ -118,13 +118,10 @@
             <div class="col-md-12 text-center">
                 <ul class="list-unstyled">
                     <li>
-                        Kartendaten und Geocoding von <a href="https://www.openstreetmap.org/">OpenStreetMap</a>,
-                        <span class="text-nowrap">&copy; OpenStreetMap-Mitwirkende</span>,
-                        <a href="https://www.openstreetmap.org/copyright">lizensiert unter <span class="text-nowrap">CC BY-SA 2.0</span></a>
+                        {{ 'footer.osm_attribution'|trans|raw }}
                     </li>
                     <li>
-                        Wetterdaten von <a href="https://openweathermap.org">OpenWeatherMap</a>,
-                        <a href="https://creativecommons.org/licenses/by-sa/4.0/">lizensiert unter <span class="text-nowrap">CC BY-SA 4.0</span></a>
+                        {{ 'footer.weather_attribution'|trans|raw }}
                     </li>
                 </ul>
             </div>
@@ -135,35 +132,35 @@
                 <ul class="list-inline">
                     <li>
                         <a href="https://luft.jetzt/"
-                           title="Aktuelle Luftmesswerte aus deiner Umgebung: Feinstaub, Stickoxide und Ozon">
+                           title="{{ 'footer.luft_title'|trans }}">
                             Luft<sup>jetzt</sup>
                         </a>
                     </li>
 
                     <li>
                         <a href="https://radverkehrsforum.de/"
-                           title="Diskussionen und Informationen rund um den Radverkehr in Deutschland">
+                           title="{{ 'footer.radverkehrsforum_title'|trans }}">
                             Radverkehrsforum
                         </a>
                     </li>
 
                     <li>
                         <a href="https://fahrradsternfahrt.hamburg/"
-                           title="Fahrradsternfahrt Hamburg — die größte Fahrrad-Demonstaton in Norddeutschland">
+                           title="{{ 'footer.sternfahrt_title'|trans }}">
                             Fahrradsternfahrt Hamburg
                         </a>
                     </li>
 
                     <li>
                         <a href="https://luenedrohne.de/"
-                           title="LüneDrohne — Drohnenfotos aus Lüneburg">
+                           title="{{ 'footer.luenedrohne_title'|trans }}">
                             Lünedrohne
                         </a>
                     </li>
 
                     <li>
                         <a href="https://luenedrohne.de/"
-                           title="Lünedrohne — Drohnenfotos aus Lüneburg">
+                           title="{{ 'footer.luenedrohne_title'|trans }}">
                             Lünedrohne
                         </a>
                     </li>
