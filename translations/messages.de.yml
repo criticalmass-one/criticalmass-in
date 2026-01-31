@@ -273,6 +273,54 @@ ride:
             timelapse_no_tracks: 'Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.'
             timelapse_loading: 'Lade Track %current% von %total%'
 
+ride.management:
+    edit_title: Tour editieren
+    create_title: Tour hinzufügen
+    breadcrumb_city_list: Städteliste
+    cycle_warning: '<strong>Vorsicht!</strong> Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich bereits existiert.'
+    intro: Hier kannst du die Details einer Tour editieren.
+    section_ride_data: Tourdaten
+    label_title: 'Titel:'
+    help_title: Hier kann optional der Titel der Tour angegeben werden.
+    label_description: 'Beschreibung:'
+    help_description: 'Hier kann optional eine Beschreibung der Tour angegeben werden. Schreibe hier nur Dinge, die wirklich direkt diese Tour betreffen — für alles andere ist in der Beschreibung der Stadt genügend Platz.'
+    section_date_location: Datum und Treffpunkt
+    warning_double_month: '<strong>Vorsicht!</strong> Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei Touren stattfinden?'
+    warning_double_day: '<strong>Achtung!</strong> An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider keine zwei Touren an einem Tag verwaltet werden.'
+    label_datetime: 'Datum und Uhrzeit:'
+    label_location: 'Treffpunkt:'
+    help_location: 'Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert werden, falls der noch nicht bekannt sein sollte.'
+    label_ride_type: 'Art der Tour:'
+    help_ride_type: 'Falls es sich bei dieser Tour nicht um eine „normale" Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.'
+    label_slug: 'Slug:'
+    label_enabled: 'Tour aktivieren:'
+    help_enabled: Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+    social_preview_title: Details für soziale Netzwerke
+    social_preview_lead: 'Hier kannst du festlegen, wie diese Tour in öffentlichen Netzwerken oder in Suchmaschinen dargestellt werden soll. Du kannst dazu ein kleines Vorschaufoto hochalden, das gemeinsam mit Verlinkungen dargestellt wird, sowie einen kurzen Vorankündigungstext eingeben.'
+    label_file: 'Datei:'
+    help_file: 'Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour im Netz angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen. <strong>Bitte lade nur Fotos hoch, an denen du das Urheber- oder Nutzungsrecht besitzt.</strong>'
+    label_social_description: 'Social-Beschreibung:'
+    help_social_description: 'Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken angezeigt wird. Bedenke, dass dort meistens nur 140 bis 160 Zeichen angezeigt und der Rest des Textes abgeschnitten werden.'
+
+subride:
+    edit_title: Mini-Mass editieren
+    create_title: Mini-Mass hinzufügen
+    intro: 'Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen Radtour verabredet haben, um nicht alleine zur „großen Masse" fahren zu müssen.'
+    section_data: Daten der Mini-Mass
+    label_title: 'Titel:'
+    help_title: 'Gib deiner Mini-Mass einen Namen. Er muss noch nicht einmal aussagekräftig sein — Hauptsache man weiß, worum es geht.'
+    label_description: 'Beschreibung:'
+    help_description: Hier ist Platz für eine grobe Beschreibung der Mini-Mass. Lege hier zum Beispiel eine ungefähre Route fest.
+    label_location: 'Treffpunkt:'
+    help_location: Wo trefft ihr euch? Vergiss nicht, den Treffpunkt oben auf der Karte zu markieren.
+    section_datetime: Datum und Uhrzeit
+    label_date: 'Datum:'
+    label_time: 'Uhrzeit:'
+    copy_title: Mini-Masses kopieren
+    copy_intro: 'Von der Tour <a href="%ride_url%">%ride_title%</a> (%ride_datetime% Uhr) können die folgenden Mini-Masses kopiert werden:'
+    copy_time_suffix: 'Uhr:'
+    copy_button: Kopieren
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
