@@ -1,12 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Deine Tracks{% endblock %}
+{% block title %}{{ 'track.view_page.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ breadcrumb.item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
-    {{ breadcrumb.active('Track anzeigen') }}
+    {{ breadcrumb.item('track.list_page.title'|trans, path('caldera_criticalmass_track_list')) }}
+    {{ breadcrumb.active('track.view_page.title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -28,22 +28,19 @@
                         <div class="btn-group pull-right">
                             <a class="btn btn-success"
                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
-                                <i class="far fa-cut"></i>&nbsp;Track beschneiden
+                                <i class="far fa-cut"></i>&nbsp;{{ 'track.view_page.trim_button'|trans }}
                             </a>
                             <a class="btn btn-secondary"
                                href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
-                                <i class="far fa-check"></i>&nbsp;Track bestätigen
+                                <i class="far fa-check"></i>&nbsp;{{ 'track.view_page.approve_button'|trans }}
                             </a>
                         </div>
 
                         <strong>
-                            Dein Track wurde noch nicht bestätigt!
+                            {{ 'track.view_page.not_reviewed_alert'|trans }}
                         </strong>
                         <br/>
-                        Bitte bestägtige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet
-                        und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a
-                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
-                            beschneiden</a>.
+                        {{ 'track.view_page.not_reviewed_hint'|trans({'%range_url%': object_path(track, 'caldera_criticalmass_track_range')})|raw }}
                     </div>
                 </div>
             </div>
@@ -66,7 +63,7 @@
             <div class="col-md-3">
                 <dl>
                     <dt>
-                        Tour:
+                        {{ 'track.properties.ride'|trans }}
                     </dt>
                     <dd>
                         <a href="{{ object_path(track.ride) }}">
@@ -79,7 +76,7 @@
             <div class="col-md-2">
                 <dl>
                     <dt>
-                        Datum:
+                        {{ 'track.properties.date'|trans }}
                     </dt>
                     <dd>
                         {{ track.ride.dateTime|date('d.m.Y H:i', track.ride.city.timezone) }}&nbsp;Uhr
@@ -90,13 +87,13 @@
             <div class="col-md-3">
                 <dl>
                     <dt>
-                        Treffpunkt:
+                        {{ 'track.properties.ride_location'|trans }}
                     </dt>
                     <dd>
                         {% if track.ride.location and track.ride.latitude and track.ride.longitude %}
                             {{ track.ride.location }}
                         {% else %}
-                            nicht bekannt
+                            {{ 'track.properties.ride_location_unknown'|trans }}
                         {% endif %}
                     </dd>
                 </dl>
@@ -105,7 +102,7 @@
             <div class="col-md-2">
                 <dl>
                     <dt>
-                        Distanz:
+                        {{ 'track.properties.distance'|trans }}
                     </dt>
                     <dd>
                         {{ track.distance|number_format(2) }}&nbsp;km
@@ -116,7 +113,7 @@
             <div class="col-md-2">
                 <dl>
                     <dt>
-                        Dauer:
+                        {{ 'track.properties.duration'|trans }}
                     </dt>
                     <dd>
                         {{ human_duration(track.getDurationInSeconds()) }}
@@ -133,13 +130,13 @@
                     <ul class="pagination justify-content-between">
                         <li class="page-item{% if not previous_track %} disabled{% endif %}">
                             <a class="page-link" href="{% if previous_track %}{{ object_path(previous_track) }}{% else %}#{% endif %}">
-                                &larr; Voriger Track
+                                &larr; {{ 'track.previous'|trans }}
                             </a>
                         </li>
 
                         <li class="page-item{% if not next_track %} disabled{% endif %}">
                             <a class="page-link" href="{% if next_track %}{{ object_path(next_track) }}{% else %}#{% endif %}">
-                                Nächster Track &rarr;
+                                {{ 'track.next'|trans }} &rarr;
                             </a>
                         </li>
                     </ul>

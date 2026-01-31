@@ -93,3 +93,47 @@ hint_modal:
         post_add_button:
             title: Kommentar verfassen
             text: '<p>Gefällt dir dieses Foto? Hast du etwas lustiges während der Tour erlebt? Mit einem criticalmass.in-Benutzerkonto kannst du an dieser Stelle einen Kommentar verfassen.</p>'
+
+track:
+    draw_page:
+        title: Track zeichnen
+        form:
+            submit:
+                caption: Speichern
+
+    view_page:
+        title: Track anzeigen
+        not_reviewed_alert: Dein Track wurde noch nicht bestätigt!
+        not_reviewed_hint: Bitte bestätige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a href="%range_url%">ganz einfach online beschneiden</a>.
+        trim_button: Track beschneiden
+        approve_button: Track bestätigen
+
+    list_page:
+        title: Deine Tracks
+        heading: Deine Gpx-Tracks
+        intro: Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet hast.
+        add_hint: Klicke in der Übersicht einer Radtour im Reiter „Tracks" auf den grünen Button, um einen neuen Track hinzuzufügen.
+        delete_modal:
+            title: Track löschen
+            confirm: Willst Du diesen Track wirklich löschen?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+
+    range_page:
+        title: Track beschneiden
+        intro: Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.
+        disclaimer: Das Beschneiden beschädigt deinen Track nicht, du kannst den für andere Nutzer sichtbaren Bereich jederzeit wieder ändern.
+        form:
+            submit: Speichern
+            cancel: Abbrechen
+
+    properties:
+        ride: Tour
+        date: Datum
+        ride_location: Treffpunkt
+        ride_location_unknown: nicht bekannt
+        distance: Distanz
+        duration: Dauer
+
+    previous: Voriger Track
+    next: Nächster Track
