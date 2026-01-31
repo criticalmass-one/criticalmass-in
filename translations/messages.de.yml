@@ -534,6 +534,43 @@ location:
     rides_panel_title: Touren von diesem Treffpunkt
     other_locations_panel_title: Andere Treffpunkte dieser Stadt
 
+statistic:
+    title: Statistiken
+    overview_lead: 'Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern der Critical Mass in den verschiedenen Städten nach einer Tour eingearbeitet worden sind &mdash; entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen.'
+    overview_info: Die Statistiken enthalten alle Städte aus Deutschland, bei denen innerhalb der letzten zwei Jahre mindestens 18 Schätzungen zu Teilnehmer-Zahlen abgegeben wurden.
+    tab_participants: Teilnehmerzahl
+    tab_duration: Fahrtdauer
+    tab_distance: Fahrtlänge
+    participants_info: Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die von den Teilnehmern geschätzt wurden.
+    duration_info: Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden angegeben.
+    distance_info: Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern angegeben.
+    list_rides_title: Critical-Mass-Teilnehmerzahlen im %month%
+    list_rides_lead: Hier siehst du die Liste der Touren im %month%.
+    col_city: Stadt
+    col_date: Datum
+    col_participants: Teilnehmer
+    col_distance: Distanz
+    col_duration: Dauer
+    col_average_speed: Durchschnittsgeschwindigkeit
+    col_participant_count: Teilnehmerzahl
+    col_track_distance: Streckenlänge
+    col_temperature: Temperatur
+    col_precipitation: Niederschlag
+    col_wind_speed: Windgeschwindigkeit
+    missing_data: 'Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.'
+    month_navigation: Monat Navigation
+    previous_month: Voriger Monat
+    next_month: Nächster Monat
+    top_title: Top-Ten-Statistiken
+    top_lead: Hier findest du eine Übersicht der Top-Ten der Touren mit den meisten Teilnehmern, der längsten Strecken und der längsten Dauer.
+    top_tab_distance: Strecke
+    city_title: Statistiken aus %city_name%
+    city_heading: Stadt-Statistiken von %city_name%
+    city_lead: 'Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern der Critical Mass in %city_name% nach einer Tour eingearbeitet worden sind &mdash; entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a href="%missing_stats_url%">Liste von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.'
+    table_comparison: Tabellarischer Vergleich
+    weather_correlation: Gibt es einen Zusammenhang zwischen dem Wetter und den Teilnehmerzahlen?
+    unknown: unbekannt
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.

@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Top-Ten-Statistiken{% endblock %}
+{% block title %}{{ 'statistic.top_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Top-Ten-Statistiken') }}
+    {{ breadcrumb.active('statistic.top_title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,11 +12,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Top-Ten-Statistiken
+                    {{ 'statistic.top_title'|trans }}
                 </h2>
 
                 <p class="lead">
-                    Hier findest du eine Übersicht der Top-Ten der Touren mit den meisten Teilnehmern, der längsten Strecken und der längsten Dauer.
+                    {{ 'statistic.top_lead'|trans }}
                 </p>
             </div>
         </div>
@@ -26,21 +26,21 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="participants-tab" data-bs-toggle="tab" data-bs-target="#participants" type="button" role="tab" aria-controls="participants" aria-selected="true">
                         <i class="far fa-users"></i>
-                        Teilnehmer
+                        {{ 'statistic.col_participants'|trans }}
                     </button>
                 </li>
 
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="distance-tab" data-bs-toggle="tab" data-bs-target="#distance" type="button" role="tab" aria-controls="distance" aria-selected="false">
                         <i class="far fa-map"></i>
-                        Strecke
+                        {{ 'statistic.top_tab_distance'|trans }}
                     </button>
                 </li>
 
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="duration-tab" data-bs-toggle="tab" data-bs-target="#duration" type="button" role="tab" aria-controls="duration" aria-selected="false">
                         <i class="far fa-clock"></i>
-                        Länge
+                        {{ 'statistic.col_duration'|trans }}
                     </button>
                 </li>
             </ul>
@@ -53,15 +53,15 @@
                             <thead>
                             <tr>
                                 <th>
-                                    Datum
+                                    {{ 'statistic.col_date'|trans }}
                                 </th>
 
                                 <th>
-                                    Stadt
+                                    {{ 'statistic.col_city'|trans }}
                                 </th>
 
                                 <th>
-                                    Teilnehmerzahl
+                                    {{ 'statistic.col_participant_count'|trans }}
                                 </th>
                             </tr>
                             </thead>
@@ -99,15 +99,15 @@
                             <thead>
                             <tr>
                                 <th>
-                                    Datum
+                                    {{ 'statistic.col_date'|trans }}
                                 </th>
 
                                 <th>
-                                    Stadt
+                                    {{ 'statistic.col_city'|trans }}
                                 </th>
 
                                 <th>
-                                    Streckenlänge
+                                    {{ 'statistic.col_track_distance'|trans }}
                                 </th>
                             </tr>
                             </thead>
@@ -145,15 +145,15 @@
                             <thead>
                             <tr>
                                 <th>
-                                    Datum
+                                    {{ 'statistic.col_date'|trans }}
                                 </th>
 
                                 <th>
-                                    Stadt
+                                    {{ 'statistic.col_city'|trans }}
                                 </th>
 
                                 <th>
-                                    Dauer
+                                    {{ 'statistic.col_duration'|trans }}
                                 </th>
                             </tr>
                             </thead>
@@ -185,7 +185,7 @@
             </div>
 
             <p>
-                Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.
+                {{ 'statistic.missing_data'|trans|raw }}
             </p>
         </div>
     </div>

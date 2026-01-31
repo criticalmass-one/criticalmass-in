@@ -1,12 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Statistiken aus {{ city.city }}{% endblock %}
+{% block title %}{{ 'statistic.city_title'|trans({'%city_name%': city.city}) }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.active('Statistiken') }}
+    {{ breadcrumb.active('statistic.title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -16,15 +16,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Stadt-Statistiken von {{ city.city }}
+                    {{ 'statistic.city_heading'|trans({'%city_name%': city.city}) }}
                 </h1>
 
                 <p class="lead">
-                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
-                    der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind &mdash; entweder von
-                    den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a
-                            href="{{ object_path(city, 'caldera_criticalmass_city_missingstats') }}">Liste
-                        von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.
+                    {{ 'statistic.city_lead'|trans({'%city_name%': city.city, '%missing_stats_url%': object_path(city, 'caldera_criticalmass_city_missingstats')})|raw }}
                 </p>
             </div>
         </div>
@@ -32,12 +28,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Teilnehmerzahl
+                    {{ 'statistic.col_participant_count'|trans }}
                 </h2>
 
                 <p>
-                    Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die von den
-                    Teilnehmern geschätzt wurden.
+                    {{ 'statistic.participants_info'|trans }}
                 </p>
             </div>
         </div>
@@ -59,11 +54,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Tabellarischer Vergleich
+                    {{ 'statistic.table_comparison'|trans }}
                 </h2>
 
                 <p class="lead">
-                    Gibt es einen Zusammenhang zwischen dem Wetter und den Teilnehmerzahlen?
+                    {{ 'statistic.weather_correlation'|trans }}
                 </p>
             </div>
         </div>
@@ -74,22 +69,22 @@
                     <thead>
                     <tr>
                         <th>
-                            Datum
+                            {{ 'statistic.col_date'|trans }}
                         </th>
                         <th>
-                            Temperatur
+                            {{ 'statistic.col_temperature'|trans }}
                         </th>
                         <th>
-                            Niederschlag
+                            {{ 'statistic.col_precipitation'|trans }}
                         </th>
                         <th>
-                            Windgeschwindigkeit
+                            {{ 'statistic.col_wind_speed'|trans }}
                         </th>
                         <th>
-                            Teilnehmerzahl
+                            {{ 'statistic.col_participant_count'|trans }}
                         </th>
                         <th>
-                            Streckenlänge
+                            {{ 'statistic.col_track_distance'|trans }}
                         </th>
                     </tr>
                     </thead>
@@ -99,7 +94,7 @@
                         {% if weather %}
                             <tr>
                                 <td>
-                                    {{ ride.dateTime | date('d.m.Y H:i') }}&nbsp;Uhr
+                                    {{ ride.dateTime | date('d.m.Y H:i') }}&nbsp;{{ 'common.time_suffix'|trans }}
                                 </td>
                                 <td>
                                     {{ weather.temperatureEvening|number_format(2) }}&nbsp;°C
@@ -114,14 +109,14 @@
                                     {% if ride.estimatedParticipants %}
                                     {{ ride.estimatedParticipants|number_format(0) }}
                                     {% else %}
-                                    unbekannt
+                                    {{ 'statistic.unknown'|trans }}
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if ride.estimatedDistance %}
                                     {{ ride.estimatedDistance|number_format(2) }}&nbsp;km
                                     {% else %}
-                                    unbekannt
+                                    {{ 'statistic.unknown'|trans }}
                                     {% endif %}
                                 </td>
                             </tr>
