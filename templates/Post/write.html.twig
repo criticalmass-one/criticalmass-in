@@ -4,22 +4,22 @@
             <div class="modal-content">
                 <div class="modal-header border-0">
                     <h5 class="modal-title" id="label-add-post">
-                        <i class="far fa-comment-alt text-primary me-2"></i>Kommentar schreiben
+                        <i class="far fa-comment-alt text-primary me-2"></i>{{ 'post.write.modal_title'|trans }}
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'common.close'|trans }}"></button>
                 </div>
                 {{ form_start(form, {'attr': {'id': 'form-post'}}) }}
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label text-muted">Dein Kommentar</label>
-                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'Schreibe hier deinen Kommentar...'}}) }}
+                        <label class="form-label text-muted">{{ 'post.write.label_comment'|trans }}</label>
+                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'post.write.placeholder'|trans}}) }}
                     </div>
                     {{ form_widget(form._token) }}
                 </div>
                 <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'common.cancel'|trans }}</button>
                     <button type="submit" id="button-submit-post" class="btn btn-primary">
-                        <i class="far fa-save me-1"></i>Speichern
+                        <i class="far fa-save me-1"></i>{{ 'common.save'|trans }}
                     </button>
                 </div>
                 {{ form_end(form) }}

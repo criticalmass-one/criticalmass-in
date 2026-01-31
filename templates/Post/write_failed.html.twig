@@ -1,17 +1,17 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Kommentar schreiben{% endblock %}
+{% block title %}{{ 'post.write.page_title'|trans }}{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h1>
-                    Hoppla: Vertippt?
+                    {{ 'post.write_failed.heading'|trans }}
                 </h1>
 
                 <p class="lead">
-                    Du hast leider gar keinen Kommentar eingegeben.
+                    {{ 'post.write_failed.lead'|trans }}
                 </p>
             </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
-                    <label for="" class="control-label">Dein Kommentar:</label>
+                    <label for="" class="control-label">{{ 'post.write.label_comment'|trans }}</label>
                     {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
                 </div>
             </div>
@@ -32,10 +32,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="form-group">
-                    <input type="checkbox" id="form-post-share-location" checked="checked"/> Wenn du diese Checkbox
-                    aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer
-                    Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares
-                    entfernen.
+                    <input type="checkbox" id="form-post-share-location" checked="checked"/> {{ 'post.write.share_location'|trans }}
                 </div>
             </div>
         </div>
@@ -48,11 +45,11 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="btn-group" role="group" aria-label="...">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Abbrechen
+                        {{ 'common.cancel'|trans }}
                     </button>
                     <button type="submit" id="button-submit-post" class="btn btn-success">
                         <i class="far fa-pencil"></i>
-                        Speichern
+                        {{ 'common.save'|trans }}
                     </button>
                 </div>
             </div>

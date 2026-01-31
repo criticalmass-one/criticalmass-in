@@ -4,7 +4,7 @@
 {% block title %}{{ board.title }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.item('board.breadcrumb_discussions'|trans, path('caldera_criticalmass_board_overview')) }}
     {{ breadcrumb.active(board.title) }}
 {% endblock %}
 
@@ -14,7 +14,7 @@
             <div class="col-md-12">
                 {% if app.getUser() %}
                     <a href="{{ newThreadUrl }}" class="btn btn-success pull-right margin-top-medium">
-                        neues Thema eröffnen
+                        {{ 'board.list_threads.new_thread'|trans }}
                     </a>
                 {% endif %}
                 <h1>
@@ -30,19 +30,19 @@
                         <thead>
                         <tr>
                             <th>
-                                Titel
+                                {{ 'board.list_threads.col_title'|trans }}
                             </th>
                             <th>
-                                Autor
+                                {{ 'board.list_threads.col_author'|trans }}
                             </th>
                             <th>
-                                Antworten
+                                {{ 'board.list_threads.col_replies'|trans }}
                             </th>
                             <th>
-                                Ansichten
+                                {{ 'board.list_threads.col_views'|trans }}
                             </th>
                             <th>
-                                letzter Beitrag
+                                {{ 'board.list_threads.col_last_post'|trans }}
                             </th>
                         </tr>
                         </thead>
@@ -56,7 +56,7 @@
                                 </td>
                                 <td>
                                     <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.firstPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
-                                    von <strong>{{ thread.firstPost.user.username }}</strong>
+                                    {{ 'board.list_threads.by_author'|trans({'%username%': thread.firstPost.user.username})|raw }}
                                 </td>
                                 <td>
                                     {{ thread.postNumber }}
@@ -67,8 +67,8 @@
                                 <td>
                                     {% if thread.lastPost %}
                                         <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
-                                        von <strong>{{ thread.lastPost.user.username }}</strong><br/>
-                                        {{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                        {{ 'board.list_threads.by_author'|trans({'%username%': thread.lastPost.user.username})|raw }}<br/>
+                                        {{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;{{ 'board.list_threads.time_suffix'|trans }}
                                     {% endif %}
                                 </td>
                             </tr>
@@ -78,9 +78,9 @@
                 {% else %}
                     <div class="alert alert-info" role="alert">
                         <strong>
-                            Hier gibt es nichts zu sehen!
+                            {{ 'board.list_threads.empty_heading'|trans }}
                         </strong>
-                        Bislang hat leider noch niemand einen Beitrag in diesem Forum geschrieben.
+                        {{ 'board.list_threads.empty_text'|trans }}
                     </div>
                 {% endif %}
             </div>

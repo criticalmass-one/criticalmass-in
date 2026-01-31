@@ -411,6 +411,39 @@ gallery:
     city_gallery_heading: Fotogalerie
     city_gallery_lead: 'Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren Critical-Mass-Touren aus %cities%. Viel Spaß beim Herumblättern!'
 
+post:
+    write:
+        modal_title: Kommentar hinzufügen
+        page_title: Kommentar schreiben
+        label_comment: 'Dein Kommentar:'
+        share_location: 'Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares entfernen.'
+    write_failed:
+        heading: 'Hoppla: Vertippt?'
+        lead: Du hast leider gar keinen Kommentar eingegeben.
+    list:
+        empty_label: 'Schade!'
+        empty_text: Bislang hat noch niemand einen Kommentar geschrieben!
+
+board:
+    breadcrumb_discussions: Diskussionen
+    add_thread:
+        title: Neues Thema beginnen
+        breadcrumb: neues Thema beginnen
+        heading: Neues Thema beginnen
+        label_title: 'Titel deines Themas:'
+        label_message: 'Dein Beitrag:'
+    list_threads:
+        new_thread: neues Thema eröffnen
+        col_title: Titel
+        col_author: Autor
+        col_replies: Antworten
+        col_views: Ansichten
+        col_last_post: letzter Beitrag
+        by_author: 'von <strong>%username%</strong>'
+        time_suffix: Uhr
+        empty_heading: Hier gibt es nichts zu sehen!
+        empty_text: Bislang hat leider noch niemand einen Beitrag in diesem Forum geschrieben.
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.

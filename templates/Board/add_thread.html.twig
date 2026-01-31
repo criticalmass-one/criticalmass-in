@@ -1,12 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Neues Thema beginnen{% endblock %}
+{% block title %}{{ 'board.add_thread.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.item('board.breadcrumb_discussions'|trans, path('caldera_criticalmass_board_overview')) }}
     {{ breadcrumb.item(board.title, object_path(board)) }}
-    {{ breadcrumb.active('neues Thema beginnen') }}
+    {{ breadcrumb.active('board.add_thread.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Neues Thema beginnen
+                    {{ 'board.add_thread.heading'|trans }}
                 </h1>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label" for="">Titel deines Themas:</label>
+                    <label class="control-label" for="">{{ 'board.add_thread.label_title'|trans }}</label>
                     {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="control-label" for="">Dein Beitrag:</label>
+                    <label class="control-label" for="">{{ 'board.add_thread.label_message'|trans }}</label>
                     {{ form_widget(form.message, { 'attr' : { 'class': 'form-control', 'rows': 10 } }) }}
                 </div>
             </div>
@@ -44,11 +44,11 @@
             <div class="col-md-12">
                 <div class="btn-group pull-right">
                     <a href="{{ object_path(board) }}" class="btn btn-secondary">
-                        Abbrechen
+                        {{ 'common.cancel'|trans }}
                     </a>
 
                     <button type="submit" class="btn btn-success">
-                        Speichern
+                        {{ 'common.save'|trans }}
                     </button>
                 </div>
             </div>
