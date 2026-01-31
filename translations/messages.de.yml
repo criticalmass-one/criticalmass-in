@@ -534,6 +534,32 @@ location:
     rides_panel_title: Touren von diesem Treffpunkt
     other_locations_panel_title: Andere Treffpunkte dieser Stadt
 
+social_network:
+    breadcrumb: Soziale Netzwerke
+    add_profile: Profil ergänzen
+    add_title: Soziales Netzwerk hinzufügen
+    edit_title: Soziales Netzwerk editieren
+    list_lead_city: 'Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in <strong>%city_name%</strong> in Verbindung stehen.'
+    list_lead_ride: 'Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am <strong>%ride_date%</strong> in Verbindung stehen.'
+    col_network: Netzwerk
+    col_username: Benutzername
+    col_management: Verwaltung
+    empty_ride: Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
+    empty_city: Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
+    parent_city_info: Die Profile der übergeordneten Stadt %city_name% werden getrennt von dieser Liste verwaltet.
+    manage_city_profiles: Profile der Stadt verwalten
+    add_profile_info: Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
+    label_profile_link: 'Link zum Profil:'
+    label_network: 'Netzwerk:'
+    label_main_profile: 'Hauptprofil:'
+    label_address: 'Adresse:'
+    label_social_network: 'Soziales Netzwerk:'
+    label_main_account: 'Hauptkonto:'
+    help_main_account: Handelt es sich bei diesem Konto um das Hauptkonto in diesem Netzwerk?
+    items_empty: '<strong>Schade!</strong> Entweder veröffentlicht niemand von der %city_title% neue Beiträge in sozialen Netzerken oder wir waren nicht in der Lage, die Beiträge abzurufen.'
+    items_empty_hint: 'Wenn du für %city_name% <a href="%social_network_url%">gesellschaftliche Netzwerke</a> konfigurierst, werden Beiträge aus diesen Netzwerken hier angezeigt.'
+    read_more: Weiterlesen
+
 statistic:
     title: Statistiken
     overview_lead: 'Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern der Critical Mass in den verschiedenen Städten nach einer Tour eingearbeitet worden sind &mdash; entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen.'
@@ -646,6 +672,7 @@ common:
     edit: Bearbeiten
     close: Schließen
     loading: Laden…
+    time_suffix: Uhr
 
 footer:
     days_in_saddle: Seit %days% Tagen im Sattel
