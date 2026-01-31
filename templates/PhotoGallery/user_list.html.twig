@@ -1,17 +1,17 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Deine Fotos{% endblock %}
+{% block title %}{{ 'gallery.user_list_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Deine Fotos') }}
+    {{ breadcrumb.active('gallery.user_list_breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Fotos sortieren</h2>
+                <h2>{{ 'gallery.user_list_heading'|trans }}</h2>
             </div>
         </div>
 
@@ -19,11 +19,11 @@
             <div class="col-md-12">
                 <table class="table">
                     <tr>
-                        <th>Datum</th>
-                        <th>Stadt</th>
-                        <th>Tour</th>
-                        <th>Anzahl</th>
-                        <th>Optionen</th>
+                        <th>{{ 'gallery.user_list_col_date'|trans }}</th>
+                        <th>{{ 'gallery.user_list_col_city'|trans }}</th>
+                        <th>{{ 'gallery.user_list_col_ride'|trans }}</th>
+                        <th>{{ 'gallery.user_list_col_count'|trans }}</th>
+                        <th>{{ 'gallery.user_list_col_options'|trans }}</th>
                     </tr>
                     {% for key, ride in result['rides'] %}
                         <tr>
@@ -57,7 +57,7 @@
                     {% endfor %}
 
                     {% if result['rides']|length == 0 %}
-                        <td colspan="7" style="text-align: center;">Du hast bislang keine Tracks hochgeladen :(</td>
+                        <td colspan="7" style="text-align: center;">{{ 'gallery.user_list_no_tracks'|trans }}</td>
                     {% endif %}
                 </table>
             </div>

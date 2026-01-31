@@ -3,13 +3,13 @@
 
 {% set city = ride.city %}
 
-{% block title %}Fotos{% endblock %}
+{% block title %}{{ 'gallery.ride_list_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('photo.show.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.active('Fotos') }}
+    {{ breadcrumb.active('gallery.ride_list_breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -20,9 +20,9 @@
                     {% if app.user %}
                         {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
 
-                        <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
+                        <a class="btn btn-success" href="{{ uploadPath }}" title="{{ 'gallery.ride_list_upload_button'|trans }}">
                             <i class="far fa-camera"></i>
-                            Fotos hochladen
+                            {{ 'gallery.ride_list_upload_button'|trans }}
                         </a>
                     {% else %}
                         <button
@@ -33,13 +33,13 @@
                                 data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
                                 data-modal-hint-size="md">
                             <i class="far fa-camera"></i>
-                            Fotos hochladen
+                            {{ 'gallery.ride_list_upload_button'|trans }}
                         </button>
                     {% endif %}
                 </div>
 
                 <h1>
-                    Fotos von {{ ride.title }}
+                    {{ 'gallery.ride_list_heading'|trans({'%ride%': ride.title}) }}
                 </h1>
             </div>
         </div>
@@ -50,11 +50,9 @@
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
-                                Schade!
+                                {{ 'gallery.ride_list_no_photos_guest_label'|trans }}
                             </strong>
-                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a
-                                    href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
-                            könntest du deine Fotos hochladen.
+                            {{ 'gallery.ride_list_no_photos_guest'|trans({'%login_url%': path('login')})|raw }}
                         </div>
                     </div>
                 </div>
@@ -63,9 +61,9 @@
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
-                                Hej!
+                                {{ 'gallery.ride_list_no_photos_user_label'|trans }}
                             </strong>
-                            Du kannst der Erste sein, der hier seine Fotos hochlädt!
+                            {{ 'gallery.ride_list_no_photos_user'|trans }}
                         </div>
                     </div>
                 </div>

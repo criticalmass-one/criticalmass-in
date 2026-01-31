@@ -321,6 +321,96 @@ subride:
     copy_time_suffix: 'Uhr:'
     copy_button: Kopieren
 
+photo:
+    show:
+        breadcrumb_city_list: Städteliste
+        breadcrumb_photos: Fotos
+        breadcrumb_photo: 'Foto %id% aus %city%'
+        navigation_label: Foto Navigation
+        previous_photo: '&larr; Voriges Foto'
+        next_photo: 'Nächstes Foto &rarr;'
+        login_heading: Bitte logge dich ein
+        login_text: 'Um diese Fotos anzusehen, musst du dich leider einloggen. Keine Sorge, das dauert keine fünf Sekunden:'
+        login_button: Login
+        login_why_heading: Warum wird mir das angezeigt?
+        login_why_text: 'criticalmass.in ist ein reines Hobby-Projekt ohne jegliche Absichten zur Gewinnerzielung. Der Ansturm auf Fotos bringt Server und Anbindung leider regelmäßig an die Belastungsgrenze &mdash; Indem bestimmte Fotos nur für angemeldete Nutzer angezeigt werden, lässt sich die Belastung (hoffentlich) besser verteilen.'
+    comments:
+        add_comment: Kommentar hinzufügen
+        heading: Kommentare zu diesem Foto
+    management:
+        manage_title: Fotos bearbeiten
+        manage_breadcrumb: Fotos bearbeiten
+        upload_more: Weitere Fotos hochladen
+        manage_heading: Fotos bearbeiten
+        dropdown_edit: Bearbeiten
+        capture_date: 'Aufnahmedatum:'
+        rotate_left: links rotieren
+        rotate_right: rechts rotieren
+        deactivate: Deaktivieren
+        activate: Aktivieren
+        unset_featured: Hauptbild lösen
+        set_featured: Hauptbild festlegen
+        user_list_title: Fotos sortieren
+        user_list_breadcrumb: Fotos sortieren
+        user_list_heading: Fotos sortieren
+        col_date: Datum
+        col_city: Stadt
+        col_ride: Tour
+        col_count: Anzahl
+        col_options: Optionen
+        no_photos: '<strong>Schade:</strong> Du hast bislang keine Fotos hochgeladen. Du kannst auf der Übersichtsseite einer Tour Fotos hochladen.'
+        place_title: Foto platzieren
+        place_breadcrumb: Foto platzieren
+        place_heading: Foto platzieren
+        place_lead: Hier kannst du das folgende Foto auf der Karte platzieren oder verschieben.
+        relocate_title: Fotos ausrichten
+        relocate_breadcrumb: Fotos ausrichten
+        relocate_manage_breadcrumb: Fotos verwalten
+        relocate_heading: Fotos ausrichten
+        relocate_no_track: '<strong>Kein Track gefunden!</strong> Bitte lade erst einen GPX-Track deiner Tour hoch, um anschließend Fotos zu verorten.'
+        censor_title: Foto zensieren
+        censor_heading: Foto zensieren
+        censor_lead: Markiere mit der Maus auf dem Foto jene Bereiche, die du unkenntlich machen möchtest.
+    upload:
+        title: Fotos hochladen
+        breadcrumb: Fotos hochladen
+        heading: Fotos hochladen
+        legacy_intro: 'Hier kannst du einzelne Fotos zu einer Tour hochladen. Wenn du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten enthalten, werden deine Fotos automatisch auf der Karte verortet.'
+        legacy_copyright: 'Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!'
+        legacy_multi_hint: 'Um mehrere Fotos auf einmal hochzuladen, probiere bitte <a href="%multi_upload_url%">Multi-Uploader</a> aus.'
+        legacy_submit: Datei hochladen
+        multi_intro: 'Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen. Wenn du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten enthalten, werden deine Fotos automatisch auf der Karte verortet.'
+        multi_fallback: 'Falls dieser Uploader nicht funktionieren sollte, kannst du auch unseren <a href="%legacy_upload_url%">alten Uploader</a> ausprobieren.'
+        multi_copyright: 'Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!'
+
+gallery:
+    title: Fotogalerie
+    breadcrumb: Fotogalerie
+    heading: Fotogalerie
+    example_lead: 'Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren Critical-Mass-Touren aus %cities%. Viel Spaß beim Herumblättern!'
+    conjunction: ' und '
+    ride_list_title: Fotos
+    ride_list_breadcrumb: Fotos
+    ride_list_upload_button: Fotos hochladen
+    ride_list_heading: 'Fotos von %ride%'
+    ride_list_no_photos_guest: 'Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a href="%login_url%">criticalmass.in-Benutzerkonto</a> könntest du deine Fotos hochladen.'
+    ride_list_no_photos_guest_label: 'Schade!'
+    ride_list_no_photos_user: Du kannst der Erste sein, der hier seine Fotos hochlädt!
+    ride_list_no_photos_user_label: 'Hej!'
+    user_list_title: Deine Fotos
+    user_list_breadcrumb: Deine Fotos
+    user_list_heading: Fotos sortieren
+    user_list_col_date: Datum
+    user_list_col_city: Stadt
+    user_list_col_ride: Tour
+    user_list_col_count: Anzahl
+    user_list_col_options: Optionen
+    user_list_no_tracks: 'Du hast bislang keine Tracks hochgeladen :('
+    city_gallery_title: Fotogalerie
+    city_gallery_breadcrumb: Fotogalerie
+    city_gallery_heading: Fotogalerie
+    city_gallery_lead: 'Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren Critical-Mass-Touren aus %cities%. Viel Spaß beim Herumblättern!'
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.

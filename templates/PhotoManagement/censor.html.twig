@@ -1,17 +1,17 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Foto zensieren{% endblock %}
+{% block title %}{{ 'photo.management.censor_title'|trans }}{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <h2>
-                Foto zensieren
+                {{ 'photo.management.censor_heading'|trans }}
             </h2>
 
             <p class="lead">
-                Markiere mit der Maus auf dem Foto jene Bereiche, die du unkenntlich machen möchtest.
+                {{ 'photo.management.censor_lead'|trans }}
             </p>
         </div>
     </div>
@@ -26,10 +26,10 @@
         <div class="col-md-12">
             <div class="btn-group pull-right" role="group">
                 <a href="javascript:window.location=document.referrer;" class="btn btn-secondary">
-                    Abbrechen
+                    {{ 'common.cancel'|trans }}
                 </a>
                 <button id="save" class="btn btn-primary">
-                    Speichern
+                    {{ 'common.save'|trans }}
                 </button>
             </div>
         </div>
