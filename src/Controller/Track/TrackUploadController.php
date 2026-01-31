@@ -2,7 +2,9 @@
 
 namespace App\Controller\Track;
 
+use App\Criticalmass\Fit\FitConverter\FitConverterInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Event\Track\TrackUploadedEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -25,8 +27,15 @@ class TrackUploadController extends AbstractController
         name: 'caldera_criticalmass_track_upload',
         priority: 270
     )]
-    public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackValidator $trackValidator): Response
-    {
+    public function uploadAction(
+        Request $request,
+        EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter,
+        Ride $ride,
+        TrackValidator $trackValidator,
+        FitConverterInterface $fitConverter,
+        UploadFakerInterface $uploadFaker,
+    ): Response {
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
@@ -35,13 +44,13 @@ class TrackUploadController extends AbstractController
             ->getForm();
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->uploadPostAction($request, $eventDispatcher, $objectRouter, $track, $ride, $form, $trackValidator);
+            return $this->uploadPostAction($request, $eventDispatcher, $objectRouter, $track, $ride, $form, $trackValidator, $fitConverter, $uploadFaker);
         } else {
-            return $this->uploadGetAction($request, $eventDispatcher, $objectRouter, $ride, $form, $trackValidator);
+            return $this->uploadGetAction($ride, $form);
         }
     }
 
-    protected function uploadGetAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
+    protected function uploadGetAction(Ride $ride, FormInterface $form): Response
     {
         return $this->render('Track/upload.html.twig', [
             'form' => $form->createView(),
@@ -50,8 +59,17 @@ class TrackUploadController extends AbstractController
         ]);
     }
 
-    public function uploadPostAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Track $track, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
-    {
+    public function uploadPostAction(
+        Request $request,
+        EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter,
+        Track $track,
+        Ride $ride,
+        FormInterface $form,
+        TrackValidator $trackValidator,
+        FitConverterInterface $fitConverter,
+        UploadFakerInterface $uploadFaker,
+    ): Response {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -75,11 +93,32 @@ class TrackUploadController extends AbstractController
                 ]);
             }
 
+            $isFitFile = $trackValidator->isFitFile();
+
+            if ($isFitFile) {
+                try {
+                    $trackFilename = $track->getTrackFilename();
+                    $trackDirectory = $this->getParameter('upload_destination.track');
+                    $fitFilePath = sprintf('%s/%s', $trackDirectory, $trackFilename);
+
+                    $gpxContent = $fitConverter->convertToGpxString($fitFilePath);
+                    $uploadFaker->fakeUpload($track, 'trackFile', $gpxContent, 'upload.gpx');
+
+                    $em->persist($track);
+                } catch (\Exception $e) {
+                    return $this->render('Track/upload.html.twig', [
+                        'form' => $form->createView(),
+                        'ride' => $ride,
+                        'errorMessage' => sprintf('FIT-Datei konnte nicht konvertiert werden: %s', $e->getMessage()),
+                    ]);
+                }
+            }
+
             $track
                 ->setRide($ride)
                 ->setUser($this->getUser())
                 ->setUsername($this->getUser()->getUsername())
-                ->setSource(Track::TRACK_SOURCE_GPX);
+                ->setSource($isFitFile ? Track::TRACK_SOURCE_FIT : Track::TRACK_SOURCE_GPX);
 
             $em->persist($track);
             $em->flush();
@@ -89,6 +128,6 @@ class TrackUploadController extends AbstractController
             return $this->redirect($objectRouter->generate($track));
         }
 
-        return $this->uploadGetAction($request, $eventDispatcher, $objectRouter, $ride, $form, $trackValidator);
+        return $this->uploadGetAction($ride, $form);
     }
 }

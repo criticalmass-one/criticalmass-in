@@ -1,7 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Gpx-Datei hochladen{% endblock %}
+{% block title %}GPX- oder FIT-Datei hochladen{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-6 col-offset-md-3">
                 <h2>
-                    Gpx-Datei hochladen
+                    GPX- oder FIT-Datei hochladen
                 </h2>
             </div>
         </div>
@@ -26,7 +26,7 @@
                     Wenn du deine Fahrt bei der <strong>{{ ride.city.title }}</strong> am
                     <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> aufgezeichnet hast, kannst du
                     hier
-                    deinen Track als GPX-Datei hochladen.
+                    deinen Track als GPX- oder FIT-Datei hochladen.
                 </p>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            Gpx-Datei hochladen
+                            GPX- oder FIT-Datei hochladen
                         </h3>
                     </div>
                     <div class="panel-body">
