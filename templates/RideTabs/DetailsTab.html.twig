@@ -5,19 +5,19 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">
             <i class="far fa-info-circle text-muted me-2"></i>
-            Über diese Tour
+            {{ 'ride.tabs.details.about_title'|trans }}
         </h4>
         <div class="btn-group">
             {% if app.user %}
                 {% if not ride.enabled %}
-                    <a class="btn btn-success btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}" title="Tour freischalten">
+                    <a class="btn btn-success btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}" title="{{ 'ride.tabs.details.enable_title'|trans }}">
                         <i class="far fa-unlock-alt me-1"></i>
-                        Aktivieren
+                        {{ 'ride.tabs.details.enable_button'|trans }}
                     </a>
                 {% else %}
-                    <a class="btn btn-outline-primary btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
+                    <a class="btn btn-outline-primary btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" title="{{ 'ride.tabs.details.edit_title'|trans }}">
                         <i class="far fa-edit me-1"></i>
-                        Bearbeiten
+                        {{ 'ride.tabs.details.edit_button'|trans }}
                     </a>
                 {% endif %}
                 <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -26,19 +26,19 @@
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
                         <a class="dropdown-item" href="{{ object_path(ride, 'criticalmass_socialnetwork_ride_list') }}">
-                            <i class="far fa-share-alt me-2"></i>Soziale Netzwerke
+                            <i class="far fa-share-alt me-2"></i>{{ 'ride.tabs.details.manage_social'|trans }}
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_ride_socialpreview') }}">
-                            <i class="far fa-eye me-2"></i>Social-Media-Vorschau
+                            <i class="far fa-eye me-2"></i>{{ 'ride.tabs.details.social_preview'|trans }}
                         </a>
                     </li>
                     {% if ride.enabled %}
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#disable-modal">
-                                <i class="far fa-ban me-2"></i>Tour deaktivieren
+                                <i class="far fa-ban me-2"></i>{{ 'ride.tabs.details.disable_link'|trans }}
                             </a>
                         </li>
                     {% endif %}
@@ -50,7 +50,7 @@
                     data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
                     data-modal-hint-size="md">
                     <i class="far fa-edit me-1"></i>
-                    Bearbeiten
+                    {{ 'ride.tabs.details.edit_button'|trans }}
                 </button>
             {% endif %}
         </div>
@@ -69,16 +69,16 @@
                         <i class="far fa-lightbulb fa-2x text-info"></i>
                     </div>
                     <div class="flex-grow-1 ms-3">
-                        <h5 class="card-title">Diese Tour braucht noch Infos</h5>
+                        <h5 class="card-title">{{ 'ride.tabs.details.no_description_heading'|trans }}</h5>
                         <p class="card-text text-muted">
-                            Bislang hat noch niemand Details zu dieser Tour hinterlegt. Hilf mit und ergänze:
+                            {{ 'ride.tabs.details.no_description_text'|trans }}
                         </p>
                         <ul class="text-muted mb-3">
-                            <li>Gibt es ein Motto für diese Tour?</li>
-                            <li>Neuigkeiten oder Termine für den Radverkehr?</li>
+                            <li>{{ 'ride.tabs.details.no_description_motto'|trans }}</li>
+                            <li>{{ 'ride.tabs.details.no_description_news'|trans }}</li>
                         </ul>
                         <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" class="btn btn-primary">
-                            <i class="far fa-edit me-1"></i>Tour ergänzen
+                            <i class="far fa-edit me-1"></i>{{ 'ride.tabs.details.edit_button'|trans }}
                         </a>
                     </div>
                 </div>
@@ -91,22 +91,22 @@
                     <i class="far fa-exclamation-triangle fa-2x"></i>
                 </div>
                 <div class="flex-grow-1 ms-3">
-                    <h5 class="alert-heading">Tour abgesagt</h5>
+                    <h5 class="alert-heading">{{ 'ride.tabs.details.disabled_heading'|trans }}</h5>
                     <p class="mb-0">
                         {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
-                            Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
+                            {{ 'ride.tabs.details.disabled_reason_duplicate'|trans }}
                         {% elseif ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
-                            Diese Tour wurde mit falschen Daten angelegt.
+                            {{ 'ride.tabs.details.disabled_reason_wrong_website'|trans }}
                         {% elseif ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
-                            Diese Tour wurde fehlerhafterweise automatisch generiert.
+                            {{ 'ride.tabs.details.disabled_reason_wrong_auto'|trans }}
                         {% elseif ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
-                            Diese Tour wurde witterungsbedingt abgesagt.
+                            {{ 'ride.tabs.details.disabled_reason_weather'|trans }}
                         {% elseif ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
-                            Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
+                            {{ 'ride.tabs.details.disabled_reason_participants'|trans }}
                         {% elseif ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
-                            Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
+                            {{ 'ride.tabs.details.disabled_reason_authorities'|trans }}
                         {% elseif ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
-                            Diese Tour wurde abgesagt.
+                            {{ 'ride.tabs.details.disabled_reason_cancelled'|trans }}
                         {% endif %}
                     </p>
                     {% if ride.disabledReasonMessage %}

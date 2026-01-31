@@ -10,7 +10,7 @@
 <div class="card border-0 bg-light mb-3">
     <div class="card-body">
         <h6 class="card-subtitle mb-3 text-muted">
-            <i class="far fa-chart-bar me-2"></i>Statistik
+            <i class="far fa-chart-bar me-2"></i>{{ 'ride.statistic.panel_title'|trans }}
         </h6>
 
         {% if hasEstimations %}
@@ -19,7 +19,7 @@
                     <div class="col-6">
                         <div class="text-center p-2 bg-white rounded">
                             <div class="h4 mb-0 text-primary">{{ ride.estimatedParticipants|number_format(0) }}</div>
-                            <small class="text-muted">Teilnehmer</small>
+                            <small class="text-muted">{{ 'ride.statistic.participants'|trans }}</small>
                         </div>
                     </div>
                 {% endif %}
@@ -28,7 +28,7 @@
                     <div class="col-6">
                         <div class="text-center p-2 bg-white rounded">
                             <div class="h4 mb-0 text-success">{{ ride.estimatedDistance|number_format(1) }}</div>
-                            <small class="text-muted">Kilometer</small>
+                            <small class="text-muted">{{ 'ride.statistic.distance'|trans }}</small>
                         </div>
                     </div>
                 {% endif %}
@@ -37,7 +37,7 @@
                     <div class="col-6">
                         <div class="text-center p-2 bg-white rounded">
                             <div class="h5 mb-0 text-info">{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</div>
-                            <small class="text-muted">Dauer</small>
+                            <small class="text-muted">{{ 'ride.statistic.duration'|trans }}</small>
                         </div>
                     </div>
                 {% endif %}
@@ -46,7 +46,7 @@
                     <div class="col-6">
                         <div class="text-center p-2 bg-white rounded">
                             <div class="h5 mb-0 text-warning">{{ ride.getAverageVelocity()|number_format(1) }}</div>
-                            <small class="text-muted">km/h</small>
+                            <small class="text-muted">{{ 'ride.statistic.average_velocity'|trans }}</small>
                         </div>
                     </div>
                 {% endif %}
@@ -56,7 +56,7 @@
         <div class="d-grid">
             {% if app.user %}
                 <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#estimate-modal">
-                    <i class="far fa-users me-1"></i>Teilnehmerzahl schätzen
+                    <i class="far fa-users me-1"></i>{{ 'ride.statistic.estimate_button'|trans }}
                 </button>
             {% else %}
                 <button type="button" class="btn btn-outline-primary btn-sm"
@@ -64,7 +64,7 @@
                     data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}"
                     data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
                     data-modal-hint-size="md">
-                    <i class="far fa-users me-1"></i>Teilnehmerzahl schätzen
+                    <i class="far fa-users me-1"></i>{{ 'ride.statistic.estimate_button'|trans }}
                 </button>
             {% endif %}
         </div>
@@ -78,20 +78,20 @@
                 {{ form_start(estimateForm) }}
                 <div class="modal-header border-0">
                     <h5 class="modal-title" id="estimate-modal-label">
-                        <i class="far fa-users text-primary me-2"></i>Teilnehmerzahl schätzen
+                        <i class="far fa-users text-primary me-2"></i>{{ 'ride.statistic.estimate_modal_title'|trans }}
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'common.close'|trans }}"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label" for="estimatedParticipants">Geschätzte Anzahl:</label>
-                        {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control form-control-lg text-center', 'placeholder': 'z.B. 150' } }) }}
+                        <label class="form-label" for="estimatedParticipants">{{ 'ride.statistic.estimate_label'|trans }}</label>
+                        {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control form-control-lg text-center', 'placeholder': 'ride.statistic.estimate_placeholder'|trans } }) }}
                     </div>
                 </div>
                 <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'common.cancel'|trans }}</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="far fa-save me-1"></i>Speichern
+                        <i class="far fa-save me-1"></i>{{ 'common.save'|trans }}
                     </button>
                 </div>
                 {{ form_end(estimateForm) }}

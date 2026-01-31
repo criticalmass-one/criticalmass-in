@@ -1,20 +1,20 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Kalender{% endblock %}
+{% block title %}{{ 'ride.list.title'|trans }}{% endblock %}
 
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
-            <li class="active">Kalender</li>
+            <li><a href="{{ path('caldera_criticalmass_city_list') }}">{{ 'ride.list.breadcrumb_city_list'|trans }}</a></li>
+            <li class="active">{{ 'ride.list.breadcrumb_calendar'|trans }}</li>
         </ol>
 
         <div class="row">
             <div class="col-md-12">
-                <h1>hic sunt birotarii</h1>
+                <h1>{{ 'ride.list.heading'|trans }}</h1>
 
-                <p class="lead">Irgendwo ist immer was los.</p>
+                <p class="lead">{{ 'ride.list.lead'|trans }}</p>
             </div>
         </div>
 
@@ -29,16 +29,16 @@
             <table class="table">
                 <tr>
                     <th class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
-                        Stadt
+                        {{ 'ride.list.col_city'|trans }}
                     </th>
                     <th class="hidden-xs col-sm-3 col-md-2 col-lg-2">
-                        Uhrzeit
+                        {{ 'ride.list.col_time'|trans }}
                     </th>
                     <th class="col-xs-8 col-sm-6 col-md-4 col-lg-4">
-                        Treffpunkt
+                        {{ 'ride.list.col_location'|trans }}
                     </th>
                     <th class="hidden-xs hidden-sm col-md-4 col-lg-4">
-                        Titel
+                        {{ 'ride.list.col_title'|trans }}
                     </th>
                 </tr>
 
@@ -52,7 +52,7 @@
 
                         <td class="hidden-xs col-sm-3 col-md-2 col-lg-2">
                             <a href="{{ object_path(ride) }}">
-                                {{ ride.getTime().format('H:i') }} Uhr
+                                {{ ride.getTime().format('H:i') }} {{ 'ride.list.time_suffix'|trans }}
                             </a>
                         </td>
 

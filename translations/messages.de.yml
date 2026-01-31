@@ -173,6 +173,106 @@ estimate:
     label: 'Teilnehmerzahl:'
     submit: Absenden
 
+ride:
+    list:
+        title: Kalender
+        breadcrumb_city_list: Städteliste
+        breadcrumb_calendar: Kalender
+        heading: hic sunt birotarii
+        lead: Irgendwo ist immer was los.
+        col_city: Stadt
+        col_time: Uhrzeit
+        col_location: Treffpunkt
+        col_title: Titel
+        time_suffix: Uhr
+    disable:
+        modal_title: Tour deaktivieren
+        reason_label: 'Grund für die Deaktivierung:'
+        comment_label: 'Kommentar zur Deaktivierung (optional):'
+        submit: Deaktivieren
+    statistic:
+        panel_title: Statistik
+        participants: Teilnehmer
+        distance: Distanz
+        duration: Dauer
+        average_velocity: Durchschnittsgeschwindigkeit
+        estimate_button: Teilnehmerzahl schätzen
+        estimate_modal_title: Teilnehmerzahl schätzen
+        estimate_label: 'Geschätzte Teilnehmerzahl:'
+    registration_hint: '<strong>Hej!</strong> Mit einem <a href="%login_url%">criticalmass.in-Benutzerkonto</a> könntest du die Daten dieser Tour aktualisieren.'
+    tabs:
+        details:
+            enable_button: Tour wieder aktivieren
+            enable_title: Tour freischalten
+            edit_button: Tour editieren
+            edit_title: Tour bearbeiten
+            manage_social: soziale Netzwerke verwalten
+            social_preview: Vorschau für soziale Netzwerke
+            disable_link: diese Tour deaktivieren
+            no_description_heading: '<strong>Huch?</strong>'
+            no_description_text: 'Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit hast, kannst du %ride_title% <a href="%edit_url%">hier editieren</a>:'
+            no_description_motto: Gibt es ein Motto für diese Tour?
+            no_description_news: Gibt es irgendwelche Neuigkeiten oder Termine für den Radverkehr?
+            no_description_weather: 'Oder, auch immer ganz wichtig: Wie wird das Wetter?'
+            disabled_heading: 'Diese Tour wurde als abgesagt markiert:'
+            disabled_reason_duplicate: Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
+            disabled_reason_wrong_website: Diese Tour wurde mit falschen Daten angelegt.
+            disabled_reason_wrong_auto: Diese Tour wurde fehlerhafterweise automatisch generiert.
+            disabled_reason_weather: Diese Tour wurde witterungsbedingt abgesagt.
+            disabled_reason_participants: Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
+            disabled_reason_authorities: Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
+            disabled_reason_cancelled: Diese Tour wurde abgesagt.
+        gallery:
+            upload_button: Fotos hochladen
+            upload_title: Fotos hochladen
+            heading: Galerie
+            empty_upload_hint: '<strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen &mdash; <a href="%upload_url%" title="Fotos hochladen">Du kannst noch immer der Erste sein</a>.'
+            empty_login_hint: '<strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Als <a href="%login_url%">angemeldeter Nutzer</a> könntest du hier der Erste sein.'
+        posts:
+            add_button: Kommentar hinzufügen
+            heading: Kommentare zu dieser Tour
+        statistic:
+            estimate_button: Tour schätzen
+            estimate_title: Tour schätzen
+            heading: Statistik
+            col_location: Treffpunkt
+            col_date: Datum
+            col_participants: Teilnehmer
+            col_distance: Distanz
+            col_duration: Dauer
+            col_average_velocity: Durchschnittsgeschwindigkeit
+            time_suffix: Uhr
+            estimate_link: Werte schätzen?
+        subrides:
+            add_button: Mini-Mass eintragen
+            add_title: Mini-Mass anlegen
+            heading: Mini-Masses zu dieser Tour
+            time_suffix: 'Uhr:'
+            empty_user_hint: '<strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt &mdash; <a href="%add_url%" title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a> oder die <a href="%copy_url%">Mini-Masses der letzten Tour kopieren</a>.'
+            empty_login_hint: '<strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt. Als <a href="%login_url%">angemeldeter Nutzer</a> könntest du hier der Erste sein.'
+        tracks:
+            add_button: Track hinzufügen
+            import_strava: Track von Strava importieren
+            upload_gpx: GPX-Datei hochladen
+            upload_title: Track hochladen
+            heading: GPX-Tracks
+            col_participant: Teilnehmer
+            col_duration: Dauer
+            col_distance: Länge
+            col_average_velocity: Durchschnittsgeschwindigkeit
+            empty_user_hint: '<strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen &mdash; <a href="#" data-bs-toggle="modal" data-bs-target="#modalTrackUpload" title="Track hochladen">Du kannst noch immer der Erste sein</a>.'
+            empty_login_hint: '<strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen. Als <a href="%login_url%">angemeldeter Nutzer</a> könntest du hier der Erste sein.'
+            timelapse_title: Timelapse
+            timelapse_clock: 'Uhrzeit:'
+            timelapse_clock_suffix: Uhr
+            timelapse_elapsed: 'Verstrichene Zeit:'
+            timelapse_elapsed_suffix: Minuten
+            timelapse_speed: 'Geschwindigkeit:'
+            timelapse_time: 'Zeitpunkt:'
+            timelapse_start: Timelapse starten
+            timelapse_no_tracks: 'Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.'
+            timelapse_loading: 'Lade Track %current% von %total%'
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.

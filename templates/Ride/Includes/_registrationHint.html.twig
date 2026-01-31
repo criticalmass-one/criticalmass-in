@@ -3,7 +3,7 @@
     <div class="alert alert-info border-0 d-flex align-items-center mb-4" role="alert">
         <i class="far fa-user-plus fa-lg me-3"></i>
         <div>
-            Mit einem <a href="{{ path('login') }}" class="alert-link">criticalmass.in-Konto</a> kannst du diese Tour bearbeiten und deine Teilnahme ankündigen.
+            {{ 'ride.registration_hint'|trans({'%login_url%': path('login')})|raw }}
         </div>
     </div>
 {% endif %}

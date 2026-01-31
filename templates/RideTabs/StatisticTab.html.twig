@@ -10,56 +10,56 @@
             {% if pastRide and app.getUser() %}
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
                     <a class="btn btn-success" href="#" data-bs-toggle="modal" data-bs-target="#modalEstimate"
-                       title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
+                       title="{{ 'ride.tabs.statistic.estimate_title'|trans }}"><i class="halflings signal"></i> {{ 'ride.tabs.statistic.estimate_button'|trans }}</a>
                 </div>
             {% endif %}
 
-            <h3>Statistik</h3>
+            <h3>{{ 'ride.tabs.statistic.heading'|trans }}</h3>
         </div>
     </div>
 
     <table class="table">
         <tr>
-            <th>Treffpunkt</th>
+            <th>{{ 'ride.tabs.statistic.col_location'|trans }}</th>
             <td>{{ ride.getLocation() }}</td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <th>Datum</th>
-            <td>{{ ride.getDateTime.format('d.m.Y H:i') }} Uhr</td>
+            <th>{{ 'ride.tabs.statistic.col_date'|trans }}</th>
+            <td>{{ ride.getDateTime.format('d.m.Y H:i') }} {{ 'ride.tabs.statistic.time_suffix'|trans }}</td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <th>Teilnehmer</th>
+            <th>{{ 'ride.tabs.statistic.col_participants'|trans }}</th>
             <td>{{ ride.getEstimatedParticipants()|round }}</td>
             <td>
                 {% include('AppBundle:Common/Ride:RideParticipants.html.twig') with { 'ride': ride } %}
             </td>
             <td>{% if app.getUser() %}<a href="#" data-bs-toggle="modal" data-bs-target="#modalEstimate"
-                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+                                         title="{{ 'ride.tabs.statistic.estimate_title'|trans }}">{{ 'ride.tabs.statistic.estimate_link'|trans }}</a>{% endif %}</td>
         </tr>
         <tr>
-            <th>Distanz</th>
+            <th>{{ 'ride.tabs.statistic.col_distance'|trans }}</th>
             <td>{{ ride.getEstimatedDistance()|round(2) }}&nbsp;km</td>
             <td>
                 {% include('AppBundle:Common/Ride:RideDistance.html.twig') with { 'ride': ride } %}
             </td>
             <td>{% if app.getUser() %}<a href="#" data-bs-toggle="modal" data-bs-target="#modalEstimate"
-                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+                                         title="{{ 'ride.tabs.statistic.estimate_title'|trans }}">{{ 'ride.tabs.statistic.estimate_link'|trans }}</a>{% endif %}</td>
         </tr>
         <tr>
-            <th>Dauer</th>
+            <th>{{ 'ride.tabs.statistic.col_duration'|trans }}</th>
             <td>{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</td>
             <td>
                 {% include('AppBundle:Common/Ride:RideDuration.html.twig') with { 'ride': ride } %}
             </td>
             <td>{% if app.getUser() %}<a href="#" data-bs-toggle="modal" data-bs-target="#modalEstimate"
-                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+                                         title="{{ 'ride.tabs.statistic.estimate_title'|trans }}">{{ 'ride.tabs.statistic.estimate_link'|trans }}</a>{% endif %}</td>
         </tr>
         <tr>
-            <th>Durchschnittsgeschwindigkeit</th>
+            <th>{{ 'ride.tabs.statistic.col_average_velocity'|trans }}</th>
             <td>{{ ride.getAverageVelocity()|round(2) }}&nbsp;km/h</td>
             <td></td>
             <td></td>
