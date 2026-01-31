@@ -57,6 +57,69 @@ cycle:
 '{1} 1 month ago |]1,Inf[ %months months ago': 'vor einem Monat|]1,Inf[v or %months Monaten'
 '{1} 1 year ago |]1,Inf[ %years years ago':  'vor einem Jahr|]1,Inf[ vor %years Jahren'
 
+profile:
+    manage:
+        title: Dein Benutzerprofil
+        breadcrumb: Dein Benutzerkonto
+        greeting: Hej %username%, schön, dass du da bist!
+        welcome: Willkommen in deinem Benutzerkonto!
+        welcome_text: 'Hier kannst du deine %photos%Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.'
+        welcome_photos_prefix: 'Fotos, '
+        panel_photo: Profilfoto ändern
+        panel_photo_text: Lade ein Foto für dein Profil hoch.
+        panel_color: Profilfarbe wählen
+        panel_color_text: Ändere die Farbe deines Benutzerkontos.
+        panel_rides: Deine Touren
+        rides_none: 'Du hast noch an keiner Critical Mass teilgenommen. Im <a href="%calendar_url%">Kalender</a> findest du Touren in deiner Nähe.'
+        rides_none_label: 'Schade:'
+        rides_count: 'Super: Du hast bislang an %count% Critical-Mass-Touren teilgenommen.'
+        rides_overview: Tourenübersicht
+        panel_tracks: Deine Tracks
+        tracks_none: Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
+        tracks_count: Von deinen Critical-Mass-Touren hast du insgesamt %count% Tracks hochgeladen.
+        tracks_manage: Tracks verwalten
+        panel_photos: Deine Fotos
+        photos_none: Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr Informationen zu diesem Thema.
+        photos_count: Du hast von deinen Touren %count% Fotos hochgeladen.
+        photos_manage: Fotos verwalten
+        panel_username: Benutzername ändern
+        panel_username_text: Hier kannst du deinen Benutzernamen ändern.
+        panel_email: E-Mail-Adresse ändern
+        panel_email_text: Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig mit deinen neuen Benutzerdaten einloggen musst.
+    username:
+        title: Benutzername ändern
+        breadcrumb: Benutzername ändern
+        heading: Benutzername ändern
+        lead: Dein Benutzername wird öffentlich angezeigt, beispielsweise bei Fotos, Kommentaren oder Teilnahmen an Critical-Mass-Touren.
+        panel_title: Dein Benutzername
+        explanation: Dein Benutzername wird öffentlich angezeigt — außerdem brauchst du ihn zum Einloggen, wenn du dich nicht über ein soziales Netzwerk anmeldest.
+        label: 'Benutzername:'
+    email:
+        title: Dein Benutzerprofil
+        breadcrumb: E-Mail-Adresse ändern
+        heading: E-Mail-Adresse ändern
+        lead: Hier kannst du deine E-Mail-Adresse ändern — denk daran, dich beim nächsten Mal mit deiner neuen E-Mail-Adresse einzuloggen.
+        panel_title: Deine E-Mail-Adresse
+        explanation: Deine E-Mail-Adresse wird selbstverständlich nirgendwo öffentlich angezeigt.
+        label: 'E-Mail-Adresse:'
+    photo:
+        title: Profilfoto hochladen
+        breadcrumb: Profilfoto hochladen
+        heading: Dein Profilfoto
+        upload_hint: 'Hier kannst du ein neues Profilfoto von deinem Rechner hochladen:'
+    color:
+        title: Farbe wählen
+        breadcrumb: Farbe wählen
+        heading: Deine Benutzerfarbe
+        explanation: Hier kannst du eine Farbe wählen, mit der dein Benutzerkonto auf criticalmass.in repräsentiert wird. Beispielsweise werden von dir hochgeladene Tracks in dieser Farbe angezeigt.
+    edit:
+        title: Handy-Nummer editieren
+        breadcrumb: Handy-Nummer editieren
+        heading: Handy-Nummer editieren
+        phone_label: 'Deine Handy-Nummer:'
+        verification_label: 'Dein Verifikationscode:'
+        verify: Überprüfen
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.

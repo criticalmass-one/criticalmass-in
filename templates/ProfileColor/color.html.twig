@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Farbe wählen{% endblock %}
+{% block title %}{{ 'profile.color.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ breadcrumb.active('Farbe wählen') }}
+    {{ breadcrumb.item('profile.manage.breadcrumb'|trans, path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('profile.color.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -14,11 +14,11 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
                 <h2>
-                    Deine Benutzerfarbe
+                    {{ 'profile.color.heading'|trans }}
                 </h2>
 
                 <p>
-                    Hier kannst du eine Farbe wählen, mit der dein Benutzerkonto auf criticalmass.in repräsentiert wird. Beispielsweise werden von dir hochgeladene Tracks in dieser Farbe angezeigt.
+                    {{ 'profile.color.explanation'|trans }}
                 </p>
             </div>
         </div>
@@ -33,10 +33,10 @@
         <div class="row margin-top-medium">
             <div class="col-md-6 col-md-offset-3 text-center">
                 <div class="btn-group">
-                    {{ form_widget(profileColorForm.submit, { label: 'Speichern', attr: { class: 'btn btn-primary'}}) }}
+                    {{ form_widget(profileColorForm.submit, { label: 'common.save'|trans, attr: { class: 'btn btn-primary'}}) }}
 
                     <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-secondary">
-                        Abbrechen
+                        {{ 'common.cancel'|trans }}
                     </a>
                 </div>
             </div>

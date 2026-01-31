@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Handy-Nummer editieren{% endblock %}
+{% block title %}{{ 'profile.edit.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Handy-Nummer editieren') }}
+    {{ breadcrumb.active('profile.edit.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1>
-                Handy-Nummer editieren
+                {{ 'profile.edit.heading'|trans }}
             </h1>
         </div>
     </div>
@@ -27,7 +27,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(phoneNumberForm.phoneNumber) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Deine Handy-Nummer:</label>
+                            <label class="control-label" for="">{{ 'profile.edit.phone_label'|trans }}</label>
                             {{ form_widget(phoneNumberForm.phoneNumber, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-success pull-right">
-                            Speichern
+                            {{ 'common.save'|trans }}
                         </button>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group{% if form_errors(verificationForm.verificationNumber) %} has-error has-feedback{% endif %}">
-                                <label class="control-label" for="">Dein Verifikationscode:</label>
+                                <label class="control-label" for="">{{ 'profile.edit.verification_label'|trans }}</label>
                                 {{ form_widget(verificationForm.verificationNumber, { 'attr' : { 'class': 'form-control', 'maxlength': 6 } }) }}
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-success pull-right">
-                                Überprüfen
+                                {{ 'profile.edit.verify'|trans }}
                             </button>
                         </div>
                     </div>
