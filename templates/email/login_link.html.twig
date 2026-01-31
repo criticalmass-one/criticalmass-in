@@ -80,7 +80,7 @@
 
         <row class="content">
             <columns>
-                <p>Hallo!</p>
+                <p>{{ 'email.login_link.greeting'|trans }}</p>
                 <p>{{ content }}</p>
             </columns>
         </row>
@@ -88,7 +88,7 @@
         <row class="button-wrapper">
             <columns>
                 <center>
-                    <button class="button" href="{{ loginUrl }}">Einloggen</button>
+                    <button class="button" href="{{ loginUrl }}">{{ 'email.login_link.button'|trans }}</button>
                 </center>
             </columns>
         </row>
@@ -97,8 +97,8 @@
 
         <row class="footer">
             <columns>
-                <p>Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.</p>
-                <p>Der Link ist {{ expirationText }} g&uuml;ltig.</p>
+                <p>{{ 'email.login_link.ignore_notice'|trans }}</p>
+                <p>{{ 'email.login_link.expiration'|trans({'%expiration%': expirationText}) }}</p>
             </columns>
         </row>
     </container>

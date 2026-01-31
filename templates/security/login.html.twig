@@ -1,15 +1,15 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{{ 'security.login.title'|trans }}{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <h1>Einloggen und losfahren!</h1>
+                <h1>{{ 'security.login.heading'|trans }}</h1>
 
                 <p class="lead">
-                    Du kannst dich entweder über ein gesellschaftliches Netzwerk oder über deine E-Mail-Adresse einloggen.
+                    {{ 'security.login.lead'|trans }}
                 </p>
             </div>
         </div>
@@ -18,13 +18,13 @@
             <div class="col-md-5 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Soziale Netzwerke
+                        {{ 'security.login.social_panel'|trans }}
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <p>
-                                    Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen Klick!
+                                    {{ 'security.login.social_text'|trans }}
                                 </p>
 
                                 <div class="btn-group" role="group" aria-label="...">
@@ -50,11 +50,11 @@
             <div class="col-md-5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        E-Mail-Adresse
+                        {{ 'security.login.email_panel'|trans }}
                     </div>
                     <div class="panel-body">
                         <p>
-                            Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
+                            {{ 'security.login.email_text'|trans }}
                         </p>
 
                         {{ form_start(login_form) }}

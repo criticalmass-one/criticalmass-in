@@ -120,6 +120,32 @@ profile:
         verification_label: 'Dein Verifikationscode:'
         verify: Überprüfen
 
+security:
+    login:
+        title: Login
+        heading: Einloggen und losfahren!
+        lead: Du kannst dich entweder über ein gesellschaftliches Netzwerk oder über deine E-Mail-Adresse einloggen.
+        social_panel: Soziale Netzwerke
+        social_text: Logge dich über eines dieser sozialen Netzwerke ein — es dauert nur einen Klick!
+        email_panel: E-Mail-Adresse
+        email_text: Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
+    login_link:
+        title: Login
+        heading: Einloggen und losfahren!
+        lead: Danke. Du hast eine E-Mail mit einem Link zum Einloggen bekommen. Bitte wirf einen Blick in deinen Posteingang.
+    oauth:
+        title: OAuth
+        question: Möchtest du der folgenden Webseite erlauben, auf deine Kontodaten zuzugreifen?
+        access_info: 'Diese Seite kann auf folgende Daten deines Benutzerkontos zugreifen:'
+        username_access: deinen Benutzernamen
+
+email:
+    login_link:
+        greeting: Hallo!
+        button: Einloggen
+        ignore_notice: Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.
+        expiration: Der Link ist %expiration% gültig.
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.

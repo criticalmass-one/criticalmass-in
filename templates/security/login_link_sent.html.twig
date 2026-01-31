@@ -1,16 +1,16 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{{ 'security.login_link.title'|trans }}{% endblock %}
 
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h1>Einloggen und losfahren!</h1>
+                <h1>{{ 'security.login_link.heading'|trans }}</h1>
 
                 <p class="lead">
-                    Danke. Du hast eine E-Mail mit einem Link zum Einloggen bekommen. Bitte wirf einen Blick in deinen Posteingang.
+                    {{ 'security.login_link.lead'|trans }}
                 </p>
             </div>
         </div>
