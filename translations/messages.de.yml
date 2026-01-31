@@ -444,6 +444,96 @@ board:
         empty_heading: Hier gibt es nichts zu sehen!
         empty_text: Bislang hat leider noch niemand einen Beitrag in diesem Forum geschrieben.
 
+city:
+    breadcrumb_city_list: Städteliste
+    breadcrumb_gallery: Foto-Galerien
+    breadcrumb_ride_list: Tour-Übersicht
+    breadcrumb_track_list: Track-Übersicht
+    title_overview: Städte-Übersicht
+    title_track_list: Track-Übersicht
+    options_button: Optionen
+    option_edit_city: Stadt editieren
+    option_add_ride: Tour hinzufügen
+    option_manage_cycle: Turnus verwalten
+    option_manage_social: soziale Netzwerke verwalten
+    no_description_heading: '<strong>Huch?</strong>'
+    no_description_text: 'Schade, bislang hat noch niemand Informationen über %city_name% hinterlegt. Wenn du Lust und Zeit hast, kannst du %city_title% <a href="%edit_url%">hier beschreiben</a>:'
+    no_description_since: Seit wann gibt es die Critical Mass in %city_name%?
+    no_description_duration: Wie lange dauern eure Touren?
+    no_description_route: Wo fahrt ihr ungefähr lang?
+    no_description_problems: Welche Probleme gibt es in %city_name% für den Radverkehr?
+    no_description_edit_button: '%city_name% editieren'
+    photos_heading: Fotos aus %city_name%
+    photos_intro: 'Hier siehst du ein paar Fotos aus %city_name%. Schau dir auch die <a href="%gallery_url%">Übersicht über Fotos aus %city_name%</a> an.'
+    gallery_heading: Fotos aus %city_name%
+    gallery_lead: 'Hier siehst du eine Übersicht von Critical-Mass-Touren aus %city_name%, zu denen Fotos hochgeladen wurden.'
+    gallery_col_date: Datum
+    gallery_col_title: Titel
+    gallery_col_photos: Fotos
+    ride_list_heading: Touren in dieser Stadt
+    ride_list_col_date: Datum
+    ride_list_col_time: Uhrzeit
+    ride_list_col_title: Titel
+    ride_list_col_location: Treffpunkt
+    ride_list_col_participants: Teilnehmer
+    ride_list_col_distance: Distanz
+    ride_list_col_duration: Dauer
+    track_list_heading: Track-Übersicht
+    track_list_delete_modal_title: Track löschen
+    track_list_delete_confirm: Willst Du diesen Track wirklich löschen?
+    track_list_delete_yes: Ja, löschen
+    track_list_delete_no: Nein, abbrechen
+    near_cities_heading: Städte in der Umgebung
+    list_heading: Die nächste Masse ist ganz nah
+    list_lead: Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.
+    list_intro: 'Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile %count% Städte. Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher weitere Quellen, bevor du dich auf den Weg machst.'
+    list_col_city: Stadt
+    list_col_current_ride: aktuelle Tour
+    list_col_cycle: Turnus
+    list_col_rides: Touren
+    list_time_suffix: Uhr
+
+city.management:
+    edit_title: Stadt editieren
+    add_title: Neue Stadt hinzufügen
+    breadcrumb_directory: Verzeichnis
+    breadcrumb_add: Stadt hinzufügen
+    section_city_info: Städte-Informationen
+    label_region: 'Region:'
+    help_region: Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.
+    label_title: 'Titel:'
+    help_title: 'Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg" oder „Fahrradfreitag Rendsburg".'
+    label_name: 'Name:'
+    help_name: Name der Stadt, etwa Hamburg oder Rendsburg.
+    label_description: 'Beschreibung:'
+    help_description: Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.
+    label_punchline: 'Punchline:'
+    help_punchline: 'Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic" oder „Reclaim the streets" ist ja schon fast Standard.'
+    label_long_description: 'Lange Beschreibung:'
+    help_long_description: Hier ist Platz für eine längere und ausführlichere Beschreibung.
+    section_technical: Technisches
+    label_enable_board: 'Forum anzeigen:'
+    help_enable_board: Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu aktivieren.
+    section_header_image: Header-Grafik
+    label_image_file: 'Datei:'
+    help_image_file: 'Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind Bildabmessungen von 2.280 mal 500 Pixel.'
+    missing_heading: Critical Mass %city_name%
+    missing_no_info: Es tut uns leid, aber wir haben keine Informationen zu einer Critical Mass in %city_name% in unserer Datenbank.
+    missing_add_prompt: 'Du kannst aber jetzt eine Critical Mass für %city_name% hinzufügen:'
+    missing_add_button: '%city_name% hinzufügen'
+    missing_not_found_heading: Keine Masse gefunden
+    missing_not_found_text: 'Es tut uns leid, aber wir konnten keine Stadt zu deiner Suche nach <code>%slug%</code> finden.'
+    missing_try_directory: Bitte versuche, die gesuchte Stadt im Verzeichnis zu finden.
+    missing_to_directory: zum Verzeichnis
+
+location:
+    title: 'Übersicht zum Treffpunkt %location% der %city_title%'
+    breadcrumb_city_list: Städteliste
+    breadcrumb_location_info: Informationen zum Treffpunkt
+    breadcrumb_locations: Treffpunkte
+    rides_panel_title: Touren von diesem Treffpunkt
+    other_locations_panel_title: Andere Treffpunkte dieser Stadt
+
 frontpage:
     heading: Hej, wir fahren Fahrrad!
     lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
