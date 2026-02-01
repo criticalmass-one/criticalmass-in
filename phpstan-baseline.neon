@@ -3996,16 +3996,6 @@ parameters:
 			path: tests/Controller/Api/Query/BoundingBoxQueryTest.php
 
 		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\DateTimeQueryTest\\:\\:apiClassProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/Controller/Api/Query/DateTimeQueryTest.php
-
-		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\DateTimeQueryTest\\:\\:testRideListWithParameter\\(\\) has parameter \\$query with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/Controller/Api/Query/DateTimeQueryTest.php
-
-		-
 			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\RadiusQueryTest\\:\\:apiClassProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Controller/Api/Query/RadiusQueryTest.php
@@ -4019,11 +4009,6 @@ parameters:
 			message: "#^Method Tests\\\\Controller\\\\Api\\\\RideApi\\\\RideApiQueryTest\\:\\:rideTypeProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Controller/Api/RideApi/RideApiQueryTest.php
-
-		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\RideApi\\\\RideApiWriteTest\\:\\:assertStringContains\\(\\) is unused\\.$#"
-			count: 1
-			path: tests/Controller/Api/RideApi/RideApiWriteTest.php
 
 		-
 			message: "#^Constant Tests\\\\Controller\\\\Api\\\\Schema\\\\JsonStructureValidator\\:\\:VALID_TYPES is unused\\.$#"

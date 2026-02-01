@@ -187,11 +187,117 @@ class RideApiWriteTest extends AbstractApiControllerTestCase
         $this->assertResponseStatusCode(404);
     }
 
-    /**
-     * Helper method to check if a string contains a substring.
-     */
-    private function assertStringContains(string $needle, string $haystack): void
+    #[TestDox('PUT /api/{citySlug}/{date} fails when a date-based ride already exists for that day')]
+    public function testCreateDuplicateDateRideReturns400(): void
     {
-        $this->assertStringContainsString($needle, $haystack);
+        $rides = $this->entityManager->getRepository(Ride::class)->findAll();
+        $this->assertNotEmpty($rides);
+
+        // Find a ride without slug (date-based ride)
+        $existingRide = null;
+        foreach ($rides as $ride) {
+            if (!$ride->getSlug()) {
+                $existingRide = $ride;
+                break;
+            }
+        }
+        $this->assertNotNull($existingRide, 'No date-based ride found in fixtures');
+
+        $citySlug = $existingRide->getCity()->getMainSlugString();
+        $dateString = $existingRide->getDateTime()->format('Y-m-d');
+
+        $rideData = [
+            'title' => 'Duplicate Date Ride',
+            'date_time' => $existingRide->getDateTime()->getTimestamp(),
+        ];
+
+        $this->client->request(
+            'PUT',
+            sprintf('/api/%s/%s', $citySlug, $dateString),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($rideData)
+        );
+
+        $this->assertResponseStatusCode(400);
+    }
+
+    #[TestDox('PUT /api/{citySlug}/{rideIdentifier} succeeds with slug on a day that already has a date-based ride')]
+    public function testCreateSlugRideOnExistingDateSucceeds(): void
+    {
+        $rides = $this->entityManager->getRepository(Ride::class)->findAll();
+        $this->assertNotEmpty($rides);
+
+        // Find a ride without slug (date-based ride)
+        $existingRide = null;
+        foreach ($rides as $ride) {
+            if (!$ride->getSlug()) {
+                $existingRide = $ride;
+                break;
+            }
+        }
+        $this->assertNotNull($existingRide, 'No date-based ride found in fixtures');
+
+        $citySlug = $existingRide->getCity()->getMainSlugString();
+        $dateString = $existingRide->getDateTime()->format('Y-m-d');
+
+        $rideData = [
+            'title' => 'Kidical Mass Special Event',
+            'date_time' => $existingRide->getDateTime()->getTimestamp(),
+        ];
+
+        $this->client->request(
+            'PUT',
+            sprintf('/api/%s/kidical-mass-%s', $citySlug, $dateString),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($rideData)
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertIsArray($response);
+        $this->assertArrayHasKey('id', $response);
+        $this->assertEquals('Kidical Mass Special Event', $response['title']);
+    }
+
+    #[TestDox('PUT /api/{citySlug}/{rideIdentifier} allows multiple slug-based rides on the same day')]
+    public function testCreateMultipleSlugRidesOnSameDateSucceeds(): void
+    {
+        $rides = $this->entityManager->getRepository(Ride::class)->findAll();
+        $this->assertNotEmpty($rides);
+
+        $existingRide = null;
+        foreach ($rides as $ride) {
+            if (!$ride->getSlug()) {
+                $existingRide = $ride;
+                break;
+            }
+        }
+        $this->assertNotNull($existingRide, 'No date-based ride found in fixtures');
+
+        $citySlug = $existingRide->getCity()->getMainSlugString();
+        $dateString = $existingRide->getDateTime()->format('Y-m-d');
+
+        $this->client->request(
+            'PUT',
+            sprintf('/api/%s/second-slug-event-%s', $citySlug, $dateString),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'title' => 'Second Slug Event',
+                'date_time' => $existingRide->getDateTime()->getTimestamp(),
+            ])
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertIsArray($response);
+        $this->assertEquals('Second Slug Event', $response['title']);
     }
 }

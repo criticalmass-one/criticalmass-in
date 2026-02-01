@@ -39,6 +39,10 @@ class SingleRideForDayValidator extends ConstraintValidator
 
         /** @var Ride $oldRide */
         foreach ($rideList as $oldRide) {
+            if ($oldRide->getSlug()) {
+                continue;
+            }
+
             if ($oldRide->getDateTime()->format('Y-m-d') === $ride->getDateTime()->format('Y-m-d')) {
                 ++$foundRidesForSameDay;
             }
