@@ -7,9 +7,9 @@ use App\Entity\Ride;
 use App\Repository\RideRepository;
 use App\Validator\Constraint\SingleRideForDay;
 use App\Validator\SingleRideForDayValidator;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
@@ -17,9 +17,9 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 #[TestDox('SingleRideForDayValidator')]
 class SingleRideForDayValidatorTest extends TestCase
 {
-    private ManagerRegistry $registry;
-    private RideRepository $rideRepository;
-    private ExecutionContextInterface $context;
+    private ManagerRegistry&MockObject $registry;
+    private RideRepository&MockObject $rideRepository;
+    private ExecutionContextInterface&MockObject $context;
     private SingleRideForDayValidator $validator;
     private SingleRideForDay $constraint;
     private City $city;
@@ -111,8 +111,6 @@ class SingleRideForDayValidatorTest extends TestCase
     #[TestDox('allows creating a slug-based ride when a date-based ride exists on the same day')]
     public function testAllowsSlugRideOnDayWithDateRide(): void
     {
-        $existingDateRide = $this->createRide(new \DateTime('2030-06-15 19:00:00'), null, 1);
-
         $this->rideRepository->expects($this->never())->method('findRidesForCity');
         $this->context->expects($this->never())->method('buildViolation');
 

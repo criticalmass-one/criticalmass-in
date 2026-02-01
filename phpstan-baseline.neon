@@ -4021,11 +4021,6 @@ parameters:
 			path: tests/Controller/Api/RideApi/RideApiQueryTest.php
 
 		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\RideApi\\\\RideApiWriteTest\\:\\:assertStringContains\\(\\) is unused\\.$#"
-			count: 1
-			path: tests/Controller/Api/RideApi/RideApiWriteTest.php
-
-		-
 			message: "#^Constant Tests\\\\Controller\\\\Api\\\\Schema\\\\JsonStructureValidator\\:\\:VALID_TYPES is unused\\.$#"
 			count: 1
 			path: tests/Controller/Api/Schema/JsonStructureValidator.php
