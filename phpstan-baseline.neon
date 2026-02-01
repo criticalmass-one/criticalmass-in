@@ -3996,16 +3996,6 @@ parameters:
 			path: tests/Controller/Api/Query/BoundingBoxQueryTest.php
 
 		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\DateTimeQueryTest\\:\\:apiClassProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/Controller/Api/Query/DateTimeQueryTest.php
-
-		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\DateTimeQueryTest\\:\\:testRideListWithParameter\\(\\) has parameter \\$query with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/Controller/Api/Query/DateTimeQueryTest.php
-
-		-
 			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\RadiusQueryTest\\:\\:apiClassProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Controller/Api/Query/RadiusQueryTest.php

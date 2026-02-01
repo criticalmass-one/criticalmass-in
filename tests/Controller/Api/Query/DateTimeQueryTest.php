@@ -4,46 +4,115 @@ namespace Tests\Controller\Api\Query;
 
 use App\Entity\Photo;
 use App\Entity\Ride;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class DateTimeQueryTest extends AbstractApiControllerTestCase
 {
-    #[DataProvider('apiClassProvider')]
-    public function testRideListWithParameter(string $fqcn, string $propertyName, array $query, string $dateTimePattern, string $expectedDateTimeString): void
+    public function testRideFilterByYear(): void
     {
-        $this->client->request('GET', sprintf('%s?%s', $this->getApiEndpointForFqcn($fqcn), http_build_query($query)));
+        $ride = $this->entityManager->getRepository(Ride::class)->findAll()[0];
+        $year = (int) $ride->getDateTime()->format('Y');
+
+        $this->client->request('GET', sprintf('/api/ride?year=%d', $year));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-
         $resultList = $this->getJsonResponse();
-
-        $this->assertIsArray($resultList);
-        $this->assertGreaterThan(0, count($resultList));
-
-        // Convert entity property name to JSON property name (camelCase to snake_case)
-        $jsonPropertyName = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $propertyName));
+        $this->assertNotEmpty($resultList);
 
         foreach ($resultList as $result) {
-            // Value is a Unix timestamp
-            $timestamp = $result[$jsonPropertyName];
-            $dateTime = (new \DateTime())->setTimestamp($timestamp);
-            $this->assertEquals($expectedDateTimeString, $dateTime->format($dateTimePattern));
+            $dateTime = (new \DateTime())->setTimestamp($result['date_time']);
+            $this->assertEquals($year, (int) $dateTime->format('Y'));
         }
     }
 
-    public static function apiClassProvider(): array
+    public function testRideFilterByYearAndMonth(): void
     {
-        // Use dates that exist in fixtures:
-        // Rides: Nov 2025 - Mar 2026 (2025-11-23, 2025-12-23, 2026-02-23, 2026-03-23)
-        // Photos: Nov-Dec 2025 (2025-11-23, 2025-12-23)
-        return [
-            [Ride::class, 'dateTime', ['year' => 2025], 'Y', '2025'],
-            [Ride::class, 'dateTime', ['year' => 2026, 'month' => 2], 'Y-m', '2026-02'],
-            [Ride::class, 'dateTime', ['year' => 2025, 'month' => 12, 'day' => 23], 'Y-m-d', '2025-12-23'],
-            [Photo::class, 'exifCreationDate', ['year' => 2025], 'Y', '2025'],
-            [Photo::class, 'exifCreationDate', ['year' => 2025, 'month' => 12], 'Y-m', '2025-12'],
-            [Photo::class, 'exifCreationDate', ['year' => 2025, 'month' => 12, 'day' => 23], 'Y-m-d', '2025-12-23'],
-        ];
+        $ride = $this->entityManager->getRepository(Ride::class)->findAll()[0];
+        $year = (int) $ride->getDateTime()->format('Y');
+        $month = (int) $ride->getDateTime()->format('n');
+
+        $this->client->request('GET', sprintf('/api/ride?year=%d&month=%d', $year, $month));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
+        $this->assertNotEmpty($resultList);
+
+        foreach ($resultList as $result) {
+            $dateTime = (new \DateTime())->setTimestamp($result['date_time']);
+            $this->assertEquals(sprintf('%d-%02d', $year, $month), $dateTime->format('Y-m'));
+        }
+    }
+
+    public function testRideFilterByYearMonthDay(): void
+    {
+        $ride = $this->entityManager->getRepository(Ride::class)->findAll()[0];
+        $year = (int) $ride->getDateTime()->format('Y');
+        $month = (int) $ride->getDateTime()->format('n');
+        $day = (int) $ride->getDateTime()->format('j');
+
+        $this->client->request('GET', sprintf('/api/ride?year=%d&month=%d&day=%d', $year, $month, $day));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
+        $this->assertNotEmpty($resultList);
+
+        foreach ($resultList as $result) {
+            $dateTime = (new \DateTime())->setTimestamp($result['date_time']);
+            $this->assertEquals($ride->getDateTime()->format('Y-m-d'), $dateTime->format('Y-m-d'));
+        }
+    }
+
+    public function testPhotoFilterByYear(): void
+    {
+        $photo = $this->entityManager->getRepository(Photo::class)->findAll()[0];
+        $year = (int) $photo->getExifCreationDate()->format('Y');
+
+        $this->client->request('GET', sprintf('/api/photo?year=%d', $year));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
+        $this->assertNotEmpty($resultList);
+
+        foreach ($resultList as $result) {
+            $dateTime = (new \DateTime())->setTimestamp($result['exif_creation_date']);
+            $this->assertEquals($year, (int) $dateTime->format('Y'));
+        }
+    }
+
+    public function testPhotoFilterByYearAndMonth(): void
+    {
+        $photo = $this->entityManager->getRepository(Photo::class)->findAll()[0];
+        $year = (int) $photo->getExifCreationDate()->format('Y');
+        $month = (int) $photo->getExifCreationDate()->format('n');
+
+        $this->client->request('GET', sprintf('/api/photo?year=%d&month=%d', $year, $month));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
+        $this->assertNotEmpty($resultList);
+
+        foreach ($resultList as $result) {
+            $dateTime = (new \DateTime())->setTimestamp($result['exif_creation_date']);
+            $this->assertEquals(sprintf('%d-%02d', $year, $month), $dateTime->format('Y-m'));
+        }
+    }
+
+    public function testPhotoFilterByYearMonthDay(): void
+    {
+        $photo = $this->entityManager->getRepository(Photo::class)->findAll()[0];
+        $year = (int) $photo->getExifCreationDate()->format('Y');
+        $month = (int) $photo->getExifCreationDate()->format('n');
+        $day = (int) $photo->getExifCreationDate()->format('j');
+
+        $this->client->request('GET', sprintf('/api/photo?year=%d&month=%d&day=%d', $year, $month, $day));
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
+        $this->assertNotEmpty($resultList);
+
+        foreach ($resultList as $result) {
+            $dateTime = (new \DateTime())->setTimestamp($result['exif_creation_date']);
+            $this->assertEquals($photo->getExifCreationDate()->format('Y-m-d'), $dateTime->format('Y-m-d'));
+        }
     }
 }
