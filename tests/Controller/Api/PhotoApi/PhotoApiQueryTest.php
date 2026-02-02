@@ -115,6 +115,7 @@ class PhotoApiQueryTest extends AbstractApiControllerTestCase
         $this->assertSame($sorted, $values, sprintf('Photos should be sorted by %s %s', $orderBy, $direction));
     }
 
+    /** @return array<array<string>> */
     public static function orderParameterProvider(): array
     {
         return [
