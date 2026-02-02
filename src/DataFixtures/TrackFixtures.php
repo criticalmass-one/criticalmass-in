@@ -15,6 +15,8 @@ class TrackFixtures extends Fixture implements DependentFixtureInterface
     public const HAMBURG_TRACK_2_REFERENCE = 'track-hamburg-2';
     public const BERLIN_TRACK_1_REFERENCE = 'track-berlin-1';
     public const MUNICH_TRACK_1_REFERENCE = 'track-munich-1';
+    public const DELETED_TRACK_REFERENCE = 'track-deleted';
+    public const DISABLED_TRACK_REFERENCE = 'track-disabled';
 
     public function load(ObjectManager $manager): void
     {
@@ -77,6 +79,32 @@ class TrackFixtures extends Fixture implements DependentFixtureInterface
         );
         $this->addReference(self::MUNICH_TRACK_1_REFERENCE, $munichTrack1);
         $manager->persist($munichTrack1);
+
+        $deletedTrack = $this->createTrack(
+            $hamburgRidePast,
+            $regularUser,
+            'testuser',
+            Track::TRACK_SOURCE_GPX,
+            14.0,
+            2.0,
+            1100
+        );
+        $deletedTrack->setDeleted(true);
+        $this->addReference(self::DELETED_TRACK_REFERENCE, $deletedTrack);
+        $manager->persist($deletedTrack);
+
+        $disabledTrack = $this->createTrack(
+            $berlinRidePast,
+            $cyclistUser,
+            'cyclist',
+            Track::TRACK_SOURCE_STRAVA,
+            13.0,
+            1.5,
+            900
+        );
+        $disabledTrack->setEnabled(false);
+        $this->addReference(self::DISABLED_TRACK_REFERENCE, $disabledTrack);
+        $manager->persist($disabledTrack);
 
         $manager->flush();
     }

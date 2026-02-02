@@ -16,6 +16,8 @@ class PhotoFixtures extends Fixture implements DependentFixtureInterface
     public const HAMBURG_PHOTO_2_REFERENCE = 'photo-hamburg-2';
     public const BERLIN_PHOTO_1_REFERENCE = 'photo-berlin-1';
     public const MUNICH_PHOTO_1_REFERENCE = 'photo-munich-1';
+    public const DELETED_PHOTO_REFERENCE = 'photo-deleted';
+    public const DISABLED_PHOTO_REFERENCE = 'photo-disabled';
 
     public function load(ObjectManager $manager): void
     {
@@ -78,6 +80,32 @@ class PhotoFixtures extends Fixture implements DependentFixtureInterface
         );
         $this->addReference(self::MUNICH_PHOTO_1_REFERENCE, $munichPhoto1);
         $manager->persist($munichPhoto1);
+
+        $deletedPhoto = $this->createPhoto(
+            $hamburgRidePast,
+            $regularUser,
+            'hamburg_ride_deleted.jpg',
+            53.5650,
+            9.9850,
+            'Deleted photo location',
+            (clone $hamburgRidePast->getDateTime())->modify('+45 minutes')
+        );
+        $deletedPhoto->setDeleted(true);
+        $this->addReference(self::DELETED_PHOTO_REFERENCE, $deletedPhoto);
+        $manager->persist($deletedPhoto);
+
+        $disabledPhoto = $this->createPhoto(
+            $berlinRidePast,
+            $cyclistUser,
+            'berlin_ride_disabled.jpg',
+            52.5000,
+            13.4200,
+            'Disabled photo location',
+            (clone $berlinRidePast->getDateTime())->modify('+15 minutes')
+        );
+        $disabledPhoto->setEnabled(false);
+        $this->addReference(self::DISABLED_PHOTO_REFERENCE, $disabledPhoto);
+        $manager->persist($disabledPhoto);
 
         $manager->flush();
     }
