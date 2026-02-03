@@ -159,6 +159,7 @@ class CityRepository extends ServiceEntityRepository
 
     public const ACTIVITY_SCORE_THRESHOLD = 0.15;
 
+    /** @return list<City> */
     public function findActiveCities(): array
     {
         $builder = $this->createQueryBuilder('c');

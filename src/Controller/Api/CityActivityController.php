@@ -25,8 +25,6 @@ class CityActivityController extends BaseController
     #[OA\Tag(name: 'CityActivity')]
     #[OA\RequestBody(description: 'JSON representation of the city activity data', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 201, description: 'Activity score created successfully')]
-    #[OA\Response(response: 400, description: 'Invalid request data')]
-    #[OA\Response(response: 404, description: 'City not found')]
     public function createAction(Request $request, City $city): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -48,6 +46,7 @@ class CityActivityController extends BaseController
         return $this->createStandardResponse($cityActivity, [], JsonResponse::HTTP_CREATED);
     }
 
+    /** @param array<string, mixed> $data */
     private function validateActivityData(array $data): void
     {
         if (!isset($data['score'])) {
@@ -78,6 +77,7 @@ class CityActivityController extends BaseController
         }
     }
 
+    /** @param array<string, mixed> $data */
     private function createCityActivity(City $city, array $data): CityActivity
     {
         $cityActivity = new CityActivity();

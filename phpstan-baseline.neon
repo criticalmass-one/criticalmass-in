@@ -2981,7 +2981,7 @@ parameters:
 			path: src/Factory/City/CityFactory.php
 
 		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\City\\>\\:\\:findEnabledCities\\(\\)\\.$#"
+			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\City\\>\\:\\:findActiveCities\\(\\)\\.$#"
 			count: 1
 			path: src/Factory/CityListFactory.php
 
@@ -4249,3 +4249,8 @@ parameters:
 			message: "#^Instantiated class Oneup\\\\FlysystemBundle\\\\Tests\\\\App\\\\AppKernel not found\\.$#"
 			count: 1
 			path: tests/symfony-container.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Ride\\>\\:\\:findFrontpageRides\\(\\)\\.$#"
+			count: 2
+			path: tests/Repository/RideRepositoryTest.php

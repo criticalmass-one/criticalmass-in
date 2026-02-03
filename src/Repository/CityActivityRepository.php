@@ -7,6 +7,7 @@ use App\Entity\CityActivity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/** @extends ServiceEntityRepository<CityActivity> */
 class CityActivityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -25,6 +26,7 @@ class CityActivityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /** @return list<CityActivity> */
     public function findByCity(City $city, int $limit = 10): array
     {
         return $this->createQueryBuilder('ca')
