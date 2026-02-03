@@ -1,0 +1,25 @@
+{% extends 'Template/FullscreenTemplate.html.twig' %}
+
+{% block title %}Explore{% endblock %}
+
+{% block content %}
+    <div class="explore-map"
+         data-controller="map--query-map"
+         data-map--query-map-api-type-value="city"
+         data-map--query-map-api-query-value="{{ path('caldera_criticalmass_rest_city_list', { size: 5000 }) }}"
+         data-map--query-map-popup-template-id-value="city-popup">
+    </div>
+
+    {% verbatim %}
+    <template id="city-popup">
+        <div class="popup">
+            <h4 class="popup__title">{{title}}</h4>
+            <div class="popup__actions">
+                <a class="btn btn-primary btn-sm" href="/{{slug}}">
+                    Zur Stadtseite
+                </a>
+            </div>
+        </div>
+    </template>
+    {% endverbatim %}
+{% endblock %}
