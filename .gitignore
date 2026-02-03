@@ -85,3 +85,15 @@ docker
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+###> phpunit ###
+.phpunit.cache/
+###< phpunit ###
+
+###> claude-code ###
+.claude/
+###< claude-code ###
+
+###> jwt ###
+config/jwt/
+###< jwt ###
