@@ -7,6 +7,7 @@ use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Table(name: 'region')]
 #[ORM\Entity(repositoryClass: 'App\Repository\RegionRepository')]
@@ -28,12 +29,15 @@ class Region implements RouteableInterface, AuditableInterface
 
     #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'children', cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Region $parent = null;
 
     #[ORM\OneToMany(targetEntity: 'Region', mappedBy: 'parent')]
+    #[Ignore]
     protected Collection $children;
 
     #[ORM\OneToMany(targetEntity: 'City', mappedBy: 'region')]
+    #[Ignore]
     protected Collection $cities;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
