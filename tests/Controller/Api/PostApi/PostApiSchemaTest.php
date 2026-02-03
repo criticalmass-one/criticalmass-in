@@ -57,11 +57,11 @@ class PostApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $post) {
-            if ($post['latitude'] !== null) {
+            if (isset($post['latitude']) && $post['latitude'] !== null) {
                 $this->assertGreaterThanOrEqual(-90, $post['latitude']);
                 $this->assertLessThanOrEqual(90, $post['latitude']);
             }
-            if ($post['longitude'] !== null) {
+            if (isset($post['longitude']) && $post['longitude'] !== null) {
                 $this->assertGreaterThanOrEqual(-180, $post['longitude']);
                 $this->assertLessThanOrEqual(180, $post['longitude']);
             }
@@ -77,7 +77,7 @@ class PostApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $post) {
-            if (isset($post['user']) && $post['user'] !== null) {
+            if (isset($post['user']) && is_array($post['user'])) {
                 $this->assertArrayHasKey('id', $post['user']);
                 $this->assertArrayHasKey('username', $post['user']);
 

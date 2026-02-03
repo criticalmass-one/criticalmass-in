@@ -25,7 +25,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[Groups(['timelapse'])]
+    #[Groups(['timelapse', 'post-list'])]
     protected ?int $id = null;
 
     #[ORM\Column(type: 'json', nullable: true)]
@@ -39,7 +39,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['timelapse'])]
+    #[Groups(['timelapse', 'post-list'])]
     protected ?string $username = null;
 
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]

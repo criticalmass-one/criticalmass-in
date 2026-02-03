@@ -37,13 +37,17 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
         /** @var Photo $hamburgPhoto1 */
         $hamburgPhoto1 = $this->getReference(PhotoFixtures::HAMBURG_PHOTO_1_REFERENCE, Photo::class);
 
+        $hamburgDateTime = $hamburgRidePast->getDateTime() ?? new \DateTime();
+        $berlinDateTime = $berlinRidePast->getDateTime() ?? new \DateTime();
+        $munichDateTime = $munichRidePast->getDateTime() ?? new \DateTime();
+
         $hamburgPost1 = $this->createRidePost(
             $hamburgRidePast,
             $regularUser,
             'Tolle Tour heute! Das Wetter war perfekt.',
             53.5611,
             9.9895,
-            (clone $hamburgRidePast->getDateTime())->modify('+1 hour')
+            (clone $hamburgDateTime)->modify('+1 hour')
         );
         $this->addReference(self::HAMBURG_POST_1_REFERENCE, $hamburgPost1);
         $manager->persist($hamburgPost1);
@@ -54,7 +58,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
             'War meine erste Critical Mass - super Erlebnis!',
             53.5520,
             9.9930,
-            (clone $hamburgRidePast->getDateTime())->modify('+90 minutes')
+            (clone $hamburgDateTime)->modify('+90 minutes')
         );
         $this->addReference(self::HAMBURG_POST_2_REFERENCE, $hamburgPost2);
         $manager->persist($hamburgPost2);
@@ -65,7 +69,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
             'Berlin rockt! Mehr als 500 Radler heute.',
             52.4989,
             13.4178,
-            (clone $berlinRidePast->getDateTime())->modify('+45 minutes')
+            (clone $berlinDateTime)->modify('+45 minutes')
         );
         $this->addReference(self::BERLIN_POST_1_REFERENCE, $berlinPost1);
         $manager->persist($berlinPost1);
@@ -76,7 +80,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
             'Erste CM in Muenchen dieses Jahr!',
             48.1371,
             11.5754,
-            (clone $munichRidePast->getDateTime())->modify('+30 minutes')
+            (clone $munichDateTime)->modify('+30 minutes')
         );
         $this->addReference(self::MUNICH_POST_1_REFERENCE, $munichPost1);
         $manager->persist($munichPost1);
@@ -87,7 +91,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
             'Dieser Post ist deaktiviert.',
             53.5600,
             9.9800,
-            (clone $hamburgRidePast->getDateTime())->modify('+2 hours')
+            (clone $hamburgDateTime)->modify('+2 hours')
         );
         $disabledPost->setEnabled(false);
         $this->addReference(self::DISABLED_POST_REFERENCE, $disabledPost);
@@ -97,7 +101,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
             $hamburgPhoto1,
             $cyclistUser,
             'Super Foto! War ein tolles Event.',
-            (clone $hamburgRidePast->getDateTime())->modify('+3 hours')
+            (clone $hamburgDateTime)->modify('+3 hours')
         );
         $this->addReference(self::PHOTO_POST_REFERENCE, $photoPost);
         $manager->persist($photoPost);

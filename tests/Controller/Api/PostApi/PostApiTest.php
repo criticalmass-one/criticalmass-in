@@ -57,7 +57,7 @@ class PostApiTest extends AbstractApiControllerTestCase
         $this->assertIsArray($response);
 
         foreach ($response as $post) {
-            $this->assertEquals('hamburg', $post['citySlug']);
+            $this->assertEquals('hamburg', $post['city_slug']);
         }
     }
 
@@ -76,13 +76,13 @@ class PostApiTest extends AbstractApiControllerTestCase
         $this->assertIsArray($response);
 
         if (count($response) > 1) {
-            $previousDateTime = null;
+            $previousTimestamp = null;
             foreach ($response as $post) {
-                $currentDateTime = new \DateTime($post['dateTime']);
-                if ($previousDateTime !== null) {
-                    $this->assertGreaterThanOrEqual($currentDateTime, $previousDateTime, 'Posts should be ordered by dateTime descending');
+                $currentTimestamp = $post['date_time'];
+                if ($previousTimestamp !== null) {
+                    $this->assertGreaterThanOrEqual($currentTimestamp, $previousTimestamp, 'Posts should be ordered by dateTime descending');
                 }
-                $previousDateTime = $currentDateTime;
+                $previousTimestamp = $currentTimestamp;
             }
         }
     }
@@ -102,13 +102,13 @@ class PostApiTest extends AbstractApiControllerTestCase
         $this->assertIsArray($response);
 
         if (count($response) > 1) {
-            $previousDateTime = null;
+            $previousTimestamp = null;
             foreach ($response as $post) {
-                $currentDateTime = new \DateTime($post['dateTime']);
-                if ($previousDateTime !== null) {
-                    $this->assertLessThanOrEqual($currentDateTime, $previousDateTime, 'Posts should be ordered by dateTime ascending');
+                $currentTimestamp = $post['date_time'];
+                if ($previousTimestamp !== null) {
+                    $this->assertLessThanOrEqual($currentTimestamp, $previousTimestamp, 'Posts should be ordered by dateTime ascending');
                 }
-                $previousDateTime = $currentDateTime;
+                $previousTimestamp = $currentTimestamp;
             }
         }
     }
@@ -129,7 +129,7 @@ class PostApiTest extends AbstractApiControllerTestCase
             $this->assertArrayHasKey('id', $post);
             $this->assertNotNull($post['id']);
             $this->assertArrayHasKey('message', $post);
-            $this->assertArrayHasKey('dateTime', $post);
+            $this->assertArrayHasKey('date_time', $post);
         }
     }
 
@@ -153,10 +153,10 @@ class PostApiTest extends AbstractApiControllerTestCase
             $this->assertArrayNotHasKey('email', $post['user']);
             $this->assertArrayNotHasKey('password', $post['user']);
             $this->assertArrayNotHasKey('roles', $post['user']);
-            $this->assertArrayNotHasKey('facebookId', $post['user']);
-            $this->assertArrayNotHasKey('stravaId', $post['user']);
-            $this->assertArrayNotHasKey('facebookAccessToken', $post['user']);
-            $this->assertArrayNotHasKey('stravaAccessToken', $post['user']);
+            $this->assertArrayNotHasKey('facebook_id', $post['user']);
+            $this->assertArrayNotHasKey('strava_id', $post['user']);
+            $this->assertArrayNotHasKey('facebook_access_token', $post['user']);
+            $this->assertArrayNotHasKey('strava_access_token', $post['user']);
         }
     }
 }
