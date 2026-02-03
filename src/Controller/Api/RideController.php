@@ -160,7 +160,7 @@ class RideController extends BaseController
             $groups[] = 'extended-ride-list';
         }
 
-        return $this->createStandardResponse($rideList);
+        return $this->createStandardResponse($rideList, ['groups' => $groups]);
     }
 
     /**

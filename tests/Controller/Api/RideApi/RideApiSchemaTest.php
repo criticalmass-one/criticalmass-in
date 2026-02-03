@@ -233,4 +233,40 @@ class RideApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
         $this->assertIsArray($response);
     }
+
+    #[TestDox('GET /api/ride list does not include deeply nested relations')]
+    public function testRideListDoesNotIncludeDeeplyNestedRelations(): void
+    {
+        $this->client->request('GET', '/api/ride?size=5');
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertNotEmpty($response);
+
+        foreach ($response as $index => $ride) {
+            $this->assertArrayNotHasKey('city', $ride, "Ride list item [{$index}] should not include city relation");
+            $this->assertArrayNotHasKey('cycle', $ride, "Ride list item [{$index}] should not include cycle relation");
+            $this->assertArrayNotHasKey('tracks', $ride, "Ride list item [{$index}] should not include tracks relation");
+        }
+    }
+
+    #[TestDox('GET /api/ride?extended=true includes city but not deeply nested region hierarchy')]
+    public function testExtendedRideListDoesNotIncludeDeeplyNestedRegions(): void
+    {
+        $this->client->request('GET', '/api/ride?size=5&extended=true');
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertNotEmpty($response);
+
+        foreach ($response as $index => $ride) {
+            if (isset($ride['city']) && is_array($ride['city'])) {
+                if (isset($ride['city']['region']) && is_array($ride['city']['region'])) {
+                    $region = $ride['city']['region'];
+                    $this->assertArrayNotHasKey('parent', $region, "Ride [{$index}] city.region should not include parent hierarchy");
+                    $this->assertArrayNotHasKey('children', $region, "Ride [{$index}] city.region should not include children");
+                }
+            }
+        }
+    }
 }
