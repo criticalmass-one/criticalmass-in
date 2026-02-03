@@ -49,6 +49,33 @@ export default class extends QueryMapController {
     async connect() {
         await super.connect();
         this.map.on('moveend', () => this.syncSidebar());
+        this.createSidebarControl();
+    }
+
+    createSidebarControl() {
+        const SidebarControl = L.Control.extend({
+            options: { position: 'topleft' },
+            onAdd: () => {
+                const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control explore-sidebar-control');
+                const button = L.DomUtil.create('a', 'explore-sidebar-control__btn', container);
+                button.href = '#';
+                button.title = 'Städteliste anzeigen';
+                button.innerHTML = '<i class="fa fa-list"></i>';
+                button.setAttribute('role', 'button');
+
+                L.DomEvent.disableClickPropagation(container);
+                L.DomEvent.on(button, 'click', (e) => {
+                    L.DomEvent.preventDefault(e);
+                    this.toggleSidebar();
+                });
+
+                return container;
+            }
+        });
+
+        this.sidebarControl = new SidebarControl();
+        this.sidebarControl.addTo(this.map);
+        this.sidebarControl.getContainer().style.display = 'none';
     }
 
     async loadAndRender() {
@@ -157,7 +184,11 @@ export default class extends QueryMapController {
             return;
         }
 
-        this.sidebarTarget.classList.toggle('explore-sidebar--collapsed');
+        const isCollapsed = this.sidebarTarget.classList.toggle('explore-sidebar--collapsed');
+
+        if (this.sidebarControl) {
+            this.sidebarControl.getContainer().style.display = isCollapsed ? 'block' : 'none';
+        }
 
         setTimeout(() => {
             this.map.invalidateSize();

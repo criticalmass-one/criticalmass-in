@@ -114,6 +114,23 @@ $explore-sidebar-transition: 0.35s ease;
     margin-left: 0.5rem;
 }
 
+.explore-sidebar-control {
+    &__btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        color: #333;
+        background: #fff;
+
+        &:hover {
+            background: #f4f4f4;
+            color: #333;
+        }
+    }
+}
+
 @media (max-width: 767px) {
     .explore-sidebar {
         position: absolute;
