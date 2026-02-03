@@ -333,4 +333,26 @@ final class ApiSchemaDefinitions
         'id' => 'int',
         'username' => 'string|null',
     ];
+
+    // =========================================================================
+    // Post Schemas
+    // =========================================================================
+
+    /**
+     * Schema for Post list endpoint: GET /api/post (post-list group)
+     * Actual keys: id, message, date_time, latitude, longitude, user, ride_id, city_id, city_slug, photo_id, thread_id
+     */
+    public const POST_SCHEMA = [
+        'id' => 'int',
+        'message' => 'string|null',
+        'date_time' => 'int', // Unix timestamp
+        'latitude' => 'float|null',
+        'longitude' => 'float|null',
+        'user' => 'array|null', // User object with public fields only
+        'ride_id' => 'int|null',
+        'city_id' => 'int|null',
+        'city_slug' => 'string|null',
+        'photo_id' => 'int|null',
+        'thread_id' => 'int|null',
+    ];
 }
