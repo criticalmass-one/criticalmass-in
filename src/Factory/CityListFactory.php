@@ -31,7 +31,7 @@ class CityListFactory
 
     protected function createList(): CityListFactory
     {
-        $cities = $this->doctrine->getRepository(City::class)->findEnabledCities();
+        $cities = $this->doctrine->getRepository(City::class)->findActiveCities();
         $now = new \DateTime();
 
         foreach ($cities as $city) {
