@@ -11,9 +11,9 @@
                         class="map"
                         id="promotion-map"
                         data-controller="map--query-map"
-                        data-map--popup-template-id-value="ride-popup"
-                        data-map--api-type-value="ride"
-                        data-map--api-query-value="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true"
+                        data-map--query-map-popup-template-id-value="ride-popup"
+                        data-map--query-map-api-type-value="ride"
+                        data-map--query-map-api-query-value="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true"
                         style="height: 350px;"
                     ></div>
                 </div>
