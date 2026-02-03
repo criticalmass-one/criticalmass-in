@@ -196,6 +196,11 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     #[Ignore]
     protected ?string $wikidataEntityId = null;
 
+    #[DataQuery\Sortable]
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['ride-list'])]
+    protected ?float $activityScore = null;
+
     public function __construct()
     {
         $this->rides = new ArrayCollection();
@@ -828,5 +833,17 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
+    }
+
+    public function getActivityScore(): ?float
+    {
+        return $this->activityScore;
+    }
+
+    public function setActivityScore(?float $activityScore): self
+    {
+        $this->activityScore = $activityScore;
+
+        return $this;
     }
 }

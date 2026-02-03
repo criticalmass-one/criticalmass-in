@@ -157,6 +157,30 @@ class CityRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public const ACTIVITY_SCORE_THRESHOLD = 0.15;
+
+    public function findActiveCities(): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->gte('c.activityScore', ':threshold'),
+                    $builder->expr()->isNull('c.activityScore')
+                )
+            )
+            ->orderBy('c.city', 'ASC')
+            ->setParameter('enabled', true)
+            ->setParameter('threshold', self::ACTIVITY_SCORE_THRESHOLD);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findCitiesWithBoard(): array
     {
         $builder = $this->createQueryBuilder('c');

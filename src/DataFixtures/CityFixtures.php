@@ -16,6 +16,7 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
     public const BERLIN_REFERENCE = 'city-berlin';
     public const MUNICH_REFERENCE = 'city-munich';
     public const KIEL_REFERENCE = 'city-kiel';
+    public const INACTIVE_CITY_REFERENCE = 'city-inactive';
 
     public function load(ObjectManager $manager): void
     {
@@ -39,7 +40,8 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
             1900000,
             $hamburgRegion,
             $adminUser,
-            $manager
+            $manager,
+            0.85
         );
         $this->addReference(self::HAMBURG_REFERENCE, $hamburg);
 
@@ -52,7 +54,8 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
             3600000,
             $berlinRegion,
             $adminUser,
-            $manager
+            $manager,
+            0.92
         );
         $this->addReference(self::BERLIN_REFERENCE, $berlin);
 
@@ -65,7 +68,8 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
             1500000,
             $bayernRegion,
             $adminUser,
-            $manager
+            $manager,
+            0.78
         );
         $this->addReference(self::MUNICH_REFERENCE, $munich);
 
@@ -82,6 +86,20 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
         );
         $this->addReference(self::KIEL_REFERENCE, $kiel);
 
+        $inactiveCity = $this->createCity(
+            'Ghosttown',
+            'Critical Mass Ghosttown',
+            'ghosttown',
+            51.0000,
+            10.0000,
+            50000,
+            $bayernRegion,
+            $adminUser,
+            $manager,
+            0.05
+        );
+        $this->addReference(self::INACTIVE_CITY_REFERENCE, $inactiveCity);
+
         $manager->flush();
     }
 
@@ -94,7 +112,8 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
         int $population,
         Region $region,
         User $user,
-        ObjectManager $manager
+        ObjectManager $manager,
+        ?float $activityScore = null
     ): City {
         $citySlug = (new CitySlug())
             ->setSlug($slug);
@@ -109,7 +128,8 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
             ->setRegion($region)
             ->setUser($user)
             ->setEnabled(true)
-            ->setTimezone('Europe/Berlin');
+            ->setTimezone('Europe/Berlin')
+            ->setActivityScore($activityScore);
 
         $city->addSlug($citySlug);
         $citySlug->setCity($city);
