@@ -1004,6 +1004,7 @@ common:
     close: Schließen
     loading: Laden…
     time_suffix: Uhr
+    please_wait: Bitte warten…
 
 footer:
     days_in_saddle: Seit %days% Tagen im Sattel
@@ -1182,3 +1183,13 @@ strava:
 
     mass_import:
         breadcrumb: Tracks importieren
+
+    upload:
+        title: Gpx-Datei hochladen
+        heading: Gpx-Datei hochladen
+        breadcrumb: Track hochladen
+        panel_title: Gpx-Datei hochladen
+        intro: "Wenn du deine Fahrt bei der <strong>%city%</strong> am <strong>%date%</strong> aufgezeichnet hast, kannst du hier deinen Track als GPX-Datei hochladen."
+        file_label: "Datei:"
+        submit: Track hochladen
+        error: "Hochladen fehlgeschlagen :("
