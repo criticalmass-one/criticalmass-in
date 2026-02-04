@@ -1213,3 +1213,25 @@ strava:
     col_distance: Distanz
     col_start: Start
     col_end: Ende
+
+city_cycle:
+    list:
+        breadcrumb: Turnusliste
+
+    edit:
+        title_edit: Turnus editieren
+        title_add: Neuen Turnus hinzufügen
+        lead: criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen, sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher festgelegten Treffpunkt starten.
+        single_ride_hint: 'Wenn du lediglich eine einzelne Tour für %city% erstellen möchtest, nutze bitte <strong><a href="%url%">dieses Formular</a></strong>.'
+        day_of_week_label: "Wochentag der Touren:"
+        day_of_week_help: Stelle hier den Wochentag ein, an dem die Touren stattfinden.
+        week_of_month_label: "Woche der Touren:"
+        week_of_month_help: Wähle hier die Woche, in der die Touren stattfinden.
+        special_calculator_hint: Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen Generator erzeugt wird.
+        time_label: "Uhrzeit der Touren:"
+        time_help: Startzeit der Touren.
+        location_label: "Treffpunkt der Touren:"
+        location_help: Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.
+        validity_intro: Hier kannst du einen optionalen Gültigkeitszeitraum angeben, in dem neue Touren nach dem obigen Einstellungen erzeugt werden sollen. Das kann nützlich sein, falls die Critical Mass in %city% nur im Sommer stattfindet oder sich irgendwann einmal der Treffpunkt ändert.
+        valid_from_label: "Gültig ab:"
+        valid_until_label: "Gültig bis:"
