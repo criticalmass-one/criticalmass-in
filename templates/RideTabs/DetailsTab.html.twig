@@ -56,75 +56,68 @@
         </div>
     </div>
 
-    <div class="row">
-        {# Hauptinhalt: Beschreibung oder Hinweise #}
-        <div class="col-lg-8 order-lg-first order-2">
-            {% if ride.description and ride.enabled %}
-                <div itemprop="description" class="lead mb-4">
-                    {{ ride.description|markdown }}
-                </div>
-            {% elseif ride.enabled %}
-                <div class="card bg-light border-0 mb-4">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0">
-                                <i class="far fa-lightbulb fa-2x text-info"></i>
-                            </div>
-                            <div class="flex-grow-1 ms-3">
-                                <h5 class="card-title">Diese Tour braucht noch Infos</h5>
-                                <p class="card-text text-muted">
-                                    Bislang hat noch niemand Details zu dieser Tour hinterlegt. Hilf mit und ergänze:
-                                </p>
-                                <ul class="text-muted mb-3">
-                                    <li>Gibt es ein Motto für diese Tour?</li>
-                                    <li>Neuigkeiten oder Termine für den Radverkehr?</li>
-                                    <li>Wie wird das Wetter?</li>
-                                </ul>
-                                <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" class="btn btn-primary">
-                                    <i class="far fa-edit me-1"></i>Tour ergänzen
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="alert alert-warning border-0" id="ride-disabled-reason">
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <i class="far fa-exclamation-triangle fa-2x"></i>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h5 class="alert-heading">Tour abgesagt</h5>
-                            <p class="mb-0">
-                                {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
-                                    Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
-                                {% elseif ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
-                                    Diese Tour wurde mit falschen Daten angelegt.
-                                {% elseif ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
-                                    Diese Tour wurde fehlerhafterweise automatisch generiert.
-                                {% elseif ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
-                                    Diese Tour wurde witterungsbedingt abgesagt.
-                                {% elseif ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
-                                    Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
-                                {% elseif ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
-                                    Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
-                                {% elseif ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
-                                    Diese Tour wurde abgesagt.
-                                {% endif %}
-                            </p>
-                            {% if ride.disabledReasonMessage %}
-                                <hr>
-                                <div class="mb-0">{{ ride.disabledReasonMessage|markdown }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+    {# Hauptinhalt: Beschreibung oder Hinweise #}
+    {% if ride.description and ride.enabled %}
+        <div itemprop="description" class="mb-4">
+            {{ ride.description|markdown }}
         </div>
+    {% elseif ride.enabled %}
+        <div class="card bg-light border-0 mb-4">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <i class="far fa-lightbulb fa-2x text-info"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="card-title">Diese Tour braucht noch Infos</h5>
+                        <p class="card-text text-muted">
+                            Bislang hat noch niemand Details zu dieser Tour hinterlegt. Hilf mit und ergänze:
+                        </p>
+                        <ul class="text-muted mb-3">
+                            <li>Gibt es ein Motto für diese Tour?</li>
+                            <li>Neuigkeiten oder Termine für den Radverkehr?</li>
+                        </ul>
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" class="btn btn-primary">
+                            <i class="far fa-edit me-1"></i>Tour ergänzen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-warning border-0" id="ride-disabled-reason">
+            <div class="d-flex">
+                <div class="flex-shrink-0">
+                    <i class="far fa-exclamation-triangle fa-2x"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5 class="alert-heading">Tour abgesagt</h5>
+                    <p class="mb-0">
+                        {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
+                        {% elseif ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde mit falschen Daten angelegt.
+                        {% elseif ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde fehlerhafterweise automatisch generiert.
+                        {% elseif ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde witterungsbedingt abgesagt.
+                        {% elseif ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
+                        {% elseif ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
+                        {% elseif ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde abgesagt.
+                        {% endif %}
+                    </p>
+                    {% if ride.disabledReasonMessage %}
+                        <hr>
+                        <div class="mb-0">{{ ride.disabledReasonMessage|markdown }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
-        {# Sidebar mit Zusatzinfos #}
-        <div class="col-lg-4 order-lg-last order-1 mb-4 mb-lg-0">
-            {% include 'Ride/Includes/_socialMedia.html.twig' with { 'ride': ride } %}
-        </div>
-    </div>
+    {# Social Media Links #}
+    {% include 'Ride/Includes/_socialMedia.html.twig' with { 'ride': ride } %}
 </div>

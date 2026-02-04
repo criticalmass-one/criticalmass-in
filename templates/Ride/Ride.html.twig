@@ -60,11 +60,11 @@
                 </div>
 
                 {# Wichtige Details als Icons/Badges #}
-                <div class="row g-3 mb-4">
+                <div class="row g-3 mb-3">
                     <div class="col-6">
                         <div class="d-flex align-items-center">
-                            <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
-                                <i class="far fa-calendar-alt text-primary fa-lg"></i>
+                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                <i class="far fa-calendar-alt text-primary"></i>
                             </div>
                             <div>
                                 <small class="text-muted d-block">Datum</small>
@@ -77,8 +77,8 @@
                     </div>
                     <div class="col-6">
                         <div class="d-flex align-items-center">
-                            <div class="bg-success bg-opacity-10 rounded-circle p-2 me-3">
-                                <i class="far fa-clock text-success fa-lg"></i>
+                            <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                <i class="far fa-clock text-success"></i>
                             </div>
                             <div>
                                 <small class="text-muted d-block">Uhrzeit</small>
@@ -92,8 +92,8 @@
                     </div>
                     <div class="col-12">
                         <div class="d-flex align-items-center" itemprop="location" itemscope itemtype="http://schema.org/Place">
-                            <div class="bg-warning bg-opacity-10 rounded-circle p-2 me-3">
-                                <i class="far fa-map-pin text-warning fa-lg"></i>
+                            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                <i class="far fa-map-pin text-warning"></i>
                             </div>
                             <div class="flex-grow-1">
                                 <small class="text-muted d-block">Treffpunkt</small>
@@ -134,56 +134,46 @@
                     {% if weatherForecast %}
                         <div class="col-12">
                             <div class="d-flex align-items-center">
-                                <div class="bg-info bg-opacity-10 rounded-circle p-2 me-3">
-                                    <i class="far fa-cloud-sun text-info fa-lg"></i>
+                                <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                    <i class="far fa-cloud-sun text-info"></i>
                                 </div>
                                 <div>
-                                    <small class="text-muted d-block">Wetter</small>
+                                    <small class="text-muted d-block">Wetter <a href="https://openweathermap.org/" target="_blank" rel="noopener" class="text-muted">(OpenWeatherMap)</a></small>
                                     <strong>{{ weatherForecast }}</strong>
-                                    <br><small class="text-muted"><a href="https://openweathermap.org/" target="_blank" rel="noopener" class="text-muted">OpenWeatherMap</a></small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# Statistik für vergangene Touren #}
+                    {% if pastRide and ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                    <i class="far fa-users text-secondary"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block">Teilnehmer</small>
+                                    <strong>{{ ride.estimatedParticipants|number_format(0) }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if pastRide and ride.estimatedDistance and ride.estimatedDistance > 0 %}
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                    <i class="far fa-route text-secondary"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block">Strecke</small>
+                                    <strong>{{ ride.estimatedDistance|number_format(1) }} km</strong>
                                 </div>
                             </div>
                         </div>
                     {% endif %}
                 </div>
-
-                {# Statistik für vergangene Touren #}
-                {% if pastRide and (ride.estimatedParticipants or ride.estimatedDistance) %}
-                    <div class="row g-2 mb-3">
-                        {% if ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
-                            <div class="col-6 col-md-3">
-                                <div class="text-center p-2 bg-light rounded">
-                                    <div class="h5 mb-0 text-primary">{{ ride.estimatedParticipants|number_format(0) }}</div>
-                                    <small class="text-muted">Teilnehmer</small>
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% if ride.estimatedDistance and ride.estimatedDistance > 0 %}
-                            <div class="col-6 col-md-3">
-                                <div class="text-center p-2 bg-light rounded">
-                                    <div class="h5 mb-0 text-success">{{ ride.estimatedDistance|number_format(1) }}</div>
-                                    <small class="text-muted">Kilometer</small>
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
-                            <div class="col-6 col-md-3">
-                                <div class="text-center p-2 bg-light rounded">
-                                    <div class="h6 mb-0 text-info">{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</div>
-                                    <small class="text-muted">Dauer</small>
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% if ride.getAverageVelocity and ride.getAverageVelocity > 0 %}
-                            <div class="col-6 col-md-3">
-                                <div class="text-center p-2 bg-light rounded">
-                                    <div class="h6 mb-0 text-warning">{{ ride.getAverageVelocity()|number_format(1) }}</div>
-                                    <small class="text-muted">km/h</small>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endif %}
 
                 {# Aktions-Buttons #}
                 <div class="mt-auto">
