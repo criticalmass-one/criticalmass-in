@@ -104,7 +104,7 @@ class RideManagementControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/edit');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['ride[title]'] = 'Geänderter Titel für Hamburg';
 
         $client->submit($form);
@@ -123,7 +123,7 @@ class RideManagementControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/edit');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['ride[title]'] = 'Critical Mass Hamburg Testtitel';
 
         $client->submit($form);
@@ -146,7 +146,7 @@ class RideManagementControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/edit');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['ride[location]'] = 'Jungfernstieg';
 
         $client->submit($form);
@@ -169,7 +169,7 @@ class RideManagementControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/edit');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['ride[description]'] = 'Neue Beschreibung für die Tour.';
 
         $client->submit($form);
