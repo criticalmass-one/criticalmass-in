@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Table(name: 'rating')]
 #[ORM\Entity(repositoryClass: 'App\Repository\RatingRepository')]
@@ -11,20 +13,25 @@ class Rating
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['rating-list'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Ride::class, inversedBy: 'ratings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?Ride $ride = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ratings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?User $user = null;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['rating-list'])]
     private int $rating = 0;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['rating-list'])]
     private \DateTime $createdAt;
 
     public function __construct()
