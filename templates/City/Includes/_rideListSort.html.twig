@@ -1,38 +1,38 @@
 <div class="dropdown" id="cityRideListButton">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="cityListDropdown" data-bs-toggle="dropdown">
         <i class="far fa-sort"></i>
-        Sortierung
+        {{ 'city.ride_list_sort.button'|trans }}
     </button>
 
     <ul class="dropdown-menu" role="menu" aria-labelledby="cityListDropdown">
         <li role="presentation" class="sortOption" data-sortAttribute="rideDate">
             <a role="menuitem" tabindex="-1" href="#">
-                Datum
+                {{ 'city.ride_list_sort.sort_date'|trans }}
             </a>
         </li>
         <li role="presentation" class="sortOption" data-sortAttribute="rideTitle">
             <a role="menuitem" tabindex="-1" href="#">
-                Titel
+                {{ 'city.ride_list_sort.sort_title'|trans }}
             </a>
         </li>
         <li role="presentation" class="sortOption" data-sortAttribute="rideLocation">
             <a role="menuitem" tabindex="-1" href="#">
-                Treffpunkt
+                {{ 'city.ride_list_sort.sort_location'|trans }}
             </a>
         </li>
         <li role="presentation" class="sortOption" data-sortAttribute="rideParticipants">
             <a role="menuitem" tabindex="-1" href="#">
-                Teilnehmer
+                {{ 'city.ride_list_sort.sort_participants'|trans }}
             </a>
         </li>
         <li role="presentation" class="sortOption" data-sortAttribute="rideDistance">
             <a role="menuitem" tabindex="-1" href="#">
-                Distanz
+                {{ 'city.ride_list_sort.sort_distance'|trans }}
             </a>
         </li>
         <li role="presentation" class="sortOption" data-sortAttribute="rideDuration">
             <a role="menuitem" tabindex="-1" href="#">
-                Dauer
+                {{ 'city.ride_list_sort.sort_duration'|trans }}
             </a>
         </li>
     </ul>
