@@ -1092,3 +1092,31 @@ track:
     previous: Voriger Track
     next: Nächster Track
 
+
+form:
+    login:
+        email_label: E-Mail-Adresse
+        email_help: Wenn du noch kein Benutzerkonto hast, wird automatisch ein neues mit deiner E-Mail-Adresse erstellt.
+        submit: Link zusenden
+
+    city_cycle:
+        day_of_week: Wochentag
+        week_of_month: Woche im Monat
+        monday: Montag
+        tuesday: Dienstag
+        wednesday: Mittwoch
+        thursday: Donnerstag
+        friday: Freitag
+        saturday: Sonnabend
+        sunday: Sonntag
+        first_week: Erste Woche im Monat
+        second_week: Zweite Woche im Monat
+        third_week: Dritte Woche im Monat
+        fourth_week: Vierte Woche im Monat
+        last_week: Letzte Woche im Monat
+
+    profile_color:
+        label: Profilfarbe wählen
+
+    social_network:
+        auto_detect: (automatisch erkennen)

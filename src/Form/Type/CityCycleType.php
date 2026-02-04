@@ -50,28 +50,30 @@ class CityCycleType extends AbstractType
         if (!$cycle->getRideCalculatorFqcn()) {
             $builder
                 ->add('dayOfWeek', ChoiceType::class, [
-                    'label' => 'Wochentag',
+                    'label' => 'form.city_cycle.day_of_week',
                     'choices' => [
-                        'Montag' => 1,
-                        'Dienstag' => 2,
-                        'Mittwoch' => 3,
-                        'Donnerstag' => 4,
-                        'Freitag' => 5,
-                        'Sonnabend' => 6,
-                        'Sonntag' => 0
+                        'form.city_cycle.monday' => 1,
+                        'form.city_cycle.tuesday' => 2,
+                        'form.city_cycle.wednesday' => 3,
+                        'form.city_cycle.thursday' => 4,
+                        'form.city_cycle.friday' => 5,
+                        'form.city_cycle.saturday' => 6,
+                        'form.city_cycle.sunday' => 0,
                     ],
-                    'required' => true
+                    'choice_translation_domain' => 'messages',
+                    'required' => true,
                 ])
                 ->add('weekOfMonth', ChoiceType::class, [
-                    'label' => 'Woche im Monat',
+                    'label' => 'form.city_cycle.week_of_month',
                     'choices' => [
-                        'Erste Woche im Monat' => 1,
-                        'Zweite Woche im Monat' => 2,
-                        'Dritte Woche im Monat' => 3,
-                        'Vierte Woche im Monat' => 4,
-                        'Letzte Woche im Monat' => 0
+                        'form.city_cycle.first_week' => 1,
+                        'form.city_cycle.second_week' => 2,
+                        'form.city_cycle.third_week' => 3,
+                        'form.city_cycle.fourth_week' => 4,
+                        'form.city_cycle.last_week' => 0,
                     ],
-                    'required' => true
+                    'choice_translation_domain' => 'messages',
+                    'required' => true,
                 ]);
         } else {
             $builder
