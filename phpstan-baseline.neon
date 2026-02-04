@@ -4254,3 +4254,8 @@ parameters:
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Ride\\>\\:\\:findFrontpageRides\\(\\)\\.$#"
 			count: 2
 			path: tests/Repository/RideRepositoryTest.php
+
+		-
+			message: "#^Attribute class OpenApi\\\\Attributes\\\\Parameter is not repeatable but is already present above the method\\.$#"
+			count: 15
+			path: src/Controller/Api/PostController.php

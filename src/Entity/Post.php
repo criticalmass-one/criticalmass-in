@@ -6,6 +6,9 @@ use App\Criticalmass\Website\Crawler\Crawlable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'post')]
@@ -16,52 +19,76 @@ class Post implements Crawlable
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[DataQuery\Sortable]
+    #[Groups(['post-list'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'Post', inversedBy: 'children')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Post $parent = null;
 
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'parent')]
+    #[Ignore]
     protected Collection $children;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'posts')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[Groups(['post-list'])]
     protected ?User $user = null;
 
+    #[DataQuery\Queryable]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'posts')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Ride $ride = null;
 
+    #[DataQuery\Queryable]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'posts')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?City $city = null;
 
     #[ORM\ManyToOne(targetEntity: 'Thread', inversedBy: 'posts')]
     #[ORM\JoinColumn(name: 'thread_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Thread $thread = null;
 
     #[ORM\ManyToOne(targetEntity: 'Photo', inversedBy: 'posts')]
     #[ORM\JoinColumn(name: 'photo_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Photo $photo = null;
 
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['post-list'])]
     protected ?float $latitude = null;
 
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['post-list'])]
     protected ?float $longitude = null;
 
+    #[DataQuery\DateTimeQueryable(format: 'strict_date_hour_minute_second', pattern: 'Y-m-d\TH:i:s')]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['post-list'])]
     protected ?\DateTime $dateTime = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['post-list'])]
     protected ?string $message = null;
 
+    #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
+    #[Ignore]
     protected bool $enabled = true;
 
     #[ORM\Column(type: 'boolean')]
+    #[Ignore]
     protected bool $crawled = false;
 
     public function __construct()
@@ -225,6 +252,36 @@ class Post implements Crawlable
         $this->thread = $thread;
 
         return $this;
+    }
+
+    #[Groups(['post-list'])]
+    public function getRideId(): ?int
+    {
+        return $this->ride?->getId();
+    }
+
+    #[Groups(['post-list'])]
+    public function getCityId(): ?int
+    {
+        return $this->city?->getId();
+    }
+
+    #[Groups(['post-list'])]
+    public function getCitySlug(): ?string
+    {
+        return $this->city?->getMainSlugString();
+    }
+
+    #[Groups(['post-list'])]
+    public function getPhotoId(): ?int
+    {
+        return $this->photo?->getId();
+    }
+
+    #[Groups(['post-list'])]
+    public function getThreadId(): ?int
+    {
+        return $this->thread?->getId();
     }
 
     /** TODO remove this and rename $message to $text */
