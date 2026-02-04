@@ -17,7 +17,7 @@
 
         {% include('Ride/Includes/_registrationHint.html.twig') %}
 
-        {% include('Ride/Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation, 'location': location, 'weatherForecast': weatherForecast } %}
+        {% include('Ride/Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation, 'location': location, 'weatherForecast': weatherForecast, 'estimateForm': estimateForm } %}
 
         {% include('Ride/Includes/_pagination.html.twig') with { 'ride': ride } %}
     </div>

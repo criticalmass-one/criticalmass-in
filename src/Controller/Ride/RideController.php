@@ -2,9 +2,14 @@
 
 namespace App\Controller\Ride;
 
-use App\Entity\Ride;
+use App\Controller\AbstractController;
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\SeoPage\SeoPageInterface;
+use App\Entity\Ride;
+use App\Entity\RideEstimate;
+use App\Entity\Weather;
 use App\Event\View\ViewEvent;
+use App\Form\Type\RideEstimateType;
 use App\Repository\BlockedCityRepository;
 use App\Repository\LocationRepository;
 use App\Repository\ParticipationRepository;
@@ -13,8 +18,6 @@ use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
-use App\Controller\AbstractController;
-use App\Entity\Weather;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -48,6 +51,7 @@ class RideController extends AbstractController
     public function showAction(
         BlockedCityRepository $blockedCityRepository,
         LocationRepository $locationRepository,
+        ObjectRouterInterface $objectRouter,
         ParticipationRepository $participationRepository,
         SubrideRepository $subrideRepository,
         WeatherRepository $weatherRepository,
@@ -106,6 +110,10 @@ class RideController extends AbstractController
             $participation = null;
         }
 
+        $estimateForm = $this->createForm(RideEstimateType::class, new RideEstimate(), [
+            'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_addestimate'),
+        ]);
+
         return $this->render('Ride/show.html.twig', [
             'city' => $ride->getCity(),
             'ride' => $ride,
@@ -116,6 +124,7 @@ class RideController extends AbstractController
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
             'location' => $locationRepository->findLocationForRide($ride),
+            'estimateForm' => $estimateForm->createView(),
         ]);
     }
 }

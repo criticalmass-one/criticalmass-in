@@ -183,6 +183,23 @@
                             </a>
                         {% endif %}
                         {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation, 'inButtonGroup': true } %}
+                        {% if pastRide %}
+                            {% if app.user %}
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#estimate-modal">
+                                    <i class="far fa-users me-1"></i>
+                                    <span class="d-none d-sm-inline">Schätzen</span>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                    data-controller="hint-modal"
+                                    data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}"
+                                    data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                                    data-modal-hint-size="md">
+                                    <i class="far fa-users me-1"></i>
+                                    <span class="d-none d-sm-inline">Schätzen</span>
+                                </button>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -247,3 +264,33 @@
         </div>
     </div>
 </div>
+
+{# Modal für Teilnehmerschätzung #}
+{% if pastRide and app.user %}
+    <div class="modal fade" id="estimate-modal" tabindex="-1" aria-labelledby="estimate-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                {{ form_start(estimateForm) }}
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="estimate-modal-label">
+                        <i class="far fa-users text-primary me-2"></i>Teilnehmer schätzen
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small">Wie viele Radfahrer waren bei dieser Tour dabei?</p>
+                    <div class="mb-3">
+                        {{ form_widget(estimateForm.estimatedParticipants, { 'attr': { 'class': 'form-control form-control-lg text-center', 'placeholder': 'z.B. 150' } }) }}
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="far fa-save me-1"></i>Speichern
+                    </button>
+                </div>
+                {{ form_end(estimateForm) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
