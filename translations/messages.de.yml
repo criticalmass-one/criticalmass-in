@@ -1217,6 +1217,78 @@ strava:
 city_cycle:
     list:
         breadcrumb: Turnusliste
+        title: Turnusse von %city% anzeigen
+        heading: Regelmäßige Touren in %city%
+        lead: Du kannst die monatlichen Touren in %city% automatisch erzeugen lassen. Wenn du mit Gültigkeitsbereichen arbeitest, kannst du auch komplexere Logiken implementieren, beispielsweise andere Uhrzeiten für sommerliche als für winterliche Touren angeben.
+        add_button: Turnus ergänzen
+        col_cycle: Turnus
+        col_location: Treffpunkt
+        col_time: Uhrzeit
+        col_validity: Gültigkeit
+        col_actions: Aktionen
+        cycle_pattern: "am %week% %day% im Monat"
+        location_undefined: nicht definiert
+        time_suffix: Uhr
+        validity_from: "vom %date%"
+        validity_until: "bis %date%"
+        validity_unlimited: nicht begrenzt
+        action_edit: Turnus editieren
+        action_rides: zugehörige Touren anzeigen
+        action_execute: Turnus manuell auslösen
+        action_disable: Turnus deaktivieren
+
+    ride_list:
+        title: Automatisch generierte Touren von %city% anzeigen
+        breadcrumb_cycle_list: Turnusliste
+        breadcrumb: Generierte Touren anzeigen
+        panel_title: Turnus
+        cycle_label: Turnus
+        cycle_pattern: "%week% %day% im Monat"
+        time_label: Uhrzeit
+        time_suffix: Uhr
+        location_label: Treffpunkt
+        location_undefined: nicht definiert
+        valid_from_label: Gültigkeitsbeginn
+        valid_until_label: Gültigkeitsende
+        heading: Tourenübersicht
+        intro: "Die folgenden Touren wurden von diesem Turnus erzeugt:"
+        col_title: Titel
+        col_date: Datum
+        col_time: Uhrzeit
+        col_location: Treffpunkt
+        to_ride: zur Tourseite
+        edit_ride: Tour editieren
+
+    execute:
+        title: Turnus auslösen
+        breadcrumb_cycle_list: Turnusliste
+        breadcrumb: Turnus auslösen
+        preview_heading: Vorschau
+        preview_lead: "Für den Zeitraum vom %from% bis %until% können die folgenden Touren generiert werden:"
+        col_title: Titel
+        col_date: Datum
+        col_time: Uhrzeit
+        col_location: Treffpunkt
+        time_suffix: Uhr
+        location_undefined: nicht definiert
+        no_rides_alert: Für deinen gewählten Zeitraum können keine Touren angelegt werden, weil entweder dieser Turnus für den gewählten Zeitraum noch nicht begonnen hat oder abgelaufen ist oder die anzulegenden Touren bereits existieren.
+        partial_rides_alert: "Du hast gerade Touren für einen Zeitraum von <strong>%requested% Monaten</strong> generieren lassen, es wurden allerdings nur <strong>%created% Touren</strong> erstellt. Das liegt daran, dass <strong>%skipped% Touren</strong> entweder bereits in unserer Datenbank vorhanden sind oder aber außerhalb des Gültigkeitszeitraumes des Turnus' liegen."
+        partial_rides_hint: Wir können dir leider momentan aus technischen Gründen nicht anzeigen, um welche Touren es sich handelt — wir arbeiten allerdings an einer entsprechenden Funktion.
+        action_hint: "Du kannst nun entweder die in der obigen Tabelle dargestellten Touren abspeichern oder zurück gehen und einen anderen Zeitraum auswählen:"
+        cancel: Abbrechen
+        save: Touren speichern
+        datetime_heading: Touren automatisch generieren
+        datetime_lead: Du kannst anhand des ausgewählten Turnus' die Touren in deiner Stadt generieren lassen.
+        datetime_info_title: Normalerweise wird diese Generierung in regelmäßigen Abständen serverseitig ausgeführt und du musst überhaupt nichts weiter dafür tun.
+        datetime_info_manual: "Diese „manuelle Generierung" ist für dich in der Regel nur dann interessant, wenn du"
+        datetime_info_new_cycle: gerade einen neuen Turnus angelegt hast und schon einmal für die nächsten Monate Touren anlegen möchtest, bevor die automatische Generierung beginnt oder
+        datetime_info_backfill: "du oder jemand anders <strong>%city%</strong> in unserer Datenbank angelegt hast und nun rückwirkend die Touren generieren lassen möchtest, weil es deine Critical Mass bereits viel länger gibt als den Eintrag in unserer Datenbank"
+        datetime_range_intro: Mit den folgenden beiden Eingabefeldern kannst du einen Zeitraum definieren, für den die Touren anhand der Daten aus dem Turnus generiert werden sollen. Der Generator wird Monat für Monat eine einzelne Tour anlegen. Du kannst die Touren im nächsten Schritt in einer Vorschau überprüfen, bevor sie abgespeichert werden.
+        from_date_label: "Startdatum:"
+        from_date_help: "Bitte im Format <code>dd.mm.jjjj</code> angeben."
+        until_date_label: "Enddatum:"
+        until_date_help: "Bitte im Format <code>dd.mm.jjjj</code> angeben."
+        submit: Weiter zur Vorschau
 
     edit:
         title_edit: Turnus editieren
@@ -1235,3 +1307,42 @@ city_cycle:
         validity_intro: Hier kannst du einen optionalen Gültigkeitszeitraum angeben, in dem neue Touren nach dem obigen Einstellungen erzeugt werden sollen. Das kann nützlich sein, falls die Critical Mass in %city% nur im Sommer stattfindet oder sich irgendwann einmal der Treffpunkt ändert.
         valid_from_label: "Gültig ab:"
         valid_until_label: "Gültig bis:"
+
+static:
+    live_tracking:
+        title: Critical Mass Live Tracking
+        heading: Critical Mass Live Tracking
+        outdated_link_text: "Wenn du diese Seite siehst, bist du vermutlich einen veralteten Link gefolgt — bitte besuche criticalmass.live für weitere Informationen zum Live-Tracking."
+
+city:
+    ride_list_sort:
+        button: Sortierung
+        sort_date: Datum
+        sort_title: Titel
+        sort_location: Treffpunkt
+        sort_participants: Teilnehmer
+        sort_distance: Distanz
+        sort_duration: Dauer
+
+    locations:
+        panel_title: Treffpunkte
+
+    missing_stats:
+        title: Touren mit fehlenden Statistiken aus %city%
+        breadcrumb_city_list: Städteliste
+        breadcrumb: Touren mit fehlenden Statistiken
+        heading: Touren aus %city% mit fehlenden Statistiken
+        lead: Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
+        col_date: Datum
+        col_title: Titel
+        col_participants: Teilnehmer
+        col_duration: Dauer
+        col_distance: Distanz
+        missing: fehlt
+
+promotion:
+    popup:
+        date: "Datum:"
+        time: "Uhrzeit:"
+        location: "Treffpunkt:"
+        to_ride: zur Tour

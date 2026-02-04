@@ -1,12 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Turnus auslösen{% endblock %}
+{% block title %}{{ 'city_cycle.execute.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item(cityCycle.city.city, object_path(cityCycle.city)) }}
-    {{ breadcrumb.item('Turnusliste', object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
-    {{ breadcrumb.active('Turnus auslösen') }}
+    {{ breadcrumb.item('city_cycle.execute.breadcrumb_cycle_list'|trans, object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active('city_cycle.execute.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -14,15 +14,11 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h2>
-                    Vorschau
+                    {{ 'city_cycle.execute.preview_heading'|trans }}
                 </h2>
 
                 <p class="lead">
-                    Für den Zeitraum vom
-                    <time>{{ executeable.fromDate|date('d.m.Y') }}</time>
-                    bis
-                    <time>{{ executeable.untilDate|date('d.m.Y') }}</time>
-                    können die folgenden Touren generiert werden:
+                    {{ 'city_cycle.execute.preview_lead'|trans({ '%from%': executeable.fromDate|date('d.m.Y'), '%until%': executeable.untilDate|date('d.m.Y') }) }}
                 </p>
             </div>
         </div>
@@ -33,19 +29,19 @@
                     <thead>
                     <tr>
                         <th>
-                            Titel
+                            {{ 'city_cycle.execute.col_title'|trans }}
                         </th>
 
                         <th>
-                            Datum
+                            {{ 'city_cycle.execute.col_date'|trans }}
                         </th>
 
                         <th>
-                            Uhrzeit
+                            {{ 'city_cycle.execute.col_time'|trans }}
                         </th>
 
                         <th>
-                            Treffpunkt
+                            {{ 'city_cycle.execute.col_location'|trans }}
                         </th>
                     </tr>
                     </thead>
@@ -61,14 +57,14 @@
                             </td>
 
                             <td>
-                                {{ ride.dateTime|date('H:i') }} Uhr
+                                {{ ride.dateTime|date('H:i') }} {{ 'city_cycle.execute.time_suffix'|trans }}
                             </td>
 
                             <td>
                                 {% if ride.location %}
                                     {{ ride.location }}
                                 {% else %}
-                                    <em>nicht definiert</em>
+                                    <em>{{ 'city_cycle.execute.location_undefined'|trans }}</em>
                                 {% endif %}
                             </td>
                         </tr>
@@ -77,9 +73,7 @@
                         <tr>
                             <td colspan="5">
                                 <div class="alert alert-danger">
-                                    Für deinen gewählten Zeitraum können keine Touren angelegt werden, weil entweder
-                                    dieser Turnus für den gewählten Zeitraum noch nicht begonnen hat oder abgelaufen ist
-                                    oder die anzulegenden Touren bereits existieren.
+                                    {{ 'city_cycle.execute.no_rides_alert'|trans }}
                                 </div>
                             </td>
                         </tr>
@@ -88,17 +82,12 @@
                             <td colspan="5">
                                 <div class="alert alert-info">
                                     <p>
-                                        Du hast gerade Touren für einen Zeitraum von <strong>{{ dateTimeList|length }}
-                                            Monaten</strong> generieren lassen, es wurden allerdings nur
-                                        <strong>{{ rideList|length }} Touren</strong> erstellt. Das liegt daran, dass
-                                        <strong>{{ dateTimeList|length - rideList|length }} Touren</strong> entweder
-                                        bereits in unserer Datenbank vorhanden sind oder aber außerhalb des
-                                        Gültigkeitszeitraumes des Turnus’ liegen.</p>
+                                        {{ 'city_cycle.execute.partial_rides_alert'|trans({ '%requested%': dateTimeList|length, '%created%': rideList|length, '%skipped%': dateTimeList|length - rideList|length })|raw }}
+                                    </p>
 
                                     <p>
-                                        Wir können dir leider momentan aus technischen Gründen nicht anzeigen, um welche
-                                        Touren es sich handelt — wir arbeiten allerdings an einer entsprechenden
-                                        Funktion.</p>
+                                        {{ 'city_cycle.execute.partial_rides_hint'|trans }}
+                                    </p>
                                 </div>
                             </td>
                         </tr>
@@ -111,8 +100,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <p>
-                    Du kannst nun entweder die in der obigen Tabelle dargestellten Touren abspeichern oder zurück gehen
-                    und einen anderen Zeitraum auswählen:
+                    {{ 'city_cycle.execute.action_hint'|trans }}
                 </p>
             </div>
         </div>
@@ -127,10 +115,10 @@
 
                 <div class="btn-group pull-right">
                     <a href="" class="btn btn-secondary">
-                        Abbrechen
+                        {{ 'city_cycle.execute.cancel'|trans }}
                     </a>
                     <button type="submit" class="btn btn-primary">
-                        Touren speichern
+                        {{ 'city_cycle.execute.save'|trans }}
                     </button>
                 </div>
                 </form>
