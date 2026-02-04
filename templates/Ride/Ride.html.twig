@@ -59,25 +59,28 @@
                     </a>
                 </div>
 
-                {# Wichtige Details als Icons/Badges #}
+                {# Wichtige Details im zweispaltigen Layout #}
                 <div class="row g-3 mb-3">
+                    {# Datum #}
                     <div class="col-6">
                         <div class="d-flex align-items-center">
-                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
                                 <i class="far fa-calendar-alt text-primary"></i>
                             </div>
                             <div>
                                 <small class="text-muted d-block">Datum</small>
                                 <strong itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">
-                                    {{ ride.dateTime|date('D, d.m.Y', ride.city.timezone) }}
+                                    {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
                                 </strong>
                                 <meta itemprop="endDate" content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-dTH:i') }}" />
                             </div>
                         </div>
                     </div>
+
+                    {# Uhrzeit #}
                     <div class="col-6">
                         <div class="d-flex align-items-center">
-                            <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                            <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
                                 <i class="far fa-clock text-success"></i>
                             </div>
                             <div>
@@ -85,17 +88,19 @@
                                 {% if ride.dateTime %}
                                     <strong>{{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr</strong>
                                 {% else %}
-                                    <span class="text-muted">noch nicht bekannt</span>
+                                    <span class="text-muted">unbekannt</span>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <div class="d-flex align-items-center" itemprop="location" itemscope itemtype="http://schema.org/Place">
-                            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+
+                    {# Treffpunkt #}
+                    <div class="col-6" itemprop="location" itemscope itemtype="http://schema.org/Place">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
                                 <i class="far fa-map-pin text-warning"></i>
                             </div>
-                            <div class="flex-grow-1">
+                            <div>
                                 <small class="text-muted d-block">Treffpunkt</small>
                                 {% if ride.location and ride.latitude and ride.longitude %}
                                     {% if location %}
@@ -113,17 +118,9 @@
                                     </div>
                                 {% else %}
                                     {% if app.user %}
-                                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" class="text-muted">
-                                            <i class="far fa-edit me-1"></i>noch nicht bekannt
-                                        </a>
+                                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" class="text-muted">unbekannt</a>
                                     {% else %}
-                                        <a href="#" class="text-muted"
-                                            data-controller="hint-modal"
-                                            data-modal-hint-title="{{ 'hint_modal.ride.location_edit_link.title'|trans }}"
-                                            data-modal-hint-text="{{ 'hint_modal.ride.location_edit_link.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
-                                            data-modal-hint-size="md">
-                                            noch nicht bekannt
-                                        </a>
+                                        <span class="text-muted">unbekannt</span>
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -132,24 +129,24 @@
 
                     {# Wetter #}
                     {% if weatherForecast %}
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="d-flex align-items-center">
-                                <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
                                     <i class="far fa-cloud-sun text-info"></i>
                                 </div>
                                 <div>
-                                    <small class="text-muted d-block">Wetter <a href="https://openweathermap.org/" target="_blank" rel="noopener" class="text-muted">(OpenWeatherMap)</a></small>
+                                    <small class="text-muted d-block">Wetter</small>
                                     <strong>{{ weatherForecast }}</strong>
                                 </div>
                             </div>
                         </div>
                     {% endif %}
 
-                    {# Statistik für vergangene Touren #}
+                    {# Teilnehmer (vergangene Touren) #}
                     {% if pastRide and ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
                         <div class="col-6">
                             <div class="d-flex align-items-center">
-                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
                                     <i class="far fa-users text-secondary"></i>
                                 </div>
                                 <div>
@@ -160,10 +157,11 @@
                         </div>
                     {% endif %}
 
+                    {# Strecke (vergangene Touren) #}
                     {% if pastRide and ride.estimatedDistance and ride.estimatedDistance > 0 %}
                         <div class="col-6">
                             <div class="d-flex align-items-center">
-                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; min-width: 40px;">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
                                     <i class="far fa-route text-secondary"></i>
                                 </div>
                                 <div>
