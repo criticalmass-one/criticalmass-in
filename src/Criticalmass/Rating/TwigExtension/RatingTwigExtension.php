@@ -10,23 +10,17 @@ use Twig\TwigFunction;
 
 class RatingTwigExtension extends AbstractExtension
 {
-    /** @var RatingCalculatorInterface $ratingCalculator */
-    protected $ratingCalculator;
-
-    /** @var StarGeneratorInterface $starGenerator */
-    protected $starGenerator;
-
-    public function __construct(RatingCalculatorInterface $ratingCalculator, StarGeneratorInterface $starGenerator)
-    {
-        $this->ratingCalculator = $ratingCalculator;
-        $this->starGenerator = $starGenerator;
+    public function __construct(
+        protected readonly RatingCalculatorInterface $ratingCalculator,
+        protected readonly StarGeneratorInterface $starGenerator
+    ) {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('ride_rating', [$this, 'rideRating'], ['is_safe' => ['html']]),
-            new TwigFunction('ride_rating_stars', [$this, 'rideRatingStars'], ['is_safe' => ['html']]),
+            new TwigFunction('ride_rating', $this->rideRating(...), ['is_safe' => ['html']]),
+            new TwigFunction('ride_rating_stars', $this->rideRatingStars(...), ['is_safe' => ['html']]),
         ];
     }
 
@@ -39,10 +33,4 @@ class RatingTwigExtension extends AbstractExtension
     {
         return $this->starGenerator->generateForRide($ride);
     }
-
-    public function getName(): string
-    {
-        return 'rating_extension';
-    }
 }
-
