@@ -126,7 +126,7 @@
         {% set next_track = next_entity(track) %}
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="Track Navigation">
+                <nav aria-label="{{ 'track.navigation_label'|trans }}">
                     <ul class="pagination justify-content-between">
                         <li class="page-item{% if not previous_track %} disabled{% endif %}">
                             <a class="page-link" href="{% if previous_track %}{{ object_path(previous_track) }}{% else %}#{% endif %}">

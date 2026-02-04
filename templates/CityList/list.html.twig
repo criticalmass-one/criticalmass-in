@@ -64,8 +64,8 @@
                                 <ul class="list-unstyled">
                                     {% for cycle in city.cycles %}
                                         <li>
-                                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
-                                            um {{ cycle.time|date('H:i', 'UTC') }} {{ 'city.list_time_suffix'|trans }}
+                                            {{ 'common.date_prefix'|trans }} {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
+                                            {{ 'common.time_prefix'|trans }} {{ cycle.time|date('H:i', 'UTC') }} {{ 'city.list_time_suffix'|trans }}
                                         </li>
                                     {% endfor %}
                                 </ul>

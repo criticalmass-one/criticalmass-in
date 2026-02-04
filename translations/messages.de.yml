@@ -622,6 +622,7 @@ calendar:
     breadcrumb: Critical-Mass-Kalender
     heading: Dein weltweiter Critical-Mass-Kalender
     lead: Hier siehst du eine Übersicht über alle in unserer Datenbank vorhandenen Critical-Mass-Touren.
+    navigation_label: Kalender Navigation
     monday: Montag
     tuesday: Dienstag
     wednesday: Mittwoch
@@ -1005,6 +1006,8 @@ common:
     edit: Bearbeiten
     close: Schließen
     loading: Laden…
+    date_prefix: am
+    time_prefix: um
     time_suffix: Uhr
     please_wait: Bitte warten…
 
@@ -1092,6 +1095,7 @@ track:
         distance: Distanz
         duration: Dauer
 
+    navigation_label: Track Navigation
     previous: Voriger Track
     next: Nächster Track
 
