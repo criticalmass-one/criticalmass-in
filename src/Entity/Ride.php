@@ -248,10 +248,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Ignore]
     protected Collection $viewRelation;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="ride", orphanRemoval=true)
-     */
-    private $ratings;
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'ride', orphanRemoval: true)]
+    private Collection $ratings;
 
     public function __construct()
     {

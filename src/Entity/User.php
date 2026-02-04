@@ -129,10 +129,8 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Ignore]
     private Collection $trackImportCandidates;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="User", orphanRemoval=true)
-     */
-    private $ratings;
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $ratings;
 
     public function __construct()
     {
