@@ -1,13 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Verbinde dich mit Strava{% endblock %}
+{% block title %}{{ 'strava.auth.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.list.title'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.active('Track importieren') }}
+    {{ breadcrumb.active('strava.auth.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Verbinde dich mit Strava
+                    {{ 'strava.auth.heading'|trans }}
                 </h1>
             </div>
         </div>
@@ -23,21 +23,11 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    Mit <a href="http://www.strava.com/">Strava</a> kannst du nicht nur Critical-Mass-Touren, sondern
-                    sämtliche deiner sportlichen Aktivitäten aufzeichnen und verwalten. Wenn du deine Tour mit Strava
-                    aufgezeichnet hast, kannst du deine Strecke mit zwei Mausklicks importieren. Klicke auf „Connect
-                    with Strava“, um eine Liste deiner Aktivitäten anzuzeigen und eine Strecke zu importieren.
+                    {{ 'strava.auth.intro'|trans|raw }}
                 </p>
 
                 <p>
-                    Nach einem Klick auf den Button „Connect with Strava“ wirst du zu der Strava-Webseite
-                    weitergeleitet, auf der du gebeten wirst, criticalmass.in gewisse Zugriffsrechte auf dein Profil
-                    einzuräumen. criticalmass.in erhält Zugriff auf dein Profil sowie deine Aktivitätsdaten;
-                    criticalmass.in kann auch auf deine als privat markierten Aktivitäten zugreifen. Anschließend wirst
-                    du zurück zu criticalmass.in geleitet, wo dir eine Liste deiner abgespeicherten Radtouren
-                    vom {{ ride.dateTime.format('d.m.Y') }} angezeigt wird. Von diesen Touren kannst du anschließend
-                    eine zum Importieren auswählen. Ein weiterer Zugriff, etwa auf andere Aktivitäten oder dein Profil,
-                    findet nicht statt.
+                    {{ 'strava.auth.privacy'|trans({ '%date%': ride.dateTime.format('d.m.Y') })|raw }}
                 </p>
             </div>
         </div>
@@ -55,7 +45,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="{{ object_path(ride) }}" class="btn btn-secondary pull-right">
-                    Abbrechen
+                    {{ 'common.cancel'|trans }}
                 </a>
             </div>
         </div>
