@@ -4,7 +4,7 @@
 {% block title %}{{ 'track.view_page.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.item('profile.account'|trans, path('criticalmass_user_usermanagement')) }}
     {{ breadcrumb.item('track.list_page.title'|trans, path('caldera_criticalmass_track_list')) }}
     {{ breadcrumb.active('track.view_page.title'|trans) }}
 {% endblock %}
@@ -79,7 +79,7 @@
                         {{ 'track.properties.date'|trans }}
                     </dt>
                     <dd>
-                        {{ track.ride.dateTime|date('d.m.Y H:i', track.ride.city.timezone) }}&nbsp;Uhr
+                        {{ track.ride.dateTime|date('d.m.Y H:i', track.ride.city.timezone) }}&nbsp;{{ 'common.time_suffix'|trans }}
                     </dd>
                 </dl>
             </div>

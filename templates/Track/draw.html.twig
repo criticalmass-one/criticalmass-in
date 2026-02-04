@@ -4,8 +4,8 @@
 {% block title %}{{ 'track.draw_page.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ breadcrumb.active('Deine Tracks') }}
+    {{ breadcrumb.item('profile.account'|trans, path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('track.list_page.title'|trans) }}
 {% endblock %}
 
 {% block content %}

@@ -4,7 +4,7 @@
 {% block title %}{{ 'track.range_page.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.item('profile.account'|trans, path('criticalmass_user_usermanagement')) }}
     {{ breadcrumb.item('track.list_page.title'|trans, path('caldera_criticalmass_track_list')) }}
     {{ breadcrumb.active('track.range_page.title'|trans) }}
 {% endblock %}

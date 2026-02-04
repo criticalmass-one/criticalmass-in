@@ -58,6 +58,8 @@ cycle:
 '{1} 1 year ago |]1,Inf[ %years years ago':  'vor einem Jahr|]1,Inf[ vor %years Jahren'
 
 profile:
+    account: Dein Benutzerkonto
+
     manage:
         title: Dein Benutzerprofil
         breadcrumb: Dein Benutzerkonto
@@ -1193,3 +1195,21 @@ strava:
         file_label: "Datei:"
         submit: Track hochladen
         error: "Hochladen fehlgeschlagen :("
+
+    menu:
+        edit: Track editieren
+        download: Herunterladen
+        deactivate: Deaktivieren
+        activate: Aktivieren
+        approve: Bestätigen
+        trim: Beschneiden
+        adjust_time: Zeit anpassen
+        delete_title: Track löschen
+        delete_confirm: "Möchtest du diesen Track von der <strong>%city%</strong> vom <strong>%date%</strong> wirklich löschen?"
+
+    col_city: Stadt
+    col_participant: Teilnehmer
+    col_date: Datum
+    col_distance: Distanz
+    col_start: Start
+    col_end: Ende
