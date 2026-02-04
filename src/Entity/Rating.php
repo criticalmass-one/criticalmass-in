@@ -4,40 +4,28 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="rating")
- * @ORM\Entity(repositoryClass="App\Repository\RatingRepository")
- */
+#[ORM\Table(name: 'rating')]
+#[ORM\Entity(repositoryClass: 'App\Repository\RatingRepository')]
 class Rating
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ride", inversedBy="ratings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $ride;
+    #[ORM\ManyToOne(targetEntity: Ride::class, inversedBy: 'ratings')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Ride $ride = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ratings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ratings')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $rating;
+    #[ORM\Column(type: 'integer')]
+    private int $rating = 0;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime')]
+    private \DateTime $createdAt;
 
     public function __construct()
     {
@@ -73,7 +61,7 @@ class Rating
         return $this;
     }
 
-    public function getRating(): ?int
+    public function getRating(): int
     {
         return $this->rating;
     }
@@ -85,12 +73,12 @@ class Rating
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
