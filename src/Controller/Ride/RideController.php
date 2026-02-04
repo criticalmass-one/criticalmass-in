@@ -8,7 +8,6 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Weather;
-use App\Event\View\ViewEvent;
 use App\Form\Type\RideEstimateType;
 use App\Repository\BlockedCityRepository;
 use App\Repository\LocationRepository;
@@ -18,7 +17,6 @@ use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -58,7 +56,6 @@ class RideController extends AbstractController
         TrackRepository $trackRepository,
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
-        EventDispatcherInterface $eventDispatcher,
         ?Ride $ride = null
     ): Response {
         if (!$ride) {
@@ -73,8 +70,6 @@ class RideController extends AbstractController
                 'blocked' => $blocked
             ]);
         }
-
-        //$eventDispatcher->dispatch(new ViewEvent($ride), ViewEvent::NAME);
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))

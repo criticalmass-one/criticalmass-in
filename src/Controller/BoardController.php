@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
-use App\Event\View\ViewEvent;
 use App\Repository\BoardRepository;
 use App\Repository\CityRepository;
 use App\Repository\PostRepository;
@@ -15,7 +14,6 @@ use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use Malenki\Slug;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
@@ -70,13 +68,10 @@ class BoardController extends AbstractController
     #[Route('/{citySlug}/thread/{threadSlug}', name: 'caldera_criticalmass_board_viewcitythread', priority: 240)]
     public function viewThreadAction(
         PostRepository $postRepository,
-        EventDispatcherInterface $eventDispatcher,
         Thread $thread
     ): Response {
         $posts = $postRepository->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
-
-        $eventDispatcher->dispatch(new ViewEvent($thread), ViewEvent::NAME);
 
         return $this->render('Board/view_thread.html.twig', [
             'board' => $board,

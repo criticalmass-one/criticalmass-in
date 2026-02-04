@@ -7,11 +7,9 @@ use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
-use App\Event\View\ViewEvent;
 use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
 use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,7 +21,6 @@ class PhotoController extends AbstractController
     #[Route('/photo/{id}', name: 'caldera_criticalmass_photo_show', options: ['expose' => true], priority: 170)]
     public function showAction(
         SeoPageInterface $seoPage,
-        EventDispatcherInterface $eventDispatcher,
         TrackRepository $trackRepository,
         ExifWrapperInterface $exifWrapper,
         Photo $photo
@@ -39,8 +36,6 @@ class PhotoController extends AbstractController
         if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
             throw $this->createAccessDeniedException();
         }
-
-        $eventDispatcher->dispatch(new ViewEvent($photo), ViewEvent::NAME);
 
         if ($ride && $photo->getUser()) {
             /** @var Track $track */
@@ -60,17 +55,12 @@ class PhotoController extends AbstractController
     #[Route('/{citySlug}/{rideIdentifier}/ajaxphotoview', name: 'caldera_criticalmass_photo_ajaxview', priority: 170)]
     public function ajaxphotoviewAction(
         Request $request,
-        PhotoRepository $photoRepository,
-        EventDispatcherInterface $eventDispatcher
+        PhotoRepository $photoRepository
     ): Response {
         $photoId = $request->get('photoId');
 
         /** @var Photo|null $photo */
         $photo = $photoRepository->find($photoId);
-
-        if ($photo) {
-            $eventDispatcher->dispatch(new ViewEvent($photo), ViewEvent::NAME);
-        }
 
         return new Response(null);
     }
