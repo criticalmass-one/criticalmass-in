@@ -124,9 +124,7 @@
 
         {# Sidebar mit Zusatzinfos #}
         <div class="col-lg-4 order-lg-last order-1 mb-4 mb-lg-0">
-            {% include 'Ride/Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
             {% include 'Ride/Includes/_socialMedia.html.twig' with { 'ride': ride } %}
-            {% include 'Ride/Includes/_statistic.html.twig' with { 'ride': ride } %}
         </div>
     </div>
 </div>
