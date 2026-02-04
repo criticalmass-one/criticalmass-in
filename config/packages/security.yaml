@@ -43,6 +43,8 @@ security:
 
 
     role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER, ROLE_PHOTO_DOWNLOAD]
+        ROLE_PHOTO_DOWNLOAD: [ROLE_USER]
         ROLE_USER: []
 
     access_decision_manager:

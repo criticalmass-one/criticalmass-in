@@ -88,8 +88,10 @@
             {% endif %}
         </dl>
 
-        <a href="{{ path('caldera_criticalmass_photo_download', { id: photo.id }) }}" class="btn btn-primary">
-            <i class="fa fa-download"></i> Foto herunterladen
-        </a>
+        {% if is_granted('ROLE_PHOTO_DOWNLOAD') %}
+            <a href="{{ path('caldera_criticalmass_photo_download', { id: photo.id }) }}" class="btn btn-primary">
+                <i class="fa fa-download"></i> Foto herunterladen
+            </a>
+        {% endif %}
     </div>
 </div>

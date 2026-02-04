@@ -8,12 +8,14 @@ use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 #[Feature('photos')]
 class PhotoDownloadController extends AbstractController
 {
     #[Route('/photo/{id}/download', name: 'caldera_criticalmass_photo_download', priority: 180)]
+    #[IsGranted('ROLE_PHOTO_DOWNLOAD')]
     public function downloadAction(
         UploaderHelper $uploaderHelper,
         Photo $photo,
