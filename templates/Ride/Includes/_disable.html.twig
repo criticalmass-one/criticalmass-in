@@ -1,67 +1,35 @@
 {% if app.user %}
 <div class="modal fade" id="disable-modal" tabindex="-1" aria-labelledby="disable-modal-label" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             {{ form_start(disableForm) }}
-            <div class="modal-header">
+            <div class="modal-header border-0">
                 <h5 class="modal-title" id="disable-modal-label">
-                    Tour deaktivieren
+                    <i class="far fa-ban text-danger me-2"></i>Tour deaktivieren
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
             </div>
             <div class="modal-body">
-                <p>
-                    Grund für die Deaktivierung:
-                </p>
+                <p class="text-muted mb-3">Bitte wähle einen Grund für die Deaktivierung:</p>
 
-                <div class="form-check">
-                    {{ form_widget(disableForm.disabledReason[0], { 'attr': { 'class': 'form-check-input' }}) }}
-                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[0]) }}</label>
-                </div>
-
-                <div class="form-check">
-                    {{ form_widget(disableForm.disabledReason[1], { 'attr': { 'class': 'form-check-input' }}) }}
-                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[1]) }}</label>
-                </div>
-
-                <div class="form-check">
-                    {{ form_widget(disableForm.disabledReason[2], { 'attr': { 'class': 'form-check-input' }}) }}
-                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[2]) }}</label>
-                </div>
-
-                <div class="form-check">
-                    {{ form_widget(disableForm.disabledReason[3], { 'attr': { 'class': 'form-check-input' }}) }}
-                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[3]) }}</label>
-                </div>
-
-                <div class="form-check">
-                    {{ form_widget(disableForm.disabledReason[4], { 'attr': { 'class': 'form-check-input' }}) }}
-                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[4]) }}</label>
-                </div>
-
-                <div class="form-check">
-                    {{ form_widget(disableForm.disabledReason[5], { 'attr': { 'class': 'form-check-input' }}) }}
-                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[5]) }}</label>
-                </div>
+                {% for i in 0..5 %}
+                    <div class="form-check mb-2">
+                        {{ form_widget(disableForm.disabledReason[i], { 'attr': { 'class': 'form-check-input' }}) }}
+                        <label class="form-check-label">{{ form_label(disableForm.disabledReason[i]) }}</label>
+                    </div>
+                {% endfor %}
             </div>
 
-            <div class="modal-body">
-                <p>
-                    Kommentar zur Deaktivierung (optional):
-                </p>
-
-                {{ form_widget(disableForm.disabledReasonMessage, { 'attr': { 'class': 'form-control', 'rows': 3 }}) }}
+            <div class="modal-body border-top pt-3">
+                <label class="form-label text-muted">Zusätzlicher Kommentar (optional)</label>
+                {{ form_widget(disableForm.disabledReasonMessage, { 'attr': { 'class': 'form-control', 'rows': 3, 'placeholder': 'z.B. weitere Details zur Absage...' }}) }}
             </div>
 
-            <div class="modal-footer">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Abbrechen
-                    </button>
-                    <button type="submit" class="btn btn-danger">
-                        Deaktivieren
-                    </button>
-                </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="submit" class="btn btn-danger">
+                    <i class="far fa-ban me-1"></i>Tour deaktivieren
+                </button>
             </div>
             {{ form_end(disableForm) }}
         </div>

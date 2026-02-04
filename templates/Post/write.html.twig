@@ -1,30 +1,26 @@
 {% if app.user %}
-    <div class="modal fade" id="modal-add-post" tabindex="-1" role="dialog" aria-labelledby="label-add-post">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="modal-add-post" tabindex="-1" aria-labelledby="label-add-post" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="label-add-post">Kommentar hinzufügen</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="label-add-post">
+                        <i class="far fa-comment-alt text-primary me-2"></i>Kommentar schreiben
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                 </div>
-                {{ form_start(form, {'attr': {'id': 'form-post', 'role': 'form'}}) }}
+                {{ form_start(form, {'attr': {'id': 'form-post'}}) }}
                 <div class="modal-body">
-                    <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
-                        <label for="" class="control-label">Dein Kommentar:</label>
-                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Dein Kommentar</label>
+                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'Schreibe hier deinen Kommentar...'}}) }}
                     </div>
-
                     {{ form_widget(form._token) }}
                 </div>
-                <div class="modal-footer">
-                    <div class="btn-group" role="group" aria-label="...">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Abbrechen
-                        </button>
-                        <button type="submit" id="button-submit-post" class="btn btn-success">
-                            <i class="far fa-pencil"></i>
-                            Speichern
-                        </button>
-                    </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" id="button-submit-post" class="btn btn-primary">
+                        <i class="far fa-save me-1"></i>Speichern
+                    </button>
                 </div>
                 {{ form_end(form) }}
             </div>

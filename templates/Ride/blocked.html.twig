@@ -11,18 +11,18 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    {{ ride.title }}
-                </h1>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-danger">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center py-5">
+                <i class="far fa-lock fa-4x text-danger mb-4"></i>
+                <h1 class="h3 mb-3">{{ ride.title }}</h1>
+                <div class="alert alert-danger border-0 d-inline-block">
+                    <i class="far fa-exclamation-triangle me-2"></i>
                     {{ blocked.description }}
+                </div>
+                <div class="mt-4">
+                    <a href="{{ object_path(ride.city) }}" class="btn btn-outline-secondary">
+                        <i class="far fa-arrow-left me-1"></i>Zurück zu {{ ride.city.city }}
+                    </a>
                 </div>
             </div>
         </div>

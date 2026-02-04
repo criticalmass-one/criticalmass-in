@@ -1,34 +1,27 @@
 <div role="tabpanel" class="tab-pane fade" id="comments" aria-labelledby="comments-tab">
-    <div class="row">
-        <div class="col-md-12">
-            {% if app.getUser() %}
-                <button type="button" class="btn btn-success float-end" data-bs-toggle="modal"
-                        data-bs-target="#modal-add-post">
-                    Kommentar hinzufügen
-                </button>
-            {% else %}
-                <button
-                        type="button"
-                        class="btn btn-success float-end"
-                        data-controller="hint-modal"
-                        data-modal-hint-title="{{ 'hint_modal.ride.post_write_button.title'|trans }}"
-                        data-modal-hint-text="{{ 'hint_modal.ride.post_write_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
-                        data-modal-hint-size="md">
-                    Kommentar hinzufügen
-                </button>
-            {% endif %}
-
-            <h3>Kommentare zu dieser Tour</h3>
-        </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">
+            <i class="far fa-comments text-muted me-2"></i>
+            Kommentare
+        </h4>
+        {% if app.getUser() %}
+            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-add-post">
+                <i class="far fa-plus me-1"></i>Kommentar schreiben
+            </button>
+        {% else %}
+            <button type="button" class="btn btn-outline-primary btn-sm"
+                data-controller="hint-modal"
+                data-modal-hint-title="{{ 'hint_modal.ride.post_write_button.title'|trans }}"
+                data-modal-hint-text="{{ 'hint_modal.ride.post_write_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                data-modal-hint-size="md">
+                <i class="far fa-plus me-1"></i>Kommentar schreiben
+            </button>
+        {% endif %}
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            {{ render(controller('App\\Controller\\PostController::listAction', { 'rideId': ride.getId() })) }}
+    {{ render(controller('App\\Controller\\PostController::listAction', { 'rideId': ride.getId() })) }}
 
-            {% if app.getUser() %}
-                {{ render(controller('App\\Controller\\PostController::writeRideAction', { 'id': ride.id, 'noButton': true })) }}
-            {% endif %}
-        </div>
-    </div>
+    {% if app.getUser() %}
+        {{ render(controller('App\\Controller\\PostController::writeRideAction', { 'id': ride.id, 'noButton': true })) }}
+    {% endif %}
 </div>

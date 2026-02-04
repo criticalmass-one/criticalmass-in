@@ -4,89 +4,293 @@
     {% set pastRide = false %}
 {% endif %}
 
-<div class="row">
-    <div class="col-md-12">
-        {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
-        <h1 itemprop="name">
-            {{ ride.title }}
-        </h1>
-    </div>
-</div>
+<style>
+    .map-expanded {
+        position: relative;
+    }
+    .map-expanded .ride-hero-row {
+        flex-direction: column !important;
+    }
+    .map-expanded .ride-map-col {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+    .map-expanded .ride-map-container {
+        height: 50vh !important;
+        min-height: 50vh !important;
+    }
+    .map-expanded .ride-info-col {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+</style>
 
-<div class="row">
-    <div class="col-md-12">
-        <div
-            data-controller="map--ride-map"
-            style="height: 350px;"
-            data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
-            data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
-            data-map--ride-map-latitude-value="{{ ride.latitude }}"
-            data-map--ride-map-longitude-value="{{ ride.longitude }}"
-        ></div>
-    </div>
-</div>
+{# Hero Section mit Karte und wichtigsten Informationen #}
+<div class="card mb-4 border-0 shadow-sm overflow-hidden" data-controller="map-expand" data-map-expand-target="container">
+    <div class="row g-0 ride-hero-row">
+        {# Karte links (auf größeren Bildschirmen) #}
+        <div class="col-lg-7 ride-map-col">
+            <div class="position-relative h-100">
+                <div
+                    data-controller="map--ride-map"
+                    class="h-100 ride-map-container"
+                    style="min-height: 300px;"
+                    data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
+                    data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
+                    data-map--ride-map-latitude-value="{{ ride.latitude }}"
+                    data-map--ride-map-longitude-value="{{ ride.longitude }}"
+                ></div>
+                <button type="button" class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 shadow" style="z-index: 1000;" data-action="map-expand#toggle" title="Karte vergrößern">
+                    <i class="far fa-expand" data-map-expand-target="icon"></i>
+                </button>
+            </div>
+        </div>
 
-<div class="row" style="margin-top: 1em;">
-    <div class="col-md-12">
-        <div>
-            <ul class="nav nav-tabs" id="rideTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">
-                        <i class="far fa-flag"></i>
-                        Details
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="minimass-tab" data-bs-toggle="tab" data-bs-target="#minimass" type="button" role="tab" aria-controls="minimass" aria-selected="false">
-                        <i class="far fa-map-marker"></i>
-                        Mini-Masses
-                        <span class="badge bg-secondary">
-                            {{ ride.getSubrides|length }}
-                        </span>
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">
-                        <i class="far fa-pencil"></i>
-                        Kommentare
-                        <span class="badge bg-secondary">
-                            {{ ride.getPosts|length }}
-                        </span>
-                    </button>
-                </li>
-                {% if pastRide and ride.enabled %}
-                    {% if feature('photos') %}
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
-                                <i class="far fa-camera"></i>
-                                Galerie
-                                <span class="badge bg-secondary">
-                            {{ photos|length }}
-                        </span>
-                            </a>
-                        </li>
+        {# Tour-Infos rechts #}
+        <div class="col-lg-5 ride-info-col">
+            <div class="card-body d-flex flex-column h-100">
+                {# Header mit Titel #}
+                <div class="mb-3">
+                    <h1 class="h3 mb-1" itemprop="name">{{ ride.title }}</h1>
+                    <a href="{{ object_path(ride.city) }}" class="text-muted text-decoration-none">
+                        <i class="far fa-map-marker-alt me-1"></i>{{ ride.city.city }}
+                    </a>
+                </div>
+
+                {# Wichtige Details im zweispaltigen Layout #}
+                <div class="row g-3 mb-3">
+                    {# Datum #}
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
+                                <i class="far fa-calendar-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block">Datum</small>
+                                <strong itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">
+                                    {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
+                                </strong>
+                                <meta itemprop="endDate" content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-dTH:i') }}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Uhrzeit #}
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
+                                <i class="far fa-clock text-success"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block">Uhrzeit</small>
+                                {% if ride.dateTime %}
+                                    <strong>{{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr</strong>
+                                {% else %}
+                                    <span class="text-muted">unbekannt</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Treffpunkt #}
+                    <div class="col-6" itemprop="location" itemscope itemtype="http://schema.org/Place">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
+                                <i class="far fa-map-pin text-warning"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block">Treffpunkt</small>
+                                {% if ride.location and ride.latitude and ride.longitude %}
+                                    {% if location %}
+                                        <strong itemprop="name">
+                                            <a href="{{ object_path(ride, 'caldera_criticalmass_location_ride') }}" class="text-decoration-none">
+                                                {{ ride.location }}
+                                            </a>
+                                        </strong>
+                                    {% else %}
+                                        <strong itemprop="name">{{ ride.location }}</strong>
+                                    {% endif %}
+                                    <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                                        <meta itemprop="latitude" content="{{ ride.latitude }}" />
+                                        <meta itemprop="longitude" content="{{ ride.longitude }}" />
+                                    </div>
+                                {% else %}
+                                    {% if app.user %}
+                                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" class="text-muted">unbekannt</a>
+                                    {% else %}
+                                        <span class="text-muted">unbekannt</span>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Wetter #}
+                    {% if weatherForecast %}
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
+                                    <i class="far fa-cloud-sun text-info"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block">Wetter</small>
+                                    <strong>{{ weatherForecast }}</strong>
+                                </div>
+                            </div>
+                        </div>
                     {% endif %}
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="tracks-tab" data-bs-toggle="tab" data-bs-target="#tracks" type="button" role="tab" aria-controls="tracks" aria-selected="false">
-                            <i class="far fa-bicycle"></i>
-                            Tracks
-                            <span class="badge bg-secondary">
-                            {{ tracks|length }}
-                        </span>
-                        </button>
-                    </li>
-                {% endif %}
-            </ul>
 
-            <div class="tab-content">
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
+                    {# Teilnehmer (vergangene Touren) #}
+                    {% if pastRide and ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
+                                    <i class="far fa-users text-secondary"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block">Teilnehmer</small>
+                                    <strong>{{ ride.estimatedParticipants|number_format(0) }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
 
-                {% if pastRide and ride.enabled %}
-                    {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
-                {% endif %}
+                    {# Strecke (vergangene Touren) #}
+                    {% if pastRide and ride.estimatedDistance and ride.estimatedDistance > 0 %}
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px; min-width: 36px;">
+                                    <i class="far fa-route text-secondary"></i>
+                                </div>
+                                <div>
+                                    <small class="text-muted d-block">Strecke</small>
+                                    <strong>{{ ride.estimatedDistance|number_format(1) }} km</strong>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {# Aktions-Buttons #}
+                <div class="mt-auto">
+                    <div class="btn-group w-100" role="group">
+                        {% if ride.dateTime %}
+                            <a href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-outline-success btn-sm">
+                                <i class="far fa-calendar-plus me-1"></i>
+                                <span class="d-none d-sm-inline">Kalender</span>
+                            </a>
+                        {% endif %}
+                        {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation, 'inButtonGroup': true } %}
+                        {% if pastRide %}
+                            {% if app.user %}
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#estimate-modal">
+                                    <i class="far fa-users me-1"></i>
+                                    <span class="d-none d-sm-inline">Schätzen</span>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                    data-controller="hint-modal"
+                                    data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}"
+                                    data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                                    data-modal-hint-size="md">
+                                    <i class="far fa-users me-1"></i>
+                                    <span class="d-none d-sm-inline">Schätzen</span>
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+{# Tabs für Details, Mini-Masses, Kommentare etc. #}
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-bottom">
+        <ul class="nav nav-tabs card-header-tabs" id="rideTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">
+                    <i class="far fa-flag me-1"></i>
+                    Details
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="minimass-tab" data-bs-toggle="tab" data-bs-target="#minimass" type="button" role="tab" aria-controls="minimass" aria-selected="false">
+                    <i class="far fa-map-marker me-1"></i>
+                    Mini-Masses
+                    <span class="badge bg-secondary ms-1">{{ ride.getSubrides|length }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">
+                    <i class="far fa-comments me-1"></i>
+                    Kommentare
+                    <span class="badge bg-secondary ms-1">{{ ride.getPosts|length }}</span>
+                </button>
+            </li>
+            {% if pastRide and ride.enabled %}
+                {% if feature('photos') %}
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                            <i class="far fa-images me-1"></i>
+                            Galerie
+                            <span class="badge bg-secondary ms-1">{{ photos|length }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tracks-tab" data-bs-toggle="tab" data-bs-target="#tracks" type="button" role="tab" aria-controls="tracks" aria-selected="false">
+                        <i class="far fa-route me-1"></i>
+                        Tracks
+                        <span class="badge bg-secondary ms-1">{{ tracks|length }}</span>
+                    </button>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <div class="tab-content">
+            {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}
+            {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
+            {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
+
+            {% if pastRide and ride.enabled %}
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{# Modal für Teilnehmerschätzung #}
+{% if pastRide and app.user %}
+    <div class="modal fade" id="estimate-modal" tabindex="-1" aria-labelledby="estimate-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                {{ form_start(estimateForm) }}
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="estimate-modal-label">
+                        <i class="far fa-users text-primary me-2"></i>Teilnehmer schätzen
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small">Wie viele Radfahrer waren bei dieser Tour dabei?</p>
+                    <div class="mb-3">
+                        {{ form_widget(estimateForm.estimatedParticipants, { 'attr': { 'class': 'form-control form-control-lg text-center', 'placeholder': 'z.B. 150' } }) }}
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="far fa-save me-1"></i>Speichern
+                    </button>
+                </div>
+                {{ form_end(estimateForm) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
