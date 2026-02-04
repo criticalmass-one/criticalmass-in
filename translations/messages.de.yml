@@ -1393,3 +1393,8 @@ timeline:
         navigation_label: Monat Navigation
         previous: "&larr; Voriger Monat"
         next: "Nächster Monat &rarr;"
+    photo_uploaded: "hat %count% Fotos zur Tour"
+    photo_uploaded_suffix: hochgeladen
+
+gallery:
+    download: Herunterladen
