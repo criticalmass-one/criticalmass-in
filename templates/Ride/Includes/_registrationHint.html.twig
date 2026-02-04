@@ -1,11 +1,9 @@
 {# Show hint for non logged in users #}
 {% if not app.user %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-info" role="alert"><strong>Hej!</strong> Mit einem <a
-                        href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a> könntest du die
-                Daten dieser Tour aktualisieren.
-            </div>
+    <div class="alert alert-info border-0 d-flex align-items-center mb-4" role="alert">
+        <i class="far fa-user-plus fa-lg me-3"></i>
+        <div>
+            Mit einem <a href="{{ path('login') }}" class="alert-link">criticalmass.in-Konto</a> kannst du diese Tour bearbeiten und deine Teilnahme ankündigen.
         </div>
     </div>
 {% endif %}
