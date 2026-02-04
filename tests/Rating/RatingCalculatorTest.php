@@ -6,8 +6,8 @@ use App\Criticalmass\Rating\Calculator\RatingCalculator;
 use App\Entity\Rating;
 use App\Entity\Ride;
 use App\Repository\RatingRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class RatingCalculatorTest extends TestCase
 {
@@ -16,13 +16,13 @@ class RatingCalculatorTest extends TestCase
         $ride = new Ride();
         $repository = $this->createMock(RatingRepository::class);
         $repository
-            ->method('__call')
-            ->will($this->returnValue([]));
+            ->method('findBy')
+            ->willReturn([]);
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
-            ->method($this->equalTo('getRepository'))
-            ->will($this->returnValue($repository));
+            ->method('getRepository')
+            ->willReturn($repository);
 
         $ratingCalculator = new RatingCalculator($registry);
 
@@ -34,15 +34,15 @@ class RatingCalculatorTest extends TestCase
         $ride = new Ride();
         $repository = $this->createMock(RatingRepository::class);
         $repository
-            ->method('__call')
-            ->will($this->returnValue([
+            ->method('findBy')
+            ->willReturn([
                 (new Rating())->setRating(4),
-            ]));
+            ]);
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
-            ->method($this->equalTo('getRepository'))
-            ->will($this->returnValue($repository));
+            ->method('getRepository')
+            ->willReturn($repository);
 
         $ratingCalculator = new RatingCalculator($registry);
 
@@ -54,16 +54,16 @@ class RatingCalculatorTest extends TestCase
         $ride = new Ride();
         $repository = $this->createMock(RatingRepository::class);
         $repository
-            ->method('__call')
-            ->will($this->returnValue([
+            ->method('findBy')
+            ->willReturn([
                 (new Rating())->setRating(4),
                 (new Rating())->setRating(2),
-            ]));
+            ]);
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
-            ->method($this->equalTo('getRepository'))
-            ->will($this->returnValue($repository));
+            ->method('getRepository')
+            ->willReturn($repository);
 
         $ratingCalculator = new RatingCalculator($registry);
 
@@ -75,17 +75,17 @@ class RatingCalculatorTest extends TestCase
         $ride = new Ride();
         $repository = $this->createMock(RatingRepository::class);
         $repository
-            ->method('__call')
-            ->will($this->returnValue([
+            ->method('findBy')
+            ->willReturn([
                 (new Rating())->setRating(4),
                 (new Rating())->setRating(2),
                 (new Rating())->setRating(5),
-            ]));
+            ]);
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
-            ->method($this->equalTo('getRepository'))
-            ->will($this->returnValue($repository));
+            ->method('getRepository')
+            ->willReturn($repository);
 
         $ratingCalculator = new RatingCalculator($registry);
 
@@ -97,23 +97,21 @@ class RatingCalculatorTest extends TestCase
         $ride = new Ride();
         $repository = $this->createMock(RatingRepository::class);
         $repository
-            ->method('__call')
-            ->will($this->returnValue([
+            ->method('findBy')
+            ->willReturn([
                 (new Rating())->setRating(4),
                 (new Rating())->setRating(2),
                 (new Rating())->setRating(5),
                 (new Rating())->setRating(5),
-            ]));
+            ]);
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
-            ->method($this->equalTo('getRepository'))
-            ->will($this->returnValue($repository));
+            ->method('getRepository')
+            ->willReturn($repository);
 
         $ratingCalculator = new RatingCalculator($registry);
 
         $this->assertEquals(4, $ratingCalculator->calculateRide($ride));
     }
-
-
 }
