@@ -1120,3 +1120,48 @@ form:
 
     social_network:
         auto_detect: (automatisch erkennen)
+
+city:
+    next_tour:
+        title: Nächste Tour
+        date: Datum
+        time: Uhrzeit
+        location: Treffpunkt
+        location_unknown: noch nicht bekannt
+        no_ride: Über eine Radtour ist momentan nichts bekannt.
+        show_more: weitere Touren anzeigen
+
+participation:
+    month:
+        jan: Jan
+        feb: Feb
+        mar: Mär
+        apr: Apr
+        may: Mai
+        jun: Jun
+        jul: Jul
+        aug: Aug
+        sep: Sep
+        oct: Okt
+        nov: Nov
+        dec: Dez
+
+    rides_count: "%count% Touren"
+
+    current_streak:
+        title: Current Streak
+        period: "%start% bis heute"
+        empty: "Schade: Du hast in der jüngeren Vergangenheit an keinen Touren teilgenommen."
+
+    total:
+        title: Gesamtzahl
+        since: "seit %date% hast du an"
+        great: teilgenommen. Super!
+        empty: "Schade, du hast bislang an keinen Touren teilgenommen."
+
+    longest_streak:
+        title: Longest Streak
+        period: "%start% bis %end%"
+        empty: "Schade, du hast bislang an keinen Touren teilgenommen."
+
+    no_participation: "Schade: Du hast bislang an keinen Touren teilgenommen, sonst könnten wir dir hier ein paar Statistiken über deine Teilnahme anzeigen."
