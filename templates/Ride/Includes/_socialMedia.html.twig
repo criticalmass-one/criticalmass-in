@@ -1,19 +1,14 @@
 {% if socialNetworkProfiles|length > 0 %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            Soziale Netze
-        </h3>
-    </div>
-
-    <div class="panel-body text-center">
-        <div class="btn-group-vertical">
+<div class="card border-0 bg-light mb-3">
+    <div class="card-body">
+        <h6 class="card-subtitle mb-3 text-muted">
+            <i class="far fa-share-alt me-2"></i>Soziale Netzwerke
+        </h6>
+        <div class="d-grid gap-2">
             {% for profile in socialNetworkProfiles %}
                 {% set network = getNetwork(profile.network) %}
-
-                <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                    <i class="{{ network.icon }}"></i>
-                    {{ network.name }}
+                <a href="{{ profile.identifier }}" class="btn btn-sm" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};" target="_blank" rel="noopener">
+                    <i class="{{ network.icon }} me-2"></i>{{ network.name }}
                 </a>
             {% endfor %}
         </div>
