@@ -11,6 +11,7 @@ class UserFixtures extends Fixture
     public const ADMIN_USER_REFERENCE = 'user-admin';
     public const REGULAR_USER_REFERENCE = 'user-regular';
     public const CYCLIST_USER_REFERENCE = 'user-cyclist';
+    public const PHOTO_DOWNLOAD_USER_REFERENCE = 'user-photo-download';
 
     public function load(ObjectManager $manager): void
     {
@@ -46,6 +47,17 @@ class UserFixtures extends Fixture
             ->setColorBlue(255);
         $manager->persist($cyclistUser);
         $this->addReference(self::CYCLIST_USER_REFERENCE, $cyclistUser);
+
+        $photoDownloadUser = (new User())
+            ->setUsername('photodownloader')
+            ->setEmail('photodownloader@criticalmass.in')
+            ->setRoles(['ROLE_PHOTO_DOWNLOAD'])
+            ->setEnabled(true)
+            ->setColorRed(128)
+            ->setColorGreen(128)
+            ->setColorBlue(0);
+        $manager->persist($photoDownloadUser);
+        $this->addReference(self::PHOTO_DOWNLOAD_USER_REFERENCE, $photoDownloadUser);
 
         $manager->flush();
     }
