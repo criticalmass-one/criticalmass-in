@@ -15,6 +15,25 @@ use Symfony\Component\Serializer\SerializerInterface;
 class PhotoController extends BaseController
 {
     /**
+     * Get a single photo by its id.
+     *
+     * Returns detailed information about a photo including the image filename which can be used to construct the image URL.
+     * The image is available at <code>/photos/{imageName}</code>.
+     */
+    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_show', methods: ['GET'], priority: 200)]
+    #[OA\Tag(name: 'Photo')]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the photo', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function showAction(Photo $photo): JsonResponse
+    {
+        if (!$photo->isEnabled() || $photo->isDeleted()) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->createStandardResponse($photo, ['groups' => 'photo-list']);
+    }
+
+    /**
      * Get a list of photos which were uploaded to a specified ride.
      */
     #[Route(path: '/api/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'], priority: 190)]
@@ -26,7 +45,7 @@ class PhotoController extends BaseController
     {
         $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);
 
-        return $this->createStandardResponse($photoList);
+        return $this->createStandardResponse($photoList, ['groups' => 'photo-list']);
     }
 
     /**
@@ -116,7 +135,7 @@ class PhotoController extends BaseController
 
         $photoList = $dataQueryManager->query($queryParameterList, Photo::class);
 
-        return $this->createStandardResponse($photoList);
+        return $this->createStandardResponse($photoList, ['groups' => 'photo-list']);
     }
 
     /**

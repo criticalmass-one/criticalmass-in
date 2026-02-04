@@ -100,18 +100,19 @@ final class ApiSchemaDefinitions
     /**
      * Schema for Photo list endpoint: GET /api/photo
      * Actual keys: id, latitude, longitude, description, views, creation_date_time, image_name, updated_at, location, exif_creation_date
+     * Note: Nullable fields are optional because SKIP_NULL_VALUES omits null values from response
      */
     public const PHOTO_SCHEMA = [
         'id' => 'int',
-        'latitude' => 'float|null',
-        'longitude' => 'float|null',
-        'description' => 'string|null',
+        'latitude?' => 'float|null',
+        'longitude?' => 'float|null',
+        'description?' => 'string|null',
         'views' => 'int',
         'creation_date_time' => 'int', // Unix timestamp
         'image_name' => 'string',
-        'updated_at' => 'int|null', // Unix timestamp or null
-        'location' => 'string|null',
-        'exif_creation_date' => 'int|null', // Unix timestamp or null
+        'updated_at?' => 'int|null', // Unix timestamp or null
+        'location?' => 'string|null',
+        'exif_creation_date?' => 'int|null', // Unix timestamp or null
     ];
 
     // =========================================================================

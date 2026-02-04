@@ -56,11 +56,11 @@ class PhotoApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $photo) {
-            if ($photo['latitude'] !== null) {
+            if (isset($photo['latitude']) && $photo['latitude'] !== null) {
                 $this->assertGreaterThanOrEqual(-90, $photo['latitude']);
                 $this->assertLessThanOrEqual(90, $photo['latitude']);
             }
-            if ($photo['longitude'] !== null) {
+            if (isset($photo['longitude']) && $photo['longitude'] !== null) {
                 $this->assertGreaterThanOrEqual(-180, $photo['longitude']);
                 $this->assertLessThanOrEqual(180, $photo['longitude']);
             }
