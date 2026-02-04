@@ -7,7 +7,7 @@
                 <strong>
                     {{ item.user.username }}
                 </strong>
-                hat {{ item.postList|length }} Fotos kommentiert:
+                {{ 'timeline.photo_commented'|trans({ '%count%': item.postList|length }) }}
             </div>
         </div>
 

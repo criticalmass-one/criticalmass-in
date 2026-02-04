@@ -1395,6 +1395,29 @@ timeline:
         next: "Nächster Monat &rarr;"
     photo_uploaded: "hat %count% Fotos zur Tour"
     photo_uploaded_suffix: hochgeladen
+    ride_commented: "hat eine Tour kommentiert:"
+    thread_replied: "hat auf ein Diskussionsthema geantwortet:"
+    ride_edited: "hat eine Tour editiert:"
+    city_edited: "hat eine Stadt editiert:"
+    photo_commented: "hat %count% Fotos kommentiert:"
+    thread_started: "hat ein neues Diskussionsthema begonnen:"
 
 gallery:
     download: Herunterladen
+
+participation:
+    question_past: Hast du teilgenommen?
+    question_future: Bist du dabei?
+    yes: Ja
+    no: Nein
+    maybe: Vielleicht
+    participated: Teilgenommen
+    participating: Du nimmst teil
+    not_participated: Nicht teilgenommen
+    cancel: Absagen
+    maybe_participating: Du nimmst vielleicht teil
+    confirm: Zusagen
+    did_not_participate: Du hast nicht teilgenommen
+    not_participating: Du nimmst nicht teil
+    did_participate: Du hast teilgenommen
+    participate: Teilnehmen
