@@ -1,13 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Track von Strava importieren{% endblock %}
+{% block title %}{{ 'strava.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.active('Track importieren') }}
+    {{ breadcrumb.active('strava.breadcrumb_import'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Wähle eine Aktivität
+                    {{ 'strava.select_activity'|trans }}
                 </h1>
             </div>
         </div>
@@ -23,8 +23,7 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    Am <strong>{{ ride.dateTime.format('d.m.Y') }}</strong> hast du die folgenden Aktivitäten mit Strava
-                    aufgezeichnet. Bitte wähle die Aktivität aus, die du als Track importieren möchtest.
+                    {{ 'strava.activity_intro'|trans({'%date%': ride.dateTime.format('d.m.Y')}) }}
                 </p>
             </div>
         </div>
@@ -57,20 +56,20 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Distanz:</dt>
+                                    <dt>{{ 'strava.label_distance'|trans }}</dt>
                                     <dd>{{ (activity.distance / 1000)|round(2) }}&nbsp;km</dd>
                                 </dl>
                             </div>
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Start:</dt>
-                                    <dd>{{ activity.start_date|date('H:i') }}&nbsp;Uhr</dd>
+                                    <dt>{{ 'strava.label_start'|trans }}</dt>
+                                    <dd>{{ activity.start_date|date('H:i') }}&nbsp;{{ 'common.time_suffix'|trans }}</dd>
                                 </dl>
                             </div>
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Dauer:</dt>
-                                    <dd>{{ (activity.elapsed_time / 60)|round() }}&nbsp;Minuten</dd>
+                                    <dt>{{ 'strava.label_duration'|trans }}</dt>
+                                    <dd>{{ (activity.elapsed_time / 60)|round() }}&nbsp;{{ 'strava.minutes'|trans }}</dd>
                                 </dl>
                             </div>
                         </div>
@@ -81,7 +80,7 @@
                                     <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
                                         {# TODO #}
                                         <i class="far fa-download"></i>
-                                        Track importieren
+                                        {{ 'strava.import_track'|trans }}
                                     </a>
                                 </div>
                             </div>
@@ -91,15 +90,13 @@
             {% elseif activities is iterable %}
                 <div class="col-md-12">
                     <div class="alert alert-warning" role="alert">
-                        <strong>Keine Touren gefunden!</strong>
-                        Offenbar hast du mit Strava am {{ ride.dateTime.format('d.m.Y') }} keine Touren aufgezeichnet.
+                        {{ 'strava.no_activities'|trans({'%date%': ride.dateTime.format('d.m.Y')}) }}
                     </div>
                 </div>
             {% else %}
                 <div class="col-md-12">
                     <div class="alert alert-danger" role="alert">
-                        <strong>Hoppla!</strong>
-                        Leider können wir momentan keine Touren von Strava auslesen — bitte versuche es später noch einmal.
+                        {{ 'strava.error'|trans }}
                     </div>
                 </div>
             {% endif %}
@@ -108,7 +105,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="{{ object_path(ride) }}" class="btn btn-secondary pull-right">
-                    Abbrechen
+                    {{ 'common.cancel'|trans }}
                 </a>
             </div>
         </div>

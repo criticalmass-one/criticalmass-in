@@ -1,12 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Track-Übersicht{% endblock %}
+{% block title %}{{ 'city.title_track_list'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.active('Track-Übersicht') }}
+    {{ breadcrumb.active('city.breadcrumb_track_list'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Track-Übersicht
+                    {{ 'city.track_list_heading'|trans }}
                 </h2>
             </div>
         </div>
@@ -39,17 +39,17 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Track löschen</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title">{{ 'city.track_list_delete_modal_title'|trans }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'common.close'|trans }}"></button>
                     </div>
                     <div class="modal-body">
                         <span id="trackIdLabel"></span>
-                        <p>Willst Du diesen Track wirklich löschen?</p>
+                        <p>{{ 'city.track_list_delete_confirm'|trans }}</p>
                     </div>
                     <div class="modal-footer">
                         <div class="btn-group" role="group" aria-label="...">
-                            <a id="deleteButton" href="#" class="btn btn-success">Ja, löschen</a>
-                            <button id="cancelButton" class="btn btn-secondary">Nein, abbrechen</button>
+                            <a id="deleteButton" href="#" class="btn btn-success">{{ 'city.track_list_delete_yes'|trans }}</a>
+                            <button id="cancelButton" class="btn btn-secondary">{{ 'city.track_list_delete_no'|trans }}</button>
                         </div>
                     </div>
                 </div>

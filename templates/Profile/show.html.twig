@@ -15,19 +15,19 @@
                 <h3 class="profile-header-user">
                     {{ userProfile.usernameCanonical }}
                 </h3>
-                <p class="profile-header-bio">I wish i was a little bit taller, wish i was a baller, wish i had a girl… also.</p>
+                <p class="profile-header-bio">{{ userProfile.bio ?? '' }}</p>
             </div>
         </div>
         <nav class="profile-header-nav">
             <ul class="nav nav-tabs justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Photos</a>
+                    <a class="nav-link active" href="#">{{ 'profile.tabs.photos'|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Others</a>
+                    <a class="nav-link" href="#">{{ 'profile.tabs.rides'|trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Anothers</a>
+                    <a class="nav-link" href="#">{{ 'profile.tabs.tracks'|trans }}</a>
                 </li>
             </ul>
         </nav>

@@ -2,24 +2,24 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="aboutModalLabel">Willkommen auf criticalmass.in!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="aboutModalLabel">{{ 'modal.about.title'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'common.close'|trans }}"></button>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="aboutTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="about-tab" data-bs-toggle="tab" data-bs-target="#aboutTabsAbout" type="button" role="tab" aria-controls="aboutTabsAbout" aria-selected="true">
-                            <i class="fa fa-info-circle"></i>&nbsp;Über uns
+                            <i class="fa fa-info-circle"></i>&nbsp;{{ 'modal.about.tab_about'|trans }}
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#aboutTabsContact" type="button" role="tab" aria-controls="aboutTabsContact" aria-selected="false">
-                            <i class="fa fa-envelope"></i>&nbsp;Kontakt
+                            <i class="fa fa-envelope"></i>&nbsp;{{ 'modal.about.tab_contact'|trans }}
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="impress-tab" data-bs-toggle="tab" data-bs-target="#aboutTabsImpress" type="button" role="tab" aria-controls="aboutTabsImpress" aria-selected="false">
-                            <i class="fa fa-exclamation-circle"></i>&nbsp;Impressum
+                            <i class="fa fa-exclamation-circle"></i>&nbsp;{{ 'modal.about.tab_impress'|trans }}
                         </button>
                     </li>
                 </ul>
@@ -27,37 +27,25 @@
                     <div id="aboutTabsAbout" class="tab-pane fade show active" role="tabpanel" aria-labelledby="about-tab">
                         <div class="jumbotron"
                              style="background-image: url(https://www.criticalmass.cm/images/header/about-us-hamburg.jpg); background-position: bottom left; text-align: right; height: 150px; padding-top: 16px;">
-                            <h2 style="color: white; text-shadow: black 0 0 3px;">Hej, wir fahren Fahrrad!</h2>
-                            <p style="color: white; text-shadow: black 0 0 3px;">Und wir lieben es. Seit 2011.</p>
+                            <h2 style="color: white; text-shadow: black 0 0 3px;">{{ 'modal.about.jumbotron_heading'|trans }}</h2>
+                            <p style="color: white; text-shadow: black 0 0 3px;">{{ 'modal.about.jumbotron_sub'|trans }}</p>
                         </div>
 
-                        <p>Auf den Sattel, fertig, los: criticalmass.in zeigt dir, wo</p>
+                        <p>{{ 'modal.about.about_text'|trans }}</p>
                     </div>
 
                     <div id="aboutTabsImpress" class="tab-pane fade" role="tabpanel" aria-labelledby="impress-tab">
-                        <p>criticalmass.in ist ein Projekt an der Fachhochschule Wedel.</p>
-                        <p>Fachhochschule Wedel<br/>Feldstraße 143<br/>22880 Wedel</p>
+                        <p>{{ 'modal.about.impress_intro'|trans }}</p>
+                        <p>{{ 'modal.about.impress_address'|trans|raw }}</p>
                         <p><i class="fa fa-envelope"></i> <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a><br/><i
                                     class="fa fa-phone"></i> 0700 11 864 833</p>
-                        <p>Eine Bitte: Wir sind weder an Newslettern, Produktempfehlungen, Partnerprogrammen und
-                            ähnlichen Angeboten interessiert. Schickt uns bitte diesbezüglich keine E-Mails und ruft uns
-                            auch nicht an. Wir vermitteln auch wirklich keine Pressekontakte zu einzelnen
-                            Critical-Mass-Touren.</p>
+                        <p>{{ 'modal.about.impress_request'|trans }}</p>
                     </div>
 
                     <div id="aboutTabsContact" class="tab-pane fade" role="tabpanel" aria-labelledby="contact-tab">
-                        <p>Am besten erreichst du uns per E-Mail oder über <a
-                                    href="https://www.facebook.com/criticalmass.in">unsere Seite auf facebook</a>
-                            (Vorsicht, der Link führt zu facebook). Allgemeine Hinweise, Vorschläge und Tipps lesen wir
-                            wirklich gerne unter <a href="mailto:mail@criticalmass.in">mail@criticalmass.in</a>.</p>
-                        <p>Wegen <strong>fehlerhafter Daten</strong> von Critical-Mass-Touren und <strong>neuen
-                                Städten</strong> schreibe uns bitte unter <a href="mailto:ride@criticalmass.in">ride@criticalmass.in</a>.
-                        </p>
-                        <p><strong>Fehlermeldungen</strong> nehmen wir gerne, aber auch ein ganz bisschen
-                            zähneknirschend, unter <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>
-                            entgegen. Schreibe uns bitte in einer solchen Mail, was passiert ist, welchen Browser du
-                            benutzt und wenn möglich die genaue Fehlermeldung. Falls du nicht genau weißt, was passiert
-                            ist, schreib uns bitte trotzdem: Wir kriegen das schon irgendwie zusammen hin!</p>
+                        <p>{{ 'modal.about.contact_text'|trans|raw }}</p>
+                        <p>{{ 'modal.about.contact_ride_data'|trans|raw }}</p>
+                        <p>{{ 'modal.about.contact_bugs'|trans|raw }}</p>
                     </div>
                 </div>
             </div>

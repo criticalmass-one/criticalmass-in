@@ -1,21 +1,20 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Mini-Masses kopieren{% endblock %}
+{% block title %}{{ 'subride.copy_title'|trans }}{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Mini-Masses kopieren
+                    {{ 'subride.copy_title'|trans }}
                 </h1>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <p>Von der Tour <a href="{{ object_path(oldRide) }}">{{ oldRide.title }}</a>
-                    ({{ oldRide.dateTime.format('d.m.Y H:i') }} Uhr) können die folgenden Mini-Masses kopiert werden:
+                <p>{{ 'subride.copy_intro'|trans({'%ride_url%': object_path(oldRide), '%ride_title%': oldRide.title, '%ride_datetime%': oldRide.dateTime.format('d.m.Y H:i')})|raw }}
                 </p>
             </div>
         </div>
@@ -27,7 +26,7 @@
                         <img class="media-object" src="{{ asset('/images/marker/marker-green.png') }}" alt="...">
                     </a>
                     <div class="media-body">
-                        <h5 class="media-heading">{{ subride.dateTime.format('H.i') }} Uhr: {{ subride.title }}</h5>
+                        <h5 class="media-heading">{{ subride.dateTime.format('H.i') }} {{ 'subride.copy_time_suffix'|trans }} {{ subride.title }}</h5>
                         <p>{{ subride.description|nl2br }}</p>
                     </div>
                 </div>
@@ -38,11 +37,11 @@
             <div class="col-md-12">
                 <div class="btn-group pull-right" role="group" aria-label="...">
                     <a href="{{ object_path(newRide) }}" class="btn btn-secondary">
-                        Abbrechen
+                        {{ 'common.cancel'|trans }}
                     </a>
                     <a href="{{ object_path(oldRide, 'caldera_criticalmass_subride_copy', { newDate: newRide.dateTime|date('Y-m-d') }) }}"
                        class="btn btn-success">
-                        Kopieren</a>
+                        {{ 'subride.copy_button'|trans }}</a>
                 </div>
             </div>
         </div>

@@ -7,16 +7,13 @@
                 <strong>
                     {{ item.user.username }}
                 </strong>
-                hat
-                <a href="{{ object_path(item.ride, 'caldera_criticalmass_photo_ride_list') }}">
-                    {{ item.counter }} Fotos
-                </a> zur Tour
+                {{ 'timeline.photo_uploaded'|trans({ '%count%': item.counter }) }}
                 <strong class="ride-title">
                     <a href="{{ object_path(item.ride) }}">
                         {{ item.ride.title }}
                     </a>
                 </strong>
-                hochgeladen
+                {{ 'timeline.photo_uploaded_suffix'|trans }}
             </div>
         </div>
 

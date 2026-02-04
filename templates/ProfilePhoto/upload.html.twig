@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Profilfoto hochladen{% endblock %}
+{% block title %}{{ 'profile.photo.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ breadcrumb.active('Profilfoto hochladen') }}
+    {{ breadcrumb.item('profile.manage.breadcrumb'|trans, path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('profile.photo.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
                 <h2>
-                    Dein Profilfoto
+                    {{ 'profile.photo.heading'|trans }}
                 </h2>
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="row margin-top-medium">
             <div class="col-md-6 col-md-offset-3 text-center">
                 <p>
-                    Hier kannst du ein neues Profilfoto von deinem Rechner hochladen:
+                    {{ 'profile.photo.upload_hint'|trans }}
                 </p>
             </div>
         </div>
@@ -43,10 +43,10 @@
         <div class="row margin-top-medium">
             <div class="col-md-6 col-md-offset-3 text-center">
                 <div class="btn-group">
-                    {{ form_widget(profilePhotoForm.submit, { label: 'Speichern', attr: { class: 'btn btn-primary'}}) }}
+                    {{ form_widget(profilePhotoForm.submit, { label: 'common.save'|trans, attr: { class: 'btn btn-primary'}}) }}
 
                     <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-secondary">
-                        Abbrechen
+                        {{ 'common.cancel'|trans }}
                     </a>
                 </div>
             </div>

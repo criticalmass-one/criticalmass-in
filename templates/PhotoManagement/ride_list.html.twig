@@ -1,13 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Deine Fotos{% endblock %}
+{% block title %}{{ 'gallery.user_list_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('photo.show.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.active('Fotos') }}
+    {{ breadcrumb.active('gallery.ride_list_breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -16,15 +16,15 @@
             <div class="col-md-12">
                 {% if app.getUser() %}
                     <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                        <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="Fotos hochladen">
+                        <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="{{ 'gallery.ride_list_upload_button'|trans }}">
                             <i class="far fa-camera"></i>
-                            Fotos hochladen
+                            {{ 'gallery.ride_list_upload_button'|trans }}
                         </a>
                     </div>
                 {% endif %}
 
                 <h1>
-                    Fotos von {{ ride.title }}
+                    {{ 'gallery.ride_list_heading'|trans({'%ride%': ride.title}) }}
                 </h1>
             </div>
         </div>
@@ -35,11 +35,9 @@
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
-                                Schade!
+                                {{ 'gallery.ride_list_no_photos_guest_label'|trans }}
                             </strong>
-                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a
-                                    href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
-                            könntest du deine Fotos hochladen.
+                            {{ 'gallery.ride_list_no_photos_guest'|trans({'%login_url%': path('login')})|raw }}
                         </div>
                     </div>
                 </div>
@@ -48,9 +46,9 @@
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
-                                Hej!
+                                {{ 'gallery.ride_list_no_photos_user_label'|trans }}
                             </strong>
-                            Du kannst der Erste sein, der hier seine Fotos hochlädt!
+                            {{ 'gallery.ride_list_no_photos_user'|trans }}
                         </div>
                     </div>
                 </div>

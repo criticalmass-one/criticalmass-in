@@ -2,11 +2,11 @@
 <div class="card border-0 bg-light mb-3">
     <div class="card-body">
         <h6 class="card-subtitle mb-3 text-muted">
-            <i class="far fa-cloud-sun me-2"></i>Wetter
+            <i class="far fa-cloud-sun me-2"></i>{{ 'ride.details_weather'|trans }}
         </h6>
         <p class="card-text mb-2">{{ weatherForecast }}</p>
         <small class="text-muted">
-            Daten von <a href="https://openweathermap.org/" target="_blank" rel="noopener" class="text-muted">OpenWeatherMap</a>
+            {{ 'ride.details_weather_source'|trans({'%url%': 'https://openweathermap.org/'})|raw }}
         </small>
     </div>
 </div>

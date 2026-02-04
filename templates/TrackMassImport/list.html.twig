@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Tracks importieren{% endblock %}
+{% block title %}{{ 'track_mass_import.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Tracks importieren') }}
+    {{ breadcrumb.active('track_mass_import.title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Wähle eine Aktivität
+                    {{ 'track_mass_import.select_activity'|trans }}
                 </h1>
             </div>
         </div>
@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <dl>
-                                    <dt>Tour:</dt>
+                                    <dt>{{ 'track_mass_import.label_ride'|trans }}</dt>
                                     <dd>
                                         <a href="{{ object_path(candidate.ride) }}">{{ candidate.ride.title }}</a>
                                     </dd>
@@ -52,21 +52,21 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Datum:</dt>
+                                    <dt>{{ 'track_mass_import.label_date'|trans }}</dt>
                                     <dd>{{ candidate.ride.dateTime|date('d.m.Y') }}</dd>
                                 </dl>
                             </div>
 
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Uhrzeit:</dt>
-                                    <dd>{{ candidate.ride.dateTime|date('H:i') }} Uhr</dd>
+                                    <dt>{{ 'track_mass_import.label_time'|trans }}</dt>
+                                    <dd>{{ candidate.ride.dateTime|date('H:i') }} {{ 'common.time_suffix'|trans }}</dd>
                                 </dl>
                             </div>
 
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Stadt:</dt>
+                                    <dt>{{ 'track_mass_import.label_city'|trans }}</dt>
                                     <dd>
                                         <a href="{{ object_path(candidate.ride.city) }}">{{ candidate.ride.city.city }}</a>
                                     </dd>
@@ -77,20 +77,20 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Distanz:</dt>
+                                    <dt>{{ 'track_mass_import.label_distance'|trans }}</dt>
                                     <dd>{{ (candidate.distance / 1000)|round(2) }}&nbsp;km</dd>
                                 </dl>
                             </div>
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Start:</dt>
-                                    <dd>{{ candidate.startDateTime|date('H:i') }}&nbsp;Uhr</dd>
+                                    <dt>{{ 'track_mass_import.label_start'|trans }}</dt>
+                                    <dd>{{ candidate.startDateTime|date('H:i') }}&nbsp;{{ 'common.time_suffix'|trans }}</dd>
                                 </dl>
                             </div>
                             <div class="col-md-4">
                                 <dl>
-                                    <dt>Dauer:</dt>
-                                    <dd>{{ (candidate.elapsedTime / 60)|round() }}&nbsp;Minuten</dd>
+                                    <dt>{{ 'track_mass_import.label_duration'|trans }}</dt>
+                                    <dd>{{ (candidate.elapsedTime / 60)|round() }}&nbsp;{{ 'track_mass_import.minutes'|trans }}</dd>
                                 </dl>
                             </div>
                         </div>
@@ -102,13 +102,13 @@
                                         <a class="btn btn-success"
                                            href="{{ object_path(candidate.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ candidate.activityId }}">
                                             <i class="far fa-check"></i>
-                                            Importieren
+                                            {{ 'track_mass_import.import'|trans }}
                                         </a>
 
                                         <a class="btn btn-danger"
                                            href="{{ path('caldera_criticalmass_trackmassimport_reject') }}?activityId={{ candidate.activityId }}">
                                             <i class="far fa-times"></i>
-                                            Ablehnen
+                                            {{ 'track_mass_import.reject'|trans }}
                                         </a>
                                     </div>
 

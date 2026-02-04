@@ -1,14 +1,14 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Automatisch generierte Touren von {{ city.city }} anzeigen{% endblock %}
+{% block title %}{{ 'city_cycle.ride_list.title'|trans({ '%city%': city.city }) }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.item('Turnusliste', object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
-    {{ breadcrumb.active('Generierte Touren anzeigen') }}
+    {{ breadcrumb.item('city_cycle.ride_list.breadcrumb_cycle_list'|trans, object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active('city_cycle.ride_list.breadcrumb'|trans) }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
         {{ include('Flash/_flash.html.twig') }}
@@ -19,55 +19,54 @@
                     <div class="col-md-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Turnus
+                                {{ 'city_cycle.ride_list.panel_title'|trans }}
                             </div>
                             <div class="panel-body">
                                 <dl>
                                     <dt>
-                                        Turnus
+                                        {{ 'city_cycle.ride_list.cycle_label'|trans }}
                                     </dt>
                                     <dd>
-                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
-                                        im Monat
+                                        {{ 'city_cycle.ride_list.cycle_pattern'|trans({ '%week%': ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans, '%day%': ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }) }}
                                     </dd>
 
                                     <dt>
-                                        Uhrzeit
+                                        {{ 'city_cycle.ride_list.time_label'|trans }}
                                     </dt>
                                     <dd>
-                                        {{ cityCycle.time|date('H:i', 'UTC') }} Uhr
+                                        {{ cityCycle.time|date('H:i', 'UTC') }} {{ 'city_cycle.ride_list.time_suffix'|trans }}
                                     </dd>
 
                                     <dt>
-                                        Treffpunkt
+                                        {{ 'city_cycle.ride_list.location_label'|trans }}
                                     </dt>
                                     <dd>
                                         {% if cityCycle.location %}
                                             {{ cityCycle.location }}
                                         {% else %}
-                                            <em>nicht definiert</em>
+                                            <em>{{ 'city_cycle.ride_list.location_undefined'|trans }}</em>
                                         {% endif %}
                                     </dd>
 
                                     <dt>
-                                        Gültigkeitsbeginn
+                                        {{ 'city_cycle.ride_list.valid_from_label'|trans }}
                                     </dt>
                                     <dd>
                                         {% if cityCycle.validFrom %}
                                             {{ cityCycle.validFrom|date('d.m.Y') }}
                                         {% else %}
-                                            <em>nicht definiert</em>
+                                            <em>{{ 'city_cycle.ride_list.location_undefined'|trans }}</em>
                                         {% endif %}
                                     </dd>
 
                                     <dt>
-                                        Gültigkeitsende
+                                        {{ 'city_cycle.ride_list.valid_until_label'|trans }}
                                     </dt>
                                     <dd>
                                         {% if cityCycle.validUntil %}
                                             {{ cityCycle.validUntil|date('d.m.Y') }}
                                         {% else %}
-                                            <em>nicht definiert</em>
+                                            <em>{{ 'city_cycle.ride_list.location_undefined'|trans }}</em>
                                         {% endif %}
                                     </dd>
                                 </dl>
@@ -79,11 +78,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h2>
-                                    Tourenübersicht
+                                    {{ 'city_cycle.ride_list.heading'|trans }}
                                 </h2>
 
                                 <p>
-                                    Die folgenden Touren wurden von diesem Turnus erzeugt:
+                                    {{ 'city_cycle.ride_list.intro'|trans }}
                                 </p>
                             </div>
                         </div>
@@ -94,19 +93,19 @@
                                     <thead>
                                     <tr>
                                         <th>
-                                            Titel
+                                            {{ 'city_cycle.ride_list.col_title'|trans }}
                                         </th>
 
                                         <th>
-                                            Datum
+                                            {{ 'city_cycle.ride_list.col_date'|trans }}
                                         </th>
 
                                         <th>
-                                            Uhrzeit
+                                            {{ 'city_cycle.ride_list.col_time'|trans }}
                                         </th>
 
                                         <th>
-                                            Treffpunkt
+                                            {{ 'city_cycle.ride_list.col_location'|trans }}
                                         </th>
 
                                         <th>
@@ -118,7 +117,7 @@
                                     {% for ride in rideList %}
                                         <tr>
                                             <td>
-                                                <a href="{{ object_path(ride) }}" title="zur Tourseite">
+                                                <a href="{{ object_path(ride) }}" title="{{ 'city_cycle.ride_list.to_ride'|trans }}">
                                                     {{ ride.title }}
                                                 </a>
                                             </td>
@@ -128,7 +127,7 @@
                                             </td>
 
                                             <td>
-                                                {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
+                                                {{ ride.dateTime|date('H:i') }}&nbsp;{{ 'city_cycle.ride_list.time_suffix'|trans }}
                                             </td>
 
                                             <td>
@@ -138,7 +137,7 @@
                                             <td>
                                                 <a class="btn btn-xs btn-secondary"
                                                    href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
-                                                   title="Tour editieren">
+                                                   title="{{ 'city_cycle.ride_list.edit_ride'|trans }}">
                                                     <i class="fa fa-wrench"></i>
                                                 </a>
                                             </td>

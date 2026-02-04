@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h2>
-                    Critical Mass {{ city.city }}
+                    {{ 'city.management.missing_heading'|trans({'%city_name%': city.city}) }}
                 </h2>
             </div>
         </div>
@@ -30,16 +30,16 @@
         <div class="row margin-top-medium">
             <div class="col-md-8 col-md-offset-2">
                 <p>
-                    Es tut uns leid, aber wir haben keine Informationen zu einer Critical Mass in {{ city.city }} in unserer Datenbank.
+                    {{ 'city.management.missing_no_info'|trans({'%city_name%': city.city}) }}
                 </p>
 
                 <p>
-                    Du kannst aber jetzt eine Critical Mass für {{ city.city }} hinzufügen:
+                    {{ 'city.management.missing_add_prompt'|trans({'%city_name%': city.city}) }}
                 </p>
 
                 <p class="text-center">
                     <a href="{{ path('caldera_criticalmass_city_add_slug', { citySlug: citySlug }) }}" class="btn btn-primary">
-                        {{ city.city }} hinzufügen
+                        {{ 'city.management.missing_add_button'|trans({'%city_name%': city.city}) }}
                     </a>
                 </p>
             </div>
@@ -50,7 +50,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <h2>
-                        Keine Masse gefunden
+                        {{ 'city.management.missing_not_found_heading'|trans }}
                     </h2>
                 </div>
             </div>
@@ -58,17 +58,16 @@
             <div class="row margin-top-medium">
                 <div class="col-md-8 col-md-offset-2">
                     <p>
-                        Es tut uns leid, aber wir konnten keine Stadt zu deiner Suche nach <code>{{ citySlug }}</code>
-                        finden.
+                        {{ 'city.management.missing_not_found_text'|trans({'%slug%': citySlug})|raw }}
                     </p>
 
                     <p>
-                        Bitte versuche, die gesuchte Stadt im Verzeichnis zu finden.
+                        {{ 'city.management.missing_try_directory'|trans }}
                     </p>
 
                     <p class="text-center">
                         <a href="{{ path('caldera_criticalmass_region_world') }}" class="btn btn-primary">
-                            zum Verzeichnis
+                            {{ 'city.management.missing_to_directory'|trans }}
                         </a>
                     </p>
                 </div>

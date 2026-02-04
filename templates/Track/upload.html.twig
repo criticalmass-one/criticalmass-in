@@ -1,13 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Gpx-Datei hochladen{% endblock %}
+{% block title %}{{ 'track.upload.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.list.title'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.active('Track hochladen') }}
+    {{ breadcrumb.active('track.upload.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-6 col-offset-md-3">
                 <h2>
-                    Gpx-Datei hochladen
+                    {{ 'track.upload.heading'|trans }}
                 </h2>
             </div>
         </div>
@@ -23,10 +23,7 @@
         <div class="row">
             <div class="col-md-6 col-offset-md-3">
                 <p>
-                    Wenn du deine Fahrt bei der <strong>{{ ride.city.title }}</strong> am
-                    <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> aufgezeichnet hast, kannst du
-                    hier
-                    deinen Track als GPX-Datei hochladen.
+                    {{ 'track.upload.intro'|trans({ '%city%': ride.city.title, '%date%': ride.dateTime|date('d.m.Y', ride.city.timezone) }) }}
                 </p>
             </div>
         </div>
@@ -38,7 +35,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            Gpx-Datei hochladen
+                            {{ 'track.upload.panel_title'|trans }}
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -46,7 +43,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="alert alert-danger" role="alert">
-                                        <strong>Hochladen fehlgeschlagen :(</strong>
+                                        <strong>{{ 'track.upload.error'|trans }}</strong>
                                         {{ errorMessage }}
                                     </div>
                                 </div>
@@ -56,7 +53,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="">Datei:</label>
+                                    <label for="">{{ 'track.upload.file_label'|trans }}</label>
                                     {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
                                 </div>
                             </div>
@@ -72,11 +69,11 @@
                     <button type="submit" class="btn btn-success"
                         data-controller="submit-disabler"
                         data-action="click->submit-disabler#disable"
-                        data-submit-disabler-message-value="Bitte warten…">
-                        Track hochladen
+                        data-submit-disabler-message-value="{{ 'common.please_wait'|trans }}">
+                        {{ 'track.upload.submit'|trans }}
                     </button>
                     <a href="{{ object_path(ride) }}" class="btn btn-secondary">
-                        Abbrechen
+                        {{ 'common.cancel'|trans }}
                     </a>
                 </div>
             </div>

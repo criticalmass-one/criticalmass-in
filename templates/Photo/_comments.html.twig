@@ -2,7 +2,7 @@
     <div class="col-md-12">
         {% if app.user %}
             <button type="button" class="btn btn-success pull-right" data-bs-toggle="modal" data-bs-target="#modal-add-post">
-                Kommentar hinzufügen
+                {{ 'photo.comments.add_comment'|trans }}
             </button>
         {% else %}
             <button
@@ -12,12 +12,12 @@
                     data-modal-hint-title="{{ 'hint_modal.photo.post_add_button.title'|trans }}"
                     data-modal-hint-text="{{ 'hint_modal.photo.post_add_button.text'|trans({'%city%': photo.ride.city.city, '%dateTime%': photo.ride.dateTime|date('d.m.Y')}) }}"
                     data-modal-hint-size="md">
-                Kommentar hinzufügen
+                {{ 'photo.comments.add_comment'|trans }}
             </button>
         {% endif %}
 
         <h3 class="no-margin-top">
-            Kommentare zu diesem Foto
+            {{ 'photo.comments.heading'|trans }}
         </h3>
     </div>
 </div>

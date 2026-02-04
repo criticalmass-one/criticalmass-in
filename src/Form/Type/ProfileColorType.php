@@ -11,7 +11,7 @@ class ProfileColorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('color', ColorType::class, [
-            'label' => 'Profilfarbe wählen',
+            'label' => 'form.profile_color.label',
         ]);
     }
 

@@ -7,13 +7,14 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>
-                    Teilnehmerzahl ergänzen
+                    {{ 'estimate.heading'|trans }}
                 </h3>
 
                 <p>
-                    Wie viele Teilnehmer sind an der Critical Mass in <strong>{{ ride.city.city }}</strong> am
-                    <strong>{{ ride.dateTime|format_date(null, 'de', ride.city.timezone, constant('IntlDateFormatter::LONG')) }}</strong>
-                    mitgefahren?
+                    {{ 'estimate.question'|trans({
+                        '%city%': ride.city.city,
+                        '%date%': ride.dateTime|format_date(null, 'de', ride.city.timezone, constant('IntlDateFormatter::LONG'))
+                    })|raw }}
                 </p>
             </div>
         </div>
@@ -25,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="">
-                            Teilnehmerzahl:
+                            {{ 'estimate.label'|trans }}
                         </label>
                     </div>
                 </div>
@@ -39,7 +40,7 @@
                 <div class="row margin-top-medium">
                     <div class="col-md-12">
                         <button class="btn btn-primary" type="submit">
-                            Absenden
+                            {{ 'estimate.submit'|trans }}
                         </button>
                     </div>
                 </div>

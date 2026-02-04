@@ -2,17 +2,17 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {% if profileAbleType == 'city' %}
         {{ breadcrumb.item(profileAble.city, object_path(profileAble)) }}
-        {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_city_list')) }}
-        {{ breadcrumb.active('Soziales Netzwerk editieren') }}
+        {{ breadcrumb.item('social_network.breadcrumb'|trans, object_path(profileAble, 'criticalmass_socialnetwork_city_list')) }}
+        {{ breadcrumb.active('social_network.edit_title'|trans) }}
     {% endif %}
     {% if profileAbleType == 'ride' %}
         {{ breadcrumb.item(profileAble.city.city, object_path(profileAble.city)) }}
         {{ breadcrumb.item(profileAble.title, object_path(profileAble)) }}
-        {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_ride_list')) }}
-        {{ breadcrumb.active('Soziales Netzwerk editieren') }}
+        {{ breadcrumb.item('social_network.breadcrumb'|trans, object_path(profileAble, 'criticalmass_socialnetwork_ride_list')) }}
+        {{ breadcrumb.active('social_network.edit_title'|trans) }}
     {% endif %}
 {% endblock %}
 
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h2>
-                    Soziales Netzwerk hinzufügen
+                    {{ 'social_network.add_title'|trans }}
                 </h2>
             </div>
         </div>
@@ -34,17 +34,17 @@
 
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        <label class="control-label" for="">Adresse:</label>
+                        <label class="control-label" for="">{{ 'social_network.label_address'|trans }}</label>
                         {{ form_widget(form.identifier, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        <label class="control-label" for="">Hauptkonto:</label>
+                        <label class="control-label" for="">{{ 'social_network.label_main_account'|trans }}</label>
                         {{ form_widget(form.mainNetwork, { 'attr' : { 'class': 'form-control'} }) }}
                         <p class="help-block">
-                            Handelt es sich bei diesem Konto um das Hauptkonto in diesem Netzwerk?
+                            {{ 'social_network.help_main_account'|trans }}
                         </p>
                     </div>
                 </div>
@@ -53,11 +53,11 @@
                      <div class="col-md-12 form-group">
                          <div class="btn-group pull-right">
                              <a href="" class="btn btn-secondary">
-                                 Abbrechen
+                                 {{ 'common.cancel'|trans }}
                              </a>
 
                              <button type="submit" class="btn btn-primary">
-                                 Speichern
+                                 {{ 'common.save'|trans }}
                              </button>
                          </div>
                      </div>

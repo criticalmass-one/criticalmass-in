@@ -1,13 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Suchergebnisse{% endblock %}
+{% block title %}{{ 'search.title'|trans }}{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Deine Suchergebnisse
+                    {{ 'search.heading'|trans }}
                 </h1>
             </div>
         </div>
@@ -17,16 +17,16 @@
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Suche
+                            {{ 'search.panel_title'|trans }}
                         </div>
                         <div class="panel-body form-group">
                             <label for="query-input">
-                                Deine Suchanfrage
+                                {{ 'search.query_label'|trans }}
                             </label>
-                            <input type="text" class="form-control" name="query" value="{{ query }}" id="query-input" placeholder="Deine Suchanfrage"/>
+                            <input type="text" class="form-control" name="query" value="{{ query }}" id="query-input" placeholder="{{ 'search.query_placeholder'|trans }}"/>
 
                             <button type="submit" class="btn btn-success float-end mt-2">
-                                Finden
+                                {{ 'search.submit'|trans }}
                             </button>
                         </div>
                     </div>
@@ -38,14 +38,14 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="city-results-tab" data-bs-toggle="tab" data-bs-target="#city-results" type="button" role="tab" aria-controls="city-results" aria-selected="true">
                             <i class="far fa-university"></i>
-                            Städte
+                            {{ 'search.tab_cities'|trans }}
                         </button>
                     </li>
 
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="ride-results-tab" data-bs-toggle="tab" data-bs-target="#ride-results" type="button" role="tab" aria-controls="ride-results" aria-selected="false">
                             <i class="far fa-bicycle"></i>
-                            Touren
+                            {{ 'search.tab_rides'|trans }}
                         </button>
                     </li>
                 </ul>
@@ -58,7 +58,7 @@
 
                         {% if cityResults|length == 0 %}
                             <div class="alert alert-info">
-                                Zu deiner Suchanfrage wurden leider keine Städte gefunden.
+                                {{ 'search.no_cities'|trans }}
                             </div>
                         {% endif %}
                     </div>
@@ -70,7 +70,7 @@
 
                         {% if rideResults|length == 0 %}
                             <div class="alert alert-info">
-                                Zu deiner Suchanfrage wurden leider keine Touren gefunden.
+                                {{ 'search.no_rides'|trans }}
                             </div>
                         {% endif %}
                     </div>

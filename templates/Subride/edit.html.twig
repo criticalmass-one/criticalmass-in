@@ -2,21 +2,21 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if subride %}
-    {% set title = 'Mini-Mass editieren' %}
+    {% set title = 'subride.edit_title'|trans %}
 {% else %}
-    {% set title = 'Mini-Mass hinzufügen' %}
+    {% set title = 'subride.create_title'|trans %}
 {% endif %}
 
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('ride.management.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
     {% if subride %}
-        {{ breadcrumb.active('Mini-Mass editieren') }}
+        {{ breadcrumb.active('subride.edit_title'|trans) }}
     {% else %}
-        {{ breadcrumb.active('Mini-Mass hinzufügen') }}
+        {{ breadcrumb.active('subride.create_title'|trans) }}
     {% endif %}
 {% endblock %}
 
@@ -33,9 +33,7 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass
-                    stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen
-                    Radtour verabredet haben, um nicht alleine zur „großen Masse“ fahren zu müssen.
+                    {{ 'subride.intro'|trans }}
                 </p>
             </div>
         </div>
@@ -65,7 +63,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3>
-                            Daten der Mini-Mass
+                            {{ 'subride.section_data'|trans }}
                         </h3>
                     </div>
                 </div>
@@ -73,11 +71,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="title">Titel:</label>
+                            <label class="control-label" for="title">{{ 'subride.label_title'|trans }}</label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">Gib deiner Mini-Mass einen Namen. Er muss noch nicht einmal
-                                aussagekräftig
-                                sein — Hauptsache man weiß, worum es geht.</p>
+                            <p class="help-block">{{ 'subride.help_title'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -85,11 +81,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="description">Beschreibung:</label>
+                            <label class="control-label" for="description">{{ 'subride.label_description'|trans }}</label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">Hier ist Platz für eine grobe Beschreibung der Mini-Mass. Lege hier
-                                zum
-                                Beispiel eine ungefähre Route fest.</p>
+                            <p class="help-block">{{ 'subride.help_description'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -97,11 +91,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="description">Treffpunkt:</label>
+                            <label class="control-label" for="description">{{ 'subride.label_location'|trans }}</label>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">Wo trefft ihr euch? Vergiss nicht, den Treffpunkt oben auf der Karte
-                                zu
-                                markieren.</p>
+                            <p class="help-block">{{ 'subride.help_location'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -111,7 +103,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3>
-                            Datum und Uhrzeit
+                            {{ 'subride.section_datetime'|trans }}
                         </h3>
                     </div>
                 </div>
@@ -119,7 +111,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="description">Datum:</label>
+                            <label class="control-label" for="description">{{ 'subride.label_date'|trans }}</label>
                             <div class="form-control">{{ ride.getDateTime().format('d. F Y') }}</div>
                         </div>
                     </div>
@@ -128,7 +120,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="description">Uhrzeit:</label>
+                            <label class="control-label" for="description">{{ 'subride.label_time'|trans }}</label>
                             {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                     </div>
@@ -141,10 +133,10 @@
                 <div class="form-group">
                     <div class="btn-group pull-right">
                         <a href="{{ object_path(ride) }}" class="btn btn-secondary">
-                            Abbrechen
+                            {{ 'common.cancel'|trans }}
                         </a>
                         <button type="submit" class="btn btn-success">
-                            Speichern
+                            {{ 'common.save'|trans }}
                         </button>
                     </div>
                 </div>

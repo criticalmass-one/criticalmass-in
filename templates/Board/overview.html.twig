@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Diskussionen{% endblock %}
+{% block title %}{{ 'board.overview_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Diskussionen') }}
+    {{ breadcrumb.active('board.overview_title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -15,16 +15,16 @@
                     <thead>
                     <tr>
                         <th>
-                            Beschreibung
+                            {{ 'board.col_description'|trans }}
                         </th>
                         <th>
-                            Themen
+                            {{ 'board.col_topics'|trans }}
                         </th>
                         <th>
-                            Beiträge
+                            {{ 'board.col_posts'|trans }}
                         </th>
                         <th>
-                            letzter Beitrag
+                            {{ 'board.col_last_post'|trans }}
                         </th>
                     </tr>
                     </thead>
@@ -32,7 +32,7 @@
                     <tr>
                         <td colspan="4">
                             <h4>
-                                Allgemeines
+                                {{ 'board.section_general'|trans }}
                             </h4>
                         </td>
                     </tr>
@@ -63,8 +63,8 @@
                                         <strong>{{ board.lastThread.title }}</strong>
                                     </a>
                                     <br/>
-                                    von <strong>{{ board.lastThread.lastPost.user.username }}</strong><br/>
-                                    {{ board.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                    {{ 'board.by_author'|trans({'%username%': board.lastThread.lastPost.user.username})|raw }}<br/>
+                                    {{ board.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;{{ 'common.time_suffix'|trans }}
                                 {% endif %}
                             </td>
                         </tr>
@@ -73,7 +73,7 @@
                     <tr>
                         <td colspan="4">
                             <h4>
-                                Städte
+                                {{ 'board.section_cities'|trans }}
                             </h4>
                         </td>
                     </tr>
@@ -104,8 +104,8 @@
                                         <strong>{{ city.lastThread.title }}</strong>
                                     </a>
                                     <br/>
-                                    von <strong>{{ city.lastThread.lastPost.user.username }}</strong><br/>
-                                    {{ city.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                    {{ 'board.by_author'|trans({'%username%': city.lastThread.lastPost.user.username})|raw }}<br/>
+                                    {{ city.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;{{ 'common.time_suffix'|trans }}
                                 {% endif %}
                             </td>
                         </tr>

@@ -1,13 +1,13 @@
 {% set previous_ride = previous_entity(ride) %}
 {% set next_ride = next_entity(ride) %}
 
-<nav aria-label="Tour Navigation" class="mt-4">
+<nav aria-label="{{ 'ride.pagination.navigation_label'|trans }}" class="mt-4">
     <div class="d-flex justify-content-between">
         {% if previous_ride %}
             <a href="{{ object_path(previous_ride) }}" class="btn btn-outline-secondary">
                 <i class="far fa-chevron-left me-2"></i>
                 <span class="d-none d-sm-inline">{{ previous_ride.dateTime|date('d.m.Y') }}</span>
-                <span class="d-sm-none">Vorige</span>
+                <span class="d-sm-none">{{ 'ride.pagination.previous_short'|trans }}</span>
             </a>
         {% else %}
             <span></span>
@@ -16,7 +16,7 @@
         {% if next_ride %}
             <a href="{{ object_path(next_ride) }}" class="btn btn-outline-secondary">
                 <span class="d-none d-sm-inline">{{ next_ride.dateTime|date('d.m.Y') }}</span>
-                <span class="d-sm-none">Nächste</span>
+                <span class="d-sm-none">{{ 'ride.pagination.next_short'|trans }}</span>
                 <i class="far fa-chevron-right ms-2"></i>
             </a>
         {% else %}

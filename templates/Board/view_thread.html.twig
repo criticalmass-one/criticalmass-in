@@ -4,7 +4,7 @@
 {% block title %}{{ thread.title }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.item('board.overview_title'|trans, path('caldera_criticalmass_board_overview')) }}
     {{ breadcrumb.item(board.title, object_path(board)) }}
     {{ breadcrumb.active(thread.title) }}
 {% endblock %}
@@ -17,7 +17,7 @@
                     <button type="button" class="btn btn-success pull-right margin-top-medium" data-bs-toggle="modal"
                             data-bs-target="#modal-add-post">
                         <i class="far fa-comment"></i>
-                        Antwort hinzufügen
+                        {{ 'board.add_reply'|trans }}
                     </button>
                     {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadSlug': thread.slug, 'noButton': true })) }}
                 {% endif %}

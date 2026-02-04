@@ -1,20 +1,20 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Fotos ausrichten{% endblock %}
+{% block title %}{{ 'photo.management.relocate_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item(ride.city.title, object_path(ride.city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.item('Fotos verwalten', object_path(ride, 'caldera_criticalmass_photo_manage')) }}
-    {{ breadcrumb.active('Fotos ausrichten') }}
+    {{ breadcrumb.item('photo.management.relocate_manage_breadcrumb'|trans, object_path(ride, 'caldera_criticalmass_photo_manage')) }}
+    {{ breadcrumb.active('photo.management.relocate_breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Fotos ausrichten</h1>
+                <h1>{{ 'photo.management.relocate_heading'|trans }}</h1>
             </div>
         </div>
 
@@ -28,8 +28,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="alert alert-danger" role="alert">
-                            <strong>Kein Track gefunden!</strong> Bitte lade erst einen GPX-Track deiner Tour hoch, um
-                            anschließend Fotos zu verorten.
+                            {{ 'photo.management.relocate_no_track'|trans|raw }}
                         </div>
                     </div>
                 </div>

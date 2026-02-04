@@ -2,15 +2,15 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {% if profileAbleType == 'city' %}
         {{ breadcrumb.item(profileAble.city, object_path(profileAble)) }}
-        {{ breadcrumb.active('Soziale Netzwerke') }}
+        {{ breadcrumb.active('social_network.breadcrumb'|trans) }}
     {% endif %}
     {% if profileAbleType == 'ride' %}
         {{ breadcrumb.item(profileAble.city.city, object_path(profileAble.city)) }}
         {{ breadcrumb.item(profileAble.title, object_path(profileAble)) }}
-        {{ breadcrumb.active('Soziale Netzwerke') }}
+        {{ breadcrumb.active('social_network.breadcrumb'|trans) }}
     {% endif %}
 {% endblock %}
 
@@ -23,22 +23,22 @@
             <div class="col-md-12">
                 <button class="btn btn-success pull-right" data-bs-toggle="modal" data-bs-target="#profile-add-modal">
                     <i class="far fa-plus"></i>
-                    Profil ergänzen
+                    {{ 'social_network.add_profile'|trans }}
                 </button>
 
                 <h2>
-                    Soziale Netzwerke
+                    {{ 'social_network.breadcrumb'|trans }}
                 </h2>
 
                 {% if profileAbleType == 'city' %}
                     <p class="lead">
-                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in <strong>{{ profileAble.city }}</strong> in Verbindung stehen.
+                        {{ 'social_network.list_lead_city'|trans({'%city_name%': profileAble.city}) }}
                     </p>
                 {% endif %}
 
                 {% if profileAbleType == 'ride' %}
                     <p class="lead">
-                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am <strong>{{ profileAble.dateTime|date('d.m.Y') }}</strong> in Verbindung stehen.
+                        {{ 'social_network.list_lead_ride'|trans({'%ride_date%': profileAble.dateTime|date('d.m.Y')}) }}
                     </p>
                 {% endif %}
             </div>
@@ -50,13 +50,13 @@
                     <thead>
                         <tr>
                             <th colspan="2">
-                                Netzwerk
+                                {{ 'social_network.col_network'|trans }}
                             </th>
                             <th>
-                                Benutzername
+                                {{ 'social_network.col_username'|trans }}
                             </th>
                             <th>
-                                Verwaltung
+                                {{ 'social_network.col_management'|trans }}
                             </th>
                         </tr>
                     </thead>
@@ -95,9 +95,9 @@
                                 <td colspan="4">
                                     <div class="alert alert-info">
                                         {% if profileAbleType == 'ride' %}
-                                        Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
+                                        {{ 'social_network.empty_ride'|trans }}
                                         {% else %}
-                                        Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
+                                        {{ 'social_network.empty_city'|trans }}
                                         {% endif %}
                                     </div>
                                 </td>
@@ -112,8 +112,8 @@
         <div class="row">
             <div class="col-md-12">
                 <p class="text-center">
-                    Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
-                    <a class="btn btn-secondary margin-top-small" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                    {{ 'social_network.parent_city_info'|trans({'%city_name%': profileAble.city.city}) }}<br />
+                    <a class="btn btn-secondary margin-top-small" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">{{ 'social_network.manage_city_profiles'|trans }}</a>
                 </p>
             </div>
         </div>
@@ -126,31 +126,31 @@
                 {{ form_start(addProfileForm) }}
                 <div class="modal-header">
                     <h5 class="modal-title" id="profile-add-modal-label">
-                        Profil ergänzen
+                        {{ 'social_network.add_profile'|trans }}
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>
-                        Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
+                        {{ 'social_network.add_profile_info'|trans }}
                     </p>
                     <div class="form-group">
                         <label class="control-label" for="identifier">
-                            Link zum Profil:
+                            {{ 'social_network.label_profile_link'|trans }}
                         </label>
                         {{ form_widget(addProfileForm.identifier, { 'attr' : { 'class': 'form-control' } }) }}
                     </div>
 
                     <div class="form-group">
                         <label class="control-label" for="identifier">
-                            Netzwerk:
+                            {{ 'social_network.label_network'|trans }}
                         </label>
                         {{ form_widget(addProfileForm.network, { 'attr' : { 'class': 'form-control' } }) }}
                     </div>
 
                     <div class="form-group">
                         <label class="control-label" for="mainNetwork">
-                            Hauptprofil:
+                            {{ 'social_network.label_main_profile'|trans }}
                         </label>
                         {{ form_widget(addProfileForm.mainNetwork, { 'attr' : { 'class': 'form-control' } }) }}
                     </div>
@@ -158,10 +158,10 @@
                 <div class="modal-footer">
                     <div class="btn-group">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Abbrechen
+                            {{ 'common.cancel'|trans }}
                         </button>
                         <button type="submit" class="btn btn-success">
-                            Speichern
+                            {{ 'common.save'|trans }}
                         </button>
                     </div>
                 </div>

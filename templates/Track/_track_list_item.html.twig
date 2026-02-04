@@ -26,7 +26,7 @@
                     <div class="col-md-6">
                         <dl>
                             <dt>
-                                Stadt
+                                {{ 'track.col_city'|trans }}
                             </dt>
 
                             <dd>
@@ -42,7 +42,7 @@
                     <div class="col-md-6">
                         <dl>
                             <dt>
-                                Teilnehmer
+                                {{ 'track.col_participant'|trans }}
                             </dt>
 
                             <dd>
@@ -55,7 +55,7 @@
                 <div class="col-md-6">
                     <dl>
                         <dt>
-                            Datum
+                            {{ 'track.col_date'|trans }}
                         </dt>
 
                         <dd>
@@ -71,7 +71,7 @@
                 <div class="col-md-4">
                     <dl>
                         <dt>
-                            Länge
+                            {{ 'track.col_distance'|trans }}
                         </dt>
 
                         <dd>
@@ -83,11 +83,11 @@
                 <div class="col-md-4">
                     <dl>
                         <dt>
-                            Beginn
+                            {{ 'track.col_start'|trans }}
                         </dt>
 
                         <dd>
-                            {{ track.startDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
+                            {{ track.startDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;{{ 'common.time_suffix'|trans }}
                         </dd>
                     </dl>
                 </div>
@@ -95,11 +95,11 @@
                 <div class="col-md-4">
                     <dl>
                         <dt>
-                            Ende
+                            {{ 'track.col_end'|trans }}
                         </dt>
 
                         <dd>
-                            {{ track.endDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
+                            {{ track.endDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;{{ 'common.time_suffix'|trans }}
                         </dd>
                     </dl>
                 </div>

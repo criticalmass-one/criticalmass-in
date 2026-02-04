@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Deine Tracks{% endblock %}
+{% block title %}{{ 'track.list_page.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ breadcrumb.active('Deine Tracks') }}
+    {{ breadcrumb.item('profile.account'|trans, path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('track.list_page.title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Deine Gpx-Tracks
+                    {{ 'track.list_page.heading'|trans }}
                 </h1>
             </div>
         </div>
@@ -21,13 +21,11 @@
         <div class="row">
             <div class="col-md-12">
                 <p class="lead">
-                    Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet
-                    hast.
+                    {{ 'track.list_page.intro'|trans }}
                 </p>
 
                 <p>
-                    Klicke in der Übersicht einer Radtour im Reiter „Tracks“ auf den grünen Button, um einen neuen Track
-                    hinzuzufügen.
+                    {{ 'track.list_page.add_hint'|trans }}
                 </p>
             </div>
         </div>
@@ -51,17 +49,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Track löschen</h5>
+                    <h5 class="modal-title">{{ 'track.list_page.delete_modal.title'|trans }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <span id="trackIdLabel"></span>
-                    <p>Willst Du diesen Track wirklich löschen?</p>
+                    <p>{{ 'track.list_page.delete_modal.confirm'|trans }}</p>
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group" role="group" aria-label="...">
-                        <a id="deleteButton" href="#" class="btn btn-success">Ja, löschen</a>
-                        <button id="cancelButton" class="btn btn-secondary">Nein, abbrechen</button>
+                        <a id="deleteButton" href="#" class="btn btn-success">{{ 'track.list_page.delete_modal.yes'|trans }}</a>
+                        <button id="cancelButton" class="btn btn-secondary">{{ 'track.list_page.delete_modal.no'|trans }}</button>
                     </div>
                 </div>
             </div>

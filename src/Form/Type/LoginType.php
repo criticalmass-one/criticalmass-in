@@ -13,11 +13,11 @@ class LoginType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'E-Mail-Adresse',
-                'help' => 'Wenn du noch kein Benutzerkonto hast, wird automatisch ein neues mit deiner E-Mail-Adresse erstellt.'
+                'label' => 'form.login.email_label',
+                'help' => 'form.login.email_help',
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Link zusenden',
+                'label' => 'form.login.submit',
             ])
         ;
     }

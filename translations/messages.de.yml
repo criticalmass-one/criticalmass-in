@@ -57,6 +57,580 @@ cycle:
 '{1} 1 month ago |]1,Inf[ %months months ago': 'vor einem Monat|]1,Inf[v or %months Monaten'
 '{1} 1 year ago |]1,Inf[ %years years ago':  'vor einem Jahr|]1,Inf[ vor %years Jahren'
 
+profile:
+    account: Dein Benutzerkonto
+
+    manage:
+        title: Dein Benutzerprofil
+        breadcrumb: Dein Benutzerkonto
+        greeting: Hej %username%, schön, dass du da bist!
+        welcome: Willkommen in deinem Benutzerkonto!
+        welcome_text: 'Hier kannst du deine %photos%Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.'
+        welcome_photos_prefix: 'Fotos, '
+        panel_photo: Profilfoto ändern
+        panel_photo_text: Lade ein Foto für dein Profil hoch.
+        panel_color: Profilfarbe wählen
+        panel_color_text: Ändere die Farbe deines Benutzerkontos.
+        panel_rides: Deine Touren
+        rides_none: 'Du hast noch an keiner Critical Mass teilgenommen. Im <a href="%calendar_url%">Kalender</a> findest du Touren in deiner Nähe.'
+        rides_none_label: 'Schade:'
+        rides_count: 'Super: Du hast bislang an %count% Critical-Mass-Touren teilgenommen.'
+        rides_overview: Tourenübersicht
+        panel_tracks: Deine Tracks
+        tracks_none: Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
+        tracks_count: Von deinen Critical-Mass-Touren hast du insgesamt %count% Tracks hochgeladen.
+        tracks_manage: Tracks verwalten
+        panel_photos: Deine Fotos
+        photos_none: Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr Informationen zu diesem Thema.
+        photos_count: Du hast von deinen Touren %count% Fotos hochgeladen.
+        photos_manage: Fotos verwalten
+        panel_username: Benutzername ändern
+        panel_username_text: Hier kannst du deinen Benutzernamen ändern.
+        panel_email: E-Mail-Adresse ändern
+        panel_email_text: Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig mit deinen neuen Benutzerdaten einloggen musst.
+    username:
+        title: Benutzername ändern
+        breadcrumb: Benutzername ändern
+        heading: Benutzername ändern
+        lead: Dein Benutzername wird öffentlich angezeigt, beispielsweise bei Fotos, Kommentaren oder Teilnahmen an Critical-Mass-Touren.
+        panel_title: Dein Benutzername
+        explanation: Dein Benutzername wird öffentlich angezeigt — außerdem brauchst du ihn zum Einloggen, wenn du dich nicht über ein soziales Netzwerk anmeldest.
+        label: 'Benutzername:'
+    email:
+        title: Dein Benutzerprofil
+        breadcrumb: E-Mail-Adresse ändern
+        heading: E-Mail-Adresse ändern
+        lead: Hier kannst du deine E-Mail-Adresse ändern — denk daran, dich beim nächsten Mal mit deiner neuen E-Mail-Adresse einzuloggen.
+        panel_title: Deine E-Mail-Adresse
+        explanation: Deine E-Mail-Adresse wird selbstverständlich nirgendwo öffentlich angezeigt.
+        label: 'E-Mail-Adresse:'
+    photo:
+        title: Profilfoto hochladen
+        breadcrumb: Profilfoto hochladen
+        heading: Dein Profilfoto
+        upload_hint: 'Hier kannst du ein neues Profilfoto von deinem Rechner hochladen:'
+    color:
+        title: Farbe wählen
+        breadcrumb: Farbe wählen
+        heading: Deine Benutzerfarbe
+        explanation: Hier kannst du eine Farbe wählen, mit der dein Benutzerkonto auf criticalmass.in repräsentiert wird. Beispielsweise werden von dir hochgeladene Tracks in dieser Farbe angezeigt.
+    edit:
+        title: Handy-Nummer editieren
+        breadcrumb: Handy-Nummer editieren
+        heading: Handy-Nummer editieren
+        phone_label: 'Deine Handy-Nummer:'
+        verification_label: 'Dein Verifikationscode:'
+        verify: Überprüfen
+
+security:
+    login:
+        title: Login
+        heading: Einloggen und losfahren!
+        lead: Du kannst dich entweder über ein gesellschaftliches Netzwerk oder über deine E-Mail-Adresse einloggen.
+        social_panel: Soziale Netzwerke
+        social_text: Logge dich über eines dieser sozialen Netzwerke ein — es dauert nur einen Klick!
+        email_panel: E-Mail-Adresse
+        email_text: Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
+    login_link:
+        title: Login
+        heading: Einloggen und losfahren!
+        lead: Danke. Du hast eine E-Mail mit einem Link zum Einloggen bekommen. Bitte wirf einen Blick in deinen Posteingang.
+    oauth:
+        title: OAuth
+        question: Möchtest du der folgenden Webseite erlauben, auf deine Kontodaten zuzugreifen?
+        access_info: 'Diese Seite kann auf folgende Daten deines Benutzerkontos zugreifen:'
+        username_access: deinen Benutzernamen
+
+email:
+    login_link:
+        greeting: Hallo!
+        button: Einloggen
+        ignore_notice: Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.
+        expiration: Der Link ist %expiration% gültig.
+
+participation:
+    title: Deine Touren
+    breadcrumb: Deine Touren
+    tab_overview: Übersicht
+    tab_participated: Teilgenommen
+    tab_undecided: Unentschieden
+    tab_cancelled: Abgesagt
+    tab_cities: Städte
+    yes_description: Hier siehst du eine Liste von Critical-Mass-Touren, zu denen du deine Teilnahme bestätigt hast. Du kannst deine Teilnahme nachträglich zurückziehen oder den Eintrag aus unserer Datenbank löschen.
+    maybe_description: Bei diesen Touren hast du bislang nicht angegeben, ob du teilgenommen hast oder nicht. Du kannst deine Teilnahme nachträglich bestätigen, zurückziehen oder den Datensatz aus unserer Datenbank löschen.
+    no_description: Hier siehst du eine Liste von Critical-Mass-Touren, zu deren Teilnahme du abgesagt hast. Du kannst deine Teilnahme nachträglich bestätigen oder den Eintrag aus unserer Datenbank löschen.
+    col_ride: Tour
+    col_city: Stadt
+    col_date: Datum
+    col_count: Anzahl
+    time_suffix: Uhr
+    delete_title: Diesen Eintrag komplett löschen
+    confirm_title: Deine Teilnahme speichern
+    reject_title: Deine Teilnahme zurückziehen
+    no_entries: Für diese Liste wurden keine Datensätze gefunden.
+
+estimate:
+    heading: Teilnehmerzahl ergänzen
+    question: Wie viele Teilnehmer sind an der Critical Mass in <strong>%city%</strong> am <strong>%date%</strong> mitgefahren?
+    label: 'Teilnehmerzahl:'
+    submit: Absenden
+
+ride:
+    list:
+        title: Kalender
+        breadcrumb_city_list: Städteliste
+        breadcrumb_calendar: Kalender
+        heading: hic sunt birotarii
+        lead: Irgendwo ist immer was los.
+        col_city: Stadt
+        col_time: Uhrzeit
+        col_location: Treffpunkt
+        col_title: Titel
+        time_suffix: Uhr
+    disable:
+        modal_title: Tour deaktivieren
+        reason_label: 'Grund für die Deaktivierung:'
+        comment_label: 'Kommentar zur Deaktivierung (optional):'
+        submit: Deaktivieren
+    statistic:
+        panel_title: Statistik
+        participants: Teilnehmer
+        distance: Distanz
+        duration: Dauer
+        average_velocity: Durchschnittsgeschwindigkeit
+        estimate_button: Teilnehmerzahl schätzen
+        estimate_modal_title: Teilnehmerzahl schätzen
+        estimate_label: 'Geschätzte Teilnehmerzahl:'
+    registration_hint: '<strong>Hej!</strong> Mit einem <a href="%login_url%">criticalmass.in-Benutzerkonto</a> könntest du die Daten dieser Tour aktualisieren.'
+    tabs:
+        details:
+            enable_button: Tour wieder aktivieren
+            enable_title: Tour freischalten
+            edit_button: Tour editieren
+            edit_title: Tour bearbeiten
+            manage_social: soziale Netzwerke verwalten
+            social_preview: Vorschau für soziale Netzwerke
+            disable_link: diese Tour deaktivieren
+            no_description_heading: '<strong>Huch?</strong>'
+            no_description_text: 'Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit hast, kannst du %ride_title% <a href="%edit_url%">hier editieren</a>:'
+            no_description_motto: Gibt es ein Motto für diese Tour?
+            no_description_news: Gibt es irgendwelche Neuigkeiten oder Termine für den Radverkehr?
+            no_description_weather: 'Oder, auch immer ganz wichtig: Wie wird das Wetter?'
+            disabled_heading: 'Diese Tour wurde als abgesagt markiert:'
+            disabled_reason_duplicate: Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
+            disabled_reason_wrong_website: Diese Tour wurde mit falschen Daten angelegt.
+            disabled_reason_wrong_auto: Diese Tour wurde fehlerhafterweise automatisch generiert.
+            disabled_reason_weather: Diese Tour wurde witterungsbedingt abgesagt.
+            disabled_reason_participants: Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
+            disabled_reason_authorities: Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
+            disabled_reason_cancelled: Diese Tour wurde abgesagt.
+        gallery:
+            upload_button: Fotos hochladen
+            upload_title: Fotos hochladen
+            heading: Galerie
+            empty_upload_hint: '<strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen &mdash; <a href="%upload_url%" title="Fotos hochladen">Du kannst noch immer der Erste sein</a>.'
+            empty_login_hint: '<strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Als <a href="%login_url%">angemeldeter Nutzer</a> könntest du hier der Erste sein.'
+        posts:
+            add_button: Kommentar hinzufügen
+            heading: Kommentare zu dieser Tour
+        statistic:
+            estimate_button: Tour schätzen
+            estimate_title: Tour schätzen
+            heading: Statistik
+            col_location: Treffpunkt
+            col_date: Datum
+            col_participants: Teilnehmer
+            col_distance: Distanz
+            col_duration: Dauer
+            col_average_velocity: Durchschnittsgeschwindigkeit
+            time_suffix: Uhr
+            estimate_link: Werte schätzen?
+        subrides:
+            add_button: Mini-Mass eintragen
+            add_title: Mini-Mass anlegen
+            heading: Mini-Masses zu dieser Tour
+            time_suffix: 'Uhr:'
+            empty_user_hint: '<strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt &mdash; <a href="%add_url%" title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a> oder die <a href="%copy_url%">Mini-Masses der letzten Tour kopieren</a>.'
+            empty_login_hint: '<strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt. Als <a href="%login_url%">angemeldeter Nutzer</a> könntest du hier der Erste sein.'
+        tracks:
+            add_button: Track hinzufügen
+            import_strava: Track von Strava importieren
+            upload_gpx: GPX-Datei hochladen
+            upload_title: Track hochladen
+            heading: GPX-Tracks
+            col_participant: Teilnehmer
+            col_duration: Dauer
+            col_distance: Länge
+            col_average_velocity: Durchschnittsgeschwindigkeit
+            empty_user_hint: '<strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen &mdash; <a href="#" data-bs-toggle="modal" data-bs-target="#modalTrackUpload" title="Track hochladen">Du kannst noch immer der Erste sein</a>.'
+            empty_login_hint: '<strong>Schade!</strong> Bislang hat noch niemand eine GPX-Datei hochgeladen. Als <a href="%login_url%">angemeldeter Nutzer</a> könntest du hier der Erste sein.'
+            timelapse_title: Timelapse
+            timelapse_clock: 'Uhrzeit:'
+            timelapse_clock_suffix: Uhr
+            timelapse_elapsed: 'Verstrichene Zeit:'
+            timelapse_elapsed_suffix: Minuten
+            timelapse_speed: 'Geschwindigkeit:'
+            timelapse_time: 'Zeitpunkt:'
+            timelapse_start: Timelapse starten
+            timelapse_no_tracks: 'Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.'
+            timelapse_loading: 'Lade Track %current% von %total%'
+
+ride.management:
+    edit_title: Tour editieren
+    create_title: Tour hinzufügen
+    breadcrumb_city_list: Städteliste
+    cycle_warning: '<strong>Vorsicht!</strong> Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich bereits existiert.'
+    intro: Hier kannst du die Details einer Tour editieren.
+    section_ride_data: Tourdaten
+    label_title: 'Titel:'
+    help_title: Hier kann optional der Titel der Tour angegeben werden.
+    label_description: 'Beschreibung:'
+    help_description: 'Hier kann optional eine Beschreibung der Tour angegeben werden. Schreibe hier nur Dinge, die wirklich direkt diese Tour betreffen — für alles andere ist in der Beschreibung der Stadt genügend Platz.'
+    section_date_location: Datum und Treffpunkt
+    warning_double_month: '<strong>Vorsicht!</strong> Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei Touren stattfinden?'
+    warning_double_day: '<strong>Achtung!</strong> An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider keine zwei Touren an einem Tag verwaltet werden.'
+    label_datetime: 'Datum und Uhrzeit:'
+    label_location: 'Treffpunkt:'
+    help_location: 'Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert werden, falls der noch nicht bekannt sein sollte.'
+    label_ride_type: 'Art der Tour:'
+    help_ride_type: 'Falls es sich bei dieser Tour nicht um eine „normale" Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.'
+    label_slug: 'Slug:'
+    label_enabled: 'Tour aktivieren:'
+    help_enabled: Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+    social_preview_title: Details für soziale Netzwerke
+    social_preview_lead: 'Hier kannst du festlegen, wie diese Tour in öffentlichen Netzwerken oder in Suchmaschinen dargestellt werden soll. Du kannst dazu ein kleines Vorschaufoto hochalden, das gemeinsam mit Verlinkungen dargestellt wird, sowie einen kurzen Vorankündigungstext eingeben.'
+    label_file: 'Datei:'
+    help_file: 'Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour im Netz angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen. <strong>Bitte lade nur Fotos hoch, an denen du das Urheber- oder Nutzungsrecht besitzt.</strong>'
+    label_social_description: 'Social-Beschreibung:'
+    help_social_description: 'Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken angezeigt wird. Bedenke, dass dort meistens nur 140 bis 160 Zeichen angezeigt und der Rest des Textes abgeschnitten werden.'
+
+subride:
+    edit_title: Mini-Mass editieren
+    create_title: Mini-Mass hinzufügen
+    intro: 'Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen Radtour verabredet haben, um nicht alleine zur „großen Masse" fahren zu müssen.'
+    section_data: Daten der Mini-Mass
+    label_title: 'Titel:'
+    help_title: 'Gib deiner Mini-Mass einen Namen. Er muss noch nicht einmal aussagekräftig sein — Hauptsache man weiß, worum es geht.'
+    label_description: 'Beschreibung:'
+    help_description: Hier ist Platz für eine grobe Beschreibung der Mini-Mass. Lege hier zum Beispiel eine ungefähre Route fest.
+    label_location: 'Treffpunkt:'
+    help_location: Wo trefft ihr euch? Vergiss nicht, den Treffpunkt oben auf der Karte zu markieren.
+    section_datetime: Datum und Uhrzeit
+    label_date: 'Datum:'
+    label_time: 'Uhrzeit:'
+    copy_title: Mini-Masses kopieren
+    copy_intro: 'Von der Tour <a href="%ride_url%">%ride_title%</a> (%ride_datetime% Uhr) können die folgenden Mini-Masses kopiert werden:'
+    copy_time_suffix: 'Uhr:'
+    copy_button: Kopieren
+
+photo:
+    show:
+        breadcrumb_city_list: Städteliste
+        breadcrumb_photos: Fotos
+        breadcrumb_photo: 'Foto %id% aus %city%'
+        navigation_label: Foto Navigation
+        previous_photo: '&larr; Voriges Foto'
+        next_photo: 'Nächstes Foto &rarr;'
+        login_heading: Bitte logge dich ein
+        login_text: 'Um diese Fotos anzusehen, musst du dich leider einloggen. Keine Sorge, das dauert keine fünf Sekunden:'
+        login_button: Login
+        login_why_heading: Warum wird mir das angezeigt?
+        login_why_text: 'criticalmass.in ist ein reines Hobby-Projekt ohne jegliche Absichten zur Gewinnerzielung. Der Ansturm auf Fotos bringt Server und Anbindung leider regelmäßig an die Belastungsgrenze &mdash; Indem bestimmte Fotos nur für angemeldete Nutzer angezeigt werden, lässt sich die Belastung (hoffentlich) besser verteilen.'
+    comments:
+        add_comment: Kommentar hinzufügen
+        heading: Kommentare zu diesem Foto
+    management:
+        manage_title: Fotos bearbeiten
+        manage_breadcrumb: Fotos bearbeiten
+        upload_more: Weitere Fotos hochladen
+        manage_heading: Fotos bearbeiten
+        dropdown_edit: Bearbeiten
+        capture_date: 'Aufnahmedatum:'
+        rotate_left: links rotieren
+        rotate_right: rechts rotieren
+        deactivate: Deaktivieren
+        activate: Aktivieren
+        unset_featured: Hauptbild lösen
+        set_featured: Hauptbild festlegen
+        user_list_title: Fotos sortieren
+        user_list_breadcrumb: Fotos sortieren
+        user_list_heading: Fotos sortieren
+        col_date: Datum
+        col_city: Stadt
+        col_ride: Tour
+        col_count: Anzahl
+        col_options: Optionen
+        no_photos: '<strong>Schade:</strong> Du hast bislang keine Fotos hochgeladen. Du kannst auf der Übersichtsseite einer Tour Fotos hochladen.'
+        place_title: Foto platzieren
+        place_breadcrumb: Foto platzieren
+        place_heading: Foto platzieren
+        place_lead: Hier kannst du das folgende Foto auf der Karte platzieren oder verschieben.
+        relocate_title: Fotos ausrichten
+        relocate_breadcrumb: Fotos ausrichten
+        relocate_manage_breadcrumb: Fotos verwalten
+        relocate_heading: Fotos ausrichten
+        relocate_no_track: '<strong>Kein Track gefunden!</strong> Bitte lade erst einen GPX-Track deiner Tour hoch, um anschließend Fotos zu verorten.'
+        censor_title: Foto zensieren
+        censor_heading: Foto zensieren
+        censor_lead: Markiere mit der Maus auf dem Foto jene Bereiche, die du unkenntlich machen möchtest.
+    upload:
+        title: Fotos hochladen
+        breadcrumb: Fotos hochladen
+        heading: Fotos hochladen
+        legacy_intro: 'Hier kannst du einzelne Fotos zu einer Tour hochladen. Wenn du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten enthalten, werden deine Fotos automatisch auf der Karte verortet.'
+        legacy_copyright: 'Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!'
+        legacy_multi_hint: 'Um mehrere Fotos auf einmal hochzuladen, probiere bitte <a href="%multi_upload_url%">Multi-Uploader</a> aus.'
+        legacy_submit: Datei hochladen
+        multi_intro: 'Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen. Wenn du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten enthalten, werden deine Fotos automatisch auf der Karte verortet.'
+        multi_fallback: 'Falls dieser Uploader nicht funktionieren sollte, kannst du auch unseren <a href="%legacy_upload_url%">alten Uploader</a> ausprobieren.'
+        multi_copyright: 'Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!'
+
+gallery:
+    title: Fotogalerie
+    breadcrumb: Fotogalerie
+    heading: Fotogalerie
+    example_lead: 'Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren Critical-Mass-Touren aus %cities%. Viel Spaß beim Herumblättern!'
+    conjunction: ' und '
+    ride_list_title: Fotos
+    ride_list_breadcrumb: Fotos
+    ride_list_upload_button: Fotos hochladen
+    ride_list_heading: 'Fotos von %ride%'
+    ride_list_no_photos_guest: 'Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a href="%login_url%">criticalmass.in-Benutzerkonto</a> könntest du deine Fotos hochladen.'
+    ride_list_no_photos_guest_label: 'Schade!'
+    ride_list_no_photos_user: Du kannst der Erste sein, der hier seine Fotos hochlädt!
+    ride_list_no_photos_user_label: 'Hej!'
+    user_list_title: Deine Fotos
+    user_list_breadcrumb: Deine Fotos
+    user_list_heading: Fotos sortieren
+    user_list_col_date: Datum
+    user_list_col_city: Stadt
+    user_list_col_ride: Tour
+    user_list_col_count: Anzahl
+    user_list_col_options: Optionen
+    user_list_no_tracks: 'Du hast bislang keine Tracks hochgeladen :('
+    city_gallery_title: Fotogalerie
+    city_gallery_breadcrumb: Fotogalerie
+    city_gallery_heading: Fotogalerie
+    city_gallery_lead: 'Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren Critical-Mass-Touren aus %cities%. Viel Spaß beim Herumblättern!'
+
+post:
+    write:
+        modal_title: Kommentar hinzufügen
+        page_title: Kommentar schreiben
+        label_comment: 'Dein Kommentar:'
+        share_location: 'Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares entfernen.'
+    write_failed:
+        heading: 'Hoppla: Vertippt?'
+        lead: Du hast leider gar keinen Kommentar eingegeben.
+    list:
+        empty_label: 'Schade!'
+        empty_text: Bislang hat noch niemand einen Kommentar geschrieben!
+
+board:
+    breadcrumb_discussions: Diskussionen
+    add_thread:
+        title: Neues Thema beginnen
+        breadcrumb: neues Thema beginnen
+        heading: Neues Thema beginnen
+        label_title: 'Titel deines Themas:'
+        label_message: 'Dein Beitrag:'
+    list_threads:
+        new_thread: neues Thema eröffnen
+        col_title: Titel
+        col_author: Autor
+        col_replies: Antworten
+        col_views: Ansichten
+        col_last_post: letzter Beitrag
+        by_author: 'von <strong>%username%</strong>'
+        time_suffix: Uhr
+        empty_heading: Hier gibt es nichts zu sehen!
+        empty_text: Bislang hat leider noch niemand einen Beitrag in diesem Forum geschrieben.
+
+city:
+    breadcrumb_city_list: Städteliste
+    breadcrumb_gallery: Foto-Galerien
+    breadcrumb_ride_list: Tour-Übersicht
+    breadcrumb_track_list: Track-Übersicht
+    title_overview: Städte-Übersicht
+    title_track_list: Track-Übersicht
+    options_button: Optionen
+    option_edit_city: Stadt editieren
+    option_add_ride: Tour hinzufügen
+    option_manage_cycle: Turnus verwalten
+    option_manage_social: soziale Netzwerke verwalten
+    no_description_heading: '<strong>Huch?</strong>'
+    no_description_text: 'Schade, bislang hat noch niemand Informationen über %city_name% hinterlegt. Wenn du Lust und Zeit hast, kannst du %city_title% <a href="%edit_url%">hier beschreiben</a>:'
+    no_description_since: Seit wann gibt es die Critical Mass in %city_name%?
+    no_description_duration: Wie lange dauern eure Touren?
+    no_description_route: Wo fahrt ihr ungefähr lang?
+    no_description_problems: Welche Probleme gibt es in %city_name% für den Radverkehr?
+    no_description_edit_button: '%city_name% editieren'
+    photos_heading: Fotos aus %city_name%
+    photos_intro: 'Hier siehst du ein paar Fotos aus %city_name%. Schau dir auch die <a href="%gallery_url%">Übersicht über Fotos aus %city_name%</a> an.'
+    gallery_heading: Fotos aus %city_name%
+    gallery_lead: 'Hier siehst du eine Übersicht von Critical-Mass-Touren aus %city_name%, zu denen Fotos hochgeladen wurden.'
+    gallery_col_date: Datum
+    gallery_col_title: Titel
+    gallery_col_photos: Fotos
+    ride_list_heading: Touren in dieser Stadt
+    ride_list_col_date: Datum
+    ride_list_col_time: Uhrzeit
+    ride_list_col_title: Titel
+    ride_list_col_location: Treffpunkt
+    ride_list_col_participants: Teilnehmer
+    ride_list_col_distance: Distanz
+    ride_list_col_duration: Dauer
+    track_list_heading: Track-Übersicht
+    track_list_delete_modal_title: Track löschen
+    track_list_delete_confirm: Willst Du diesen Track wirklich löschen?
+    track_list_delete_yes: Ja, löschen
+    track_list_delete_no: Nein, abbrechen
+    near_cities_heading: Städte in der Umgebung
+    list_heading: Die nächste Masse ist ganz nah
+    list_lead: Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.
+    list_intro: 'Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile %count% Städte. Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher weitere Quellen, bevor du dich auf den Weg machst.'
+    list_col_city: Stadt
+    list_col_current_ride: aktuelle Tour
+    list_col_cycle: Turnus
+    list_col_rides: Touren
+    list_time_suffix: Uhr
+
+city.management:
+    edit_title: Stadt editieren
+    add_title: Neue Stadt hinzufügen
+    breadcrumb_directory: Verzeichnis
+    breadcrumb_add: Stadt hinzufügen
+    section_city_info: Städte-Informationen
+    label_region: 'Region:'
+    help_region: Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.
+    label_title: 'Titel:'
+    help_title: 'Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg" oder „Fahrradfreitag Rendsburg".'
+    label_name: 'Name:'
+    help_name: Name der Stadt, etwa Hamburg oder Rendsburg.
+    label_description: 'Beschreibung:'
+    help_description: Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.
+    label_punchline: 'Punchline:'
+    help_punchline: 'Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic" oder „Reclaim the streets" ist ja schon fast Standard.'
+    label_long_description: 'Lange Beschreibung:'
+    help_long_description: Hier ist Platz für eine längere und ausführlichere Beschreibung.
+    section_technical: Technisches
+    label_enable_board: 'Forum anzeigen:'
+    help_enable_board: Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu aktivieren.
+    section_header_image: Header-Grafik
+    label_image_file: 'Datei:'
+    help_image_file: 'Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind Bildabmessungen von 2.280 mal 500 Pixel.'
+    missing_heading: Critical Mass %city_name%
+    missing_no_info: Es tut uns leid, aber wir haben keine Informationen zu einer Critical Mass in %city_name% in unserer Datenbank.
+    missing_add_prompt: 'Du kannst aber jetzt eine Critical Mass für %city_name% hinzufügen:'
+    missing_add_button: '%city_name% hinzufügen'
+    missing_not_found_heading: Keine Masse gefunden
+    missing_not_found_text: 'Es tut uns leid, aber wir konnten keine Stadt zu deiner Suche nach <code>%slug%</code> finden.'
+    missing_try_directory: Bitte versuche, die gesuchte Stadt im Verzeichnis zu finden.
+    missing_to_directory: zum Verzeichnis
+
+location:
+    title: 'Übersicht zum Treffpunkt %location% der %city_title%'
+    breadcrumb_city_list: Städteliste
+    breadcrumb_location_info: Informationen zum Treffpunkt
+    breadcrumb_locations: Treffpunkte
+    rides_panel_title: Touren von diesem Treffpunkt
+    other_locations_panel_title: Andere Treffpunkte dieser Stadt
+
+social_network:
+    breadcrumb: Soziale Netzwerke
+    add_profile: Profil ergänzen
+    add_title: Soziales Netzwerk hinzufügen
+    edit_title: Soziales Netzwerk editieren
+    list_lead_city: 'Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in <strong>%city_name%</strong> in Verbindung stehen.'
+    list_lead_ride: 'Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am <strong>%ride_date%</strong> in Verbindung stehen.'
+    col_network: Netzwerk
+    col_username: Benutzername
+    col_management: Verwaltung
+    empty_ride: Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
+    empty_city: Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
+    parent_city_info: Die Profile der übergeordneten Stadt %city_name% werden getrennt von dieser Liste verwaltet.
+    manage_city_profiles: Profile der Stadt verwalten
+    add_profile_info: Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
+    label_profile_link: 'Link zum Profil:'
+    label_network: 'Netzwerk:'
+    label_main_profile: 'Hauptprofil:'
+    label_address: 'Adresse:'
+    label_social_network: 'Soziales Netzwerk:'
+    label_main_account: 'Hauptkonto:'
+    help_main_account: Handelt es sich bei diesem Konto um das Hauptkonto in diesem Netzwerk?
+    items_empty: '<strong>Schade!</strong> Entweder veröffentlicht niemand von der %city_title% neue Beiträge in sozialen Netzerken oder wir waren nicht in der Lage, die Beiträge abzurufen.'
+    items_empty_hint: 'Wenn du für %city_name% <a href="%social_network_url%">gesellschaftliche Netzwerke</a> konfigurierst, werden Beiträge aus diesen Netzwerken hier angezeigt.'
+    read_more: Weiterlesen
+
+statistic:
+    title: Statistiken
+    overview_lead: 'Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern der Critical Mass in den verschiedenen Städten nach einer Tour eingearbeitet worden sind &mdash; entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen.'
+    overview_info: Die Statistiken enthalten alle Städte aus Deutschland, bei denen innerhalb der letzten zwei Jahre mindestens 18 Schätzungen zu Teilnehmer-Zahlen abgegeben wurden.
+    tab_participants: Teilnehmerzahl
+    tab_duration: Fahrtdauer
+    tab_distance: Fahrtlänge
+    participants_info: Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die von den Teilnehmern geschätzt wurden.
+    duration_info: Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden angegeben.
+    distance_info: Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern angegeben.
+    list_rides_title: Critical-Mass-Teilnehmerzahlen im %month%
+    list_rides_lead: Hier siehst du die Liste der Touren im %month%.
+    col_city: Stadt
+    col_date: Datum
+    col_participants: Teilnehmer
+    col_distance: Distanz
+    col_duration: Dauer
+    col_average_speed: Durchschnittsgeschwindigkeit
+    col_participant_count: Teilnehmerzahl
+    col_track_distance: Streckenlänge
+    col_temperature: Temperatur
+    col_precipitation: Niederschlag
+    col_wind_speed: Windgeschwindigkeit
+    missing_data: 'Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.'
+    month_navigation: Monat Navigation
+    previous_month: Voriger Monat
+    next_month: Nächster Monat
+    top_title: Top-Ten-Statistiken
+    top_lead: Hier findest du eine Übersicht der Top-Ten der Touren mit den meisten Teilnehmern, der längsten Strecken und der längsten Dauer.
+    top_tab_distance: Strecke
+    city_title: Statistiken aus %city_name%
+    city_heading: Stadt-Statistiken von %city_name%
+    city_lead: 'Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern der Critical Mass in %city_name% nach einer Tour eingearbeitet worden sind &mdash; entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a href="%missing_stats_url%">Liste von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.'
+    table_comparison: Tabellarischer Vergleich
+    weather_correlation: Gibt es einen Zusammenhang zwischen dem Wetter und den Teilnehmerzahlen?
+    unknown: unbekannt
+
+frontpage:
+    heading: Hej, wir fahren Fahrrad!
+    lead: In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
+    learn_more: Erfahre mehr über criticalmass.in
+    ride_list_title: Bald unterwegs
+
+search:
+    title: Suchergebnisse
+    heading: Deine Suchergebnisse
+    panel_title: Suche
+    query_label: Deine Suchanfrage
+    query_placeholder: Deine Suchanfrage
+    submit: Finden
+    tab_cities: Städte
+    tab_rides: Touren
+    no_cities: Zu deiner Suchanfrage wurden leider keine Städte gefunden.
+    no_rides: Zu deiner Suchanfrage wurden leider keine Touren gefunden.
+
+calendar:
+    title: Kalender
+    breadcrumb: Critical-Mass-Kalender
+    heading: Dein weltweiter Critical-Mass-Kalender
+    lead: Hier siehst du eine Übersicht über alle in unserer Datenbank vorhandenen Critical-Mass-Touren.
+    navigation_label: Kalender Navigation
+    monday: Montag
+    tuesday: Dienstag
+    wednesday: Mittwoch
+    thursday: Donnerstag
+    friday: Freitag
+    saturday: Sonnabend
+    sunday: Sonntag
+
 # Modal hints
 hint_modal:
     ride:
@@ -93,3 +667,761 @@ hint_modal:
         post_add_button:
             title: Kommentar verfassen
             text: '<p>Gefällt dir dieses Foto? Hast du etwas lustiges während der Tour erlebt? Mit einem criticalmass.in-Benutzerkonto kannst du an dieser Stelle einen Kommentar verfassen.</p>'
+
+gdpr:
+    title: Deine persönlichen Daten
+    lead: 'Hier erfährst du, was mit deinen persönlichen und allgemeinen Daten auf unserer Website passiert.'
+    intro: 'Seit Anfang an, als criticalmass.in noch ein Studentenprojekt an der <a href="https://fh-wedel.de/">Fachhochschule Wedel</a> war, galt der Grundsatz, keinen Unfug mit persönlichen Daten anzustellen. Daran hat sich bis heute nichts geändert: Wir nutzen so wenig persönliche Daten wie möglich und haben kein Interesse daran, mit deinen Daten Geld zu verdienen. Wenn du ein wenig von Programmierung verstehst, kannst du dich in unserem <a href="https://github.com/calderacc/criticalmass-in">GitHub-Repository</a> selbst davon überzeugen.'
+    section_profile: Dein Profil
+    profile_intro: 'Wenn du dich bei criticalmass.in registrierst, speichern wir folgende deiner Daten in unserer Datenbank:'
+    profile_username: deinen Benutzernamen
+    profile_email: 'deine E-Mail-Adresse, sofern du dich nicht über soziale Netzwerke einloggst'
+    profile_password: 'ein verschlüsseltes Abbild deines Kennwortes, sofern du dich nicht über soziale Netzwerke einloggst'
+    profile_last_login: den Zeitpunkt deines letzten Logins
+    profile_color: 'die Profilfarbe, mit der beispielsweise deine Tracks auf Karten dargestellt werden'
+    profile_photo: den Dateinamen deines Profilfotos
+    profile_social_login: 'Benutzer-Kennung und verschlüsseltes Login-Geheimnis, falls du dich über soziale Netzwerke einloggst'
+    profile_username_info: 'Du kannst deinen Benutzernamen jederzeit in deinen Profileinstellungen ändern. Wir empfehlen dir die Verwendung eines Pseudonyms, das keine Rückschlüsse auf deine Persönlichkeit zulässt. Wir setzen allerdings die Verwendung eines Benutzernamens voraus, damit andere Nutzer auf criticalmass.in dich erkennen können.'
+    profile_email_info: 'Selbstverständlich kannst du auch deine E-Mail-Adresse in deinen Kontoeinstellungen ändern. Deine E-Mail-Adresse benötigen wir, um dir im Notfall ein neues Kennwort zusenden zu können.'
+    profile_password_info: 'Falls du dich nicht über soziale Netzwerke einloggst, kannst du in deinen Profileinstellungen außerdem dein Kennwort und deine E-Mail-Adresse ändern.'
+    section_social_login: Login über soziale Netzwerke
+    social_login_intro: 'Anstatt über Benutzernamen und Kennwort kannst du dich auf criticalmass.in auch über Facebook oder Strava anmelden. Eine solche Registrierung läuft grundsätzlich so ab, dass unter unserem Login-Formular auf den Knopf von einem dieser drei Anbieter klickst. Du wirst daraufhin zur Webseite dieses Anbieters weitergeleitet, wo du gefragt wirst, ob du criticalmass.in den Zugriff auf dein Benutzerkonto gestattest. Wenn du uns diese Genehmigung erteilst, wirst du anschließend auf criticalmass.in zurückgeleitet, wo du entweder in dein bestehendes Benutzerkonto eingeloggt wirst oder ein neues Benutzerkonto mit den Daten aus jenem sozialen Netzwerk erstellt wird.'
+    social_login_delete: 'Wenn du dein Benutzerkonto bei criticalmass.in löscht, werden selbstverständlich alle Verknüpfungen zu sozialen Netzwerken widerrufen.'
+    section_facebook: Login über Facebook
+    facebook_provider: 'Anbieter des Logins über <a href="https://facebook.com/">Facebook</a> ist die Facebook Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland.'
+    facebook_data_intro: 'Wenn du dich zu einem Login über Facebook entscheidest, fragen wir die folgenden Daten von Facebook ab und speichern sie in unserer Datenbank:'
+    facebook_data_id: numerische Kennung deines Benutzerkontos bei Facebook
+    facebook_data_name: Vor- und Nachname deines Benutzerkontos bei Facebook
+    facebook_data_email: bei Facebook hinterlegte E-Mail-Adresse
+    section_strava: Login über Strava
+    strava_provider: 'Anbieter des Logins über <a href="https://strava.com/">Strava</a> ist die Strava, Inc., 500 3rd Street, Suite 110 , San Francisco, CA 94107.'
+    strava_data_id: numerische Kennung deines Benutzerkontos bei Strava
+    strava_data_name: Vor- und Nachname deines Benutzerkontos bei Strava
+    strava_data_email: bei Strava hinterlegte E-Mail-Adresse
+    section_photos: Fotos
+    photos_intro: 'Als angemeldeter Nutzer kannst du Fotos zu Touren hochladen, die auch von nicht angemeldeten Nutzern betrachtet werden können.'
+    photos_gps: 'Wenn deine hochgeladenen Fotos GPS-Daten enthalten oder du bereits einen Track zu dieser Tour hochgeladen oder importiert hast, versuchen wir deine Fotos zu verorten und auf der Karte der Tour deinen Aufnahmestandpunkt darzustellen.'
+    photos_legal: 'Für Fotos von Critical-Mass-Touren ist <a href="https://www.gesetze-im-internet.de/kunsturhg/__23.html">§ 23 Abs. 1 Nr. 3 KunstUrhG</a> einschlägig, der die Veröffentlichung der „Bilder von Versammlungen, Aufzügen und ähnlichen Vorgängen, an denen die dargestellten Personen teilgenommen haben" erlaubt.'
+    photos_manage: 'Du hast selbstverständlich die Möglichkeit, <a href="%photo_list_url%">Fotos zu löschen oder zu deaktivieren</a>. Wenn du dein Benutzerkonto löschst, werden auch deine hochgeladenen Fotos entfernt.'
+    photos_tracking: 'Der Aufruf von Fotos wird zu statistischen Zwecken gespeichert. Wenn du als eingeloggter Nutzer Fotos betrachtest, wird dieser Aufruf mit deinem Benutzerkonto verknüpft, so dass wir dir Fotos vorschlagen können, die du noch nicht gesehen hast.'
+    section_tracks: Tracks
+    tracks_intro: 'Als Track bezeichnen wir die Aufzeichnung einer Strecke, die ein Teilnehmer während einer Critical-Mass-Tour zurückgelegt hat. Aus technischer Sicht besteht ein Track aus einer Liste von Coordinaten und Zeitstempeln, aus denen ersichtlich ist, zu welchem Zeitpunkt sich ein Nutzer an einem bestimmten Ort aufgehalten hat.'
+    tracks_usage: 'Wir nutzen Tracks zu statistischen Zwecken. Erfahrungsgemäß ist es für die Teilnehmer einer Tour im Nachhinein immer recht interessant, wohin die Reise ging, außerdem lassen sich aus Tracks einerseits Statistiken über die Länge und Dauer einer Tour generieren, andererseits so genannte Heatmaps erstellen.'
+    tracks_strava: 'Du kannst Tracks entweder manuell als GPX-Datei hochladen oder über das soziale Fahrrad-Netzwerk Strava importieren. Wenn du dich für einen Importvorgang über Strava entscheidest, erteilst du uns die einmalige Erlaubnis, auf die von dir dort gespeicherten Touren zuzugreifen. Wir fragen über eine technische Schnittstelle zunächst jene Touren ab, die am Tag einer Critical Mass stattgefunden haben. Diese Touren präsentieren wir dir als Liste, von denen du eine einzelne Tour zum Importieren auswählen kannst. Wir laden anschließend von Strava nur die Positions- und Zeitdaten herunter, etwaige Gesundheitsdaten wie beispielsweise deine Herzfrequenz, oder zusätzliche Daten wie deine Trittfrequenz fragen wir nicht an.'
+    tracks_manage: '<a href="%track_list_url%">Selbstverständlich kannst du deine Tracks anschließend verwalten</a>. Dir stehen verschiedene Werkzeuge zur Verfügung, mit denen du deinen Track unsichtbar schalten kannst, um ihn von anderen Nutzern und aus den Heatmaps zu verbergen, oder mit denen du deinen Track kürzen kannst, um etwa die An- und Abfahrt zu einer Critical Mass herauszuschneiden. Natürlich kannst du deine Track auch komplett aus unserer Webseite löschen. Die damit verknüpften statistischen Daten werden dann ebenfalls entfernt.'
+    section_cities_rides: 'Städte, Touren und Zubringertouren'
+    cities_rides_intro: 'criticalmass.in funktioniert gewissermaßen wie Wikipedia: Jeder angemeldete Nutzer kann Städte, Touren und Zubringertouren erstellen und editieren.'
+    cities_rides_history: 'Wenn du eine Stadt, eine Tour oder eine Zubringertour erstellst oder editierst, wird der Zeitpunkt dieser Aktion zusammen mit deinem aktuellen Benutzernamen in einer Historie gespeichert und außerdem auf der Startseite in der Zeitleiste dargestellt. Mit dieser Historie sind wir in der Lage, Änderungen aufgrund von Vandalismus nachzuvollziehen und zurückzudrehen.'
+    cities_rides_delete: 'Beachte bitte, dass dein Benutzername aus technischen Gründen in der Historie gespeichert bleibt, wenn du dein Benutzerkonto löscht oder dein Benutzernamen änderst.'
+    cities_rides_tracking: 'Der Aufruf der Seite einer Stadt oder einer Tour wird zu statistischen Zwecken erhoben, um besonders beliebte oder wenig bekannte Städte und Touren ermitteln zu können. Falls du im eingeloggten Zustand diese Seiten aufrufst, wird der Zugriff mit deinem Benutzerkonto verknüpft, damit wir dir anzeigen können, ob du die Seite einer Stadt bereits aufgerufen oder eine neu erstellte Tour bereits kennst.'
+    section_participation: Teilnahmen an Touren
+    participation_intro: 'Du hast die Möglichkeit, die Teilnahme an einer Critical-Mass-Tour auf criticalmass.in zu bestätigen, indem du auf der Seite der jeweiligen Tour auf „Teilnehmen" klickst. Diese Funktion dient lediglich statistischen Zwecken: Einerseits können wir anzeigen, wie viele Radfahrer an einer Tour teilnehmen wollen, andererseits können wir dir <a href="%participation_url%">eine detaillierte Statistik anzeigen</a>, wie oft, in welchen Städten und in welchen Monaten du bei einer Critical Mass mitgefahren bist.'
+    participation_reminders: 'Hin und wieder werden wir dich aufgrund der Liste deiner Teilnahmen fragen, ob du fehlende Daten oder Beschreibungen zu Städten oder Touren, die du besucht hast, zu ergänzen.'
+    participation_manage: 'Du kannst deine Teilnahmen <a href="%participation_url%">jederzeit wiederrufen oder den Datensatz komplett löschen</a>.'
+    section_statistics: Statistiken
+    statistics_intro: 'Zu jeder Tour sammeln wir statistische Daten: Die Länge der zurückgelegten Strecke, die Dauer der Tour und die ungefähre Anzahl an Teilnehmern.'
+    statistics_estimates: 'Jeder bei criticalmass.in angemeldete Nutzer kann Schätzungen zur Teilnehmerzahl abgeben. Diese Schätzungen werden zusammengerechnet und ein Mittelwert gebildet, der zu einer Tour abgespeichert wird. Beachte, dass deine Schätzungen erhalten bleiben, wenn du dein Benutzerkonto löschst, da es sich nicht um personenbezogene Daten handelt.'
+    statistics_api: 'Es besteht außerdem die Möglichkeit, Schätzungen anonym über unsere Api-Schnittstelle von unserem <a href="https://wp-demo.criticalmass.in">Wordpress-Plguin</a> einzugeben.'
+    statistics_tracks: 'Wenn du einen Track hochlädst oder importierst, wird automatisch die Länge der Strecke und die Dauer als statistischer Wert erhoben. Diese Werte werden jedoch wieder entfernt, wenn du deinen Track deaktivierst, löschst oder dein Benutzerkonto entfernst.'
+    section_forum: Diskussionsforum und Kommentare
+    forum_intro: 'Auf criticalmass.in kannst du Fotos und Touren kommentieren sowie im Diskussionsforum Beiträge schreiben.'
+    forum_profile: 'Wenn du einen Kommentar oder Beitrag schreibst, wird deine Nachricht mit deinem Benutzerkonto verknüpft. Neben deinem Benutzernamen und deinem Profilfoto wird außerdem der Zeitpunkt dargestellt, zu dem du den Kommentar geschrieben hast.'
+    forum_location: 'Du hast zusätzlich die Möglichkeit, deinen Standort ermitteln und mit deinem Kommentar verknüpfen zu lassen. Dadurch kann dein Kommentar beispielsweise auf der Karte einer Tour dargestellt werden. Die Standortermittlung wird nur ausgeführt, wenn du die entsprechende Checkbox anklickst. Natürlich kannst du deinen Standort anschließend von deinem Kommentar entfernen lassen.'
+    forum_delete: 'Beachte bitte, dass Kommentare und Forenbeiträge erhalten bleiben, wenn du dein Benutzerkonto löscht, da ansonsten die Diskussionen nicht mehr nachvollziehbar wären. Sie werden dann ohne deinen Benutzernamen und ohne dein Profilfoto als Kommentar eines anonymen Nutzers dargestellt.'
+    forum_timeline: 'Wenn du einen Kommentar oder Forenbeitrag schreibst, wird dieser Text außerdem zusammen mit deinem Benutzernamen und deinem Profilfoto auf der Zeitleiste auf unserer Startseite dargestellt.'
+    forum_tracking: 'Der Aufruf eines Diskussionsstranges wird zu statistischen Zwecken mitgezählt. Wenn du im eingeloggten Zustand einen Strang aufrufst, wird dieser Aufruf mit deinem Benutzerkonto verknüpft, damit wir dir anzeigen können, welche Stränge und Foren noch ungelesene Beiträge enthalten.'
+    section_maps: Landkarten
+    maps_intro: 'Wir setzen das freie JavaScript-Framework <a href="https://leafletjs.com/">Leaflet</a> ein, um Landkarten auf unseren Webseiten anzuzeigen. Die grundlegenden Daten stammen vom Internetprojekt Open Street Map, das mit tausenden freiwilligen Helfern rund um den Globus freie Landkarten erstellt und dem Netz zur Verfügung stellt. Diese Kartendarten werden von verschiedenen Anbietern aufbereitet und unterscheiden sich vor allem hinsichtlich der Farbgebung und der abgebildeten Details. So gibt es Karten, auf denen Radwege besonders hervorgehoben sind, während sich andere Karten auf Eisenbahn- oder gar Stromtrassen konzentrieren.'
+    maps_tiles: 'Die Darstellung einer Karte in deinem Browser erfolgt mit quadratischen Bilddateien, auf denen jeweils ein Aussschnitt der Karte dargestellt wird. Nebeneinandergelegt ergeben diese einzelnen Kacheln eine Landkarte — wenn du in der Karte nach Osten navigierst, werden aus dem Internet weitere Kacheln nachgeladen und an der rechten Seite der Darstellung angehängt.'
+    maps_provider: 'Wir nutzen bei criticalmass.in die Kacheldarstellung, die du beispielsweise von Wikipedia kennst. Sie wird von <a href="https://maps.wikimedia.org/">Wikimedia Maps</a> zur Verfügung gestellt.'
+    maps_privacy: 'Theoretisch kann der Anbieter dieser Kacheln, in unserem Fall Wikimedia Maps, deine Betrachtung der Karte verfolgen. Aus einer Statistik, welche Kacheln in welcher Zoom-Stufe an welchen Nutzer ausgeliefert werden, ließe sich beispielsweise ermitteln, für welche Städte oder Gebiete sich diese Nutzer interessieren, bis hin zu konkreten Mutmaßungen, wo sich beispielsweise die Wohnung eines Nutzers befindet.'
+    maps_proxy: 'Um deine Privatsphäre zu schützen, leiten wir alle Kacheldaten über unseren Kachel-Proxy-Server <code>tiles.caldera.cc</code> um. Weder Wikimedia Maps noch Open Street Map werden darüber informiert, welche Gebiete der Karte du dir angesehen hast. Selbstverständlich erhebt unser Kachel-Proxy-Server keine weiteren Logdateien über deine Zugriffe.'
+    section_encryption: Verschlüsselung
+    encryption_intro: 'Selbstverständlich werden deine Daten zwischen deinem Browser und criticalmass.in ausschließlich verschlüsselt übertragen. Du kannst die Sicherheit dieser Verschlüsselung beispielsweise bei <a href="https://www.ssllabs.com/ssltest/analyze.html?d=criticalmass.in&latest">SSL Labs</a> überprüfen.'
+    encryption_bcrypt: 'Wenn du dich mit deiner E-Mail-Adresse und einem Kennwort bei criticalmass.in registrierst, wird dein Kennwort nach dem <a href="https://de.wikipedia.org/wiki/Bcrypt">bcrypt</a>-Verfahren verschlüsselt in unserer Datenbank abgelegt. Wenn du dich anschließend einloggst, wird das eingegebene Kennwort ebenfalls nach diesem Verfahren verschlüsselt und mit dem Wert aus der Datenbank verglichen.'
+    encryption_hash: 'Technisch gesehen ist bcrypt keine Verschlüsselungs-, sondern eine Hashfunktion, was bedeutet, dass einmal gehashte Werte nie wieder in ihren Ursprungswert zurückgeführt werden können.'
+    section_cookies: Cookies
+    cookies_intro: 'Als Webseite mit Login-Funktionalität kommen wir leider um Cookies nicht drumherum. Du kennst den Spruch sicherlich: Wir setzen Cookies ein, um die Funktionalität unserer Webseite zu gewährleisten. In den Cookies werden keine persönlichen Informationen abgelegt, sie denen lediglich dazu, dich beim Besuch von criticalmass.in erkennen und einloggen zu können.'
+    section_tracking: Tracking
+    tracking_intro: 'Zugriffe auf criticalmass.in werden von der Software <a href="https://matomo.org">Matomo</a>, ehemals Piwik, gemessen. Wir setzen Matomo ein, um ein ungefähres Bild des Interesses der Nutzer an unserer Webseite zu bekommen. Die Zugriffe werden anonymisiert erhoben, unser Server <code>piwik.caldera.cc</code> führt darüberhinaus keine zusätzlichen Logfiles.'
+    tracking_optout: 'Du kannst dem Tracking entweder über die <a href="https://de.wikipedia.org/wiki/Do_Not_Track_(Software)">„Do not Track"-Einstellungen deines Browsers</a> oder über folgende Checkbox widersprechen:'
+    nav_profile: Dein Profil
+    nav_social_login: Login über soziale Netzwerke
+    nav_photos: Fotos
+    nav_tracks: Tracks
+    nav_cities_rides: 'Städte, Touren und Zubringertouren'
+    nav_participation: Teilnahmen an Touren
+    nav_statistics: Statistiken
+    nav_forum: Diskussionsforum
+    nav_maps: Landkarten
+    nav_advertising: Werbung
+    nav_encryption: Verschlüsselung
+    nav_cookies: Cookies
+    nav_tracking: Tracking
+
+impress:
+    title: Impressum
+    responsibility:
+        heading: Verantwortlichkeit für lokale Critical-Mass-Gruppen
+        paragraph1: Die Website criticalmass.in ist ein rein informatorisches Projekt.
+        paragraph2: 'Wir organisieren, veranstalten, betreiben, administrieren und moderieren keine lokalen Critical-Mass-Gruppen, Facebook-Seiten, Instagram-Accounts, Telegram-Kanäle oder sonstige Social-Media-Präsenzen.'
+        paragraph3: 'Alle Einträge zu Städten, Touren oder Gruppen dienen ausschließlich der Übersicht und werden größtenteils von Nutzer*innen selbst gepflegt.'
+        paragraph4: 'Für Inhalte, Fotos, Videos oder Beiträge einzelner Städte oder deren Social-Media-Kanäle sind wir nicht verantwortlich und haben keinen administrativen Zugriff.'
+    external_content:
+        heading: Externe Inhalte und Links
+        paragraph1: 'Die auf criticalmass.in verlinkten Websites, Social-Media-Kanäle und externen Inhalte werden weder betrieben noch kontrolliert. Für deren Inhalte sind ausschließlich die jeweiligen Betreiber verantwortlich.'
+        paragraph2: Wir machen uns fremde Inhalte nicht zu eigen und haben keinen Einfluss auf deren Veröffentlichung, Löschung oder rechtlichen Status.
+    no_responsibility:
+        heading: Keine Verantwortlichkeit für Inhalte verlinkter Social-Media-Seiten
+        paragraph1: 'Bitte beachten Sie, dass wir in keiner Form Betreiber oder Verantwortlicher externern Social-Media-Angebote von Critical-Mass-Radtouren sind sind.'
+        paragraph2: 'Wir haben keinen Zugriff auf dort veröffentlichte Inhalte und können diese nicht entfernen, nicht bearbeiten und nicht moderieren.'
+        paragraph3: Bitte wenden Sie sich bei rechtlichen Anliegen direkt an die jeweiligen Seitenbetreiber der lokalen Gruppe.
+    impress:
+        heading: Impressum
+        legal_notice: 'Angaben nach § 5 TMG:'
+        address: 'Malte Hübner<br />Goethestraße 48<br />21335 Lüneburg'
+        contact: 'Telefon: 0151 172 77 032<br/>E-Mail: <a href="mailto:maltehuebner@gmx.org">maltehuebner@gmx.org</a>'
+        contact_warning: 'Bitte beachte, dass diese Kontaktdaten nicht für Support- oder Presseanfragen vorgesehen sind.'
+    contact:
+        heading: Kontakt
+        support:
+            heading: Supportanfragen
+            text: 'Wenn du Probleme bei der Bedienung dieser Internetseite oder einen Fehler gefunden hast, schreibe bitte eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> oder, falls du mit Software-Entwicklung und GitHub vertraut bist, eröffne ein Ticket <a href="https://github.com/calderacc/criticalmass-in/issues">in unserem Repository</a>.'
+        city_data:
+            heading: Korrektur von Städtedaten
+            text: 'criticalmass.in funktioniert so ähnlich wie Wikipedia: Fehler in den Daten von Städten oder Touren kannst du direkt selbst korrigieren und abändern, du brauchst dazu lediglich ein kostenloses Benutzerkonto auf unserer Webseite. Schicke uns bitte eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>, wenn du Probleme mit der Bedienung der Seite hast.'
+        feedback:
+            heading: Rückmeldungen und Kommentare zur Critical Mass
+            text: 'Wir bekommen häufig lange E-Mails mit Erfahrungsberichten und Verbesserungsvorschlägen zu allen möglichen Critical-Mass-Touren — leider können wir damit gar nichts anfangen, weil wir nicht dabei waren und überhaupt keinen Einfluss auf den Ablauf der Touren haben. Damit deine Berichte das entsprechende Publikum finden, suchst du am besten deine Stadt aus der <a href="%city_list_url%">Städteliste</a> heraus und schreibst deine Erfahrungen entweder als Kommentar unter die jeweilige Tour oder nutzt die Verlinkungen zu sozialen Netzwerken, um dort mit anderen Teilnehmern über die Tour zu diskutieren. Natürlich kannst du auch gerne das <a href="%board_url%">Diskussionsforum auf criticalmass.in</a> nutzen.'
+        press:
+            heading: Presseanfragen
+            text: 'Wir können leider nur allgemeine Fragen zur Critical Mass beantworten. Über Details zur Critical Mass in einzelnen Städten oder weiteren Fahrrad-Aktionen wie das Aufstellen von Ghostbikes, Fahrradreparaturwerkstätten oder Fahrradtouren können wir keine Auskunft geben. Bitte suche in der <a href="%city_list_url%">Städteliste</a> die jeweilige Stadt heraus und versuche über die Verlinkungen zu sozialen Netzwerken einen Ansprechpartner zu finden.'
+
+privacy:
+    title: Datenschutzerklärung
+    intro: 'Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten (nachfolgend kurz „Daten") innerhalb unseres Onlineangebotes und der mit ihm verbundenen Webseiten, Funktionen und Inhalte sowie externen Onlinepräsenzen, wie z.B. unser Social Media Profile auf. (nachfolgend gemeinsam bezeichnet als „Onlineangebot"). Im Hinblick auf die verwendeten Begrifflichkeiten, wie z.B. „Verarbeitung" oder „Verantwortlicher" verweisen wir auf die Definitionen im Art. 4 der Datenschutzgrundverordnung (DSGVO).'
+    responsible:
+        heading: Verantwortlicher
+        address: 'Malte Hübner<br />Goethestraße 48<br />21335 Lüneburg'
+        contact: 'Telefon: 0151 172 77 032<br/>E-Mail: <a href="mailto:maltehuebner@gmx.org">maltehuebner@gmx.org</a>'
+    data_types:
+        heading: Arten der verarbeiteten Daten
+        inventory: 'Bestandsdaten (z.B., Namen, Adressen).'
+        contact: 'Kontaktdaten (z.B., E-Mail, Telefonnummern).'
+        content: 'Inhaltsdaten (z.B., Texteingaben, Fotografien, Videos).'
+        usage: 'Nutzungsdaten (z.B., besuchte Webseiten, Interesse an Inhalten, Zugriffszeiten).'
+        meta: 'Meta-/Kommunikationsdaten (z.B., Geräte-Informationen, IP-Adressen).'
+    affected_persons:
+        heading: Kategorien betroffener Personen
+        text: 'Besucher und Nutzer des Onlineangebotes (Nachfolgend bezeichnen wir die betroffenen Personen zusammenfassend auch als „Nutzer").'
+    purpose:
+        heading: Zweck der Verarbeitung
+        provision: 'Zurverfügungstellung des Onlineangebotes, seiner Funktionen und  Inhalte.'
+        contact_requests: Beantwortung von Kontaktanfragen und Kommunikation mit Nutzern.
+        security: Sicherheitsmaßnahmen.
+        marketing: Reichweitenmessung/Marketing
+    terminology:
+        heading: Verwendete Begrifflichkeiten
+        personal_data: '„Personenbezogene Daten" sind alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person (im Folgenden „betroffene Person") beziehen; als identifizierbar wird eine natürliche Person angesehen, die direkt oder indirekt, insbesondere mittels Zuordnung zu einer Kennung wie einem Namen, zu einer Kennnummer, zu Standortdaten, zu einer Online-Kennung (z.B. Cookie) oder zu einem oder mehreren besonderen Merkmalen identifiziert werden kann, die Ausdruck der physischen, physiologischen, genetischen, psychischen, wirtschaftlichen, kulturellen oder sozialen Identität dieser natürlichen Person sind.'
+        processing: '„Verarbeitung" ist jeder mit oder ohne Hilfe automatisierter Verfahren ausgeführten Vorgang oder jede solche Vorgangsreihe im Zusammenhang mit personenbezogenen Daten. Der Begriff reicht weit und umfasst praktisch jeden Umgang mit Daten.'
+        responsible: 'Als „Verantwortlicher" wird die natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet, bezeichnet.'
+    legal_basis:
+        heading: Maßgebliche Rechtsgrundlagen
+        text: 'Nach Maßgabe des Art. 13 DSGVO teilen wir Ihnen die Rechtsgrundlagen unserer Datenverarbeitungen mit. Sofern die Rechtsgrundlage in der Datenschutzerklärung nicht genannt wird, gilt Folgendes: Die Rechtsgrundlage für die Einholung von Einwilligungen ist Art. 6 Abs. 1 lit. a und Art. 7 DSGVO, die Rechtsgrundlage für die Verarbeitung zur Erfüllung unserer Leistungen und Durchführung vertraglicher Maßnahmen sowie Beantwortung von Anfragen ist Art. 6 Abs. 1 lit. b DSGVO, die Rechtsgrundlage für die Verarbeitung zur Erfüllung unserer rechtlichen Verpflichtungen ist Art. 6 Abs. 1 lit. c DSGVO, und die Rechtsgrundlage für die Verarbeitung zur Wahrung unserer berechtigten Interessen ist Art. 6 Abs. 1 lit. f DSGVO. Für den Fall, dass lebenswichtige Interessen der betroffenen Person oder einer anderen natürlichen Person eine Verarbeitung personenbezogener Daten erforderlich machen, dient Art. 6 Abs. 1 lit. d DSGVO als Rechtsgrundlage.'
+    processors:
+        heading: Zusammenarbeit mit Auftragsverarbeitern und Dritten
+        paragraph1: 'Sofern wir im Rahmen unserer Verarbeitung Daten gegenüber anderen Personen und Unternehmen (Auftragsverarbeitern oder Dritten) offenbaren, sie an diese übermitteln oder ihnen sonst Zugriff auf die Daten gewähren, erfolgt dies nur auf Grundlage einer gesetzlichen Erlaubnis (z.B. wenn eine Übermittlung der Daten an Dritte, wie an Zahlungsdienstleister, gem. Art. 6 Abs. 1 lit. b DSGVO zur Vertragserfüllung erforderlich ist), Sie eingewilligt haben, eine rechtliche Verpflichtung dies vorsieht oder auf Grundlage unserer berechtigten Interessen (z.B. beim Einsatz von Beauftragten, Webhostern, etc.).'
+        paragraph2: 'Sofern wir Dritte mit der Verarbeitung von Daten auf Grundlage eines sog. „Auftragsverarbeitungsvertrages" beauftragen, geschieht dies auf Grundlage des Art. 28 DSGVO.'
+    third_countries:
+        heading: Übermittlungen in Drittländer
+        text: 'Sofern wir Daten in einem Drittland (d.h. außerhalb der Europäischen Union (EU) oder des Europäischen Wirtschaftsraums (EWR)) verarbeiten oder dies im Rahmen der Inanspruchnahme von Diensten Dritter oder Offenlegung, bzw. Übermittlung von Daten an Dritte geschieht, erfolgt dies nur, wenn es zur Erfüllung unserer (vor)vertraglichen Pflichten, auf Grundlage Ihrer Einwilligung, aufgrund einer rechtlichen Verpflichtung oder auf Grundlage unserer berechtigten Interessen geschieht. Vorbehaltlich gesetzlicher oder vertraglicher Erlaubnisse, verarbeiten oder lassen wir die Daten in einem Drittland nur beim Vorliegen der besonderen Voraussetzungen der Art. 44 ff. DSGVO verarbeiten. D.h. die Verarbeitung erfolgt z.B. auf Grundlage besonderer Garantien, wie der offiziell anerkannten Feststellung eines der EU entsprechenden Datenschutzniveaus (z.B. für die USA durch das „Privacy Shield") oder Beachtung offiziell anerkannter spezieller vertraglicher Verpflichtungen (so genannte „Standardvertragsklauseln").'
+    rights:
+        heading: Rechte der betroffenen Personen
+        paragraph1: 'Sie haben das Recht, eine Bestätigung darüber zu verlangen, ob betreffende Daten verarbeitet werden und auf Auskunft über diese Daten sowie auf weitere Informationen und Kopie der Daten entsprechend Art. 15 DSGVO.'
+        paragraph2: 'Sie haben entsprechend. Art. 16 DSGVO das Recht, die Vervollständigung der Sie betreffenden Daten oder die Berichtigung der Sie betreffenden unrichtigen Daten zu verlangen.'
+        paragraph3: 'Sie haben nach Maßgabe des Art. 17 DSGVO das Recht zu verlangen, dass betreffende Daten unverzüglich gelöscht werden, bzw. alternativ nach Maßgabe des Art. 18 DSGVO eine Einschränkung der Verarbeitung der Daten zu verlangen.'
+        paragraph4: 'Sie haben das Recht zu verlangen, dass die Sie betreffenden Daten, die Sie uns bereitgestellt haben nach Maßgabe des Art. 20 DSGVO zu erhalten und deren Übermittlung an andere Verantwortliche zu fordern.'
+        paragraph5: 'Sie haben ferner gem. Art. 77 DSGVO das Recht, eine Beschwerde bei der zuständigen Aufsichtsbehörde einzureichen.'
+    revocation:
+        heading: Widerrufsrecht
+        text: 'Sie haben das Recht, erteilte Einwilligungen gem. Art. 7 Abs. 3 DSGVO mit Wirkung für die Zukunft zu widerrufen.'
+    objection:
+        heading: Widerspruchsrecht
+        text: 'Sie können der künftigen Verarbeitung der Sie betreffenden Daten nach Maßgabe des Art. 21 DSGVO jederzeit widersprechen. Der Widerspruch kann insbesondere gegen die Verarbeitung für Zwecke der Direktwerbung erfolgen.'
+    cookies:
+        heading: Cookies und Widerspruchsrecht bei Direktwerbung
+        paragraph1: 'Als „Cookies" werden kleine Dateien bezeichnet, die auf Rechnern der Nutzer gespeichert werden. Innerhalb der Cookies können unterschiedliche Angaben gespeichert werden. Ein Cookie dient primär dazu, die Angaben zu einem Nutzer (bzw. dem Gerät auf dem das Cookie gespeichert ist) während oder auch nach seinem Besuch innerhalb eines Onlineangebotes zu speichern. Als temporäre Cookies, bzw. „Session-Cookies" oder „transiente Cookies", werden Cookies bezeichnet, die gelöscht werden, nachdem ein Nutzer ein Onlineangebot verlässt und seinen Browser schließt. In einem solchen Cookie kann z.B. der Inhalt eines Warenkorbs in einem Onlineshop oder ein Login-Staus gespeichert werden. Als „permanent" oder „persistent" werden Cookies bezeichnet, die auch nach dem Schließen des Browsers gespeichert bleiben. So kann z.B. der Login-Status gespeichert werden, wenn die Nutzer diese nach mehreren Tagen aufsuchen. Ebenso können in einem solchen Cookie die Interessen der Nutzer gespeichert werden, die für Reichweitenmessung oder Marketingzwecke verwendet werden. Als „Third-Party-Cookie" werden Cookies bezeichnet, die von anderen Anbietern als dem Verantwortlichen, der das Onlineangebot betreibt, angeboten werden (andernfalls, wenn es nur dessen Cookies sind spricht man von „First-Party Cookies").'
+        paragraph2: Wir können temporäre und permanente Cookies einsetzen und klären hierüber im Rahmen unserer Datenschutzerklärung auf.
+        paragraph3: 'Falls die Nutzer nicht möchten, dass Cookies auf ihrem Rechner gespeichert werden, werden sie gebeten die entsprechende Option in den Systemeinstellungen ihres Browsers zu deaktivieren. Gespeicherte Cookies können in den Systemeinstellungen des Browsers gelöscht werden. Der Ausschluss von Cookies kann zu Funktionseinschränkungen dieses Onlineangebotes führen.'
+        paragraph4: 'Ein genereller Widerspruch gegen den Einsatz der zu Zwecken des Onlinemarketing eingesetzten Cookies kann bei einer Vielzahl der Dienste, vor allem im Fall des Trackings, über die US-amerikanische Seite <a href="http://www.aboutads.info/choices/">http://www.aboutads.info/choices/</a> oder die EU-Seite <a href="http://www.youronlinechoices.com/">http://www.youronlinechoices.com/</a> erklärt werden. Des Weiteren kann die Speicherung von Cookies mittels deren Abschaltung in den Einstellungen des Browsers erreicht werden. Bitte beachten Sie, dass dann gegebenenfalls nicht alle Funktionen dieses Onlineangebotes genutzt werden können.'
+    deletion:
+        heading: Löschung von Daten
+        paragraph1: 'Die von uns verarbeiteten Daten werden nach Maßgabe der Art. 17 und 18 DSGVO gelöscht oder in ihrer Verarbeitung eingeschränkt. Sofern nicht im Rahmen dieser Datenschutzerklärung ausdrücklich angegeben, werden die bei uns gespeicherten Daten gelöscht, sobald sie für ihre Zweckbestimmung nicht mehr erforderlich sind und der Löschung keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Sofern die Daten nicht gelöscht werden, weil sie für andere und gesetzlich zulässige Zwecke erforderlich sind, wird deren Verarbeitung eingeschränkt. D.h. die Daten werden gesperrt und nicht für andere Zwecke verarbeitet. Das gilt z.B. für Daten, die aus handels- oder steuerrechtlichen Gründen aufbewahrt werden müssen.'
+        paragraph2: 'Nach gesetzlichen Vorgaben in Deutschland erfolgt die Aufbewahrung insbesondere für 6 Jahre gemäß § 257 Abs. 1 HGB (Handelsbücher, Inventare, Eröffnungsbilanzen, Jahresabschlüsse, Handelsbriefe, Buchungsbelege, etc.) sowie für 10 Jahre gemäß § 147 Abs. 1 AO (Bücher, Aufzeichnungen, Lageberichte, Buchungsbelege, Handels- und Geschäftsbriefe, Für Besteuerung relevante Unterlagen, etc.).'
+        paragraph3: 'Nach gesetzlichen Vorgaben in Österreich erfolgt die Aufbewahrung insbesondere für 7 J gemäß § 132 Abs. 1 BAO (Buchhaltungsunterlagen, Belege/Rechnungen, Konten, Belege, Geschäftspapiere, Aufstellung der Einnahmen und Ausgaben, etc.), für 22 Jahre im Zusammenhang mit Grundstücken und für 10 Jahre bei Unterlagen im Zusammenhang mit elektronisch erbrachten Leistungen, Telekommunikations-, Rundfunk- und Fernsehleistungen, die an Nichtunternehmer in EU-Mitgliedstaaten erbracht werden und für die der Mini-One-Stop-Shop (MOSS) in Anspruch genommen wird.'
+    hosting:
+        heading: Hosting
+        paragraph1: 'Die von uns in Anspruch genommenen Hosting-Leistungen dienen der Zurverfügungstellung der folgenden Leistungen: Infrastruktur- und Plattformdienstleistungen, Rechenkapazität, Speicherplatz und Datenbankdienste, Sicherheitsleistungen sowie technische Wartungsleistungen, die wir zum Zwecke des Betriebs dieses Onlineangebotes einsetzen.'
+        paragraph2: 'Hierbei verarbeiten wir, bzw. unser Hostinganbieter Bestandsdaten, Kontaktdaten, Inhaltsdaten, Vertragsdaten, Nutzungsdaten, Meta- und Kommunikationsdaten von Kunden, Interessenten und Besuchern dieses Onlineangebotes auf Grundlage unserer berechtigten Interessen an einer effizienten und sicheren Zurverfügungstellung dieses Onlineangebotes gem. Art. 6 Abs. 1 lit. f DSGVO i.V.m. Art. 28 DSGVO (Abschluss Auftragsverarbeitungsvertrag).'
+    logfiles:
+        heading: Erhebung von Zugriffsdaten und Logfiles
+        paragraph1: 'Wir, bzw. unser Hostinganbieter, erhebt auf Grundlage unserer berechtigten Interessen im Sinne des Art. 6 Abs. 1 lit. f. DSGVO Daten über jeden Zugriff auf den Server, auf dem sich dieser Dienst befindet (sogenannte Serverlogfiles). Zu den Zugriffsdaten gehören Name der abgerufenen Webseite, Datei, Datum und Uhrzeit des Abrufs, übertragene Datenmenge, Meldung über erfolgreichen Abruf, Browsertyp nebst Version, das Betriebssystem des Nutzers, Referrer URL (die zuvor besuchte Seite), IP-Adresse und der anfragende Provider.'
+        paragraph2: 'Logfile-Informationen werden aus Sicherheitsgründen (z.B. zur Aufklärung von Missbrauchs- oder Betrugshandlungen) für die Dauer von maximal 7 Tagen gespeichert und danach gelöscht. Daten, deren weitere Aufbewahrung zu Beweiszwecken erforderlich ist, sind bis zur endgültigen Klärung des jeweiligen Vorfalls von der Löschung ausgenommen.'
+    registration:
+        heading: Registrierfunktion
+        paragraph1: 'Nutzer können optional ein Nutzerkonto anlegen. Im Rahmen der Registrierung werden die erforderlichen Pflichtangaben den Nutzern mitgeteilt. Die im Rahmen der Registrierung eingegebenen Daten werden für die Zwecke der Nutzung des Angebotes verwendet. Die Nutzer können über angebots- oder registrierungsrelevante Informationen, wie Änderungen des Angebotsumfangs oder technische Umstände per E-Mail informiert werden. Wenn Nutzer ihr Nutzerkonto gekündigt haben, werden deren Daten im Hinblick auf das Nutzerkonto gelöscht, vorbehaltlich deren Aufbewahrung ist aus handels- oder steuerrechtlichen Gründen entspr. Art. 6 Abs. 1 lit. c DSGVO notwendig. Es obliegt den Nutzern, ihre Daten bei erfolgter Kündigung vor dem Vertragsende zu sichern. Wir sind berechtigt, sämtliche während der Vertragsdauer gespeicherten Daten des Nutzers unwiederbringlich zu löschen.'
+        paragraph2: 'Im Rahmen der Inanspruchnahme unserer Regsitrierungs- und Anmeldefunktionen sowie der Nutzung der Nutzerkontos, speichern wird die IP-Adresse und den Zeitpunkt der jeweiligen Nutzerhandlung. Die Speicherung erfolgt auf Grundlage unserer berechtigten Interessen, als auch der Nutzer an Schutz vor Missbrauch und sonstiger unbefugter Nutzung. Eine Weitergabe dieser Daten an Dritte erfolgt grundsätzlich nicht, außer sie ist zur Verfolgung unserer Ansprüche erforderlich oder es besteht hierzu besteht eine gesetzliche Verpflichtung gem. Art. 6 Abs. 1 lit. c DSGVO. Die IP-Adressen werden spätestens nach 7 Tagen anonymisiert oder gelöscht.'
+    contact:
+        heading: Kontaktaufnahme
+        paragraph1: 'Bei der Kontaktaufnahme mit uns (z.B. per Kontaktformular, E-Mail, Telefon oder via sozialer Medien) werden die Angaben des Nutzers zur Bearbeitung der Kontaktanfrage und deren Abwicklung gem. Art. 6 Abs. 1 lit. b) DSGVO verarbeitet. Die Angaben der Nutzer können in einem Customer-Relationship-Management System ("CRM System") oder vergleichbarer Anfragenorganisation gespeichert werden.'
+        paragraph2: 'Wir löschen die Anfragen, sofern diese nicht mehr erforderlich sind. Wir überprüfen die Erforderlichkeit alle zwei Jahre; Ferner gelten die gesetzlichen Archivierungspflichten.'
+    comments:
+        heading: Kommentare und Beiträge
+        text: 'Wenn Nutzer Kommentare oder sonstige Beiträge hinterlassen, werden ihre IP-Adressen auf Grundlage unserer berechtigten Interessen im Sinne des Art. 6 Abs. 1 lit. f. DSGVO für 7 Tage gespeichert. Das erfolgt zu unserer Sicherheit, falls jemand in Kommentaren und Beiträgen widerrechtliche Inhalte hinterlässt (Beleidigungen, verbotene politische Propaganda, etc.). In diesem Fall können wir selbst für den Kommentar oder Beitrag belangt werden und sind daher an der Identität des Verfassers interessiert.'
+    comment_subscriptions:
+        heading: Kommentarabonnements
+        text: 'Die Nachfolgekommentare können durch Nutzer mit deren Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO abonniert werden. Die Nutzer erhalten eine Bestätigungsemail, um zu überprüfen, ob sie der Inhaber der eingegebenen Emailadresse sind. Nutzer können laufende Kommentarabonnements jederzeit abbestellen. Die Bestätigungsemail wird Hinweise zu den Widerrufsmöglichkeiten enthalten.'
+    newsletter:
+        heading: Newsletter
+        intro: 'Mit den nachfolgenden Hinweisen informieren wir Sie über die Inhalte unseres Newsletters sowie das Anmelde-, Versand- und das statistische Auswertungsverfahren sowie Ihre Widerspruchsrechte auf. Indem Sie unseren Newsletter abonnieren, erklären Sie sich mit dem Empfang und den beschriebenen Verfahren einverstanden.'
+        content: 'Inhalt des Newsletters: Wir versenden Newsletter, E-Mails und weitere elektronische Benachrichtigungen mit werblichen Informationen (nachfolgend „Newsletter") nur mit der Einwilligung der Empfänger oder einer gesetzlichen Erlaubnis. Sofern im Rahmen einer Anmeldung zum Newsletter dessen Inhalte konkret umschrieben werden, sind sie für die Einwilligung der Nutzer maßgeblich. Im Übrigen enthalten unsere Newsletter Informationen zu unseren Leistungen und uns.'
+        double_opt_in: 'Double-Opt-In und Protokollierung: Die Anmeldung zu unserem Newsletter erfolgt in einem sog. Double-Opt-In-Verfahren. D.h. Sie erhalten nach der Anmeldung eine E-Mail, in der Sie um die Bestätigung Ihrer Anmeldung gebeten werden. Diese Bestätigung ist notwendig, damit sich niemand mit fremden E-Mailadressen anmelden kann. Die Anmeldungen zum Newsletter werden protokolliert, um den Anmeldeprozess entsprechend den rechtlichen Anforderungen nachweisen zu können. Hierzu gehört die Speicherung des Anmelde- und des Bestätigungszeitpunkts, als auch der IP-Adresse. Ebenso werden die Änderungen Ihrer bei dem Versanddienstleister gespeicherten Daten protokolliert.'
+        registration_data: 'Anmeldedaten: Um sich für den Newsletter anzumelden, reicht es aus, wenn Sie Ihre E-Mailadresse angeben. Optional bitten wir Sie einen Namen, zwecks persönlicher Ansprache im Newsletters anzugeben.'
+        germany: 'Deutschland: Der Versand des Newsletters und die mit ihm verbundene Erfolgsmessung erfolgt auf Grundlage einer Einwilligung der Empfänger gem. Art. 6 Abs. 1 lit. a, Art. 7 DSGVO i.V.m § 7 Abs. 2 Nr. 3 UWG bzw. auf Grundlage der gesetzlichen Erlaubnis gem. § 7 Abs. 3 UWG.'
+        logging: 'Die Protokollierung des Anmeldeverfahrens erfolgt auf Grundlage unserer berechtigten Interessen gem. Art. 6 Abs. 1 lit. f DSGVO. Unser Interesse richtet sich auf den Einsatz eines nutzerfreundlichen sowie sicheren Newslettersystems, das sowohl unseren geschäftlichen Interessen dient, als auch den Erwartungen der Nutzer entspricht und uns ferner den Nachweis von Einwilligungen erlaubt.'
+        cancellation: 'Sie können den Empfang unseres Newsletters jederzeit kündigen, d.h. Ihre Einwilligungen widerrufen. Einen Link zur Kündigung des Newsletters finden Sie am Ende eines jeden Newsletters. Wir können die ausgetragenen E-Mailadressen bis zu drei Jahren auf Grundlage unserer berechtigten Interessen speichern bevor wir sie für Zwecke des Newsletterversandes löschen, um eine ehemals gegebene Einwilligung nachweisen zu können. Die Verarbeitung dieser Daten wird auf den Zweck einer möglichen Abwehr von Ansprüchen beschränkt. Ein individueller Löschungsantrag ist jederzeit möglich, sofern zugleich das ehemalige Bestehen einer Einwilligung bestätigt wird.'
+    creator_credit: '<a href="https://datenschutz-generator.de">Erstellt mit Datenschutz-Generator.de von RA Dr. Thomas Schwenke</a>'
+
+board:
+    overview_title: Diskussionen
+    col_description: Beschreibung
+    col_topics: Themen
+    col_posts: Beiträge
+    col_last_post: letzter Beitrag
+    by_author: 'von <strong>%username%</strong>'
+    section_general: Allgemeines
+    section_cities: Städte
+    add_reply: Antwort hinzufügen
+
+modal:
+    city:
+        date: 'Datum:'
+        time: 'Uhrzeit:'
+        location: 'Treffpunkt:'
+        weather: 'Wettervorhersage:'
+        glympse_email: 'E-Mail für Glympse-Einladungen:'
+        no_rides: 'Schade — zu dieser Stadt sind uns keine Fahrten bekannt :( Aber wenn du mehr weißt als wir: Schreib uns bitte unter <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>!'
+        to_city: Zur Stadt
+        to_location: Zum Treffpunkt
+        to_position: Zur neusten Position
+
+region:
+    title: Critical Mass in %region_name%
+    breadcrumb_directory: Verzeichnis
+    add_city: Stadt hinzufügen
+    worldwide: Critical Mass weltweit
+    continents: Kontinente
+    subregions: Unterregionen in %region_name%
+    cities_in_region: '%count% Städte in dieser Region'
+    cities_in: Städte in %region_name%
+
+promotion:
+    col_date: Datum
+    col_time: Uhrzeit
+    col_city: Stadt
+    col_title: Titel
+    col_location: Treffpunkt
+    to_city_page: zur Seite der Stadt %city_name%
+    to_ride_page: zur Seite der Tour
+
+ride:
+    details_title: Details
+    details_date: Datum
+    details_time: Uhrzeit
+    details_time_unknown: die Uhrzeit ist noch nicht bekannt
+    details_location: Treffpunkt
+    details_location_unknown: noch nicht bekannt
+    details_weather: Wetter
+    details_ical: Kalendereintrag merken
+
+search:
+    label_date: 'Datum:'
+    label_time: 'Uhrzeit:'
+    label_location: 'Treffpunkt:'
+
+track:
+    col_city: Stadt
+    col_participant: Teilnehmer
+    col_date: Datum
+    col_distance: Länge
+    col_start: Beginn
+    col_end: Ende
+    time_title: Zeit anpassen
+    breadcrumb_account: Dein Benutzerkonto
+    breadcrumb_tracks: Deine Tracks
+    time_lead: Falls dein Aufzeichnungsgerät aus irgendeinem Grunde eine falsche Uhrzeit bei deinem GPX-Track angegeben haben sollte, kannst du hier den Start-Zeitpunkt deines Tracks verschieben.
+    time_old: Alte Uhrzeit
+    time_new: Neue Uhrzeit
+    time_label_date: 'Datum:'
+    time_label_time: 'Uhrzeit:'
+    time_label_timezone: 'Zeitzone:'
+
+strava:
+    title: Track von Strava importieren
+    breadcrumb_import: Track importieren
+    select_activity: Wähle eine Aktivität
+    activity_intro: Am <strong>%date%</strong> hast du die folgenden Aktivitäten mit Strava aufgezeichnet. Bitte wähle die Aktivität aus, die du als Track importieren möchtest.
+    label_distance: 'Distanz:'
+    label_start: 'Start:'
+    label_duration: 'Dauer:'
+    minutes: Minuten
+    import_track: Track importieren
+    no_activities: '<strong>Keine Touren gefunden!</strong> Offenbar hast du mit Strava am %date% keine Touren aufgezeichnet.'
+    error: '<strong>Hoppla!</strong> Leider können wir momentan keine Touren von Strava auslesen — bitte versuche es später noch einmal.'
+
+timeline:
+    track_uploaded: 'hat einen Track hochgeladen:'
+    label_date: 'Datum:'
+    label_distance: 'Länge:'
+    label_duration: 'Dauer:'
+
+track_mass_import:
+    title: Tracks importieren
+    select_activity: Wähle eine Aktivität
+    label_ride: 'Tour:'
+    label_date: 'Datum:'
+    label_time: 'Uhrzeit:'
+    label_city: 'Stadt:'
+    label_distance: 'Distanz:'
+    label_start: 'Start:'
+    label_duration: 'Dauer:'
+    minutes: Minuten
+    import: Importieren
+    reject: Ablehnen
+
+common:
+    save: Speichern
+    cancel: Abbrechen
+    delete: Löschen
+    edit: Bearbeiten
+    close: Schließen
+    loading: Laden…
+    date_prefix: am
+    time_prefix: um
+    time_suffix: Uhr
+    please_wait: Bitte warten…
+
+footer:
+    days_in_saddle: Seit %days% Tagen im Sattel
+    impress: Impressum
+    privacy: Datenschutz
+    private_data: Deine privaten Daten
+    status: Status
+    github_repository: GitHub-Repository
+    from_blog: Aus dem Blog
+    to_blog: zum Critical-Mass-Weblog
+    to_blog_post: zum Blog-Beitrag
+    cm_actions: Critical-Mass-Aktionen
+    cm_cities: Critical-Mass-Städte
+    to_startpage: zur Startseite von criticalmass.in
+    to_city_list: zur Liste der Städte mit einer Critical-Mass-Radtour
+    city_list: Städteliste
+    osm_attribution: 'Kartendaten und Geocoding von <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, <span class="text-nowrap">&copy; OpenStreetMap-Mitwirkende</span>, <a href="https://www.openstreetmap.org/copyright">lizensiert unter <span class="text-nowrap">CC BY-SA 2.0</span></a>'
+    weather_attribution: 'Wetterdaten von <a href="https://openweathermap.org">OpenWeatherMap</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">lizensiert unter <span class="text-nowrap">CC BY-SA 4.0</span></a>'
+    luft_title: 'Aktuelle Luftmesswerte aus deiner Umgebung: Feinstaub, Stickoxide und Ozon'
+    radverkehrsforum_title: Diskussionen und Informationen rund um den Radverkehr in Deutschland
+    sternfahrt_title: Fahrradsternfahrt Hamburg — die größte Fahrrad-Demonstaton in Norddeutschland
+    luenedrohne_title: LüneDrohne — Drohnenfotos aus Lüneburg
+
+modal:
+    about:
+        title: Willkommen auf criticalmass.in!
+        tab_about: Über uns
+        tab_contact: Kontakt
+        tab_impress: Impressum
+        jumbotron_heading: Hej, wir fahren Fahrrad!
+        jumbotron_sub: Und wir lieben es. Seit 2011.
+        about_text: 'Auf den Sattel, fertig, los: criticalmass.in zeigt dir, wo'
+        impress_intro: criticalmass.in ist ein Projekt an der Fachhochschule Wedel.
+        impress_address: 'Fachhochschule Wedel<br/>Feldstraße 143<br/>22880 Wedel'
+        impress_request: Eine Bitte: Wir sind weder an Newslettern, Produktempfehlungen, Partnerprogrammen und ähnlichen Angeboten interessiert. Schickt uns bitte diesbezüglich keine E-Mails und ruft uns auch nicht an. Wir vermitteln auch wirklich keine Pressekontakte zu einzelnen Critical-Mass-Touren.
+        contact_text: 'Am besten erreichst du uns per E-Mail oder über <a href="https://www.facebook.com/criticalmass.in">unsere Seite auf facebook</a> (Vorsicht, der Link führt zu facebook). Allgemeine Hinweise, Vorschläge und Tipps lesen wir wirklich gerne unter <a href="mailto:mail@criticalmass.in">mail@criticalmass.in</a>.'
+        contact_ride_data: 'Wegen <strong>fehlerhafter Daten</strong> von Critical-Mass-Touren und <strong>neuen Städten</strong> schreibe uns bitte unter <a href="mailto:ride@criticalmass.in">ride@criticalmass.in</a>.'
+        contact_bugs: '<strong>Fehlermeldungen</strong> nehmen wir gerne, aber auch ein ganz bisschen zähneknirschend, unter <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> entgegen. Schreibe uns bitte in einer solchen Mail, was passiert ist, welchen Browser du benutzt und wenn möglich die genaue Fehlermeldung. Falls du nicht genau weißt, was passiert ist, schreib uns bitte trotzdem: Wir kriegen das schon irgendwie zusammen hin!'
+    login:
+        title: Login
+        tab_login: Anmelden
+        tab_register: Registrieren
+        tab_password: Kennwort vergessen
+
+track:
+    draw_page:
+        title: Track zeichnen
+        form:
+            submit:
+                caption: Speichern
+
+    view_page:
+        title: Track anzeigen
+        not_reviewed_alert: Dein Track wurde noch nicht bestätigt!
+        not_reviewed_hint: Bitte bestätige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a href="%range_url%">ganz einfach online beschneiden</a>.
+        trim_button: Track beschneiden
+        approve_button: Track bestätigen
+
+    list_page:
+        title: Deine Tracks
+        heading: Deine Gpx-Tracks
+        intro: Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet hast.
+        add_hint: Klicke in der Übersicht einer Radtour im Reiter „Tracks" auf den grünen Button, um einen neuen Track hinzuzufügen.
+        delete_modal:
+            title: Track löschen
+            confirm: Willst Du diesen Track wirklich löschen?
+            yes: Ja, löschen
+            no: Nein, abbrechen
+
+    range_page:
+        title: Track beschneiden
+        intro: Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.
+        disclaimer: Das Beschneiden beschädigt deinen Track nicht, du kannst den für andere Nutzer sichtbaren Bereich jederzeit wieder ändern.
+        form:
+            submit: Speichern
+            cancel: Abbrechen
+
+    properties:
+        ride: Tour
+        date: Datum
+        ride_location: Treffpunkt
+        ride_location_unknown: nicht bekannt
+        distance: Distanz
+        duration: Dauer
+
+    navigation_label: Track Navigation
+    previous: Voriger Track
+    next: Nächster Track
+
+
+form:
+    login:
+        email_label: E-Mail-Adresse
+        email_help: Wenn du noch kein Benutzerkonto hast, wird automatisch ein neues mit deiner E-Mail-Adresse erstellt.
+        submit: Link zusenden
+
+    city_cycle:
+        day_of_week: Wochentag
+        week_of_month: Woche im Monat
+        monday: Montag
+        tuesday: Dienstag
+        wednesday: Mittwoch
+        thursday: Donnerstag
+        friday: Freitag
+        saturday: Sonnabend
+        sunday: Sonntag
+        first_week: Erste Woche im Monat
+        second_week: Zweite Woche im Monat
+        third_week: Dritte Woche im Monat
+        fourth_week: Vierte Woche im Monat
+        last_week: Letzte Woche im Monat
+
+    profile_color:
+        label: Profilfarbe wählen
+
+    social_network:
+        auto_detect: (automatisch erkennen)
+
+city:
+    next_tour:
+        title: Nächste Tour
+        date: Datum
+        time: Uhrzeit
+        location: Treffpunkt
+        location_unknown: noch nicht bekannt
+        no_ride: Über eine Radtour ist momentan nichts bekannt.
+        show_more: weitere Touren anzeigen
+
+participation:
+    month:
+        jan: Jan
+        feb: Feb
+        mar: Mär
+        apr: Apr
+        may: Mai
+        jun: Jun
+        jul: Jul
+        aug: Aug
+        sep: Sep
+        oct: Okt
+        nov: Nov
+        dec: Dez
+
+    rides_count: "%count% Touren"
+
+    current_streak:
+        title: Current Streak
+        period: "%start% bis heute"
+        empty: "Schade: Du hast in der jüngeren Vergangenheit an keinen Touren teilgenommen."
+
+    total:
+        title: Gesamtzahl
+        since: "seit %date% hast du an"
+        great: teilgenommen. Super!
+        empty: "Schade, du hast bislang an keinen Touren teilgenommen."
+
+    longest_streak:
+        title: Longest Streak
+        period: "%start% bis %end%"
+        empty: "Schade, du hast bislang an keinen Touren teilgenommen."
+
+    no_participation: "Schade: Du hast bislang an keinen Touren teilgenommen, sonst könnten wir dir hier ein paar Statistiken über deine Teilnahme anzeigen."
+
+profile:
+    tabs:
+        photos: Fotos
+        rides: Touren
+        tracks: Tracks
+
+strava:
+    auth:
+        title: Verbinde dich mit Strava
+        heading: Verbinde dich mit Strava
+        breadcrumb: Track importieren
+        intro: 'Mit <a href="http://www.strava.com/">Strava</a> kannst du nicht nur Critical-Mass-Touren, sondern sämtliche deiner sportlichen Aktivitäten aufzeichnen und verwalten. Wenn du deine Tour mit Strava aufgezeichnet hast, kannst du deine Strecke mit zwei Mausklicks importieren. Klicke auf „Connect with Strava", um eine Liste deiner Aktivitäten anzuzeigen und eine Strecke zu importieren.'
+        privacy: 'Nach einem Klick auf den Button „Connect with Strava" wirst du zu der Strava-Webseite weitergeleitet, auf der du gebeten wirst, criticalmass.in gewisse Zugriffsrechte auf dein Profil einzuräumen. criticalmass.in erhält Zugriff auf dein Profil sowie deine Aktivitätsdaten; criticalmass.in kann auch auf deine als privat markierten Aktivitäten zugreifen. Anschließend wirst du zurück zu criticalmass.in geleitet, wo dir eine Liste deiner abgespeicherten Radtouren vom %date% angezeigt wird. Von diesen Touren kannst du anschließend eine zum Importieren auswählen. Ein weiterer Zugriff, etwa auf andere Aktivitäten oder dein Profil, findet nicht statt.'
+
+    mass_import:
+        breadcrumb: Tracks importieren
+
+    upload:
+        title: Gpx-Datei hochladen
+        heading: Gpx-Datei hochladen
+        breadcrumb: Track hochladen
+        panel_title: Gpx-Datei hochladen
+        intro: "Wenn du deine Fahrt bei der <strong>%city%</strong> am <strong>%date%</strong> aufgezeichnet hast, kannst du hier deinen Track als GPX-Datei hochladen."
+        file_label: "Datei:"
+        submit: Track hochladen
+        error: "Hochladen fehlgeschlagen :("
+
+    menu:
+        edit: Track editieren
+        download: Herunterladen
+        deactivate: Deaktivieren
+        activate: Aktivieren
+        approve: Bestätigen
+        trim: Beschneiden
+        adjust_time: Zeit anpassen
+        delete_title: Track löschen
+        delete_confirm: "Möchtest du diesen Track von der <strong>%city%</strong> vom <strong>%date%</strong> wirklich löschen?"
+
+    col_city: Stadt
+    col_participant: Teilnehmer
+    col_date: Datum
+    col_distance: Distanz
+    col_start: Start
+    col_end: Ende
+
+city_cycle:
+    list:
+        breadcrumb: Turnusliste
+        title: Turnusse von %city% anzeigen
+        heading: Regelmäßige Touren in %city%
+        lead: Du kannst die monatlichen Touren in %city% automatisch erzeugen lassen. Wenn du mit Gültigkeitsbereichen arbeitest, kannst du auch komplexere Logiken implementieren, beispielsweise andere Uhrzeiten für sommerliche als für winterliche Touren angeben.
+        add_button: Turnus ergänzen
+        col_cycle: Turnus
+        col_location: Treffpunkt
+        col_time: Uhrzeit
+        col_validity: Gültigkeit
+        col_actions: Aktionen
+        cycle_pattern: "am %week% %day% im Monat"
+        location_undefined: nicht definiert
+        time_suffix: Uhr
+        validity_from: "vom %date%"
+        validity_until: "bis %date%"
+        validity_unlimited: nicht begrenzt
+        action_edit: Turnus editieren
+        action_rides: zugehörige Touren anzeigen
+        action_execute: Turnus manuell auslösen
+        action_disable: Turnus deaktivieren
+
+    ride_list:
+        title: Automatisch generierte Touren von %city% anzeigen
+        breadcrumb_cycle_list: Turnusliste
+        breadcrumb: Generierte Touren anzeigen
+        panel_title: Turnus
+        cycle_label: Turnus
+        cycle_pattern: "%week% %day% im Monat"
+        time_label: Uhrzeit
+        time_suffix: Uhr
+        location_label: Treffpunkt
+        location_undefined: nicht definiert
+        valid_from_label: Gültigkeitsbeginn
+        valid_until_label: Gültigkeitsende
+        heading: Tourenübersicht
+        intro: "Die folgenden Touren wurden von diesem Turnus erzeugt:"
+        col_title: Titel
+        col_date: Datum
+        col_time: Uhrzeit
+        col_location: Treffpunkt
+        to_ride: zur Tourseite
+        edit_ride: Tour editieren
+
+    execute:
+        title: Turnus auslösen
+        breadcrumb_cycle_list: Turnusliste
+        breadcrumb: Turnus auslösen
+        preview_heading: Vorschau
+        preview_lead: "Für den Zeitraum vom %from% bis %until% können die folgenden Touren generiert werden:"
+        col_title: Titel
+        col_date: Datum
+        col_time: Uhrzeit
+        col_location: Treffpunkt
+        time_suffix: Uhr
+        location_undefined: nicht definiert
+        no_rides_alert: Für deinen gewählten Zeitraum können keine Touren angelegt werden, weil entweder dieser Turnus für den gewählten Zeitraum noch nicht begonnen hat oder abgelaufen ist oder die anzulegenden Touren bereits existieren.
+        partial_rides_alert: "Du hast gerade Touren für einen Zeitraum von <strong>%requested% Monaten</strong> generieren lassen, es wurden allerdings nur <strong>%created% Touren</strong> erstellt. Das liegt daran, dass <strong>%skipped% Touren</strong> entweder bereits in unserer Datenbank vorhanden sind oder aber außerhalb des Gültigkeitszeitraumes des Turnus' liegen."
+        partial_rides_hint: Wir können dir leider momentan aus technischen Gründen nicht anzeigen, um welche Touren es sich handelt — wir arbeiten allerdings an einer entsprechenden Funktion.
+        action_hint: "Du kannst nun entweder die in der obigen Tabelle dargestellten Touren abspeichern oder zurück gehen und einen anderen Zeitraum auswählen:"
+        cancel: Abbrechen
+        save: Touren speichern
+        datetime_heading: Touren automatisch generieren
+        datetime_lead: Du kannst anhand des ausgewählten Turnus' die Touren in deiner Stadt generieren lassen.
+        datetime_info_title: Normalerweise wird diese Generierung in regelmäßigen Abständen serverseitig ausgeführt und du musst überhaupt nichts weiter dafür tun.
+        datetime_info_manual: "Diese „manuelle Generierung" ist für dich in der Regel nur dann interessant, wenn du"
+        datetime_info_new_cycle: gerade einen neuen Turnus angelegt hast und schon einmal für die nächsten Monate Touren anlegen möchtest, bevor die automatische Generierung beginnt oder
+        datetime_info_backfill: "du oder jemand anders <strong>%city%</strong> in unserer Datenbank angelegt hast und nun rückwirkend die Touren generieren lassen möchtest, weil es deine Critical Mass bereits viel länger gibt als den Eintrag in unserer Datenbank"
+        datetime_range_intro: Mit den folgenden beiden Eingabefeldern kannst du einen Zeitraum definieren, für den die Touren anhand der Daten aus dem Turnus generiert werden sollen. Der Generator wird Monat für Monat eine einzelne Tour anlegen. Du kannst die Touren im nächsten Schritt in einer Vorschau überprüfen, bevor sie abgespeichert werden.
+        from_date_label: "Startdatum:"
+        from_date_help: "Bitte im Format <code>dd.mm.jjjj</code> angeben."
+        until_date_label: "Enddatum:"
+        until_date_help: "Bitte im Format <code>dd.mm.jjjj</code> angeben."
+        submit: Weiter zur Vorschau
+
+    edit:
+        title_edit: Turnus editieren
+        title_add: Neuen Turnus hinzufügen
+        lead: criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen, sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher festgelegten Treffpunkt starten.
+        single_ride_hint: 'Wenn du lediglich eine einzelne Tour für %city% erstellen möchtest, nutze bitte <strong><a href="%url%">dieses Formular</a></strong>.'
+        day_of_week_label: "Wochentag der Touren:"
+        day_of_week_help: Stelle hier den Wochentag ein, an dem die Touren stattfinden.
+        week_of_month_label: "Woche der Touren:"
+        week_of_month_help: Wähle hier die Woche, in der die Touren stattfinden.
+        special_calculator_hint: Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen Generator erzeugt wird.
+        time_label: "Uhrzeit der Touren:"
+        time_help: Startzeit der Touren.
+        location_label: "Treffpunkt der Touren:"
+        location_help: Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.
+        validity_intro: Hier kannst du einen optionalen Gültigkeitszeitraum angeben, in dem neue Touren nach dem obigen Einstellungen erzeugt werden sollen. Das kann nützlich sein, falls die Critical Mass in %city% nur im Sommer stattfindet oder sich irgendwann einmal der Treffpunkt ändert.
+        valid_from_label: "Gültig ab:"
+        valid_until_label: "Gültig bis:"
+
+static:
+    live_tracking:
+        title: Critical Mass Live Tracking
+        heading: Critical Mass Live Tracking
+        outdated_link_text: "Wenn du diese Seite siehst, bist du vermutlich einen veralteten Link gefolgt — bitte besuche criticalmass.live für weitere Informationen zum Live-Tracking."
+
+city:
+    ride_list_sort:
+        button: Sortierung
+        sort_date: Datum
+        sort_title: Titel
+        sort_location: Treffpunkt
+        sort_participants: Teilnehmer
+        sort_distance: Distanz
+        sort_duration: Dauer
+
+    locations:
+        panel_title: Treffpunkte
+
+    missing_stats:
+        title: Touren mit fehlenden Statistiken aus %city%
+        breadcrumb_city_list: Städteliste
+        breadcrumb: Touren mit fehlenden Statistiken
+        heading: Touren aus %city% mit fehlenden Statistiken
+        lead: Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
+        col_date: Datum
+        col_title: Titel
+        col_participants: Teilnehmer
+        col_duration: Dauer
+        col_distance: Distanz
+        missing: fehlt
+
+promotion:
+    popup:
+        date: "Datum:"
+        time: "Uhrzeit:"
+        location: "Treffpunkt:"
+        to_ride: zur Tour
+
+crawler:
+    website:
+        art11_notice: 'Das europäische Leistungsschutzrecht erlaubt uns leider nur die Darstellung <a href="https://felixreda.eu/2019/02/artikel-13-endgueltig/">„einzelner Worte oder sehr kurzer Textausschnitte" der verlinkten Webseite</a>. Um auf der rechtlich sicheren Seite zu sein, verzichten wir auf diese Texte und zeigen dir stattdessen gehaltvollen Blödsinn an.'
+        art11_link: Erfahre mehr über die EU-Urheberrechtsreform
+
+explore:
+    title: Entdecken
+    sidebar_title: Städte
+    popup_to_city: Zur Stadtseite
+
+admin:
+    view_button: im Frontend öffnen
+
+ride:
+    pagination:
+        previous: "&larr; Vorige Tour"
+        next: "Nächste Tour &rarr;"
+        navigation_label: Tour Navigation
+
+post:
+    writes_about_ride: "%username% schreibt zu"
+    writes_about_city: "%username% schreibt über"
+    writes: "%username% schreibt:"
+    time_suffix: Uhr
+
+timeline:
+    tab_news: Neuigkeiten
+    tab_facebook: Facebook-Beiträge
+    tab_twitter: Tweets
+    tab_instagram: Instagram-Fotos
+    tab_blog: Blog-Beiträge
+    tab_mastodon: Mastodon-Beiträge
+    estimate_text: "schätzt, dass %count% Radfahrer an"
+    estimate_participated: teilgenommen haben.
+    city_created: hat eine neue Stadt hinzugefügt
+    tweeted: hat getwittert
+    blogged: hat gebloggt
+    posted_instagram: hat etwas auf Instagram veröffentlicht
+    posted_mastodon: hat etwas auf Mastodon veröffentlicht
+    yearmonth:
+        title: Critical Mass im %month%
+        heading: Die Critical Mass im %month%
+        lead: Schau dir an, was im %month% bei der Critical Mass passiert ist.
+        navigation_label: Monat Navigation
+        previous: "&larr; Voriger Monat"
+        next: "Nächster Monat &rarr;"
+    photo_uploaded: "hat %count% Fotos zur Tour"
+    photo_uploaded_suffix: hochgeladen
+    ride_commented: "hat eine Tour kommentiert:"
+    thread_replied: "hat auf ein Diskussionsthema geantwortet:"
+    ride_edited: "hat eine Tour editiert:"
+    city_edited: "hat eine Stadt editiert:"
+    photo_commented: "hat %count% Fotos kommentiert:"
+    thread_started: "hat ein neues Diskussionsthema begonnen:"
+
+gallery:
+    download: Herunterladen
+
+participation:
+    question_past: Hast du teilgenommen?
+    question_future: Bist du dabei?
+    yes: Ja
+    no: Nein
+    maybe: Vielleicht
+    participated: Teilgenommen
+    participating: Du nimmst teil
+    not_participated: Nicht teilgenommen
+    cancel: Absagen
+    maybe_participating: Du nimmst vielleicht teil
+    confirm: Zusagen
+    did_not_participate: Du hast nicht teilgenommen
+    not_participating: Du nimmst nicht teil
+    did_participate: Du hast teilgenommen
+    participate: Teilnehmen

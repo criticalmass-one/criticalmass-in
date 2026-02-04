@@ -4,7 +4,7 @@
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.active(city.city) }}
 {% endblock %}
 
@@ -14,34 +14,34 @@
             <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                 <i class="far fa-cogs"></i>
-                Optionen
+                {{ 'city.options_button'|trans }}
             </button>
             <ul class="dropdown-menu">
                 <li>
                     <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">
                         <i class="far fa-cogs"></i>
-                        Stadt editieren
+                        {{ 'city.option_edit_city'|trans }}
                     </a>
                 </li>
 
                 <li>
                     <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">
                         <i class="far fa-plus"></i>
-                        Tour hinzufügen
+                        {{ 'city.option_add_ride'|trans }}
                     </a>
                 </li>
 
                 <li>
                     <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
                         <i class="far fa-calendar"></i>
-                        Turnus verwalten
+                        {{ 'city.option_manage_cycle'|trans }}
                     </a>
                 </li>
 
                 <li>
                     <a class="dropdown-item" href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">
                         <i class="far fa-at"></i>
-                        soziale Netzwerke verwalten
+                        {{ 'city.option_manage_social'|trans }}
                     </a>
                 </li>
             </ul>
@@ -54,7 +54,7 @@
                     data-modal-hint-text="{{ 'hint_modal.city.options_button.text'|trans({'%city%': city.city}) }}"
                     data-modal-hint-size="md">
                 <i class="far fa-cogs"></i>
-                Optionen
+                {{ 'city.options_button'|trans }}
             </button>
         {% endif %}
     </div>
@@ -112,31 +112,28 @@
                             {{ city.longDescription|markdown }}
                         {% else %}
                             <div class="alert alert-info">
-                                <strong>Huch?</strong>
-                                Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
-                                Lust und Zeit hast, kannst du {{ city.title }} <a
-                                        href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">hier
-                                    beschreiben</a>:
+                                {{ 'city.no_description_heading'|trans|raw }}
+                                {{ 'city.no_description_text'|trans({'%city_name%': city.city, '%city_title%': city.title, '%edit_url%': object_path(city, 'caldera_criticalmass_city_edit')})|raw }}
 
                                 <ul>
                                     <li>
-                                        Seit wann gibt es die Critical Mass in {{ city.city }}?
+                                        {{ 'city.no_description_since'|trans({'%city_name%': city.city}) }}
                                     </li>
                                     <li>
-                                        Wie lange dauern eure Touren?
+                                        {{ 'city.no_description_duration'|trans }}
                                     </li>
                                     <li>
-                                        Wo fahrt ihr ungefähr lang?
+                                        {{ 'city.no_description_route'|trans }}
                                     </li>
                                     <li>
-                                        Welche Probleme gibt es in {{ city.city }} für den Radverkehr?
+                                        {{ 'city.no_description_problems'|trans({'%city_name%': city.city}) }}
                                     </li>
                                 </ul>
 
                                 <p class="text-center margin-top-medium">
                                     <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}"
                                        class="btn btn-primary btn-lg">
-                                        {{ city.city }} editieren
+                                        {{ 'city.no_description_edit_button'|trans({'%city_name%': city.city}) }}
                                     </a>
                                 </p>
                             </div>
@@ -148,11 +145,11 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h2>
-                                Fotos aus {{ city.city }}
+                                {{ 'city.photos_heading'|trans({'%city_name%': city.city}) }}
                             </h2>
 
                             <p>
-                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}">Übersicht über Fotos aus {{ city.city }}</a> an.
+                                {{ 'city.photos_intro'|trans({'%city_name%': city.city, '%gallery_url%': object_path(city, 'caldera_criticalmass_city_listgalleries')})|raw }}
                             </p>
                         </div>
                     </div>

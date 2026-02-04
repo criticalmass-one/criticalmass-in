@@ -5,12 +5,12 @@
             {{ form_start(disableForm) }}
             <div class="modal-header border-0">
                 <h5 class="modal-title" id="disable-modal-label">
-                    <i class="far fa-ban text-danger me-2"></i>Tour deaktivieren
+                    <i class="far fa-ban text-danger me-2"></i>{{ 'ride.disable.modal_title'|trans }}
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'common.close'|trans }}"></button>
             </div>
             <div class="modal-body">
-                <p class="text-muted mb-3">Bitte wähle einen Grund für die Deaktivierung:</p>
+                <p class="text-muted mb-3">{{ 'ride.disable.reason_label'|trans }}</p>
 
                 {% for i in 0..5 %}
                     <div class="form-check mb-2">
@@ -21,14 +21,14 @@
             </div>
 
             <div class="modal-body border-top pt-3">
-                <label class="form-label text-muted">Zusätzlicher Kommentar (optional)</label>
-                {{ form_widget(disableForm.disabledReasonMessage, { 'attr': { 'class': 'form-control', 'rows': 3, 'placeholder': 'z.B. weitere Details zur Absage...' }}) }}
+                <label class="form-label text-muted">{{ 'ride.disable.comment_label'|trans }}</label>
+                {{ form_widget(disableForm.disabledReasonMessage, { 'attr': { 'class': 'form-control', 'rows': 3, 'placeholder': 'ride.disable.comment_placeholder'|trans }}) }}
             </div>
 
             <div class="modal-footer border-0">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'common.cancel'|trans }}</button>
                 <button type="submit" class="btn btn-danger">
-                    <i class="far fa-ban me-1"></i>Tour deaktivieren
+                    <i class="far fa-ban me-1"></i>{{ 'ride.disable.submit'|trans }}
                 </button>
             </div>
             {{ form_end(disableForm) }}

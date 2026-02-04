@@ -109,7 +109,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
         try {
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
 
-            $form = $crawler->selectButton('Track hochladen')->form();
+            $form = $crawler->filter('button[type="submit"]')->form();
             $this->uploadFileToForm($form, $gpxFile);
 
             $client->submit($form);
@@ -160,7 +160,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
         try {
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
 
-            $form = $crawler->selectButton('Track hochladen')->form();
+            $form = $crawler->filter('button[type="submit"]')->form();
             $this->uploadFileToForm($form, $gpxFile);
 
             $client->submit($form);
@@ -194,7 +194,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
         try {
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
 
-            $form = $crawler->selectButton('Track hochladen')->form();
+            $form = $crawler->filter('button[type="submit"]')->form();
             $this->uploadFileToForm($form, $gpxFile);
 
             $client->submit($form);
@@ -224,7 +224,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
 
         try {
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
-            $form = $crawler->selectButton('Track hochladen')->form();
+            $form = $crawler->filter('button[type="submit"]')->form();
             $this->uploadFileToForm($form, $gpxFile);
             $client->submit($form);
 
@@ -255,14 +255,14 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
         try {
             // Upload first track
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
-            $form = $crawler->selectButton('Track hochladen')->form();
+            $form = $crawler->filter('button[type="submit"]')->form();
             $this->uploadFileToForm($form, $gpxFile1);
             $client->submit($form);
             $this->assertEquals(302, $client->getResponse()->getStatusCode());
 
             // Upload second track
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
-            $form = $crawler->selectButton('Track hochladen')->form();
+            $form = $crawler->filter('button[type="submit"]')->form();
             $this->uploadFileToForm($form, $gpxFile2);
             $client->submit($form);
             $this->assertEquals(302, $client->getResponse()->getStatusCode());
@@ -310,7 +310,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
         try {
             // Upload first track
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
-            $form = $crawler->selectButton('Track hochladen')->form();
+            $form = $crawler->filter('button[type="submit"]')->form();
             $this->uploadFileToForm($form, $gpxFile1);
             $client->submit($form);
             $this->assertEquals(302, $client->getResponse()->getStatusCode());
@@ -323,7 +323,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
 
             // Upload second track
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
-            $form = $crawler->selectButton('Track hochladen')->form();
+            $form = $crawler->filter('button[type="submit"]')->form();
             $this->uploadFileToForm($form, $gpxFile2);
             $client->submit($form);
             $this->assertEquals(302, $client->getResponse()->getStatusCode());

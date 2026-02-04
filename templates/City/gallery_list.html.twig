@@ -1,25 +1,24 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Städte-Übersicht{% endblock %}
+{% block title %}{{ 'city.title_overview'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.active('Foto-Galerien') }}
+    {{ breadcrumb.active('city.breadcrumb_gallery'|trans) }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container main-container">
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Fotos aus {{ city.city }}
+                    {{ 'city.gallery_heading'|trans({'%city_name%': city.city}) }}
                 </h1>
 
                 <p class="lead">
-                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos
-                    hochgeladen wurden.
+                    {{ 'city.gallery_lead'|trans({'%city_name%': city.city}) }}
                 </p>
             </div>
         </div>
@@ -30,13 +29,13 @@
                     <thead>
                     <tr>
                         <th>
-                            Datum
+                            {{ 'city.gallery_col_date'|trans }}
                         </th>
                         <th>
-                            Titel
+                            {{ 'city.gallery_col_title'|trans }}
                         </th>
                         <th>
-                            Fotos
+                            {{ 'city.gallery_col_photos'|trans }}
                         </th>
                     </tr>
                     </thead>

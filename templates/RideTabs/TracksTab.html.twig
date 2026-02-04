@@ -2,24 +2,24 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">
             <i class="far fa-route text-muted me-2"></i>
-            GPX-Tracks
+            {{ 'ride.tabs.tracks.heading'|trans }}
         </h4>
         <div class="btn-group">
             {% if app.user %}
                 <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="far fa-plus me-1"></i>Track hinzufügen
+                    <i class="far fa-plus me-1"></i>{{ 'ride.tabs.tracks.add_button'|trans }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     {% if feature('strava_track_upload') %}
                         <li>
                             <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
-                                <i class="fab fa-strava text-orange me-2"></i>Von Strava importieren
+                                <i class="fab fa-strava text-orange me-2"></i>{{ 'ride.tabs.tracks.import_strava'|trans }}
                             </a>
                         </li>
                     {% endif %}
                     <li>
-                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}" title="Track hochladen">
-                            <i class="far fa-upload me-2"></i>GPX-Datei hochladen
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}" title="{{ 'ride.tabs.tracks.upload_title'|trans }}">
+                            <i class="far fa-upload me-2"></i>{{ 'ride.tabs.tracks.upload_gpx'|trans }}
                         </a>
                     </li>
                 </ul>
@@ -29,7 +29,7 @@
                     data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}"
                     data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
                     data-modal-hint-size="md">
-                    <i class="far fa-plus me-1"></i>Track hinzufügen
+                    <i class="far fa-plus me-1"></i>{{ 'ride.tabs.tracks.add_button'|trans }}
                 </button>
             {% endif %}
         </div>
@@ -43,12 +43,12 @@
                         <thead class="table-light">
                             <tr>
                                 <th class="text-center" style="width: 40px;">
-                                    <input type="checkbox" class="form-check-input allgroups-visibility-toggle" checked="checked" title="Alle ein-/ausblenden"/>
+                                    <input type="checkbox" class="form-check-input allgroups-visibility-toggle" checked="checked" title="{{ 'ride.tabs.tracks.toggle_all'|trans }}"/>
                                 </th>
-                                <th>Teilnehmer</th>
-                                <th class="text-end">Dauer</th>
-                                <th class="text-end">Länge</th>
-                                <th class="text-end d-none d-md-table-cell">Tempo</th>
+                                <th>{{ 'ride.tabs.tracks.col_participant'|trans }}</th>
+                                <th class="text-end">{{ 'ride.tabs.tracks.col_duration'|trans }}</th>
+                                <th class="text-end">{{ 'ride.tabs.tracks.col_distance'|trans }}</th>
+                                <th class="text-end d-none d-md-table-cell">{{ 'ride.tabs.tracks.col_average_velocity'|trans }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,17 +91,17 @@
                 <div class="card bg-light border-0">
                     <div class="card-body text-center py-5">
                         <i class="far fa-route fa-3x text-muted mb-3"></i>
-                        <h5>Keine Tracks vorhanden</h5>
+                        <h5>{{ 'ride.tabs.tracks.empty_heading'|trans }}</h5>
                         {% if app.getUser() %}
                             <p class="text-muted mb-3">
-                                Lade deinen GPX-Track hoch und zeige anderen, wo ihr gefahren seid!
+                                {{ 'ride.tabs.tracks.empty_user_hint'|trans }}
                             </p>
                             <a href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}" class="btn btn-primary">
-                                <i class="far fa-upload me-1"></i>Track hochladen
+                                <i class="far fa-upload me-1"></i>{{ 'ride.tabs.tracks.upload_button'|trans }}
                             </a>
                         {% else %}
                             <p class="text-muted mb-0">
-                                <a href="{{ path('login') }}">Melde dich an</a>, um einen Track hochzuladen.
+                                {{ 'ride.tabs.tracks.empty_login_hint'|trans({'%login_url%': path('login')})|raw }}
                             </p>
                         {% endif %}
                     </div>
@@ -113,23 +113,23 @@
             <div class="card border-0 bg-light">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-3 text-muted">
-                        <i class="far fa-play-circle me-2"></i>Timelapse
+                        <i class="far fa-play-circle me-2"></i>{{ 'ride.tabs.tracks.timelapse_title'|trans }}
                     </h6>
 
                     <div id="timelapse-control" style="display: none;">
                         <div class="row g-2 mb-3">
                             <div class="col-6">
-                                <small class="text-muted d-block">Uhrzeit</small>
-                                <strong><span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr</strong>
+                                <small class="text-muted d-block">{{ 'ride.tabs.tracks.timelapse_clock'|trans }}</small>
+                                <strong><span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> {{ 'ride.tabs.tracks.timelapse_clock_suffix'|trans }}</strong>
                             </div>
                             <div class="col-6">
-                                <small class="text-muted d-block">Verstrichene Zeit</small>
-                                <strong><span id="timelapse-time-elapsed">0</span> Min</strong>
+                                <small class="text-muted d-block">{{ 'ride.tabs.tracks.timelapse_elapsed'|trans }}</small>
+                                <strong><span id="timelapse-time-elapsed">0</span> {{ 'ride.tabs.tracks.timelapse_elapsed_suffix'|trans }}</strong>
                             </div>
                         </div>
 
                         <div class="d-flex justify-content-center mb-3">
-                            <div class="btn-group btn-group-sm" id="control-buttons" role="group" aria-label="Timelapse-Steuerung">
+                            <div class="btn-group btn-group-sm" id="control-buttons" role="group" aria-label="{{ 'ride.tabs.tracks.timelapse_controls'|trans }}">
                                 <button type="button" id="step-backward-button" class="btn btn-outline-secondary">
                                     <i class="far fa-backward"></i>
                                 </button>
@@ -149,12 +149,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label small text-muted">Geschwindigkeit</label>
+                            <label class="form-label small text-muted">{{ 'ride.tabs.tracks.timelapse_speed'|trans }}</label>
                             <input id="speed-slider-input" type="text" class="w-100"/>
                         </div>
 
                         <div>
-                            <label class="form-label small text-muted">Zeitpunkt</label>
+                            <label class="form-label small text-muted">{{ 'ride.tabs.tracks.timelapse_time'|trans }}</label>
                             <input id="time-slider-input" type="text" class="w-100"/>
                         </div>
                     </div>
@@ -162,13 +162,13 @@
                     <div id="timelapse-start">
                         <div class="text-center">
                             {% if tracks|length %}
-                                <p class="text-muted small mb-3">Verfolge die Tour im Zeitraffer auf der Karte.</p>
+                                <p class="text-muted small mb-3">{{ 'ride.tabs.tracks.timelapse_description'|trans }}</p>
                                 <button id="timelapse-start-button" class="btn btn-success btn-sm">
-                                    <i class="far fa-play me-1"></i>Timelapse starten
+                                    <i class="far fa-play me-1"></i>{{ 'ride.tabs.tracks.timelapse_start'|trans }}
                                 </button>
                             {% else %}
                                 <p class="text-muted small mb-0">
-                                    Die Timelapse-Funktion ist verfügbar, sobald mindestens ein GPX-Track hochgeladen wurde.
+                                    {{ 'ride.tabs.tracks.timelapse_no_tracks'|trans }}
                                 </p>
                             {% endif %}
                         </div>
@@ -177,9 +177,9 @@
                     <div id="timelapse-loader" style="display: none;">
                         <div class="text-center">
                             <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
-                                <span class="visually-hidden">Lädt...</span>
+                                <span class="visually-hidden">{{ 'common.loading'|trans }}</span>
                             </div>
-                            Track <span id="timelapse-track-number">0</span> von <span id="timelapse-track-total">0</span>
+                            {{ 'ride.tabs.tracks.timelapse_loading'|trans({'%current%': '<span id="timelapse-track-number">0</span>', '%total%': '<span id="timelapse-track-total">0</span>'})|raw }}
                         </div>
                     </div>
                 </div>

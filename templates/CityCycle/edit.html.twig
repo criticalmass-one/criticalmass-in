@@ -2,16 +2,16 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if city != null %}
-    {% set title = 'Turnus editieren' %}
+    {% set title = 'city_cycle.edit.title_edit'|trans %}
 {% else %}
-    {% set title = 'Neuen Turnus hinzufügen' %}
+    {% set title = 'city_cycle.edit.title_add'|trans %}
 {% endif %}
 
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.item('Turnusliste', object_path(city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.item('city_cycle.list.breadcrumb'|trans, object_path(city, 'caldera_criticalmass_citycycle_list')) }}
     {{ breadcrumb.active(title) }}
 {% endblock %}
 
@@ -28,16 +28,14 @@
                     {{ title }}
                 </h2>
 
-                <p class="lead">criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen,
-                    sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher
-                    festgelegten Treffpunkt starten.</p>
+                <p class="lead">{{ 'city_cycle.edit.lead'|trans }}</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-info">
-                    Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">dieses Formular</a></strong>.
+                    {{ 'city_cycle.edit.single_ride_hint'|trans({ '%city%': city.city, '%url%': object_path(city, 'caldera_criticalmass_ride_add') })|raw }}
                 </div>
             </div>
         </div>
@@ -67,16 +65,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.dayOfWeek) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Wochentag der Touren:</label>
+                            <label class="control-label" for="">{{ 'city_cycle.edit.day_of_week_label'|trans }}</label>
                             {{ form_widget(form.dayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
                             {% if not cityCycle.hasSpecialCalculator() %}
                                 <p class="help-block">
-                                    Stelle hier den Wochentag ein, an dem die Touren stattfinden.
+                                    {{ 'city_cycle.edit.day_of_week_help'|trans }}
                                 </p>
                             {% else %}
                                 <p class="text-info">
-                                    Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
-                                    Generator erzeugt wird.
+                                    {{ 'city_cycle.edit.special_calculator_hint'|trans }}
                                 </p>
                             {% endif %}
                         </div>
@@ -86,16 +83,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.weekOfMonth) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Woche der Touren:</label>
+                            <label class="control-label" for="">{{ 'city_cycle.edit.week_of_month_label'|trans }}</label>
                             {{ form_widget(form.weekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
                             {% if not cityCycle.hasSpecialCalculator() %}
                                 <p class="help-block">
-                                    Wähle hier die Woche, in der die Touren stattfinden.
+                                    {{ 'city_cycle.edit.week_of_month_help'|trans }}
                                 </p>
                             {% else %}
                                 <p class="text-info">
-                                    Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
-                                    Generator erzeugt wird.
+                                    {{ 'city_cycle.edit.special_calculator_hint'|trans }}
                                 </p>
                             {% endif %}
                         </div>
@@ -107,10 +103,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.time) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Uhrzeit der Touren:</label>
+                            <label class="control-label" for="">{{ 'city_cycle.edit.time_label'|trans }}</label>
                             {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
                             <p class="help-block">
-                                Startzeit der Touren.
+                                {{ 'city_cycle.edit.time_help'|trans }}
                             </p>
                         </div>
                     </div>
@@ -119,11 +115,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Treffpunkt der Touren:</label>
+                            <label class="control-label" for="">{{ 'city_cycle.edit.location_label'|trans }}</label>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                             <p class="help-block">
-                                Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour
-                                startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.
+                                {{ 'city_cycle.edit.location_help'|trans }}
                             </p>
                         </div>
                     </div>
@@ -133,23 +128,21 @@
 
         <div class="row">
             <div class="col-md-12">
-                Hier kannst du einen optionalen Gültigkeitszeitraum angeben, in dem neue Touren nach dem obigen
-                Einstellungen erzeugt werden sollen. Das kann nützlich sein, falls die Critical Mass in {{ city.city }}
-                nur im Sommer stattfindet oder sich irgendwann einmal der Treffpunkt ändert.
+                {{ 'city_cycle.edit.validity_intro'|trans({ '%city%': city.city }) }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label" for="">Gültig ab:</label>
+                    <label class="control-label" for="">{{ 'city_cycle.edit.valid_from_label'|trans }}</label>
                     {{ form_widget(form.validFrom, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label" for="">Gültig bis:</label>
+                    <label class="control-label" for="">{{ 'city_cycle.edit.valid_until_label'|trans }}</label>
                     {{ form_widget(form.validUntil, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
@@ -159,10 +152,10 @@
             <div class="col-md-12">
                 <div class="btn-group pull-right">
                     <a href="{{ object_path(city) }}" class="btn btn-secondary">
-                        Abbrechen
+                        {{ 'common.cancel'|trans }}
                     </a>
                     <button type="submit" class="btn btn-success">
-                        Speichern
+                        {{ 'common.save'|trans }}
                     </button>
                 </div>
             </div>

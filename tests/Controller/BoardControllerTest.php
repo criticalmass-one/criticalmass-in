@@ -50,7 +50,7 @@ class BoardControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', '/boards/general/addthread');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['form[title]'] = 'Neues Testthema';
         $form['form[message]'] = 'Das ist die erste Nachricht im Testthema.';
 
@@ -66,7 +66,7 @@ class BoardControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', '/boards/general/addthread');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['form[title]'] = 'Sichtbares Testthema';
         $form['form[message]'] = 'Diese Nachricht muss sichtbar sein.';
 
@@ -85,7 +85,7 @@ class BoardControllerTest extends AbstractControllerTestCase
 
         // Create a thread first
         $crawler = $client->request('GET', '/boards/general/addthread');
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['form[title]'] = 'Thread fuer Antworttest';
         $form['form[message]'] = 'Erste Nachricht.';
         $client->submit($form);
@@ -98,7 +98,7 @@ class BoardControllerTest extends AbstractControllerTestCase
         $crawler = $client->request('GET', sprintf('/post/write/thread/%s', $thread->getSlug()));
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['post[message]'] = 'Das ist eine Antwort auf das Thema.';
         $client->submit($form);
 
@@ -112,7 +112,7 @@ class BoardControllerTest extends AbstractControllerTestCase
 
         // Create a thread first
         $crawler = $client->request('GET', '/boards/general/addthread');
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['form[title]'] = 'Thread fuer Logintest';
         $form['form[message]'] = 'Erste Nachricht.';
         $client->submit($form);
