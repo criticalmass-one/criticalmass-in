@@ -52,8 +52,8 @@ public/users/
 
 ###> symfony/framework-bundle ###
 /.env
-/.env.test
 /.env.local
+/.env.*.local
 /public/bundles/
 /var/
 /vendor/
@@ -96,4 +96,5 @@ phpstan.neon
 
 ###> jwt ###
 config/jwt/
+!config/jwt/test/
 ###< jwt ###
