@@ -1,0 +1,58 @@
+{% extends 'Template/FullscreenTemplate.html.twig' %}
+
+{% block title %}Explore{% endblock %}
+
+{% block content %}
+    <div class="explore-container"
+         data-controller="map--explore-map"
+         data-map--explore-map-api-type-value="city"
+         data-map--explore-map-api-query-value="{{ path('caldera_criticalmass_rest_city_list', { size: 5000 }) }}"
+         data-map--explore-map-popup-template-id-value="city-popup"
+         data-map--explore-map-sidebar-item-template-id-value="sidebar-item-template">
+
+        <aside class="explore-sidebar" data-map--explore-map-target="sidebar">
+            <div class="explore-sidebar__header">
+                <h2 class="explore-sidebar__title">
+                    <i class="fa fa-university"></i>
+                    Staedte
+                    <span class="badge bg-secondary" data-counter>0</span>
+                </h2>
+                <button type="button"
+                        class="btn btn-sm btn-outline-secondary explore-sidebar__toggle"
+                        data-action="click->map--explore-map#toggleSidebar"
+                        data-map--explore-map-target="toggleBtn">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+            </div>
+            <div class="explore-sidebar__content">
+                <ul class="explore-sidebar__list" data-map--explore-map-target="sidebarList">
+                </ul>
+            </div>
+        </aside>
+
+        <div class="explore-map"></div>
+    </div>
+
+    {% verbatim %}
+    <template id="city-popup">
+        <div class="popup">
+            <h4 class="popup__title">{{title}}</h4>
+            <div class="popup__actions">
+                <a class="btn btn-primary btn-sm" href="/{{slug}}">
+                    Zur Stadtseite
+                </a>
+            </div>
+        </div>
+    </template>
+
+    <template id="sidebar-item-template">
+        <li class="explore-sidebar__item"
+            data-action="click->map--explore-map#focusCity"
+            data-lat="{{latitude}}"
+            data-lng="{{longitude}}">
+            <span class="explore-sidebar__item-name">{{title}}</span>
+            <i class="fa fa-chevron-right explore-sidebar__item-chevron"></i>
+        </li>
+    </template>
+    {% endverbatim %}
+{% endblock %}
