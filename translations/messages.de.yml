@@ -1351,3 +1351,8 @@ crawler:
     website:
         art11_notice: 'Das europäische Leistungsschutzrecht erlaubt uns leider nur die Darstellung <a href="https://felixreda.eu/2019/02/artikel-13-endgueltig/">„einzelner Worte oder sehr kurzer Textausschnitte" der verlinkten Webseite</a>. Um auf der rechtlich sicheren Seite zu sein, verzichten wir auf diese Texte und zeigen dir stattdessen gehaltvollen Blödsinn an.'
         art11_link: Erfahre mehr über die EU-Urheberrechtsreform
+
+explore:
+    title: Entdecken
+    sidebar_title: Städte
+    popup_to_city: Zur Stadtseite
