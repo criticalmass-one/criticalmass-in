@@ -6,6 +6,7 @@ use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
+use App\Repository\LocationRepository;
 use App\Repository\ParticipationRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
@@ -46,6 +47,7 @@ class RideController extends AbstractController
     )]
     public function showAction(
         BlockedCityRepository $blockedCityRepository,
+        LocationRepository $locationRepository,
         ParticipationRepository $participationRepository,
         SubrideRepository $subrideRepository,
         WeatherRepository $weatherRepository,
@@ -113,6 +115,7 @@ class RideController extends AbstractController
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
+            'location' => $locationRepository->findLocationForRide($ride),
         ]);
     }
 }
