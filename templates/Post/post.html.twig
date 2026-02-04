@@ -1,38 +1,38 @@
-<div class="row post margin-bottom-medium">
-    <a name="post-{{ post.id }}"></a>
-    <div class="col-md-12">
-        <div class="media post">
-            <span class="pull-left">
+<div class="card border-0 bg-light mb-3" id="post-{{ post.id }}">
+    <div class="card-body">
+        <div class="d-flex">
+            <div class="flex-shrink-0 me-3">
                 {% if post.user.imageName %}
-                <img class="media-object round-media-object"
-                     src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
+                    <img class="rounded-circle" width="48" height="48"
+                         src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+                         alt="{{ post.user.username }}"/>
+                {% else %}
+                    <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                        <i class="far fa-user text-secondary"></i>
+                    </div>
                 {% endif %}
-            </span>
-
-            <div class="media-body">
-                <h4 class="media-heading username">
-                    {% if post.getRide() %}
-                    {{ post.getUser().getUsername() }} schreibt zu
-                        <a href="{{ object_path(post.ride) }}">
-                            {{ post.ride.title }}
-                        </a>:
-                    {% elseif post.getCity() %}
-                    {{ post.getUser().getUsername() }} schreibt über
-                    <a href="{{ object_path(post.city) }}">
-                        {{ post.city.title }}
-                    </a>:
-                    {% else %}
-                        {{ post.getUser().getUsername() }} schreibt:
-                    {% endif %}
-                </h4>
-
-                <a href="#post-{{ post.id }}">
-                    <time>
-                        {{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
-                    </time>
-                </a>
-
-                {{ post.message|markdown }}
+            </div>
+            <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <strong>{{ post.user.username }}</strong>
+                        {% if post.getRide() and post.ride != ride|default(null) %}
+                            <span class="text-muted">zu
+                                <a href="{{ object_path(post.ride) }}" class="text-decoration-none">{{ post.ride.title }}</a>
+                            </span>
+                        {% elseif post.getCity() %}
+                            <span class="text-muted">über
+                                <a href="{{ object_path(post.city) }}" class="text-decoration-none">{{ post.city.title }}</a>
+                            </span>
+                        {% endif %}
+                    </div>
+                    <a href="#post-{{ post.id }}" class="text-muted small text-decoration-none">
+                        <i class="far fa-clock me-1"></i>{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}
+                    </a>
+                </div>
+                <div class="post-content">
+                    {{ post.message|markdown }}
+                </div>
             </div>
         </div>
     </div>
