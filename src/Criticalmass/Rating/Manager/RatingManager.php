@@ -4,28 +4,29 @@ namespace App\Criticalmass\Rating\Manager;
 
 use App\Entity\Rating;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class RatingManager implements RatingManagerInterface
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
-    public function __construct(RegistryInterface $registry, TokenStorageInterface $tokenStorage)
-    {
-        $this->registry = $registry;
-        $this->tokenStorage = $tokenStorage;
+    public function __construct(
+        protected readonly ManagerRegistry $registry,
+        protected readonly Security $security
+    ) {
     }
 
     public function rateRide(Ride $ride, int $stars): RatingManagerInterface
     {
+        $user = $this->security->getUser();
+
+        if (!$user instanceof User) {
+            throw new \RuntimeException('User must be logged in to rate a ride');
+        }
+
         $rating = new Rating();
         $rating
-            ->setUser($this->tokenStorage->getToken()->getUser())
+            ->setUser($user)
             ->setRide($ride)
             ->setRating($stars);
 
