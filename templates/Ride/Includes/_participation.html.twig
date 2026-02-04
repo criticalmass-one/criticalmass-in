@@ -1,4 +1,4 @@
-<div class="btn-group">
+{% if not inButtonGroup|default(false) %}<div class="btn-group">{% endif %}
     {% if app.user %}
         {% if participation == null or (participation.goingMaybe and pastRide) %}
             <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,4 +99,4 @@
             {% if pastRide %}Teilgenommen?{% else %}Dabei?{% endif %}
         </button>
     {% endif %}
-</div>
+{% if not inButtonGroup|default(false) %}</div>{% endif %}
