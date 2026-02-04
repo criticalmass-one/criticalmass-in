@@ -2111,36 +2111,6 @@ parameters:
 			path: src/Criticalmass/Util/ClassUtil.php
 
 		-
-			message: "#^Method App\\\\Criticalmass\\\\ViewStorage\\\\Persister\\\\ViewStoragePersisterInterface\\:\\:storeView\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: src/Criticalmass/ViewStorage/Cache/RobustViewStorageCache.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\ViewStorage\\\\Persister\\\\ViewStoragePersister\\:\\:persistViews\\(\\) has parameter \\$viewList with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Criticalmass/ViewStorage/Persister/ViewStoragePersister.php
-
-		-
-			message: "#^Unable to resolve the template type T in call to method Doctrine\\\\Persistence\\\\ManagerRegistry\\:\\:getRepository\\(\\)$#"
-			count: 1
-			path: src/Criticalmass/ViewStorage/Persister/ViewStoragePersister.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\ViewStorage\\\\Persister\\\\ViewStoragePersisterInterface\\:\\:persistViews\\(\\) has parameter \\$viewList with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Criticalmass/ViewStorage/Persister/ViewStoragePersisterInterface.php
-
-		-
-			message: "#^Call to an undefined method Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\:\\:getId\\(\\)\\.$#"
-			count: 1
-			path: src/Criticalmass/ViewStorage/ViewModel/ViewFactory.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\ViewStorage\\\\ViewModel\\\\ViewFactory\\:\\:createView\\(\\) has parameter \\$user with no type specified\\.$#"
-			count: 1
-			path: src/Criticalmass/ViewStorage/ViewModel/ViewFactory.php
-
-		-
 			message: "#^Array has 2 duplicate keys with value 'CANCELLED_WEATHER' \\(self\\:\\:CANCELLED_WEATHER, self\\:\\:CANCELLED_PARTICIPANTS\\)\\.$#"
 			count: 1
 			path: src/DBAL/Type/RideDisabledReasonType.php
@@ -2969,11 +2939,6 @@ parameters:
 			message: "#^Method App\\\\Menu\\\\Builder\\:\\:mainMenu\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Menu/Builder.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\ViewStorage\\\\Persister\\\\ViewStoragePersisterInterface\\:\\:storeView\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: src/MessageHandler/CountViewMessageHandler.php
 
 		-
 			message: "#^Method App\\\\Model\\\\CityListModel\\:\\:__construct\\(\\) has parameter \\$cycles with no value type specified in iterable type array\\.$#"
@@ -4061,24 +4026,9 @@ parameters:
 			path: tests/IcalGenerator/RideIcalGeneratorTest.php
 
 		-
-			message: "#^Method Tests\\\\Message\\\\CountViewMessageTest\\:\\:entityClassNameProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/Message/CountViewMessageTest.php
-
-		-
 			message: "#^Method Tests\\\\Message\\\\ImportTrackCandidateMessageTest\\:\\:activityTypeProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Message/ImportTrackCandidateMessageTest.php
-
-		-
-			message: "#^Anonymous function has an unused use \\$dateTime\\.$#"
-			count: 1
-			path: tests/MessageHandler/CountViewMessageHandlerTest.php
-
-		-
-			message: "#^Method Tests\\\\MessageHandler\\\\CountViewMessageHandlerTest\\:\\:entityClassNameProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/MessageHandler/CountViewMessageHandlerTest.php
 
 		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
@@ -4104,41 +4054,6 @@ parameters:
 			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityManager\\:\\:expects\\(\\)\\.$#"
 			count: 2
 			path: tests/Strava/Importer/TrackImporterIntegrationTest.php
-
-		-
-			message: "#^Call to an undefined method App\\\\Criticalmass\\\\ViewStorage\\\\ViewInterface\\\\ViewEntity\\:\\:setTestClass\\(\\)\\.$#"
-			count: 2
-			path: tests/ViewStorage/Cache/RobustViewStorageCacheTest.php
-
-		-
-			message: "#^Call to an undefined method App\\\\Criticalmass\\\\ViewStorage\\\\ViewInterface\\\\ViewEntity\\:\\:setTest\\(\\)\\.$#"
-			count: 3
-			path: tests/ViewStorage/Persister/ViewStoragePersisterTest.php
-
-		-
-			message: "#^Property Tests\\\\ViewStorage\\\\TestClass\\:\\:\\$views has no type specified\\.$#"
-			count: 1
-			path: tests/ViewStorage/TestClass.php
-
-		-
-			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$user \\(App\\\\Entity\\\\User\\) is implicitly nullable via default value null\\.$#"
-			count: 1
-			path: tests/ViewStorage/TestClassView.php
-
-		-
-			message: "#^Property Tests\\\\ViewStorage\\\\TestClassView\\:\\:\\$testClass has no type specified\\.$#"
-			count: 1
-			path: tests/ViewStorage/TestClassView.php
-
-		-
-			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$user \\(App\\\\Entity\\\\User\\) is implicitly nullable via default value null\\.$#"
-			count: 1
-			path: tests/ViewStorage/TestView.php
-
-		-
-			message: "#^Call to an undefined method App\\\\Criticalmass\\\\ViewStorage\\\\ViewInterface\\\\ViewEntity\\:\\:setTestClass\\(\\)\\.$#"
-			count: 2
-			path: tests/ViewStorage/ViewEntityFactory/ViewEntityFactoryTest.php
 
 		-
 			message: "#^Call to method boot\\(\\) on an unknown class Oneup\\\\FlysystemBundle\\\\Tests\\\\App\\\\AppKernel\\.$#"
