@@ -25,5 +25,9 @@ league_oauth2_server:
 
 when@test:
     league_oauth2_server:
+        authorization_server:
+            private_key: '%kernel.project_dir%/config/jwt/test/private.pem'
+        resource_server:
+            public_key: '%kernel.project_dir%/config/jwt/test/public.pem'
         persistence:
             in_memory: null

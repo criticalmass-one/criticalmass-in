@@ -52,8 +52,8 @@ public/users/
 
 ###> symfony/framework-bundle ###
 /.env
-/.env.test
 /.env.local
+/.env.*.local
 /public/bundles/
 /var/
 /vendor/
@@ -88,4 +88,5 @@ phpstan.neon
 
 ###> league/oauth2-server-bundle ###
 /config/jwt/*.pem
+!/config/jwt/test/*.pem
 ###< league/oauth2-server-bundle ###
