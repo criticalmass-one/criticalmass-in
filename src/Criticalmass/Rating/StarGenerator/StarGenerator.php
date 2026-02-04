@@ -7,16 +7,13 @@ use App\Entity\Ride;
 
 class StarGenerator implements StarGeneratorInterface
 {
-    const HTML_STAR_FULL = '<i class="fas fa-star"></i>';
-    const HTML_STAR_HALF = '<i class="fad fa-star-half-alt"></i>';
-    const HTML_STAR_EMPTY = '<i class="far fa-star"></i>';
+    private const string HTML_STAR_FULL = '<i class="fas fa-star"></i>';
+    private const string HTML_STAR_HALF = '<i class="fad fa-star-half-alt"></i>';
+    private const string HTML_STAR_EMPTY = '<i class="far fa-star"></i>';
 
-    /** @var RatingCalculatorInterface $ratingCalculator */
-    protected $ratingCalculator;
-
-    public function __construct(RatingCalculatorInterface $ratingCalculator)
-    {
-        $this->ratingCalculator = $ratingCalculator;
+    public function __construct(
+        protected readonly RatingCalculatorInterface $ratingCalculator
+    ) {
     }
 
     public function generateForRide(Ride $ride): string
@@ -39,6 +36,6 @@ class StarGenerator implements StarGeneratorInterface
             $stars[] = self::HTML_STAR_EMPTY;
         }
 
-        return join('', $stars);
+        return implode('', $stars);
     }
 }
