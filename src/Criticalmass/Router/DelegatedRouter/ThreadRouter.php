@@ -8,6 +8,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ThreadRouter extends AbstractDelegatedRouter
 {
+    protected static function getEntityFqcn(): string
+    {
+        return Thread::class;
+    }
+
     /** @param Thread $thread */
     public function generate(
         RouteableInterface $thread,

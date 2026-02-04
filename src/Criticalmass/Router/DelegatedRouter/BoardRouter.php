@@ -9,6 +9,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BoardRouter extends AbstractDelegatedRouter
 {
+    protected static function getEntityFqcn(): string
+    {
+        return Board::class;
+    }
+
     /** @param BoardInterface $board */
     public function generate(
         RouteableInterface $board,
