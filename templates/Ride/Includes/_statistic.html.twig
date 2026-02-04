@@ -7,92 +7,96 @@
 {% endif %}
 
 {% if pastRide %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Statistik</h3>
+<div class="card border-0 bg-light mb-3">
+    <div class="card-body">
+        <h6 class="card-subtitle mb-3 text-muted">
+            <i class="far fa-chart-bar me-2"></i>Statistik
+        </h6>
+
+        {% if hasEstimations %}
+            <div class="row g-2 mb-3">
+                {% if ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
+                    <div class="col-6">
+                        <div class="text-center p-2 bg-white rounded">
+                            <div class="h4 mb-0 text-primary">{{ ride.estimatedParticipants|number_format(0) }}</div>
+                            <small class="text-muted">Teilnehmer</small>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if ride.estimatedDistance and ride.estimatedDistance > 0 %}
+                    <div class="col-6">
+                        <div class="text-center p-2 bg-white rounded">
+                            <div class="h4 mb-0 text-success">{{ ride.estimatedDistance|number_format(1) }}</div>
+                            <small class="text-muted">Kilometer</small>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
+                    <div class="col-6">
+                        <div class="text-center p-2 bg-white rounded">
+                            <div class="h5 mb-0 text-info">{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</div>
+                            <small class="text-muted">Dauer</small>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if ride.getAverageVelocity and ride.getAverageVelocity > 0 %}
+                    <div class="col-6">
+                        <div class="text-center p-2 bg-white rounded">
+                            <div class="h5 mb-0 text-warning">{{ ride.getAverageVelocity()|number_format(1) }}</div>
+                            <small class="text-muted">km/h</small>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="d-grid">
+            {% if app.user %}
+                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#estimate-modal">
+                    <i class="far fa-users me-1"></i>Teilnehmerzahl schätzen
+                </button>
+            {% else %}
+                <button type="button" class="btn btn-outline-primary btn-sm"
+                    data-controller="hint-modal"
+                    data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}"
+                    data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                    data-modal-hint-size="md">
+                    <i class="far fa-users me-1"></i>Teilnehmerzahl schätzen
+                </button>
+            {% endif %}
         </div>
-        <div class="panel-body">
-            {% if hasEstimations %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <dl>
-                            {% if ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
-                                <dt>Teilnehmer</dt>
-                                <dd>{{ ride.estimatedParticipants|number_format(0) }}</dd>
-                            {% endif %}
+    </div>
+</div>
 
-                            {% if ride.estimatedDistance and ride.estimatedDistance > 0 %}
-                                <dt>Distanz</dt>
-                                <dd>{{ ride.estimatedDistance|number_format(2) }}&nbsp;km</dd>
-                            {% endif %}
-
-                            {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
-                                <dt>Dauer</dt>
-                                <dd>{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</dd>
-                            {% endif %}
-
-                            {% if ride.getAverageVelocity and ride.getAverageVelocity > 0 %}
-                                <dt>Durchschnittsgeschwindigkeit</dt>
-                                <dd>{{ ride.getAverageVelocity()|number_format(2) }}&nbsp;km/h</dd>
-                            {% endif %}
-                        </dl>
+{% if app.user %}
+    <div class="modal fade" id="estimate-modal" tabindex="-1" aria-labelledby="estimate-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                {{ form_start(estimateForm) }}
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="estimate-modal-label">
+                        <i class="far fa-users text-primary me-2"></i>Teilnehmerzahl schätzen
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="estimatedParticipants">Geschätzte Anzahl:</label>
+                        {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control form-control-lg text-center', 'placeholder': 'z.B. 150' } }) }}
                     </div>
                 </div>
-            {% endif %}
-
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    {% if app.user %}
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#estimate-modal">
-                            <i class="far fa-users"></i>
-                            Teilnehmerzahl schätzen
-                        </button>
-                    {% else %}
-                        <button
-                                type="button"
-                                class="btn btn-success"
-                                data-controller="hint-modal"
-                                data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}"
-                                data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
-                                data-modal-hint-size="md">
-                            <i class="far fa-users"></i>
-                            Teilnehmerzahl schätzen
-                        </button>
-                    {% endif %}
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="far fa-save me-1"></i>Speichern
+                    </button>
                 </div>
+                {{ form_end(estimateForm) }}
             </div>
         </div>
     </div>
-
-    {% if app.user %}
-        <div class="modal fade" id="estimate-modal" tabindex="-1" role="dialog" aria-labelledby="estimate-modal-label">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    {{ form_start(estimateForm) }}
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="estimate-modal-label">Teilnehmerzahl schätzen</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="control-label" for="estimatedParticipants">Geschätzte Teilnehmerzahl:</label>
-                            {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control' } }) }}
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Abbrechen
-                            </button>
-                            <button type="submit" class="btn btn-success">
-                                Speichern
-                            </button>
-                        </div>
-                    </div>
-                    {{ form_end(estimateForm) }}
-                </div>
-            </div>
-        </div>
-    {% endif %}
+{% endif %}
 {% endif %}

@@ -1,70 +1,13 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Details</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-12">
-                <dl>
-                    <dt>Datum</dt>
-                    <dd itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
-                    <meta itemprop="endDate" content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-dTH:i') }}" />
-                    <dt>Uhrzeit</dt>
-                    {% if ride.dateTime %}
-                        <dd>{{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr</dd>
-                    {% else %}
-                        <dd>die Uhrzeit ist noch nicht bekannt</dd>
-                    {% endif %}
-                    <div itemprop="location" itemscope itemtype="http://schema.org/Place">
-                        <dt>Treffpunkt</dt>
-                        {% if ride.location and ride.latitude and ride.longitude %}
-                            {% if location %}
-                                <dd itemprop="name">
-                                    <a href="{{ object_path(ride, 'caldera_criticalmass_location_ride') }}">
-                                        {{ ride.location }}
-                                    </a>
-                                </dd>
-                            {% else %}
-                                <dd itemprop="name">{{ ride.location }}</dd>
-                            {% endif %}
-                            <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-                                <meta itemprop="latitude" content="{{ ride.latitude }}" />
-                                <meta itemprop="longitude" content="{{ ride.longitude }}" />
-                            </div>
-                        {% else %}
-                            <dd>
-                                {% if app.user %}
-                                    <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">
-                                        noch nicht bekannt
-                                    </a>
-                                {% else %}
-                                    <a
-                                            href="#"
-                                            data-controller="hint-modal"
-                                            data-modal-hint-title="{{ 'hint_modal.ride.location_edit_link.title'|trans }}"
-                                            data-modal-hint-text="{{ 'hint_modal.ride.location_edit_link.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
-                                            data-modal-hint-size="md">
-                                        noch nicht bekannt
-                                    </a>
-                                {% endif %}
-                            </dd>
-                        {% endif %}
-                    </div>
-                    {% if weatherForecast %}
-                        <dt>Wetter</dt>
-                        <dd>{{ weatherForecast }}</dd>
-                    {% endif %}
-                </dl>
-
-                {% if ride.dateTime %}
-                    <p class="text-center">
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
-                            <i class="far fa-calendar"></i>
-                            Kalendereintrag merken
-                        </a>
-                    </p>
-                {% endif %}
-            </div>
-        </div>
+{% if weatherForecast %}
+<div class="card border-0 bg-light mb-3">
+    <div class="card-body">
+        <h6 class="card-subtitle mb-3 text-muted">
+            <i class="far fa-cloud-sun me-2"></i>Wetter
+        </h6>
+        <p class="card-text mb-2">{{ weatherForecast }}</p>
+        <small class="text-muted">
+            Daten von <a href="https://openweathermap.org/" target="_blank" rel="noopener" class="text-muted">OpenWeatherMap</a>
+        </small>
     </div>
 </div>
+{% endif %}

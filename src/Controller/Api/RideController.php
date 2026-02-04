@@ -160,7 +160,7 @@ class RideController extends BaseController
             $groups[] = 'extended-ride-list';
         }
 
-        return $this->createStandardResponse($rideList);
+        return $this->createStandardResponse($rideList, ['groups' => $groups]);
     }
 
     /**
@@ -179,15 +179,19 @@ class RideController extends BaseController
 
         $ride->setCity($city);
 
-        if (!$ride->getDateTime()) {
-            $rideIdentifier = $request->get('rideIdentifier');
+        $rideIdentifier = $request->get('rideIdentifier');
+        $isDateIdentifier = false;
 
-            try {
-                $ride->setDateTime(new \DateTime($rideIdentifier));
-            } catch (\Exception $exception) {
-                if (!$ride->hasSlug()) {
-                    $ride->setSlug($rideIdentifier);
-                }
+        try {
+            $dateTime = new \DateTime($rideIdentifier);
+            $isDateIdentifier = true;
+
+            if (!$ride->getDateTime()) {
+                $ride->setDateTime($dateTime);
+            }
+        } catch (\Exception) {
+            if (!$ride->hasSlug()) {
+                $ride->setSlug($rideIdentifier);
             }
         }
 

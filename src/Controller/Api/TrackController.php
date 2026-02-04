@@ -82,17 +82,11 @@ class TrackController extends BaseController
      *
      * <ul>
      * <li><code>id</code></li>
-     * <li><code>slug</code></li>
-     * <li><code>title</code></li>
-     * <li><code>description</code></li>
-     * <li><code>socialDescription</code></li>
-     * <li><code>latitude</code></li>
-     * <li><code>longitude</code></li>
-     * <li><code>estimatedParticipants</code></li>
-     * <li><code>estimatedDuration</code></li>
-     * <li><code>estimatedDistance</code></li>
-     * <li><code>views</code></li>
-     * <li><code>dateTime</code></li>
+     * <li><code>creationDateTime</code></li>
+     * <li><code>startDateTime</code></li>
+     * <li><code>endDateTime</code></li>
+     * <li><code>distance</code></li>
+     * <li><code>points</code></li>
      * </ul>
      *
      * Specify the order direction with <code>orderDirection=asc</code> or <code>orderDirection=desc</code>.

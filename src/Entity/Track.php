@@ -6,6 +6,7 @@ use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
@@ -35,6 +36,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
+    #[DataQuery\Sortable]
     #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -64,6 +66,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?RideEstimate $rideEstimate = null;
 
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
     protected ?\DateTime $creationDateTime = null;
@@ -71,18 +74,23 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     /**
      * @OE\Order(direction="asc")
      */
+    #[DataQuery\Sortable]
+    #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
     protected ?\DateTime $startDateTime = null;
 
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
     protected ?\DateTime $endDateTime = null;
 
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
     protected ?float $distance = null;
 
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
     protected ?int $points = null;
@@ -99,6 +107,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?string $md5Hash = null;
 
+    #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
     protected bool $enabled = true;
@@ -106,6 +115,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     /**
      * @OE\Boolean(value=false)
      */
+    #[DataQuery\DefaultBooleanValue(value: false)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
     protected bool $deleted = false;

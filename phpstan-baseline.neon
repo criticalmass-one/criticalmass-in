@@ -226,11 +226,6 @@ parameters:
 			path: src/Command/Track/OptimizeTracksCommand.php
 
 		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\Post\\>\\:\\:findByCrawled\\(\\)\\.$#"
-			count: 1
-			path: src/Command/WebsiteCrawlerCommand.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\Api\\\\BaseController\\:\\:createErrors\\(\\) has parameter \\$errorMessages with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Controller/Api/BaseController.php
@@ -2146,41 +2141,6 @@ parameters:
 			path: src/Criticalmass/ViewStorage/ViewModel/ViewFactory.php
 
 		-
-			message: "#^Method App\\\\Criticalmass\\\\Website\\\\Crawler\\\\Crawler\\:\\:crawlUrls\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Crawler/Crawler.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\Website\\\\Crawler\\\\CrawlerInterface\\:\\:crawlUrls\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Crawler/CrawlerInterface.php
-
-		-
-			message: "#^Call to method find\\(\\) on an unknown class simplehtmldom_1_5\\\\simple_html_dom\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\Website\\\\Parser\\\\Parser\\:\\:fetchHtml\\(\\) has invalid return type simplehtmldom_1_5\\\\simple_html_dom\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
-			message: "#^Parameter \\$element of method App\\\\Criticalmass\\\\Website\\\\Parser\\\\Parser\\:\\:findFirstMatchingElement\\(\\) has invalid type simplehtmldom_1_5\\\\simple_html_dom\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
-			message: "#^Parameter \\$element of method App\\\\Criticalmass\\\\Website\\\\Parser\\\\Parser\\:\\:parseHtml\\(\\) has invalid type simplehtmldom_1_5\\\\simple_html_dom\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between simplehtmldom_1_5\\\\simple_html_dom and false will always evaluate to false\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
 			message: "#^Array has 2 duplicate keys with value 'CANCELLED_WEATHER' \\(self\\:\\:CANCELLED_WEATHER, self\\:\\:CANCELLED_PARTICIPANTS\\)\\.$#"
 			count: 1
 			path: src/DBAL/Type/RideDisabledReasonType.php
@@ -2981,46 +2941,6 @@ parameters:
 			path: src/Factory/City/CityFactory.php
 
 		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\City\\>\\:\\:findEnabledCities\\(\\)\\.$#"
-			count: 1
-			path: src/Factory/CityListFactory.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\CityCycle\\>\\:\\:findByCity\\(\\)\\.$#"
-			count: 1
-			path: src/Factory/CityListFactory.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\Ride\\>\\:\\:countRidesByCity\\(\\)\\.$#"
-			count: 1
-			path: src/Factory/CityListFactory.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\Ride\\>\\:\\:findCurrentRideForCity\\(\\)\\.$#"
-			count: 1
-			path: src/Factory/CityListFactory.php
-
-		-
-			message: "#^Method App\\\\Factory\\\\CityListFactory\\:\\:createModel\\(\\) has parameter \\$cycles with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Factory/CityListFactory.php
-
-		-
-			message: "#^Method App\\\\Factory\\\\CityListFactory\\:\\:getList\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Factory/CityListFactory.php
-
-		-
-			message: "#^Property App\\\\Factory\\\\CityListFactory\\:\\:\\$list has no type specified\\.$#"
-			count: 1
-			path: src/Factory/CityListFactory.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\Ride\\>\\:\\:findFrontpageRides\\(\\)\\.$#"
-			count: 1
-			path: src/Factory/FrontpageRideListFactory.php
-
-		-
 			message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\SocialNetworkProfile\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User\\|null, Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface given\\.$#"
 			count: 1
 			path: src/Factory/SocialNetworkProfile/SocialNetworkProfileFactory.php
@@ -3337,11 +3257,6 @@ parameters:
 
 		-
 			message: "#^Class App\\\\Repository\\\\PostRepository extends generic class Doctrine\\\\Bundle\\\\DoctrineBundle\\\\Repository\\\\ServiceEntityRepository but does not specify its types\\: T$#"
-			count: 1
-			path: src/Repository/PostRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\PostRepository\\:\\:findByCrawled\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Repository/PostRepository.php
 
@@ -3786,16 +3701,6 @@ parameters:
 			path: src/Serializer/CriticalSerializer.php
 
 		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\CrawledWebsite\\>\\:\\:findOneByUrl\\(\\)\\.$#"
-			count: 1
-			path: src/Twig/Extension/CrawlTwigExtension.php
-
-		-
-			message: "#^Property App\\\\Twig\\\\Extension\\\\CrawlTwigExtension\\:\\:\\$blacklistPatternList type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Twig/Extension/CrawlTwigExtension.php
-
-		-
 			message: "#^Method App\\\\Twig\\\\Extension\\\\RouterTwigExtension\\:\\:objectPath\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Twig/Extension/RouterTwigExtension.php
@@ -3996,16 +3901,6 @@ parameters:
 			path: tests/Controller/Api/Query/BoundingBoxQueryTest.php
 
 		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\DateTimeQueryTest\\:\\:apiClassProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/Controller/Api/Query/DateTimeQueryTest.php
-
-		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\DateTimeQueryTest\\:\\:testRideListWithParameter\\(\\) has parameter \\$query with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/Controller/Api/Query/DateTimeQueryTest.php
-
-		-
 			message: "#^Method Tests\\\\Controller\\\\Api\\\\Query\\\\RadiusQueryTest\\:\\:apiClassProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Controller/Api/Query/RadiusQueryTest.php
@@ -4019,11 +3914,6 @@ parameters:
 			message: "#^Method Tests\\\\Controller\\\\Api\\\\RideApi\\\\RideApiQueryTest\\:\\:rideTypeProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Controller/Api/RideApi/RideApiQueryTest.php
-
-		-
-			message: "#^Method Tests\\\\Controller\\\\Api\\\\RideApi\\\\RideApiWriteTest\\:\\:assertStringContains\\(\\) is unused\\.$#"
-			count: 1
-			path: tests/Controller/Api/RideApi/RideApiWriteTest.php
 
 		-
 			message: "#^Constant Tests\\\\Controller\\\\Api\\\\Schema\\\\JsonStructureValidator\\:\\:VALID_TYPES is unused\\.$#"
@@ -4264,3 +4154,13 @@ parameters:
 			message: "#^Instantiated class Oneup\\\\FlysystemBundle\\\\Tests\\\\App\\\\AppKernel not found\\.$#"
 			count: 1
 			path: tests/symfony-container.php
+
+		-
+			message: "#^Call to an undefined method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Ride\\>\\:\\:findFrontpageRides\\(\\)\\.$#"
+			count: 2
+			path: tests/Repository/RideRepositoryTest.php
+
+		-
+			message: "#^Attribute class OpenApi\\\\Attributes\\\\Parameter is not repeatable but is already present above the method\\.$#"
+			count: 15
+			path: src/Controller/Api/PostController.php

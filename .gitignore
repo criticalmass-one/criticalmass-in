@@ -86,7 +86,15 @@ docker
 phpstan.neon
 ###< phpstan/phpstan ###
 
-###> league/oauth2-server-bundle ###
-/config/jwt/*.pem
-!/config/jwt/test/*.pem
-###< league/oauth2-server-bundle ###
+###> phpunit ###
+.phpunit.cache/
+###< phpunit ###
+
+###> claude-code ###
+.claude/
+###< claude-code ###
+
+###> jwt ###
+config/jwt/
+!config/jwt/test/
+###< jwt ###

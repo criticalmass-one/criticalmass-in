@@ -177,6 +177,14 @@ class SensitiveDataExposureTest extends AbstractApiControllerTestCase
         $this->assertNoSensitiveDataInResponse();
     }
 
+    #[TestDox('GET /api/post should not expose sensitive data')]
+    public function testPostListDoesNotExposeSensitiveData(): void
+    {
+        $this->client->request('GET', '/api/post');
+        $this->assertResponseIsSuccessful();
+        $this->assertNoSensitiveDataInResponse();
+    }
+
     #[TestDox('GET /api/track/{trackId} should not expose sensitive data')]
     public function testTrackShowDoesNotExposeSensitiveData(): void
     {
@@ -291,6 +299,7 @@ class SensitiveDataExposureTest extends AbstractApiControllerTestCase
             'ride list' => ['/api/ride'],
             'photo list' => ['/api/photo'],
             'track list' => ['/api/track'],
+            'post list' => ['/api/post'],
             'cycles list' => ['/api/cycles'],
             'hamburg current' => ['/api/hamburg/current'],
             'berlin current' => ['/api/berlin/current'],

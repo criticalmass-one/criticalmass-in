@@ -222,10 +222,19 @@ class RideRepository extends ServiceEntityRepository
             ->join('r.city', 'city')
             ->where($builder->expr()->lte('r.dateTime', ':startDateTime'))
             ->andWhere($builder->expr()->gte('r.dateTime', ':endDateTime'))
+            ->andWhere($builder->expr()->eq('city.enabled', ':enabled'))
+            ->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->gte('city.activityScore', ':threshold'),
+                    $builder->expr()->isNull('city.activityScore')
+                )
+            )
             ->addOrderBy('r.dateTime', 'ASC')
             ->addOrderBy('r.city', 'ASC')
             ->setParameter('startDateTime', $startDateTime)
-            ->setParameter('endDateTime', $endDateTime);
+            ->setParameter('endDateTime', $endDateTime)
+            ->setParameter('enabled', true)
+            ->setParameter('threshold', CityRepository::ACTIVITY_SCORE_THRESHOLD);
 
         $query = $builder->getQuery();
 
