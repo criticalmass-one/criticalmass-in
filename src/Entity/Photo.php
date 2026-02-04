@@ -7,7 +7,6 @@ use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadFaker\FakeUploadable;
-use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
@@ -31,7 +30,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Table(name: 'photo')]
 #[ORM\Entity(repositoryClass: 'App\Repository\PhotoRepository')]
 #[ORM\Index(fields: ['exifCreationDate'], name: 'photo_exif_creation_date_index')]
-class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, OrderedEntityInterface, CoordinateInterface
+class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, OrderedEntityInterface, CoordinateInterface
 {
     #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
@@ -78,10 +77,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
-
-    #[DataQuery\Sortable]
-    #[ORM\Column(type: 'integer')]
-    protected int $views = 0;
 
     /**
      * @OE\Boolean(value=true)
@@ -402,25 +397,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     public function setBackupMimeType(string $backupMimeType): Photo
     {
         $this->backupMimeType = $backupMimeType;
-
-        return $this;
-    }
-
-    public function setViews(int $views): ViewableEntity
-    {
-        $this->views = $views;
-
-        return $this;
-    }
-
-    public function getViews(): int
-    {
-        return $this->views;
-    }
-
-    public function incViews(): ViewableEntity
-    {
-        ++$this->views;
 
         return $this;
     }
