@@ -17,11 +17,11 @@
                     <div>
                         <strong>{{ post.user.username }}</strong>
                         {% if post.getRide() and post.ride != ride|default(null) %}
-                            <span class="text-muted">zu
+                            <span class="text-muted">{{ 'post.writes_about_ride_prefix'|trans }}
                                 <a href="{{ object_path(post.ride) }}" class="text-decoration-none">{{ post.ride.title }}</a>
                             </span>
                         {% elseif post.getCity() %}
-                            <span class="text-muted">über
+                            <span class="text-muted">{{ 'post.writes_about_city_prefix'|trans }}
                                 <a href="{{ object_path(post.city) }}" class="text-decoration-none">{{ post.city.title }}</a>
                             </span>
                         {% endif %}

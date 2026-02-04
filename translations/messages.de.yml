@@ -1356,3 +1356,40 @@ explore:
     title: Entdecken
     sidebar_title: Städte
     popup_to_city: Zur Stadtseite
+
+admin:
+    view_button: im Frontend öffnen
+
+ride:
+    pagination:
+        previous: "&larr; Vorige Tour"
+        next: "Nächste Tour &rarr;"
+        navigation_label: Tour Navigation
+
+post:
+    writes_about_ride: "%username% schreibt zu"
+    writes_about_city: "%username% schreibt über"
+    writes: "%username% schreibt:"
+    time_suffix: Uhr
+
+timeline:
+    tab_news: Neuigkeiten
+    tab_facebook: Facebook-Beiträge
+    tab_twitter: Tweets
+    tab_instagram: Instagram-Fotos
+    tab_blog: Blog-Beiträge
+    tab_mastodon: Mastodon-Beiträge
+    estimate_text: "schätzt, dass %count% Radfahrer an"
+    estimate_participated: teilgenommen haben.
+    city_created: hat eine neue Stadt hinzugefügt
+    tweeted: hat getwittert
+    blogged: hat gebloggt
+    posted_instagram: hat etwas auf Instagram veröffentlicht
+    posted_mastodon: hat etwas auf Mastodon veröffentlicht
+    yearmonth:
+        title: Critical Mass im %month%
+        heading: Die Critical Mass im %month%
+        lead: Schau dir an, was im %month% bei der Critical Mass passiert ist.
+        navigation_label: Monat Navigation
+        previous: "&larr; Voriger Monat"
+        next: "Nächster Monat &rarr;"
