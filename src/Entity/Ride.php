@@ -248,6 +248,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Ignore]
     protected Collection $viewRelation;
 
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'ride', orphanRemoval: true)]
+    private Collection $ratings;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -263,6 +266,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
         $this->viewRelation = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1016,6 +1020,37 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
             // set the owning side to null (unless already changed)
             if ($viewRelation->getRide() === $this) {
                 $viewRelation->setRide(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setRide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->contains($rating)) {
+            $this->ratings->removeElement($rating);
+            // set the owning side to null (unless already changed)
+            if ($rating->getRide() === $this) {
+                $rating->setRide(null);
             }
         }
 
