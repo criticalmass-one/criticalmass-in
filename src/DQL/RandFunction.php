@@ -9,14 +9,14 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class RandFunction extends FunctionNode
 {
-    private $arg;
+    private mixed $arg;
 
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return 'RAND()';
     }
 
-    public function parse(Parser $parser)
+    public function parse(Parser $parser): void
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
