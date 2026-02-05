@@ -117,7 +117,6 @@ class RideController extends BaseController
      * <li><code>estimatedParticipants</code></li>
      * <li><code>estimatedDuration</code></li>
      * <li><code>estimatedDistance</code></li>
-     * <li><code>views</code></li>
      * <li><code>dateTime</code></li>
      * </ul>
      *

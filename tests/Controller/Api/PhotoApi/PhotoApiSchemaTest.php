@@ -67,20 +67,6 @@ class PhotoApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Photo views is a non-negative integer')]
-    public function testPhotoViewsIsNonNegativeInteger(): void
-    {
-        $this->client->request('GET', '/api/photo?size=10');
-        $this->assertResponseIsSuccessful();
-
-        $response = $this->getJsonResponse();
-
-        foreach ($response as $photo) {
-            $this->assertIsInt($photo['views']);
-            $this->assertGreaterThanOrEqual(0, $photo['views']);
-        }
-    }
-
     #[TestDox('Photo imageName is a non-empty string')]
     public function testPhotoImageNameIsNonEmptyString(): void
     {
