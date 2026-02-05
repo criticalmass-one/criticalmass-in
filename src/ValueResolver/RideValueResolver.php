@@ -49,14 +49,14 @@ class RideValueResolver implements ValueResolverInterface
 
     private function findRideById(Request $request): ?Ride
     {
-        $rideId = $request->get('rideId');
+        $rideId = $request->attributes->get('rideId');
         return $rideId ? $this->registry->getRepository(Ride::class)->find($rideId) : null;
     }
 
     private function findRideBySlugs(Request $request): ?Ride
     {
-        $citySlug = $request->get('citySlug');
-        $rideIdentifier = $request->get('rideIdentifier');
+        $citySlug = $request->attributes->get('citySlug');
+        $rideIdentifier = $request->attributes->get('rideIdentifier');
 
         if (!$citySlug || !$rideIdentifier) {
             return null;
