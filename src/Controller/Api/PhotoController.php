@@ -9,6 +9,7 @@ use App\Entity\Ride;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -117,6 +118,29 @@ class PhotoController extends BaseController
         $photoList = $dataQueryManager->query($queryParameterList, Photo::class);
 
         return $this->createStandardResponse($photoList);
+    }
+
+    /**
+     * Retrieve details of a single photo by its id.
+     */
+    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_show', methods: ['GET'], priority: 200)]
+    #[OA\Tag(name: 'Photo')]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the photo', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returns photo details')]
+    #[OA\Response(response: 404, description: 'Photo not found')]
+    public function showAction(int $id): JsonResponse
+    {
+        $photo = $this->managerRegistry->getRepository(Photo::class)->findOneBy([
+            'id' => $id,
+            'enabled' => true,
+            'deleted' => false,
+        ]);
+
+        if (!$photo) {
+            throw new NotFoundHttpException('Photo not found');
+        }
+
+        return $this->createStandardResponse($photo, ['groups' => 'photo-details']);
     }
 
     /**

@@ -38,7 +38,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[DataQuery\Sortable]
-    #[Groups(['ride-details'])]
+    #[Groups(['ride-details', 'photo-details'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'photos')]
@@ -66,21 +66,23 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-details'])]
+    #[Groups(['ride-details', 'photo-details'])]
     protected ?float $latitude = null;
 
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-details'])]
+    #[Groups(['ride-details', 'photo-details'])]
     protected ?float $longitude = null;
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['photo-details'])]
     protected ?string $description = null;
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['photo-details'])]
     protected int $views = 0;
 
     /**
@@ -101,19 +103,23 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['photo-details'])]
     protected ?\DateTime $creationDateTime = null;
 
     #[Vich\UploadableField(mapping: 'photo_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['photo-details'])]
     protected ?string $imageName = null;
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['photo-details'])]
     protected ?int $imageSize = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['photo-details'])]
     protected ?string $imageMimeType = null;
 
     #[Vich\UploadableField(mapping: 'photo_photo', fileNameProperty: 'backupName')]
@@ -139,7 +145,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'photo-details'])]
     protected ?string $location = null;
 
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'photo')]
@@ -148,22 +154,27 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', nullable: true)]
+    #[Groups(['photo-details'])]
     protected ?string $exifExposure = null;
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', nullable: true)]
+    #[Groups(['photo-details'])]
     protected ?string $exifAperture = null;
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'smallint', nullable: true)]
+    #[Groups(['photo-details'])]
     protected ?int $exifIso = null;
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['photo-details'])]
     protected ?float $exifFocalLength = null;
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['photo-details'])]
     protected ?string $exifCamera = null;
 
     /**
@@ -172,6 +183,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[DataQuery\DateTimeQueryable(format: 'strict_date_hour_minute_second', pattern: 'Y-m-d\TH:i:s')]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['photo-details'])]
     protected ?\DateTime $exifCreationDate = null;
 
     public function __construct()
