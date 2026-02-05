@@ -34,6 +34,7 @@ parameters:
     assets_version: '%env(ASSETS_VERSION)%'
     friendlycaptcha_api_key: '%env(FRIENDLYCAPTCHA_API_KEY)%'
     friendlycaptcha_site_key: '%env(FRIENDLYCAPTCHA_SITE_KEY)%'
+    maps_jetzt_api_url: '%env(MAPS_JETZT_API_URL)%'
 
 services:
     _defaults:
@@ -58,6 +59,7 @@ services:
             $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
             $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
             cachePrefix: 'media/cache'
+            $mapsJetztApiUrl: '%maps_jetzt_api_url%'
 
     App\:
         resource: '../src/*'
