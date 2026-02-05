@@ -107,7 +107,7 @@ class CityController extends AbstractController
             'currentRide' => $rideRepository->findCurrentRideForCity($city),
             'nearCities' => $cityRepository->findNearCities($city),
             'locations' => $locationRepository->findLocationsByCity($city),
-            'photos' => $photoRepository->findSomePhotos(8, null, $city),
+            'photos' => $photoRepository->findSomePhotos(8, $city),
             'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
             'socialNetworkProfiles' => $socialNetworkProfileRepository->findByCity($city),
         ]);
