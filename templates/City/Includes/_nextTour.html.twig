@@ -1,70 +1,79 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Nächste Tour</h3>
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-header bg-white border-bottom">
+        <h5 class="card-title mb-0">
+            <i class="far fa-calendar-alt text-primary me-2"></i>Nächste Tour
+        </h5>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         {% if currentRide %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-center">
-                        <a href="{{ object_path(currentRide) }}">
-                            <h3 class="no-margin-top">
-                                {{ currentRide.title }}
-                            </h3>
-                        </a>
+            <div class="text-center mb-3">
+                <a href="{{ object_path(currentRide) }}" class="text-decoration-none">
+                    <h5 class="mb-0">{{ currentRide.title }}</h5>
+                </a>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                             style="width: 36px; height: 36px; min-width: 36px;">
+                            <i class="far fa-calendar-alt text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Datum</small>
+                            <strong>{{ currentRide.dateTime|date('d.m.Y', currentRide.city.timezone) }}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                             style="width: 36px; height: 36px; min-width: 36px;">
+                            <i class="far fa-clock text-success"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Uhrzeit</small>
+                            <strong>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} Uhr</strong>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <dl>
-                        <dt>Datum</dt>
-                        <dd>{{ currentRide.dateTime|date('d.m.Y', currentRide.city.timezone) }}</dd>
-                    </dl>
+            <div class="d-flex align-items-center mb-3">
+                <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                     style="width: 36px; height: 36px; min-width: 36px;">
+                    <i class="far fa-map-marker-alt text-warning"></i>
                 </div>
-
-                <div class="col-md-6">
-                    <dl>
-                        <dt>Uhrzeit</dt>
-                        <dd>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} Uhr</dd>
-                    </dl>
+                <div>
+                    <small class="text-muted d-block">Treffpunkt</small>
+                    {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
+                        <strong>{{ currentRide.location }}</strong>
+                    {% else %}
+                        <a href="{{ object_path(currentRide, 'caldera_criticalmass_ride_edit') }}" class="text-muted">
+                            noch nicht bekannt
+                        </a>
+                    {% endif %}
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <dl>
-                        <dt>Treffpunkt</dt>
-                        {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
-                            <dd>{{ currentRide.location }}</dd>
-                        {% else %}
-                            <a href="{{ object_path(currentRide, 'caldera_criticalmass_ride_edit') }}">
-                                noch nicht bekannt
-                            </a>
-                        {% endif %}
-                    </dl>
-                </div>
+            <div class="d-grid">
+                <a href="{{ object_path(currentRide) }}" class="btn btn-primary btn-sm">
+                    <i class="far fa-arrow-right me-1"></i>
+                    Tour anzeigen
+                </a>
             </div>
         {% else %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-center">
-                        Über eine Radtour ist momentan nichts bekannt.
-                    </div>
-                </div>
+            <div class="text-center py-3">
+                <i class="far fa-calendar-times fa-2x text-muted mb-2"></i>
+                <p class="text-muted mb-0">Über eine Radtour ist momentan nichts bekannt.</p>
             </div>
         {% endif %}
-
-        <div class="row margin-top-medium">
-            <div class="col-md-12">
-                <div class="text-center">
-                    <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-success">
-                        <i class="far fa-list"></i>
-                        weitere Touren anzeigen
-                    </a>
-                </div>
-            </div>
-        </div>
+    </div>
+    <div class="card-footer bg-white border-top-0">
+        <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-outline-success btn-sm w-100">
+            <i class="far fa-list me-1"></i>
+            weitere Touren anzeigen
+        </a>
     </div>
 </div>
