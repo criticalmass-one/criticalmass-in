@@ -3166,16 +3166,6 @@ parameters:
 			path: src/Repository/PhotoRepository.php
 
 		-
-			message: "#^Method App\\\\Repository\\\\PhotoRepository\\:\\:findSomePhotos\\(\\) has parameter \\$limit with no type specified\\.$#"
-			count: 1
-			path: src/Repository/PhotoRepository.php
-
-		-
-			message: "#^Method App\\\\Repository\\\\PhotoRepository\\:\\:findSomePhotos\\(\\) has parameter \\$maxViews with no type specified\\.$#"
-			count: 1
-			path: src/Repository/PhotoRepository.php
-
-		-
 			message: "#^Method App\\\\Repository\\\\PhotoRepository\\:\\:findSomePhotos\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Repository/PhotoRepository.php
