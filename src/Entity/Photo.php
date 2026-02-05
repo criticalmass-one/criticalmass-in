@@ -14,17 +14,11 @@ use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
-use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
-use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @OE\OrderedEntity()
- */
 #[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_photo_show_ride')]
 #[ORM\Table(name: 'photo')]
@@ -36,7 +30,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[DataQuery\Sortable]
     #[Groups(['ride-details'])]
     protected ?int $id = null;
 
@@ -45,36 +38,26 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Ignore]
     protected ?User $user = null;
 
-    /**
-     * @OE\Identical()
-     */
-    #[DataQuery\Queryable]
     #[Routing\RouteParameter(name: 'rideIdentifier')]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'photos')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     #[Ignore]
     protected ?Ride $ride = null;
 
-    #[DataQuery\Queryable]
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'photos')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     #[Ignore]
     protected ?City $city = null;
 
-    #[DataQuery\Queryable]
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-details'])]
     protected ?float $latitude = null;
 
-    #[DataQuery\Queryable]
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-details'])]
     protected ?float $longitude = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
 
@@ -86,15 +69,10 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Ignore]
     protected bool $enabled = true;
 
-    /**
-     * @OE\Boolean(value=false)
-     */
-    #[DataQuery\DefaultBooleanValue(alias: 'isDeleted', value: false)]
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
     protected bool $deleted = false;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
     protected ?\DateTime $creationDateTime = null;
 
@@ -104,7 +82,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[ORM\Column(type: 'string', length: 255)]
     protected ?string $imageName = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $imageSize = null;
 
@@ -123,7 +100,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $backupMimeType = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
     protected ?\DateTime $updatedAt = null;
 
@@ -131,8 +107,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Ignore]
     protected Collection $featuredRides;
 
-    #[DataQuery\Queryable]
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $location = null;
@@ -141,31 +115,21 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Ignore]
     protected Collection $posts;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $exifExposure = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $exifAperture = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'smallint', nullable: true)]
     protected ?int $exifIso = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $exifFocalLength = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $exifCamera = null;
 
-    /**
-     * @OE\Order(direction="asc")
-     */
-    #[DataQuery\DateTimeQueryable(format: 'strict_date_hour_minute_second', pattern: 'Y-m-d\TH:i:s')]
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
     protected ?\DateTime $exifCreationDate = null;
 

@@ -18,13 +18,10 @@ return [
     Presta\SitemapBundle\PrestaSitemapBundle::class => ['all' => true],
     Oneup\FlysystemBundle\OneupFlysystemBundle::class => ['all' => true],
     Flagception\Bundle\FlagceptionBundle\FlagceptionBundle::class => ['all' => true],
-    Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
-    MalteHuebner\OrderedEntitiesBundle\MalteHuebnerOrderedEntitiesBundle::class => ['all' => true],
-    MalteHuebner\DataQueryBundle\MalteHuebnerDataQueryBundle::class => ['all' => true],
     CalendR\Bridge\Symfony\Bundle\CalendRBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
 ];

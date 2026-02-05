@@ -3,19 +3,13 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use Doctrine\ORM\QueryBuilder;
-use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
-use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
-use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
-use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-#[DataQuery\RequiredEntityProperty(propertyName: 'rideType')]
-class RideTypeQuery extends AbstractQuery implements OrmQueryInterface, ElasticQueryInterface
+class RideTypeQuery
 {
     #[Constraints\NotNull]
     protected string $rideType;
 
-    #[DataQuery\RequiredQueryParameter(parameterName: 'rideType')]
     public function setRideType(string $rideType): self
     {
         $this->rideType = $rideType;

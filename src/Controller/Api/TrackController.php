@@ -2,8 +2,8 @@
 
 namespace App\Controller\Api;
 
-use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
-use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
+use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Event\Track\TrackDeletedEvent;

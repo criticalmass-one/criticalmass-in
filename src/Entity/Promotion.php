@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;

@@ -2,19 +2,16 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Wildcard;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-#[DataQuery\RequiredEntityProperty(propertyName: 'pin', propertyType: 'string')]
-class LocationNameQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
+class LocationNameQuery
 {
     #[Constraints\IsTrue]
     protected bool $coordsRequired = false;
 
-    #[DataQuery\RequiredQueryParameter(parameterName: 'has_coords')]
-    public function setCoordsRequired(bool $hasCoords): HasCoordinatesQuery
+    public function setCoordsRequired(bool $hasCoords): LocationNameQuery
     {
         $this->coordsRequired = $hasCoords;
         return $this;

@@ -7,27 +7,18 @@ use App\Entity\Photo;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Track;
-use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\City;
-use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
-use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
-use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 use Doctrine\ORM\QueryBuilder;
 
-#[DataQuery\RequiredEntityProperty(propertyName: 'slug')]
-class CityQuery extends AbstractQuery implements OrmQueryInterface, ElasticQueryInterface
+class CityQuery
 {
     #[Constraints\NotNull]
     #[Constraints\Type(City::class)]
     protected City $city;
 
-    #[DataQuery\RequiredQueryParameter(
-        parameterName: 'citySlug',
-        repository: CitySlug::class,
-        repositoryMethod: 'findOneBySlug',
-        accessor: 'getCity'
-    )]
+    protected ?string $entityFqcn = null;
+
     public function setCity(City $city): CityQuery
     {
         $this->city = $city;
@@ -38,6 +29,12 @@ class CityQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuery
     public function getCity(): City
     {
         return $this->city;
+    }
+
+    public function setEntityFqcn(string $entityFqcn): self
+    {
+        $this->entityFqcn = $entityFqcn;
+        return $this;
     }
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery

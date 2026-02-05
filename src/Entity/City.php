@@ -15,7 +15,6 @@ use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
@@ -34,7 +33,6 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[Groups(['ride-list', 'ride-details'])]
-    #[DataQuery\Sortable]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cities')]
@@ -42,8 +40,6 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[Ignore]
     protected ?User $user = null;
 
-    #[DataQuery\Sortable]
-    #[DataQuery\Queryable]
     #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'cities', cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
     #[Ignore]
@@ -56,14 +52,12 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[Groups(['ride-list', 'ride-details'])]
     protected ?CitySlug $mainSlug = null;
 
-    #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[SerializedName('name')]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?string $city = null;
 
-    #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
@@ -73,19 +67,14 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[Groups(['ride-list'])]
     protected ?string $description = null;
 
-    #[DataQuery\Queryable]
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected float $latitude = 0.0;
 
-    #[DataQuery\Queryable]
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected float $longitude = 0.0;
 
-    #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
     protected bool $enabled = true;
@@ -114,8 +103,6 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[Groups(['ride-details'])]
     protected Collection $socialNetworkProfiles;
 
-    #[DataQuery\Sortable]
-    #[DataQuery\Queryable]
     #[Assert\Type(type: 'int')]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['ride-list'])]
@@ -142,12 +129,10 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[Ignore]
     protected ?string $imageMimeType = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
     private ?\DateTime $updatedAt = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
     protected ?\DateTime $createdAt = null;
@@ -191,7 +176,6 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[Ignore]
     protected ?string $wikidataEntityId = null;
 
-    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?float $activityScore = null;

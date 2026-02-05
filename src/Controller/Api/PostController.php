@@ -2,9 +2,9 @@
 
 namespace App\Controller\Api;
 
+use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\Post;
-use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
-use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
