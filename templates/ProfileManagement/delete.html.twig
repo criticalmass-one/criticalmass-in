@@ -1,0 +1,53 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Benutzerkonto löschen{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Benutzerkonto löschen') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>
+                    Benutzerkonto löschen
+                </h2>
+
+                <div class="alert alert-danger" role="alert">
+                    <strong>Achtung!</strong> Diese Aktion kann nicht rückgängig gemacht werden.
+                </div>
+
+                <p class="lead">
+                    Möchtest du dein Benutzerkonto wirklich löschen? Dabei werden folgende Daten unwiderruflich gelöscht:
+                </p>
+
+                <ul>
+                    <li>Dein Benutzerkonto und alle persönlichen Daten</li>
+                    <li>Alle von dir hochgeladenen Fotos</li>
+                    <li>Alle von dir hochgeladenen Tracks</li>
+                    <li>Alle deine Teilnahme-Markierungen</li>
+                </ul>
+
+                <p>
+                    Bitte beachte, dass diese Aktion nicht rückgängig gemacht werden kann. Wenn du dir unsicher bist, kannst du jederzeit abbrechen.
+                </p>
+
+                <form method="post" action="{{ path('criticalmass_user_profile_delete_confirm') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete-profile') }}">
+
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-secondary">
+                            Abbrechen
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            Benutzerkonto endgültig löschen
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
