@@ -2361,11 +2361,6 @@ parameters:
 			path: src/Entity/CitySlug.php
 
 		-
-			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\ManyToOne constructor expects class\\-string\\|null, string given\\.$#"
-			count: 2
-			path: src/Entity/CityView.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\FrontpageTeaser\\:\\:getButtons\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/FrontpageTeaser.php
@@ -2446,11 +2441,6 @@ parameters:
 			path: src/Entity/Photo.php
 
 		-
-			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\ManyToOne constructor expects class\\-string\\|null, string given\\.$#"
-			count: 2
-			path: src/Entity/PhotoView.php
-
-		-
 			message: "#^Method App\\\\Entity\\\\Post\\:\\:getChildren\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/Post.php
@@ -2479,11 +2469,6 @@ parameters:
 			message: "#^Property App\\\\Entity\\\\Promotion\\:\\:\\$updatedAt \\(DateTime\\|null\\) does not accept DateTimeInterface\\.$#"
 			count: 1
 			path: src/Entity/Promotion.php
-
-		-
-			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\ManyToOne constructor expects class\\-string\\|null, string given\\.$#"
-			count: 2
-			path: src/Entity/PromotionView.php
 
 		-
 			message: "#^Method App\\\\Entity\\\\Region\\:\\:getChildren\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
@@ -2557,11 +2542,6 @@ parameters:
 
 		-
 			message: "#^Method App\\\\Entity\\\\Ride\\:\\:getTracks\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Ride.php
-
-		-
-			message: "#^Method App\\\\Entity\\\\Ride\\:\\:getViewRelations\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/Ride.php
 
@@ -2641,11 +2621,6 @@ parameters:
 			path: src/Entity/Ride.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Ride\\:\\:\\$viewRelation with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-			count: 1
-			path: src/Entity/Ride.php
-
-		-
 			message: "#^Property App\\\\Entity\\\\Ride\\:\\:\\$weathers with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
 			count: 1
 			path: src/Entity/Ride.php
@@ -2659,11 +2634,6 @@ parameters:
 			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\OneToOne constructor expects class\\-string\\|null, string given\\.$#"
 			count: 1
 			path: src/Entity/RideEstimate.php
-
-		-
-			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\ManyToOne constructor expects class\\-string\\|null, string given\\.$#"
-			count: 1
-			path: src/Entity/RideView.php
 
 		-
 			message: "#^Attribute class Doctrine\\\\ORM\\\\Mapping\\\\Index is not repeatable but is already present above the class\\.$#"
@@ -2759,11 +2729,6 @@ parameters:
 			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\OneToOne constructor expects class\\-string\\|null, string given\\.$#"
 			count: 2
 			path: src/Entity/Thread.php
-
-		-
-			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\ManyToOne constructor expects class\\-string\\|null, string given\\.$#"
-			count: 1
-			path: src/Entity/ThreadView.php
 
 		-
 			message: "#^If condition is always true\\.$#"
