@@ -131,3 +131,14 @@ services:
                 'strava': 'stravaId'
 
     Sabre\VObject\Component\VCalendar: ~
+
+    App\Criticalmass\Profile\Deletion\UserPartDeleterInterface:
+        tags: ['app.user_part_deleter']
+
+    _instanceof:
+        App\Criticalmass\Profile\Deletion\UserPartDeleterInterface:
+            tags: ['app.user_part_deleter']
+
+    App\Criticalmass\Profile\Deletion\UserDeleter:
+        arguments:
+            $userPartDeleterList: !tagged_iterator app.user_part_deleter

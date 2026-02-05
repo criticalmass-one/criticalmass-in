@@ -364,5 +364,20 @@ class PhotoRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * @return Photo[]
+     */
+    public function findByUser(User $user): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.user', ':user'))
+            ->setParameter('user', $user);
+
+        return $builder->getQuery()->getResult();
+    }
 }
 
