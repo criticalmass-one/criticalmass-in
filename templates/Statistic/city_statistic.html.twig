@@ -11,126 +11,124 @@
 
 {% block content %}
     <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
         {{ include('City/Includes/_tabs.html.twig', { tab: 'statistic' }) }}
 
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    Stadt-Statistiken von {{ city.city }}
-                </h1>
-
-                <p class="lead">
-                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
-                    der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind &mdash; entweder von
-                    den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a
-                            href="{{ object_path(city, 'caldera_criticalmass_city_missingstats') }}">Liste
-                        von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.
-                </p>
+        {# Header Card #}
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h4 class="mb-2">
+                            <i class="far fa-chart-bar text-primary me-2"></i>Stadt-Statistiken von {{ city.city }}
+                        </h4>
+                        <p class="text-muted mb-0">
+                            Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
+                            der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind.
+                        </p>
+                    </div>
+                    <a href="{{ object_path(city, 'caldera_criticalmass_city_missingstats') }}" class="btn btn-outline-primary btn-sm">
+                        <i class="far fa-list-alt me-1"></i>Fehlende Statistiken
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    Teilnehmerzahl
-                </h2>
-
-                <p>
+        {# Chart Card #}
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="card-title mb-0">
+                    <i class="far fa-users text-primary me-2"></i>Teilnehmerzahl
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
                     Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die von den
                     Teilnehmern geschätzt wurden.
                 </p>
+
+                <div data-controller="statistic-city-chart">
+                    <canvas id="chart" style="width: 100%; height: 400px;" data-statistic-city-chart-target="canvas"></canvas>
+
+                    {% for ride in rides %}
+                        <span class="d-none" data-statistic-city-chart-target="rideData"
+                              data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}"
+                              data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}"
+                              data-estimated-duration="{{ ride.estimatedDuration|default(0) }}"
+                              data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></span>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
-        <div class="row" data-controller="statistic-city-chart">
-            <div class="col-md-12">
-                <canvas id="chart" style="width: 100%; height: 75vh;" data-statistic-city-chart-target="canvas"></canvas>
+        {# Table Card #}
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="card-title mb-0">
+                    <i class="far fa-table text-primary me-2"></i>Tabellarischer Vergleich
+                </h5>
             </div>
-
-            {% for ride in rides %}
-                <span class="d-none" data-statistic-city-chart-target="rideData"
-                      data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}"
-                      data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}"
-                      data-estimated-duration="{{ ride.estimatedDuration|default(0) }}"
-                      data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></span>
-            {% endfor %}
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    Tabellarischer Vergleich
-                </h2>
-
-                <p class="lead">
+            <div class="card-body">
+                <p class="text-muted mb-4">
                     Gibt es einen Zusammenhang zwischen dem Wetter und den Teilnehmerzahlen?
                 </p>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Datum
-                        </th>
-                        <th>
-                            Temperatur
-                        </th>
-                        <th>
-                            Niederschlag
-                        </th>
-                        <th>
-                            Windgeschwindigkeit
-                        </th>
-                        <th>
-                            Teilnehmerzahl
-                        </th>
-                        <th>
-                            Streckenlänge
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for ride in rides %}
-                        {% set weather = ride.weathers.first %}
-                        {% if weather %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
                             <tr>
-                                <td>
-                                    {{ ride.dateTime | date('d.m.Y H:i') }}&nbsp;Uhr
-                                </td>
-                                <td>
-                                    {{ weather.temperatureEvening|number_format(2) }}&nbsp;°C
-                                </td>
-                                <td>
-                                    {{ weather.precipitation|number_format(2) }}&nbsp;mm
-                                </td>
-                                <td>
-                                    {{ weather.windSpeed|number_format(2) }}&nbsp;m/s
-                                </td>
-                                <td>
-                                    {% if ride.estimatedParticipants %}
-                                    {{ ride.estimatedParticipants|number_format(0) }}
-                                    {% else %}
-                                    unbekannt
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if ride.estimatedDistance %}
-                                    {{ ride.estimatedDistance|number_format(2) }}&nbsp;km
-                                    {% else %}
-                                    unbekannt
-                                    {% endif %}
-                                </td>
+                                <th>Datum</th>
+                                <th class="d-none d-md-table-cell">Temperatur</th>
+                                <th class="d-none d-lg-table-cell">Niederschlag</th>
+                                <th class="d-none d-lg-table-cell">Windgeschwindigkeit</th>
+                                <th>Teilnehmer</th>
+                                <th class="d-none d-md-table-cell">Strecke</th>
                             </tr>
-                        {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for ride in rides %}
+                                {% set weather = ride.weathers.first %}
+                                {% if weather %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ object_path(ride) }}" class="text-decoration-none">
+                                                {{ ride.dateTime|date('d.m.Y') }}
+                                            </a>
+                                        </td>
+                                        <td class="d-none d-md-table-cell">
+                                            <i class="far fa-thermometer-half text-warning me-1"></i>
+                                            {{ weather.temperatureEvening|number_format(1) }} °C
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">
+                                            <i class="far fa-tint text-info me-1"></i>
+                                            {{ weather.precipitation|number_format(1) }} mm
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">
+                                            <i class="far fa-wind text-secondary me-1"></i>
+                                            {{ weather.windSpeed|number_format(1) }} m/s
+                                        </td>
+                                        <td>
+                                            {% if ride.estimatedParticipants %}
+                                                <span class="badge bg-primary">{{ ride.estimatedParticipants|number_format(0) }}</span>
+                                            {% else %}
+                                                <span class="text-muted">—</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="d-none d-md-table-cell">
+                                            {% if ride.estimatedDistance %}
+                                                {{ ride.estimatedDistance|number_format(1) }} km
+                                            {% else %}
+                                                <span class="text-muted">—</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
 {% endblock %}
