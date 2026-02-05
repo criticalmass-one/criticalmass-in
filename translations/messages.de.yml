@@ -1405,6 +1405,9 @@ timeline:
     city_edited: "hat eine Stadt editiert:"
     photo_commented: "hat %count% Fotos kommentiert:"
     thread_started: "hat ein neues Diskussionsthema begonnen:"
+    track_map_alt: "Karte der Tour %ride%"
+    ride_map_alt: "Karte der Tour %ride%"
+    city_map_alt: "Karte von %city%"
 
 gallery:
     download: Herunterladen

@@ -24,21 +24,32 @@
         {% if item.ride.latitude and item.ride.longitude %}
             <div class="row">
                 <div class="col-md-12">
-                    <div
-                        id="map-{{ item.uniqId }}"
-                        class="map timeline-item-ride-map"
-                        data-controller="map--map"
-                        style="height: 150px;"
-                        data-map--map-center-latitude-value="{{ item.ride.latitude }}"
-                        data-map--map-center-longitude-value="{{ item.ride.longitude }}"
-                        data-map--map-zoom-value="13"
-                        data-map--map-lock-map-value="true"
-                        data-map--map-marker-latitude-value="{{ item.ride.latitude }}"
-                        data-map--map-marker-longitude-value="{{ item.ride.longitude }}"
-                        data-map--map-marker-type-value="ride"
-                        data-map--map-vector-value="false"
-                    >
-                    </div>
+                    {% set static_map_url = static_map_marker(item.ride.latitude, item.ride.longitude, 'ride') %}
+                    {% if static_map_url %}
+                        <img
+                            src="{{ static_map_url }}"
+                            alt="{{ 'timeline.ride_map_alt'|trans({'%ride%': item.rideTitle}) }}"
+                            class="img-responsive timeline-item-ride-map"
+                            style="width: 100%; height: auto;"
+                            loading="lazy"
+                        />
+                    {% else %}
+                        <div
+                            id="map-{{ item.uniqId }}"
+                            class="map timeline-item-ride-map"
+                            data-controller="map--map"
+                            style="height: 150px;"
+                            data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                            data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                            data-map--map-zoom-value="13"
+                            data-map--map-lock-map-value="true"
+                            data-map--map-marker-latitude-value="{{ item.ride.latitude }}"
+                            data-map--map-marker-longitude-value="{{ item.ride.longitude }}"
+                            data-map--map-marker-type-value="ride"
+                            data-map--map-vector-value="false"
+                        >
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% endif %}

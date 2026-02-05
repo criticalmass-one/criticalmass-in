@@ -24,20 +24,31 @@
         {% if item.polyline %}
         <div class="row">
             <div class="col-md-12">
-                <div
-                    id="map-{{ item.uniqId }}"
-                    class="map timeline-item-ride-map"
-                    data-controller="map--map"
-                    style="height: 150px;"
-                    data-map--map-center-latitude-value="{{ item.ride.latitude }}"
-                    data-map--map-center-longitude-value="{{ item.ride.longitude }}"
-                    data-map--map-zoom-value="13"
-                    data-map--map-lock-map-value="true"
-                    data-map--map-polyline-color-value="{{ item.track.user.color }}"
-                    data-map--map-polyline-value="{{ item.track.polyline }}"
-                    data-map--map-vector-value="false"
-                >
-                </div>
+                {% set static_map_url = static_map_polyline(item.track.polyline, item.track.user.color) %}
+                {% if static_map_url %}
+                    <img
+                        src="{{ static_map_url }}"
+                        alt="{{ 'timeline.track_map_alt'|trans({'%ride%': item.rideTitle}) }}"
+                        class="img-responsive timeline-item-ride-map"
+                        style="width: 100%; height: auto;"
+                        loading="lazy"
+                    />
+                {% else %}
+                    <div
+                        id="map-{{ item.uniqId }}"
+                        class="map timeline-item-ride-map"
+                        data-controller="map--map"
+                        style="height: 150px;"
+                        data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                        data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                        data-map--map-zoom-value="13"
+                        data-map--map-lock-map-value="true"
+                        data-map--map-polyline-color-value="{{ item.track.user.color }}"
+                        data-map--map-polyline-value="{{ item.track.polyline }}"
+                        data-map--map-vector-value="false"
+                    >
+                    </div>
+                {% endif %}
             </div>
         </div>
         {% endif %}
