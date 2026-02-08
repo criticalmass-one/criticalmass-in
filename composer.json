@@ -60,7 +60,6 @@
         "knplabs/knp-menu-bundle": "^3.0",
         "maltehuebner/ordered-entities-bundle": "^0.1",
         "symfony/doctrine-bridge": "^6.0",
-        "symfony/proxy-manager-bridge": "^6.0",
         "symfony/framework-bundle": "^6.0",
         "symfony/dotenv": "^6.0",
         "maltehuebner/dataquery-bundle": "0.9",
