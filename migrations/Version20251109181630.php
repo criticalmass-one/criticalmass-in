@@ -29,7 +29,7 @@ final class Version20251109181630 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE track ADD previewPolyline LONGTEXT DEFAULT NULL
+            ALTER TABLE track DROP app
         SQL);
     }
 }
