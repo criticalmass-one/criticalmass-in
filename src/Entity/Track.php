@@ -52,7 +52,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     protected ?User $user = null;
 
     #[ORM\OneToOne(targetEntity: 'RideEstimate', mappedBy: 'track', cascade: ['all'], orphanRemoval: true)]
-    #[ORM\JoinColumn(name: 'estimate_id', referencedColumnName: 'id')]
     #[Ignore]
     protected ?RideEstimate $rideEstimate = null;
 

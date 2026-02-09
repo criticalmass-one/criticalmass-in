@@ -2,8 +2,8 @@
 
 namespace App\Controller\Promotion;
 
-use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
-use MalteHuebner\DataQueryBundle\RequestParameterList\QueryStringToListConverter;
+use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\QueryStringToListConverter;
 use App\Entity\Promotion;
 use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;

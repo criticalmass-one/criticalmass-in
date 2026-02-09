@@ -11,6 +11,8 @@ use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -61,10 +63,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
 
-    /**
-     * @OE\Boolean(value=true)
-     */
-    #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
     protected bool $enabled = true;

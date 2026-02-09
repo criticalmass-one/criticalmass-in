@@ -12,6 +12,7 @@ use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\SocialNetworkProfileAble;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Enum\RideDisabledReasonEnum;
 use App\Enum\RideTypeEnum;
 use App\Validator\Constraint as CriticalAssert;
