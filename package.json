@@ -47,7 +47,7 @@
     "leaflet.locatecontrol": "^0.68.0",
     "leaflet.markercluster": "1.5.3",
     "maplibre-gl": "^5.13.0",
-    "npm": "^8.19.2",
+    "npm": "^11.9.0",
     "polyline-encoded": "0.0.8",
     "requirejs": "^2.3.7",
     "typeahead.js": "^0.11.1",
