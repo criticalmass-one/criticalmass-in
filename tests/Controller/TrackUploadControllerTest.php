@@ -229,6 +229,12 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             $client->submit($form);
 
             $crawler = $client->request('GET', $this->buildRideUrl($ride));
+            if ($client->getResponse()->getStatusCode() === 500) {
+                $errorText = $crawler->filter('.exception-message')->count() > 0
+                    ? $crawler->filter('.exception-message')->text()
+                    : substr($client->getResponse()->getContent(), 0, 2000);
+                $this->fail('Ride page returned 500: ' . $errorText);
+            }
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
             $tracksTabContent = $crawler->filter('#tracks')->text();
@@ -269,6 +275,12 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
 
             // Check ride page shows tracks
             $crawler = $client->request('GET', $this->buildRideUrl($ride));
+            if ($client->getResponse()->getStatusCode() === 500) {
+                $errorText = $crawler->filter('.exception-message')->count() > 0
+                    ? $crawler->filter('.exception-message')->text()
+                    : substr($client->getResponse()->getContent(), 0, 2000);
+                $this->fail('Ride page returned 500: ' . $errorText);
+            }
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
             // Count track rows in the tracks table (excluding header)
