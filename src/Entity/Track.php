@@ -138,7 +138,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     /**
      * $source must be nullable du to legacy tracks without source attribution
      */
-    #[ORM\Column(type: 'string', nullable: true, columnDefinition: "ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Ignore]
     protected ?string $source = self::TRACK_SOURCE_UNKNOWN;
 

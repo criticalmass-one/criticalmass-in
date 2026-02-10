@@ -113,10 +113,10 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Ignore]
     protected Collection $posts;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $exifExposure = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $exifAperture = null;
 
     #[ORM\Column(type: 'smallint', nullable: true)]

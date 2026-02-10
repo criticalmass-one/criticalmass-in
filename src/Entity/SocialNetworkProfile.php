@@ -39,11 +39,11 @@ class SocialNetworkProfile
     protected ?Subride $subride = null;
 
     #[Assert\NotBlank]
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?string $identifier = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?string $network = null;
 
