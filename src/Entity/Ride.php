@@ -185,13 +185,13 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Groups(['ride-list', 'ride-details'])]
     protected bool $enabled = true;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true, enumType: RideDisabledReasonEnum::class)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['ride-list'])]
-    protected ?RideDisabledReasonEnum $disabledReason = null;
+    protected ?string $disabledReason = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true, enumType: RideTypeEnum::class)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
-    protected ?RideTypeEnum $rideType = null;
+    protected ?string $rideType = null;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'ride')]
     #[Ignore]
@@ -854,24 +854,24 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     public function getDisabledReason(): ?RideDisabledReasonEnum
     {
-        return $this->disabledReason;
+        return $this->disabledReason !== null ? RideDisabledReasonEnum::from($this->disabledReason) : null;
     }
 
     public function setDisabledReason(?RideDisabledReasonEnum $disabledReason = null): Ride
     {
-        $this->disabledReason = $disabledReason;
+        $this->disabledReason = $disabledReason?->value;
 
         return $this;
     }
 
     public function getRideType(): ?RideTypeEnum
     {
-        return $this->rideType;
+        return $this->rideType !== null ? RideTypeEnum::from($this->rideType) : null;
     }
 
     public function setRideType(?RideTypeEnum $rideType = null): Ride
     {
-        $this->rideType = $rideType;
+        $this->rideType = $rideType?->value;
 
         return $this;
     }
