@@ -6,14 +6,20 @@ use App\Entity\Region;
 use Doctrine\ORM\QueryBuilder;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Term;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
+use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
+use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-class RegionQuery
+#[DataQuery\RequiredEntityProperty(propertyName: 'region')]
+class RegionQuery extends AbstractQuery implements OrmQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type(Region::class)]
     protected Region $region;
 
+    #[DataQuery\RequiredQueryParameter(parameterName: 'regionSlug')]
     public function setRegion(Region $region): RegionQuery
     {
         $this->region = $region;

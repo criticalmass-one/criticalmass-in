@@ -25,4 +25,5 @@ return [
     CalendR\Bridge\Symfony\Bundle\CalendRBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     MalteHuebner\OrderedEntitiesBundle\MalteHuebnerOrderedEntitiesBundle::class => ['all' => true],
+    MalteHuebner\DataQueryBundle\MalteHuebnerDataQueryBundle::class => ['all' => true],
 ];

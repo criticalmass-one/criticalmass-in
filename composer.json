@@ -82,7 +82,8 @@
         "symfony/messenger": "^7.2",
         "beberlei/doctrineextensions": "^1.5",
         "sibyx/phpgpx": "^1.3",
-        "twig/intl-extra": "^3.23"
+        "twig/intl-extra": "^3.23",
+        "maltehuebner/dataquery-bundle": "0.9.1"
     },
     "require-dev": {
         "symfony/browser-kit": "^7.2",

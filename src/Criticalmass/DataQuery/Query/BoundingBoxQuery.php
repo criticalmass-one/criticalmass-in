@@ -3,9 +3,16 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use Doctrine\ORM\QueryBuilder;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
+use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
+use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
+use MalteHuebner\DataQueryBundle\Validator\Constraint\BoundingBoxValues;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-class BoundingBoxQuery
+#[DataQuery\RequiredEntityProperty(propertyName: 'pin', propertyType: 'string')]
+#[BoundingBoxValues]
+class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface, OrmQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type('float')]
@@ -27,24 +34,28 @@ class BoundingBoxQuery
     #[Constraints\Range(min: -180, max: 180)]
     protected ?float $westLongitude = null;
 
+    #[DataQuery\RequiredQueryParameter(parameterName: 'bbNorthLatitude')]
     public function setNorthLatitude(float $northLatitude): BoundingBoxQuery
     {
         $this->northLatitude = $northLatitude;
         return $this;
     }
 
+    #[DataQuery\RequiredQueryParameter(parameterName: 'bbSouthLatitude')]
     public function setSouthLatitude(float $southLatitude): BoundingBoxQuery
     {
         $this->southLatitude = $southLatitude;
         return $this;
     }
 
+    #[DataQuery\RequiredQueryParameter(parameterName: 'bbEastLongitude')]
     public function setEastLongitude(float $eastLongitude): BoundingBoxQuery
     {
         $this->eastLongitude = $eastLongitude;
         return $this;
     }
 
+    #[DataQuery\RequiredQueryParameter(parameterName: 'bbWestLongitude')]
     public function setWestLongitude(float $westLongitude): BoundingBoxQuery
     {
         $this->westLongitude = $westLongitude;

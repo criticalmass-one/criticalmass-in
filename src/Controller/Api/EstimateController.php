@@ -2,20 +2,20 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
-use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
+use Doctrine\Persistence\ManagerRegistry;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
 use App\Serializer\CriticalSerializerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EstimateController extends BaseController
 {

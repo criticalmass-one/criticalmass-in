@@ -6,15 +6,23 @@ use App\Entity\City;
 use App\Entity\Ride;
 use Doctrine\ORM\QueryBuilder;
 use Elastica\Query\Term;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
+use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
+use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-class CityNameQuery
+#[DataQuery\RequiredEntityProperty(propertyName: 'name')]
+class CityNameQuery extends AbstractQuery implements OrmQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     protected string $name;
 
-    protected ?string $entityFqcn = null;
-
+    #[DataQuery\RequiredQueryParameter(
+        parameterName: 'name',
+        repository: City::class,
+        repositoryMethod: 'findOneByName'
+    )]
     public function setName(string $name): CityNameQuery
     {
         $this->name = $name;
@@ -24,12 +32,6 @@ class CityNameQuery
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function setEntityFqcn(string $entityFqcn): self
-    {
-        $this->entityFqcn = $entityFqcn;
-        return $this;
     }
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
