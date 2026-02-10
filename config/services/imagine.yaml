@@ -4,7 +4,6 @@ services:
         autoconfigure: true
         bind:
             $webRootDir: '%kernel.project_dir%/../public'
-            cachePrefix: 'media/cache'
 
     App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
         arguments: ['@liip_imagine']
