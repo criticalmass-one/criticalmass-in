@@ -332,7 +332,7 @@ SQL;
         $query->setParameter('lon', $city->getLongitude());
         $query->setParameter('id', $city->getId());
         $query->setParameter('distance', $distance);
-        $query->setParameter('size', $size, \PDO::PARAM_INT);
+        $query->setParameter('size', $size, \Doctrine\DBAL\ParameterType::INTEGER);
 
         return $query->getResult();
     }
