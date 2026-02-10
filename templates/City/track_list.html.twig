@@ -1,7 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Track-Übersicht{% endblock %}
+{% block title %}Tracks aus {{ city.city }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
@@ -10,47 +10,57 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container main-container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    Track-Übersicht
-                </h2>
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'city' }) }}
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="card-title mb-0">
+                    <i class="far fa-route text-primary me-2"></i>Track-Übersicht
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if pagination|length > 0 %}
+                    {% for track in pagination %}
+                        {% include('Track/_track_list_item.html.twig') with { 'track': track, 'show_city': false } %}
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="far fa-route fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Keine Tracks vorhanden</h5>
+                        <p class="text-muted mb-0">Für {{ city.city }} wurden noch keine GPS-Tracks hochgeladen.</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                {% for track in pagination %}
-                    {% include('Track/_track_list_item.html.twig') with { 'track': track, 'show_city': false } %}
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="text-center">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
+        {# Delete Modal #}
+        <div class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Track löschen</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title">
+                            <i class="far fa-trash text-danger me-2"></i>Track löschen
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                     </div>
                     <div class="modal-body">
                         <span id="trackIdLabel"></span>
-                        <p>Willst Du diesen Track wirklich löschen?</p>
+                        <p class="mb-0">Willst Du diesen Track wirklich löschen?</p>
                     </div>
-                    <div class="modal-footer">
-                        <div class="btn-group" role="group" aria-label="...">
-                            <a id="deleteButton" href="#" class="btn btn-success">Ja, löschen</a>
-                            <button id="cancelButton" class="btn btn-secondary">Nein, abbrechen</button>
-                        </div>
+                    <div class="modal-footer border-0">
+                        <button id="cancelButton" class="btn btn-light" data-bs-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <a id="deleteButton" href="#" class="btn btn-danger">
+                            <i class="far fa-trash me-1"></i>Löschen
+                        </a>
                     </div>
                 </div>
             </div>

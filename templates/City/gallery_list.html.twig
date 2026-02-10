@@ -1,67 +1,74 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Städte-Übersicht{% endblock %}
+{% block title %}Fotos aus {{ city.city }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
     {{ breadcrumb.active('Foto-Galerien') }}
 {% endblock %}
-    
+
 {% block content %}
-    <div class="container main-container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    Fotos aus {{ city.city }}
-                </h1>
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
 
-                <p class="lead">
-                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos
-                    hochgeladen wurden.
-                </p>
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'city' }) }}
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
+                        <i class="far fa-images text-primary me-2"></i>Fotos aus {{ city.city }}
+                    </h5>
+                </div>
             </div>
-        </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
+                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos hochgeladen wurden.
+                </p>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table id="cityRideList" class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Datum
-                        </th>
-                        <th>
-                            Titel
-                        </th>
-                        <th>
-                            Fotos
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for key, ride in result.rides %}
-                        <tr class="ride">
-                            <td>
-                                <a href="{{ object_path(ride) }}">
-                                    {{ ride.dateTime.format('d.m.Y') }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ object_path(ride) }}">
-                                    {{ ride.title }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
-                                    {{ result.counter[key] }}
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                {% if result.rides|length > 0 %}
+                    <div class="table-responsive">
+                        <table id="cityRideList" class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>Titel</th>
+                                    <th class="text-end">Fotos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for key, ride in result.rides %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ object_path(ride) }}" class="text-decoration-none">
+                                                <i class="far fa-calendar-alt text-muted me-1"></i>
+                                                {{ ride.dateTime.format('d.m.Y') }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ object_path(ride) }}" class="text-decoration-none">
+                                                {{ ride.title }}
+                                            </a>
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}" class="badge bg-primary text-decoration-none">
+                                                <i class="far fa-images me-1"></i>{{ result.counter[key] }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="far fa-images fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Keine Fotos vorhanden</h5>
+                        <p class="text-muted mb-0">Für {{ city.city }} wurden noch keine Fotos hochgeladen.</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

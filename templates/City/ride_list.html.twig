@@ -1,71 +1,67 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Städte-Übersicht{% endblock %}
+{% block title %}Touren in {{ city.city }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
     {{ breadcrumb.active('Tour-Übersicht') }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
 
         {{ include('City/Includes/_tabs.html.twig', { tab: 'ride_list' }) }}
 
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    Touren in dieser Stadt
-                </h2>
-            </div>
-        </div>
-
-        {% for message in app.flashes('success') %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-success">
-                        {{ message|raw }}
-                    </div>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
+                        <i class="far fa-bicycle text-primary me-2"></i>Touren in {{ city.city }}
+                    </h5>
+                    {% if app.user %}
+                        <a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}" class="btn btn-primary btn-sm">
+                            <i class="far fa-plus me-1"></i>Tour hinzufügen
+                        </a>
+                    {% endif %}
                 </div>
             </div>
-        {% endfor %}
-
-        <div class="row">
-            <div class="col-md-12">
-                <table id="ride-list-table" class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Datum
-                        </th>
-                        <th>
-                            Uhrzeit
-                        </th>
-                        <th>
-                            Titel
-                        </th>
-                        <th>
-                            Treffpunkt
-                        </th>
-                        <th>
-                            Teilnehmer
-                        </th>
-                        <th>
-                            Distanz
-                        </th>
-                        <th>
-                            Dauer
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for ride in rides %}
-                    {% include 'Common/Ride/standard_city_ride_table_row.html.twig' with { ride: ride } %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+            <div class="card-body p-0">
+                {% if rides|length > 0 %}
+                    <div class="table-responsive">
+                        <table id="ride-list-table" class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Datum</th>
+                                    <th class="d-none d-md-table-cell">Uhrzeit</th>
+                                    <th>Titel</th>
+                                    <th class="d-none d-lg-table-cell">Treffpunkt</th>
+                                    <th class="d-none d-md-table-cell">Teilnehmer</th>
+                                    <th class="d-none d-lg-table-cell">Distanz</th>
+                                    <th class="d-none d-lg-table-cell">Dauer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ride in rides %}
+                                    {% include 'Common/Ride/standard_city_ride_table_row.html.twig' with { ride: ride } %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="far fa-bicycle fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Keine Touren vorhanden</h5>
+                        <p class="text-muted mb-0">Für {{ city.city }} wurden noch keine Touren eingetragen.</p>
+                        {% if app.user %}
+                            <a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}" class="btn btn-primary mt-3">
+                                <i class="far fa-plus me-1"></i>Tour hinzufügen
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
