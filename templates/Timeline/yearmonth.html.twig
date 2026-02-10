@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Critical Mass im {{ startDateTime|format_date('MMMM YYYY') }}{% endblock %}
+{% block title %}Critical Mass im {{ startDateTime|format_datetime(pattern='MMMM yyyy') }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Timeline', path('caldera_criticalmass_timeline_index')) }}
-    {{ breadcrumb.active(startDateTime|format_date('MMMM YYYY')) }}
+    {{ breadcrumb.active(startDateTime|format_datetime(pattern='MMMM yyyy')) }}
 {% endblock %}
 
 {% block content %}
@@ -13,11 +13,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Die Critical Mass im {{ startDateTime|format_date('MMMM YYYY') }}
+                    Die Critical Mass im {{ startDateTime|format_datetime(pattern='MMMM yyyy') }}
                 </h1>
 
                 <p class="lead">
-                    Schau dir an, was im {{ startDateTime|format_date('MMMM YYYY') }} bei der Critical Mass passiert
+                    Schau dir an, was im {{ startDateTime|format_datetime(pattern='MMMM yyyy') }} bei der Critical Mass passiert
                     ist.
                 </p>
             </div>

@@ -2,7 +2,7 @@
 
 namespace App\Form\Type;
 
-use App\DBAL\Type\RideDisabledReasonType;
+use App\Enum\RideDisabledReasonEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -14,7 +14,7 @@ class RideDisableType extends AbstractType
     {
         $builder->add('disabledReason', ChoiceType::class, [
             'required' => true,
-            'choices' => array_flip(RideDisabledReasonType::$choices),
+            'choices' => array_flip(RideDisabledReasonEnum::choices()),
             'expanded' => true,
             'multiple' => false,
         ])

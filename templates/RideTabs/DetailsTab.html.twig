@@ -93,19 +93,19 @@
                 <div class="flex-grow-1 ms-3">
                     <h5 class="alert-heading">Tour abgesagt</h5>
                     <p class="mb-0">
-                        {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
+                        {% if ride.disabledReason.value == 'DUPLICATE' %}
                             Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
-                        {% elseif ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason.value == 'WRONG_WEBSITE_HANDLING' %}
                             Diese Tour wurde mit falschen Daten angelegt.
-                        {% elseif ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason.value == 'WRONG_AUTO_GENERATION' %}
                             Diese Tour wurde fehlerhafterweise automatisch generiert.
-                        {% elseif ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason.value == 'CANCELLED_WEATHER' %}
                             Diese Tour wurde witterungsbedingt abgesagt.
-                        {% elseif ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason.value == 'CANCELLED_PARTICIPANTS' %}
                             Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
-                        {% elseif ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason.value == 'CANCELLED_AUTHORITIES' %}
                             Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
-                        {% elseif ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason.value == 'CANCELLED' %}
                             Diese Tour wurde abgesagt.
                         {% endif %}
                     </p>

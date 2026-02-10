@@ -12,7 +12,7 @@
                         {% for day in month %}
                             <li>
                                 <h5>
-                                    {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
+                                    {{ day.dateTime|format_datetime(pattern='eeee, dd. MMMM yyyy') }}
                                 </h5>
 
                                 <ul>

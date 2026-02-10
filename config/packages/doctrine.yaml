@@ -20,8 +20,6 @@ doctrine:
             datetime: App\DBAL\Type\UTCDateTimeType
             date: App\DBAL\Type\UTCDateType
             time: App\DBAL\Type\UTCTimeType
-        mapping_types:
-            enum: string
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
