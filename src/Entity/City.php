@@ -365,6 +365,7 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     }
 
     /** @deprecated */
+    #[Ignore]
     public function isEqual(City $city): bool
     {
         return $city->getId() === $this->getId();

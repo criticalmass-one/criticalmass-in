@@ -376,18 +376,21 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     }
 
     /** @deprecated */
+    #[Ignore]
     public function isEqual(Ride $ride): bool
     {
         return $ride->getId() == $this->getId();
     }
 
     /** @deprecated */
+    #[Ignore]
     public function equals(Ride $ride): bool
     {
         return $this->isEqual($ride);
     }
 
     /** @deprecated */
+    #[Ignore]
     public function isSameRide(Ride $ride): bool
     {
         return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getDateTime()->format('Y-m-d') == $this->getDateTime()->format('Y-m-d');
