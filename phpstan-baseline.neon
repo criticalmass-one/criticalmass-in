@@ -3121,12 +3121,6 @@ parameters:
 			path: src/Entity/Ride.php
 
 		-
-			message: '#^Method App\\Entity\\Ride\:\:getViewRelations\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
-			identifier: missingType.generics
-			count: 1
-			path: src/Entity/Ride.php
-
-		-
 			message: '#^Method App\\Entity\\Ride\:\:getWeathers\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
 			identifier: missingType.generics
 			count: 1
@@ -3212,12 +3206,6 @@ parameters:
 
 		-
 			message: '#^Property App\\Entity\\Ride\:\:\$tracks with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
-			identifier: missingType.generics
-			count: 1
-			path: src/Entity/Ride.php
-
-		-
-			message: '#^Property App\\Entity\\Ride\:\:\$viewRelation with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
 			identifier: missingType.generics
 			count: 1
 			path: src/Entity/Ride.php
@@ -3523,12 +3511,6 @@ parameters:
 			path: src/EventSubscriber/ProfilePhotoEventSubscriber.php
 
 		-
-			message: '#^Access to undefined constant Presta\\SitemapBundle\\Event\\SitemapPopulateEvent\:\:ON_SITEMAP_POPULATE\.$#'
-			identifier: classConstant.notFound
-			count: 1
-			path: src/EventSubscriber/SitemapEventSubscriber.php
-
-		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\City\>\:\:findCities\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -3557,18 +3539,6 @@ parameters:
 			identifier: missingType.return
 			count: 1
 			path: src/Form/Type/PhotoCoordType.php
-
-		-
-			message: '#^Access to static property \$choices on an unknown class App\\DBAL\\Type\\RideDisabledReasonType\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Form/Type/RideDisableType.php
-
-		-
-			message: '#^Access to static property \$choices on an unknown class App\\DBAL\\Type\\RideType\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Form/Type/RideType.php
 
 		-
 			message: '#^Method App\\Form\\Type\\SocialNetworkProfileType\:\:getNetworkList\(\) return type has no value type specified in iterable type array\.$#'
@@ -3909,18 +3879,6 @@ parameters:
 		-
 			message: '#^Method App\\Repository\\PhotoRepository\:\:findRidesWithPhotoCounterByUser\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/Repository/PhotoRepository.php
-
-		-
-			message: '#^Method App\\Repository\\PhotoRepository\:\:findSomePhotos\(\) has parameter \$limit with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/Repository/PhotoRepository.php
-
-		-
-			message: '#^Method App\\Repository\\PhotoRepository\:\:findSomePhotos\(\) has parameter \$maxViews with no type specified\.$#'
-			identifier: missingType.parameter
 			count: 1
 			path: src/Repository/PhotoRepository.php
 

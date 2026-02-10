@@ -635,7 +635,6 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
         return $this->participationsNumberNo;
     }
 
-    #[DataQuery\Queryable]
     public function getRegion(): ?Region
     {
         if ($this->city) {
