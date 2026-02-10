@@ -70,7 +70,6 @@ class PhotoController extends BaseController
      * <li><code>latitude</code></li>
      * <li><code>longitude</code></li>
      * <li><code>description</code></li>
-     * <li><code>views</code></li>
      * <li><code>creationDateTime</code></li>
      * <li><code>imageSize</code></li>
      * <li><code>updatedAt</code></li>

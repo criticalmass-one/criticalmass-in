@@ -291,7 +291,7 @@ class CityRepository extends ServiceEntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->eq('c.enabled', ':enabled'))
-            ->orderBy('c.views', 'DESC')
+            ->orderBy('c.cityPopulation', 'DESC')
             ->setParameter('enabled', true)
             ->setMaxResults($limit);
 

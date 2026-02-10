@@ -19,5 +19,4 @@ framework:
 
         routing:
             # Route messages to the async transport
-            'App\Message\CountViewMessage': async
             'App\Message\ImportTrackCandidateMessage': async

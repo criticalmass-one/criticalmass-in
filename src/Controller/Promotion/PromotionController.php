@@ -4,7 +4,6 @@ namespace App\Controller\Promotion;
 
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\QueryStringToListConverter;
-use App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface;
 use App\Entity\Promotion;
 use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -22,11 +21,8 @@ class PromotionController extends AbstractController
     public function showAction(
         #[MapEntity(mapping: ['promotionSlug' => 'slug'])] Promotion $promotion,
         DataQueryManagerInterface $dataQueryManager,
-        ViewStorageCacheInterface $viewStorageCache
     ): Response
     {
-        $viewStorageCache->countView($promotion);
-
         $requestParameterList = QueryStringToListConverter::convert($promotion->getQuery());
 
         $rideList = $dataQueryManager->query($requestParameterList, Ride::class);

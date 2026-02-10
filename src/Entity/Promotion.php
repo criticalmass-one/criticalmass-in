@@ -4,14 +4,13 @@ namespace App\Entity;
 
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
-use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_promotion_show')]
 #[ORM\Table(name: 'promotion')]
 #[ORM\Entity(repositoryClass: 'App\Repository\PromotionRepository')]
-class Promotion implements ViewableEntity, RouteableInterface
+class Promotion implements RouteableInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -48,11 +47,6 @@ class Promotion implements ViewableEntity, RouteableInterface
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $mapZoomLevel = null;
-
-    #[DataQuery\Queryable]
-    #[DataQuery\Sortable]
-    #[ORM\Column(type: 'integer', options: ['default' => 0])]
-    protected int $views = 0;
 
     public function getId(): ?int
     {
@@ -180,25 +174,6 @@ class Promotion implements ViewableEntity, RouteableInterface
     public function setMapZoomLevel(?int $mapZoomLevel): self
     {
         $this->mapZoomLevel = $mapZoomLevel;
-
-        return $this;
-    }
-
-    public function getViews(): int
-    {
-        return $this->views;
-    }
-
-    public function incViews(): ViewableEntity
-    {
-        ++$this->views;
-
-        return $this;
-    }
-
-    public function setViews(int $views): ViewableEntity
-    {
-        $this->views = $views;
 
         return $this;
     }

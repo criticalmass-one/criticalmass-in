@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Criticalmass\Geo\Coord\Coord;
 use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Criticalmass\Router\Attribute as Routing;
-use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ParticipateableInterface;
@@ -37,7 +36,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Index(fields: ['dateTime'], name: 'ride_date_time_index')]
 #[ORM\Index(fields: ['createdAt'], name: 'ride_created_at_index')]
 #[ORM\Index(fields: ['updatedAt'], name: 'ride_updated_at_index')]
-class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
 {
     #[DataQuery\Sortable]
     #[ORM\Id]
@@ -184,12 +183,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Ignore]
     protected Collection $estimates;
 
-    #[DataQuery\Sortable]
-    #[DataQuery\Queryable]
-    #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
-    protected int $views = 0;
-
     #[ORM\ManyToOne(targetEntity: 'Photo', inversedBy: 'featuredRides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'featured_photo', referencedColumnName: 'id')]
     #[Ignore]
@@ -244,10 +237,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Groups(['ride-list'])]
     private ?string $disabledReasonMessage = null;
 
-    #[ORM\OneToMany(targetEntity: RideView::class, mappedBy: 'ride', fetch: 'LAZY')]
-    #[Ignore]
-    protected Collection $viewRelation;
-
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -262,7 +251,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
-        $this->viewRelation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -680,25 +668,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->participationsNumberNo;
     }
 
-    public function setViews(int $views): ViewableEntity
-    {
-        $this->views = $views;
-
-        return $this;
-    }
-
-    public function getViews(): int
-    {
-        return $this->views;
-    }
-
-    public function incViews(): ViewableEntity
-    {
-        ++$this->views;
-
-        return $this;
-    }
-
     #[DataQuery\Queryable]
     public function getRegion(): ?Region
     {
@@ -987,37 +956,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     public function setDisabledReasonMessage(?string $disabledReasonMessage): self
     {
         $this->disabledReasonMessage = $disabledReasonMessage;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|RideView[]
-     */
-    public function getViewRelations(): Collection
-    {
-        return $this->viewRelation;
-    }
-
-    public function addViewRelation(RideView $viewRelation): self
-    {
-        if (!$this->viewRelation->contains($viewRelation)) {
-            $this->viewRelation[] = $viewRelation;
-            $viewRelation->setRide($this);
-        }
-
-        return $this;
-    }
-
-    public function removeViewRelation(RideView $viewRelation): self
-    {
-        if ($this->viewRelation->contains($viewRelation)) {
-            $this->viewRelation->removeElement($viewRelation);
-            // set the owning side to null (unless already changed)
-            if ($viewRelation->getRide() === $this) {
-                $viewRelation->setRide(null);
-            }
-        }
 
         return $this;
     }

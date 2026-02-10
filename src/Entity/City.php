@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Criticalmass\Geo\Coord\Coord;
 use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Criticalmass\Router\Attribute as Routing;
-use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\BoardInterface;
 use App\EntityInterface\CoordinateInterface;
@@ -29,7 +28,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 #[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
-class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
+class City implements BoardInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -183,10 +182,6 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     #[ORM\JoinColumn(name: 'lastthread_id', referencedColumnName: 'id')]
     #[Ignore]
     protected ?Thread $lastThread = null;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
-    #[Ignore]
-    protected int $views = 0;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Ignore]
@@ -696,25 +691,6 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     public function removePhoto(Photo $photo): City
     {
         $this->photos->removeElement($photo);
-
-        return $this;
-    }
-
-    public function setViews(int $views): ViewableEntity
-    {
-        $this->views = $views;
-
-        return $this;
-    }
-
-    public function getViews(): int
-    {
-        return $this->views;
-    }
-
-    public function incViews(): ViewableEntity
-    {
-        ++$this->views;
 
         return $this;
     }

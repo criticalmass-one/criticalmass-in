@@ -54,7 +54,7 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for Ride list endpoint: GET /api/ride (ride-list group)
-     * Actual keys: id, title, date_time, location, latitude, longitude, estimated_participants, views, enabled
+     * Actual keys: id, title, date_time, location, latitude, longitude, estimated_participants, enabled
      */
     public const RIDE_LIST_ITEM_SCHEMA = [
         'id' => 'int',
@@ -63,7 +63,6 @@ final class ApiSchemaDefinitions
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'views' => 'int',
         'enabled' => 'bool',
         // Optional fields
         'estimated_participants?' => 'int|null',
@@ -80,7 +79,6 @@ final class ApiSchemaDefinitions
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'views' => 'int',
         'participations_number_yes' => 'int',
         'participations_number_maybe' => 'int',
         'participations_number_no' => 'int',
@@ -99,14 +97,13 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for Photo list endpoint: GET /api/photo
-     * Actual keys: id, latitude, longitude, description, views, creation_date_time, image_name, updated_at, location, exif_creation_date
+     * Actual keys: id, latitude, longitude, description, creation_date_time, image_name, updated_at, location, exif_creation_date
      */
     public const PHOTO_SCHEMA = [
         'id' => 'int',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
         'description' => 'string|null',
-        'views' => 'int',
         'creation_date_time' => 'int', // Unix timestamp
         'image_name' => 'string',
         'updated_at' => 'int|null', // Unix timestamp or null
