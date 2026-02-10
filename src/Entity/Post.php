@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,6 +18,7 @@ class Post
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[DataQuery\Sortable]
     #[Groups(['post-list'])]
     protected ?int $id = null;
 
@@ -34,11 +36,13 @@ class Post
     #[Groups(['post-list'])]
     protected ?User $user = null;
 
+    #[DataQuery\Queryable]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'posts')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     #[Ignore]
     protected ?Ride $ride = null;
 
+    #[DataQuery\Queryable]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'posts')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     #[Ignore]
@@ -54,14 +58,20 @@ class Post
     #[Ignore]
     protected ?Photo $photo = null;
 
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['post-list'])]
     protected ?float $latitude = null;
 
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['post-list'])]
     protected ?float $longitude = null;
 
+    #[DataQuery\DateTimeQueryable(format: 'strict_date_hour_minute_second', pattern: 'Y-m-d\TH:i:s')]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['post-list'])]
     protected ?\DateTime $dateTime = null;
@@ -71,6 +81,7 @@ class Post
     #[Groups(['post-list'])]
     protected ?string $message = null;
 
+    #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
     protected bool $enabled = true;

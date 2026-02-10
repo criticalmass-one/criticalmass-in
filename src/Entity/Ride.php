@@ -19,6 +19,7 @@ use App\Validator\Constraint as CriticalAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
@@ -37,6 +38,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Index(fields: ['updatedAt'], name: 'ride_updated_at_index')]
 class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
 {
+    #[DataQuery\Sortable]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
@@ -53,6 +55,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Groups(['extended-ride-list', 'ride-details'])]
     protected ?CityCycle $cycle = null;
 
+    #[DataQuery\Sortable]
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'rides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
@@ -67,47 +70,69 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Groups(['extended-ride-list'])]
     protected Collection $subrides;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?string $slug = null;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?string $title = null;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?string $description = null;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'text', nullable: true)]
     #[Ignore]
     protected ?string $socialDescription = null;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected \DateTime $dateTime;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?string $location = null;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?float $latitude = 0.0;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?float $longitude = 0.0;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'smallint', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?int $estimatedParticipants = null;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?float $estimatedDistance = null;
 
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?float $estimatedDuration = null;
@@ -635,6 +660,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
         return $this->participationsNumberNo;
     }
 
+    #[DataQuery\Queryable]
     public function getRegion(): ?Region
     {
         if ($this->city) {
