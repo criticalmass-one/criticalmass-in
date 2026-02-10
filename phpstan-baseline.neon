@@ -3199,12 +3199,6 @@ parameters:
 			path: src/Entity/Promotion.php
 
 		-
-			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
-			identifier: argument.type
-			count: 2
-			path: src/Entity/PromotionView.php
-
-		-
 			message: '#^Method App\\Entity\\Region\:\:getChildren\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
 			identifier: missingType.generics
 			count: 1
@@ -3412,12 +3406,6 @@ parameters:
 			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
 			identifier: argument.type
 			count: 1
-			path: src/Entity/RideView.php
-
-		-
-			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
 			path: src/Entity/SocialNetworkFeedItem.php
 
 		-
@@ -3521,12 +3509,6 @@ parameters:
 			identifier: argument.type
 			count: 2
 			path: src/Entity/Thread.php
-
-		-
-			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Entity/ThreadView.php
 
 		-
 			message: '#^If condition is always true\.$#'
@@ -3773,12 +3755,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Menu/Builder.php
-
-		-
-			message: '#^Method App\\Criticalmass\\ViewStorage\\Persister\\ViewStoragePersisterInterface\:\:storeView\(\) invoked with 2 parameters, 1 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: src/MessageHandler/CountViewMessageHandler.php
 
 		-
 			message: '#^Method App\\Model\\CityListModel\:\:__construct\(\) has parameter \$cycles with no value type specified in iterable type array\.$#'
@@ -5401,34 +5377,10 @@ parameters:
 			path: tests/IcalGenerator/RideIcalGeneratorTest.php
 
 		-
-			message: '#^Method Tests\\Message\\CountViewMessageTest\:\:entityClassNameProvider\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Message/CountViewMessageTest.php
-
-		-
 			message: '#^Method Tests\\Message\\ImportTrackCandidateMessageTest\:\:activityTypeProvider\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: tests/Message/ImportTrackCandidateMessageTest.php
-
-		-
-			message: '#^Anonymous function has an unused use \$dateTime\.$#'
-			identifier: closure.unusedUse
-			count: 1
-			path: tests/MessageHandler/CountViewMessageHandlerTest.php
-
-		-
-			message: '#^Instanceof between DateTime and DateTime will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 2
-			path: tests/MessageHandler/CountViewMessageHandlerTest.php
-
-		-
-			message: '#^Method Tests\\MessageHandler\\CountViewMessageHandlerTest\:\:entityClassNameProvider\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/MessageHandler/CountViewMessageHandlerTest.php
 
 		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
@@ -5507,66 +5459,6 @@ parameters:
 			identifier: method.alreadyNarrowedType
 			count: 1
 			path: tests/Twig/VelocityExtensionTest.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\ViewStorage\\ViewInterface\\ViewEntity\:\:setTestClass\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: tests/ViewStorage/Cache/RobustViewStorageCacheTest.php
-
-		-
-			message: '#^Instanceof between DateTime and DateTime will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 2
-			path: tests/ViewStorage/Cache/RobustViewStorageCacheTest.php
-
-		-
-			message: '#^Instanceof between DateTimeInterface and DateTimeInterface will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 2
-			path: tests/ViewStorage/Cache/ViewStorageCacheTest.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\ViewStorage\\ViewInterface\\ViewEntity\:\:setTest\(\)\.$#'
-			identifier: method.notFound
-			count: 3
-			path: tests/ViewStorage/Persister/ViewStoragePersisterTest.php
-
-		-
-			message: '#^Instanceof between DateTime and DateTime will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 3
-			path: tests/ViewStorage/Persister/ViewStoragePersisterTest.php
-
-		-
-			message: '#^Property Tests\\ViewStorage\\TestClass\:\:\$views has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: tests/ViewStorage/TestClass.php
-
-		-
-			message: '#^Deprecated in PHP 8\.4\: Parameter \#1 \$user \(App\\Entity\\User\) is implicitly nullable via default value null\.$#'
-			identifier: parameter.implicitlyNullable
-			count: 1
-			path: tests/ViewStorage/TestClassView.php
-
-		-
-			message: '#^Property Tests\\ViewStorage\\TestClassView\:\:\$testClass has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: tests/ViewStorage/TestClassView.php
-
-		-
-			message: '#^Deprecated in PHP 8\.4\: Parameter \#1 \$user \(App\\Entity\\User\) is implicitly nullable via default value null\.$#'
-			identifier: parameter.implicitlyNullable
-			count: 1
-			path: tests/ViewStorage/TestView.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\ViewStorage\\ViewInterface\\ViewEntity\:\:setTestClass\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: tests/ViewStorage/ViewEntityFactory/ViewEntityFactoryTest.php
 
 		-
 			message: '#^Call to method boot\(\) on an unknown class Oneup\\FlysystemBundle\\Tests\\App\\AppKernel\.$#'
