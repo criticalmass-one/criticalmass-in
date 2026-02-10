@@ -1,4 +1,8 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
     Symfony\Component\Routing\RouteCollection: ~
 
     Sonata\SeoBundle\Seo\SeoPageInterface:

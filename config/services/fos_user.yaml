@@ -1,4 +1,8 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
     fos_user.doctrine_registry:
         alias: doctrine
 

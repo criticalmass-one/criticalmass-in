@@ -1,4 +1,8 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
     App\Menu\Builder:
         arguments:
             - '@knp_menu.factory'

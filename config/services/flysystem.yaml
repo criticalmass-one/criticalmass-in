@@ -1,4 +1,8 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
     App\Criticalmass\Image\ExifWrapper\ExifWrapper:
         arguments:
             $flysystemFilesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
