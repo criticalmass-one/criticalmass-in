@@ -4321,6 +4321,24 @@ parameters:
 			path: src/ValueResolver/CityValueResolver.php
 
 		-
+			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\CitySlug\>\:\:findOneBySlug\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/ValueResolver/LocationValueResolver.php
+
+		-
+			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\Location\>\:\:findOneByCityAndSlug\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/ValueResolver/LocationValueResolver.php
+
+		-
+			message: '#^Method App\\ValueResolver\\LocationValueResolver\:\:resolve\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/ValueResolver/LocationValueResolver.php
+
+		-
 			message: '#^Method App\\ValueResolver\\CityValueResolver\:\:resolve\(\) return type has no value type specified in iterable type iterable\.$#'
 			identifier: missingType.iterableValue
 			count: 1

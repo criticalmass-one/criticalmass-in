@@ -30,6 +30,11 @@ class LocationRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findOneByCityAndSlug(City $city, string $slug): ?Location
+    {
+        return $this->findOneBy(['city' => $city, 'slug' => $slug]);
+    }
+
     public function findLocationForRide(Ride $ride): ?Location
     {
         if (!$ride->getLatitude() || !$ride->getLongitude()) {
