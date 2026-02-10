@@ -47,7 +47,7 @@ class RideType extends AbstractType
             ->add('longitude', HiddenType::class, ['required' => false])
             ->add('rideType', ChoiceType::class, [
                 'required' => true,
-                'choices' => array_flip(\App\DBAL\Type\RideType::$choices),
+                'choices' => array_flip(\App\Enum\RideTypeEnum::choices()),
                 'expanded' => false,
                 'multiple' => false,
             ]);
