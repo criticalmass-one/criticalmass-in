@@ -1,3 +1,6 @@
+imports:
+    - { resource: 'services/*.yaml' }
+
 parameters:
     locale: de
     secret: '%env(APP_SECRET)%'
