@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "598de9c9caac6937b12e53c4e6536611",
+    "content-hash": "1e0749d2f8456f6d58cfd41b1dffda13",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -712,29 +712,29 @@
         },
         {
             "name": "doctrine/deprecations",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38"
+                "reference": "d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38",
-                "reference": "459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca",
+                "reference": "d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
             "conflict": {
-                "phpunit/phpunit": "<=7.5 || >=13"
+                "phpunit/phpunit": "<=7.5 || >=14"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^9 || ^12 || ^13",
-                "phpstan/phpstan": "1.4.10 || 2.1.11",
+                "doctrine/coding-standard": "^9 || ^12 || ^14",
+                "phpstan/phpstan": "1.4.10 || 2.1.30",
                 "phpstan/phpstan-phpunit": "^1.0 || ^2",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6 || ^10.5 || ^11.5 || ^12",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6 || ^10.5 || ^11.5 || ^12.4 || ^13.0",
                 "psr/log": "^1 || ^2 || ^3"
             },
             "suggest": {
@@ -754,9 +754,9 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/1.1.5"
+                "source": "https://github.com/doctrine/deprecations/tree/1.1.6"
             },
-            "time": "2025-04-07T20:06:18+00:00"
+            "time": "2026-02-07T07:09:04+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -3364,6 +3364,47 @@
             "time": "2014-04-26T15:40:10+00:00"
         },
         {
+            "name": "maltehuebner/ordered-entities-bundle",
+            "version": "0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maltehuebner/ordered-entities-bundle.git",
+                "reference": "311492592ee5a46636031ceab74047b9edbcea0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/311492592ee5a46636031ceab74047b9edbcea0b",
+                "reference": "311492592ee5a46636031ceab74047b9edbcea0b",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/collections": "^2.0",
+                "php": "^8.5",
+                "symfony/framework-bundle": "^3.0|^4.0|^5.0|^6.0|^7.0|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MalteHuebner\\OrderedEntitiesBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Malte Huebner",
+                    "email": "maltehuebner@gmx.org"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/maltehuebner/ordered-entities-bundle/issues",
+                "source": "https://github.com/maltehuebner/ordered-entities-bundle/tree/0.3"
+            },
+            "time": "2026-01-24T10:47:58+00:00"
+        },
+        {
             "name": "miljar/php-exif",
             "version": "v0.6.5",
             "source": {
@@ -5915,58 +5956,6 @@
                 }
             ],
             "time": "2025-10-26T11:11:16+00:00"
-        },
-        {
-            "name": "sunra/php-simple-html-dom-parser",
-            "version": "v1.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sunra/php-simple-html-dom-parser.git",
-                "reference": "75b9b1cb64502d8f8c04dc11b5906b969af247c6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sunra/php-simple-html-dom-parser/zipball/75b9b1cb64502d8f8c04dc11b5906b969af247c6",
-                "reference": "75b9b1cb64502d8f8c04dc11b5906b969af247c6",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "php": ">=5.3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Sunra\\PhpSimple\\HtmlDomParser": "Src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sunra",
-                    "email": "sunra@yandex.ru",
-                    "homepage": "https://github.com/sunra"
-                },
-                {
-                    "name": "S.C. Chen",
-                    "homepage": "http://sourceforge.net/projects/simplehtmldom/"
-                }
-            ],
-            "description": "Composer adaptation of: A HTML DOM parser written in PHP5+ let you manipulate HTML in a very easy way! Require PHP 5+. Supports invalid HTML. Find tags on an HTML page with selectors just like jQuery. Extract contents from HTML in a single line.",
-            "homepage": "https://github.com/sunra/php-simple-html-dom-parser",
-            "keywords": [
-                "dom",
-                "html",
-                "parser"
-            ],
-            "support": {
-                "issues": "https://github.com/sunra/php-simple-html-dom-parser/issues",
-                "source": "https://github.com/sunra/php-simple-html-dom-parser/tree/master"
-            },
-            "time": "2016-11-22T22:57:47+00:00"
         },
         {
             "name": "symfony/apache-pack",
