@@ -2,6 +2,8 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        bind:
+            $projectDirectory: '%kernel.project_dir%'
 
     App\Criticalmass\Image\ExifWrapper\ExifWrapper:
         arguments:
