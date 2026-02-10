@@ -2653,42 +2653,6 @@ parameters:
 			path: src/Criticalmass/Util/ClassUtil.php
 
 		-
-			message: '#^Method App\\Criticalmass\\ViewStorage\\Persister\\ViewStoragePersisterInterface\:\:storeView\(\) invoked with 2 parameters, 1 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: src/Criticalmass/ViewStorage/Cache/RobustViewStorageCache.php
-
-		-
-			message: '#^Method App\\Criticalmass\\ViewStorage\\Persister\\ViewStoragePersister\:\:persistViews\(\) has parameter \$viewList with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/ViewStorage/Persister/ViewStoragePersister.php
-
-		-
-			message: '#^Unable to resolve the template type T in call to method Doctrine\\Persistence\\ManagerRegistry\:\:getRepository\(\)$#'
-			identifier: argument.templateType
-			count: 1
-			path: src/Criticalmass/ViewStorage/Persister/ViewStoragePersister.php
-
-		-
-			message: '#^Method App\\Criticalmass\\ViewStorage\\Persister\\ViewStoragePersisterInterface\:\:persistViews\(\) has parameter \$viewList with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/ViewStorage/Persister/ViewStoragePersisterInterface.php
-
-		-
-			message: '#^Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface\:\:getId\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/ViewStorage/ViewModel/ViewFactory.php
-
-		-
-			message: '#^Method App\\Criticalmass\\ViewStorage\\ViewModel\\ViewFactory\:\:createView\(\) has parameter \$user with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/Criticalmass/ViewStorage/ViewModel/ViewFactory.php
-
-		-
 			message: '#^Call to an undefined method App\\DBAL\\Type\\UTCDateTimeType\:\:getName\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -3043,12 +3007,6 @@ parameters:
 			path: src/Entity/CitySlug.php
 
 		-
-			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
-			identifier: argument.type
-			count: 2
-			path: src/Entity/CityView.php
-
-		-
 			message: '#^Method App\\Entity\\FrontpageTeaser\:\:getButtons\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
 			identifier: missingType.generics
 			count: 1
@@ -3143,12 +3101,6 @@ parameters:
 			identifier: missingType.generics
 			count: 1
 			path: src/Entity/Photo.php
-
-		-
-			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
-			identifier: argument.type
-			count: 2
-			path: src/Entity/PhotoView.php
 
 		-
 			message: '#^Method App\\Entity\\Post\:\:getChildren\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
