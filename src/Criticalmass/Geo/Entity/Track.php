@@ -42,9 +42,6 @@ class Track
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $polyline = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected ?string $previewPolyline = null;
-
     public function getPolyline(): ?string
     {
         return $this->polyline;
@@ -214,15 +211,4 @@ class Track
         return $this->updatedAt;
     }
 
-    public function setPreviewPolyline(?string $previewPolyline = null): Track
-    {
-        $this->previewPolyline = $previewPolyline;
-
-        return $this;
-    }
-
-    public function getPreviewPolyline(): ?string
-    {
-        return $this->previewPolyline;
-    }
 }
