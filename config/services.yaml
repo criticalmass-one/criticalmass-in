@@ -45,8 +45,6 @@ services:
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
             $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'
-            $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
-            $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
             cachePrefix: 'media/cache'
 
     App\:
