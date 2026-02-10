@@ -8,11 +8,11 @@
         }
 
         .header {
-            background-color: #337ab7;
+            background: linear-gradient(135deg, #337ab7, #2a9d8f);
         }
 
         .header td {
-            padding: 20px 0;
+            padding: 30px 0;
             text-align: center;
         }
 
@@ -28,51 +28,65 @@
         }
 
         .content td {
-            padding: 10px 20px;
+            padding: 25px 30px;
         }
 
         .content p {
             color: #333333;
             font-size: 16px;
-            line-height: 1.5;
-            margin: 0 0 10px;
+            line-height: 1.6;
+            margin: 0 0 12px;
+        }
+
+        .content .greeting {
+            font-size: 20px;
+            color: #2a9d8f;
+            font-weight: bold;
+            margin: 0 0 16px;
         }
 
         .button-wrapper td {
-            padding: 10px 20px 20px;
+            padding: 10px 30px 30px;
             background-color: #ffffff;
         }
 
         .button a {
-            background-color: #337ab7;
+            background-color: #2a9d8f;
             color: #ffffff;
             font-size: 18px;
             font-weight: bold;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 8px;
+            padding: 14px 32px;
         }
 
         .footer {
-            background-color: #f3f3f3;
+            background-color: #f8f8f8;
         }
 
         .footer td {
-            padding: 20px 0;
+            padding: 25px 20px;
             text-align: center;
         }
 
         .footer p {
-            color: #999999;
+            color: #888888;
             font-size: 13px;
-            line-height: 1.4;
-            margin: 0;
+            line-height: 1.5;
+            margin: 0 0 6px;
+        }
+
+        .footer .community-hint {
+            color: #2a9d8f;
+            font-size: 14px;
+            margin-top: 10px;
         }
     </style>
 
     <container>
         <row class="header">
             <columns>
-                <h1>criticalmass.in</h1>
+                <h1>&#x1F6B2; criticalmass.in</h1>
             </columns>
         </row>
 
@@ -80,7 +94,7 @@
 
         <row class="content">
             <columns>
-                <p>Hallo!</p>
+                <p class="greeting">Hey, sch&ouml;n dass du da bist!</p>
                 <p>{{ content }}</p>
             </columns>
         </row>
@@ -88,7 +102,7 @@
         <row class="button-wrapper">
             <columns>
                 <center>
-                    <button class="button" href="{{ loginUrl }}">Einloggen</button>
+                    <button class="button" href="{{ loginUrl }}">Jetzt einloggen &#x1F6B2;</button>
                 </center>
             </columns>
         </row>
@@ -99,6 +113,7 @@
             <columns>
                 <p>Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.</p>
                 <p>Der Link ist {{ expirationText }} g&uuml;ltig.</p>
+                <p class="community-hint">Gemeinsam auf die Stra&szlig;e &mdash; deine Critical-Mass-Community</p>
             </columns>
         </row>
     </container>
