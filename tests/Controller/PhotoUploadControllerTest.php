@@ -233,13 +233,7 @@ class PhotoUploadControllerTest extends AbstractControllerTestCase
         $this->assertEquals($photoCountBefore + 1, $photoCountAfter, 'Photo count should increase by 1 after upload');
 
         // Verify ride page still loads correctly after photo upload
-        $crawler = $client->request('GET', $this->buildRideUrl($ride));
-        if ($client->getResponse()->getStatusCode() === 500) {
-            $errorText = $crawler->filter('.exception-message')->count() > 0
-                ? $crawler->filter('.exception-message')->text()
-                : substr($client->getResponse()->getContent(), 0, 2000);
-            $this->fail('Ride page returned 500: ' . $errorText);
-        }
+        $client->request('GET', $this->buildRideUrl($ride));
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
