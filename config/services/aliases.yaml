@@ -1,0 +1,22 @@
+services:
+    Symfony\Component\Routing\RouteCollection: ~
+
+    Sonata\SeoBundle\Seo\SeoPageInterface:
+        alias: sonata.seo.page.default
+
+    App\Criticalmass\Geo\GpxService\GpxServiceInterface:
+        alias: App\Criticalmass\Geo\GpxService\GpxService
+
+    App\Criticalmass\Geocoding\ReverseGeocoderInterface:
+        alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
+
+    App\Criticalmass\Timeline\TimelineInterface:
+        alias: App\Criticalmass\Timeline\CachedTimeline
+
+    App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
+        alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
+
+    App\Serializer\CriticalSerializerInterface:
+        alias: App\Serializer\CriticalSerializer
+
+    Sabre\VObject\Component\VCalendar: ~

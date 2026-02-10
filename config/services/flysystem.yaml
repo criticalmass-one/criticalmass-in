@@ -1,0 +1,23 @@
+services:
+    App\Criticalmass\Image\ExifWrapper\ExifWrapper:
+        arguments:
+            $flysystemFilesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Image\PhotoManipulator\Storage\PhotoStorage:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
+
+    App\Criticalmass\UploadableDataHandler\UploadableDataHandler:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface:
+        alias: App\Criticalmass\UploadableDataHandler\UploadableDataHandler
+
+    App\Criticalmass\UploadValidator\TrackValidator:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
