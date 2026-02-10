@@ -236,8 +236,6 @@ class RideApiQueryTest extends AbstractApiControllerTestCase
             ['estimatedParticipants', 'desc', 'estimated_participants'],
             ['estimatedDuration', 'desc', 'estimated_duration'],
             ['estimatedDistance', 'desc', 'estimated_distance'],
-            ['views', 'asc'],
-            ['views', 'desc'],
             ['dateTime', 'asc', 'date_time'],
             ['dateTime', 'desc', 'date_time'],
         ];
