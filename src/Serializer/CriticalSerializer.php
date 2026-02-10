@@ -37,6 +37,14 @@ class CriticalSerializer implements CriticalSerializerInterface
         return $this->serializer->deserialize($data, $type, $format, $this->buildContext($context));
     }
 
+    /** @param array<string, mixed> $context */
+    public function deserializeInto(mixed $data, object $target, string $format = self::FORMAT, array $context = []): object
+    {
+        $context[AbstractNormalizer::OBJECT_TO_POPULATE] = $target;
+
+        return $this->deserialize($data, get_class($target), $format, $context);
+    }
+
     private function buildContext(array $context): array
     {
         $defaultContext = [
