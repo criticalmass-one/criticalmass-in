@@ -107,6 +107,7 @@ class Region implements RouteableInterface, AuditableInterface
         return $this->id == 1;
     }
 
+    #[Ignore]
     public function isLevel(int $levelNumber): bool
     {
         if ($levelNumber == 0 && $this->parent == null) {
