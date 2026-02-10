@@ -26,9 +26,7 @@ use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @CriticalAssert\SingleRideForDay
- */
+#[CriticalAssert\SingleRideForDay]
 #[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_ride_show')]
 #[ORM\Table(name: 'ride')]

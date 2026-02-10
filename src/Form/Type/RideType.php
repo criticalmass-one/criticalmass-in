@@ -5,8 +5,8 @@ namespace App\Form\Type;
 use App\Entity\Ride;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -45,11 +45,9 @@ class RideType extends AbstractType
             ->add('location', TextType::class, ['required' => false])
             ->add('latitude', HiddenType::class, ['required' => false])
             ->add('longitude', HiddenType::class, ['required' => false])
-            ->add('rideType', ChoiceType::class, [
+            ->add('rideType', EnumType::class, [
+                'class' => \App\Enum\RideTypeEnum::class,
                 'required' => true,
-                'choices' => array_flip(\App\Enum\RideTypeEnum::choices()),
-                'expanded' => false,
-                'multiple' => false,
             ]);
 
         if (!$ride->isEnabled()) {

@@ -4,7 +4,7 @@ namespace App\Form\Type;
 
 use App\Enum\RideDisabledReasonEnum;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -12,9 +12,9 @@ class RideDisableType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('disabledReason', ChoiceType::class, [
+        $builder->add('disabledReason', EnumType::class, [
+            'class' => RideDisabledReasonEnum::class,
             'required' => true,
-            'choices' => array_flip(RideDisabledReasonEnum::choices()),
             'expanded' => true,
             'multiple' => false,
         ])
