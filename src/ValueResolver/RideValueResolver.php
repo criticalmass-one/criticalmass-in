@@ -47,16 +47,23 @@ class RideValueResolver implements ValueResolverInterface
         };
     }
 
+    private function getRequestParam(Request $request, string $name): ?string
+    {
+        return $request->attributes->get($name)
+            ?? $request->query->get($name)
+            ?? $request->request->get($name);
+    }
+
     private function findRideById(Request $request): ?Ride
     {
-        $rideId = $request->attributes->get('rideId');
+        $rideId = $this->getRequestParam($request, 'rideId');
         return $rideId ? $this->registry->getRepository(Ride::class)->find($rideId) : null;
     }
 
     private function findRideBySlugs(Request $request): ?Ride
     {
-        $citySlug = $request->attributes->get('citySlug');
-        $rideIdentifier = $request->attributes->get('rideIdentifier');
+        $citySlug = $this->getRequestParam($request, 'citySlug');
+        $rideIdentifier = $this->getRequestParam($request, 'rideIdentifier');
 
         if (!$citySlug || !$rideIdentifier) {
             return null;

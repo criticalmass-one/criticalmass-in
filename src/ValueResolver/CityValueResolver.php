@@ -26,9 +26,13 @@ class CityValueResolver implements ValueResolverInterface
             return [];
         }
 
-        $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug(
-            $request->attributes->get('citySlug')
-        );
+        $citySlugParam = $request->attributes->get('citySlug')
+            ?? $request->query->get('citySlug')
+            ?? $request->request->get('citySlug');
+
+        $citySlug = $citySlugParam
+            ? $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlugParam)
+            : null;
 
         if (!$citySlug && $argument->isNullable()) {
             return [];
