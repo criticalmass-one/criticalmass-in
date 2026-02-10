@@ -2,17 +2,10 @@
 
 namespace App\Criticalmass\EntityMerger;
 
-use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 class EntityMerger implements EntityMergerInterface
 {
-    protected Reader $annotationReader;
-
-    public function __construct(Reader $annotationReader)
-    {
-        $this->annotationReader = $annotationReader;
-    }
 
     public function merge(object $source, object $destination): object
     {
@@ -51,15 +44,9 @@ class EntityMerger implements EntityMergerInterface
 
     protected function isPropertyExposed(\ReflectionProperty $reflectionProperty): bool
     {
-        $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
+        $attributes = $reflectionProperty->getAttributes(Ignore::class);
 
-        foreach ($propertyAnnotations as $propertyAnnotation) {
-            if ($propertyAnnotation instanceof Ignore) {
-                return false;
-            }
-        }
-
-        return true;
+        return count($attributes) === 0;
     }
 
     protected function generateSetMethodName(\ReflectionProperty $reflectionProperty): string

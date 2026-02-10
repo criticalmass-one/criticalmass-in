@@ -11,20 +11,17 @@ use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
-use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
-use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @OE\OrderedEntity()
- */
 #[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_photo_show_ride')]
 #[ORM\Table(name: 'photo')]
@@ -45,9 +42,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Ignore]
     protected ?User $user = null;
 
-    /**
-     * @OE\Identical()
-     */
     #[DataQuery\Queryable]
     #[Routing\RouteParameter(name: 'rideIdentifier')]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'photos')]
@@ -78,17 +72,11 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
 
-    /**
-     * @OE\Boolean(value=true)
-     */
     #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
     protected bool $enabled = true;
 
-    /**
-     * @OE\Boolean(value=false)
-     */
     #[DataQuery\DefaultBooleanValue(alias: 'isDeleted', value: false)]
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
@@ -142,11 +130,11 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     protected Collection $posts;
 
     #[DataQuery\Sortable]
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $exifExposure = null;
 
     #[DataQuery\Sortable]
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $exifAperture = null;
 
     #[DataQuery\Sortable]
@@ -161,9 +149,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $exifCamera = null;
 
-    /**
-     * @OE\Order(direction="asc")
-     */
     #[DataQuery\DateTimeQueryable(format: 'strict_date_hour_minute_second', pattern: 'Y-m-d\TH:i:s')]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]

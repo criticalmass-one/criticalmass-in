@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}{% endblock %}
+{% block title %}Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Statistik', '#') }}
-    {{ breadcrumb.active('Critical-Mass-Teilnehmerzahlen im ' ~ dateTime|format_date('MMMM YYYY')) }}
+    {{ breadcrumb.active('Critical-Mass-Teilnehmerzahlen im ' ~ dateTime|format_datetime(pattern='MMMM yyyy')) }}
 {% endblock %}
 
 {% block content %}
@@ -13,11 +13,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}
+                    Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}
                 </h2>
 
                 <p class="lead">
-                    Hier siehst du die Liste der Touren im {{ dateTime|format_date('MMMM YYYY') }}.
+                    Hier siehst du die Liste der Touren im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}.
                 </p>
             </div>
         </div>

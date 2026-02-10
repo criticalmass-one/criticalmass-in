@@ -26,7 +26,7 @@ class TrackImportCandidate
     #[ORM\Column(type: 'bigint')]
     protected ?int $activityId = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', length: 255)]
     protected ?string $name = null;
 
     #[ORM\Column(type: 'float')]
@@ -35,7 +35,7 @@ class TrackImportCandidate
     #[ORM\Column(type: 'integer')]
     protected ?int $elapsedTime = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', length: 255)]
     protected ?string $type = null;
 
     #[ORM\Column(type: 'datetime')]

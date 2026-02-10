@@ -121,7 +121,7 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[Groups(['ride-list'])]
     protected ?int $cityPopulation = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $punchLine = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -381,6 +381,7 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     }
 
     /** @deprecated */
+    #[Ignore]
     public function isEqual(City $city): bool
     {
         return $city->getId() === $this->getId();

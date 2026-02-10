@@ -4,29 +4,24 @@ namespace App\Entity;
 
 use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
-use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
-use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
-use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @OE\OrderedEntity()
- */
 #[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_track_view')]
 #[ORM\Table(name: 'track')]
 #[ORM\Entity(repositoryClass: 'App\Repository\TrackRepository')]
 #[ORM\Index(fields: ['creationDateTime'], name: 'track_creation_date_time_index')]
-class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
+class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
@@ -53,16 +48,12 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?Ride $ride = null;
 
-    /**
-     * @OE\Identical()
-     */
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'tracks')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     #[Groups(['timelapse', 'api-private'])]
     protected ?User $user = null;
 
     #[ORM\OneToOne(targetEntity: 'RideEstimate', mappedBy: 'track', cascade: ['all'], orphanRemoval: true)]
-    #[ORM\JoinColumn(name: 'estimate_id', referencedColumnName: 'id')]
     #[Ignore]
     protected ?RideEstimate $rideEstimate = null;
 
@@ -71,9 +62,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Groups(['timelapse', 'api-public'])]
     protected ?\DateTime $creationDateTime = null;
 
-    /**
-     * @OE\Order(direction="asc")
-     */
     #[DataQuery\Sortable]
     #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -112,9 +100,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected bool $enabled = true;
 
-    /**
-     * @OE\Boolean(value=false)
-     */
     #[DataQuery\DefaultBooleanValue(value: false)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
@@ -163,7 +148,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     /**
      * $source must be nullable du to legacy tracks without source attribution
      */
-    #[ORM\Column(type: 'string', nullable: true, columnDefinition: "ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Ignore]
     protected ?string $source = self::TRACK_SOURCE_UNKNOWN;
 

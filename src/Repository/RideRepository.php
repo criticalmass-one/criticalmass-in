@@ -730,7 +730,7 @@ SQL;
         $query->setParameter('latitude', $latitude);
         $query->setParameter('longitude', $longitude);
         $query->setParameter('radius', $radiusInMeters);
-        $query->setParameter('limit', $limit, \PDO::PARAM_INT);
+        $query->setParameter('limit', $limit, \Doctrine\DBAL\ParameterType::INTEGER);
 
         return $query->getResult();
     }

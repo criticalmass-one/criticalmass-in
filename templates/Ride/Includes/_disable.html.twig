@@ -12,12 +12,7 @@
             <div class="modal-body">
                 <p class="text-muted mb-3">Bitte wähle einen Grund für die Deaktivierung:</p>
 
-                {% for i in 0..5 %}
-                    <div class="form-check mb-2">
-                        {{ form_widget(disableForm.disabledReason[i], { 'attr': { 'class': 'form-check-input' }}) }}
-                        <label class="form-check-label">{{ form_label(disableForm.disabledReason[i]) }}</label>
-                    </div>
-                {% endfor %}
+                {{ form_widget(disableForm.disabledReason) }}
             </div>
 
             <div class="modal-body border-top pt-3">
