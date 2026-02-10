@@ -185,11 +185,11 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Groups(['ride-list', 'ride-details'])]
     protected bool $enabled = true;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true, enumType: RideDisabledReasonEnum::class)]
+    #[ORM\Column(length: 255, nullable: true, enumType: RideDisabledReasonEnum::class)]
     #[Groups(['ride-list'])]
     protected ?RideDisabledReasonEnum $disabledReason = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true, enumType: RideTypeEnum::class)]
+    #[ORM\Column(length: 255, nullable: true, enumType: RideTypeEnum::class)]
     #[Groups(['ride-list', 'ride-details'])]
     protected ?RideTypeEnum $rideType = null;
 
