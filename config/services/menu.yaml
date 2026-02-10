@@ -1,0 +1,12 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Menu\Builder:
+        arguments:
+            - '@knp_menu.factory'
+            - '@security.token_storage'
+            - '@Flagception\Manager\FeatureManagerInterface'
+        tags:
+            - { name: knp_menu.menu_builder, method: mainMenu, alias: main_menu }
