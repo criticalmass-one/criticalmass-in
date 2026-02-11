@@ -38,7 +38,20 @@
 
                 <div class="row margin-top-medium">
                     <div class="col-md-12">
-                        {{ include('Timeline/timeline.html.twig') }}
+                        <div data-controller="timeline"
+                             data-timeline-api-url-value="{{ apiUrl }}"
+                             data-timeline-year-value="{{ year }}"
+                             data-timeline-month-value="{{ month }}"
+                             data-timeline-show-navigation-value="false">
+                            <div data-timeline-target="loading" class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Lädt…</span>
+                                </div>
+                            </div>
+
+                            <div data-timeline-target="tabs"></div>
+                            <div class="tab-content mt-3" data-timeline-target="tabContent"></div>
+                        </div>
                     </div>
                 </div>
             </div>
