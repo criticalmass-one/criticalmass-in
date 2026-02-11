@@ -15,7 +15,7 @@ class TimelineController extends BaseController
         name: 'caldera_criticalmass_rest_timeline_yearmonth',
         requirements: ['year' => '\d{4}', 'month' => '\d{2}'],
         methods: ['GET'],
-        priority: 110
+        priority: 200
     )]
     public function yearmonthAction(TimelineInterface $cachedTimeline, int $year, int $month): JsonResponse
     {
