@@ -4,15 +4,25 @@ namespace App\Controller\Api;
 
 use App\Criticalmass\Timeline\TimelineInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 class TimelineController extends BaseController
 {
     private const string LOWER_LIMIT = '2010-01-01';
 
-    public function yearmonthAction(TimelineInterface $cachedTimeline, int $year, int $month): JsonResponse
+    #[Route(
+        path: '/api/timeline',
+        name: 'caldera_criticalmass_rest_timeline',
+        methods: ['GET'],
+        priority: 200
+    )]
+    public function timelineAction(Request $request, TimelineInterface $cachedTimeline): JsonResponse
     {
-        if ($month < 1 || $month > 12) {
+        $year = $request->query->getInt('year');
+        $month = $request->query->getInt('month');
+
+        if ($year < 2010 || $month < 1 || $month > 12) {
             return new JsonResponse(['error' => 'Invalid date format'], JsonResponse::HTTP_NOT_FOUND);
         }
 

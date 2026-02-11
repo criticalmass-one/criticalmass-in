@@ -27,9 +27,7 @@ export default class extends Controller {
         this.showLoading();
 
         try {
-            const url = this.apiUrlValue
-                .replace('{year}', String(this.yearValue).padStart(4, '0'))
-                .replace('{month}', String(this.monthValue).padStart(2, '0'));
+            const url = `${this.apiUrlValue}?year=${this.yearValue}&month=${this.monthValue}`;
 
             const response = await fetch(url);
 

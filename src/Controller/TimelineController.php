@@ -26,7 +26,7 @@ class TimelineController extends AbstractController
 
         return $this->render('Timeline/yearmonth.html.twig', [
             'startDateTime' => $startDateTime,
-            'apiUrl' => '/api/timeline/{year}/{month}',
+            'apiUrl' => '/api/timeline',
             'year' => (int) $startDateTime->format('Y'),
             'month' => (int) $startDateTime->format('m'),
         ]);

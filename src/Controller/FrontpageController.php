@@ -24,7 +24,7 @@ class FrontpageController extends AbstractController
 
         return $this->render('Frontpage/index.html.twig', [
             'frontpageTeaserList' => $frontpageTeaserList,
-            'apiUrl' => '/api/timeline/{year}/{month}',
+            'apiUrl' => '/api/timeline',
             'year' => (int) $now->format('Y'),
             'month' => (int) $now->format('m'),
         ]);

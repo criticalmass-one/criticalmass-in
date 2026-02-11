@@ -10,7 +10,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API returns valid JSON structure with tabs, navigation and period')]
     public function testValidJsonStructure(): void
     {
-        $this->client->request('GET', '/api/timeline/2024/06');
+        $this->client->request('GET', '/api/timeline?year=2024&month=6');
 
         $this->assertResponseIsSuccessful();
 
@@ -24,7 +24,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API returns correct content type')]
     public function testContentType(): void
     {
-        $this->client->request('GET', '/api/timeline/2024/06');
+        $this->client->request('GET', '/api/timeline?year=2024&month=6');
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('Content-Type', 'application/json');
@@ -33,7 +33,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API tabs contain arrays of HTML strings')]
     public function testTabsContainHtmlArrays(): void
     {
-        $this->client->request('GET', '/api/timeline/2024/06');
+        $this->client->request('GET', '/api/timeline?year=2024&month=6');
 
         $this->assertResponseIsSuccessful();
 
@@ -54,7 +54,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API returns correct period data')]
     public function testPeriodData(): void
     {
-        $this->client->request('GET', '/api/timeline/2024/06');
+        $this->client->request('GET', '/api/timeline?year=2024&month=6');
 
         $this->assertResponseIsSuccessful();
 
@@ -67,7 +67,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API returns previous month navigation when not at lower bound')]
     public function testNavigationPreviousMonthPresent(): void
     {
-        $this->client->request('GET', '/api/timeline/2024/06');
+        $this->client->request('GET', '/api/timeline?year=2024&month=6');
 
         $this->assertResponseIsSuccessful();
 
@@ -81,7 +81,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API returns null for previous month at lower bound 2010-01')]
     public function testNavigationPreviousMonthNullAtLowerBound(): void
     {
-        $this->client->request('GET', '/api/timeline/2010/01');
+        $this->client->request('GET', '/api/timeline?year=2010&month=1');
 
         $this->assertResponseIsSuccessful();
 
@@ -93,7 +93,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API returns navigation structure')]
     public function testNavigationStructure(): void
     {
-        $this->client->request('GET', '/api/timeline/2024/06');
+        $this->client->request('GET', '/api/timeline?year=2024&month=6');
 
         $this->assertResponseIsSuccessful();
 
@@ -106,7 +106,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API returns 404 for date before lower bound')]
     public function testReturns404ForDateBeforeLowerBound(): void
     {
-        $this->client->request('GET', '/api/timeline/2009/12');
+        $this->client->request('GET', '/api/timeline?year=2009&month=12');
 
         $this->assertResponseStatusCode(404);
     }
@@ -114,7 +114,7 @@ class TimelineApiTest extends AbstractApiControllerTestCase
     #[TestDox('Timeline API returns 404 for invalid month')]
     public function testReturns404ForInvalidMonth(): void
     {
-        $this->client->request('GET', '/api/timeline/2024/13');
+        $this->client->request('GET', '/api/timeline?year=2024&month=13');
 
         $this->assertResponseStatusCode(404);
     }
