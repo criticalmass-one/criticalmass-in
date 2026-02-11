@@ -10,13 +10,6 @@ class TimelineController extends BaseController
 {
     private const string LOWER_LIMIT = '2010-01-01';
 
-    #[Route(
-        path: '/api/timeline/{year}/{month}',
-        name: 'caldera_criticalmass_rest_timeline_yearmonth',
-        requirements: ['year' => '\d{4}', 'month' => '\d{2}'],
-        methods: ['GET'],
-        priority: 200
-    )]
     public function yearmonthAction(TimelineInterface $cachedTimeline, int $year, int $month): JsonResponse
     {
         if ($month < 1 || $month > 12) {
