@@ -2,15 +2,15 @@
 
 namespace App\ValueResolver;
 
-use App\Entity\City;
 use App\Entity\CitySlug;
+use App\Entity\Location;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class CityValueResolver implements ValueResolverInterface
+class LocationValueResolver implements ValueResolverInterface
 {
     public function __construct(
         private readonly ManagerRegistry $registry
@@ -20,34 +20,34 @@ class CityValueResolver implements ValueResolverInterface
 
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if ($argument->getType() !== City::class
-            || $argument->getName() !== 'city'
+        if (
+            $argument->getType() !== Location::class
+            || $argument->getName() !== 'location'
         ) {
             return [];
         }
 
-        $citySlugParam = $request->attributes->get('citySlug')
-            ?? $request->query->get('citySlug')
-            ?? $request->request->get('citySlug');
+        $citySlugParam = $request->attributes->get('citySlug');
+        $slug = $request->attributes->get('slug');
 
-        $citySlug = $citySlugParam
-            ? $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlugParam)
-            : null;
-
-        if (!$citySlug && $argument->isNullable()) {
+        if (!$citySlugParam || !$slug) {
             return [];
         }
 
-        if (!$citySlug && !$argument->isNullable()) {
+        $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlugParam);
+
+        if (!$citySlug) {
             throw new NotFoundHttpException('City not found');
         }
 
         $city = $citySlug->getCity();
 
-        if (!$city && !$argument->isNullable()) {
-            throw new NotFoundHttpException('Ride not found');
+        $location = $this->registry->getRepository(Location::class)->findOneByCityAndSlug($city, $slug);
+
+        if (!$location && !$argument->isNullable()) {
+            throw new NotFoundHttpException('Location not found');
         }
 
-        return [$city];
+        return [$location];
     }
 }

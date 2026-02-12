@@ -73,7 +73,7 @@ class CityController extends AbstractController
         ?City $city = null
     ): Response {
         if (!$city) {
-            $citySlug = $request->get('citySlug');
+            $citySlug = $request->attributes->get('citySlug');
 
             if (!$citySlug) {
                 throw $this->createNotFoundException('City not found');

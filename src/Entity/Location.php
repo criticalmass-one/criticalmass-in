@@ -7,8 +7,8 @@ use App\Criticalmass\Router\Attribute\RouteParameter;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_location_show')]
 #[ORM\Table(name: 'location')]

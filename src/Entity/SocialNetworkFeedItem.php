@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\Ignore;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'social_network_feed_item')]
 #[ORM\UniqueConstraint(name: 'unique_feed_item', fields: ['socialNetworkProfile', 'uniqueIdentifier'])]

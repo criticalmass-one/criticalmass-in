@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'cityslug')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CitySlugRepository')]

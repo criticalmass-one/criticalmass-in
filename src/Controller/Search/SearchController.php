@@ -22,7 +22,7 @@ class SearchController extends AbstractController
     #[Route('/search/query', name: 'caldera_criticalmass_search_query', priority: 260)]
     public function queryAction(Request $request): Response
     {
-        $queryPhrase = $request->get('query', '');
+        $queryPhrase = $request->query->get('query', '');
 
         $cityResults = $this->cityRepository->searchByQuery($queryPhrase);
         $rideResults = $this->rideRepository->searchByQuery($queryPhrase);

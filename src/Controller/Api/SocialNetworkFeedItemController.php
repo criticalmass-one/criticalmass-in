@@ -25,8 +25,8 @@ class SocialNetworkFeedItemController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function listSocialNetworkFeedItemsCityAction(Request $request, City $city): JsonResponse
     {
-        $uniqueIdentifier = $request->get('uniqueIdentifier');
-        $networkIdentifier = $request->get('networkIdentifier');
+        $uniqueIdentifier = $request->query->get('uniqueIdentifier');
+        $networkIdentifier = $request->query->get('networkIdentifier');
 
         $profileList = $this->managerRegistry->getRepository(SocialNetworkFeedItem::class)->findByCityAndProperties($city, $uniqueIdentifier, $networkIdentifier);
 

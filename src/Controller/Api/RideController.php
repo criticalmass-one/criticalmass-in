@@ -177,7 +177,7 @@ class RideController extends BaseController
 
         $ride->setCity($city);
 
-        $rideIdentifier = $request->get('rideIdentifier');
+        $rideIdentifier = $request->attributes->get('rideIdentifier');
         $isDateIdentifier = false;
 
         try {
@@ -227,7 +227,7 @@ class RideController extends BaseController
         $this->deserializeRequestInto($request, $ride);
 
         if (!$ride->getDateTime()) {
-            $rideIdentifier = $request->get('rideIdentifier');
+            $rideIdentifier = $request->attributes->get('rideIdentifier');
 
             try {
                 $ride->setDateTime(new \DateTime($rideIdentifier));
