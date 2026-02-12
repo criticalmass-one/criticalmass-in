@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Geo\GpxService;
 
 use App\Entity\Track;
+use App\Enum\PolylineResolution;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 
@@ -24,9 +25,7 @@ interface GpxServiceInterface
 
     public function findPointAtTime(Track $track, \DateTimeInterface $dateTime, ?\DateTimeZone $timeZone = null): ?Point;
 
-    public function generatePolyline(Track $track): string;
-
-    public function generateReducedPolyline(Track $track): string;
+    public function generatePolylineAtResolution(Track $track, PolylineResolution $resolution): string;
 
     public function calculateDistance(Track $track): float;
 

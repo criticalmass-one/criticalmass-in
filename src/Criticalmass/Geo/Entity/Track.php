@@ -39,21 +39,6 @@ class Track
     #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $endPoint = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    protected ?string $polyline = null;
-
-    public function getPolyline(): ?string
-    {
-        return $this->polyline;
-    }
-
-    public function setPolyline(?string $polyline): static
-    {
-        $this->polyline = $polyline;
-
-        return $this;
-    }
-
     #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
     protected ?File $trackFile = null;
 
