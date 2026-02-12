@@ -29,8 +29,8 @@ class TimelineApiTest extends AbstractApiControllerTestCase
         $this->assertResponseHeaderSame('Content-Type', 'application/json');
     }
 
-    #[TestDox('Timeline API items is an array of HTML strings')]
-    public function testItemsContainHtmlStrings(): void
+    #[TestDox('Timeline API items contain JSON objects with type and dateTime')]
+    public function testItemsContainJsonObjects(): void
     {
         $this->client->request('GET', '/api/timeline');
 
@@ -40,8 +40,42 @@ class TimelineApiTest extends AbstractApiControllerTestCase
 
         $this->assertIsArray($response['items']);
 
-        foreach ($response['items'] as $htmlItem) {
-            $this->assertIsString($htmlItem);
+        foreach ($response['items'] as $item) {
+            $this->assertIsArray($item);
+            $this->assertArrayHasKey('type', $item);
+            $this->assertArrayHasKey('dateTime', $item);
+            $this->assertArrayHasKey('timeAgo', $item);
+            $this->assertIsString($item['type']);
+            $this->assertIsString($item['dateTime']);
+            $this->assertIsString($item['timeAgo']);
+        }
+    }
+
+    #[TestDox('Timeline API items have valid types')]
+    public function testItemsHaveValidTypes(): void
+    {
+        $validTypes = [
+            'cityCreated',
+            'cityEdit',
+            'rideComment',
+            'rideEdit',
+            'ridePhoto',
+            'photoComment',
+            'rideParticipationEstimate',
+            'rideTrack',
+            'thread',
+            'threadPost',
+            'socialNetworkFeedItem',
+        ];
+
+        $this->client->request('GET', '/api/timeline');
+
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+
+        foreach ($response['items'] as $item) {
+            $this->assertContains($item['type'], $validTypes, sprintf('Invalid timeline item type: %s', $item['type']));
         }
     }
 
