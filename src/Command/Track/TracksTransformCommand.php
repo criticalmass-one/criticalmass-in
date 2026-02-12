@@ -4,6 +4,8 @@ namespace App\Command\Track;
 
 use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Entity\Track;
+use App\Entity\TrackPolyline;
+use App\Enum\PolylineResolution;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -28,11 +30,13 @@ class TracksTransformCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $tracks = $this->registry->getRepository(Track::class)->findBy(['polyline' => null]);
+        $tracks = $this->registry->getRepository(Track::class)->findAll();
 
-        $io->info(sprintf('Found %d tracks without polyline', count($tracks)));
+        $missingTracks = array_filter($tracks, fn(Track $track) => $track->getTrackPolylines()->isEmpty());
 
-        if (count($tracks) === 0) {
+        $io->info(sprintf('Found %d tracks without polylines', count($missingTracks)));
+
+        if (count($missingTracks) === 0) {
             $io->success('All tracks already have polylines.');
             return Command::SUCCESS;
         }
@@ -42,7 +46,7 @@ class TracksTransformCommand extends Command
         $skipped = 0;
 
         /** @var Track $track */
-        foreach ($tracks as $track) {
+        foreach ($missingTracks as $track) {
             $io->write(sprintf('Track #%d: ', $track->getId()));
 
             if (!$track->getTrackFilename()) {
@@ -52,12 +56,18 @@ class TracksTransformCommand extends Command
             }
 
             try {
-                $polyline = $this->gpxService->generatePolyline($track);
-                $reducedPolyline = $this->gpxService->generateReducedPolyline($track);
+                foreach (PolylineResolution::cases() as $resolution) {
+                    $polylineString = $this->gpxService->generatePolylineAtResolution($track, $resolution);
+                    $numPoints = (int) (count(\Polyline::Decode($polylineString)) / 2);
 
-                $track
-                    ->setPolyline($polyline)
-                    ->setReducedPolyline($reducedPolyline);
+                    $trackPolyline = new TrackPolyline();
+                    $trackPolyline
+                        ->setResolution($resolution)
+                        ->setPolyline($polylineString)
+                        ->setNumPoints($numPoints);
+
+                    $track->addTrackPolyline($trackPolyline);
+                }
 
                 $em->persist($track);
                 $processed++;
