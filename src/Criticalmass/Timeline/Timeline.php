@@ -5,9 +5,9 @@ namespace App\Criticalmass\Timeline;
 use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
+use App\Criticalmass\Timeline\Serializer\TimelineItemSerializer;
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Twig\Environment;
 
 class Timeline implements TimelineInterface
 {
@@ -23,7 +23,7 @@ class Timeline implements TimelineInterface
 
     public function __construct(
         protected readonly ManagerRegistry $doctrine,
-        protected readonly Environment $twigEnvironment,
+        protected readonly TimelineItemSerializer $serializer,
         protected readonly FeatureManagerInterface $featureManager
     ) {
     }
@@ -103,27 +103,10 @@ class Timeline implements TimelineInterface
     {
         /** @var ItemInterface $item */
         foreach ($this->items as $item) {
-            $templateName = $this->templateNameForItem($item);
-
-            $this->contentList[] = $this->twigEnvironment->render('Timeline/Items/' . $templateName . '.html.twig', [
-                'item' => $item
-            ]);
+            $this->contentList[] = $this->serializer->serialize($item);
         }
 
         return $this;
-    }
-
-    protected function templateNameForItem(ItemInterface $item): string
-    {
-        $itemFullClassName = get_class($item);
-
-        $itemClassNamespaces = explode('\\', $itemFullClassName);
-
-        $itemClassName = array_pop($itemClassNamespaces);
-
-        $templateName = lcfirst(str_replace('Item', '', $itemClassName));
-
-        return $templateName;
     }
 
     public function getTimelineContentList(): array
