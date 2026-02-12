@@ -5,6 +5,8 @@ namespace App\Controller\Track;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\Track;
+use App\Entity\TrackPolyline;
+use App\Enum\PolylineResolution;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -42,13 +44,24 @@ class TrackDrawController extends AbstractController
         $track = new Track();
 
         $track->setCreationDateTime(new \DateTime())
-            ->setPolyline($polyline)
             ->setGeoJson($geojson)
             ->setRide($ride)
             ->setSource(Track::TRACK_SOURCE_DRAW)
             ->setUser($this->getUser())
             ->setUsername($this->getUser()->getUsername())
             ->setTrackFilename('foo');
+
+        $numPoints = (int) (count(\Polyline::Decode($polyline)) / 2);
+
+        foreach (PolylineResolution::cases() as $resolution) {
+            $trackPolyline = new TrackPolyline();
+            $trackPolyline
+                ->setResolution($resolution)
+                ->setPolyline($polyline)
+                ->setNumPoints($numPoints);
+
+            $track->addTrackPolyline($trackPolyline);
+        }
 
         $em = $this->managerRegistry->getManager();
         $em->persist($track);
@@ -87,8 +100,25 @@ class TrackDrawController extends AbstractController
         $polyline = $request->request->get('polyline');
         $geojson = $request->request->get('geojson');
 
-        $track->setPolyline($polyline);
         $track->setGeoJson($geojson);
+
+        $numPoints = (int) (count(\Polyline::Decode($polyline)) / 2);
+
+        foreach (PolylineResolution::cases() as $resolution) {
+            $existing = $track->getPolylineByResolution($resolution);
+
+            if ($existing) {
+                $track->removeTrackPolyline($existing);
+            }
+
+            $trackPolyline = new TrackPolyline();
+            $trackPolyline
+                ->setResolution($resolution)
+                ->setPolyline($polyline)
+                ->setNumPoints($numPoints);
+
+            $track->addTrackPolyline($trackPolyline);
+        }
 
         $em = $this->managerRegistry->getManager();
         $em->persist($track);

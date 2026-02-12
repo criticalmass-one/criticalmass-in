@@ -15,7 +15,7 @@
                         data-controller="map--map"
                         data-map--map-lock-map-value="true"
                         data-map--map-polyline-color-value="{{ track.user.color }}"
-                        data-map--map-polyline-value="{{ track.polyline }}"
+                        data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::COARSE')) }}"
                     ></div>
 
                 </div>

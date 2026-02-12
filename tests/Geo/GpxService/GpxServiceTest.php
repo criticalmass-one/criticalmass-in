@@ -4,6 +4,7 @@ namespace Tests\Geo\GpxService;
 
 use App\Criticalmass\Geo\GpxService\GpxService;
 use App\Entity\Track;
+use App\Enum\PolylineResolution;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 use PHPUnit\Framework\TestCase;
@@ -124,44 +125,44 @@ class GpxServiceTest extends TestCase
     // Polyline Generation Tests
     // ============================================
 
-    public function testGeneratePolyline(): void
+    public function testGeneratePolylineAtResolutionFine(): void
     {
         $track = $this->createMock(Track::class);
         $track->method('getTrackFilename')->willReturn('braunschweig.gpx');
         $track->method('getStartPoint')->willReturn(0);
         $track->method('getEndPoint')->willReturn(5);
 
-        $polyline = $this->gpxService->generatePolyline($track);
+        $polyline = $this->gpxService->generatePolylineAtResolution($track, PolylineResolution::FINE);
 
         $this->assertIsString($polyline);
         $this->assertNotEmpty($polyline);
     }
 
-    public function testGenerateReducedPolyline(): void
+    public function testGeneratePolylineAtResolutionCoarse(): void
     {
         $track = $this->createMock(Track::class);
         $track->method('getTrackFilename')->willReturn('braunschweig.gpx');
         $track->method('getStartPoint')->willReturn(0);
         $track->method('getEndPoint')->willReturn(100);
 
-        $reducedPolyline = $this->gpxService->generateReducedPolyline($track);
+        $coarsePolyline = $this->gpxService->generatePolylineAtResolution($track, PolylineResolution::COARSE);
 
-        $this->assertIsString($reducedPolyline);
-        $this->assertNotEmpty($reducedPolyline);
+        $this->assertIsString($coarsePolyline);
+        $this->assertNotEmpty($coarsePolyline);
     }
 
-    public function testReducedPolylineIsShorterOrEqualToFullPolyline(): void
+    public function testCoarsePolylineIsShorterOrEqualToFinePolyline(): void
     {
         $track = $this->createMock(Track::class);
         $track->method('getTrackFilename')->willReturn('braunschweig.gpx');
         $track->method('getStartPoint')->willReturn(0);
         $track->method('getEndPoint')->willReturn(100);
 
-        $fullPolyline = $this->gpxService->generatePolyline($track);
-        $reducedPolyline = $this->gpxService->generateReducedPolyline($track);
+        $finePolyline = $this->gpxService->generatePolylineAtResolution($track, PolylineResolution::FINE);
+        $coarsePolyline = $this->gpxService->generatePolylineAtResolution($track, PolylineResolution::COARSE);
 
-        // Reduced polyline should generally be shorter or equal in length
-        $this->assertLessThanOrEqual(strlen($fullPolyline), strlen($reducedPolyline) * 2);
+        // Coarse polyline should generally be shorter or equal in length
+        $this->assertLessThanOrEqual(strlen($finePolyline), strlen($coarsePolyline) * 2);
     }
 
     public function testPolylineCanBeDecoded(): void
@@ -171,7 +172,7 @@ class GpxServiceTest extends TestCase
         $track->method('getStartPoint')->willReturn(0);
         $track->method('getEndPoint')->willReturn(5);
 
-        $polyline = $this->gpxService->generatePolyline($track);
+        $polyline = $this->gpxService->generatePolylineAtResolution($track, PolylineResolution::FINE);
 
         // Decode the polyline and verify it contains valid coordinates
         // Polyline::Decode returns a flat array [lat1, lng1, lat2, lng2, ...]
