@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Criticalmass\SeoPage\SeoPageInterface;
-use App\Criticalmass\Timeline\TimelineInterface;
 use App\Model\Frontpage\RideList\MonthList;
 use App\Repository\FrontpageTeaserRepository;
 use App\Repository\RideRepository;
@@ -15,26 +14,15 @@ class FrontpageController extends AbstractController
     #[Route('/', name: 'caldera_criticalmass_frontpage', priority: 180)]
     public function indexAction(
         FrontpageTeaserRepository $frontpageTeaserRepository,
-        SeoPageInterface $seoPage,
-        TimelineInterface $cachedTimeline
+        SeoPageInterface $seoPage
     ): Response {
         $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
         $frontpageTeaserList = $frontpageTeaserRepository->findForFrontpage();
 
-        $endDateTime = new \DateTime();
-        $startDateTime = new \DateTime();
-        $monthInterval = new \DateInterval('P1M');
-        $startDateTime->sub($monthInterval);
-
-        $timelineContentList = $cachedTimeline
-            ->setDateRange($startDateTime, $endDateTime)
-            ->execute()
-            ->getTimelineContentList();
-
         return $this->render('Frontpage/index.html.twig', [
-            'timelineContentList' => $timelineContentList,
             'frontpageTeaserList' => $frontpageTeaserList,
+            'apiUrl' => '/api/timeline',
         ]);
     }
 

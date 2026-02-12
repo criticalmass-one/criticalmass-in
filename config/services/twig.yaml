@@ -9,3 +9,5 @@ services:
             - '@translator'
         tags:
             - { name: twig.extension }
+
+    Salavert\Twig\Extension\TimeAgoExtension: '@salavert.twig.time_ago'
