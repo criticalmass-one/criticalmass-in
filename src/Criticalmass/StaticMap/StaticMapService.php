@@ -63,6 +63,7 @@ class StaticMapService
         return $this->cache->get($cacheKey, fn() => $this->fetchMapUrl($parameters));
     }
 
+    /** @param array<string, string|int|float> $parameters */
     private function fetchMapUrl(array $parameters): ?string
     {
         try {
