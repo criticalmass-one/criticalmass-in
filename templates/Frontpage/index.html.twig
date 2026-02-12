@@ -40,17 +40,23 @@
                     <div class="col-md-12">
                         <div data-controller="timeline"
                              data-timeline-api-url-value="{{ apiUrl }}"
-                             data-timeline-year-value="{{ year }}"
-                             data-timeline-month-value="{{ month }}"
-                             data-timeline-show-navigation-value="false">
+                             data-timeline-initial-limit-value="10"
+                             data-timeline-batch-size-value="20">
                             <div data-timeline-target="loading" class="text-center py-5">
                                 <div class="spinner-border text-primary" role="status">
                                     <span class="visually-hidden">Lädt…</span>
                                 </div>
                             </div>
 
-                            <div data-timeline-target="tabs"></div>
-                            <div class="tab-content mt-3" data-timeline-target="tabContent"></div>
+                            <div data-timeline-target="items"></div>
+
+                            <div class="text-center my-4">
+                                <button class="btn btn-primary d-none"
+                                        data-timeline-target="loadMore"
+                                        data-action="timeline#loadMore">
+                                    Mehr laden
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

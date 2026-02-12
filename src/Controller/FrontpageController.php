@@ -20,13 +20,9 @@ class FrontpageController extends AbstractController
 
         $frontpageTeaserList = $frontpageTeaserRepository->findForFrontpage();
 
-        $now = new \DateTime();
-
         return $this->render('Frontpage/index.html.twig', [
             'frontpageTeaserList' => $frontpageTeaserList,
             'apiUrl' => '/api/timeline',
-            'year' => (int) $now->format('Y'),
-            'month' => (int) $now->format('m'),
         ]);
     }
 

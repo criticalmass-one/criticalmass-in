@@ -105,11 +105,7 @@ class Timeline implements TimelineInterface
         foreach ($this->items as $item) {
             $templateName = $this->templateNameForItem($item);
 
-            if (!array_key_exists($item->getTabName(), $this->contentList)) {
-                $this->contentList[$item->getTabName()] = [];
-            }
-
-            $this->contentList[$item->getTabName()][]= $this->twigEnvironment->render('Timeline/Items/' . $templateName . '.html.twig', [
+            $this->contentList[] = $this->twigEnvironment->render('Timeline/Items/' . $templateName . '.html.twig', [
                 'item' => $item
             ]);
         }

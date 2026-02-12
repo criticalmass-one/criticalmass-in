@@ -14,22 +14,9 @@ class TimelineController extends AbstractController
         requirements: ['year' => '([0-9]{4,4})', 'month' => '([0-9]{2,2})'],
         priority: 130
     )]
-    public function yearmonthAction(int $year, int $month): Response
+    public function yearmonthAction(int $year, int $month): RedirectResponse
     {
-        $lowerLimitDateTime = new \DateTime('2010-01-01');
-
-        $startDateTime = new \DateTime($year . '-' . $month . '-01');
-
-        if ($startDateTime < $lowerLimitDateTime) {
-            $startDateTime = new \DateTime();
-        }
-
-        return $this->render('Timeline/yearmonth.html.twig', [
-            'startDateTime' => $startDateTime,
-            'apiUrl' => '/api/timeline',
-            'year' => (int) $startDateTime->format('Y'),
-            'month' => (int) $startDateTime->format('m'),
-        ]);
+        return $this->redirectToRoute('caldera_criticalmass_timeline_index');
     }
 
     #[Route(
@@ -37,13 +24,10 @@ class TimelineController extends AbstractController
         name: 'caldera_criticalmass_timeline_index',
         priority: 130
     )]
-    public function indexAction(): RedirectResponse
+    public function indexAction(): Response
     {
-        $dateTime = new \DateTime();
-
-        return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth', [
-            'year' => $dateTime->format('Y'),
-            'month' => $dateTime->format('m'),
+        return $this->render('Timeline/yearmonth.html.twig', [
+            'apiUrl' => '/api/timeline',
         ]);
     }
 }
