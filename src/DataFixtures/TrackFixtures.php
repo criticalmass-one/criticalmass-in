@@ -4,7 +4,9 @@ namespace App\DataFixtures;
 
 use App\Entity\Ride;
 use App\Entity\Track;
+use App\Entity\TrackPolyline;
 use App\Entity\User;
+use App\Enum\PolylineResolution;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -136,8 +138,19 @@ class TrackFixtures extends Fixture implements DependentFixtureInterface
             ->setEnabled(true)
             ->setDeleted(false)
             ->setReviewed(true)
-            ->setPolyline($this->generateSamplePolyline($ride))
             ->setMd5Hash(md5($ride->getId() . $user->getId() . time()));
+
+        $polylineString = $this->generateSamplePolyline($ride);
+
+        foreach (PolylineResolution::cases() as $resolution) {
+            $trackPolyline = new TrackPolyline();
+            $trackPolyline
+                ->setResolution($resolution)
+                ->setPolyline($polylineString)
+                ->setNumPoints(10);
+
+            $track->addTrackPolyline($trackPolyline);
+        }
 
         return $track;
     }
