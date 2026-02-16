@@ -82,9 +82,12 @@
                                     <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}" class="btn btn-secondary btn-xs">
                                         <i class="far fa-pencil"></i>
                                     </a>
-                                    <a href="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}" class="btn btn-secondary btn-xs">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
+                                    <form method="post" action="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}" class="d-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('socialnetwork_disable_' ~ profile.id) }}">
+                                        <button type="submit" class="btn btn-secondary btn-xs">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

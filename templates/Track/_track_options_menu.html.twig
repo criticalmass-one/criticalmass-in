@@ -19,17 +19,23 @@
             </li>
             {% if track.enabled %}
                 <li>
-                    <a href="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
-                        <i class="far fa-eye-slash"></i>
-                        Deaktivieren
-                    </a>
+                    <form method="post" action="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('track_toggle_' ~ track.id) }}">
+                        <button type="submit" class="dropdown-item">
+                            <i class="far fa-eye-slash"></i>
+                            Deaktivieren
+                        </button>
+                    </form>
                 </li>
             {% else %}
                 <li>
-                    <a href="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
-                        <i class="far fa-eye"></i>
-                        Aktivieren
-                    </a>
+                    <form method="post" action="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('track_toggle_' ~ track.id) }}">
+                        <button type="submit" class="dropdown-item">
+                            <i class="far fa-eye"></i>
+                            Aktivieren
+                        </button>
+                    </form>
                 </li>
             {% endif %}
 

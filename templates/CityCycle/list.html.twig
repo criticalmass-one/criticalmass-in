@@ -118,10 +118,12 @@
                                             <i class="far fa-play"></i>
                                         </a>
 
-                                        <a class="btn btn-secondary btn-xs" title="Turnus deaktivieren"
-                                           href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_disable') }}">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+                                        <form method="post" action="{{ object_path(cycle, 'caldera_criticalmass_citycycle_disable') }}" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('citycycle_disable_' ~ cycle.id) }}">
+                                            <button type="submit" class="btn btn-secondary btn-xs" title="Turnus deaktivieren">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 {% endif %}
                             </td>
