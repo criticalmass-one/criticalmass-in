@@ -36,6 +36,10 @@ class TrackDrawController extends AbstractController
 
     protected function drawPostAction(Request $request, Ride $ride): Response
     {
+        if (!$this->isCsrfTokenValid('track_draw', $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $polyline = $request->request->get('polyline');
         $geojson = $request->request->get('geojson');
 
@@ -84,6 +88,10 @@ class TrackDrawController extends AbstractController
 
     protected function editPostAction(Request $request, Ride $ride, Track $track): Response
     {
+        if (!$this->isCsrfTokenValid('track_draw', $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $polyline = $request->request->get('polyline');
         $geojson = $request->request->get('geojson');
 
