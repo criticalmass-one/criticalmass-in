@@ -255,6 +255,10 @@ class PhotoManagementController extends AbstractController
     {
         $referer = $request->headers->get('referer');
 
+        if ($referer && !$this->isLocalUrl($referer, $request)) {
+            $referer = '/';
+        }
+
         $request->getSession()->set('referer', $referer);
 
         return $referer;
@@ -269,10 +273,21 @@ class PhotoManagementController extends AbstractController
     {
         $referer = $this->getSavedReferer($request);
 
-        if (!$referer) {
-            throw new \Exception('No saved referer found to redirect to.');
+        if (!$referer || !$this->isLocalUrl($referer, $request)) {
+            return new RedirectResponse('/');
         }
 
         return new RedirectResponse($referer);
+    }
+
+    private function isLocalUrl(string $url, Request $request): bool
+    {
+        $parsedUrl = parse_url($url);
+
+        if (!isset($parsedUrl['host'])) {
+            return true;
+        }
+
+        return $parsedUrl['host'] === $request->getHost();
     }
 }
