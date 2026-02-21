@@ -44,7 +44,7 @@ class SocialNetworkFeedItemController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem): JsonResponse
     {
-        $this->serializer->deserializeInto($request->getContent(), $socialNetworkFeedItem);
+        $this->deserializeRequestInto($request, $socialNetworkFeedItem);
 
         $this->managerRegistry->getManager()->flush();
 
@@ -62,7 +62,7 @@ class SocialNetworkFeedItemController extends BaseController
     #[OA\Response(response: 409, description: 'Returned when feed item already exists')]
     public function createSocialNetworkFeedItemAction(Request $request): JsonResponse
     {
-        $newSocialNetworkFeedItem = $this->serializer->deserialize($request->getContent(), SocialNetworkFeedItem::class, 'json');
+        $newSocialNetworkFeedItem = $this->deserializeRequest($request, SocialNetworkFeedItem::class);
 
         $newSocialNetworkFeedItem->setCreatedAt(new \DateTime());
 
@@ -76,6 +76,6 @@ class SocialNetworkFeedItemController extends BaseController
             return $this->createErrors(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, ['An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.']);
         }
 
-        return $this->createStandardResponse($newSocialNetworkFeedItem, null, JsonResponse::HTTP_CREATED);
+        return $this->createStandardResponse($newSocialNetworkFeedItem, [], JsonResponse::HTTP_CREATED);
     }
 }

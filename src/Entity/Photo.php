@@ -20,6 +20,7 @@ use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
@@ -87,6 +88,7 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     protected ?\DateTime $creationDateTime = null;
 
     #[Vich\UploadableField(mapping: 'photo_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
+    #[Assert\File(maxSize: '30M', mimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'])]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255)]

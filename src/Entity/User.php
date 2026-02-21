@@ -131,9 +131,9 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function __construct()
     {
-        $this->colorRed = rand(0, 255);
-        $this->colorGreen = rand(0, 255);
-        $this->colorBlue = rand(0, 255);
+        $this->colorRed = random_int(0, 255);
+        $this->colorGreen = random_int(0, 255);
+        $this->colorBlue = random_int(0, 255);
         $this->createdAt = new \DateTime();
 
         $this->tracks = new ArrayCollection();

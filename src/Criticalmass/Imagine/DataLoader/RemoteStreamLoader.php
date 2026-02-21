@@ -17,6 +17,18 @@ class RemoteStreamLoader implements LoaderInterface
 
     public function find($path)
     {
+        $scheme = parse_url($path, PHP_URL_SCHEME);
+
+        if (!in_array($scheme, ['http', 'https'], true)) {
+            throw new \InvalidArgumentException(sprintf('Only http and https URLs are allowed, got "%s".', $scheme));
+        }
+
+        $host = parse_url($path, PHP_URL_HOST);
+
+        if ($host && (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false && !preg_match('/\.[a-z]{2,}$/i', $host))) {
+            throw new \InvalidArgumentException('Requests to private or reserved IP ranges are not allowed.');
+        }
+
         return $this->imagine->load(file_get_contents($path));
     }
 }

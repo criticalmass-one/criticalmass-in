@@ -9,7 +9,7 @@ class CriticalmassBlog implements CriticalmassBlogInterface
     public function getArticles(): array
     {
         try {
-            $xml = @simplexml_load_file(static::BLOG_FEED_URL, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = @simplexml_load_file(static::BLOG_FEED_URL, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NONET | LIBXML_NOENT);
 
             if (!$xml || !isset($xml->channel->item)) {
                 return [];
