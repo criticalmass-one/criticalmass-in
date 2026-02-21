@@ -34,7 +34,9 @@ class ParticipationControllerTest extends AbstractControllerTestCase
         $ride = $this->getFirstRideForCity('hamburg');
         $this->assertNotNull($ride, 'Hamburg ride fixture should exist');
 
-        $client->request('GET', $this->buildRideUrl($ride) . '/participation/yes');
+        $client->request('POST', $this->buildRideUrl($ride) . '/participation/yes', [
+            '_token' => 'dummy',
+        ]);
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
@@ -47,7 +49,18 @@ class ParticipationControllerTest extends AbstractControllerTestCase
         $ride = $this->getFirstRideForCity('hamburg');
         $this->assertNotNull($ride, 'Hamburg ride fixture should exist');
 
-        $client->request('GET', $this->buildRideUrl($ride) . '/participation/yes');
+        $tokenId = 'participation_' . $ride->getId();
+        $tokenValue = 'test_csrf_token';
+
+        // Store CSRF token directly in session via an initial request
+        $client->request('GET', $this->buildRideUrl($ride));
+        $session = $client->getRequest()->getSession();
+        $session->set('_csrf/' . $tokenId, $tokenValue);
+        $session->save();
+
+        $client->request('POST', $this->buildRideUrl($ride) . '/participation/yes', [
+            '_token' => $tokenValue,
+        ]);
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }

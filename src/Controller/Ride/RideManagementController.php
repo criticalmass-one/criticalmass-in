@@ -230,9 +230,13 @@ class RideManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/{citySlug}/{rideIdentifier}/enable', name: 'caldera_criticalmass_ride_enable', priority: 70)]
-    public function enableAction(ManagerRegistry $registry, Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): RedirectResponse
+    #[Route('/{citySlug}/{rideIdentifier}/enable', name: 'caldera_criticalmass_ride_enable', methods: ['POST'], priority: 70)]
+    public function enableAction(Request $request, ManagerRegistry $registry, Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): RedirectResponse
     {
+        if (!$this->isCsrfTokenValid('ride_enable_' . $ride->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $ride->setEnabled(true)
             ->setDisabledReason(null)
             ->setDisabledReasonMessage(null);

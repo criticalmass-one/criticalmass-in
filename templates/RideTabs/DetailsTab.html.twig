@@ -10,10 +10,13 @@
         <div class="btn-group">
             {% if app.user %}
                 {% if not ride.enabled %}
-                    <a class="btn btn-success btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}" title="Tour freischalten">
-                        <i class="far fa-unlock-alt me-1"></i>
-                        Aktivieren
-                    </a>
+                    <form method="post" action="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}" class="d-inline">
+                        <input type="hidden" name="_token" value="{{ csrf_token('ride_enable_' ~ ride.id) }}">
+                        <button type="submit" class="btn btn-success btn-sm" title="Tour freischalten">
+                            <i class="far fa-unlock-alt me-1"></i>
+                            Aktivieren
+                        </button>
+                    </form>
                 {% else %}
                     <a class="btn btn-outline-primary btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
                         <i class="far fa-edit me-1"></i>
