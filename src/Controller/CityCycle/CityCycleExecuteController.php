@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CityCycleExecuteController extends AbstractController
@@ -58,7 +59,9 @@ class CityCycleExecuteController extends AbstractController
                 'body' => $json,
             ]);
 
-            $rideList = $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json');
+            $rideList = $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json', [
+                'groups' => ['api-write'],
+            ]);
 
             return $this->render('CityCycle/execute_preview.html.twig', [
                 'cityCycle' => $cityCycle,
@@ -82,7 +85,8 @@ class CityCycleExecuteController extends AbstractController
         CityCycle $cityCycle,
         SessionInterface $session,
         ManagerRegistry $registry,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
     ): Response {
         if (
             $request->isMethod('POST') &&
@@ -102,12 +106,24 @@ class CityCycleExecuteController extends AbstractController
                 'body' => $json,
             ]);
 
-            $rideList = $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json');
+            $rideList = $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json', [
+                'groups' => ['api-write'],
+            ]);
 
             $em = $registry->getManager();
 
             /** @var Ride $ride */
             foreach ($rideList as $ride) {
+                $ride->setCity($cityCycle->getCity());
+                $ride->setCycle($cityCycle);
+                $ride->setCreatedAt(new \DateTime());
+
+                $errors = $validator->validate($ride);
+
+                if (count($errors) > 0) {
+                    continue;
+                }
+
                 $em->persist($ride);
             }
 
