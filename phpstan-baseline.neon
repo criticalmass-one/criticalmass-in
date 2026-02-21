@@ -458,18 +458,6 @@ parameters:
 			path: src/Controller/Photo/LegacyPhotoUploadController.php
 
 		-
-			message: '#^Variable \$uploadedFile in PHPDoc tag @var does not match assigned variable \$fileArray\.$#'
-			identifier: varTag.differentVariable
-			count: 1
-			path: src/Controller/Photo/LegacyPhotoUploadController.php
-
-		-
-			message: '#^Variable \$uploadedFile might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: src/Controller/Photo/LegacyPhotoUploadController.php
-
-		-
 			message: '#^Right side of && is always true\.$#'
 			identifier: booleanAnd.rightAlwaysTrue
 			count: 1
