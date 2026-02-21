@@ -33,7 +33,7 @@ class UploadFaker extends AbstractUploadFaker
 
     protected function generateFilename(): string
     {
-        return sprintf('%s/%s', self::TMP, uniqid('', true));
+        return sprintf('%s/%s', self::TMP, bin2hex(random_bytes(16)));
     }
 
     protected function dumpContentToTmp(string $filename, string $fileContent): UploadFaker

@@ -5,7 +5,7 @@
                 {% for alert in alertList %}
                     <div class="alert alert-{{ alert.type }}">
                         <strong>{{ alert.title }}</strong>
-                        {{ alert.message|raw|nl2br }}
+                        {{ alert.message|nl2br }}
                     </div>
                 {% endfor %}
             </div>
