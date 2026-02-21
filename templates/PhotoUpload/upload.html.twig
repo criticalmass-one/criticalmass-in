@@ -3,13 +3,13 @@
 
 {% set city = ride.city %}
 
-{% block title %}Fotos hochladen{% endblock %}
+{% block title %}{{ 'photo.upload.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('photo.show.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.title, object_path(city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.active('Fotos hochladen') }}
+    {{ breadcrumb.active('photo.upload.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Fotos hochladen
+                    {{ 'photo.upload.heading'|trans }}
                 </h1>
             </div>
         </div>
@@ -25,20 +25,15 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen. Wenn
-                    du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten
-                    enthalten, werden deine Fotos automatisch auf der Karte verortet.
+                    {{ 'photo.upload.multi_intro'|trans }}
                 </p>
 
                 <p>
-                    Falls dieser Uploader nicht funktionieren sollte, kannst du auch unseren <a
-                            href="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}">alten
-                        Uploader</a> ausprobieren.
+                    {{ 'photo.upload.multi_fallback'|trans({'%legacy_upload_url%': object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride')})|raw }}
                 </p>
                 <p>
                     <strong>
-                        Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte
-                        lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!
+                        {{ 'photo.upload.multi_copyright'|trans }}
                     </strong>
                 </p>
             </div>

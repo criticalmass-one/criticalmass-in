@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Deine Tracks{% endblock %}
+{% block title %}{{ 'track.draw_page.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ breadcrumb.active('Deine Tracks') }}
+    {{ breadcrumb.item('profile.account'|trans, path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('track.list_page.title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -28,7 +28,7 @@
                     <input type="hidden" id="geojson" name="geojson"/>
 
                     <button type="submit" id="save-track" class="btn btn-secondary">
-                        Speichern
+                        {{ 'track.draw_page.form.submit.caption'|trans }}
                     </button>
                 </form>
             </div>

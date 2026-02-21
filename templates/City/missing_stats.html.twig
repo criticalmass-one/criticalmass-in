@@ -1,25 +1,24 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
+{% block title %}{{ 'city.missing_stats.title'|trans({ '%city%': city.city }) }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.missing_stats.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.active('Touren mit fehlenden Statistiken') }}
+    {{ breadcrumb.active('city.missing_stats.breadcrumb'|trans) }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Touren aus {{ city.city }} mit fehlenden Statistiken
+                    {{ 'city.missing_stats.heading'|trans({ '%city%': city.city }) }}
                 </h1>
 
                 <p class="lead">
-                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der
-                    jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
+                    {{ 'city.missing_stats.lead'|trans }}
                 </p>
             </div>
         </div>
@@ -30,23 +29,23 @@
                     <thead>
                     <tr>
                         <th>
-                            Datum
+                            {{ 'city.missing_stats.col_date'|trans }}
                         </th>
 
                         <th>
-                            Titel
+                            {{ 'city.missing_stats.col_title'|trans }}
                         </th>
 
                         <th>
-                            Teilnehmer
+                            {{ 'city.missing_stats.col_participants'|trans }}
                         </th>
 
                         <th>
-                            Dauer
+                            {{ 'city.missing_stats.col_duration'|trans }}
                         </th>
 
                         <th>
-                            Distanz
+                            {{ 'city.missing_stats.col_distance'|trans }}
                         </th>
                     </tr>
                     </thead>
@@ -66,15 +65,15 @@
                             </td>
 
                             <td>
-                                {{ ride.estimatedParticipants|default('fehlt') }}
+                                {{ ride.estimatedParticipants|default('city.missing_stats.missing'|trans) }}
                             </td>
 
                             <td>
-                                {{ human_duration(ride.getEstimatedDurationInSeconds())|default('fehlt') }}
+                                {{ human_duration(ride.getEstimatedDurationInSeconds())|default('city.missing_stats.missing'|trans) }}
                             </td>
 
                             <td>
-                                {{ ride.estimatedDistance|default('fehlt') }}
+                                {{ ride.estimatedDistance|default('city.missing_stats.missing'|trans) }}
                             </td>
                         </tr>
                     {% endfor %}

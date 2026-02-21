@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Nächste Tour</h3>
+        <h3 class="panel-title">{{ 'city.next_tour.title'|trans }}</h3>
     </div>
     <div class="panel-body">
         {% if currentRide %}
@@ -19,15 +19,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <dl>
-                        <dt>Datum</dt>
+                        <dt>{{ 'city.next_tour.date'|trans }}</dt>
                         <dd>{{ currentRide.dateTime|date('d.m.Y', currentRide.city.timezone) }}</dd>
                     </dl>
                 </div>
 
                 <div class="col-md-6">
                     <dl>
-                        <dt>Uhrzeit</dt>
-                        <dd>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} Uhr</dd>
+                        <dt>{{ 'city.next_tour.time'|trans }}</dt>
+                        <dd>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} {{ 'common.time_suffix'|trans }}</dd>
                     </dl>
                 </div>
             </div>
@@ -35,12 +35,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <dl>
-                        <dt>Treffpunkt</dt>
+                        <dt>{{ 'city.next_tour.location'|trans }}</dt>
                         {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
                             <dd>{{ currentRide.location }}</dd>
                         {% else %}
                             <a href="{{ object_path(currentRide, 'caldera_criticalmass_ride_edit') }}">
-                                noch nicht bekannt
+                                {{ 'city.next_tour.location_unknown'|trans }}
                             </a>
                         {% endif %}
                     </dl>
@@ -50,7 +50,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
-                        Über eine Radtour ist momentan nichts bekannt.
+                        {{ 'city.next_tour.no_ride'|trans }}
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                 <div class="text-center">
                     <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-success">
                         <i class="far fa-list"></i>
-                        weitere Touren anzeigen
+                        {{ 'city.next_tour.show_more'|trans }}
                     </a>
                 </div>
             </div>

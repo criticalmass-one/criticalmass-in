@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Fotogalerie{% endblock %}
+{% block title %}{{ 'gallery.city_gallery_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ breadcrumb.active('Fotogalerie') }}
+    {{ breadcrumb.item('photo.show.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.active('gallery.city_gallery_breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Fotogalerie
+                    {{ 'gallery.city_gallery_heading'|trans }}
                 </h1>
             </div>
         </div>
@@ -27,14 +27,13 @@
             {% endif %}
 
             {% if loop.revindex0 == 1 %}
-                {% set cityString = cityString ~ ' und ' %}
+                {% set cityString = cityString ~ 'gallery.conjunction'|trans %}
             {% endif %}
         {% endfor %}
         <div class="row">
             <div class="col-md-12">
                 <p class="lead">
-                    Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren
-                    Critical-Mass-Touren aus {{ cityString|raw }}. Viel Spaß beim Herumblättern!
+                    {{ 'gallery.city_gallery_lead'|trans({'%cities%': cityString})|raw }}
                 </p>
             </div>
         </div>

@@ -15,50 +15,50 @@
         {% if participation == null or (participation.goingMaybe and pastRide) %}
             <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="far fa-bicycle me-1"></i>
-                {% if pastRide %}Teilgenommen?{% else %}Dabei?{% endif %}
+                {% if pastRide %}{{ 'participation.question_past'|trans }}{% else %}{{ 'participation.question_future'|trans }}{% endif %}
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-                {{ macros.participation_form(ride, 'yes', 'Ja', 'check text-success') }}
+                {{ macros.participation_form(ride, 'yes', 'participation.yes'|trans, 'check text-success') }}
                 {% if pastRide %}
-                    {{ macros.participation_form(ride, 'no', 'Nein', 'times text-danger') }}
+                    {{ macros.participation_form(ride, 'no', 'participation.no'|trans, 'times text-danger') }}
                 {% else %}
-                    {{ macros.participation_form(ride, 'maybe', 'Vielleicht', 'question-circle text-warning') }}
+                    {{ macros.participation_form(ride, 'maybe', 'participation.maybe'|trans, 'question-circle text-warning') }}
                 {% endif %}
             </ul>
         {% else %}
             {% if participation.goingYes %}
                 <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-check me-1"></i>
-                    {% if pastRide %}Teilgenommen{% else %}Dabei{% endif %}
+                    {% if pastRide %}{{ 'participation.participated'|trans }}{% else %}{{ 'participation.participating'|trans }}{% endif %}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     {% if not pastRide %}
-                        {{ macros.participation_form(ride, 'maybe', 'Vielleicht', 'question-circle text-warning') }}
+                        {{ macros.participation_form(ride, 'maybe', 'participation.maybe'|trans, 'question-circle text-warning') }}
                     {% endif %}
-                    {{ macros.participation_form(ride, 'no', pastRide ? 'Nicht teilgenommen' : 'Absagen', 'times text-danger') }}
+                    {{ macros.participation_form(ride, 'no', pastRide ? 'participation.not_participated'|trans : 'participation.cancel'|trans, 'times text-danger') }}
                 </ul>
             {% endif %}
 
             {% if participation.goingMaybe %}
                 <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-question-circle me-1"></i>
-                    Vielleicht
+                    {{ 'participation.maybe_participating'|trans }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    {{ macros.participation_form(ride, 'yes', 'Zusagen', 'check text-success') }}
-                    {{ macros.participation_form(ride, 'no', 'Absagen', 'times text-danger') }}
+                    {{ macros.participation_form(ride, 'yes', 'participation.confirm'|trans, 'check text-success') }}
+                    {{ macros.participation_form(ride, 'no', 'participation.cancel'|trans, 'times text-danger') }}
                 </ul>
             {% endif %}
 
             {% if participation.goingNo %}
                 <button type="button" class="btn btn-outline-danger btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-times me-1"></i>
-                    {% if pastRide %}Nicht teilgenommen{% else %}Nicht dabei{% endif %}
+                    {% if pastRide %}{{ 'participation.did_not_participate'|trans }}{% else %}{{ 'participation.not_participating'|trans }}{% endif %}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    {{ macros.participation_form(ride, 'yes', pastRide ? 'Doch teilgenommen' : 'Teilnehmen', 'check text-success') }}
+                    {{ macros.participation_form(ride, 'yes', pastRide ? 'participation.did_participate'|trans : 'participation.participate'|trans, 'check text-success') }}
                     {% if not pastRide %}
-                        {{ macros.participation_form(ride, 'maybe', 'Vielleicht', 'question-circle text-warning') }}
+                        {{ macros.participation_form(ride, 'maybe', 'participation.maybe'|trans, 'question-circle text-warning') }}
                     {% endif %}
                 </ul>
             {% endif %}
@@ -70,7 +70,7 @@
             data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
             data-modal-hint-size="md">
             <i class="far fa-bicycle me-1"></i>
-            {% if pastRide %}Teilgenommen?{% else %}Dabei?{% endif %}
+            {% if pastRide %}{{ 'participation.question_past'|trans }}{% else %}{{ 'participation.question_future'|trans }}{% endif %}
         </button>
     {% endif %}
 {% if not inButtonGroup|default(false) %}</div>{% endif %}

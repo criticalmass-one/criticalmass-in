@@ -1,29 +1,26 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Städte-Übersicht{% endblock %}
+{% block title %}{{ 'city.title_overview'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Städteliste') }}
+    {{ breadcrumb.active('city.breadcrumb_city_list'|trans) }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Die nächste Masse ist ganz nah
+                    {{ 'city.list_heading'|trans }}
                 </h1>
 
                 <p class="lead">
-                    Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.
+                    {{ 'city.list_lead'|trans }}
                 </p>
 
                 <p>
-                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte.
-                    Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und
-                    womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher weitere Quellen,
-                    bevor du dich auf den Weg machst.
+                    {{ 'city.list_intro'|trans({'%count%': cityList|length}) }}
                 </p>
             </div>
         </div>
@@ -34,16 +31,16 @@
                     <thead>
                     <tr>
                         <th>
-                            Stadt
+                            {{ 'city.list_col_city'|trans }}
                         </th>
                         <th>
-                            aktuelle Tour
+                            {{ 'city.list_col_current_ride'|trans }}
                         </th>
                         <th>
-                            Turnus
+                            {{ 'city.list_col_cycle'|trans }}
                         </th>
                         <th>
-                            Touren
+                            {{ 'city.list_col_rides'|trans }}
                         </th>
                     </tr>
                     </thead>
@@ -59,7 +56,7 @@
                                 {% if city.currentRide %}
                                     <a href="{{ object_path(city.currentRide) }}">
                                         {{ city.currentRide.dateTime|format_datetime(dateFormat='long', timeFormat='short', locale='de', timezone=city.city.timezone) }}
-                                        &nbsp;Uhr
+                                        &nbsp;{{ 'city.list_time_suffix'|trans }}
                                     </a>
                                 {% endif %}
                             </td>
@@ -67,8 +64,8 @@
                                 <ul class="list-unstyled">
                                     {% for cycle in city.cycles %}
                                         <li>
-                                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
-                                            um {{ cycle.time|date('H:i', 'UTC') }} Uhr
+                                            {{ 'common.date_prefix'|trans }} {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
+                                            {{ 'common.time_prefix'|trans }} {{ cycle.time|date('H:i', 'UTC') }} {{ 'city.list_time_suffix'|trans }}
                                         </li>
                                     {% endfor %}
                                 </ul>

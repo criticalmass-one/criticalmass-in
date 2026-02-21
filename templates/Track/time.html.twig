@@ -1,12 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Zeit anpassen{% endblock %}
+{% block title %}{{ 'track.time_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ breadcrumb.item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
-    {{ breadcrumb.active('Zeit anpassen') }}
+    {{ breadcrumb.item('track.breadcrumb_account'|trans, path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.item('track.breadcrumb_tracks'|trans, path('caldera_criticalmass_track_list')) }}
+    {{ breadcrumb.active('track.time_title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -14,12 +14,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Zeit anpassen
+                    {{ 'track.time_title'|trans }}
                 </h1>
 
                 <p class="lead">
-                    Falls dein Aufzeichnungsgerät aus irgendeinem Grunde eine falsche Uhrzeit bei deinem GPX-Track
-                    angegeben haben sollte, kannst du hier den Start-Zeitpunkt deines Tracks verschieben.
+                    {{ 'track.time_lead'|trans }}
                 </p>
             </div>
         </div>
@@ -30,13 +29,13 @@
             <div class="col-md-5 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Alte Uhrzeit
+                        {{ 'track.time_old'|trans }}
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="">Datum:</label>
+                                    <label class="control-label" for="">{{ 'track.time_label_date'|trans }}</label>
                                     <input class="form-control" type="text" disabled="disabled"
                                            value="{{ track.startDate.format('d.m.Y') }}"/>
                                 </div>
@@ -46,7 +45,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="">Uhrzeit:</label>
+                                    <label class="control-label" for="">{{ 'track.time_label_time'|trans }}</label>
                                     <input class="form-control" type="text" disabled="disabled"
                                            value="{{ track.startDate.format('H:i') }}"/>
                                 </div>
@@ -56,7 +55,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="">Zeitzone:</label>
+                                    <label class="control-label" for="">{{ 'track.time_label_timezone'|trans }}</label>
                                     <input class="form-control" type="text" disabled="disabled"
                                            value="{{ track.ride.city.timezone }}"/>
                                 </div>
@@ -69,13 +68,13 @@
             <div class="col-md-5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Neue Uhrzeit
+                        {{ 'track.time_new'|trans }}
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group{% if form_errors(form.startDate) %} has-error has-feedback{% endif %}">
-                                    <label class="control-label" for="">Datum:</label>
+                                    <label class="control-label" for="">{{ 'track.time_label_date'|trans }}</label>
                                     {{ form_widget(form.startDate, { 'attr' : { 'class': 'form-control'} }) }}
                                 </div>
                             </div>
@@ -84,7 +83,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group{% if form_errors(form.startTime) %} has-error has-feedback{% endif %}">
-                                    <label class="control-label" for="">Uhrzeit:</label>
+                                    <label class="control-label" for="">{{ 'track.time_label_time'|trans }}</label>
                                     {{ form_widget(form.startTime, { 'attr' : { 'class': 'form-control'} }) }}
                                 </div>
                             </div>
@@ -93,7 +92,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="">Zeitzone:</label>
+                                    <label class="control-label" for="">{{ 'track.time_label_timezone'|trans }}</label>
                                     <input class="form-control" type="text" disabled="disabled"
                                            value="{{ track.ride.city.timezone }}"/>
                                 </div>
@@ -108,10 +107,10 @@
             <div class="col-md-12 text-center">
                 <div class="btn-group">
                     <a href="{{ path('caldera_criticalmass_track_list') }}" class="btn btn-secondary">
-                        Abbrechen
+                        {{ 'common.cancel'|trans }}
                     </a>
                     <button type="submit" class="btn btn-success">
-                        Speichern
+                        {{ 'common.save'|trans }}
                     </button>
                 </div>
             </div>

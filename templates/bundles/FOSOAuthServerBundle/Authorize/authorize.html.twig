@@ -7,11 +7,11 @@
                 {{ form_start(form, {'method': 'POST', 'action': path('fos_oauth_server_authorize'), 'label_attr': {'class': 'fos_oauth_server_authorize'} }) }}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">OAuth</h3>
+                        <h3 class="panel-title">{{ 'security.oauth.title'|trans }}</h3>
                     </div>
                     <div class="panel-body">
                         <p>
-                            Möchtest du der folgenden Webseite erlauben, auf deine Kontodaten zuzugreifen?
+                            {{ 'security.oauth.question'|trans }}
                         </p>
 
                         <p>
@@ -23,12 +23,12 @@
                         </p>
 
                         <p>
-                            Diese Seite kann auf folgende Daten deines Benutzerkontos zugreifen:
+                            {{ 'security.oauth.access_info'|trans }}
                         </p>
 
                         <ul>
                             <li>
-                                deinen Benutzernamen
+                                {{ 'security.oauth.username_access'|trans }}
                             </li>
                         </ul>
 

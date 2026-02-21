@@ -1,18 +1,17 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Critical Mass Live Tracking{% endblock %}
+{% block title %}{{ 'static.live_tracking.title'|trans }}{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h1>
-                    Critical Mass Live Tracking
+                    {{ 'static.live_tracking.heading'|trans }}
                 </h1>
 
                 <p>
-                    Wenn du diese Seite siehst, bist du vermutlich einen veralteten Link gefolgt &mdash; bitte besuche
-                    criticalmass.live für weitere Informationen zum Live-Tracking.
+                    {{ 'static.live_tracking.outdated_link_text'|trans }}
                 </p>
 
                 <p class="text-center">

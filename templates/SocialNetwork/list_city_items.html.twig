@@ -2,9 +2,9 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.active('Soziale Netzwerke') }}
+    {{ breadcrumb.active('social_network.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -16,14 +16,11 @@
                 {% if itemList|length == 0 %}
                     <div class="alert alert-info">
                         <p>
-                            <strong>Schade!</strong> Entweder veröffentlicht niemand von der {{ city.title }} neue
-                            Beiträge in sozialen Netzerken oder wir waren nicht in der Lage, die Beiträge abzurufen.
+                            {{ 'social_network.items_empty'|trans({'%city_title%': city.title}) }}
                         </p>
 
                         <p>
-                            Wenn du für {{ city.city }} <a
-                                    href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">gesellschaftliche
-                                Netzwerke</a> konfigurierst, werden Beiträge aus diesen Netzwerken hier angezeigt.
+                            {{ 'social_network.items_empty_hint'|trans({'%city_name%': city.city, '%social_network_url%': object_path(city, 'criticalmass_socialnetwork_city_list')})|raw }}
                         </p>
                     </div>
                 {% endif %}
@@ -36,7 +33,7 @@
                             </p>
 
                             <a href="{{ item.permalink }}">
-                                <time title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
+                                <time title="{{ item.dateTime|date('d.m.Y H:i') }} {{ 'common.time_suffix'|trans }}">
                                     {{ item.dateTime|time_ago_in_words }}
                                 </time>
                             </a>
@@ -53,9 +50,9 @@
                             </p>
 
                             <p class="text-right">
-                                <a href="{{ item.permalink }}" title="zum Beitrag" class="btn btn-primary">
+                                <a href="{{ item.permalink }}" title="{{ 'social_network.read_more'|trans }}" class="btn btn-primary">
                                     <i class="far fa-hand-point-right"></i>
-                                    Weiterlesen
+                                    {{ 'social_network.read_more'|trans }}
                                 </a>
                             </p>
                         </div>

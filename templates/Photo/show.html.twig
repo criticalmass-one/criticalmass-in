@@ -5,27 +5,27 @@
 {% set next_photo = next_entity(photo) %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('photo.show.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.item('Fotos', object_path(ride, 'caldera_criticalmass_photo_ride_list')) }}
-    {{ breadcrumb.active('Foto ' ~ photo.id ~ ' aus ' ~ city.city) }}
+    {{ breadcrumb.item('photo.show.breadcrumb_photos'|trans, object_path(ride, 'caldera_criticalmass_photo_ride_list')) }}
+    {{ breadcrumb.active('photo.show.breadcrumb_photo'|trans({'%id%': photo.id, '%city%': city.city})) }}
 {% endblock %}
 
 {% block navigation %}
     <div class="row">
         <div class="col-md-12">
-            <nav aria-label="Foto Navigation">
+            <nav aria-label="{{ 'photo.show.navigation_label'|trans }}">
                 <ul class="pagination justify-content-between">
                     <li class="page-item{% if not previous_photo %} disabled{% endif %}">
                         <a class="page-link" href="{% if previous_photo %}{{ object_path(previous_photo) }}{% else %}#{% endif %}">
-                            &larr; Voriges Foto
+                            {{ 'photo.show.previous_photo'|trans|raw }}
                         </a>
                     </li>
 
                     <li class="page-item{% if not next_photo %} disabled{% endif %}">
                         <a class="page-link" href="{% if next_photo %}{{ object_path(next_photo) }}{% else %}#{% endif %}">
-                            Nächstes Foto &rarr;
+                            {{ 'photo.show.next_photo'|trans|raw }}
                         </a>
                     </li>
                 </ul>
@@ -46,31 +46,26 @@
                         <div class="panel panel-danger">
                             <div class="panel-body">
                                 <h4 class="text-center">
-                                    Bitte logge dich ein
+                                    {{ 'photo.show.login_heading'|trans }}
                                 </h4>
 
                                 <p>
-                                    Um diese Fotos anzusehen, musst du dich leider einloggen. Keine Sorge, das dauert
-                                    keine fünf Sekunden:
+                                    {{ 'photo.show.login_text'|trans }}
                                 </p>
 
                                 <p class="text-center">
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-primary">
-                                        Login
+                                        {{ 'photo.show.login_button'|trans }}
                                     </a>
                                 </p>
 
                                 <h6 class="text-center">
-                                    Warum wird mir das angezeigt?
+                                    {{ 'photo.show.login_why_heading'|trans }}
                                 </h6>
 
                                 <p>
                                     <small>
-                                        criticalmass.in ist ein reines Hobby-Projekt ohne jegliche Absichten zur
-                                        Gewinnerzielung. Der Ansturm auf Fotos bringt Server und Anbindung leider
-                                        regelmäßig an die Belastungsgrenze &mdash; Indem bestimmte Fotos nur für
-                                        angemeldete Nutzer angezeigt werden, lässt sich die Belastung (hoffentlich)
-                                        besser verteilen.
+                                        {{ 'photo.show.login_why_text'|trans|raw }}
                                     </small>
                                 </p>
                             </div>

@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Dein Benutzerprofil{% endblock %}
+{% block title %}{{ 'profile.manage.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Dein Benutzerkonto') }}
+    {{ breadcrumb.active('profile.manage.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,12 +12,12 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h2>
-                    Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
+                    {{ 'profile.manage.greeting'|trans({'%username%': app.getUser().getUsername()}) }}
                 </h2>
 
                 <p class="lead">
-                    Willkommen in deinem Benutzerkonto!
-                    Hier kannst du deine {% if feature('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.
+                    {{ 'profile.manage.welcome'|trans }}
+                    {{ 'profile.manage.welcome_text'|trans({'%photos%': feature('photos') ? 'profile.manage.welcome_photos_prefix'|trans : ''}) }}
                 </p>
             </div>
         </div>
@@ -28,7 +28,7 @@
                 <div class="col-md-10 col-md-offset-1">
                     <div class="alert alert-dismissible alert-success" role="alert">
                         {{ flashMessage }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'common.close'|trans }}"></button>
                     </div>
                 </div>
             </div>
@@ -40,17 +40,17 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Profilfoto ändern
+                                {{ 'profile.manage.panel_photo'|trans }}
                             </div>
                             <div class="panel-body">
                                 <p>
-                                    Lade ein Foto für dein Profil hoch.
+                                    {{ 'profile.manage.panel_photo_text'|trans }}
                                 </p>
 
                                 <p class="text-center">
                                     <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_profile_photo') }}">
-                                        Profilfoto ändern
+                                        {{ 'profile.manage.panel_photo'|trans }}
                                     </a>
                                 </p>
                             </div>
@@ -60,17 +60,17 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Profilfarbe wählen
+                                {{ 'profile.manage.panel_color'|trans }}
                             </div>
                             <div class="panel-body">
                                 <p>
-                                    Ändere die Farbe deines Benutzerkontos.
+                                    {{ 'profile.manage.panel_color_text'|trans }}
                                 </p>
 
                                 <p class="text-center">
                                     <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_profile_color') }}">
-                                        Profilfarbe wählen
+                                        {{ 'profile.manage.panel_color'|trans }}
                                     </a>
                                 </p>
                             </div>
@@ -80,27 +80,24 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Deine Touren
+                                {{ 'profile.manage.panel_rides'|trans }}
                             </div>
 
                             <div class="panel-body">
                                 {% if participationCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
-                                        <strong>Schade:</strong>
-                                        Du hast noch an keiner Critical Mass teilgenommen. Im <a
-                                                href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a> findest
-                                        du Touren in deiner Nähe.
+                                        <strong>{{ 'profile.manage.rides_none_label'|trans }}</strong>
+                                        {{ 'profile.manage.rides_none'|trans({'%calendar_url%': path('caldera_criticalmass_calendar')})|raw }}
                                     </div>
                                 {% else %}
                                     <p>
-                                        Super: Du hast bislang an {{ participationCounter }} Critical-Mass-Touren
-                                        teilgenommen.
+                                        {{ 'profile.manage.rides_count'|trans({'%count%': participationCounter}) }}
                                     </p>
 
                                     <p class="text-center">
                                         <a class="btn btn-secondary"
                                            href="{{ path('criticalmass_user_participation_list') }}">
-                                            Tourenübersicht
+                                            {{ 'profile.manage.rides_overview'|trans }}
                                         </a>
                                     </p>
                                 {% endif %}
@@ -111,23 +108,21 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Deine Tracks
+                                {{ 'profile.manage.panel_tracks'|trans }}
                             </div>
                             <div class="panel-body">
                                 {% if trackCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
-                                        Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in
-                                        die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
+                                        {{ 'profile.manage.tracks_none'|trans }}
                                     </div>
                                 {% else %}
                                     <p>
-                                        Von deinen Critical-Mass-Touren hast du insgesamt {{ trackCounter }} Tracks
-                                        hochgeladen.
+                                        {{ 'profile.manage.tracks_count'|trans({'%count%': trackCounter}) }}
                                     </p>
 
                                     <p class="text-center">
                                         <a class="btn btn-secondary" href="{{ path('caldera_criticalmass_track_list') }}">
-                                            Tracks verwalten
+                                            {{ 'profile.manage.tracks_manage'|trans }}
                                         </a>
                                     </p>
                                 {% endif %}
@@ -139,23 +134,22 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Deine Fotos
+                                {{ 'profile.manage.panel_photos'|trans }}
                             </div>
                             <div class="panel-body">
                                 {% if photoCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
-                                        Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr
-                                        Informationen zu diesem Thema.
+                                        {{ 'profile.manage.photos_none'|trans }}
                                     </div>
                                 {% else %}
                                     <p>
-                                        Du hast von deinen Touren {{ photoCounter }} Fotos hochgeladen.
+                                        {{ 'profile.manage.photos_count'|trans({'%count%': photoCounter}) }}
                                     </p>
 
                                     <p class="text-center">
                                         <a class="btn btn-secondary"
                                            href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                            Fotos verwalten
+                                            {{ 'profile.manage.photos_manage'|trans }}
                                         </a>
                                     </p>
                                 {% endif %}
@@ -167,17 +161,17 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Benutzername ändern
+                                {{ 'profile.manage.panel_username'|trans }}
                             </div>
                             <div class="panel-body">
                                 <p>
-                                    Hier kannst du deinen Benutzernamen ändern.
+                                    {{ 'profile.manage.panel_username_text'|trans }}
                                 </p>
 
                                 <p class="text-center">
                                     <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_usermanagement_editusername') }}">
-                                        Benutzername ändern
+                                        {{ 'profile.manage.panel_username'|trans }}
                                     </a>
                                 </p>
                             </div>
@@ -187,18 +181,17 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                E-Mail-Adresse ändern
+                                {{ 'profile.manage.panel_email'|trans }}
                             </div>
                             <div class="panel-body">
                                 <p>
-                                    Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
-                                    mit deinen neuen Benutzerdaten einloggen musst.
+                                    {{ 'profile.manage.panel_email_text'|trans }}
                                 </p>
 
                                 <p class="text-center">
                                     <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_usermanagement_editemail') }}">
-                                        E-Mail-Adresse ändern
+                                        {{ 'profile.manage.panel_email'|trans }}
                                     </a>
                                 </p>
                             </div>

@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Verbinde dich mit Strava{% endblock %}
+{% block title %}{{ 'strava.auth.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Tracks importieren') }}
+    {{ breadcrumb.active('strava.mass_import.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Verbinde dich mit Strava
+                    {{ 'strava.auth.heading'|trans }}
                 </h1>
             </div>
         </div>

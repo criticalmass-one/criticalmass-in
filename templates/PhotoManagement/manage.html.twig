@@ -1,12 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Fotos bearbeiten{% endblock %}
+{% block title %}{{ 'photo.management.manage_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item(ride.city.title, object_path(ride.city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
-    {{ breadcrumb.active('Fotos bearbeiten') }}
+    {{ breadcrumb.active('photo.management.manage_breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
                     <a href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}"
                        class="btn btn-success">
                         <i class="far fa-camera"></i>
-                        Weitere Fotos hochladen
+                        {{ 'photo.management.upload_more'|trans }}
                     </a>
 
                     {#<a href="{{ object_path(ride, 'caldera_criticalmass_photo_relocate') }}"
@@ -29,7 +29,7 @@
 
 
                 <h2>
-                    Fotos bearbeiten
+                    {{ 'photo.management.manage_heading'|trans }}
                 </h2>
             </div>
         </div>
@@ -51,11 +51,11 @@
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-secondary btn-xs dropdown-toggle"
                                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Bearbeiten                                        </button>
+                                            {{ 'photo.management.dropdown_edit'|trans }}                                        </button>
                                         <ul class="dropdown-menu">
                                             <li class="disabled">
                                                 <a href="#">
-                                                    Aufnahmedatum: <br/>
+                                                    {{ 'photo.management.capture_date'|trans }} <br/>
                                                     {{ photo.exifCreationDate.format('d.m.Y H:i:s') }}
                                                 </a>
                                             </li>
@@ -65,7 +65,7 @@
                                             <li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_delete') }}">
                                                     <i class="far fa-trash-alt"></i>
-                                                    Löschen
+                                                    {{ 'common.delete'|trans }}
                                                 </a>
                                             </li>
 
@@ -80,14 +80,14 @@
                                                 <li>
                                                     <a href="{{ object_path(photo, 'caldera_criticalmass_photo_toggle') }}">
                                                         <i class="far fa-eye-slash"></i>
-                                                        Deaktivieren
+                                                        {{ 'photo.management.deactivate'|trans }}
                                                     </a>
                                                 </li>
                                             {% else %}
                                                 <li>
                                                     <a href="{{ object_path(photo, 'caldera_criticalmass_photo_toggle') }}">
                                                         <i class="far fa-eye"></i>
-                                                        Aktivieren
+                                                        {{ 'photo.management.activate'|trans }}
                                                     </a>
                                                 </li>
                                             {% endif %}
@@ -106,13 +106,13 @@
                                             <li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=left">
                                                     <i class="far fa-undo"></i>
-                                                    links rotieren
+                                                    {{ 'photo.management.rotate_left'|trans }}
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=right">
                                                     <i class="far fa-redo"></i>
-                                                    rechts rotieren
+                                                    {{ 'photo.management.rotate_right'|trans }}
                                                 </a>
                                             </li>
 
@@ -122,14 +122,14 @@
                                                 <li>
                                                     <a href="{{ object_path(photo, 'caldera_criticalmass_photo_featured') }}">
                                                         <i class="far fa-flag"></i>
-                                                        Hauptbild lösen
+                                                        {{ 'photo.management.unset_featured'|trans }}
                                                     </a>
                                                 </li>
                                             {% else %}
                                                 <li>
                                                     <a href="{{ object_path(photo, 'caldera_criticalmass_photo_featured') }}">
                                                         <i class="far fa-flag"></i>
-                                                        Hauptbild festlegen
+                                                        {{ 'photo.management.set_featured'|trans }}
                                                     </a>
                                                 </li>
                                             {% endif %}

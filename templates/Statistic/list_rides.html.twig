@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}{% endblock %}
+{% block title %}{{ 'statistic.list_rides_title'|trans({'%month%': dateTime|format_datetime(pattern='MMMM yyyy')}) }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Statistik', '#') }}
-    {{ breadcrumb.active('Critical-Mass-Teilnehmerzahlen im ' ~ dateTime|format_datetime(pattern='MMMM yyyy')) }}
+    {{ breadcrumb.item('statistic.title'|trans, '#') }}
+    {{ breadcrumb.active('statistic.list_rides_title'|trans({'%month%': dateTime|format_datetime(pattern='MMMM yyyy')})) }}
 {% endblock %}
 
 {% block content %}
@@ -13,11 +13,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}
+                    {{ 'statistic.list_rides_title'|trans({'%month%': dateTime|format_datetime(pattern='MMMM yyyy')}) }}
                 </h2>
 
                 <p class="lead">
-                    Hier siehst du die Liste der Touren im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}.
+                    {{ 'statistic.list_rides_lead'|trans({'%month%': dateTime|format_datetime(pattern='MMMM yyyy')}) }}
                 </p>
             </div>
         </div>
@@ -28,22 +28,22 @@
                     <thead>
                     <tr>
                         <th>
-                            Stadt
+                            {{ 'statistic.col_city'|trans }}
                         </th>
                         <th>
-                            Datum
+                            {{ 'statistic.col_date'|trans }}
                         </th>
                         <th>
-                            Teilnehmer
+                            {{ 'statistic.col_participants'|trans }}
                         </th>
                         <th>
-                            Distanz
+                            {{ 'statistic.col_distance'|trans }}
                         </th>
                         <th>
-                            Länge
+                            {{ 'statistic.col_duration'|trans }}
                         </th>
                         <th>
-                            Durchschnittsgeschwindigkeit
+                            {{ 'statistic.col_average_speed'|trans }}
                         </th>
                     </tr>
                     </thead>
@@ -59,24 +59,24 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.
+                    {{ 'statistic.missing_data'|trans|raw }}
                 </p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="Monat Navigation">
+                <nav aria-label="{{ 'statistic.month_navigation'|trans }}">
                     <ul class="pagination justify-content-between">
                         <li class="page-item{% if not previousDateTime %} disabled{% endif %}">
                             <a class="page-link" href="{% if previousDateTime %}{{ path('caldera_criticalmass_statistic_ride_month', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}{% else %}#{% endif %}">
-                                &larr; Voriger Monat
+                                &larr; {{ 'statistic.previous_month'|trans }}
                             </a>
                         </li>
 
                         <li class="page-item{% if not nextDateTime %} disabled{% endif %}">
                             <a class="page-link" href="{% if nextDateTime %}{{ path('caldera_criticalmass_statistic_ride_month', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}{% else %}#{% endif %}">
-                                Nächster Monat &rarr;
+                                {{ 'statistic.next_month'|trans }} &rarr;
                             </a>
                         </li>
                     </ul>

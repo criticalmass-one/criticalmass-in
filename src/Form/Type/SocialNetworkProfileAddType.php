@@ -20,7 +20,7 @@ class SocialNetworkProfileAddType extends SocialNetworkProfileType
             ])
             ->add('network', ChoiceType::class, [
                 'choices' => $this->getNetworkList(),
-                'placeholder' => '(automatisch erkennen)',
+                'placeholder' => 'form.social_network.auto_detect',
                 'required' => false,
             ]);
     }

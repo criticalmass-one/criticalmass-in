@@ -64,7 +64,7 @@ class CityManagementControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', '/hamburg/edit');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['city[punchLine]'] = 'Testpunchline';
 
         $client->submit($form);
@@ -79,7 +79,7 @@ class CityManagementControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', '/hamburg/edit');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['city[longDescription]'] = 'Hamburg ist eine wunderschöne Hafenstadt an der Elbe.';
 
         $client->submit($form);
@@ -104,7 +104,7 @@ class CityManagementControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', '/hamburg/edit');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['city[description]'] = 'Die schönste Stadt im Norden.';
 
         $client->submit($form);
@@ -129,7 +129,7 @@ class CityManagementControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', '/hamburg/edit');
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['city[punchLine]'] = 'Radfahren in Hamburg';
 
         $client->submit($form);

@@ -2,9 +2,9 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if city != null %}
-    {% set title = 'Stadt editieren' %}
+    {% set title = 'city.management.edit_title'|trans %}
 {% else %}
-    {% set title = 'Neue Stadt hinzufügen' %}
+    {% set title = 'city.management.add_title'|trans %}
 {% endif %}
 
 {% block title %}{{ title }}{% endblock %}
@@ -14,7 +14,7 @@
         {{ breadcrumb.item(city.city, object_path(city)) }}
         {{ breadcrumb.active(title) }}
     {% else %}
-        {{ breadcrumb.item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
+        {{ breadcrumb.item('city.management.breadcrumb_directory'|trans, path('caldera_criticalmass_region_world')) }}
         {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
             {{ breadcrumb.item(region.parent.parent.parent.name, object_path(region.parent.parent.parent)) }}
         {% endif %}
@@ -25,7 +25,7 @@
             {{ breadcrumb.item(region.parent.name, object_path(region.parent)) }}
         {% endif %}
         {{ breadcrumb.item(region.name, object_path(region)) }}
-        {{ breadcrumb.active('Stadt hinzufügen') }}
+        {{ breadcrumb.active('city.management.breadcrumb_add'|trans) }}
     {% endif %}
 {% endblock %}
 
@@ -66,16 +66,16 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Städte-Informationen</h2>
+                        <h2>{{ 'city.management.section_city_info'|trans }}</h2>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.region) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Region:</label>
+                            <label class="control-label" for="">{{ 'city.management.label_region'|trans }}</label>
                             {{ form_widget(form.region, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.</p>
+                            <p class="help-block">{{ 'city.management.help_region'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -83,10 +83,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Titel:</label>
+                            <label class="control-label" for="">{{ 'city.management.label_title'|trans }}</label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass
-                                Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                            <p class="help-block">{{ 'city.management.help_title'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -101,9 +100,9 @@
                                 data-geocoding-query-part-selector-value="#city_region">
                                 <i class="far fa-map-marker"></i>
                             </button>
-                            <label class="control-label" for="">Name:</label>
+                            <label class="control-label" for="">{{ 'city.management.label_name'|trans }}</label>
                             {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
+                            <p class="help-block">{{ 'city.management.help_name'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -111,9 +110,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Beschreibung:</label>
+                            <label class="control-label" for="">{{ 'city.management.label_description'|trans }}</label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
-                            <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
+                            <p class="help-block">{{ 'city.management.help_description'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -121,10 +120,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Punchline:</label>
+                            <label class="control-label" for="">{{ 'city.management.label_punchline'|trans }}</label>
                             {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“
-                                oder „Reclaim the streets“ ist ja schon fast Standard.</p>
+                            <p class="help-block">{{ 'city.management.help_punchline'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -132,9 +130,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Lange Beschreibung:</label>
+                            <label class="control-label" for="">{{ 'city.management.label_long_description'|trans }}</label>
                             {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
-                            <p class="help-block">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>
+                            <p class="help-block">{{ 'city.management.help_long_description'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -143,17 +141,16 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Technisches</h2>
+                        <h2>{{ 'city.management.section_technical'|trans }}</h2>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="">Forum anzeigen:</label>
+                            <label class="control-label" for="">{{ 'city.management.label_enable_board'|trans }}</label>
                             {{ form_widget(form.enableBoard, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu
-                                aktivieren.</p>
+                            <p class="help-block">{{ 'city.management.help_enable_board'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -161,18 +158,16 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Header-Grafik</h2>
+                        <h2>{{ 'city.management.section_header_image'|trans }}</h2>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="">Datei:</label>
+                            <label class="control-label" for="">{{ 'city.management.label_image_file'|trans }}</label>
                             {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass
-                                    du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind
-                                Bildabmessungen von 2.280 mal 500 Pixel.</p>
+                            <p class="help-block">{{ 'city.management.help_image_file'|trans|raw }}</p>
                         </div>
                     </div>
                 </div>
@@ -184,15 +179,15 @@
                 <div class="btn-group pull-right">
                     {% if city and city.mainSlug %}
                         <a href="{{ object_path(city) }}" class="btn btn-secondary">
-                            Abbrechen
+                            {{ 'common.cancel'|trans }}
                         </a>
                     {% else %}
                         <a href="{{ object_path(region) }}" class="btn btn-secondary">
-                            Abbrechen
+                            {{ 'common.cancel'|trans }}
                         </a>
                     {% endif %}
                     <button type="submit" class="btn btn-success">
-                        Speichern
+                        {{ 'common.save'|trans }}
                     </button>
                 </div>
             </div>

@@ -58,7 +58,7 @@ class PostControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', sprintf('/post/write/ride/%d', $ride->getId()));
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['post[message]'] = 'Tolle Tour, hat Spaß gemacht!';
 
         $client->submit($form);
@@ -77,7 +77,7 @@ class PostControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', sprintf('/post/write/ride/%d', $rideId));
 
-        $form = $crawler->selectButton('Speichern')->form();
+        $form = $crawler->filter('button[type="submit"]')->form();
         $form['post[message]'] = 'Einzigartiger Testkommentar 12345';
 
         $client->submit($form);

@@ -5,7 +5,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="standard-tab" data-bs-toggle="tab" data-bs-target="#standard" type="button" role="tab" aria-controls="standard" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                     <i class="far fa-clock"></i>
-                    Neuigkeiten
+                    {{ 'timeline.tab_news'|trans }}
                 </button>
             </li>
             {% set hasActiveTab = true %}
@@ -15,7 +15,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="facebook-tab" data-bs-toggle="tab" data-bs-target="#facebook" type="button" role="tab" aria-controls="facebook" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                     <i class="fab fa-facebook"></i>
-                    Facebook-Beiträge
+                    {{ 'timeline.tab_facebook'|trans }}
                 </button>
             </li>
             {% set hasActiveTab = true %}
@@ -25,7 +25,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="twitter-tab" data-bs-toggle="tab" data-bs-target="#twitter" type="button" role="tab" aria-controls="twitter" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                     <i class="fab fa-twitter"></i>
-                    Tweets
+                    {{ 'timeline.tab_twitter'|trans }}
                 </button>
             </li>
             {% set hasActiveTab = true %}
@@ -35,7 +35,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="instagram-tab" data-bs-toggle="tab" data-bs-target="#instagram_profile" type="button" role="tab" aria-controls="instagram_profile" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                     <i class="fab fa-instagram"></i>
-                    Instagram-Fotos
+                    {{ 'timeline.tab_instagram'|trans }}
                 </button>
             </li>
             {% set hasActiveTab = true %}
@@ -45,7 +45,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="www-tab" data-bs-toggle="tab" data-bs-target="#www" type="button" role="tab" aria-controls="www" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                     <i class="far fa-globe"></i>
-                    Blog-Beiträge
+                    {{ 'timeline.tab_blog'|trans }}
                 </button>
             </li>
             {% set hasActiveTab = true %}
@@ -55,7 +55,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="mastodon-tab" data-bs-toggle="tab" data-bs-target="#mastodon" type="button" role="tab" aria-controls="mastodon" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                     <i class="fab fa-mastodon"></i>
-                    Mastodon-Beiträge
+                    {{ 'timeline.tab_mastodon'|trans }}
                 </button>
             </li>
             {% set hasActiveTab = true %}

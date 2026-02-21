@@ -4,18 +4,18 @@
         <table class="table">
             <tr>
                 <th>&nbsp;</th>
-                <th class="text-center">Jan</th>
-                <th class="text-center">Feb</th>
-                <th class="text-center">Mär</th>
-                <th class="text-center">Apr</th>
-                <th class="text-center">Mai</th>
-                <th class="text-center">Jun</th>
-                <th class="text-center">Jul</th>
-                <th class="text-center">Aug</th>
-                <th class="text-center">Sep</th>
-                <th class="text-center">Okt</th>
-                <th class="text-center">Nov</th>
-                <th class="text-center">Dez</th>
+                <th class="text-center">{{ 'participation.month.jan'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.feb'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.mar'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.apr'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.may'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.jun'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.jul'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.aug'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.sep'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.oct'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.nov'|trans }}</th>
+                <th class="text-center">{{ 'participation.month.dec'|trans }}</th>
                 <th class="text-center">&sum;</th>
             </tr>
 
@@ -56,22 +56,22 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Current Streak
+                {{ 'participation.current_streak.title'|trans }}
             </div>
             <div class="panel-body text-center">
                 {% if currentStreak.rideList|length > 0 %}
                 <p>
-                    {{ currentStreak.startDateTime|date('d.m.Y') }} bis heute
+                    {{ 'participation.current_streak.period'|trans({ '%start%': currentStreak.startDateTime|date('d.m.Y') }) }}
                 </p>
 
                 <p>
                     <strong>
-                        {{ currentStreak.rideList|length }} Touren
+                        {{ 'participation.rides_count'|trans({ '%count%': currentStreak.rideList|length }) }}
                     </strong>
                 </p>
                 {% else %}
                     <p>
-                        Schade: Du hast in der jüngeren Vergangenheit an keinen Touren teilgenommen.
+                        {{ 'participation.current_streak.empty'|trans }}
                     </p>
                 {% endif %}
             </div>
@@ -81,28 +81,28 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Gesamtzahl
+                {{ 'participation.total.title'|trans }}
             </div>
             <div class="panel-body text-center">
                 {% set firstRide = participationYesList|last %}
 
                 {% if firstRide %}
                 <p>
-                    seit {{ participationYesList|last.ride.dateTime|date('d.m.Y') }} hast du an
+                    {{ 'participation.total.since'|trans({ '%date%': participationYesList|last.ride.dateTime|date('d.m.Y') }) }}
                 </p>
 
                 <p>
                     <strong>
-                        {{ participationYesList|length }} Touren
+                        {{ 'participation.rides_count'|trans({ '%count%': participationYesList|length }) }}
                     </strong>
                 </p>
 
                 <p>
-                    teilgenommen. Super!
+                    {{ 'participation.total.great'|trans }}
                 </p>
                 {% else %}
                 <p>
-                    Schade, du hast bislang an keinen Touren teilgenommen.
+                    {{ 'participation.total.empty'|trans }}
                 </p>
                 {% endif %}
             </div>
@@ -112,23 +112,22 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Longest Streak
+                {{ 'participation.longest_streak.title'|trans }}
             </div>
             <div class="panel-body text-center">
                 {% if longestStreak %}
                 <p>
-                    {{ longestStreak.startDateTime|date('d.m.Y') }}
-                    bis {{ longestStreak.endDateTime|date('d.m.Y') }}
+                    {{ 'participation.longest_streak.period'|trans({ '%start%': longestStreak.startDateTime|date('d.m.Y'), '%end%': longestStreak.endDateTime|date('d.m.Y') }) }}
                 </p>
 
                 <p>
                     <strong>
-                        {{ longestStreak.rideList|length }} Touren
+                        {{ 'participation.rides_count'|trans({ '%count%': longestStreak.rideList|length }) }}
                     </strong>
                 </p>
                 {% else %}
                     <p>
-                        Schade, du hast bislang an keinen Touren teilgenommen.
+                        {{ 'participation.longest_streak.empty'|trans }}
                     </p>
                 {% endif %}
             </div>
@@ -139,7 +138,7 @@
 <div class="row margin-top-medium">
     <div class="col-md-12">
         <div class="alert alert-info">
-            Schade: Du hast bislang an keinen Touren teilgenommen, sonst könnten wir dir hier ein paar Statistiken über deine Teilnahme anzeigen.
+            {{ 'participation.no_participation'|trans }}
         </div>
     </div>
 </div>

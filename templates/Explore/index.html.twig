@@ -1,6 +1,6 @@
 {% extends 'Template/FullscreenTemplate.html.twig' %}
 
-{% block title %}Explore{% endblock %}
+{% block title %}{{ 'explore.title'|trans }}{% endblock %}
 
 {% block content %}
     <div class="explore-container"
@@ -14,7 +14,7 @@
             <div class="explore-sidebar__header">
                 <h2 class="explore-sidebar__title">
                     <i class="fa fa-university"></i>
-                    Staedte
+                    {{ 'explore.sidebar_title'|trans }}
                     <span class="badge bg-secondary" data-counter>0</span>
                 </h2>
                 <button type="button"
@@ -39,7 +39,7 @@
             <h4 class="popup__title">{{title}}</h4>
             <div class="popup__actions">
                 <a class="btn btn-primary btn-sm" href="/{{slug}}">
-                    Zur Stadtseite
+                    {% endverbatim %}{{ 'explore.popup_to_city'|trans }}{% verbatim %}
                 </a>
             </div>
         </div>

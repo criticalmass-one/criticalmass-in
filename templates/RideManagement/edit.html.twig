@@ -2,23 +2,23 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if ride %}
-    {% set title = 'Tour editieren' %}
+    {% set title = 'ride.management.edit_title'|trans %}
     {% set mode = 'edit' %}
 {% else %}
-    {% set title = 'Tour hinzufügen' %}
+    {% set title = 'ride.management.create_title'|trans %}
     {% set mode = 'create' %}
 {% endif %}
 
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('ride.management.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
     {% if ride %}
         {{ breadcrumb.item(ride.title, object_path(ride)) }}
-        {{ breadcrumb.active('Tour editieren') }}
+        {{ breadcrumb.active('ride.management.edit_title'|trans) }}
     {% else %}
-        {{ breadcrumb.active('Tour hinzufügen') }}
+        {{ breadcrumb.active('ride.management.create_title'|trans) }}
     {% endif %}
 {% endblock %}
 
@@ -28,10 +28,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-warning" role="alert">
-                        <strong>Vorsicht!</strong>
-                        Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch
-                        generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich
-                        bereits existiert.
+                        {{ 'ride.management.cycle_warning'|trans|raw }}
                     </div>
                 </div>
             </div>
@@ -46,7 +43,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <p>Hier kannst du die Details einer Tour editieren.</p>
+                <p>{{ 'ride.management.intro'|trans }}</p>
             </div>
         </div>
 
@@ -77,7 +74,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3>
-                            Tourdaten
+                            {{ 'ride.management.section_ride_data'|trans }}
                         </h3>
                     </div>
                 </div>
@@ -86,11 +83,11 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="title">
-                                Titel:
+                                {{ 'ride.management.label_title'|trans }}
                             </label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
                             <p class="help-block">
-                                Hier kann optional der Titel der Tour angegeben werden.
+                                {{ 'ride.management.help_title'|trans }}
                             </p>
                         </div>
                     </div>
@@ -100,13 +97,11 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="description">
-                                Beschreibung:
+                                {{ 'ride.management.label_description'|trans }}
                             </label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
                             <p class="help-block">
-                                Hier kann optional eine Beschreibung der Tour angegeben werden. Schreibe hier nur Dinge,
-                                die wirklich direkt diese Tour betreffen — für alles andere ist in der Beschreibung der
-                                Stadt genügend Platz.
+                                {{ 'ride.management.help_description'|trans }}
                             </p>
                         </div>
                     </div>
@@ -117,7 +112,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3>
-                            Datum und Treffpunkt
+                            {{ 'ride.management.section_date_location'|trans }}
                         </h3>
                     </div>
                 </div>
@@ -125,24 +120,16 @@
                 <div class="row" data-controller="ride-date-checker">
                     <div class="col-md-12">
                         <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide" data-ride-date-checker-target="doubleMonthMessage">
-                            <strong>
-                                Vorsicht!
-                            </strong>
-                            Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei
-                            Touren stattfinden?
+                            {{ 'ride.management.warning_double_month'|trans|raw }}
                         </div>
 
                         <div class="alert alert-danger d-none hidden" role="alert" id="doubleDayRide" data-ride-date-checker-target="doubleDayMessage">
-                            <strong>
-                                Achtung!
-                            </strong>
-                            An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider
-                            keine zwei Touren an einem Tag verwaltet werden.
+                            {{ 'ride.management.warning_double_day'|trans|raw }}
                         </div>
 
                         <div class="form-group{% if form_errors(form.dateTime) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="dateTime">
-                                Datum und Uhrzeit:
+                                {{ 'ride.management.label_datetime'|trans }}
                             </label>
                             <div class="row">
                                 <div class="col-md-6">
@@ -161,7 +148,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="location">
-                                Treffpunkt:
+                                {{ 'ride.management.label_location'|trans }}
                             </label>
                             <button class="btn btn-secondary btn-xs pull-right"
                                     data-controller="geocoding"
@@ -174,10 +161,7 @@
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                         <p class="help-block">
-                            Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige
-                            Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne
-                            Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert
-                            werden, falls der noch nicht bekannt sein sollte.
+                            {{ 'ride.management.help_location'|trans }}
                         </p>
                     </div>
                 </div>
@@ -186,13 +170,13 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="rideType">
-                                Art der Tour:
+                                {{ 'ride.management.label_ride_type'|trans }}
                             </label>
 
                             {{ form_widget(form.rideType, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                         <p class="help-block">
-                            Falls es sich bei dieser Tour nicht um eine „normale“ Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.
+                            {{ 'ride.management.help_ride_type'|trans }}
                         </p>
                     </div>
                 </div>
@@ -202,7 +186,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label" for="slug">
-                                    Slug:
+                                    {{ 'ride.management.label_slug'|trans }}
                                 </label>
 
                                 {{ form_widget(form.slug, { 'attr' : { 'class': 'form-control' } }) }}
@@ -216,13 +200,13 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label" for="location">
-                                    Tour aktivieren:
+                                    {{ 'ride.management.label_enabled'|trans }}
                                 </label>
 
                                 {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
                             </div>
                             <p class="help-block">
-                                Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+                                {{ 'ride.management.help_enabled'|trans }}
                             </p>
                         </div>
                     </div>
@@ -234,15 +218,15 @@
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
                                     <a href="{{ object_path(ride) }}" class="btn btn-secondary">
-                                        Abbrechen
+                                        {{ 'common.cancel'|trans }}
                                     </a>
                                 {% else %}
                                     <a href="{{ object_path(city) }}" class="btn btn-secondary">
-                                        Abbrechen
+                                        {{ 'common.cancel'|trans }}
                                     </a>
                                 {% endif %}
                                 <button type="submit" class="btn btn-success" id="rideSubmitButton" data-ride-date-checker-target="submitButton">
-                                    Speichern
+                                    {{ 'common.save'|trans }}
                                 </button>
                             </div>
                         </div>

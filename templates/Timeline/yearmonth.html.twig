@@ -1,7 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Critical Mass im {{ startDateTime|format_datetime(pattern='MMMM yyyy') }}{% endblock %}
+{% block title %}{{ 'timeline.yearmonth.title'|trans({ '%month%': startDateTime|format_datetime(pattern='MMMM yyyy') }) }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Timeline', path('caldera_criticalmass_timeline_index')) }}
@@ -13,12 +13,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Die Critical Mass im {{ startDateTime|format_datetime(pattern='MMMM yyyy') }}
+                    {{ 'timeline.yearmonth.heading'|trans({ '%month%': startDateTime|format_datetime(pattern='MMMM yyyy') }) }}
                 </h1>
 
                 <p class="lead">
-                    Schau dir an, was im {{ startDateTime|format_datetime(pattern='MMMM yyyy') }} bei der Critical Mass passiert
-                    ist.
+                    {{ 'timeline.yearmonth.lead'|trans({ '%month%': startDateTime|format_datetime(pattern='MMMM yyyy') }) }}
                 </p>
             </div>
         </div>
@@ -30,7 +29,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="standard-tab" data-bs-toggle="tab" data-bs-target="#standard" type="button" role="tab" aria-controls="standard" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="far fa-clock"></i>
-                            Neuigkeiten
+                            {{ 'timeline.tab_news'|trans }}
                         </button>
                     </li>
                     {% set hasActiveTab = true %}
@@ -40,7 +39,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="facebook-tab" data-bs-toggle="tab" data-bs-target="#facebook" type="button" role="tab" aria-controls="facebook" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="fab fa-facebook"></i>
-                            Facebook-Beiträge
+                            {{ 'timeline.tab_facebook'|trans }}
                         </button>
                     </li>
                     {% set hasActiveTab = true %}
@@ -50,7 +49,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="twitter-tab" data-bs-toggle="tab" data-bs-target="#twitter" type="button" role="tab" aria-controls="twitter" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="fab fa-twitter"></i>
-                            Tweets
+                            {{ 'timeline.tab_twitter'|trans }}
                         </button>
                     </li>
                     {% set hasActiveTab = true %}
@@ -60,7 +59,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="instagram-tab" data-bs-toggle="tab" data-bs-target="#instagram_profile" type="button" role="tab" aria-controls="instagram_profile" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="fab fa-instagram"></i>
-                            Instagram-Fotos
+                            {{ 'timeline.tab_instagram'|trans }}
                         </button>
                     </li>
                     {% set hasActiveTab = true %}
@@ -70,7 +69,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="www-tab" data-bs-toggle="tab" data-bs-target="#www" type="button" role="tab" aria-controls="www" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="far fa-globe"></i>
-                            Blog-Beiträge
+                            {{ 'timeline.tab_blog'|trans }}
                         </button>
                     </li>
                     {% set hasActiveTab = true %}
@@ -134,17 +133,17 @@
 
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="Monat Navigation">
+                <nav aria-label="{{ 'timeline.yearmonth.navigation_label'|trans }}">
                     <ul class="pagination justify-content-between">
                         <li class="page-item{% if not previousDateTime %} disabled{% endif %}">
                             <a class="page-link" href="{% if previousDateTime %}{{ path('caldera_criticalmass_timeline_yearmonth', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}{% else %}#{% endif %}">
-                                &larr; Voriger Monat
+                                {{ 'timeline.yearmonth.previous'|trans|raw }}
                             </a>
                         </li>
 
                         <li class="page-item{% if not nextDateTime %} disabled{% endif %}">
                             <a class="page-link" href="{% if nextDateTime %}{{ path('caldera_criticalmass_timeline_yearmonth', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}{% else %}#{% endif %}">
-                                Nächster Monat &rarr;
+                                {{ 'timeline.yearmonth.next'|trans|raw }}
                             </a>
                         </li>
                     </ul>

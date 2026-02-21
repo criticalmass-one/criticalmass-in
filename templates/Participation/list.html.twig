@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Deine Touren{% endblock %}
+{% block title %}{{ 'participation.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ breadcrumb.active('Deine Touren') }}
+    {{ breadcrumb.item('profile.manage.breadcrumb'|trans, path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('participation.breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -15,12 +15,12 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table" type="button" role="tab" aria-controls="table" aria-selected="true">
-                            Übersicht
+                            {{ 'participation.tab_overview'|trans }}
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="goingYes-tab" data-bs-toggle="tab" data-bs-target="#goingYes" type="button" role="tab" aria-controls="goingYes" aria-selected="false">
-                            Teilgenommen <span class="badge bg-secondary">
+                            {{ 'participation.tab_participated'|trans }} <span class="badge bg-secondary">
                                 {{ participationYesList|length }}
                             </span>
                         </button>
@@ -28,7 +28,7 @@
 
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="goingMaybe-tab" data-bs-toggle="tab" data-bs-target="#goingMaybe" type="button" role="tab" aria-controls="goingMaybe" aria-selected="false">
-                            Unentschieden <span class="badge bg-secondary">
+                            {{ 'participation.tab_undecided'|trans }} <span class="badge bg-secondary">
                                 {{ participationMaybeList|length }}
                             </span>
                         </button>
@@ -36,7 +36,7 @@
 
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="goingNo-tab" data-bs-toggle="tab" data-bs-target="#goingNo" type="button" role="tab" aria-controls="goingNo" aria-selected="false">
-                            Abgesagt <span class="badge bg-secondary">
+                            {{ 'participation.tab_cancelled'|trans }} <span class="badge bg-secondary">
                                 {{ participationNoList|length }}
                             </span>
                         </button>
@@ -44,7 +44,7 @@
 
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="city-list-tab" data-bs-toggle="tab" data-bs-target="#city-list" type="button" role="tab" aria-controls="city-list" aria-selected="false">
-                            Städte
+                            {{ 'participation.tab_cities'|trans }}
                             <span class="badge bg-secondary">
                                 {{ participationCityList|length }}
                             </span>
@@ -61,7 +61,7 @@
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>
-                                    Hier siehst du eine Liste von Critical-Mass-Touren, zu denen du deine Teilnahme bestätigt hast. Du kannst deine Teilnahme nachträglich zurückziehen oder den Eintrag aus unserer Datenbank löschen.
+                                    {{ 'participation.yes_description'|trans }}
                                 </p>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>
-                                    Bei diesen Touren hast du bislang nicht angegeben, ob du teilgenommen hast oder nicht. Du kannst deine Teilnahme nachträglich bestätigen, zurückziehen oder den Datensatz aus unserer Datenbank löschen.
+                                    {{ 'participation.maybe_description'|trans }}
                                 </p>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>
-                                    Hier siehst du eine Liste von Critical-Mass-Touren, zu deren Teilnahme du abgesagt hast. Du kannst deine Teilnahme nachträglich bestätigen oder den Eintrag aus unserer Datenbank löschen.
+                                    {{ 'participation.no_description'|trans }}
                                 </p>
                             </div>
                         </div>

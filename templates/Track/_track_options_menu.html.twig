@@ -1,20 +1,21 @@
 <div class="btn-group pull-right">
     <button type="button" class="btn btn-secondary btn-xs dropdown-toggle"
             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Bearbeiten    </button>
+        {{ 'common.edit'|trans }}
+    </button>
     <ul class="dropdown-menu">
         {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
             <li>
                 <a href="{{ object_path(track, 'caldera_criticalmass_track_edit') }}">
                     <i class="far fa-pencil"></i>
-                    Track editieren
+                    {{ 'track.menu.edit'|trans }}
                 </a>
             </li>
         {% else %}
             <li>
                 <a href="{{ object_path(track, 'caldera_criticalmass_track_download') }}">
                     <i class="far fa-download"></i>
-                    Herunterladen
+                    {{ 'track.menu.download'|trans }}
                 </a>
             </li>
             {% if track.enabled %}
@@ -23,7 +24,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token('track_toggle_' ~ track.id) }}">
                         <button type="submit" class="dropdown-item">
                             <i class="far fa-eye-slash"></i>
-                            Deaktivieren
+                            {{ 'track.menu.deactivate'|trans }}
                         </button>
                     </form>
                 </li>
@@ -33,7 +34,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token('track_toggle_' ~ track.id) }}">
                         <button type="submit" class="dropdown-item">
                             <i class="far fa-eye"></i>
-                            Aktivieren
+                            {{ 'track.menu.activate'|trans }}
                         </button>
                     </form>
                 </li>
@@ -45,7 +46,7 @@
                 <li>
                     <a href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
                         <i class="far fa-check"></i>
-                        Bestätigen
+                        {{ 'track.menu.approve'|trans }}
                     </a>
                 </li>
             {% endif %}
@@ -53,14 +54,14 @@
             <li>
                 <a href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
                     <i class="far fa-cut"></i>
-                    Beschneiden
+                    {{ 'track.menu.trim'|trans }}
                 </a>
             </li>
 
             <li>
                 <a href="{{ object_path(track, 'caldera_criticalmass_track_time') }}">
                     <i class="far fa-clock"></i>
-                    Zeit anpassen
+                    {{ 'track.menu.adjust_time'|trans }}
                 </a>
             </li>
 
@@ -69,10 +70,10 @@
             <a href="{{ path('caldera_criticalmass_rest_track_delete', { id: track.id }) }}"
                    data-controller="delete-modal"
                    data-action="click->delete-modal#open"
-                   data-delete-modal-title-value="Track löschen"
-                   data-delete-modal-text-value="Möchtest du diesen Track von der {{ track.ride.city.title }} vom {{ track.ride.dateTime|date('d.m.Y') }} wirklich löschen?">
+                   data-delete-modal-title-value="{{ 'track.menu.delete_title'|trans }}"
+                   data-delete-modal-text-value="{{ 'track.menu.delete_confirm'|trans({ '%city%': track.ride.city.title, '%date%': track.ride.dateTime|date('d.m.Y') }) }}">
                 <i class="far fa-trash-alt"></i>
-                Löschen
+                {{ 'common.delete'|trans }}
             </a>
         </li>
     </ul>

@@ -1,17 +1,17 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Fotos sortieren{% endblock %}
+{% block title %}{{ 'photo.management.user_list_title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Fotos sortieren') }}
+    {{ breadcrumb.active('photo.management.user_list_breadcrumb'|trans) }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Fotos sortieren</h2>
+                <h2>{{ 'photo.management.user_list_heading'|trans }}</h2>
             </div>
         </div>
 
@@ -20,11 +20,11 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Datum</th>
-                        <th>Stadt</th>
-                        <th>Tour</th>
-                        <th>Anzahl</th>
-                        <th>Optionen</th>
+                        <th>{{ 'photo.management.col_date'|trans }}</th>
+                        <th>{{ 'photo.management.col_city'|trans }}</th>
+                        <th>{{ 'photo.management.col_ride'|trans }}</th>
+                        <th>{{ 'photo.management.col_count'|trans }}</th>
+                        <th>{{ 'photo.management.col_options'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -52,7 +52,7 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="...">
-                                    <a class="btn btn-secondary btn-xs" title="Herunterladen"
+                                    <a class="btn btn-secondary btn-xs" title="{{ 'gallery.download'|trans }}"
                                        href="{{ object_path(photo.ride, 'caldera_criticalmass_photo_manage') }}">
                                         <i class="far fa-images"></i>
                                     </a>
@@ -65,8 +65,7 @@
                         <tr>
                             <td colspan="7">
                                 <div class="alert alert-info">
-                                    <strong>Schade:</strong> Du hast bislang keine Fotos hochgeladen. Du kannst auf der
-                                    Übersichtsseite einer Tour Fotos hochladen.
+                                    {{ 'photo.management.no_photos'|trans|raw }}
                                 </div>
                             </td>
                         </tr>

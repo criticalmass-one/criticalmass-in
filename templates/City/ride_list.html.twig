@@ -1,14 +1,14 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Städte-Übersicht{% endblock %}
+{% block title %}{{ 'city.title_overview'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item('city.breadcrumb_city_list'|trans, path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.active('Tour-Übersicht') }}
+    {{ breadcrumb.active('city.breadcrumb_ride_list'|trans) }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
 
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Touren in dieser Stadt
+                    {{ 'city.ride_list_heading'|trans }}
                 </h2>
             </div>
         </div>
@@ -38,25 +38,25 @@
                     <thead>
                     <tr>
                         <th>
-                            Datum
+                            {{ 'city.ride_list_col_date'|trans }}
                         </th>
                         <th>
-                            Uhrzeit
+                            {{ 'city.ride_list_col_time'|trans }}
                         </th>
                         <th>
-                            Titel
+                            {{ 'city.ride_list_col_title'|trans }}
                         </th>
                         <th>
-                            Treffpunkt
+                            {{ 'city.ride_list_col_location'|trans }}
                         </th>
                         <th>
-                            Teilnehmer
+                            {{ 'city.ride_list_col_participants'|trans }}
                         </th>
                         <th>
-                            Distanz
+                            {{ 'city.ride_list_col_distance'|trans }}
                         </th>
                         <th>
-                            Dauer
+                            {{ 'city.ride_list_col_duration'|trans }}
                         </th>
                     </tr>
                     </thead>

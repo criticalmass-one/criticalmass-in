@@ -2,24 +2,24 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="loginModalLabel">{{ 'modal.login.title'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'common.close'|trans }}"></button>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="loginTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#loginTabsLogin" type="button" role="tab" aria-controls="loginTabsLogin" aria-selected="true">
-                            <i class="fa fa-info-circle"></i>&nbsp;Anmelden
+                            <i class="fa fa-info-circle"></i>&nbsp;{{ 'modal.login.tab_login'|trans }}
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#loginTabsRegister" type="button" role="tab" aria-controls="loginTabsRegister" aria-selected="false">
-                            <i class="fa fa-envelope"></i>&nbsp;Registrieren
+                            <i class="fa fa-envelope"></i>&nbsp;{{ 'modal.login.tab_register'|trans }}
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#loginTabsPassword" type="button" role="tab" aria-controls="loginTabsPassword" aria-selected="false">
-                            <i class="fa fa-exclamation-circle"></i>&nbsp;Kennwort vergessen
+                            <i class="fa fa-exclamation-circle"></i>&nbsp;{{ 'modal.login.tab_password'|trans }}
                         </button>
                     </li>
                 </ul>

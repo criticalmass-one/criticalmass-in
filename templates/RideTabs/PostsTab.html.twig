@@ -2,11 +2,11 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">
             <i class="far fa-comments text-muted me-2"></i>
-            Kommentare
+            {{ 'ride.tabs.posts.heading'|trans }}
         </h4>
         {% if app.getUser() %}
             <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-add-post">
-                <i class="far fa-plus me-1"></i>Kommentar schreiben
+                <i class="far fa-plus me-1"></i>{{ 'ride.tabs.posts.add_button'|trans }}
             </button>
         {% else %}
             <button type="button" class="btn btn-outline-primary btn-sm"
@@ -14,7 +14,7 @@
                 data-modal-hint-title="{{ 'hint_modal.ride.post_write_button.title'|trans }}"
                 data-modal-hint-text="{{ 'hint_modal.ride.post_write_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
                 data-modal-hint-size="md">
-                <i class="far fa-plus me-1"></i>Kommentar schreiben
+                <i class="far fa-plus me-1"></i>{{ 'ride.tabs.posts.add_button'|trans }}
             </button>
         {% endif %}
     </div>

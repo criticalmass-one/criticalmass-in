@@ -41,11 +41,11 @@
                 <table class="table" id="ride-table" data-controller="datatable">
                     <thead>
                     <tr>
-                        <th>Datum</th>
-                        <th>Uhrzeit</th>
-                        <th>Stadt</th>
-                        <th>Titel</th>
-                        <th>Treffpunkt</th>
+                        <th>{{ 'promotion.col_date'|trans }}</th>
+                        <th>{{ 'promotion.col_time'|trans }}</th>
+                        <th>{{ 'promotion.col_city'|trans }}</th>
+                        <th>{{ 'promotion.col_title'|trans }}</th>
+                        <th>{{ 'promotion.col_location'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,17 +56,17 @@
                             </td>
 
                             <td>
-                                {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
+                                {{ ride.dateTime|date('H:i') }}&nbsp;{{ 'common.time_suffix'|trans }}
                             </td>
 
                             <td>
-                                <a href="{{ object_path(ride.city) }}" title="zur Seite der Stadt {{ ride.city.city }}">
+                                <a href="{{ object_path(ride.city) }}" title="{{ 'promotion.to_city_page'|trans({'%city_name%': ride.city.city}) }}">
                                     {{ ride.city.city }}
                                 </a>
                             </td>
 
                             <td>
-                                <a href="{{ object_path(ride) }}" title="zur Seite der Tour">
+                                <a href="{{ object_path(ride) }}" title="{{ 'promotion.to_ride_page'|trans }}">
                                     {{ ride.title }}
                                 </a>
                             </td>
@@ -82,24 +82,21 @@
         </div>
     </div>
 
-    {% verbatim %}
 <template id="ride-popup">
   <div class="popup">
-    <h3 class="popup__title">{{title}}</h3>
+    <h3 class="popup__title">{% verbatim %}{{title}}{% endverbatim %}</h3>
 
     <div class="popup__meta">
-      <div><strong>Datum:</strong> {{formatDateLocal this}}</div>
-      <div><strong>Uhrzeit:</strong> {{formatTimeLocal this}}</div>
-      {{#if location}}
-        <div><strong>Treffpunkt:</strong> {{location}}</div>
-      {{/if}}
+      <div><strong>{{ 'promotion.popup.date'|trans }}</strong> {% verbatim %}{{formatDateLocal this}}{% endverbatim %}</div>
+      <div><strong>{{ 'promotion.popup.time'|trans }}</strong> {% verbatim %}{{formatTimeLocal this}}{% endverbatim %}</div>
+      {% verbatim %}{{#if location}}{% endverbatim %}
+        <div><strong>{{ 'promotion.popup.location'|trans }}</strong> {% verbatim %}{{location}}{% endverbatim %}</div>
+      {% verbatim %}{{/if}}{% endverbatim %}
     </div>
 
     <div class="popup__actions" style="margin-top: .5rem;">
-      <a class="btn btn-primary" href="{{rideUrl this}}">zur Tour</a>
+      <a class="btn btn-primary" href="{% verbatim %}{{rideUrl this}}{% endverbatim %}">{{ 'promotion.popup.to_ride'|trans }}</a>
     </div>
   </div>
 </template>
-{% endverbatim %}
 {% endblock %}
-

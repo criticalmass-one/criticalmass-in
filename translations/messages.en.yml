@@ -27,3 +27,8 @@ criticalmass:
             login: Login
         search:
             search: Search
+
+timeline:
+    track_map_alt: "Map of the ride %ride%"
+    ride_map_alt: "Map of the ride %ride%"
+    city_map_alt: "Map of %city%"

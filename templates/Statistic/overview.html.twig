@@ -1,10 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Statistiken{% endblock %}
+{% block title %}{{ 'statistic.title'|trans }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.active('Statistiken') }}
+    {{ breadcrumb.active('statistic.title'|trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,18 +12,15 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    Statistiken
+                    {{ 'statistic.title'|trans }}
                 </h1>
 
                 <p class="lead">
-                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
-                    der Critical Mass in den verschiedenen Städten nach einer Tour eingearbeitet worden sind &mdash;
-                    entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen.
+                    {{ 'statistic.overview_lead'|trans }}
                 </p>
 
                 <p>
-                    Die Statistiken enthalten alle Städte aus Deutschland, bei denen innerhalb der letzten zwei Jahre
-                    mindestens 18 Schätzungen zu Teilnehmer-Zahlen abgegeben wurden.
+                    {{ 'statistic.overview_info'|trans }}
                 </p>
             </div>
         </div>
@@ -32,17 +29,17 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="participiants-tab" data-bs-toggle="tab" data-bs-target="#tab-participiants" type="button" role="tab" aria-controls="tab-participiants" aria-selected="true">
-                        Teilnehmerzahl
+                        {{ 'statistic.tab_participants'|trans }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="duration-tab" data-bs-toggle="tab" data-bs-target="#tab-duration" type="button" role="tab" aria-controls="tab-duration" aria-selected="false">
-                        Fahrtdauer
+                        {{ 'statistic.tab_duration'|trans }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="distance-tab" data-bs-toggle="tab" data-bs-target="#tab-distance" type="button" role="tab" aria-controls="tab-distance" aria-selected="false">
-                        Fahrtlänge
+                        {{ 'statistic.tab_distance'|trans }}
                     </button>
                 </li>
             </ul>
@@ -52,9 +49,7 @@
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>
-                                Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die
-                                von den
-                                Teilnehmern geschätzt wurden.
+                                {{ 'statistic.participants_info'|trans }}
                             </p>
                         </div>
                     </div>
@@ -70,8 +65,7 @@
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>
-                                Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden
-                                angegeben.
+                                {{ 'statistic.duration_info'|trans }}
                             </p>
                         </div>
                     </div>
@@ -87,8 +81,7 @@
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>
-                                Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern
-                                angegeben.
+                                {{ 'statistic.distance_info'|trans }}
                             </p>
                         </div>
                     </div>

@@ -2,11 +2,11 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">
             <i class="far fa-map-marker-alt text-muted me-2"></i>
-            Mini-Masses
+            {{ 'ride.tabs.subrides.heading'|trans }}
         </h4>
         {% if app.getUser() %}
-            <a class="btn btn-outline-primary btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}" title="Mini-Mass anlegen">
-                <i class="far fa-plus me-1"></i>Mini-Mass eintragen
+            <a class="btn btn-outline-primary btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}" title="{{ 'ride.tabs.subrides.add_title'|trans }}">
+                <i class="far fa-plus me-1"></i>{{ 'ride.tabs.subrides.add_button'|trans }}
             </a>
         {% endif %}
     </div>
@@ -27,13 +27,13 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <h6 class="card-title mb-1">{{ subride.getTitle() }}</h6>
                                         {% if app.getUser() %}
-                                            <a href="{{ object_path(subride, 'caldera_criticalmass_subride_edit') }}" class="btn btn-sm btn-link text-muted p-0" title="Bearbeiten">
+                                            <a href="{{ object_path(subride, 'caldera_criticalmass_subride_edit') }}" class="btn btn-sm btn-link text-muted p-0" title="{{ 'common.edit'|trans }}">
                                                 <i class="far fa-edit"></i>
                                             </a>
                                         {% endif %}
                                     </div>
                                     <p class="text-muted small mb-2">
-                                        <i class="far fa-clock me-1"></i>{{ subride.getDateTime().format('H:i') }} Uhr
+                                        <i class="far fa-clock me-1"></i>{{ subride.getDateTime().format('H:i') }} {{ 'ride.tabs.subrides.time_suffix'|trans }}
                                     </p>
                                     {% if subride.getDescription() %}
                                         <p class="card-text small mb-0">{{ subride.getDescription()|nl2br }}</p>
@@ -49,22 +49,22 @@
         <div class="card bg-light border-0">
             <div class="card-body text-center py-5">
                 <i class="far fa-map-marker-alt fa-3x text-muted mb-3"></i>
-                <h5>Keine Mini-Masses vorhanden</h5>
+                <h5>{{ 'ride.tabs.subrides.empty_heading'|trans }}</h5>
                 {% if app.getUser() %}
                     <p class="text-muted mb-3">
-                        Sei der Erste und trage eine Mini-Mass ein!
+                        {{ 'ride.tabs.subrides.empty_user_text'|trans }}
                     </p>
                     <div class="btn-group">
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}" class="btn btn-primary" title="Mini-Mass anlegen">
-                            <i class="far fa-plus me-1"></i>Neue Mini-Mass
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}" class="btn btn-primary" title="{{ 'ride.tabs.subrides.add_title'|trans }}">
+                            <i class="far fa-plus me-1"></i>{{ 'ride.tabs.subrides.add_new'|trans }}
                         </a>
                         <a href="{{ object_path(ride, 'caldera_criticalmass_subride_preparecopy') }}" class="btn btn-outline-secondary">
-                            <i class="far fa-copy me-1"></i>Von letzter Tour kopieren
+                            <i class="far fa-copy me-1"></i>{{ 'ride.tabs.subrides.copy_from_last'|trans }}
                         </a>
                     </div>
                 {% else %}
                     <p class="text-muted mb-0">
-                        <a href="{{ path('login') }}">Melde dich an</a>, um eine Mini-Mass einzutragen.
+                        {{ 'ride.tabs.subrides.empty_login_hint'|trans({'%login_url%': path('login')})|raw }}
                     </p>
                 {% endif %}
             </div>
