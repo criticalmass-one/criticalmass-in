@@ -90,6 +90,7 @@ class CityCycleExecuteController extends AbstractController
     ): Response {
         if (
             $request->isMethod('POST') &&
+            $this->isCsrfTokenValid('citycycle_execute', $request->request->get('_token')) &&
             $request->request->getInt('fromDate') &&
             $request->request->get('untilDate')
         ) {

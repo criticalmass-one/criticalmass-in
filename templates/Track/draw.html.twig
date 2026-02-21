@@ -23,6 +23,7 @@
             <div class="col-md-12">
                 <form method="post"
                       action="{{ object_path(track, 'caldera_criticalmass_track_draw') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('track_draw') }}"/>
                     <input type="hidden" id="polyline" name="polyline"/>
                     <input type="hidden" id="geojson" name="geojson"/>
 
