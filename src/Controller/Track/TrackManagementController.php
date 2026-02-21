@@ -41,9 +41,13 @@ class TrackManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'track')]
-    #[Route('/{id}/toggle', name: 'toggle', methods: ['GET'], priority: 150)]
-    public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
+    #[Route('/{id}/toggle', name: 'toggle', methods: ['POST'], priority: 150)]
+    public function toggleAction(Request $request, EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
+        if (!$this->isCsrfTokenValid('track_toggle_' . $track->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $track->setEnabled(!$track->getEnabled());
 
         $this->managerRegistry->getManager()->flush();
@@ -58,9 +62,13 @@ class TrackManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'track')]
-    #[Route('/{id}/delete', name: 'delete', methods: ['POST', 'GET'], priority: 150)]
-    public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST'], priority: 150)]
+    public function deleteAction(Request $request, Track $track, EventDispatcherInterface $eventDispatcher): Response
     {
+        if (!$this->isCsrfTokenValid('track_delete_' . $track->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $track->setDeleted(true);
 
         $this->managerRegistry->getManager()->flush();

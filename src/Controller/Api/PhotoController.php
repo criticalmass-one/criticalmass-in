@@ -10,7 +10,6 @@ use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class PhotoController extends BaseController
 {
@@ -70,7 +69,6 @@ class PhotoController extends BaseController
      * <li><code>latitude</code></li>
      * <li><code>longitude</code></li>
      * <li><code>description</code></li>
-     * <li><code>views</code></li>
      * <li><code>creationDateTime</code></li>
      * <li><code>imageSize</code></li>
      * <li><code>updatedAt</code></li>
@@ -127,14 +125,10 @@ class PhotoController extends BaseController
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the photo to update', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\RequestBody(description: 'JSON representation of the photo data', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function updatePhotoAction(Request $request, SerializerInterface $serializer): JsonResponse
+    public function updatePhotoAction(Request $request): JsonResponse
     {
-        $json = $request->getContent();
+        $photo = $this->deserializeRequest($request, Photo::class);
 
-        $photo = $serializer->deserialize($json, Photo::class, 'json');
-
-        $photoJson = $serializer->serialize($photo, 'json');
-
-        return $this->createStandardResponse($photoJson);
+        return $this->createStandardResponse($photo);
     }
 }

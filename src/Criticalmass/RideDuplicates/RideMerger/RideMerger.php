@@ -10,9 +10,7 @@ class RideMerger extends AbstractRideMerger
     {
         /** @var Ride $sourceRide */
         foreach ($this->sourceRides as $sourceRide) {
-            $this->targetRide->setViews($this->targetRide->getViews() + $sourceRide->getViews());
-
-            $relationProperties = ['weather', 'estimate', 'track', 'subride', 'post', 'photo', 'socialNetworkProfile', 'viewRelation'];
+            $relationProperties = ['weather', 'estimate', 'track', 'subride', 'post', 'photo', 'socialNetworkProfile'];
 
             foreach ($relationProperties as $relationProperty) {
                 $getMethodName = sprintf('get%ss', ucfirst($relationProperty));

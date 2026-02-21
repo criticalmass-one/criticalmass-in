@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
 use OpenApi\Attributes as OA;
@@ -66,11 +65,8 @@ class SocialNetworkProfileController extends BaseController
     public function updateSocialNetworkProfileAction(
         Request $request,
         SocialNetworkProfile $socialNetworkProfile,
-        EntityMergerInterface $entityMerger
     ): Response {
-        $updatedSocialNetworkProfile = $this->serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
-
-        $entityMerger->merge($updatedSocialNetworkProfile, $socialNetworkProfile);
+        $this->deserializeRequestInto($request, $socialNetworkProfile);
 
         $this->managerRegistry->getManager()->flush();
 
@@ -87,7 +83,7 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successfully created')]
     public function createSocialNetworkProfileAction(Request $request, City $city): JsonResponse
     {
-        $newSocialNetworkProfile = $this->serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
+        $newSocialNetworkProfile = $this->deserializeRequest($request, SocialNetworkProfile::class);
 
         $newSocialNetworkProfile
             ->setCity($city)

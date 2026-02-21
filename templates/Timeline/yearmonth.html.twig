@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}{{ 'timeline.yearmonth.title'|trans({ '%month%': startDateTime|format_date('MMMM YYYY') }) }}{% endblock %}
+{% block title %}{{ 'timeline.yearmonth.title'|trans({ '%month%': startDateTime|format_datetime(pattern='MMMM yyyy') }) }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('Timeline', path('caldera_criticalmass_timeline_index')) }}
-    {{ breadcrumb.active(startDateTime|format_date('MMMM YYYY')) }}
+    {{ breadcrumb.active(startDateTime|format_datetime(pattern='MMMM yyyy')) }}
 {% endblock %}
 
 {% block content %}
@@ -13,11 +13,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    {{ 'timeline.yearmonth.heading'|trans({ '%month%': startDateTime|format_date('MMMM YYYY') }) }}
+                    {{ 'timeline.yearmonth.heading'|trans({ '%month%': startDateTime|format_datetime(pattern='MMMM yyyy') }) }}
                 </h1>
 
                 <p class="lead">
-                    {{ 'timeline.yearmonth.lead'|trans({ '%month%': startDateTime|format_date('MMMM YYYY') }) }}
+                    {{ 'timeline.yearmonth.lead'|trans({ '%month%': startDateTime|format_datetime(pattern='MMMM yyyy') }) }}
                 </p>
             </div>
         </div>

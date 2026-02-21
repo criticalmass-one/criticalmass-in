@@ -37,11 +37,10 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="form-group">
-                    <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}"
-                          method="post" enctype="multipart/form-data">
+                    {{ form_start(form, {'action': object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride'), 'attr': {'enctype': 'multipart/form-data'}}) }}
                         {{ form_widget(form.imageFile) }}
                         <input type="submit" value="{{ 'photo.upload.legacy_submit'|trans }}" class="btn btn-success margin-top-medium">
-                    </form>
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

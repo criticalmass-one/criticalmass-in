@@ -43,6 +43,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" class="dropzone" id="photo-dropzone">
+                        <input type="hidden" name="_token" value="{{ csrf_token('photo_upload') }}"/>
                     </form>
                 </div>
             </div>

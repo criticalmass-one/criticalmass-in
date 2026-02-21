@@ -13,7 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
 class LoginController extends AbstractController
@@ -44,8 +45,17 @@ class LoginController extends AbstractController
         NotifierInterface $notifier,
         LoginLinkHandlerInterface $loginLinkHandler,
         UserRepository $userRepository,
-        Request $request
+        Request $request,
+        RateLimiterFactory $loginLimiter
     ): Response {
+        $limiter = $loginLimiter->create($request->getClientIp());
+
+        if (false === $limiter->consume()->isAccepted()) {
+            $this->addFlash('error', 'Zu viele Login-Versuche. Bitte versuche es später erneut.');
+
+            return $this->redirectToRoute('login');
+        }
+
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
 

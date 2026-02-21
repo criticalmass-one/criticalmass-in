@@ -254,7 +254,7 @@ class PhotoRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findSomePhotos($limit = 16, $maxViews = 15, ?City $city = null): array
+    public function findSomePhotos(int $limit = 16, ?City $city = null): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -265,12 +265,6 @@ class PhotoRepository extends ServiceEntityRepository
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false);
-
-        if ($maxViews) {
-            $builder
-                ->andWhere($builder->expr()->lte('p.views', ':maxViews'))
-                ->setParameter('maxViews', $maxViews);
-        }
 
         if ($city) {
             $builder

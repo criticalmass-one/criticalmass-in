@@ -125,8 +125,6 @@ class PhotoApiQueryTest extends AbstractApiControllerTestCase
             ['latitude', 'desc'],
             ['longitude', 'asc'],
             ['longitude', 'desc'],
-            ['views', 'asc'],
-            ['views', 'desc'],
             ['creationDateTime', 'asc', 'creation_date_time'],
             ['creationDateTime', 'desc', 'creation_date_time'],
             ['exifCreationDate', 'asc', 'exif_creation_date'],

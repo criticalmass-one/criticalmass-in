@@ -83,18 +83,22 @@ class RideApiQueryTest extends AbstractApiControllerTestCase
 
     public function testFilterByYearMonth(): void
     {
-        // Use dates that exist in fixtures: 2026-02
-        $this->client->request('GET', '/api/ride?year=2026&month=2');
+        // Read actual ride date from DB to avoid hardcoding dates that drift with fixture generation
+        $ride = $this->entityManager->getRepository(\App\Entity\Ride::class)->findAll()[0];
+        $year = (int) $ride->getDateTime()->format('Y');
+        $month = (int) $ride->getDateTime()->format('n');
+
+        $this->client->request('GET', sprintf('/api/ride?year=%d&month=%d', $year, $month));
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($data);
 
-        foreach ($data as $ride) {
-            $date = new \DateTime('@' . $ride['date_time']);
-            $this->assertEquals(2026, (int) $date->format('Y'));
-            $this->assertEquals(2, (int) $date->format('n'));
+        foreach ($data as $item) {
+            $date = new \DateTime('@' . $item['date_time']);
+            $this->assertEquals($year, (int) $date->format('Y'));
+            $this->assertEquals($month, (int) $date->format('n'));
         }
     }
 
@@ -236,8 +240,6 @@ class RideApiQueryTest extends AbstractApiControllerTestCase
             ['estimatedParticipants', 'desc', 'estimated_participants'],
             ['estimatedDuration', 'desc', 'estimated_duration'],
             ['estimatedDistance', 'desc', 'estimated_distance'],
-            ['views', 'asc'],
-            ['views', 'desc'],
             ['dateTime', 'asc', 'date_time'],
             ['dateTime', 'desc', 'date_time'],
         ];

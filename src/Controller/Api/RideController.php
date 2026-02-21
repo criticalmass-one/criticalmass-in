@@ -4,7 +4,6 @@ namespace App\Controller\Api;
 
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
-use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use OpenApi\Attributes as OA;
@@ -117,7 +116,6 @@ class RideController extends BaseController
      * <li><code>estimatedParticipants</code></li>
      * <li><code>estimatedDuration</code></li>
      * <li><code>estimatedDistance</code></li>
-     * <li><code>views</code></li>
      * <li><code>dateTime</code></li>
      * </ul>
      *
@@ -224,12 +222,9 @@ class RideController extends BaseController
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride to be updated', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of ride', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function updateRideAction(Request $request, Ride $ride, ValidatorInterface $validator, EntityMergerInterface $entityMerger): JsonResponse
+    public function updateRideAction(Request $request, Ride $ride, ValidatorInterface $validator): JsonResponse
     {
-        /** @var Ride $ride */
-        $updatedRide = $this->deserializeRequest($request, Ride::class);
-
-        $ride = $entityMerger->merge($updatedRide, $ride);
+        $this->deserializeRequestInto($request, $ride);
 
         if (!$ride->getDateTime()) {
             $rideIdentifier = $request->get('rideIdentifier');

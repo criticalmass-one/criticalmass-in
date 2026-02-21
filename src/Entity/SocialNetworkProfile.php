@@ -39,12 +39,12 @@ class SocialNetworkProfile
     protected ?Subride $subride = null;
 
     #[Assert\NotBlank]
-    #[ORM\Column(type: 'string')]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $identifier = null;
 
-    #[ORM\Column(type: 'string')]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $network = null;
 
     #[ORM\Column(type: 'boolean')]
@@ -64,7 +64,7 @@ class SocialNetworkProfile
     private ?User $createdBy = null;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected bool $autoPublish = true;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -80,7 +80,7 @@ class SocialNetworkProfile
     protected ?string $lastFetchFailureError = null;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected $autoFetch = true;
 
     #[ORM\Column(type: 'text', nullable: true)]

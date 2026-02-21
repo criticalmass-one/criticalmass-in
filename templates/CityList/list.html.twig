@@ -55,7 +55,7 @@
                             <td>
                                 {% if city.currentRide %}
                                     <a href="{{ object_path(city.currentRide) }}">
-                                        {{ city.currentRide.dateTime|format_datetime(null, 'de', city.city.timezone, constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}
+                                        {{ city.currentRide.dateTime|format_datetime(dateFormat='long', timeFormat='short', locale='de', timezone=city.city.timezone) }}
                                         &nbsp;{{ 'city.list_time_suffix'|trans }}
                                     </a>
                                 {% endif %}

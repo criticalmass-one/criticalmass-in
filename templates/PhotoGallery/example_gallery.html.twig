@@ -20,7 +20,7 @@
 
         {% set cityString = '' %}
         {% for city in cities %}
-            {% set cityString = cityString ~ '<a href="' ~ object_path(city) ~ '">' ~ city.city ~ '</a>' %}
+            {% set cityString = cityString ~ '<a href="' ~ object_path(city) ~ '">' ~ city.city|e ~ '</a>' %}
 
             {% if loop.revindex0 > 1 %}
                 {% set cityString = cityString ~ ', ' %}

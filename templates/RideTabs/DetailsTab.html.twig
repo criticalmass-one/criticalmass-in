@@ -10,10 +10,13 @@
         <div class="btn-group">
             {% if app.user %}
                 {% if not ride.enabled %}
-                    <a class="btn btn-success btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}" title="{{ 'ride.tabs.details.enable_title'|trans }}">
-                        <i class="far fa-unlock-alt me-1"></i>
-                        {{ 'ride.tabs.details.enable_button'|trans }}
-                    </a>
+                    <form method="post" action="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}" class="d-inline">
+                        <input type="hidden" name="_token" value="{{ csrf_token('ride_enable_' ~ ride.id) }}">
+                        <button type="submit" class="btn btn-success btn-sm" title="{{ 'ride.tabs.details.enable_title'|trans }}">
+                            <i class="far fa-unlock-alt me-1"></i>
+                            {{ 'ride.tabs.details.enable_button'|trans }}
+                        </button>
+                    </form>
                 {% else %}
                     <a class="btn btn-outline-primary btn-sm" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}" title="{{ 'ride.tabs.details.edit_title'|trans }}">
                         <i class="far fa-edit me-1"></i>
@@ -93,19 +96,19 @@
                 <div class="flex-grow-1 ms-3">
                     <h5 class="alert-heading">{{ 'ride.tabs.details.disabled_heading'|trans }}</h5>
                     <p class="mb-0">
-                        {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
+                        {% if ride.disabledReason is not null and ride.disabledReason.value == 'DUPLICATE' %}
                             {{ 'ride.tabs.details.disabled_reason_duplicate'|trans }}
-                        {% elseif ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason is not null and ride.disabledReason.value == 'WRONG_WEBSITE_HANDLING' %}
                             {{ 'ride.tabs.details.disabled_reason_wrong_website'|trans }}
-                        {% elseif ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason is not null and ride.disabledReason.value == 'WRONG_AUTO_GENERATION' %}
                             {{ 'ride.tabs.details.disabled_reason_wrong_auto'|trans }}
-                        {% elseif ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason is not null and ride.disabledReason.value == 'CANCELLED_WEATHER' %}
                             {{ 'ride.tabs.details.disabled_reason_weather'|trans }}
-                        {% elseif ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason is not null and ride.disabledReason.value == 'CANCELLED_PARTICIPANTS' %}
                             {{ 'ride.tabs.details.disabled_reason_participants'|trans }}
-                        {% elseif ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason is not null and ride.disabledReason.value == 'CANCELLED_AUTHORITIES' %}
                             {{ 'ride.tabs.details.disabled_reason_authorities'|trans }}
-                        {% elseif ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
+                        {% elseif ride.disabledReason is not null and ride.disabledReason.value == 'CANCELLED' %}
                             {{ 'ride.tabs.details.disabled_reason_cancelled'|trans }}
                         {% endif %}
                     </p>

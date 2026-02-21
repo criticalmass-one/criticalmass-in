@@ -41,7 +41,7 @@ class AutoAssignNetworkCommand extends Command
             ->addOption('filter-detected', null, InputOption::VALUE_REQUIRED);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $networkList = $this->createNetworkList();
 
@@ -92,6 +92,8 @@ class AutoAssignNetworkCommand extends Command
         }
 
         $table->render();
+
+        return Command::SUCCESS;
     }
 
     private function queryForNewNetwork(

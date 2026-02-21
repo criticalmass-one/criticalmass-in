@@ -125,12 +125,17 @@ class CityCycleManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/{citySlug}/cycles/{id}/disable', name: 'caldera_criticalmass_citycycle_disable', priority: 80)]
+    #[Route('/{citySlug}/cycles/{id}/disable', name: 'caldera_criticalmass_citycycle_disable', methods: ['POST'], priority: 80)]
     public function disableAction(
+        Request $request,
         CityCycle $cityCycle,
         ManagerRegistry $managerRegistry,
         ObjectRouterInterface $objectRouter
     ): Response {
+        if (!$this->isCsrfTokenValid('citycycle_disable_' . $cityCycle->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $manager = $managerRegistry->getManager();
 
         if ($cityCycle->getRides()->count() > 0) {

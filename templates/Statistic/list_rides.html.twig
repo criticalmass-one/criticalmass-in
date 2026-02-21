@@ -1,11 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}{{ 'statistic.list_rides_title'|trans({'%month%': dateTime|format_date('MMMM YYYY')}) }}{% endblock %}
+{% block title %}{{ 'statistic.list_rides_title'|trans({'%month%': dateTime|format_datetime(pattern='MMMM yyyy')}) }}{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item('statistic.title'|trans, '#') }}
-    {{ breadcrumb.active('statistic.list_rides_title'|trans({'%month%': dateTime|format_date('MMMM YYYY')})) }}
+    {{ breadcrumb.active('statistic.list_rides_title'|trans({'%month%': dateTime|format_datetime(pattern='MMMM yyyy')})) }}
 {% endblock %}
 
 {% block content %}
@@ -13,11 +13,11 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    {{ 'statistic.list_rides_title'|trans({'%month%': dateTime|format_date('MMMM YYYY')}) }}
+                    {{ 'statistic.list_rides_title'|trans({'%month%': dateTime|format_datetime(pattern='MMMM yyyy')}) }}
                 </h2>
 
                 <p class="lead">
-                    {{ 'statistic.list_rides_lead'|trans({'%month%': dateTime|format_date('MMMM YYYY')}) }}
+                    {{ 'statistic.list_rides_lead'|trans({'%month%': dateTime|format_datetime(pattern='MMMM yyyy')}) }}
                 </p>
             </div>
         </div>

@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Table(name: 'social_network_feed_item')]
-#[ORM\UniqueConstraint(name: 'unique_feed_item', columns: ['social_network_profile_id', 'uniqueIdentifier'])]
+#[ORM\UniqueConstraint(name: 'unique_feed_item', fields: ['socialNetworkProfile', 'uniqueIdentifier'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\SocialNetworkFeedItemRepository')]
 #[ORM\Index(fields: ['dateTime'], name: 'social_network_feed_item_date_time_index')]
 #[ORM\Index(fields: ['createdAt'], name: 'social_network_feed_item_created_at_index')]
@@ -26,31 +26,31 @@ class SocialNetworkFeedItem
     protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?string $uniqueIdentifier = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?string $permalink = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?string $text = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?\DateTime $dateTime = null;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected bool $hidden = false;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected bool $deleted = false;
 
     #[ORM\Column(type: 'datetime', nullable: false)]

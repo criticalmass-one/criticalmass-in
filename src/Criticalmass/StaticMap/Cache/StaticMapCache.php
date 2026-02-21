@@ -29,6 +29,7 @@ class StaticMapCache
         });
     }
 
+    /** @param array<string, string|int|float> $parameters */
     public static function generateCacheKey(array $parameters): string
     {
         return md5(serialize($parameters));

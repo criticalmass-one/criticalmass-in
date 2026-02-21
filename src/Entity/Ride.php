@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Criticalmass\Geo\Coord\Coord;
 use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Criticalmass\Router\Attribute as Routing;
-use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ParticipateableInterface;
@@ -13,23 +12,21 @@ use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\SocialNetworkProfileAble;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
+use App\Enum\RideDisabledReasonEnum;
+use App\Enum\RideTypeEnum;
 use App\Validator\Constraint as CriticalAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
-use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
-use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @CriticalAssert\SingleRideForDay
- */
+#[CriticalAssert\SingleRideForDay]
 #[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_ride_show')]
 #[ORM\Table(name: 'ride')]
@@ -37,7 +34,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Index(fields: ['dateTime'], name: 'ride_date_time_index')]
 #[ORM\Index(fields: ['createdAt'], name: 'ride_created_at_index')]
 #[ORM\Index(fields: ['updatedAt'], name: 'ride_updated_at_index')]
-class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
 {
     #[DataQuery\Sortable]
     #[ORM\Id]
@@ -56,9 +53,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Groups(['extended-ride-list', 'ride-details'])]
     protected ?CityCycle $cycle = null;
 
-    /**
-     * @OE\Identical()
-     */
     #[DataQuery\Sortable]
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'rides', fetch: 'LAZY')]
@@ -76,21 +70,21 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
-    #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $slug = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $title = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $description = null;
 
     #[DataQuery\Sortable]
@@ -99,49 +93,46 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Ignore]
     protected ?string $socialDescription = null;
 
-    /**
-     * @OE\Order(direction="asc")
-     */
     #[DataQuery\Sortable]
     #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected \DateTime $dateTime;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $location = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $latitude = 0.0;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $longitude = 0.0;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'smallint', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?int $estimatedParticipants = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $estimatedDistance = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $estimatedDuration = null;
 
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'ride', fetch: 'LAZY')]
@@ -184,12 +175,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Ignore]
     protected Collection $estimates;
 
-    #[DataQuery\Sortable]
-    #[DataQuery\Queryable]
-    #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
-    protected int $views = 0;
-
     #[ORM\ManyToOne(targetEntity: 'Photo', inversedBy: 'featuredRides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'featured_photo', referencedColumnName: 'id')]
     #[Ignore]
@@ -219,21 +204,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Ignore]
     protected ?string $imageMimeType = null;
 
-    /**
-     * @OE\Boolean(true)
-     */
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     #[Groups(['ride-list', 'ride-details'])]
     protected bool $enabled = true;
 
-    #[DoctrineAssert\EnumType(entity: 'App\DBAL\Type\RideDisabledReasonType')]
-    #[ORM\Column(type: 'RideDisabledReasonType', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $disabledReason = null;
 
-    #[DoctrineAssert\EnumType(entity: 'App\DBAL\Type\RideType')]
-    #[ORM\Column(type: 'RideType', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $rideType = null;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'ride')]
@@ -243,10 +223,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['ride-list'])]
     private ?string $disabledReasonMessage = null;
-
-    #[ORM\OneToMany(targetEntity: RideView::class, mappedBy: 'ride', fetch: 'LAZY')]
-    #[Ignore]
-    protected Collection $viewRelation;
 
     public function __construct()
     {
@@ -262,7 +238,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
-        $this->viewRelation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -424,18 +399,21 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     }
 
     /** @deprecated */
+    #[Ignore]
     public function isEqual(Ride $ride): bool
     {
         return $ride->getId() == $this->getId();
     }
 
     /** @deprecated */
+    #[Ignore]
     public function equals(Ride $ride): bool
     {
         return $this->isEqual($ride);
     }
 
     /** @deprecated */
+    #[Ignore]
     public function isSameRide(Ride $ride): bool
     {
         return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getDateTime()->format('Y-m-d') == $this->getDateTime()->format('Y-m-d');
@@ -680,25 +658,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->participationsNumberNo;
     }
 
-    public function setViews(int $views): ViewableEntity
-    {
-        $this->views = $views;
-
-        return $this;
-    }
-
-    public function getViews(): int
-    {
-        return $this->views;
-    }
-
-    public function incViews(): ViewableEntity
-    {
-        ++$this->views;
-
-        return $this;
-    }
-
     #[DataQuery\Queryable]
     public function getRegion(): ?Region
     {
@@ -919,26 +878,26 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->enabled;
     }
 
-    public function getDisabledReason(): ?string
+    public function getDisabledReason(): ?RideDisabledReasonEnum
     {
-        return $this->disabledReason;
+        return $this->disabledReason !== null ? RideDisabledReasonEnum::from($this->disabledReason) : null;
     }
 
-    public function setDisabledReason(?string $disabledReason = null): Ride
+    public function setDisabledReason(?RideDisabledReasonEnum $disabledReason = null): Ride
     {
-        $this->disabledReason = $disabledReason;
+        $this->disabledReason = $disabledReason?->value;
 
         return $this;
     }
 
-    public function getRideType(): ?string
+    public function getRideType(): ?RideTypeEnum
     {
-        return $this->rideType;
+        return $this->rideType !== null ? RideTypeEnum::from($this->rideType) : null;
     }
 
-    public function setRideType(?string $rideType = null): Ride
+    public function setRideType(?RideTypeEnum $rideType = null): Ride
     {
-        $this->rideType = $rideType;
+        $this->rideType = $rideType?->value;
 
         return $this;
     }
@@ -987,37 +946,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     public function setDisabledReasonMessage(?string $disabledReasonMessage): self
     {
         $this->disabledReasonMessage = $disabledReasonMessage;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|RideView[]
-     */
-    public function getViewRelations(): Collection
-    {
-        return $this->viewRelation;
-    }
-
-    public function addViewRelation(RideView $viewRelation): self
-    {
-        if (!$this->viewRelation->contains($viewRelation)) {
-            $this->viewRelation[] = $viewRelation;
-            $viewRelation->setRide($this);
-        }
-
-        return $this;
-    }
-
-    public function removeViewRelation(RideView $viewRelation): self
-    {
-        if ($this->viewRelation->contains($viewRelation)) {
-            $this->viewRelation->removeElement($viewRelation);
-            // set the owning side to null (unless already changed)
-            if ($viewRelation->getRide() === $this) {
-                $viewRelation->setRide(null);
-            }
-        }
 
         return $this;
     }

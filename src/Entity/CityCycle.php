@@ -66,7 +66,7 @@ class CityCycle implements RouteableInterface
     #[Groups(['ride-list'])]
     protected ?\DateTime $time = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $location = null;
 

@@ -20,10 +20,6 @@ doctrine:
             datetime: App\DBAL\Type\UTCDateTimeType
             date: App\DBAL\Type\UTCDateType
             time: App\DBAL\Type\UTCTimeType
-            RideDisabledReasonType: App\DBAL\Type\RideDisabledReasonType
-            RideType: App\DBAL\Type\RideType
-        mapping_types:
-            enum: string
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

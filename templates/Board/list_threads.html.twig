@@ -62,9 +62,6 @@
                                     {{ thread.postNumber }}
                                 </td>
                                 <td>
-                                    {{ thread.views }}
-                                </td>
-                                <td>
                                     {% if thread.lastPost %}
                                         <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                         {{ 'board.list_threads.by_author'|trans({'%username%': thread.lastPost.user.username})|raw }}<br/>

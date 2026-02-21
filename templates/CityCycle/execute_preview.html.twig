@@ -108,8 +108,8 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <form method="post"
-                      action="{{ object_path(cityCycle, 'caldera_criticalmass_citycycle_execute_persist') }}"
-                ">
+                      action="{{ object_path(cityCycle, 'caldera_criticalmass_citycycle_execute_persist') }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('citycycle_execute') }}"/>
                 <input type="hidden" name="fromDate" value="{{ executeable.fromDate|date('U') }}"/>
                 <input type="hidden" name="untilDate" value="{{ executeable.untilDate|date('U') }}"/>
 

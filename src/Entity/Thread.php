@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +10,7 @@ use App\Criticalmass\Router\Attribute as Routing;
 
 #[ORM\Table(name: 'thread')]
 #[ORM\Entity(repositoryClass: 'App\Repository\ThreadRepository')]
-class Thread implements ViewableEntity, RouteableInterface, PostableInterface
+class Thread implements RouteableInterface, PostableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -35,9 +34,6 @@ class Thread implements ViewableEntity, RouteableInterface, PostableInterface
     #[Routing\RouteParameter(name: 'threadSlug')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $slug = null;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
-    protected int $views = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     protected int $postNumber = 0;
@@ -132,25 +128,6 @@ class Thread implements ViewableEntity, RouteableInterface, PostableInterface
     public function getLastPost(): ?Post
     {
         return $this->lastPost;
-    }
-
-    public function setViews(int $views): ViewableEntity
-    {
-        $this->views = $views;
-
-        return $this;
-    }
-
-    public function getViews(): int
-    {
-        return $this->views;
-    }
-
-    public function incViews(): ViewableEntity
-    {
-        ++$this->views;
-
-        return $this;
     }
 
     public function setPostNumber(int $postNumber): Thread

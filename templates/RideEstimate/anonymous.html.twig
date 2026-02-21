@@ -13,7 +13,7 @@
                 <p>
                     {{ 'estimate.question'|trans({
                         '%city%': ride.city.city,
-                        '%date%': ride.dateTime|format_date(null, 'de', ride.city.timezone, constant('IntlDateFormatter::LONG'))
+                        '%date%': ride.dateTime|format_datetime(dateFormat='long', timeFormat='none', locale='de', timezone=ride.city.timezone)
                     })|raw }}
                 </p>
             </div>

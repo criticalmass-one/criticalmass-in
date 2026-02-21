@@ -23,7 +23,7 @@ class RideEstimate
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
-    #[ORM\OneToOne(targetEntity: 'Track', mappedBy: 'rideEstimate', cascade: ['persist'], fetch: 'LAZY')]
+    #[ORM\OneToOne(targetEntity: 'Track', inversedBy: 'rideEstimate', cascade: ['persist'], fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'track_id', referencedColumnName: 'id')]
     protected ?Track $track = null;
 

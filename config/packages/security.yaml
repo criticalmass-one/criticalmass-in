@@ -1,6 +1,4 @@
 security:
-    enable_authenticator_manager: true
-
     providers:
         users:
             entity:
@@ -20,7 +18,7 @@ security:
             pattern: .*
             context: user
             logout:
-                invalidate_session: false
+                invalidate_session: true
             oauth:
                 resource_owners:
                     facebook: '/login/check-facebook'
@@ -43,6 +41,8 @@ security:
 
 
     role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER, ROLE_PHOTO_DOWNLOAD]
+        ROLE_PHOTO_DOWNLOAD: [ROLE_USER]
         ROLE_USER: []
 
     access_decision_manager:
