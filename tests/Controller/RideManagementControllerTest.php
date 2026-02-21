@@ -89,7 +89,11 @@ class RideManagementControllerTest extends AbstractControllerTestCase
         $ride = $this->getFirstRideForCity('hamburg');
         $this->assertNotNull($ride, 'Hamburg ride fixture should exist');
 
-        $client->request('GET', $this->buildRideUrl($ride) . '/enable');
+        $csrfToken = static::getContainer()->get('security.csrf.token_manager')->getToken('ride_enable_' . $ride->getId());
+
+        $client->request('POST', $this->buildRideUrl($ride) . '/enable', [
+            '_token' => $csrfToken->getValue(),
+        ]);
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
