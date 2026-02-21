@@ -237,15 +237,21 @@ class PhotoManagementController extends AbstractController
         PhotoManipulatorInterface $photoManipulator,
         ?UserInterface $user = null
     ): Response {
-        $areaDataList = json_decode($request->getContent());
+        $areaDataList = json_decode($request->getContent(), true);
 
-        if (0 === count($areaDataList)) {
-            return new Response(null);
+        if (!is_array($areaDataList) || 0 === count($areaDataList)) {
+            return new Response(null, Response::HTTP_BAD_REQUEST);
+        }
+
+        $displayWidth = (int) $request->query->get('width');
+
+        if ($displayWidth <= 0) {
+            return new Response(null, Response::HTTP_BAD_REQUEST);
         }
 
         $newFilename = $photoManipulator
             ->open($photo)
-            ->censor($areaDataList, (int) $request->query->get('width'))
+            ->censor($areaDataList, $displayWidth)
             ->save();
 
         return new Response($newFilename);
@@ -254,6 +260,10 @@ class PhotoManagementController extends AbstractController
     protected function saveReferer(Request $request): string
     {
         $referer = $request->headers->get('referer');
+
+        if ($referer && !$this->isLocalUrl($referer, $request)) {
+            $referer = '/';
+        }
 
         $request->getSession()->set('referer', $referer);
 
@@ -269,10 +279,21 @@ class PhotoManagementController extends AbstractController
     {
         $referer = $this->getSavedReferer($request);
 
-        if (!$referer) {
-            throw new \Exception('No saved referer found to redirect to.');
+        if (!$referer || !$this->isLocalUrl($referer, $request)) {
+            return new RedirectResponse('/');
         }
 
         return new RedirectResponse($referer);
+    }
+
+    private function isLocalUrl(string $url, Request $request): bool
+    {
+        $parsedUrl = parse_url($url);
+
+        if (!isset($parsedUrl['host'])) {
+            return true;
+        }
+
+        return $parsedUrl['host'] === $request->getHost();
     }
 }

@@ -22,6 +22,10 @@ class RedirectingController extends AbstractController
 
         $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
 
+        if (str_starts_with($url, '//') || str_contains($url, '://')) {
+            $url = '/';
+        }
+
         return $this->redirect($url, RedirectResponse::HTTP_MOVED_PERMANENTLY);
     }
 }
