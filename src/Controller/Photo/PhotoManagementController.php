@@ -237,15 +237,21 @@ class PhotoManagementController extends AbstractController
         PhotoManipulatorInterface $photoManipulator,
         ?UserInterface $user = null
     ): Response {
-        $areaDataList = json_decode($request->getContent());
+        $areaDataList = json_decode($request->getContent(), true);
 
-        if (0 === count($areaDataList)) {
-            return new Response(null);
+        if (!is_array($areaDataList) || 0 === count($areaDataList)) {
+            return new Response(null, Response::HTTP_BAD_REQUEST);
+        }
+
+        $displayWidth = (int) $request->query->get('width');
+
+        if ($displayWidth <= 0) {
+            return new Response(null, Response::HTTP_BAD_REQUEST);
         }
 
         $newFilename = $photoManipulator
             ->open($photo)
-            ->censor($areaDataList, (int) $request->query->get('width'))
+            ->censor($areaDataList, $displayWidth)
             ->save();
 
         return new Response($newFilename);
