@@ -2,22 +2,30 @@
 
 namespace App\Model;
 
+use Symfony\Component\Serializer\Attribute\Groups;
+
 class CreateEstimateModel
 {
+    #[Groups(['api-write'])]
     protected ?\DateTime $dateTime = null;
 
+    #[Groups(['api-write'])]
     protected ?string $citySlug = null;
 
+    #[Groups(['api-write'])]
     protected ?float $latitude = null;
 
+    #[Groups(['api-write'])]
     protected ?float $longitude = null;
 
+    #[Groups(['api-write'])]
     protected ?int $estimation = null;
 
+    #[Groups(['api-write'])]
     protected ?string $source = null;
 
     public function __construct(
-        int $estimation,
+        ?int $estimation = null,
         ?\DateTime $dateTime = null,
         ?string $citySlug = null,
         ?float $latitude = null,
@@ -85,7 +93,7 @@ class CreateEstimateModel
         return $this;
     }
 
-    public function getEstimation(): int
+    public function getEstimation(): ?int
     {
         return $this->estimation;
     }

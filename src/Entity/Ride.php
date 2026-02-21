@@ -71,20 +71,20 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $slug = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $title = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $description = null;
 
     #[DataQuery\Sortable]
@@ -96,43 +96,43 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[DataQuery\Sortable]
     #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected \DateTime $dateTime;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $location = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $latitude = 0.0;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $longitude = 0.0;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'smallint', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?int $estimatedParticipants = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $estimatedDistance = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $estimatedDuration = null;
 
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'ride', fetch: 'LAZY')]
@@ -213,7 +213,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     protected ?string $disabledReason = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $rideType = null;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'ride')]

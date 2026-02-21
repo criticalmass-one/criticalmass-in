@@ -19,7 +19,7 @@ abstract class BaseController extends AbstractController
 
     }
 
-    protected function deserializeRequest(Request $request, string $modelClass)
+    protected function deserializeRequest(Request $request, string $modelClass, array $context = [])
     {
         $content = null;
 
@@ -29,12 +29,20 @@ abstract class BaseController extends AbstractController
             $content = $request->getContent();
         }
 
-        return $this->serializer->deserialize($content, $modelClass, 'json');
+        if (!isset($context['groups'])) {
+            $context['groups'] = ['api-write'];
+        }
+
+        return $this->serializer->deserialize($content, $modelClass, 'json', $context);
     }
 
-    protected function deserializeRequestInto(Request $request, object $target): object
+    protected function deserializeRequestInto(Request $request, object $target, array $context = []): object
     {
-        return $this->serializer->deserializeInto($request->getContent(), $target);
+        if (!isset($context['groups'])) {
+            $context['groups'] = ['api-write'];
+        }
+
+        return $this->serializer->deserializeInto($request->getContent(), $target, 'json', $context);
     }
 
     protected function createErrors(int $statusCode, array $errorMessages): JsonResponse
