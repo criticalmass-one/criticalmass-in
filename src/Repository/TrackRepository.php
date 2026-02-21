@@ -74,8 +74,7 @@ class TrackRepository extends ServiceEntityRepository
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
             ->setParameter('deleted', false)
-            ->andWhere($builder->expr()->isNotNull('t.polyline'))
-            ->andWhere($builder->expr()->isNotNull('t.reducedPolyline'));
+            ->andWhere('SIZE(t.trackPolylines) > 0');
 
         if ($startDateTime) {
             $builder
@@ -153,8 +152,7 @@ class TrackRepository extends ServiceEntityRepository
         $builder
             ->join('t.ride', 'r')
             ->where($builder->expr()->eq('t.user', ':user'))
-            ->andWhere($builder->expr()->isNotNull('t.polyline'))
-            ->andWhere($builder->expr()->isNotNull('t.reducedPolyline'))
+            ->andWhere('SIZE(t.trackPolylines) > 0')
             ->setParameter('user', $user)
             ->orderBy('r.dateTime', $order);
 

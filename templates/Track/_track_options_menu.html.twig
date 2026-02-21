@@ -3,15 +3,7 @@
             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Bearbeiten    </button>
     <ul class="dropdown-menu">
-        {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
-            <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_edit') }}">
-                    <i class="far fa-pencil"></i>
-                    Track editieren
-                </a>
-            </li>
-        {% else %}
-            <li>
+        <li>
                 <a href="{{ object_path(track, 'caldera_criticalmass_track_download') }}">
                     <i class="far fa-download"></i>
                     Herunterladen
@@ -57,8 +49,6 @@
                     Zeit anpassen
                 </a>
             </li>
-
-        {% endif %}
         <li>
             <a href="{{ path('caldera_criticalmass_rest_track_delete', { id: track.id }) }}"
                    data-controller="delete-modal"

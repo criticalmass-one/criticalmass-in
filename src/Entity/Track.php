@@ -8,6 +8,9 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
+use App\Enum\PolylineResolution;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
@@ -27,7 +30,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
     const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
-    const TRACK_SOURCE_DRAW = 'TRACK_SOURCE_DRAW';
     const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
     const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
@@ -117,15 +119,10 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?string $geoJson = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    /** @var Collection<int, TrackPolyline> */
+    #[ORM\OneToMany(targetEntity: TrackPolyline::class, mappedBy: 'track', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['timelapse', 'api-public'])]
-    #[SerializedName('polylineString')]
-    protected ?string $polyline;
-
-    #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['timelapse', 'api-public'])]
-    #[SerializedName('reducedPolylineString')]
-    protected ?string $reducedPolyline = null;
+    private Collection $trackPolylines;
 
     #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
     #[Assert\File(maxSize: '20M', mimeTypes: ['application/gpx+xml', 'application/xml', 'text/xml', 'application/octet-stream'])]
@@ -167,6 +164,8 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
 
     public function __construct()
     {
+        $this->trackPolylines = new ArrayCollection();
+
         parent::__construct();
     }
 
@@ -271,28 +270,43 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->latLngList;
     }
 
-    public function setPolyline(?string $polyline): static
+    /** @return Collection<int, TrackPolyline> */
+    public function getTrackPolylines(): Collection
     {
-        $this->polyline = $polyline;
+        return $this->trackPolylines;
+    }
+
+    public function addTrackPolyline(TrackPolyline $trackPolyline): static
+    {
+        if (!$this->trackPolylines->contains($trackPolyline)) {
+            $this->trackPolylines->add($trackPolyline);
+            $trackPolyline->setTrack($this);
+        }
 
         return $this;
     }
 
-    public function getPolyline(): ?string
+    public function removeTrackPolyline(TrackPolyline $trackPolyline): static
     {
-        return $this->polyline;
-    }
-
-    public function setReducedPolyline(?string $reducedPolyline = null): TrackInterface
-    {
-        $this->reducedPolyline = $reducedPolyline;
+        $this->trackPolylines->removeElement($trackPolyline);
 
         return $this;
     }
 
-    public function getReducedPolyline(): ?string
+    public function getPolylineByResolution(PolylineResolution $resolution): ?TrackPolyline
     {
-        return $this->reducedPolyline;
+        foreach ($this->trackPolylines as $trackPolyline) {
+            if ($trackPolyline->getResolution() === $resolution) {
+                return $trackPolyline;
+            }
+        }
+
+        return null;
+    }
+
+    public function getPolylineString(PolylineResolution $resolution): ?string
+    {
+        return $this->getPolylineByResolution($resolution)?->getPolyline();
     }
 
     #[Groups(['timelapse'])]

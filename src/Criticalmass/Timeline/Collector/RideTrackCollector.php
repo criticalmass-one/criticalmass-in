@@ -4,6 +4,7 @@ namespace App\Criticalmass\Timeline\Collector;
 
 use App\Criticalmass\Timeline\Item\RideTrackItem;
 use App\Entity\Track;
+use App\Enum\PolylineResolution;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {
@@ -22,7 +23,7 @@ class RideTrackCollector extends AbstractTimelineCollector
                 ->setRideTitle($trackEntity->getRide()->getTitle())
                 ->setDistance($trackEntity->getDistance())
                 ->setDuration($trackEntity->getDurationInSeconds())
-                ->setPolyline($trackEntity->getPolyline()) // @todo use reduced polyline later
+                ->setPolyline($trackEntity->getPolylineString(PolylineResolution::COARSE) ?? '')
                 ->setPolylineColor('rgb(' . $trackEntity->getUser()->getColorRed() . ', ' . $trackEntity->getUser()->getColorGreen() . ', ' . $trackEntity->getUser()->getColorBlue() . ')')
                 ->setDateTime($trackEntity->getCreationDateTime())
                 ->setRideEnabled($trackEntity->getRide()->isEnabled());

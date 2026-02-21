@@ -56,7 +56,7 @@
                         class="map"
                         style="height: 350px;"
                         data-controller="map--map"
-                        data-map--map-polyline-value="{{ track.polyline }}"
+                        data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::MEDIUM')) }}"
                         data-map--map-polyline-color-value="{{ track.user.color }}"
                 ></div>
             </div>
