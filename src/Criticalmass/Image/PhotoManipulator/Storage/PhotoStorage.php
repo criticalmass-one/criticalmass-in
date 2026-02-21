@@ -20,7 +20,7 @@ class PhotoStorage extends AbstractPhotoStorage
     public function save(ManipulateablePhotoInterface $photo, ImageInterface $image): string
     {
         if (!$photo->getBackupName()) {
-            $newFilename = sprintf('%s.jpg', uniqid('', true));
+            $newFilename = sprintf('%s.jpg', bin2hex(random_bytes(16)));
 
             $photo->setBackupName($photo->getImageName());
 

@@ -106,16 +106,24 @@ export default class extends Controller {
         }
     }
 
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
     renderSuggestion(data) {
+        const value = this.escapeHtml(data.value);
+        const url = encodeURI(data.url);
         let html = '<div class="search-result-item p-2">';
 
         if (data.type === 'city') {
-            html += `<a href="${data.url}"><i class="far fa-university"></i> ${data.value}</a>`;
+            html += `<a href="${url}"><i class="far fa-university"></i> ${value}</a>`;
         } else if (data.type === 'ride') {
-            html += `<a href="${data.url}">`;
-            html += `<div><i class="far fa-bicycle"></i> ${data.value}</div>`;
+            html += `<a href="${url}">`;
+            html += `<div><i class="far fa-bicycle"></i> ${value}</div>`;
             if (data.meta?.location) {
-                html += `<div class="small text-muted">${data.meta.location}</div>`;
+                html += `<div class="small text-muted">${this.escapeHtml(data.meta.location)}</div>`;
             }
             if (data.meta?.dateTime) {
                 const dateTime = new Date(data.meta.dateTime);
@@ -123,7 +131,7 @@ export default class extends Controller {
             }
             html += '</a>';
         } else if (data.type === 'content') {
-            html += `<a href="${data.url}"><i class="far fa-file-text"></i> ${data.value}</a>`;
+            html += `<a href="${url}"><i class="far fa-file-text"></i> ${value}</a>`;
         }
 
         html += '</div>';

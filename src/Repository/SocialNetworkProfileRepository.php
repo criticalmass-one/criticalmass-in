@@ -56,8 +56,13 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
                 ->setParameter('city', $city);
         }
 
-        /** @var string $entityClassName */
+        $allowedEntityFields = ['city', 'ride', 'subride', 'user'];
+
         foreach ($entityClassNames as $entityClassName) {
+            if (!in_array($entityClassName, $allowedEntityFields, true)) {
+                continue;
+            }
+
             $builder->andWhere($builder->expr()->isNotNull(sprintf('snp.%s', $entityClassName)));
         }
 

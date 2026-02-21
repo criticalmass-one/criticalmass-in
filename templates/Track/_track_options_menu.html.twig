@@ -70,7 +70,7 @@
                    data-controller="delete-modal"
                    data-action="click->delete-modal#open"
                    data-delete-modal-title-value="Track löschen"
-                   data-delete-modal-text-value="Möchtest du diesen Track von der <strong>{{ track.ride.city.title }}</strong> vom <strong>{{ track.ride.dateTime|date('d.m.Y') }}</strong> wirklich löschen?">
+                   data-delete-modal-text-value="Möchtest du diesen Track von der {{ track.ride.city.title }} vom {{ track.ride.dateTime|date('d.m.Y') }} wirklich löschen?">
                 <i class="far fa-trash-alt"></i>
                 Löschen
             </a>
