@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
@@ -127,6 +128,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     protected ?string $reducedPolyline = null;
 
     #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
+    #[Assert\File(maxSize: '20M', mimeTypes: ['application/gpx+xml', 'application/xml', 'text/xml', 'application/octet-stream'])]
     protected ?File $trackFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
