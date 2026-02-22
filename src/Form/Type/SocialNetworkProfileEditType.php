@@ -14,7 +14,6 @@ class SocialNetworkProfileEditType extends SocialNetworkProfileType
         $builder
             ->add('identifier', TextType::class, [
                 'required' => true,
-                'disabled' => true,
             ])
             ->add('mainNetwork', CheckboxType::class, [
                 'required' => false,
