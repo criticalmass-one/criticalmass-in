@@ -13,7 +13,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6 offset-md-3">
                 <h2>
                     E-Mail-Adresse ändern
                 </h2>
@@ -28,36 +28,38 @@
         {{ form_start(userEmailForm) }}
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Deine E-Mail-Adresse
+            <div class="col-md-6 offset-md-3">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <i class="far fa-envelope text-primary me-2"></i>Deine E-Mail-Adresse
                     </div>
-                    <div class="panel-body form-group form-group{% if form_errors(userEmailForm.email) %} has-error has-feedback{% endif %}">
+                    <div class="card-body">
                         <p>
                             Deine E-Mail-Adresse wird selbstverständlich nirgendwo öffentlich angezeigt.
                         </p>
 
                         {{ form_errors(userEmailForm.email) }}
 
-                        <label class="control-label" for="">
-                            E-Mail-Adresse:
-                        </label>
-                        {{ form_widget(userEmailForm.email, { 'attr' : { 'class': 'form-control'} }) }}
+                        <div class="mb-3">
+                            <label class="form-label">
+                                E-Mail-Adresse:
+                            </label>
+                            {{ form_widget(userEmailForm.email, { 'attr' : { 'class': 'form-control'} }) }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 text-center">
+            <div class="col-md-6 offset-md-3 text-center">
                 <div class="btn-group" role="group">
-                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-secondary">
-                        Abbrechen
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-light">
+                        <i class="far fa-times me-1"></i>Abbrechen
                     </a>
 
                     <button type="submit" class="btn btn-primary">
-                        Speichern
+                        <i class="far fa-save me-1"></i>Speichern
                     </button>
                 </div>
             </div>

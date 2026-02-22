@@ -10,7 +10,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-10 offset-md-1">
                 <h2>
                     Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
                 </h2>
@@ -23,9 +23,8 @@
         </div>
 
         {% for flashMessage in app.session.flashbag.get('success') %}
-
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-10 offset-md-1">
                     <div class="alert alert-dismissible alert-success" role="alert">
                         {{ flashMessage }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -35,61 +34,60 @@
         {% endfor %}
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Profilfoto ändern
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                <i class="far fa-camera text-primary me-2"></i>Profilfoto ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body d-flex flex-column">
                                 <p>
                                     Lade ein Foto für dein Profil hoch.
                                 </p>
 
-                                <p class="text-center">
-                                    <a class="btn btn-secondary"
+                                <div class="mt-auto text-center">
+                                    <a class="btn btn-outline-primary btn-sm"
                                        href="{{ path('criticalmass_user_profile_photo') }}">
-                                        Profilfoto ändern
+                                        <i class="far fa-camera me-1"></i>Profilfoto ändern
                                     </a>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Profilfarbe wählen
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                <i class="far fa-palette text-success me-2"></i>Profilfarbe wählen
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body d-flex flex-column">
                                 <p>
                                     Ändere die Farbe deines Benutzerkontos.
                                 </p>
 
-                                <p class="text-center">
-                                    <a class="btn btn-secondary"
+                                <div class="mt-auto text-center">
+                                    <a class="btn btn-outline-success btn-sm"
                                        href="{{ path('criticalmass_user_profile_color') }}">
-                                        Profilfarbe wählen
+                                        <i class="far fa-palette me-1"></i>Profilfarbe wählen
                                     </a>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Deine Touren
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                <i class="far fa-bicycle text-warning me-2"></i>Deine Touren
                             </div>
-
-                            <div class="panel-body">
+                            <div class="card-body d-flex flex-column">
                                 {% if participationCounter == 0 %}
-                                    <div class="alert alert-info" role="alert">
-                                        <strong>Schade:</strong>
-                                        Du hast noch an keiner Critical Mass teilgenommen. Im <a
-                                                href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a> findest
-                                        du Touren in deiner Nähe.
+                                    <div class="text-center py-3">
+                                        <i class="far fa-bicycle fa-2x text-muted mb-2"></i>
+                                        <p class="text-muted mb-0">
+                                            Du hast noch an keiner Critical Mass teilgenommen. Im <a href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a> findest du Touren in deiner Nähe.
+                                        </p>
                                     </div>
                                 {% else %}
                                     <p>
@@ -97,27 +95,30 @@
                                         teilgenommen.
                                     </p>
 
-                                    <p class="text-center">
-                                        <a class="btn btn-secondary"
+                                    <div class="mt-auto text-center">
+                                        <a class="btn btn-outline-warning btn-sm"
                                            href="{{ path('criticalmass_user_participation_list') }}">
-                                            Tourenübersicht
+                                            <i class="far fa-bicycle me-1"></i>Tourenübersicht
                                         </a>
-                                    </p>
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Deine Tracks
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                <i class="far fa-route text-info me-2"></i>Deine Tracks
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body d-flex flex-column">
                                 {% if trackCounter == 0 %}
-                                    <div class="alert alert-info" role="alert">
-                                        Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in
-                                        die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
+                                    <div class="text-center py-3">
+                                        <i class="far fa-route fa-2x text-muted mb-2"></i>
+                                        <p class="text-muted mb-0">
+                                            Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in
+                                            die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
+                                        </p>
                                     </div>
                                 {% else %}
                                     <p>
@@ -125,11 +126,11 @@
                                         hochgeladen.
                                     </p>
 
-                                    <p class="text-center">
-                                        <a class="btn btn-secondary" href="{{ path('caldera_criticalmass_track_list') }}">
-                                            Tracks verwalten
+                                    <div class="mt-auto text-center">
+                                        <a class="btn btn-outline-info btn-sm" href="{{ path('caldera_criticalmass_track_list') }}">
+                                            <i class="far fa-route me-1"></i>Tracks verwalten
                                         </a>
-                                    </p>
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -137,27 +138,30 @@
 
                     {% if feature('photos') %}
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Deine Fotos
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                <i class="far fa-images text-secondary me-2"></i>Deine Fotos
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body d-flex flex-column">
                                 {% if photoCounter == 0 %}
-                                    <div class="alert alert-info" role="alert">
-                                        Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr
-                                        Informationen zu diesem Thema.
+                                    <div class="text-center py-3">
+                                        <i class="far fa-images fa-2x text-muted mb-2"></i>
+                                        <p class="text-muted mb-0">
+                                            Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr
+                                            Informationen zu diesem Thema.
+                                        </p>
                                     </div>
                                 {% else %}
                                     <p>
                                         Du hast von deinen Touren {{ photoCounter }} Fotos hochgeladen.
                                     </p>
 
-                                    <p class="text-center">
-                                        <a class="btn btn-secondary"
+                                    <div class="mt-auto text-center">
+                                        <a class="btn btn-outline-secondary btn-sm"
                                            href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                            Fotos verwalten
+                                            <i class="far fa-images me-1"></i>Fotos verwalten
                                         </a>
-                                    </p>
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -165,42 +169,42 @@
                     {% endif %}
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Benutzername ändern
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                <i class="far fa-user text-primary me-2"></i>Benutzername ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body d-flex flex-column">
                                 <p>
                                     Hier kannst du deinen Benutzernamen ändern.
                                 </p>
 
-                                <p class="text-center">
-                                    <a class="btn btn-secondary"
+                                <div class="mt-auto text-center">
+                                    <a class="btn btn-outline-primary btn-sm"
                                        href="{{ path('criticalmass_user_usermanagement_editusername') }}">
-                                        Benutzername ändern
+                                        <i class="far fa-edit me-1"></i>Benutzername ändern
                                     </a>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                E-Mail-Adresse ändern
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white">
+                                <i class="far fa-envelope text-warning me-2"></i>E-Mail-Adresse ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body d-flex flex-column">
                                 <p>
                                     Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
                                     mit deinen neuen Benutzerdaten einloggen musst.
                                 </p>
 
-                                <p class="text-center">
-                                    <a class="btn btn-secondary"
+                                <div class="mt-auto text-center">
+                                    <a class="btn btn-outline-warning btn-sm"
                                        href="{{ path('criticalmass_user_usermanagement_editemail') }}">
-                                        E-Mail-Adresse ändern
+                                        <i class="far fa-edit me-1"></i>E-Mail-Adresse ändern
                                     </a>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
