@@ -22,16 +22,16 @@ class Participation
     protected ?User $user = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected \DateTime $dateTime;
+    protected ?\DateTime $dateTime = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
-    protected bool $goingYes = true;
+    protected ?bool $goingYes = true;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
-    protected bool $goingMaybe = true;
+    protected ?bool $goingMaybe = true;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
-    protected bool $goingNo = true;
+    protected ?bool $goingNo = true;
 
     public function __construct()
     {
@@ -57,7 +57,7 @@ class Participation
 
     public function getGoingYes(): bool
     {
-        return $this->goingYes;
+        return $this->goingYes ?? true;
     }
 
     public function setGoingYes(bool $goingYes): Participation
@@ -69,7 +69,7 @@ class Participation
 
     public function getGoingMaybe(): bool
     {
-        return $this->goingMaybe;
+        return $this->goingMaybe ?? true;
     }
 
     public function setGoingMaybe(bool $goingMaybe): Participation
@@ -81,7 +81,7 @@ class Participation
 
     public function getGoingNo(): bool
     {
-        return $this->goingNo;
+        return $this->goingNo ?? true;
     }
 
     public function setGoingNo(bool $goingNo): Participation

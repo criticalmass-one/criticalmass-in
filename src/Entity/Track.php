@@ -99,12 +99,12 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
-    protected bool $enabled = true;
+    protected ?bool $enabled = true;
 
     #[DataQuery\DefaultBooleanValue(value: false)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
-    protected bool $deleted = false;
+    protected ?bool $deleted = false;
 
     /**
      * @deprecated
@@ -225,7 +225,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
 
     public function getEnabled(): bool
     {
-        return $this->enabled;
+        return $this->enabled ?? true;
     }
 
     public function setEnabled(bool $enabled): Track
@@ -237,7 +237,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
 
     public function getDeleted(): bool
     {
-        return $this->deleted;
+        return $this->deleted ?? false;
     }
 
     public function setDeleted(bool $deleted): Track

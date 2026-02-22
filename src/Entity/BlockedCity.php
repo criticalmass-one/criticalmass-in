@@ -27,10 +27,10 @@ class BlockedCity
     protected ?string $description = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
-    protected bool $photosLink = false;
+    protected ?bool $photosLink = false;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
-    protected bool $rideListLink = false;
+    protected ?bool $rideListLink = false;
 
     public function getId(): ?int
     {
@@ -82,7 +82,7 @@ class BlockedCity
 
     public function getPhotosLink(): bool
     {
-        return $this->photosLink;
+        return $this->photosLink ?? false;
     }
 
     public function setRideListLink(bool $rideListLink): BlockedCity
@@ -94,7 +94,7 @@ class BlockedCity
 
     public function getRideListLink(): bool
     {
-        return $this->rideListLink;
+        return $this->rideListLink ?? false;
     }
 
     public function setCity(?City $city = null): BlockedCity
