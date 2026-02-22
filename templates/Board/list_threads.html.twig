@@ -10,74 +10,86 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                {% if app.getUser() %}
-                    <a href="{{ newThreadUrl }}" class="btn btn-success pull-right margin-top-medium">
-                        neues Thema eröffnen
-                    </a>
-                {% endif %}
-                <h1>
-                    {{ board.title }}
-                </h1>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">
+                <i class="far fa-comments text-muted me-2"></i>
+                {{ board.title }}
+            </h1>
+            {% if app.getUser() %}
+                <a href="{{ newThreadUrl }}" class="btn btn-success btn-sm">
+                    <i class="far fa-plus me-1"></i>
+                    <span class="d-none d-sm-inline">Neues Thema</span>
+                </a>
+            {% endif %}
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                {% if threads|length %}
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>
-                                Titel
-                            </th>
-                            <th>
-                                Autor
-                            </th>
-                            <th>
-                                Antworten
-                            </th>
-                            <th>
-                                letzter Beitrag
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for thread in threads %}
-                            <tr>
-                                <td>
-                                    <a href="{{ object_path(thread) }}">
-                                        {{ thread.title }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.firstPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
-                                    von <strong>{{ thread.firstPost.user.username }}</strong>
-                                </td>
-                                <td>
-                                    {{ thread.postNumber }}
-                                </td>
-                                <td>
-                                    {% if thread.lastPost %}
-                                        <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
-                                        von <strong>{{ thread.lastPost.user.username }}</strong><br/>
-                                        {{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                {% else %}
-                    <div class="alert alert-info" role="alert">
-                        <strong>
-                            Hier gibt es nichts zu sehen!
-                        </strong>
-                        Bislang hat leider noch niemand einen Beitrag in diesem Forum geschrieben.
+        {% if threads|length %}
+            {% for thread in threads %}
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-5">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 me-3">
+                                        {% if thread.firstPost.user.imageName %}
+                                            <img class="rounded-circle" width="40" height="40"
+                                                 src="{{ vich_uploader_asset(thread.firstPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+                                                 alt="{{ thread.firstPost.user.username }}"/>
+                                        {% else %}
+                                            <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                <i class="far fa-user text-secondary"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <a href="{{ object_path(thread) }}" class="text-decoration-none">
+                                            <strong>{{ thread.title }}</strong>
+                                        </a>
+                                        <br/>
+                                        <small class="text-muted">von {{ thread.firstPost.user.username }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center d-none d-md-block">
+                                <span class="d-block text-muted"><small>Antworten</small></span>
+                                <strong>{{ thread.postNumber }}</strong>
+                            </div>
+                            <div class="col-md-5">
+                                {% if thread.lastPost %}
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0 me-2">
+                                            {% if thread.lastPost.user.imageName %}
+                                                <img class="rounded-circle" width="36" height="36"
+                                                     src="{{ vich_uploader_asset(thread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+                                                     alt="{{ thread.lastPost.user.username }}"/>
+                                            {% else %}
+                                                <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                                                    <i class="far fa-user text-secondary"></i>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <small class="text-muted">
+                                                Letzter Beitrag von <strong>{{ thread.lastPost.user.username }}</strong>
+                                            </small>
+                                            <br/>
+                                            <small class="text-muted">
+                                                <i class="far fa-clock me-1"></i>{{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center py-5">
+                <i class="far fa-comments fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">Hier gibt es noch nichts zu sehen!</h5>
+                <p class="text-muted mb-0">Bislang hat leider noch niemand einen Beitrag in diesem Forum geschrieben.</p>
             </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}
