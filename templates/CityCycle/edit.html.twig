@@ -62,22 +62,25 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row mt-4">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.dayOfWeek) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Wochentag der Touren:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Wochentag der Touren:</label>
                             {{ form_widget(form.dayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
                             {% if not cityCycle.hasSpecialCalculator() %}
-                                <p class="help-block">
+                                <div class="form-text">
                                     Stelle hier den Wochentag ein, an dem die Touren stattfinden.
-                                </p>
+                                </div>
                             {% else %}
                                 <p class="text-info">
                                     Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
                                     Generator erzeugt wird.
                                 </p>
+                            {% endif %}
+                            {% if form_errors(form.dayOfWeek) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.dayOfWeek) }}</div>
                             {% endif %}
                         </div>
                     </div>
@@ -85,18 +88,21 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.weekOfMonth) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Woche der Touren:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Woche der Touren:</label>
                             {{ form_widget(form.weekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
                             {% if not cityCycle.hasSpecialCalculator() %}
-                                <p class="help-block">
+                                <div class="form-text">
                                     Wähle hier die Woche, in der die Touren stattfinden.
-                                </p>
+                                </div>
                             {% else %}
                                 <p class="text-info">
                                     Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
                                     Generator erzeugt wird.
                                 </p>
+                            {% endif %}
+                            {% if form_errors(form.weekOfMonth) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.weekOfMonth) }}</div>
                             {% endif %}
                         </div>
                     </div>
@@ -106,25 +112,31 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.time) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Uhrzeit der Touren:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Uhrzeit der Touren:</label>
                             {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">
+                            <div class="form-text">
                                 Startzeit der Touren.
-                            </p>
+                            </div>
+                            {% if form_errors(form.time) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.time) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Treffpunkt der Touren:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Treffpunkt der Touren:</label>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">
+                            <div class="form-text">
                                 Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour
                                 startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.
-                            </p>
+                            </div>
+                            {% if form_errors(form.location) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.location) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -139,17 +151,17 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label" for="">Gültig ab:</label>
+                <div class="mb-3">
+                    <label class="form-label" for="">Gültig ab:</label>
                     {{ form_widget(form.validFrom, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label" for="">Gültig bis:</label>
+                <div class="mb-3">
+                    <label class="form-label" for="">Gültig bis:</label>
                     {{ form_widget(form.validUntil, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
@@ -157,11 +169,12 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="btn-group pull-right">
+                <div class="btn-group float-end">
                     <a href="{{ object_path(city) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
                     <button type="submit" class="btn btn-success">
+                        <i class="far fa-save me-1"></i>
                         Speichern
                     </button>
                 </div>
