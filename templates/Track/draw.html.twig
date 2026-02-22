@@ -11,10 +11,11 @@
 {% block content %}
 
     <div class="container">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-12">
-                <div id="map" style="height: 400px;">
-
+                <div class="card border-0 shadow-sm overflow-hidden">
+                    <div id="map" style="height: 400px;">
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,9 +28,11 @@
                     <input type="hidden" id="polyline" name="polyline"/>
                     <input type="hidden" id="geojson" name="geojson"/>
 
-                    <button type="submit" id="save-track" class="btn btn-secondary">
-                        Speichern
-                    </button>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" id="save-track" class="btn btn-success btn-sm">
+                            <i class="far fa-save me-1"></i>Speichern
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
