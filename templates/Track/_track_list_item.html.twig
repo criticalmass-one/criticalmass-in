@@ -1,115 +1,128 @@
-<div class="col-md-4 margin-bottom-medium">
-    <div class="panel panel-default{% if not track.enabled %} panel-warning{% elseif not track.reviewed %} panel-danger{% endif %}">
-        <div class="panel-heading">
-            <a href="{{ object_path(track.ride) }}">
-                {{ track.ride.title }}
-            </a>
+<div class="col-md-4 mb-4">
+    <div class="card border-0 shadow-sm{% if not track.enabled %} border-start border-warning border-3{% elseif not track.reviewed %} border-start border-danger border-3{% endif %}">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{ object_path(track.ride) }}" class="text-decoration-none fw-bold">
+                    <i class="far fa-bicycle text-muted me-1"></i>{{ track.ride.title }}
+                </a>
+                {% if not track.enabled %}
+                    <span class="badge bg-warning text-dark">
+                        <i class="far fa-eye-slash me-1"></i>Deaktiviert
+                    </span>
+                {% elseif not track.reviewed %}
+                    <span class="badge bg-danger">
+                        <i class="far fa-exclamation-triangle me-1"></i>Unbestätigt
+                    </span>
+                {% endif %}
+            </div>
         </div>
-        <div class="panel-body">
-            <div class="row margin-bottom-medium">
-                <div class="col-md-12">
-                    <div
-                        id="map-{{ track.id }}"
-                        class="map"
-                        style="height: 150px;"
-                        data-controller="map--map"
-                        data-map--map-lock-map-value="true"
-                        data-map--map-polyline-color-value="{{ track.user.color }}"
-                        data-map--map-polyline-value="{{ track.polyline }}"
-                    ></div>
 
-                </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <div
+                    id="map-{{ track.id }}"
+                    class="map rounded"
+                    style="height: 150px;"
+                    data-controller="map--map"
+                    data-map--map-lock-map-value="true"
+                    data-map--map-polyline-color-value="{{ track.user.color }}"
+                    data-map--map-polyline-value="{{ track.polyline }}"
+                ></div>
             </div>
 
-            <div class="row">
+            <div class="row g-3 mb-3">
                 {% if show_city is not defined or show_city == true %}
-                    <div class="col-md-6">
-                        <dl>
-                            <dt>
-                                Stadt
-                            </dt>
-
-                            <dd>
-                                <a href="{{ object_path(track.ride.city) }}">
-                                    {{ track.ride.city.city }}
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                 style="width: 36px; height: 36px; min-width: 36px;">
+                                <i class="far fa-map-marker-alt text-warning"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block">Stadt</small>
+                                <a href="{{ object_path(track.ride.city) }}" class="text-decoration-none">
+                                    <strong>{{ track.ride.city.city }}</strong>
                                 </a>
-                            </dd>
-                        </dl>
+                            </div>
+                        </div>
                     </div>
                 {% endif %}
 
                 {% if show_user is not defined or show_user == true %}
-                    <div class="col-md-6">
-                        <dl>
-                            <dt>
-                                Teilnehmer
-                            </dt>
-
-                            <dd>
-                                {{ track.user.username }}
-                            </dd>
-                        </dl>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                 style="width: 36px; height: 36px; min-width: 36px;">
+                                <i class="far fa-user text-info"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block">Teilnehmer</small>
+                                <strong>{{ track.user.username }}</strong>
+                            </div>
+                        </div>
                     </div>
                 {% endif %}
 
-                <div class="col-md-6">
-                    <dl>
-                        <dt>
-                            Datum
-                        </dt>
-
-                        <dd>
-                            <a href="{{ object_path(track) }}">
-                                {{ track.ride.dateTime|date('d.m.Y') }}
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                             style="width: 36px; height: 36px; min-width: 36px;">
+                            <i class="far fa-calendar-alt text-primary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Datum</small>
+                            <a href="{{ object_path(track) }}" class="text-decoration-none">
+                                <strong>{{ track.ride.dateTime|date('d.m.Y') }}</strong>
                             </a>
-                        </dd>
-                    </dl>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-4">
-                    <dl>
-                        <dt>
-                            Länge
-                        </dt>
-
-                        <dd>
-                            {{ track.distance|number_format(2) }}&nbsp;km
-                        </dd>
-                    </dl>
+            <div class="row g-3">
+                <div class="col-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                             style="width: 36px; height: 36px; min-width: 36px;">
+                            <i class="far fa-route text-success"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Länge</small>
+                            <strong>{{ track.distance|number_format(2) }}&nbsp;km</strong>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-md-4">
-                    <dl>
-                        <dt>
-                            Beginn
-                        </dt>
-
-                        <dd>
-                            {{ track.startDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
-                        </dd>
-                    </dl>
+                <div class="col-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                             style="width: 36px; height: 36px; min-width: 36px;">
+                            <i class="far fa-clock text-secondary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Beginn</small>
+                            <strong>{{ track.startDateTime|date('H:i', track.ride.city.timezone) }}</strong>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-md-4">
-                    <dl>
-                        <dt>
-                            Ende
-                        </dt>
-
-                        <dd>
-                            {{ track.endDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
-                        </dd>
-                    </dl>
+                <div class="col-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                             style="width: 36px; height: 36px; min-width: 36px;">
+                            <i class="far fa-clock text-secondary"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Ende</small>
+                            <strong>{{ track.endDateTime|date('H:i', track.ride.city.timezone) }}</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {% if is_granted('edit', track) %}
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include('Track/_track_options_menu.html.twig') with { 'track': track } %}
-                    </div>
+                <div class="mt-3">
+                    {% include('Track/_track_options_menu.html.twig') with { 'track': track } %}
                 </div>
             {% endif %}
         </div>
