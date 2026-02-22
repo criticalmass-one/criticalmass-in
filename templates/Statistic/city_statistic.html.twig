@@ -49,7 +49,7 @@
 
             {% for ride in rides %}
                 <span class="d-none" data-statistic-city-chart-target="rideData"
-                      data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}"
+                      data-ride-datetime="{{ ride.dateTime ? ride.dateTime|date('Y-m-d') : '' }}"
                       data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}"
                       data-estimated-duration="{{ ride.estimatedDuration|default(0) }}"
                       data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></span>
