@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row mb-3">
+        <div class="col-12">
             <h2>
                 Foto zensieren
             </h2>
@@ -16,20 +16,20 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
+    <div class="row mb-4">
+        <div class="col-12">
+            <img id="photo" class="img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
         </div>
     </div>
 
-    <div class="row margin-top-medium">
-        <div class="col-md-12">
-            <div class="btn-group pull-right" role="group">
-                <a href="javascript:window.location=document.referrer;" class="btn btn-secondary">
-                    Abbrechen
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="btn-group float-end" role="group">
+                <a href="javascript:window.location=document.referrer;" class="btn btn-secondary btn-sm">
+                    <i class="far fa-times me-1"></i> Abbrechen
                 </a>
-                <button id="save" class="btn btn-primary">
-                    Speichern
+                <button id="save" class="btn btn-primary btn-sm">
+                    <i class="far fa-save me-1"></i> Speichern
                 </button>
             </div>
         </div>

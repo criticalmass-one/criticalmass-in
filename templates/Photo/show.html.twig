@@ -13,10 +13,10 @@
 {% endblock %}
 
 {% block navigation %}
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row mb-3">
+        <div class="col-12">
             <nav aria-label="Foto Navigation">
-                <ul class="pagination justify-content-between">
+                <ul class="pagination justify-content-between mb-0">
                     <li class="page-item{% if not previous_photo %} disabled{% endif %}">
                         <a class="page-link" href="{% if previous_photo %}{{ object_path(previous_photo) }}{% else %}#{% endif %}">
                             &larr; Voriges Foto
@@ -38,57 +38,58 @@
 <div class="container">
     {{ block('navigation') }}
 
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row mb-4">
+        <div class="col-12">
             {% if not app.user and photo.user.blurGalleries %}
-                <div class="row" style="position: absolute; z-index: 100; width: 100%; height: 100%; top: 100px;">
-                    <div class="col-md-6 col-md-offset-3">
-                        <div class="panel panel-danger">
-                            <div class="panel-body">
-                                <h4 class="text-center">
-                                    Bitte logge dich ein
-                                </h4>
+                <div class="position-relative">
+                    <div class="position-absolute w-100 h-100 d-flex align-items-center justify-content-center" style="z-index: 100; top: 0; left: 0;">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h4 class="text-center">
+                                        Bitte logge dich ein
+                                    </h4>
 
-                                <p>
-                                    Um diese Fotos anzusehen, musst du dich leider einloggen. Keine Sorge, das dauert
-                                    keine fünf Sekunden:
-                                </p>
+                                    <p>
+                                        Um diese Fotos anzusehen, musst du dich leider einloggen. Keine Sorge, das dauert
+                                        keine fünf Sekunden:
+                                    </p>
 
-                                <p class="text-center">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-primary">
-                                        Login
-                                    </a>
-                                </p>
+                                    <p class="text-center">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-primary">
+                                            Login
+                                        </a>
+                                    </p>
 
-                                <h6 class="text-center">
-                                    Warum wird mir das angezeigt?
-                                </h6>
+                                    <h6 class="text-center">
+                                        Warum wird mir das angezeigt?
+                                    </h6>
 
-                                <p>
-                                    <small>
-                                        criticalmass.in ist ein reines Hobby-Projekt ohne jegliche Absichten zur
-                                        Gewinnerzielung. Der Ansturm auf Fotos bringt Server und Anbindung leider
-                                        regelmäßig an die Belastungsgrenze &mdash; Indem bestimmte Fotos nur für
-                                        angemeldete Nutzer angezeigt werden, lässt sich die Belastung (hoffentlich)
-                                        besser verteilen.
-                                    </small>
-                                </p>
+                                    <p class="mb-0">
+                                        <small class="text-muted">
+                                            criticalmass.in ist ein reines Hobby-Projekt ohne jegliche Absichten zur
+                                            Gewinnerzielung. Der Ansturm auf Fotos bringt Server und Anbindung leider
+                                            regelmäßig an die Belastungsgrenze &mdash; Indem bestimmte Fotos nur für
+                                            angemeldete Nutzer angezeigt werden, lässt sich die Belastung (hoffentlich)
+                                            besser verteilen.
+                                        </small>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <img id="photo" class="img-fluid w-100"
+                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}"/>
                 </div>
-                <img id="photo" class="img-responsive"
-                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}"
-                     style="width: 100%;"/>
             {% else %}
-                <img id="photo" class="img-responsive"
+                <img id="photo" class="img-fluid"
                      src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
             {% endif %}
         </div>
     </div>
 
-    <div class="row margin-top-medium">
-        <div class="col-md-8">
+    <div class="row mb-4">
+        <div class="col-md-8 mb-3 mb-md-0">
             {% include 'Photo/_comments.html.twig' with { 'photo': photo } %}
         </div>
 
@@ -98,7 +99,7 @@
         </div>
     </div>
 
-        {{ block('navigation') }}
+    {{ block('navigation') }}
 </div>
 
 {% endblock %}

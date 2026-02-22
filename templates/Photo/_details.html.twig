@@ -1,13 +1,13 @@
-<div class="panel panel-default margin-top-medium">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            Detaildaten
+<div class="card border-0 shadow-sm mt-3">
+    <div class="card-header bg-white border-bottom">
+        <h3 class="card-title h6 mb-0">
+            <i class="far fa-info-circle text-muted me-2"></i>Detaildaten
         </h3>
     </div>
-    <div class="panel-body">
-        <dl>
+    <div class="card-body">
+        <dl class="mb-0">
             <dt>
-                Fotografïn
+                <i class="far fa-user me-1"></i> Fotografïn
             </dt>
             <dd>
                 {{ photo.user.username }}
@@ -15,7 +15,7 @@
 
             {% if photo.exifCreationDate %}
             <dt>
-                Aufnahmedatum
+                <i class="far fa-calendar-alt me-1"></i> Aufnahmedatum
             </dt>
             <dd>
                 {{ photo.exifCreationDate|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr
@@ -24,7 +24,7 @@
 
             {% if photo.location %}
                 <dt>
-                    Aufnahmeort
+                    <i class="far fa-map-marker-alt me-1"></i> Aufnahmeort
                 </dt>
                 <dd>
                     {{ photo.location }}
@@ -33,10 +33,10 @@
 
             {% if photo.hasCoordinates() %}
                 <dt>
-                    Koordinaten
+                    <i class="far fa-map-pin me-1"></i> Koordinaten
                 </dt>
                 <dd>
-                    <a href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}" target="_blank">
+                    <a href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}" target="_blank" rel="noopener">
                         {{ photo.latitude }}, {{ photo.longitude }}
                     </a>
                 </dd>
@@ -44,7 +44,7 @@
 
             {% if photo.exifExposure %}
                 <dt>
-                    Verschlusszeit
+                    <i class="far fa-clock me-1"></i> Verschlusszeit
                 </dt>
                 <dd>
                     {{ photo.exifExposure }}"
@@ -80,7 +80,7 @@
 
             {% if photo.exifCamera %}
                 <dt>
-                    Kamera
+                    <i class="far fa-camera me-1"></i> Kamera
                 </dt>
                 <dd>
                     {{ photo.exifCamera }}
@@ -89,8 +89,8 @@
         </dl>
 
         {% if is_granted('ROLE_PHOTO_DOWNLOAD') %}
-            <a href="{{ path('caldera_criticalmass_photo_download', { id: photo.id }) }}" class="btn btn-primary">
-                <i class="fa fa-download"></i> Foto herunterladen
+            <a href="{{ path('caldera_criticalmass_photo_download', { id: photo.id }) }}" class="btn btn-primary btn-sm">
+                <i class="far fa-download me-1"></i> Foto herunterladen
             </a>
         {% endif %}
     </div>
