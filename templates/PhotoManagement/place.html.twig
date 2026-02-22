@@ -16,8 +16,8 @@
 {% block content %}
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row mb-3">
+            <div class="col-12">
                 <h1>
                     Foto platzieren
                 </h1>
@@ -28,9 +28,9 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-3 text-center">
-                <img class="img-responsive img-thumbnail"
+        <div class="row mb-4">
+            <div class="col-md-3 text-center mb-3 mb-md-0">
+                <img class="img-fluid rounded shadow-sm"
                      src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
             </div>
 
@@ -56,18 +56,18 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
-            <div class="col-md-12">
+        <div class="row mb-4">
+            <div class="col-12">
                 {{ form_start(form) }}
                 {{ form_widget(form.latitude) }}
                 {{ form_widget(form.longitude) }}
 
-                <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="javascript:window.location=document.referrer;" class="btn btn-secondary">
-                        Abbrechen
+                <div class="btn-group float-end" role="group">
+                    <a href="javascript:window.location=document.referrer;" class="btn btn-secondary btn-sm">
+                        <i class="far fa-times me-1"></i> Abbrechen
                     </a>
-                    <button type="submit" class="btn btn-success">
-                        Speichern
+                    <button type="submit" class="btn btn-success btn-sm">
+                        <i class="far fa-save me-1"></i> Speichern
                     </button>
                 </div>
 
@@ -76,9 +76,9 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <nav aria-label="Foto Navigation">
-                    <ul class="pagination justify-content-between">
+                    <ul class="pagination justify-content-between mb-0">
                         <li class="page-item{% if not previous_photo %} disabled{% endif %}">
                             <a class="page-link" href="{% if previous_photo %}{{ object_path(previous_photo) }}{% else %}#{% endif %}">
                                 &larr; Voriges Foto
