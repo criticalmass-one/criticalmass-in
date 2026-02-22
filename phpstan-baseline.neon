@@ -3578,12 +3578,6 @@ parameters:
 			path: src/Repository/CityRepository.php
 
 		-
-			message: '#^Parameter \#1 \$parameters of method Doctrine\\ORM\\QueryBuilder\:\:setParameters\(\) expects Doctrine\\Common\\Collections\\ArrayCollection\<int, Doctrine\\ORM\\Query\\Parameter\>, array\{enabled\: true, q\?\: non\-falsy\-string\} given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Repository/CityRepository.php
-
-		-
 			message: '#^Class App\\Repository\\CitySlugRepository extends generic class Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository but does not specify its types\: T$#'
 			identifier: missingType.generics
 			count: 1
