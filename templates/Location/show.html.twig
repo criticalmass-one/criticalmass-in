@@ -66,9 +66,14 @@
                             <ul>
                                 {% for ride in rides %}
                                     <li>
-                                        <a href="{{ object_path(ride) }}">
-                                            {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
+                                        {% set ridePath = object_path(ride) %}
+                                        {% if ridePath %}
+                                        <a href="{{ ridePath }}">
+                                            {{ ride.dateTime ? ride.dateTime|date('d.m.Y', ride.city.timezone) : '—' }}
                                         </a>
+                                        {% else %}
+                                            {{ ride.dateTime ? ride.dateTime|date('d.m.Y', ride.city.timezone) : '—' }}
+                                        {% endif %}
                                     </li>
                                 {% endfor %}
                             </ul>

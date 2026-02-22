@@ -1,16 +1,21 @@
 <tr class="ride{% if not ride.enabled %}--disabled{% endif %}">
-    <td data-sort="{{ ride.dateTime|date('U') }}">
-        {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
+    <td data-sort="{{ ride.dateTime ? ride.dateTime|date('U') : 0 }}">
+        {{ ride.dateTime ? ride.dateTime|date('d.m.Y', ride.city.timezone) : '—' }}
     </td>
 
     <td>
-        {{ ride.dateTime|date('H:i', ride.city.timezone) }}&nbsp;Uhr
+        {{ ride.dateTime ? ride.dateTime|date('H:i', ride.city.timezone) ~ ' Uhr' : '—' }}
     </td>
 
     <td>
-        <a href="{{ object_path(ride) }}">
+        {% set ridePath = object_path(ride) %}
+        {% if ridePath %}
+        <a href="{{ ridePath }}">
             {{ ride.title }}
         </a>
+        {% else %}
+            {{ ride.title }}
+        {% endif %}
     </td>
 
     <td>
