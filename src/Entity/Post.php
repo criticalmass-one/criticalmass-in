@@ -84,7 +84,7 @@ class Post
     #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
-    protected bool $enabled = true;
+    protected ?bool $enabled = true;
 
     public function __construct()
     {
@@ -148,7 +148,7 @@ class Post
 
     public function getEnabled(): bool
     {
-        return $this->enabled;
+        return $this->enabled ?? true;
     }
 
     public function setEnabled(bool $enabled): Post

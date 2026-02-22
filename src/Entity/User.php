@@ -48,23 +48,23 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     #[ORM\Column(type: 'smallint', nullable: true)]
     #[Groups(['timelapse'])]
-    protected int $colorRed = 0;
+    protected ?int $colorRed = 0;
 
     #[ORM\Column(type: 'smallint', nullable: true)]
     #[Groups(['timelapse'])]
-    protected int $colorGreen = 0;
+    protected ?int $colorGreen = 0;
 
     #[ORM\Column(type: 'smallint', nullable: true)]
     #[Groups(['timelapse'])]
-    protected int $colorBlue = 0;
+    protected ?int $colorBlue = 0;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
     #[Ignore]
-    protected bool $blurGalleries = false;
+    protected ?bool $blurGalleries = false;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
     #[Ignore]
-    protected bool $enabled = false;
+    protected ?bool $enabled = false;
 
     #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'user')]
     #[Ignore]
@@ -213,7 +213,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function getColorRed(): int
     {
-        return $this->colorRed;
+        return $this->colorRed ?? 0;
     }
 
     public function setColorRed(int $colorRed): User
@@ -225,7 +225,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function getColorGreen(): int
     {
-        return $this->colorGreen;
+        return $this->colorGreen ?? 0;
     }
 
     public function setColorGreen(int $colorGreen): User
@@ -237,7 +237,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function getColorBlue(): int
     {
-        return $this->colorBlue;
+        return $this->colorBlue ?? 0;
     }
 
     public function setColorBlue(int $colorBlue): User
@@ -404,7 +404,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function getBlurGalleries(): bool
     {
-        return $this->blurGalleries;
+        return $this->blurGalleries ?? false;
     }
 
     public function isOauthAccount(): bool
@@ -610,7 +610,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function isEnabled(): bool
     {
-        return $this->enabled;
+        return $this->enabled ?? false;
     }
 
     public function setEnabled(bool $enabled): self
