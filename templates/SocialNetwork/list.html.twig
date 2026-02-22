@@ -21,8 +21,8 @@
 
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-success pull-right" data-bs-toggle="modal" data-bs-target="#profile-add-modal">
-                    <i class="far fa-plus"></i>
+                <button class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#profile-add-modal">
+                    <i class="far fa-plus me-1"></i>
                     Profil ergänzen
                 </button>
 
@@ -79,12 +79,12 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}" class="btn btn-secondary btn-xs">
+                                    <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}" class="btn btn-secondary btn-sm">
                                         <i class="far fa-pencil"></i>
                                     </a>
                                     <form method="post" action="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}" class="d-inline">
                                         <input type="hidden" name="_token" value="{{ csrf_token('socialnetwork_disable_' ~ profile.id) }}">
-                                        <button type="submit" class="btn btn-secondary btn-xs">
+                                        <button type="submit" class="btn btn-secondary btn-sm">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
                                     </form>
@@ -96,12 +96,15 @@
                         {% if list|length == 0 %}
                             <tr>
                                 <td colspan="4">
-                                    <div class="alert alert-info">
-                                        {% if profileAbleType == 'ride' %}
-                                        Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
-                                        {% else %}
-                                        Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
-                                        {% endif %}
+                                    <div class="text-center py-4">
+                                        <i class="far fa-share-alt fa-2x text-muted mb-3 d-block"></i>
+                                        <p class="text-muted mb-0">
+                                            {% if profileAbleType == 'ride' %}
+                                            Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
+                                            {% else %}
+                                            Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
+                                            {% endif %}
+                                        </p>
                                     </div>
                                 </td>
                             </tr>
@@ -116,19 +119,20 @@
             <div class="col-md-12">
                 <p class="text-center">
                     Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
-                    <a class="btn btn-secondary margin-top-small" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                    <a class="btn btn-secondary mt-2" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
                 </p>
             </div>
         </div>
         {% endif %}
     </div>
 
-    <div class="modal fade" id="profile-add-modal" tabindex="-1" role="dialog" aria-labelledby="profile-add-modal-label">
-        <div class="modal-dialog modal-md" role="document">
+    <div class="modal fade" id="profile-add-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 {{ form_start(addProfileForm) }}
-                <div class="modal-header">
-                    <h5 class="modal-title" id="profile-add-modal-label">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">
+                        <i class="far fa-plus text-primary me-2"></i>
                         Profil ergänzen
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -137,36 +141,35 @@
                     <p>
                         Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
                     </p>
-                    <div class="form-group">
-                        <label class="control-label" for="identifier">
+                    <div class="mb-3">
+                        <label class="form-label" for="identifier">
                             Link zum Profil:
                         </label>
                         {{ form_widget(addProfileForm.identifier, { 'attr' : { 'class': 'form-control' } }) }}
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label" for="identifier">
+                    <div class="mb-3">
+                        <label class="form-label" for="identifier">
                             Netzwerk:
                         </label>
                         {{ form_widget(addProfileForm.network, { 'attr' : { 'class': 'form-control' } }) }}
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label" for="mainNetwork">
+                    <div class="mb-3">
+                        <label class="form-label" for="mainNetwork">
                             Hauptprofil:
                         </label>
                         {{ form_widget(addProfileForm.mainNetwork, { 'attr' : { 'class': 'form-control' } }) }}
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Abbrechen
-                        </button>
-                        <button type="submit" class="btn btn-success">
-                            Speichern
-                        </button>
-                    </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                        Abbrechen
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="far fa-save me-1"></i>
+                        Speichern
+                    </button>
                 </div>
                 {{ form_end(addProfileForm) }}
             </div>
