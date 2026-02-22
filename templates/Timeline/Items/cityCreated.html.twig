@@ -1,42 +1,32 @@
-<div class="row margin-bottom-medium">
-    {{ include('Timeline/_includes/user_column.html.twig') }}
-
-    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
-                <strong>
-                    {{ item.user.username }}
-                </strong>
-                hat eine neue Stadt hinzugefügt:
-            </div>
-        </div>
+            {{ include('Timeline/_includes/user_column.html.twig') }}
 
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ object_path(item.city) }}">
-                    <h4>
+            <div class="col-9 col-md-10">
+                <p class="mb-2">
+                    <strong>{{ item.user.username }}</strong>
+                    hat eine neue Stadt hinzugefügt:
+                </p>
+
+                <h5 class="mb-3">
+                    <a href="{{ object_path(item.city) }}" class="text-decoration-none">
                         {{ item.cityName }}
-                    </h4>
-                </a>
-            </div>
-        </div>
+                    </a>
+                </h5>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div
-                    id="map-{{ item.uniqId }}"
-                    class="map"
-                    data-controller="map--map"
-                    style="height: 150px;"
-                    data-map--map-center-latitude-value="{{ item.city.latitude }}"
-                    data-map--map-center-longitude-value="{{ item.city.longitude }}"
-                    data-map--map-zoom-value="13"
-                    data-map--map-lock-map-value="true"
-                    data-map--map-marker-latitude-value="{{ item.city.latitude }}"
-                    data-map--map-marker-longitude-value="{{ item.city.longitude }}"
-                    data-map--map-marker-type-value="city"
-                    data-map--map-vector-value="false"
-                >
+                <div class="rounded overflow-hidden"
+                     id="map-{{ item.uniqId }}"
+                     data-controller="map--map"
+                     style="height: 150px;"
+                     data-map--map-center-latitude-value="{{ item.city.latitude }}"
+                     data-map--map-center-longitude-value="{{ item.city.longitude }}"
+                     data-map--map-zoom-value="13"
+                     data-map--map-lock-map-value="true"
+                     data-map--map-marker-latitude-value="{{ item.city.latitude }}"
+                     data-map--map-marker-longitude-value="{{ item.city.longitude }}"
+                     data-map--map-marker-type-value="city"
+                     data-map--map-vector-value="false">
                 </div>
             </div>
         </div>

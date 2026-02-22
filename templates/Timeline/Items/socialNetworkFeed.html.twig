@@ -1,117 +1,85 @@
-<div class="row margin-bottom-medium">
-    {{ include('Timeline/_includes/social_feed_item_column.html.twig') }}
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-body">
+        <div class="row">
+            {{ include('Timeline/_includes/social_feed_item_column.html.twig') }}
 
-    {% set city = item.socialNetworkFeedItem.socialNetworkProfile.city %}
+            {% set city = item.socialNetworkFeedItem.socialNetworkProfile.city %}
 
-    {% if city == null %}
-        {% set city = item.socialNetworkFeedItem.socialNetworkProfile.ride.city %}
-    {% endif %}
+            {% if city == null %}
+                {% set city = item.socialNetworkFeedItem.socialNetworkProfile.ride.city %}
+            {% endif %}
 
-    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'twitter' %}
-        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ object_path(city) }}">
-                        <strong>
-                            {{ city.title }}
-                        </strong>
-                    </a>
-                    hat getwittert:
-                </div>
-            </div>
+            {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'twitter' %}
+                <div class="col-9 col-md-10">
+                    <p class="mb-2">
+                        <a href="{{ object_path(city) }}">
+                            <strong>{{ city.title }}</strong>
+                        </a>
+                        hat getwittert:
+                    </p>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <p>
-                        <a href="{{ item.socialNetworkFeedItem.permalink }}">
+                    <p class="text-muted mb-0">
+                        <a href="{{ item.socialNetworkFeedItem.permalink }}" class="text-decoration-none">
                             {{ item.socialNetworkFeedItem.text }}
                         </a>
                     </p>
                 </div>
-            </div>
-        </div>
-    {% endif %}
+            {% endif %}
 
-    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'homepage' %}
-        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ object_path(city) }}">
-                        <strong>
-                            {{ city.title }}
-                        </strong>
-                    </a>
-                    hat gebloggt:
-                </div>
-            </div>
+            {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'homepage' %}
+                <div class="col-9 col-md-10">
+                    <p class="mb-2">
+                        <a href="{{ object_path(city) }}">
+                            <strong>{{ city.title }}</strong>
+                        </a>
+                        hat gebloggt:
+                    </p>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ item.socialNetworkFeedItem.permalink }}">
-                        <h4>
+                    <h5 class="mb-2">
+                        <a href="{{ item.socialNetworkFeedItem.permalink }}" class="text-decoration-none">
                             {{ item.socialNetworkFeedItem.title }}
-                        </h4>
-                    </a>
-                </div>
-            </div>
+                        </a>
+                    </h5>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <p>
+                    <p class="text-muted mb-0">
                         {{ item.socialNetworkFeedItem.text|trim_intro }}
                     </p>
                 </div>
-            </div>
-        </div>
-    {% endif %}
+            {% endif %}
 
-    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'instagram_profile' %}
-        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ object_path(city) }}">
-                        <strong>
-                            {{ city.title }}
-                        </strong>
-                    </a>
-                    hat etwas auf Instagram veröffentlicht:
-                </div>
-            </div>
+            {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'instagram_profile' %}
+                <div class="col-9 col-md-10">
+                    <p class="mb-2">
+                        <a href="{{ object_path(city) }}">
+                            <strong>{{ city.title }}</strong>
+                        </a>
+                        hat etwas auf Instagram veröffentlicht:
+                    </p>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <p>
-                        <a href="{{ item.socialNetworkFeedItem.permalink }}">
+                    <p class="text-muted mb-0">
+                        <a href="{{ item.socialNetworkFeedItem.permalink }}" class="text-decoration-none">
                             {{ item.socialNetworkFeedItem.text }}
                         </a>
                     </p>
                 </div>
-            </div>
-        </div>
-    {% endif %}
+            {% endif %}
 
-    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'mastodon' %}
-        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ object_path(city) }}">
-                        <strong>
-                            {{ city.title }}
-                        </strong>
-                    </a>
-                    hat etwas auf Mastodon veröffentlicht:
-                </div>
-            </div>
+            {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'mastodon' %}
+                <div class="col-9 col-md-10">
+                    <p class="mb-2">
+                        <a href="{{ object_path(city) }}">
+                            <strong>{{ city.title }}</strong>
+                        </a>
+                        hat etwas auf Mastodon veröffentlicht:
+                    </p>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <p>
-                        <a href="{{ item.socialNetworkFeedItem.permalink }}">
+                    <p class="text-muted mb-0">
+                        <a href="{{ item.socialNetworkFeedItem.permalink }}" class="text-decoration-none">
                             {{ item.socialNetworkFeedItem.text|striptags }}
                         </a>
                     </p>
                 </div>
-            </div>
+            {% endif %}
         </div>
-    {% endif %}
+    </div>
 </div>

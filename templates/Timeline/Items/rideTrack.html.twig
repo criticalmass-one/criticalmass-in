@@ -1,82 +1,75 @@
-<div class="row margin-bottom-medium timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
-    {{ include('Timeline/_includes/user_column.html.twig') }}
-
-    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+<div class="card border-0 shadow-sm mb-3 timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
-                <strong>
-                    {{ item.user.username }}
-                </strong>
-                hat einen Track hochgeladen:
-            </div>
-        </div>
+            {{ include('Timeline/_includes/user_column.html.twig') }}
 
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ object_path(item.ride) }}">
-                    <h4>
+            <div class="col-9 col-md-10">
+                <p class="mb-2">
+                    <strong>{{ item.user.username }}</strong>
+                    hat einen Track hochgeladen:
+                </p>
+
+                <h5 class="mb-3">
+                    <a href="{{ object_path(item.ride) }}" class="text-decoration-none">
                         {{ item.rideTitle }}
-                    </h4>
-                </a>
-            </div>
-        </div>
+                    </a>
+                </h5>
 
-        {% if item.polyline %}
-        <div class="row">
-            <div class="col-md-12">
-                <div
-                    id="map-{{ item.uniqId }}"
-                    class="map timeline-item-ride-map"
-                    data-controller="map--map"
-                    style="height: 150px;"
-                    data-map--map-center-latitude-value="{{ item.ride.latitude }}"
-                    data-map--map-center-longitude-value="{{ item.ride.longitude }}"
-                    data-map--map-zoom-value="13"
-                    data-map--map-lock-map-value="true"
-                    data-map--map-polyline-color-value="{{ item.track.user.color }}"
-                    data-map--map-polyline-value="{{ item.track.polyline }}"
-                    data-map--map-vector-value="false"
-                >
+                {% if item.polyline %}
+                    <div class="rounded overflow-hidden mb-3"
+                         id="map-{{ item.uniqId }}"
+                         data-controller="map--map"
+                         style="height: 150px;"
+                         data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                         data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                         data-map--map-zoom-value="13"
+                         data-map--map-lock-map-value="true"
+                         data-map--map-polyline-color-value="{{ item.track.user.color }}"
+                         data-map--map-polyline-value="{{ item.track.polyline }}"
+                         data-map--map-vector-value="false">
+                    </div>
+                {% endif %}
+
+                <div class="row g-3">
+                    <div class="col-4">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                 style="width: 36px; height: 36px; min-width: 36px;">
+                                <i class="far fa-calendar-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block">Datum</small>
+                                <strong>{{ item.ride.dateTime|date('d.m.Y') }}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                 style="width: 36px; height: 36px; min-width: 36px;">
+                                <i class="far fa-route text-success"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block">Distanz</small>
+                                <strong>{{ item.distance|number_format(2, ',', '.') }}&nbsp;km</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                 style="width: 36px; height: 36px; min-width: 36px;">
+                                <i class="far fa-clock text-info"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block">Dauer</small>
+                                <strong>{{ human_duration(item.duration) }}</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        {% endif %}
-
-        <div class="row">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Datum:
-                    </dt>
-
-                    <dd>
-                        {{ item.ride.dateTime|date('d.m.Y') }}
-                    </dd>
-                </dl>
-            </div>
-
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Länge:
-                    </dt>
-
-                    <dd>
-                        {{ item.distance|number_format(2, ',', '.') }}&nbsp;km
-                    </dd>
-                </dl>
-            </div>
-
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Dauer:
-                    </dt>
-
-                    <dd>
-                        {{ human_duration(item.duration) }}
-                    </dd>
-                </dl>
             </div>
         </div>
     </div>
