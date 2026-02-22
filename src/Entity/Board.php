@@ -26,10 +26,10 @@ class Board implements BoardInterface, RouteableInterface
     protected ?string $description = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    protected int $threadNumber = 0;
+    protected ?int $threadNumber = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    protected int $postNumber = 0;
+    protected ?int $postNumber = 0;
 
     #[ORM\OneToOne(targetEntity: 'Thread')]
     #[ORM\JoinColumn(name: 'lastthread_id', referencedColumnName: 'id', unique: true)]
@@ -112,7 +112,7 @@ class Board implements BoardInterface, RouteableInterface
 
     public function getPostNumber(): int
     {
-        return $this->postNumber;
+        return $this->postNumber ?? 0;
     }
 
     public function incPostNumber(): BoardInterface
@@ -131,7 +131,7 @@ class Board implements BoardInterface, RouteableInterface
 
     public function getThreadNumber(): int
     {
-        return $this->threadNumber;
+        return $this->threadNumber ?? 0;
     }
 
     public function incThreadNumber(): BoardInterface

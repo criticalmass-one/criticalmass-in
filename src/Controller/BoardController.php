@@ -44,6 +44,10 @@ class BoardController extends AbstractController
         #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
         ?City $city = null
     ): Response {
+        if (!$board && !$city) {
+            throw $this->createNotFoundException();
+        }
+
         $threads = [];
         $newThreadUrl = '';
 

@@ -33,11 +33,11 @@
                         </div>
                         <div class="col-md-2 text-center d-none d-md-block">
                             <span class="d-block text-muted"><small>Themen</small></span>
-                            <strong>{{ board.threadNumber }}</strong>
+                            <strong>{{ board.threadNumber ?? 0 }}</strong>
                         </div>
                         <div class="col-md-1 text-center d-none d-md-block">
                             <span class="d-block text-muted"><small>Beitr&auml;ge</small></span>
-                            <strong>{{ board.postNumber }}</strong>
+                            <strong>{{ board.postNumber ?? 0 }}</strong>
                         </div>
                         <div class="col-md-4">
                             {% if board.lastThread %}
