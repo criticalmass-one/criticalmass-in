@@ -66,11 +66,11 @@
                         {% set network = getNetwork(profile.network) %}
 
                         <tr>
-                            <td class="text-center" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                                <i class="{{ network.icon }}"></i>
+                            <td class="text-center"{% if network %} style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};"{% endif %}>
+                                <i class="{{ network ? network.icon : 'far fa-globe' }}"></i>
                             </td>
                             <td>
-                                {{ network.name }}
+                                {{ network ? network.name : profile.network }}
                             </td>
                             <td>
                                 <a href="{{ profile.identifier }}">
@@ -79,12 +79,12 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}" class="btn btn-secondary btn-xs">
+                                    <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}" class="btn btn-secondary btn-sm">
                                         <i class="far fa-pencil"></i>
                                     </a>
                                     <form method="post" action="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}" class="d-inline">
                                         <input type="hidden" name="_token" value="{{ csrf_token('socialnetwork_disable_' ~ profile.id) }}">
-                                        <button type="submit" class="btn btn-secondary btn-xs">
+                                        <button type="submit" class="btn btn-secondary btn-sm">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
                                     </form>

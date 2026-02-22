@@ -21,7 +21,7 @@ class SocialNetworkManagementController extends AbstractController
     #[Route(
         '/socialnetwork/{id}/edit',
         name: 'criticalmass_socialnetwork_edit',
-        priority: 60
+        priority: 80
     )]
     public function editAction(
         Request $request,
@@ -87,7 +87,7 @@ class SocialNetworkManagementController extends AbstractController
         '/socialnetwork/{id}/disable',
         name: 'criticalmass_socialnetwork_disable',
         methods: ['POST'],
-        priority: 60
+        priority: 80
     )]
     public function disableAction(
         Request $request,
