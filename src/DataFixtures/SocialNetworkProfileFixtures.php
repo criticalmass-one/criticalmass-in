@@ -37,7 +37,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $hamburg,
             $adminUser,
             'twitter',
-            'criticalmassHH',
+            'https://twitter.com/criticalmassHH',
             true
         );
         $this->addReference(self::HAMBURG_TWITTER_REFERENCE, $hamburgTwitter);
@@ -46,8 +46,8 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
         $hamburgFacebook = $this->createProfile(
             $hamburg,
             $adminUser,
-            'facebook',
-            'CriticalMassHamburg',
+            'facebook_page',
+            'https://www.facebook.com/CriticalMassHamburg',
             false
         );
         $this->addReference(self::HAMBURG_FACEBOOK_REFERENCE, $hamburgFacebook);
@@ -56,8 +56,8 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
         $hamburgInstagram = $this->createProfile(
             $hamburg,
             $adminUser,
-            'instagram',
-            'criticalmass_hamburg',
+            'instagram_profile',
+            'https://www.instagram.com/criticalmass_hamburg',
             false
         );
         $this->addReference(self::HAMBURG_INSTAGRAM_REFERENCE, $hamburgInstagram);
@@ -67,7 +67,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $berlin,
             $adminUser,
             'twitter',
-            'CMBerlin',
+            'https://twitter.com/CMBerlin',
             true
         );
         $this->addReference(self::BERLIN_TWITTER_REFERENCE, $berlinTwitter);
@@ -77,7 +77,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $berlin,
             $adminUser,
             'mastodon',
-            '@criticalmass@mastodon.social',
+            'https://mastodon.social/@criticalmass',
             false
         );
         $this->addReference(self::BERLIN_MASTODON_REFERENCE, $berlinMastodon);
@@ -86,8 +86,8 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
         $munichInstagram = $this->createProfile(
             $munich,
             $adminUser,
-            'instagram',
-            'criticalmass_munich',
+            'instagram_profile',
+            'https://www.instagram.com/criticalmass_munich',
             true
         );
         $this->addReference(self::MUNICH_INSTAGRAM_REFERENCE, $munichInstagram);
@@ -96,8 +96,8 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
         $kielFacebook = $this->createProfile(
             $kiel,
             $adminUser,
-            'facebook',
-            'CriticalMassKiel',
+            'facebook_page',
+            'https://www.facebook.com/CriticalMassKiel',
             true
         );
         $this->addReference(self::KIEL_FACEBOOK_REFERENCE, $kielFacebook);
