@@ -10,49 +10,41 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_errors(form) }}
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    Neues Thema beginnen
-                </h1>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">
+                <i class="far fa-plus text-muted me-2"></i>
+                Neues Thema beginnen
+            </h1>
         </div>
 
-        {{ form_start(form) }}
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label" for="">Titel deines Themas:</label>
+                <div class="mb-3">
+                    <label class="form-label" for="{{ form.title.vars.id }}">Titel deines Themas:</label>
                     {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label" for="">Dein Beitrag:</label>
+                <div class="mb-3">
+                    <label class="form-label" for="{{ form.message.vars.id }}">Dein Beitrag:</label>
                     {{ form_widget(form.message, { 'attr' : { 'class': 'form-control', 'rows': 10 } }) }}
                 </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="btn-group pull-right">
-                    <a href="{{ object_path(board) }}" class="btn btn-secondary">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ object_path(board) }}" class="btn btn-light me-2">
                         Abbrechen
                     </a>
-
                     <button type="submit" class="btn btn-success">
+                        <i class="far fa-save me-1"></i>
                         Speichern
                     </button>
                 </div>
+
+                {{ form_end(form) }}
             </div>
         </div>
-        {{ form_end(form) }}
     </div>
 {% endblock %}
