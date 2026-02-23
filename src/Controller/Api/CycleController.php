@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
+use App\Repository\CityCycleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use OpenApi\Attributes as OA;
@@ -51,5 +52,42 @@ class CycleController extends BaseController
         $cycleList = $this->managerRegistry->getRepository(CityCycle::class)->findForApi($city, $region, $validFrom, $validUntil, $validNow, $dayOfWeek, $weekOfMonth);
 
         return $this->createStandardResponse($cycleList);
+    }
+
+    /**
+     * Retrieve a list of cycles assigned to a city.
+     */
+    #[Route(path: '/api/{citySlug}/cycles', name: 'caldera_criticalmass_rest_cycles_citylist', methods: ['GET'], priority: 190)]
+    #[OA\Tag(name: 'Cycles')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function listCyclesCityAction(City $city, CityCycleRepository $cityCycleRepository): JsonResponse
+    {
+        $cycleList = $cityCycleRepository->findByCity($city);
+
+        return $this->createStandardResponse($cycleList);
+    }
+
+    /**
+     * Create a new cycle and assign it to the provided city.
+     */
+    #[Route(path: '/api/{citySlug}/cycles', name: 'caldera_criticalmass_rest_cycles_create', methods: ['PUT'], priority: 190)]
+    #[OA\Tag(name: 'Cycles')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of the cycle to create', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully created')]
+    public function createCycleAction(Request $request, City $city): JsonResponse
+    {
+        $newCycle = $this->deserializeRequest($request, CityCycle::class);
+
+        $newCycle
+            ->setCity($city)
+            ->setCreatedAt(new \DateTime());
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->persist($newCycle);
+        $manager->flush();
+
+        return $this->createStandardResponse($newCycle);
     }
 }
