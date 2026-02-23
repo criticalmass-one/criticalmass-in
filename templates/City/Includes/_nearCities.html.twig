@@ -1,14 +1,16 @@
 {% if nearCities|length > 0 %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Städte in der Umgebung</h3>
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-header bg-white border-bottom">
+        <h5 class="card-title mb-0">
+            <i class="far fa-city text-primary me-2"></i>Städte in der Umgebung
+        </h5>
     </div>
-    <div class="panel-body">
-        <ul>
+    <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
             {% for city in nearCities %}
-                <li>
-                    <a href="{{ object_path(city) }}">
-                        {{ city.city }}
+                <li class="list-group-item border-0">
+                    <a href="{{ object_path(city) }}" class="text-decoration-none">
+                        <i class="far fa-map-marker-alt text-muted me-2"></i>{{ city.city }}
                     </a>
                 </li>
             {% endfor %}
