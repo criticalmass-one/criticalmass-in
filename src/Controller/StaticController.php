@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Twig\Error\LoaderError;
 
 class StaticController extends AbstractController
 {
@@ -19,7 +19,7 @@ class StaticController extends AbstractController
 
         try {
             return $this->render($templateName);
-        } catch (InvalidArgumentException $e) {
+        } catch (LoaderError) {
             throw $this->createNotFoundException(sprintf('There is no content for slug "%s"', $slug));
         }
     }
