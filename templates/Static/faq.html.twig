@@ -1,0 +1,123 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Häufig gestellte Fragen{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.active('Häufig gestellte Fragen') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <h2>
+                    Häufig gestellte Fragen
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-bicycle me-2"></i>Was ist die Critical Mass?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            Die Critical Mass ist eine weltweite Bewegung, bei der sich Radfahrerinnen und Radfahrer zu gemeinsamen Fahrradtouren durch ihre Stadt verabreden. Es gibt keine Veranstalter und keine feste Route — die Gruppe entscheidet spontan, wohin es geht.
+                        </p>
+
+                        <p class="mb-0">
+                            Die Touren finden in den meisten Städten regelmäßig statt, oft am letzten Freitag im Monat.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-map-marker-alt me-2"></i>Wo und wann findet die Critical Mass in meiner Stadt statt?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            Suche deine Stadt in der <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a>. Dort findest du alle Informationen zu Terminen, Treffpunkten und Uhrzeiten.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-user-plus me-2"></i>Muss ich mich anmelden?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            Nein. Für die Teilnahme an einer Critical Mass ist keine Anmeldung erforderlich. Du brauchst nur ein Fahrrad und musst zum richtigen Zeitpunkt am richtigen Ort sein.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-edit me-2"></i>Wie kann ich Daten zu meiner Stadt eintragen oder korrigieren?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            criticalmass.in funktioniert ähnlich wie Wikipedia: Du kannst dich mit einem kostenlosen Benutzerkonto registrieren und anschließend direkt Informationen zu Städten und Touren eintragen, ergänzen oder korrigieren.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-city me-2"></i>Meine Stadt fehlt in der Liste. Was kann ich tun?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            Wenn deine Stadt noch nicht auf criticalmass.in gelistet ist, kannst du sie selbst hinzufügen. Registriere dich mit einem kostenlosen Benutzerkonto und trage die Daten ein. Falls du dabei Hilfe brauchst, schreibe eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-route me-2"></i>Was sind GPS-Tracks und wie kann ich sie hochladen?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            GPS-Tracks sind aufgezeichnete Strecken im GPX-Format, die während einer Critical-Mass-Tour mit dem Smartphone oder einem GPS-Gerät aufgenommen wurden.
+                        </p>
+
+                        <p class="mb-0">
+                            Nach dem Upload werden die Tracks auf der Karte der jeweiligen Tour angezeigt und fließen in die Statistiken zu Streckenlänge und Fahrtdauer ein.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-envelope me-2"></i>Ich habe einen Fehler gefunden oder eine Frage. An wen kann ich mich wenden?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            Schreibe eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> oder eröffne ein <a href="https://github.com/criticalmass-one/criticalmass-in/issues">Ticket auf GitHub</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
