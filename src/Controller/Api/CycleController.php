@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
+use App\Repository\CityCycleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use OpenApi\Attributes as OA;
@@ -60,9 +61,9 @@ class CycleController extends BaseController
     #[OA\Tag(name: 'Cycles')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listCyclesCityAction(City $city): JsonResponse
+    public function listCyclesCityAction(City $city, CityCycleRepository $cityCycleRepository): JsonResponse
     {
-        $cycleList = $this->managerRegistry->getRepository(CityCycle::class)->findByCity($city);
+        $cycleList = $cityCycleRepository->findByCity($city);
 
         return $this->createStandardResponse($cycleList);
     }
