@@ -4828,7 +4828,7 @@ parameters:
 		-
 			message: '#^Strict comparison using \!\=\= between mixed and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
-			count: 6
+			count: 4
 			path: tests/Controller/Api/TrackApi/TrackApiSchemaTest.php
 
 		-

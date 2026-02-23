@@ -117,7 +117,7 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for Track list endpoint: GET /api/track (api-public group)
-     * Actual keys: id, creation_date_time, start_date_time, end_date_time, distance, points, polylineString
+     * Actual keys: id, creation_date_time, start_date_time, end_date_time, distance, points, start_point, end_point, track_polylines
      */
     public const TRACK_PUBLIC_SCHEMA = [
         'id' => 'int',
@@ -126,7 +126,9 @@ final class ApiSchemaDefinitions
         'end_date_time' => 'int|null', // Unix timestamp
         'distance' => 'float|int|null', // Can be int or float
         'points' => 'int|null',
-        'polylineString' => 'string|null', // Note: camelCase here
+        'start_point' => 'int|null',
+        'end_point' => 'int|null',
+        'track_polylines' => 'array', // Array of TrackPolyline objects
     ];
 
     /**
@@ -140,7 +142,9 @@ final class ApiSchemaDefinitions
         'end_date_time' => 'int|null',
         'distance' => 'float|int|null',
         'points' => 'int|null',
-        'polylineString' => 'string|null',
+        'start_point' => 'int|null',
+        'end_point' => 'int|null',
+        'track_polylines' => 'array', // Array of TrackPolyline objects
         'user?' => 'array', // User object
     ];
 
@@ -156,7 +160,9 @@ final class ApiSchemaDefinitions
         'end_date_time' => 'int|null',
         'distance' => 'float|int|null',
         'points' => 'int|null',
-        'polylineString' => 'string|null',
+        'start_point' => 'int|null',
+        'end_point' => 'int|null',
+        'track_polylines' => 'array', // Array of TrackPolyline objects
         'color_red' => 'int',
         'color_green' => 'int',
         'color_blue' => 'int',
