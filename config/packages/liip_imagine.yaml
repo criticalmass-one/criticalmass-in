@@ -72,7 +72,7 @@ liip_imagine:
             data_loader: city_image_flysystem_loader
             quality: 60
             filters:
-                thumbnail: { size: [1140, 250], mode: inset }
+                thumbnail: { size: [1400, 400], mode: inset }
 
         ride_image_wide:
             data_loader: ride_image_flysystem_loader
