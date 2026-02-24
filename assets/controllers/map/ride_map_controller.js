@@ -73,7 +73,7 @@ export default class extends BaseMapController {
             const trackLayer = L.featureGroup();
 
             for (const track of trackList) {
-                const polylineString = track.polylineString || track.polyline;
+                const polylineString = this.getPolylineFromTrack(track);
                 if (!polylineString || !track.user) continue;
 
                 const { color_red, color_green, color_blue } = track.user;
@@ -147,6 +147,18 @@ export default class extends BaseMapController {
         } catch (err) {
             console.warn('Ride photos load failed', err);
         }
+    }
+
+    getPolylineFromTrack(track) {
+        if (track.track_polylines && track.track_polylines.length) {
+            const preferred = track.track_polylines.find(p => p.resolution && p.resolution.value === 10)
+                || track.track_polylines.find(p => p.resolution && p.resolution.value === 2)
+                || track.track_polylines[0];
+
+            return preferred.polyline;
+        }
+
+        return track.polylineString || track.polyline || null;
     }
 
     getPhotoIcon() {
