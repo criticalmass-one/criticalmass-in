@@ -126,8 +126,8 @@ final class ApiSchemaDefinitions
         'end_date_time' => 'int|null', // Unix timestamp
         'distance' => 'float|int|null', // Can be int or float
         'points' => 'int|null',
-        'start_point' => 'int|null',
-        'end_point' => 'int|null',
+        'start_point?' => 'int|null',
+        'end_point?' => 'int|null',
         'track_polylines' => 'array', // Array of TrackPolyline objects
     ];
 
@@ -142,8 +142,8 @@ final class ApiSchemaDefinitions
         'end_date_time' => 'int|null',
         'distance' => 'float|int|null',
         'points' => 'int|null',
-        'start_point' => 'int|null',
-        'end_point' => 'int|null',
+        'start_point?' => 'int|null',
+        'end_point?' => 'int|null',
         'track_polylines' => 'array', // Array of TrackPolyline objects
         'user?' => 'array', // User object
     ];
@@ -160,8 +160,8 @@ final class ApiSchemaDefinitions
         'end_date_time' => 'int|null',
         'distance' => 'float|int|null',
         'points' => 'int|null',
-        'start_point' => 'int|null',
-        'end_point' => 'int|null',
+        'start_point?' => 'int|null',
+        'end_point?' => 'int|null',
         'track_polylines' => 'array', // Array of TrackPolyline objects
         'color_red' => 'int',
         'color_green' => 'int',
