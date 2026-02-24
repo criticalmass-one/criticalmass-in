@@ -854,18 +854,6 @@ parameters:
 			path: src/Controller/Track/TrackDownloadController.php
 
 		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Geo\\Entity\\Track\:\:setGeoJson\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Controller/Track/TrackDrawController.php
-
-		-
-			message: '#^Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface\:\:getUsername\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Controller/Track/TrackDrawController.php
-
-		-
 			message: '#^Parameter \#1 \$user of method App\\Repository\\TrackRepository\:\:findByUserQuery\(\) expects App\\Entity\\User, Symfony\\Component\\Security\\Core\\User\\UserInterface\|null given\.$#'
 			identifier: argument.type
 			count: 1
@@ -3164,6 +3152,12 @@ parameters:
 			path: src/Entity/Track.php
 
 		-
+			message: '#^Property App\\Entity\\TrackPolyline\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/TrackPolyline.php
+
+		-
 			message: '#^Binary operation "\-" between \$this\(App\\Entity\\TrackImportCandidate\) and float\|null results in an error\.$#'
 			identifier: binaryOp.invalid
 			count: 1
@@ -4834,7 +4828,7 @@ parameters:
 		-
 			message: '#^Strict comparison using \!\=\= between mixed and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
-			count: 6
+			count: 4
 			path: tests/Controller/Api/TrackApi/TrackApiSchemaTest.php
 
 		-

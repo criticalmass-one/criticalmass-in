@@ -10,14 +10,15 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'criticalmass:tracks:transform',
-    description: 'Generate polylines for tracks that are missing them',
+    name: 'criticalmass:track:generate-polylines',
+    description: 'Generate TrackPolyline entities for all resolutions',
 )]
-class TracksTransformCommand extends Command
+class TrackGeneratePolylinesCommand extends Command
 {
     public function __construct(
         private readonly ManagerRegistry $registry,
@@ -26,19 +27,37 @@ class TracksTransformCommand extends Command
         parent::__construct();
     }
 
+    protected function configure(): void
+    {
+        $this
+            ->addOption('all', 'a', InputOption::VALUE_NONE, 'Generate polylines for all tracks')
+            ->addOption('track-id', 't', InputOption::VALUE_REQUIRED, 'Generate polylines for a specific track')
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Regenerate existing polylines');
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $force = $input->getOption('force');
+        $trackId = $input->getOption('track-id');
+        $all = $input->getOption('all');
 
-        $tracks = $this->registry->getRepository(Track::class)->findAll();
+        $trackRepository = $this->registry->getRepository(Track::class);
 
-        $missingTracks = array_filter($tracks, fn(Track $track) => $track->getTrackPolylines()->isEmpty());
+        if ($trackId) {
+            $track = $trackRepository->find($trackId);
 
-        $io->info(sprintf('Found %d tracks without polylines', count($missingTracks)));
+            if (!$track) {
+                $io->error(sprintf('Track #%s not found.', $trackId));
+                return Command::FAILURE;
+            }
 
-        if (count($missingTracks) === 0) {
-            $io->success('All tracks already have polylines.');
-            return Command::SUCCESS;
+            $tracks = [$track];
+        } elseif ($all) {
+            $tracks = $trackRepository->findAll();
+        } else {
+            $io->error('Please specify --all or --track-id=N');
+            return Command::FAILURE;
         }
 
         $em = $this->registry->getManager();
@@ -46,13 +65,27 @@ class TracksTransformCommand extends Command
         $skipped = 0;
 
         /** @var Track $track */
-        foreach ($missingTracks as $track) {
+        foreach ($tracks as $track) {
             $io->write(sprintf('Track #%d: ', $track->getId()));
 
             if (!$track->getTrackFilename()) {
                 $io->writeln('<comment>No GPX file, skipping</comment>');
                 $skipped++;
                 continue;
+            }
+
+            $existing = !$track->getTrackPolylines()->isEmpty();
+
+            if ($existing) {
+                if (!$force) {
+                    $io->writeln('<comment>Already has polylines, skipping (use --force to regenerate)</comment>');
+                    $skipped++;
+                    continue;
+                }
+
+                foreach ($track->getTrackPolylines()->toArray() as $polyline) {
+                    $track->removeTrackPolyline($polyline);
+                }
             }
 
             try {
@@ -69,13 +102,15 @@ class TracksTransformCommand extends Command
                     $track->addTrackPolyline($trackPolyline);
                 }
 
-                $em->persist($track);
                 $processed++;
-
                 $io->writeln('<info>OK</info>');
             } catch (\Exception $e) {
                 $io->writeln(sprintf('<error>Error: %s</error>', $e->getMessage()));
                 $skipped++;
+            }
+
+            if ($processed % 50 === 0) {
+                $em->flush();
             }
         }
 

@@ -9,6 +9,8 @@ use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use App\Entity\Ride;
 use App\Entity\Track;
+use App\Entity\TrackPolyline;
+use App\Enum\PolylineResolution;
 use App\Event\Track\TrackDeletedEvent;
 use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
@@ -128,9 +130,24 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     protected function updatePolyline(Track $track): void
     {
-        $track
-            ->setPolyline($this->gpxService->generatePolyline($track))
-            ->setReducedPolyline($this->gpxService->generateReducedPolyline($track));
+        foreach (PolylineResolution::cases() as $resolution) {
+            $existing = $track->getPolylineByResolution($resolution);
+
+            if ($existing) {
+                $track->removeTrackPolyline($existing);
+            }
+
+            $polylineString = $this->gpxService->generatePolylineAtResolution($track, $resolution);
+            $numPoints = (int) (count(\Polyline::Decode($polylineString)) / 2);
+
+            $trackPolyline = new TrackPolyline();
+            $trackPolyline
+                ->setResolution($resolution)
+                ->setPolyline($polylineString)
+                ->setNumPoints($numPoints);
+
+            $track->addTrackPolyline($trackPolyline);
+        }
     }
 
     protected function updateLatLngList(Track $track): void
