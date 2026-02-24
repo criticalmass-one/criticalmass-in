@@ -44,6 +44,10 @@ class GpxService implements GpxServiceInterface
     {
         $gpxFile = $this->loadFromTrack($track);
 
+        if (empty($gpxFile->tracks)) {
+            return [];
+        }
+
         return $gpxFile->tracks[0]->getPoints();
     }
 
@@ -276,6 +280,11 @@ class GpxService implements GpxServiceInterface
     public function shiftTimeAndSave(Track $track, \DateInterval $interval): void
     {
         $gpxFile = $this->loadFromTrack($track);
+
+        if (empty($gpxFile->tracks)) {
+            return;
+        }
+
         $gpxTrack = $gpxFile->tracks[0];
 
         foreach ($gpxTrack->segments as $segment) {
