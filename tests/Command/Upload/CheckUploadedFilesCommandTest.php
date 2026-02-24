@@ -11,15 +11,16 @@ use Doctrine\ORM\QueryBuilder;
 use League\Flysystem\DirectoryListing;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\FilesystemOperator;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class CheckUploadedFilesCommandTest extends TestCase
 {
-    private UploadMappingResolverInterface $mappingResolver;
-    private EntityManagerInterface $entityManager;
-    private FilesystemOperator $filesystem;
+    private MockObject&UploadMappingResolverInterface $mappingResolver;
+    private MockObject&EntityManagerInterface $entityManager;
+    private MockObject&FilesystemOperator $filesystem;
     private CommandTester $commandTester;
 
     protected function setUp(): void
@@ -118,6 +119,7 @@ class CheckUploadedFilesCommandTest extends TestCase
             ->willReturn([new UploadMappingInfo('trackFilename', 'track_file')]);
     }
 
+    /** @param list<array<string, mixed>> $results */
     private function setupDatabaseResults(array $results): void
     {
         $query = $this->createMock(Query::class);
@@ -131,6 +133,7 @@ class CheckUploadedFilesCommandTest extends TestCase
         $this->entityManager->method('createQueryBuilder')->willReturn($qb);
     }
 
+    /** @param list<string> $filenames */
     private function setupFilesystemContents(array $filenames): void
     {
         $items = array_map(
