@@ -24,12 +24,34 @@ class DurationTwigExtensionTest extends TestCase
         $this->assertNull($this->extension->duration(''));
     }
 
-    public function testHumanizesDuration(): void
+    public function testHoursAndMinutes(): void
     {
-        $result = $this->extension->duration('3600');
+        $this->assertEquals("1\u{00A0}h 30\u{00A0}min", $this->extension->duration('5400'));
+    }
 
-        $this->assertIsString($result);
-        $this->assertNotEmpty($result);
+    public function testExactHours(): void
+    {
+        $this->assertEquals("1\u{00A0}h", $this->extension->duration('3600'));
+    }
+
+    public function testMinutesOnly(): void
+    {
+        $this->assertEquals("45\u{00A0}min", $this->extension->duration('2700'));
+    }
+
+    public function testSecondsIgnored(): void
+    {
+        $this->assertEquals("1\u{00A0}h 1\u{00A0}min", $this->extension->duration('3661'));
+    }
+
+    public function testLessThanOneMinute(): void
+    {
+        $this->assertEquals("0\u{00A0}min", $this->extension->duration('30'));
+    }
+
+    public function testMultipleHours(): void
+    {
+        $this->assertEquals("2\u{00A0}h 15\u{00A0}min", $this->extension->duration('8100'));
     }
 
     public function testGetName(): void
