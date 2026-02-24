@@ -104,7 +104,7 @@ class TrackGeneratePolylinesCommand extends Command
 
                 $processed++;
                 $io->writeln('<info>OK</info>');
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $io->writeln(sprintf('<error>Error: %s</error>', $e->getMessage()));
                 $skipped++;
             }
