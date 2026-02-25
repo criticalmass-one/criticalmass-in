@@ -212,6 +212,18 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
         return $this;
     }
 
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
+    public function setViews(int $views): Photo
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
     public function isDeleted(): bool
     {
         return $this->deleted;
