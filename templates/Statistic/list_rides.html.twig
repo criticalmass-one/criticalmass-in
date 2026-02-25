@@ -10,78 +10,61 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}
-                </h2>
+        <h2 class="mb-2">
+            Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}
+        </h2>
 
-                <p class="lead">
-                    Hier siehst du die Liste der Touren im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}.
-                </p>
+        <p class="lead text-muted mb-4">
+            Hier siehst du die Liste der Touren im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}.
+        </p>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover ride-list mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Stadt</th>
+                                <th>Datum</th>
+                                <th>Teilnehmer</th>
+                                <th>Distanz</th>
+                                <th>Länge</th>
+                                <th>Durchschnittsgeschwindigkeit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ride in rides %}
+                                {% include 'Common/Ride/statistic_ride_table_row.html.twig' with { ride: ride } %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table ride-list">
-                    <thead>
-                    <tr>
-                        <th>
-                            Stadt
-                        </th>
-                        <th>
-                            Datum
-                        </th>
-                        <th>
-                            Teilnehmer
-                        </th>
-                        <th>
-                            Distanz
-                        </th>
-                        <th>
-                            Länge
-                        </th>
-                        <th>
-                            Durchschnittsgeschwindigkeit
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for ride in rides %}
-                        {% include 'Common/Ride/statistic_ride_table_row.html.twig' with { ride: ride } %}
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <p>
+        <div class="card bg-light border-0 mb-4">
+            <div class="card-body">
+                <p class="mb-0">
+                    <i class="far fa-info-circle text-muted me-2"></i>
                     Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.
                 </p>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="Monat Navigation">
-                    <ul class="pagination justify-content-between">
-                        <li class="page-item{% if not previousDateTime %} disabled{% endif %}">
-                            <a class="page-link" href="{% if previousDateTime %}{{ path('caldera_criticalmass_statistic_ride_month', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}{% else %}#{% endif %}">
-                                &larr; Voriger Monat
-                            </a>
-                        </li>
+        <nav aria-label="Monat Navigation">
+            <ul class="pagination justify-content-between">
+                <li class="page-item{% if not previousDateTime %} disabled{% endif %}">
+                    <a class="page-link" href="{% if previousDateTime %}{{ path('caldera_criticalmass_statistic_ride_month', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}{% else %}#{% endif %}">
+                        <i class="far fa-arrow-left me-1"></i> Voriger Monat
+                    </a>
+                </li>
 
-                        <li class="page-item{% if not nextDateTime %} disabled{% endif %}">
-                            <a class="page-link" href="{% if nextDateTime %}{{ path('caldera_criticalmass_statistic_ride_month', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}{% else %}#{% endif %}">
-                                Nächster Monat &rarr;
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+                <li class="page-item{% if not nextDateTime %} disabled{% endif %}">
+                    <a class="page-link" href="{% if nextDateTime %}{{ path('caldera_criticalmass_statistic_ride_month', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}{% else %}#{% endif %}">
+                        Nächster Monat <i class="far fa-arrow-right ms-1"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 {% endblock %}

@@ -45,20 +45,20 @@ class LegacyPhotoUploadController extends AbstractController
 
     protected function uploadPostAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, ?UserInterface $user = null): Response
     {
-        /** @var UploadedFile $uploadedFile */
-        $fileArray = $request->files->get('legacy_photo_upload');
+        $form = $this->createForm(LegacyPhotoUploadType::class, new Photo());
+        $form->handleRequest($request);
 
-        if (!is_array($fileArray)) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Photo $photo */
+            $photo = $form->getData();
+            $uploadedFile = $photo->getImageFile();
 
-        } else {
-            $uploadedFile = $fileArray['imageFile']['file'];
-        }
-
-        if ($uploadedFile && $uploadedFile instanceof UploadedFile) {
-            $photoUploader
-                ->setRide($ride)
-                ->setUser($user)
-                ->addUploadedFile($uploadedFile);
+            if ($uploadedFile instanceof UploadedFile) {
+                $photoUploader
+                    ->setRide($ride)
+                    ->setUser($user)
+                    ->addUploadedFile($uploadedFile);
+            }
         }
 
         return $this->uploadGetAction($request, $ride, $photoUploader, $user);

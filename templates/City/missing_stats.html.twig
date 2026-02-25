@@ -6,80 +6,91 @@
 {% block breadcrumb %}
     {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {{ breadcrumb.active('Touren mit fehlenden Statistiken') }}
+    {{ breadcrumb.active('Fehlende Statistiken') }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    Touren aus {{ city.city }} mit fehlenden Statistiken
-                </h1>
+        {{ include('Flash/_flash.html.twig') }}
 
-                <p class="lead">
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'statistic' }) }}
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
+                        <i class="far fa-chart-bar text-warning me-2"></i>Touren mit fehlenden Statistiken
+                    </h5>
+                    <a href="{{ object_path(city, 'caldera_criticalmass_statistic_city') }}" class="btn btn-outline-primary btn-sm">
+                        <i class="far fa-arrow-left me-1"></i>Zurück zur Statistik
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
                     Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der
                     jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
                 </p>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Datum
-                        </th>
-
-                        <th>
-                            Titel
-                        </th>
-
-                        <th>
-                            Teilnehmer
-                        </th>
-
-                        <th>
-                            Dauer
-                        </th>
-
-                        <th>
-                            Distanz
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for ride in rides %}
-                        <tr>
-                            <td>
-                                <a href="{{ object_path(ride) }}">
-                                    {{ ride.dateTime|date('d.m.Y') }}
-                                </a>
-                            </td>
-
-                            <td>
-                                <a href="{{ object_path(ride) }}">
-                                    {{ ride.title }}
-                                </a>
-                            </td>
-
-                            <td>
-                                {{ ride.estimatedParticipants|default('fehlt') }}
-                            </td>
-
-                            <td>
-                                {{ human_duration(ride.getEstimatedDurationInSeconds())|default('fehlt') }}
-                            </td>
-
-                            <td>
-                                {{ ride.estimatedDistance|default('fehlt') }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                {% if rides|length > 0 %}
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>Titel</th>
+                                    <th class="d-none d-md-table-cell">Teilnehmer</th>
+                                    <th class="d-none d-lg-table-cell">Dauer</th>
+                                    <th class="d-none d-md-table-cell">Distanz</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ride in rides %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ object_path(ride) }}" class="text-decoration-none">
+                                                <i class="far fa-calendar-alt text-muted me-1"></i>
+                                                {{ ride.dateTime|date('d.m.Y') }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ object_path(ride) }}" class="text-decoration-none">
+                                                {{ ride.title }}
+                                            </a>
+                                        </td>
+                                        <td class="d-none d-md-table-cell">
+                                            {% if ride.estimatedParticipants %}
+                                                <span class="badge bg-primary">{{ ride.estimatedParticipants }}</span>
+                                            {% else %}
+                                                <span class="badge bg-warning text-dark">fehlt</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">
+                                            {% if ride.getEstimatedDurationInSeconds() %}
+                                                {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
+                                            {% else %}
+                                                <span class="badge bg-warning text-dark">fehlt</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="d-none d-md-table-cell">
+                                            {% if ride.estimatedDistance %}
+                                                {{ ride.estimatedDistance|number_format(1) }} km
+                                            {% else %}
+                                                <span class="badge bg-warning text-dark">fehlt</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="far fa-check-circle fa-3x text-success mb-3"></i>
+                        <h5 class="text-muted">Alle Statistiken vollständig</h5>
+                        <p class="text-muted mb-0">Für alle Touren in {{ city.city }} sind Statistiken vorhanden.</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

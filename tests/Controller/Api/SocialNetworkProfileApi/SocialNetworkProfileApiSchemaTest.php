@@ -60,7 +60,15 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        $validNetworks = ['facebook', 'twitter', 'instagram', 'youtube', 'mastodon', 'bluesky', 'tumblr'];
+        $validNetworks = [
+            'facebook_page', 'facebook_group', 'facebook_profile', 'facebook_event',
+            'twitter', 'instagram_profile', 'instagram_photo',
+            'youtube_channel', 'youtube_user', 'youtube_video', 'youtube_playlist',
+            'mastodon', 'bluesky_profile', 'tumblr',
+            'strava_club', 'strava_activity', 'strava_route',
+            'telegram_chat', 'whatsapp_chat', 'discord_chat',
+            'threads_profile', 'threads_post', 'flickr', 'google', 'homepage',
+        ];
 
         foreach ($response as $profile) {
             $this->assertIsString($profile['network']);

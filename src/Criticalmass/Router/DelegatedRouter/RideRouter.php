@@ -27,7 +27,7 @@ class RideRouter extends AbstractDelegatedRouter
             if ($ride->hasSlug()) {
                 return $ride->getSlug();
             } else {
-                return $ride->getDateTime()->format('Y-m-d');
+                return $ride->getDateTime()?->format('Y-m-d');
             }
         }
 

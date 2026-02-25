@@ -36,7 +36,7 @@ class Thread implements RouteableInterface, PostableInterface
     protected ?string $slug = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    protected int $postNumber = 0;
+    protected ?int $postNumber = 0;
 
     #[ORM\OneToOne(targetEntity: 'Post')]
     #[ORM\JoinColumn(name: 'firstpost_id', referencedColumnName: 'id', unique: true)]
@@ -47,7 +47,7 @@ class Thread implements RouteableInterface, PostableInterface
     protected ?Post $lastPost = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
-    protected bool $enabled = true;
+    protected ?bool $enabled = true;
 
     public function __construct()
     {
@@ -79,7 +79,7 @@ class Thread implements RouteableInterface, PostableInterface
 
     public function getEnabled(): bool
     {
-        return $this->enabled;
+        return $this->enabled ?? true;
     }
 
     public function setCity(?City $city = null): Thread
@@ -139,7 +139,7 @@ class Thread implements RouteableInterface, PostableInterface
 
     public function getPostNumber(): int
     {
-        return $this->postNumber;
+        return $this->postNumber ?? 0;
     }
 
     public function incPostNumber(): Thread

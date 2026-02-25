@@ -1,0 +1,122 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Über die Critical Mass{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.active('Über die Critical Mass') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <h2>
+                    Über die Critical Mass
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 offset-md-1">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-bicycle me-2"></i>Was ist die Critical Mass?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            Die Critical Mass ist eine weltweite Bewegung, bei der sich Radfahrerinnen und Radfahrer zu gemeinsamen Fahrradtouren durch ihre Städte verabreden.
+                        </p>
+
+                        <p>
+                            Die Touren finden in den meisten Städten einmal im Monat statt und folgen keiner festen Route. Es gibt keine Veranstalter, keine Anmeldung und keine Teilnahmegebühren.
+                        </p>
+
+                        <p class="mb-0">
+                            Jede und jeder kann einfach zum vereinbarten Zeitpunkt am Treffpunkt erscheinen und mitfahren.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-globe me-2"></i>Was ist criticalmass.in?
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            criticalmass.in ist eine Plattform, die Critical-Mass-Touren weltweit dokumentiert und sichtbar macht.
+                        </p>
+
+                        <p>
+                            Die Seite sammelt Informationen zu Städten, Terminen, Treffpunkten und Uhrzeiten und stellt Statistiken zu Teilnehmerzahlen und gefahrenen Strecken bereit.
+                        </p>
+
+                        <p class="mb-0">
+                            Das Projekt ist Open Source und wird von der Community gepflegt. Der Quellcode ist auf <a href="https://github.com/criticalmass-one/criticalmass-in">GitHub</a> verfügbar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-list me-2"></i>Features
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="mb-0">
+                            <li>
+                                <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a> mit allen bekannten Critical-Mass-Touren
+                            </li>
+                            <li>
+                                Termine und Treffpunkte für jede Stadt
+                            </li>
+                            <li>
+                                Statistiken zu Teilnehmerzahlen, Streckenlängen und Fahrtdauern
+                            </li>
+                            <li>
+                                Upload und Anzeige von GPS-Tracks
+                            </li>
+                            <li>
+                                Fotogalerien von vergangenen Touren
+                            </li>
+                            <li>
+                                <a href="{{ path('caldera_criticalmass_board_overview') }}">Diskussionsforum</a> für die Community
+                            </li>
+                            <li>
+                                <a href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a> mit allen anstehenden Touren
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="mb-0 h6">
+                            <i class="far fa-hands-helping me-2"></i>Mitmachen
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            criticalmass.in funktioniert ähnlich wie Wikipedia: Alle Daten zu Städten und Touren können von registrierten Nutzerinnen und Nutzern selbst gepflegt und ergänzt werden.
+                        </p>
+
+                        <p>
+                            Du kannst dich mit einem kostenlosen Benutzerkonto anmelden und direkt Informationen zu deiner Stadt eintragen oder korrigieren.
+                        </p>
+
+                        <p class="mb-0">
+                            Fehler gefunden oder Verbesserungsvorschläge? Schreibe eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> oder eröffne ein <a href="https://github.com/criticalmass-one/criticalmass-in/issues">Ticket auf GitHub</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

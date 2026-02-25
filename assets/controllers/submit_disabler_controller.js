@@ -10,7 +10,7 @@ export default class extends Controller {
 
         if (form && form.checkValidity()) {
             if (this.messageValue) {
-                this.element.innerHTML = this.messageValue;
+                this.element.textContent = this.messageValue;
             }
 
             this.element.disabled = true;

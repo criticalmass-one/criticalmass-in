@@ -53,31 +53,31 @@ class CityCycle implements RouteableInterface
 
     #[Assert\Range(min: 0, max: 6)]
     #[ORM\Column(type: 'smallint', nullable: false)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?int $dayOfWeek = null;
 
     #[Assert\Range(min: 0, max: 4)]
     #[ORM\Column(type: 'smallint', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?int $weekOfMonth = null;
 
     #[Assert\Type(type: '\DateTime')]
     #[ORM\Column(type: 'time', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?\DateTime $time = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?string $location = null;
 
     #[Assert\NotEqualTo(value: '0.0')]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?float $latitude = null;
 
     #[Assert\NotEqualTo(value: '0.0')]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?float $longitude = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
@@ -91,17 +91,18 @@ class CityCycle implements RouteableInterface
     protected ?\DateTime $disabledAt = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?\DateTime $validFrom = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?\DateTime $validUntil = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $rideCalculatorFqcn = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['ride-list', 'api-write'])]
     private ?string $description = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

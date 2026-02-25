@@ -18,7 +18,7 @@
                  data-map--map-marker-longitude-value="{{ photo.longitude }}"
                  data-map--map-marker-type-value="photo"
                 {% if track %}
-                    data-map--map-polyline-value="{{ track.polyline }}"
+                    data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::COARSE')) }}"
                     data-map--map-polyline-color-value="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
                 {% endif %}
             ></div>

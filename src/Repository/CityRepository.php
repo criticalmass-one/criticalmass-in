@@ -343,7 +343,8 @@ SQL;
         $expr = $qb->expr();
 
         $conditions = [$expr->eq('c.enabled', ':enabled')];
-        $parameters = ['enabled' => true];
+
+        $qb->setParameter('enabled', true);
 
         if ($query !== '') {
             $likeExpr = $expr->orX(
@@ -351,11 +352,10 @@ SQL;
                 $expr->like('c.description', ':q'),
             );
             $conditions[] = $likeExpr;
-            $parameters['q'] = '%' . $query . '%';
+            $qb->setParameter('q', '%' . $query . '%');
         }
 
         $qb->where(call_user_func_array([$expr, 'andX'], $conditions))
-            ->setParameters($parameters)
             ->setMaxResults($maxResults)
         ;
 

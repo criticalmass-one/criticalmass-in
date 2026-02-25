@@ -131,8 +131,8 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Track polyline is a string when present')]
-    public function testTrackPolylineIsString(): void
+    #[TestDox('Track polylines is an array when present')]
+    public function testTrackPolylinesIsArray(): void
     {
         $this->client->request('GET', '/api/track?size=10');
         $this->assertResponseIsSuccessful();
@@ -140,11 +140,8 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $track) {
-            if (isset($track['polyline']) && $track['polyline'] !== null) {
-                $this->assertIsString($track['polyline']);
-            }
-            if (isset($track['polylineString']) && $track['polylineString'] !== null) {
-                $this->assertIsString($track['polylineString']);
+            if (isset($track['track_polylines'])) {
+                $this->assertIsArray($track['track_polylines']);
             }
         }
     }

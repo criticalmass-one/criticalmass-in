@@ -1,72 +1,64 @@
-<div class="btn-group pull-right">
-    <button type="button" class="btn btn-secondary btn-xs dropdown-toggle"
+<div class="float-end">
+    <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle"
             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Bearbeiten    </button>
-    <ul class="dropdown-menu">
-        {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
+        <i class="far fa-cog me-1"></i>Bearbeiten
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+            <a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_download') }}">
+                <i class="far fa-download me-2"></i>Herunterladen
+            </a>
+        </li>
+        {% if track.enabled %}
             <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_edit') }}">
-                    <i class="far fa-pencil"></i>
-                    Track editieren
-                </a>
+                <form method="post" action="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('track_toggle_' ~ track.id) }}">
+                    <button type="submit" class="dropdown-item">
+                        <i class="far fa-eye-slash me-2"></i>Deaktivieren
+                    </button>
+                </form>
             </li>
         {% else %}
             <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_download') }}">
-                    <i class="far fa-download"></i>
-                    Herunterladen
-                </a>
+                <form method="post" action="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('track_toggle_' ~ track.id) }}">
+                    <button type="submit" class="dropdown-item">
+                        <i class="far fa-eye me-2"></i>Aktivieren
+                    </button>
+                </form>
             </li>
-            {% if track.enabled %}
-                <li>
-                    <a href="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
-                        <i class="far fa-eye-slash"></i>
-                        Deaktivieren
-                    </a>
-                </li>
-            {% else %}
-                <li>
-                    <a href="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
-                        <i class="far fa-eye"></i>
-                        Aktivieren
-                    </a>
-                </li>
-            {% endif %}
-
-            <li><hr class="dropdown-divider"></li>
-
-            {% if not track.isReviewed %}
-                <li>
-                    <a href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
-                        <i class="far fa-check"></i>
-                        Bestätigen
-                    </a>
-                </li>
-            {% endif %}
-
-            <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
-                    <i class="far fa-cut"></i>
-                    Beschneiden
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_time') }}">
-                    <i class="far fa-clock"></i>
-                    Zeit anpassen
-                </a>
-            </li>
-
         {% endif %}
+
+        <li><hr class="dropdown-divider"></li>
+
+        {% if not track.isReviewed %}
+            <li>
+                <a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
+                    <i class="far fa-check me-2"></i>Bestätigen
+                </a>
+            </li>
+        {% endif %}
+
         <li>
-            <a href="{{ path('caldera_criticalmass_rest_track_delete', { id: track.id }) }}"
+            <a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
+                <i class="far fa-cut me-2"></i>Beschneiden
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_time') }}">
+                <i class="far fa-clock me-2"></i>Zeit anpassen
+            </a>
+        </li>
+
+        <li><hr class="dropdown-divider"></li>
+        <li>
+            <a class="dropdown-item text-danger" href="{{ path('caldera_criticalmass_rest_track_delete', { id: track.id }) }}"
                    data-controller="delete-modal"
                    data-action="click->delete-modal#open"
                    data-delete-modal-title-value="Track löschen"
-                   data-delete-modal-text-value="Möchtest du diesen Track von der <strong>{{ track.ride.city.title }}</strong> vom <strong>{{ track.ride.dateTime|date('d.m.Y') }}</strong> wirklich löschen?">
-                <i class="far fa-trash-alt"></i>
-                Löschen
+                   data-delete-modal-text-value="Möchtest du diesen Track von der {{ track.ride.city.title }} vom {{ track.ride.dateTime|date('d.m.Y') }} wirklich löschen?">
+                <i class="far fa-trash-alt me-2"></i>Löschen
             </a>
         </li>
     </ul>

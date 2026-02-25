@@ -17,7 +17,13 @@ class CorsEventSubscriber implements EventSubscriberInterface
 
     public function onResponse(ResponseEvent $event): void
     {
-        if (!str_starts_with($event->getRequest()->getPathInfo(), '/api/')) {
+        $request = $event->getRequest();
+
+        if (!str_starts_with($request->getPathInfo(), '/api/')) {
+            return;
+        }
+
+        if (!$request->isMethod('GET') && !$request->isMethod('OPTIONS')) {
             return;
         }
 
@@ -25,8 +31,9 @@ class CorsEventSubscriber implements EventSubscriberInterface
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->headers->set('Access-Control-Allow-Methods', 'GET, OPTIONS');
         $response->headers->set('Access-Control-Allow-Headers', 'Content-Type');
+        $response->headers->set('Access-Control-Max-Age', '3600');
 
-        if ($event->getRequest()->isMethod('OPTIONS')) {
+        if ($request->isMethod('OPTIONS')) {
             $response->setStatusCode(204);
             $response->setContent('');
         }

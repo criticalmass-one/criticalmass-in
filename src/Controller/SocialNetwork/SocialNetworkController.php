@@ -43,6 +43,10 @@ class SocialNetworkController extends AbstractController
         ?Ride $ride = null,
         ?UserInterface $user = null
     ): Response {
+        if (!$user) {
+            return $this->redirectToRoute('login');
+        }
+
         $socialNetworkProfile = $networkProfileFactory
             ->withCreatedBy($user)
             ->build();

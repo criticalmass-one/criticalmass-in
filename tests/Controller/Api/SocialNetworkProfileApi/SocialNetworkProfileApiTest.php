@@ -33,8 +33,8 @@ class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 
         $networks = array_map(fn(array $profile) => $profile['network'], $response);
         $this->assertContains('twitter', $networks);
-        $this->assertContains('facebook', $networks);
-        $this->assertContains('instagram', $networks);
+        $this->assertContains('facebook_page', $networks);
+        $this->assertContains('instagram_profile', $networks);
     }
 
     public function testListSocialNetworkProfilesForBerlin(): void

@@ -71,20 +71,20 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $slug = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $title = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $description = null;
 
     #[DataQuery\Sortable]
@@ -96,43 +96,43 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[DataQuery\Sortable]
     #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
-    protected \DateTime $dateTime;
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
+    protected ?\DateTime $dateTime = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $location = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $latitude = 0.0;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $longitude = 0.0;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'smallint', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?int $estimatedParticipants = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $estimatedDistance = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $estimatedDuration = null;
 
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'ride', fetch: 'LAZY')]
@@ -149,7 +149,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
-    protected \DateTime $createdAt;
+    protected ?\DateTime $createdAt = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Ignore]
@@ -157,15 +157,15 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
-    protected int $participationsNumberYes = 0;
+    protected ?int $participationsNumberYes = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
-    protected int $participationsNumberMaybe = 0;
+    protected ?int $participationsNumberMaybe = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
-    protected int $participationsNumberNo = 0;
+    protected ?int $participationsNumberNo = 0;
 
     #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'ride', fetch: 'LAZY')]
     #[Ignore]
@@ -182,7 +182,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
-    protected bool $restrictedPhotoAccess = false;
+    protected ?bool $restrictedPhotoAccess = false;
 
     #[ORM\OneToMany(targetEntity: 'Weather', mappedBy: 'ride', fetch: 'LAZY')]
     #[ORM\OrderBy(['creationDateTime' => 'DESC'])]
@@ -213,7 +213,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     protected ?string $disabledReason = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $rideType = null;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'ride')]
@@ -421,10 +421,12 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     public function __toString(): string
     {
+        $dateStr = $this->dateTime ? $this->dateTime->format('Y-m-d') : 'unknown';
+
         if ($this->city) {
-            return $this->city->getTitle() . " - " . $this->getDateTime()->format('Y-m-d');
+            return $this->city->getTitle() . " - " . $dateStr;
         } else {
-            return $this->getDateTime()->format('Y-m-d');
+            return $dateStr;
         }
     }
 
@@ -441,13 +443,13 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     }
 
     /** @deprecated */
-    public function getDate(): \DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->dateTime;
     }
 
     /** @deprecated */
-    public function getTime(): \DateTime
+    public function getTime(): ?\DateTime
     {
         return $this->dateTime;
     }
@@ -598,7 +600,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -631,7 +633,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     public function getParticipationsNumberYes(): int
     {
-        return $this->participationsNumberYes;
+        return $this->participationsNumberYes ?? 0;
     }
 
     public function setParticipationsNumberMaybe(int $participationsNumberMaybe): ParticipateableInterface
@@ -643,7 +645,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     public function getParticipationsNumberMaybe(): int
     {
-        return $this->participationsNumberMaybe;
+        return $this->participationsNumberMaybe ?? 0;
     }
 
     public function setParticipationsNumberNo(int $participationsNumberNo): ParticipateableInterface
@@ -655,7 +657,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     public function getParticipationsNumberNo(): int
     {
-        return $this->participationsNumberNo;
+        return $this->participationsNumberNo ?? 0;
     }
 
     #[DataQuery\Queryable]
@@ -701,7 +703,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     /** @deprecated */
     public function getRestrictedPhotoAccess(): bool
     {
-        return $this->restrictedPhotoAccess;
+        return $this->restrictedPhotoAccess ?? false;
     }
 
     /** @deprecated */

@@ -1,3 +1,15 @@
+{% macro participation_form(ride, status, label, iconClass) %}
+    <li>
+        <form method="post" action="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: status }) }}" class="d-inline">
+            <input type="hidden" name="_token" value="{{ csrf_token('participation_' ~ ride.id) }}">
+            <button type="submit" class="dropdown-item">
+                <i class="far fa-{{ iconClass }} me-2"></i>{{ label }}
+            </button>
+        </form>
+    </li>
+{% endmacro %}
+{% import _self as macros %}
+
 {% if not inButtonGroup|default(false) %}<div class="btn-group">{% endif %}
     {% if app.user %}
         {% if participation == null or (participation.goingMaybe and pastRide) %}
@@ -6,23 +18,11 @@
                 {% if pastRide %}Teilgenommen?{% else %}Dabei?{% endif %}
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                    <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
-                        <i class="far fa-check text-success me-2"></i>Ja
-                    </a>
-                </li>
+                {{ macros.participation_form(ride, 'yes', 'Ja', 'check text-success') }}
                 {% if pastRide %}
-                    <li>
-                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
-                            <i class="far fa-times text-danger me-2"></i>Nein
-                        </a>
-                    </li>
+                    {{ macros.participation_form(ride, 'no', 'Nein', 'times text-danger') }}
                 {% else %}
-                    <li>
-                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
-                            <i class="far fa-question-circle text-warning me-2"></i>Vielleicht
-                        </a>
-                    </li>
+                    {{ macros.participation_form(ride, 'maybe', 'Vielleicht', 'question-circle text-warning') }}
                 {% endif %}
             </ul>
         {% else %}
@@ -33,18 +33,9 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     {% if not pastRide %}
-                        <li>
-                            <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
-                                <i class="far fa-question-circle text-warning me-2"></i>Vielleicht
-                            </a>
-                        </li>
+                        {{ macros.participation_form(ride, 'maybe', 'Vielleicht', 'question-circle text-warning') }}
                     {% endif %}
-                    <li>
-                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
-                            <i class="far fa-times text-danger me-2"></i>
-                            {% if pastRide %}Nicht teilgenommen{% else %}Absagen{% endif %}
-                        </a>
-                    </li>
+                    {{ macros.participation_form(ride, 'no', pastRide ? 'Nicht teilgenommen' : 'Absagen', 'times text-danger') }}
                 </ul>
             {% endif %}
 
@@ -54,16 +45,8 @@
                     Vielleicht
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
-                            <i class="far fa-check text-success me-2"></i>Zusagen
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
-                            <i class="far fa-times text-danger me-2"></i>Absagen
-                        </a>
-                    </li>
+                    {{ macros.participation_form(ride, 'yes', 'Zusagen', 'check text-success') }}
+                    {{ macros.participation_form(ride, 'no', 'Absagen', 'times text-danger') }}
                 </ul>
             {% endif %}
 
@@ -73,18 +56,9 @@
                     {% if pastRide %}Nicht teilgenommen{% else %}Nicht dabei{% endif %}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
-                            <i class="far fa-check text-success me-2"></i>
-                            {% if pastRide %}Doch teilgenommen{% else %}Teilnehmen{% endif %}
-                        </a>
-                    </li>
+                    {{ macros.participation_form(ride, 'yes', pastRide ? 'Doch teilgenommen' : 'Teilnehmen', 'check text-success') }}
                     {% if not pastRide %}
-                        <li>
-                            <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
-                                <i class="far fa-question-circle text-warning me-2"></i>Vielleicht
-                            </a>
-                        </li>
+                        {{ macros.participation_form(ride, 'maybe', 'Vielleicht', 'question-circle text-warning') }}
                     {% endif %}
                 </ul>
             {% endif %}

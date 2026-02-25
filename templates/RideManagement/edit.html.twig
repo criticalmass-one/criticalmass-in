@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row mt-4">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
@@ -84,30 +84,30 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="title">
+                        <div class="mb-3">
+                            <label class="form-label" for="title">
                                 Titel:
                             </label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">
+                            <div class="form-text">
                                 Hier kann optional der Titel der Tour angegeben werden.
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="description">
+                        <div class="mb-3">
+                            <label class="form-label" for="description">
                                 Beschreibung:
                             </label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">
+                            <div class="form-text">
                                 Hier kann optional eine Beschreibung der Tour angegeben werden. Schreibe hier nur Dinge,
-                                die wirklich direkt diese Tour betreffen — für alles andere ist in der Beschreibung der
+                                die wirklich direkt diese Tour betreffen -- für alles andere ist in der Beschreibung der
                                 Stadt genügend Platz.
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -140,8 +140,8 @@
                             keine zwei Touren an einem Tag verwaltet werden.
                         </div>
 
-                        <div class="form-group{% if form_errors(form.dateTime) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="dateTime">
+                        <div class="mb-3">
+                            <label class="form-label" for="dateTime">
                                 Datum und Uhrzeit:
                             </label>
                             <div class="row">
@@ -153,17 +153,20 @@
                                     {{ form_widget(form.dateTime.time, { attr: { class: 'form-control' } }) }}
                                 </div>
                             </div>
+                            {% if form_errors(form.dateTime) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.dateTime) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="location">
+                        <div class="mb-3">
+                            <label class="form-label" for="location">
                                 Treffpunkt:
                             </label>
-                            <button class="btn btn-secondary btn-xs pull-right"
+                            <button class="btn btn-secondary btn-sm float-end"
                                     data-controller="geocoding"
                                     data-action="click->geocoding#search"
                                     data-geocoding-query-suffix-value="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
@@ -173,35 +176,35 @@
                             </button>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
-                        <p class="help-block">
+                        <div class="form-text">
                             Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige
                             Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne
                             Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert
                             werden, falls der noch nicht bekannt sein sollte.
-                        </p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="rideType">
+                        <div class="mb-3">
+                            <label class="form-label" for="rideType">
                                 Art der Tour:
                             </label>
 
                             {{ form_widget(form.rideType, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
-                        <p class="help-block">
-                            Falls es sich bei dieser Tour nicht um eine „normale“ Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.
-                        </p>
+                        <div class="form-text">
+                            Falls es sich bei dieser Tour nicht um eine "normale" Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.
+                        </div>
                     </div>
                 </div>
 
                 {% if form.slug is defined %}
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label" for="slug">
+                            <div class="mb-3">
+                                <label class="form-label" for="slug">
                                     Slug:
                                 </label>
 
@@ -214,24 +217,24 @@
                 {% if form.enabled is defined %}
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label" for="location">
+                            <div class="mb-3">
+                                <label class="form-label" for="location">
                                     Tour aktivieren:
                                 </label>
 
                                 {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
                             </div>
-                            <p class="help-block">
+                            <div class="form-text">
                                 Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
-                            </p>
+                            </div>
                         </div>
                     </div>
                 {% endif %}
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="btn-group pull-right" role="group" aria-label="...">
+                        <div class="mb-3">
+                            <div class="btn-group float-end" role="group">
                                 {% if ride %}
                                     <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                                         Abbrechen
@@ -242,6 +245,7 @@
                                     </a>
                                 {% endif %}
                                 <button type="submit" class="btn btn-success" id="rideSubmitButton" data-ride-date-checker-target="submitButton">
+                                    <i class="far fa-save me-1"></i>
                                     Speichern
                                 </button>
                             </div>

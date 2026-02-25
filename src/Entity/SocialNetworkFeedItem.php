@@ -26,31 +26,31 @@ class SocialNetworkFeedItem
     protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?string $uniqueIdentifier = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?string $permalink = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?string $text = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected ?\DateTime $dateTime = null;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected bool $hidden = false;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
-    #[Groups(['feed-item'])]
+    #[Groups(['feed-item', 'api-write'])]
     protected bool $deleted = false;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
