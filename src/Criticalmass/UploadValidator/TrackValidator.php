@@ -43,7 +43,6 @@ class TrackValidator implements UploadValidatorInterface
 
     protected function checkForXmlContent(): void
     {
-        //echo "checkForXmlContent";
         try {
             $this->simpleXml = new \SimpleXMLElement($this->rawFileContent, LIBXML_NONET | LIBXML_NOENT);
         } catch (Exception $e) {
@@ -53,7 +52,6 @@ class TrackValidator implements UploadValidatorInterface
 
     protected function checkForBasicGpxStructure(): void
     {
-        //echo "checkForBasicGpxStructure";
         try {
             $this->simpleXml->trk->trkseg->trkpt[0];
         } catch (Exception $e) {
@@ -76,32 +74,34 @@ class TrackValidator implements UploadValidatorInterface
 
     protected function checkForLatitudeLongitude(): void
     {
-        //echo "checkForLatitudeLongitude";
-        foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
-            /* @TODO This is really bullshit, but php refuses to get is_float or stuff like this working. Replace preg_match with a faster solution! */
-            if (
-                !$point['lat'] ||
-                !$point['lon'] ||
-                !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', (string) $point['lat']) ||
-                !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', (string) $point['lon'])
-            ) {
-                throw new NoLatitudeLongitudeException();
+        foreach ($this->simpleXml->trk->trkseg as $trkseg) {
+            foreach ($trkseg->trkpt as $point) {
+                /* @TODO This is really bullshit, but php refuses to get is_float or stuff like this working. Replace preg_match with a faster solution! */
+                if (
+                    !$point['lat'] ||
+                    !$point['lon'] ||
+                    !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', (string) $point['lat']) ||
+                    !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', (string) $point['lon'])
+                ) {
+                    throw new NoLatitudeLongitudeException();
+                }
             }
         }
     }
 
     protected function checkForDateTime(): void
     {
-        //echo "checkForDateTime";
-        foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
-            if (!$point->time) {
-                throw new NoDateTimeException();
-            }
+        foreach ($this->simpleXml->trk->trkseg as $trkseg) {
+            foreach ($trkseg->trkpt as $point) {
+                if (!$point->time) {
+                    throw new NoDateTimeException();
+                }
 
-            try {
-                $dateTime = new \DateTime((string) $point->time);
-            } catch (Exception $e) {
-                throw new NoDateTimeException();
+                try {
+                    $dateTime = new \DateTime((string) $point->time);
+                } catch (Exception $e) {
+                    throw new NoDateTimeException();
+                }
             }
         }
     }
