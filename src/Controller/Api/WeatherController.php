@@ -43,7 +43,7 @@ class WeatherController extends BaseController
     public function addWeatherAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var Weather $weather */
-        $weather = $this->deserializeRequest($request, Weather::class);
+        $weather = $this->deserializeRequest($request, Weather::class, ['groups' => ['weather']]);
 
         $weather
             ->setRide($ride)
