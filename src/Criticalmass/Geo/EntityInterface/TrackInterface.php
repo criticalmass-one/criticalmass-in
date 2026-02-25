@@ -2,10 +2,11 @@
 
 namespace App\Criticalmass\Geo\EntityInterface;
 
+use App\Entity\TrackPolyline;
+use App\Enum\PolylineResolution;
+
 interface TrackInterface
 {
-    public function getPolyline(): ?string;
-    public function setPolyline(?string $polyline): static;
-    public function setReducedPolyline(?string $reducedPolyline = null): TrackInterface;
-    public function getReducedPolyline(): ?string;
+    public function getPolylineByResolution(PolylineResolution $resolution): ?TrackPolyline;
+    public function getPolylineString(PolylineResolution $resolution): ?string;
 }

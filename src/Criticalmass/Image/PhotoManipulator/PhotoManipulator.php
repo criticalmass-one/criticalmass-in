@@ -22,8 +22,17 @@ class PhotoManipulator extends AbstractPhotoManipulator
         $factor = $this->image->getSize()->getWidth() / $displayWidth;
 
         foreach ($areaDataList as $areaData) {
-            $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
-            $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
+            $x = (float) ($areaData['x'] ?? $areaData->x ?? 0);
+            $y = (float) ($areaData['y'] ?? $areaData->y ?? 0);
+            $width = (float) ($areaData['width'] ?? $areaData->width ?? 0);
+            $height = (float) ($areaData['height'] ?? $areaData->height ?? 0);
+
+            if ($width <= 0 || $height <= 0) {
+                continue;
+            }
+
+            $topLeftPoint = new Point((int) ($x * $factor), (int) ($y * $factor));
+            $dimension = new Box((int) ($width * $factor), (int) ($height * $factor));
 
             $this->applyBlurArea($topLeftPoint, $dimension);
         }

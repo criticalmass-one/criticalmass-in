@@ -47,6 +47,6 @@ class CriticalMassLoginLinkNotification extends LoginLinkNotification
 
     private function getDefaultContent(): string
     {
-        return 'Bitte klicke auf den Button, um dich auf criticalmass.in einzuloggen.';
+        return 'Klick auf den Button und du bist dabei — deine Critical Mass wartet schon auf dich!';
     }
 }

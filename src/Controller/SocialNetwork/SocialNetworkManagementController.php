@@ -14,13 +14,14 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SocialNetworkManagementController extends AbstractController
 {
     #[Route(
         '/socialnetwork/{id}/edit',
         name: 'criticalmass_socialnetwork_edit',
-        priority: 60
+        priority: 80
     )]
     public function editAction(
         Request $request,
@@ -81,16 +82,23 @@ class SocialNetworkManagementController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route(
         '/socialnetwork/{id}/disable',
         name: 'criticalmass_socialnetwork_disable',
-        priority: 60
+        methods: ['POST'],
+        priority: 80
     )]
     public function disableAction(
+        Request $request,
         EntityManagerInterface $entityManager,
         SocialNetworkProfile $socialNetworkProfile,
         SocialNetworkHelper $socialNetworkHelper
     ): Response {
+        if (!$this->isCsrfTokenValid('socialnetwork_disable_' . $socialNetworkProfile->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $socialNetworkProfile->setEnabled(false);
 
         $entityManager->flush();

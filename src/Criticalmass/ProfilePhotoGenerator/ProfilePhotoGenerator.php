@@ -107,7 +107,7 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
 
     protected function generateFilename(): string
     {
-        $filename = sprintf('%s.jpg', uniqid('', true));
+        $filename = sprintf('%s.jpg', bin2hex(random_bytes(16)));
 
         $this->user->setImageName($filename);
 

@@ -10,59 +10,65 @@
 
 {% block content %}
     <div class="container main-container">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-12">
                 <h1>
-                    Deine Gpx-Tracks
+                    <i class="far fa-route text-muted me-2"></i>Deine Gpx-Tracks
                 </h1>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
                 <p class="lead">
                     Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet
                     hast.
                 </p>
 
                 <p>
-                    Klicke in der Übersicht einer Radtour im Reiter „Tracks“ auf den grünen Button, um einen neuen Track
+                    Klicke in der Übersicht einer Radtour im Reiter „Tracks" auf den grünen Button, um einen neuen Track
                     hinzuzufügen.
                 </p>
             </div>
         </div>
 
-        <div class="row">
-            {% for track in pagination %}
-                {% include('Track/_track_list_item.html.twig') with { 'track': track, 'show_user': false } %}
-            {% endfor %}
-        </div>
-    </div>
+        {% if pagination|length > 0 %}
+            <div class="row">
+                {% for track in pagination %}
+                    {% include('Track/_track_list_item.html.twig') with { 'track': track, 'show_user': false } %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="far fa-route fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">Keine Tracks vorhanden</h5>
+                <p class="text-muted mb-0">Du hast noch keine GPX-Tracks hochgeladen.</p>
+            </div>
+        {% endif %}
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="text-center">
-                {{ knp_pagination_render(pagination) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Track löschen</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">
+                        <i class="far fa-trash-alt text-danger me-2"></i>Track löschen
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                 </div>
                 <div class="modal-body">
                     <span id="trackIdLabel"></span>
                     <p>Willst Du diesen Track wirklich löschen?</p>
                 </div>
-                <div class="modal-footer">
-                    <div class="btn-group" role="group" aria-label="...">
-                        <a id="deleteButton" href="#" class="btn btn-success">Ja, löschen</a>
-                        <button id="cancelButton" class="btn btn-secondary">Nein, abbrechen</button>
-                    </div>
+                <div class="modal-footer border-0">
+                    <button id="cancelButton" class="btn btn-light" data-bs-dismiss="modal">Nein, abbrechen</button>
+                    <a id="deleteButton" href="#" class="btn btn-danger">
+                        <i class="far fa-trash-alt me-1"></i>Ja, löschen
+                    </a>
                 </div>
             </div>
         </div>

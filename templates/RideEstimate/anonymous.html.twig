@@ -3,47 +3,42 @@
 {% block title %}{% endblock title %}
 
 {% block masterContent %}
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    Teilnehmerzahl ergänzen
-                </h3>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center py-5">
+                        <i class="far fa-users fa-3x text-primary mb-3"></i>
 
-                <p>
-                    Wie viele Teilnehmer sind an der Critical Mass in <strong>{{ ride.city.city }}</strong> am
-                    <strong>{{ ride.dateTime|format_datetime(dateFormat='long', timeFormat='none', locale='de', timezone=ride.city.timezone) }}</strong>
-                    mitgefahren?
-                </p>
-            </div>
-        </div>
+                        <h3 class="mb-3">
+                            Teilnehmerzahl ergänzen
+                        </h3>
 
-        <div class="row">
-            <div class="col-md-12">
-                {{ form_start(estimateForm) }}
+                        <p class="text-muted mb-4">
+                            Wie viele Teilnehmer sind an der Critical Mass in <strong>{{ ride.city.city }}</strong> am
+                            <strong>{{ ride.dateTime|format_datetime(dateFormat='long', timeFormat='none', locale='de', timezone=ride.city.timezone) }}</strong>
+                            mitgefahren?
+                        </p>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="">
-                            Teilnehmerzahl:
-                        </label>
+                        {{ form_start(estimateForm) }}
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                Teilnehmerzahl:
+                            </label>
+                            {{ form_widget(estimateForm.estimatedParticipants) }}
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="far fa-save me-1"></i>
+                                Absenden
+                            </button>
+                        </div>
+
+                        {{ form_end(estimateForm) }}
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        {{ form_widget(estimateForm.estimatedParticipants) }}
-                    </div>
-                </div>
-
-                <div class="row margin-top-medium">
-                    <div class="col-md-12">
-                        <button class="btn btn-primary" type="submit">
-                            Absenden
-                        </button>
-                    </div>
-                </div>
-                {{ form_end(estimateForm) }}
             </div>
         </div>
     </div>

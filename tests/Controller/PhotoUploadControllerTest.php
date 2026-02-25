@@ -76,7 +76,14 @@ class PhotoUploadControllerTest extends AbstractControllerTestCase
     {
         $tmpFile = $this->generateTestImage();
         $uploadedFile = new UploadedFile($tmpFile, 'test_photo.jpg', 'image/jpeg', null, true);
-        $client->request('POST', $this->buildRideUrl($ride) . '/addphoto', [], ['file' => $uploadedFile]);
+
+        // Set CSRF token in session
+        $client->request('GET', $this->buildRideUrl($ride) . '/addphoto');
+        $session = $client->getRequest()->getSession();
+        $session->set('_csrf/photo_upload', 'test_token');
+        $session->save();
+
+        $client->request('POST', $this->buildRideUrl($ride) . '/addphoto', ['_token' => 'test_token'], ['file' => $uploadedFile]);
     }
 
     public function testPhotoUploadPageAccessibleWhenLoggedIn(): void
@@ -116,7 +123,14 @@ class PhotoUploadControllerTest extends AbstractControllerTestCase
 
         try {
             $uploadedFile = new UploadedFile($tmpFile, 'test_photo.jpg', 'image/jpeg', null, true);
-            $client->request('POST', $this->buildRideUrl($ride) . '/addphoto', [], ['file' => $uploadedFile]);
+
+            // Set CSRF token in session
+            $client->request('GET', $this->buildRideUrl($ride) . '/addphoto');
+            $session = $client->getRequest()->getSession();
+            $session->set('_csrf/photo_upload', 'test_token');
+            $session->save();
+
+            $client->request('POST', $this->buildRideUrl($ride) . '/addphoto', ['_token' => 'test_token'], ['file' => $uploadedFile]);
 
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
             $this->assertEquals('Success', $client->getResponse()->getContent());

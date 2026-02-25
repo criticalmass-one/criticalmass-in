@@ -77,18 +77,18 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
-    protected float $latitude = 0.0;
+    protected ?float $latitude = 0.0;
 
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details'])]
-    protected float $longitude = 0.0;
+    protected ?float $longitude = 0.0;
 
     #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
-    protected bool $enabled = true;
+    protected ?bool $enabled = true;
 
     #[ORM\OneToMany(targetEntity: 'Ride', mappedBy: 'city')]
     #[Ignore]
@@ -396,12 +396,12 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
 
     public function getEnabled(): bool
     {
-        return $this->enabled;
+        return $this->enabled ?? true;
     }
 
     public function isEnabled(): bool
     {
-        return $this->enabled;
+        return $this->enabled ?? true;
     }
 
     public function setCityPopulation(int $cityPopulation): City

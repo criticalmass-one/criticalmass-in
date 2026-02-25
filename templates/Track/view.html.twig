@@ -22,106 +22,134 @@
         </div>
 
         {% if not track.reviewed %}
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col-md-12">
-                    <div class="alert alert-danger">
-                        <div class="btn-group pull-right">
-                            <a class="btn btn-success"
-                               href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
-                                <i class="far fa-cut"></i>&nbsp;Track beschneiden
-                            </a>
-                            <a class="btn btn-secondary"
-                               href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
-                                <i class="far fa-check"></i>&nbsp;Track bestätigen
-                            </a>
+                    <div class="card border-0 shadow-sm border-start border-danger border-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="card-title text-danger mb-2">
+                                        <i class="far fa-exclamation-triangle me-2"></i>Dein Track wurde noch nicht bestätigt!
+                                    </h5>
+                                    <p class="mb-0">
+                                        Bitte bestätige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet
+                                        und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a
+                                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
+                                            beschneiden</a>.
+                                    </p>
+                                </div>
+                                <div class="btn-group ms-3 flex-shrink-0">
+                                    <a class="btn btn-outline-success btn-sm"
+                                       href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
+                                        <i class="far fa-cut me-1"></i><span class="d-none d-sm-inline">Track beschneiden</span>
+                                    </a>
+                                    <a class="btn btn-outline-secondary btn-sm"
+                                       href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
+                                        <i class="far fa-check me-1"></i><span class="d-none d-sm-inline">Track bestätigen</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-
-                        <strong>
-                            Dein Track wurde noch nicht bestätigt!
-                        </strong>
-                        <br/>
-                        Bitte bestägtige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet
-                        und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a
-                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
-                            beschneiden</a>.
                     </div>
                 </div>
             </div>
         {% endif %}
 
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-12">
-                <div
-                        id="map"
-                        class="map"
-                        style="height: 350px;"
-                        data-controller="map--map"
-                        data-map--map-polyline-value="{{ track.polyline }}"
-                        data-map--map-polyline-color-value="{{ track.user.color }}"
-                ></div>
+                <div class="card border-0 shadow-sm overflow-hidden">
+                    <div
+                            id="map"
+                            class="map"
+                            style="height: 350px;"
+                            data-controller="map--map"
+                            data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::MEDIUM')) }}"
+                            data-map--map-polyline-color-value="{{ track.user.color }}"
+                    ></div>
+                </div>
             </div>
         </div>
 
-        <div class="row margin-top-medium">
-            <div class="col-md-3">
-                <dl>
-                    <dt>
-                        Tour:
-                    </dt>
-                    <dd>
-                        <a href="{{ object_path(track.ride) }}">
-                            {{ track.ride.title }}
-                        </a>
-                    </dd>
-                </dl>
-            </div>
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                         style="width: 36px; height: 36px; min-width: 36px;">
+                                        <i class="far fa-bicycle text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block">Tour</small>
+                                        <a href="{{ object_path(track.ride) }}" class="text-decoration-none">
+                                            <strong>{{ track.ride.title }}</strong>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
-            <div class="col-md-2">
-                <dl>
-                    <dt>
-                        Datum:
-                    </dt>
-                    <dd>
-                        {{ track.ride.dateTime|date('d.m.Y H:i', track.ride.city.timezone) }}&nbsp;Uhr
-                    </dd>
-                </dl>
-            </div>
+                            <div class="col-6 col-md-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                         style="width: 36px; height: 36px; min-width: 36px;">
+                                        <i class="far fa-calendar-alt text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block">Datum</small>
+                                        <strong>{{ track.ride.dateTime|date('d.m.Y H:i', track.ride.city.timezone) }}&nbsp;Uhr</strong>
+                                    </div>
+                                </div>
+                            </div>
 
-            <div class="col-md-3">
-                <dl>
-                    <dt>
-                        Treffpunkt:
-                    </dt>
-                    <dd>
-                        {% if track.ride.location and track.ride.latitude and track.ride.longitude %}
-                            {{ track.ride.location }}
-                        {% else %}
-                            nicht bekannt
-                        {% endif %}
-                    </dd>
-                </dl>
-            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                         style="width: 36px; height: 36px; min-width: 36px;">
+                                        <i class="far fa-map-marker-alt text-warning"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block">Treffpunkt</small>
+                                        <strong>
+                                            {% if track.ride.location and track.ride.latitude and track.ride.longitude %}
+                                                {{ track.ride.location }}
+                                            {% else %}
+                                                nicht bekannt
+                                            {% endif %}
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
 
-            <div class="col-md-2">
-                <dl>
-                    <dt>
-                        Distanz:
-                    </dt>
-                    <dd>
-                        {{ track.distance|number_format(2) }}&nbsp;km
-                    </dd>
-                </dl>
-            </div>
+                            <div class="col-6 col-md-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                         style="width: 36px; height: 36px; min-width: 36px;">
+                                        <i class="far fa-route text-success"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block">Distanz</small>
+                                        <strong>{{ track.distance|number_format(2) }}&nbsp;km</strong>
+                                    </div>
+                                </div>
+                            </div>
 
-            <div class="col-md-2">
-                <dl>
-                    <dt>
-                        Dauer:
-                    </dt>
-                    <dd>
-                        {{ human_duration(track.getDurationInSeconds()) }}
-                    </dd>
-                </dl>
+                            <div class="col-6 col-md-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                                         style="width: 36px; height: 36px; min-width: 36px;">
+                                        <i class="far fa-clock text-info"></i>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted d-block">Dauer</small>
+                                        <strong>{{ human_duration(track.getDurationInSeconds()) }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

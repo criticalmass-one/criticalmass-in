@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
@@ -72,69 +72,87 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.region) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Region:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Region:</label>
                             {{ form_widget(form.region, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.</p>
+                            <div class="form-text">Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.</div>
+                            {% if form_errors(form.region) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.region) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Titel:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Titel:</label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass
-                                Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                            <div class="form-text">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass
+                                Hamburg" oder „Fahrradfreitag Rendsburg".</div>
+                            {% if form_errors(form.title) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.title) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
-                            <button class="btn btn-secondary btn-xs pull-right" type="button"
+                        <div class="mb-3">
+                            <button class="btn btn-secondary btn-sm float-end" type="button"
                                 data-controller="geocoding"
                                 data-action="click->geocoding#search"
                                 data-geocoding-query-selector-value="#city_city"
                                 data-geocoding-query-part-selector-value="#city_region">
                                 <i class="far fa-map-marker"></i>
                             </button>
-                            <label class="control-label" for="">Name:</label>
+                            <label class="form-label" for="">Name:</label>
                             {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
+                            <div class="form-text">Name der Stadt, etwa Hamburg oder Rendsburg.</div>
+                            {% if form_errors(form.city) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.city) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Beschreibung:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Beschreibung:</label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
-                            <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
+                            <div class="form-text">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</div>
+                            {% if form_errors(form.description) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.description) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Punchline:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Punchline:</label>
                             {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“
-                                oder „Reclaim the streets“ ist ja schon fast Standard.</p>
+                            <div class="form-text">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic"
+                                oder „Reclaim the streets" ist ja schon fast Standard.</div>
+                            {% if form_errors(form.punchLine) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.punchLine) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Lange Beschreibung:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Lange Beschreibung:</label>
                             {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
-                            <p class="help-block">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>
+                            <div class="form-text">Hier ist Platz für eine längere und ausführlichere Beschreibung.</div>
+                            {% if form_errors(form.longDescription) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.longDescription) }}</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -149,11 +167,11 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="">Forum anzeigen:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Forum anzeigen:</label>
                             {{ form_widget(form.enableBoard, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu
-                                aktivieren.</p>
+                            <div class="form-text">Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu
+                                aktivieren.</div>
                         </div>
                     </div>
                 </div>
@@ -167,12 +185,12 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="">Datei:</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="">Datei:</label>
                             {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass
+                            <div class="form-text">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass
                                     du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind
-                                Bildabmessungen von 2.280 mal 500 Pixel.</p>
+                                Bildabmessungen von 2.280 mal 500 Pixel.</div>
                         </div>
                     </div>
                 </div>
@@ -181,7 +199,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="btn-group pull-right">
+                <div class="btn-group float-end">
                     {% if city and city.mainSlug %}
                         <a href="{{ object_path(city) }}" class="btn btn-secondary">
                             Abbrechen
@@ -192,6 +210,7 @@
                         </a>
                     {% endif %}
                     <button type="submit" class="btn btn-success">
+                        <i class="far fa-save me-1"></i>
                         Speichern
                     </button>
                 </div>

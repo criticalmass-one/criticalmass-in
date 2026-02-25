@@ -2,7 +2,6 @@
 
 namespace App\Twig\Extension;
 
-use Khill\Duration\Duration;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -23,7 +22,19 @@ class DurationTwigExtension extends AbstractExtension
             return null;
         }
 
-        return (new Duration())->humanize($duration);
+        $totalSeconds = (int) $duration;
+        $hours = intdiv($totalSeconds, 3600);
+        $minutes = intdiv($totalSeconds % 3600, 60);
+
+        $parts = [];
+        if ($hours > 0) {
+            $parts[] = $hours . "\u{00A0}" . 'h';
+        }
+        if ($minutes > 0 || $hours === 0) {
+            $parts[] = $minutes . "\u{00A0}" . 'min';
+        }
+
+        return implode(' ', $parts);
     }
 
     public function getName(): string

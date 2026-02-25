@@ -48,6 +48,10 @@ class PhotoUploadController extends AbstractController
         PhotoUploaderInterface $photoUploader,
         ?UserInterface $user = null
     ): Response {
+        if (!$this->isCsrfTokenValid('photo_upload', $request->request->get('_token'))) {
+            return new Response('Invalid CSRF token.', Response::HTTP_FORBIDDEN);
+        }
+
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');
 

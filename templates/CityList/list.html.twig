@@ -6,84 +6,73 @@
 {% block breadcrumb %}
     {{ breadcrumb.active('Städteliste') }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    Die nächste Masse ist ganz nah
-                </h1>
+        <h1 class="mb-2">
+            Die nächste Masse ist ganz nah
+        </h1>
 
-                <p class="lead">
-                    Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.
-                </p>
+        <p class="lead text-muted">
+            Die Critical-Mass-Bewegung ist in beinahe jeder größeren Stadt zu Hause.
+        </p>
 
-                <p>
-                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte.
-                    Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und
-                    womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher weitere Quellen,
-                    bevor du dich auf den Weg machst.
-                </p>
-            </div>
-        </div>
+        <p class="mb-4">
+            Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte.
+            Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und
+            womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher weitere Quellen,
+            bevor du dich auf den Weg machst.
+        </p>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table id="city-list-table" class="table tablesorter">
-                    <thead>
-                    <tr>
-                        <th>
-                            Stadt
-                        </th>
-                        <th>
-                            aktuelle Tour
-                        </th>
-                        <th>
-                            Turnus
-                        </th>
-                        <th>
-                            Touren
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for city in cityList %}
-                        <tr data-city-slug="{{ city.city.getMainSlugString() }}">
-                            <td>
-                                <a href="{{ object_path(city.city) }}">
-                                    {{ city.city.city }}
-                                </a>
-                            </td>
-                            <td>
-                                {% if city.currentRide %}
-                                    <a href="{{ object_path(city.currentRide) }}">
-                                        {{ city.currentRide.dateTime|format_datetime(dateFormat='long', timeFormat='short', locale='de', timezone=city.city.timezone) }}
-                                        &nbsp;Uhr
-                                    </a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <ul class="list-unstyled">
-                                    {% for cycle in city.cycles %}
-                                        <li>
-                                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
-                                            um {{ cycle.time|date('H:i', 'UTC') }} Uhr
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </td>
-                            <td>
-                                <a href="{{ object_path(city.city, 'caldera_criticalmass_city_listrides') }}">
-                                    {{ city.countRides }}
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table id="city-list-table" class="table table-hover tablesorter mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Stadt</th>
+                                <th>aktuelle Tour</th>
+                                <th>Turnus</th>
+                                <th>Touren</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for city in cityList %}
+                                <tr data-city-slug="{{ city.city.getMainSlugString() }}">
+                                    <td>
+                                        <a href="{{ object_path(city.city) }}">
+                                            {{ city.city.city }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {% if city.currentRide %}
+                                            <a href="{{ object_path(city.currentRide) }}">
+                                                {{ city.currentRide.dateTime|format_datetime(dateFormat='long', timeFormat='short', locale='de', timezone=city.city.timezone) }}
+                                                &nbsp;Uhr
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled mb-0">
+                                            {% for cycle in city.cycles %}
+                                                <li>
+                                                    am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
+                                                    um {{ cycle.time|date('H:i', 'UTC') }} Uhr
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <a href="{{ object_path(city.city, 'caldera_criticalmass_city_listrides') }}">
+                                            {{ city.countRides }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

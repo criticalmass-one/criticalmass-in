@@ -1,20 +1,20 @@
 {% if locations|length > 0 %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                Treffpunkte
-            </h3>
-        </div>
-        <div class="panel-body">
-            <ul>
-                {% for location in locations %}
-                    <li>
-                        <a href="{{ object_path(location) }}">
-                            {{ location.title }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+<div class="card border-0 shadow-sm mb-3">
+    <div class="card-header bg-white border-bottom">
+        <h5 class="card-title mb-0">
+            <i class="far fa-map-pin text-primary me-2"></i>Treffpunkte
+        </h5>
     </div>
+    <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+            {% for location in locations %}
+                <li class="list-group-item border-0">
+                    <a href="{{ object_path(location) }}" class="text-decoration-none">
+                        <i class="far fa-map-marker-alt text-muted me-2"></i>{{ location.title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endif %}

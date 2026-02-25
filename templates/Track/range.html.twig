@@ -11,54 +11,61 @@
 
 {% block content %}
     <div class="container" id="track-range-page">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-12">
                 <h2>
-                    Track beschneiden
+                    <i class="far fa-cut text-muted me-2"></i>Track beschneiden
                 </h2>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-12">
-                <p>Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du
-                    versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.</p>
-
-                <p>
-                    Das Beschneiden beschädigt deinen Track nicht, du kannst den für andere Nutzer sichtbaren Bereich
-                    jederzeit wieder ändern.
-                </p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div id="map-range"
-                     class="map"
-                     data-controller="map--track-range-map"
-                     data-map--lock-map="true"
-                     style="height: 50vh;">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <p class="mb-2">Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du
+                            versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.</p>
+                        <p class="mb-0">
+                            Das Beschneiden beschädigt deinen Track nicht, du kannst den für andere Nutzer sichtbaren Bereich
+                            jederzeit wieder ändern.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm overflow-hidden">
+                    <div id="map-range"
+                         class="map"
+                         data-controller="map--track-range-map"
+                         data-map--lock-map="true"
+                         style="height: 50vh;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
             <div class="col-md-12">
                 <input id="slider" type="text" value="" style="width: 100%;"/>
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row">
             <div class="col-md-12">
                 <input type="hidden" id="track_range_latLngList" value="{{ latLngList }}" />
                 {{ form_start(form) }}
-                <div class="btn-group pull-right" role="group" aria-label="...">
-                    <button class="btn btn-success" type="submit">
-                        Speichern
-                    </button>
-                    <a class="btn btn-secondary" href="{{ path('caldera_criticalmass_track_list') }}">
-                        Abbrechen
-                    </a>
+                <div class="d-flex justify-content-end">
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-outline-secondary btn-sm" href="{{ path('caldera_criticalmass_track_list') }}">
+                            Abbrechen
+                        </a>
+                        <button class="btn btn-success btn-sm" type="submit">
+                            <i class="far fa-save me-1"></i>Speichern
+                        </button>
+                    </div>
                 </div>
                 {{ form_end(form) }}
             </div>

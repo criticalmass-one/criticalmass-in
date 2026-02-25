@@ -14,83 +14,81 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                    {% if app.user %}
-                        {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="mb-0">
+                        Fotos von {{ ride.title }}
+                    </h1>
 
-                        <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
-                            <i class="far fa-camera"></i>
-                            Fotos hochladen
-                        </a>
-                    {% else %}
-                        <button
-                                type="button"
-                                class="btn btn-success"
-                                data-controller="hint-modal"
-                                data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}"
-                                data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
-                                data-modal-hint-size="md">
-                            <i class="far fa-camera"></i>
-                            Fotos hochladen
-                        </button>
-                    {% endif %}
+                    <div>
+                        {% if app.user %}
+                            {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
+
+                            <a class="btn btn-success btn-sm" href="{{ uploadPath }}" title="Fotos hochladen">
+                                <i class="far fa-camera me-1"></i>
+                                Fotos hochladen
+                            </a>
+                        {% else %}
+                            <button
+                                    type="button"
+                                    class="btn btn-success btn-sm"
+                                    data-controller="hint-modal"
+                                    data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}"
+                                    data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                                    data-modal-hint-size="md">
+                                <i class="far fa-camera me-1"></i>
+                                Fotos hochladen
+                            </button>
+                        {% endif %}
+                    </div>
                 </div>
-
-                <h1>
-                    Fotos von {{ ride.title }}
-                </h1>
             </div>
         </div>
 
         {% if pagination|length == 0 %}
             {% if not app.getUser() %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-info" role="alert">
-                            <strong>
-                                Schade!
-                            </strong>
+                <div class="card bg-light border-0 mb-4">
+                    <div class="card-body text-center py-5">
+                        <i class="far fa-images fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Schade!</h5>
+                        <p class="text-muted mb-0">
                             Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a
                                     href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
                             könntest du deine Fotos hochladen.
-                        </div>
+                        </p>
                     </div>
                 </div>
             {% else %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-info" role="alert">
-                            <strong>
-                                Hej!
-                            </strong>
+                <div class="card bg-light border-0 mb-4">
+                    <div class="card-body text-center py-5">
+                        <i class="far fa-camera fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Hej!</h5>
+                        <p class="text-muted mb-0">
                             Du kannst der Erste sein, der hier seine Fotos hochlädt!
-                        </div>
+                        </p>
                     </div>
                 </div>
             {% endif %}
         {% else %}
-            <div class="row">
-                <div class="photo-list">
-                    {% for photo in pagination %}
-                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                            <div class="margin-bottom-medium text-center">
-                                <a href="{{ object_path(photo) }}">
-                                    {% if photo.posts|length > 0 %}
-                                        <span class="badge" style="position: absolute; top: -10px; right: 10px; background-color: red; font-size: 1em;">{{ photo.posts|length }}</span>
-                                    {% endif %}
-                                    <img class="img-thumbnail"
-                                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
-                                </a>
-                            </div>
+            <div class="row g-3">
+                {% for photo in pagination %}
+                    <div class="col-6 col-sm-4 col-md-3">
+                        <div class="text-center mb-3">
+                            <a href="{{ object_path(photo) }}" class="position-relative d-inline-block">
+                                {% if photo.posts|length > 0 %}
+                                    <span class="badge bg-danger position-absolute top-0 end-0 translate-middle-y">{{ photo.posts|length }}</span>
+                                {% endif %}
+                                <img class="img-fluid rounded shadow-sm"
+                                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                            </a>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row mt-3">
+                <div class="col-12">
                     <div class="text-center">
                         {{ knp_pagination_render(pagination) }}
                     </div>

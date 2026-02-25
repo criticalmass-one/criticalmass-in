@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Geo\GpxService;
 
 use App\Entity\Track;
+use App\Enum\PolylineResolution;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
@@ -14,7 +15,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class GpxService implements GpxServiceInterface
 {
-    private const REDUCED_POLYLINE_TOLERANCE = 0.05;
     private const LAT_LNG_LIST_SAMPLE_WIDTH = 10;
 
     public function __construct(
@@ -43,6 +43,10 @@ class GpxService implements GpxServiceInterface
     public function getPoints(Track $track): array
     {
         $gpxFile = $this->loadFromTrack($track);
+
+        if (empty($gpxFile->tracks)) {
+            return [];
+        }
 
         return $gpxFile->tracks[0]->getPoints();
     }
@@ -117,27 +121,13 @@ class GpxService implements GpxServiceInterface
         return $leftDiff < $rightDiff ? $leftPoint : $rightPoint;
     }
 
-    /**
-     * Generates an encoded polyline string from track points.
-     */
-    public function generatePolyline(Track $track): string
-    {
-        $points = $this->getPointsInRange($track);
-        $pointList = $this->pointsToArray($points);
-
-        return \Polyline::Encode($pointList);
-    }
-
-    /**
-     * Generates a reduced/simplified polyline string from track points.
-     */
-    public function generateReducedPolyline(Track $track): string
+    public function generatePolylineAtResolution(Track $track, PolylineResolution $resolution): string
     {
         $points = $this->getPointsInRange($track);
         $pointList = $this->pointsToArray($points);
 
         $reducer = new RadialDistance($pointList);
-        $reducedPointList = $reducer->reduce(self::REDUCED_POLYLINE_TOLERANCE);
+        $reducedPointList = $reducer->reduce($resolution->tolerance());
 
         $reducedList = [];
         foreach ($reducedPointList as $point) {
@@ -290,6 +280,11 @@ class GpxService implements GpxServiceInterface
     public function shiftTimeAndSave(Track $track, \DateInterval $interval): void
     {
         $gpxFile = $this->loadFromTrack($track);
+
+        if (empty($gpxFile->tracks)) {
+            return;
+        }
+
         $gpxTrack = $gpxFile->tracks[0];
 
         foreach ($gpxTrack->segments as $segment) {

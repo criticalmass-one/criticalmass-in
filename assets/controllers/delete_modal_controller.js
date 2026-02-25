@@ -60,7 +60,7 @@ export default class extends Controller {
             '        <h5 class="modal-title" id="delete-modal-label">{{ title }}</h5>' +
             '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
             '      </div>' +
-            '      <div class="modal-body">{{{ text }}}</div>' +
+            '      <div class="modal-body">{{ text }}</div>' +
             '      <div class="modal-footer">' +
             '        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>' +
             '        <button type="button" class="btn btn-danger">Löschen</button>' +

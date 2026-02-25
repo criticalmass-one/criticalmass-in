@@ -59,7 +59,7 @@ class RideController extends AbstractController
         ?Ride $ride = null
     ): Response {
         if (!$ride) {
-            $this->redirectToRoute('caldera_criticalmass_calendar');
+            return $this->redirectToRoute('caldera_criticalmass_calendar');
         }
 
         $blocked = $blockedCityRepository->findCurrentCityBlock($ride->getCity());
@@ -72,7 +72,7 @@ class RideController extends AbstractController
         }
 
         $seoPage
-            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
+            ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ($ride->getDateTime() ? ' am ' . $ride->getDateTime()->format('d.m.Y') : ''))
             ->setCanonicalForObject($ride);
 
         if ($ride->getImageName()) {
@@ -90,7 +90,7 @@ class RideController extends AbstractController
         /** @var Weather $weather */
         $weather = $weatherRepository->findCurrentWeatherForRide($ride);
 
-        if ($weather) {
+        if ($weather && $weather->getTemperatureEvening() !== null) {
             $weatherForecast = round($weather->getTemperatureEvening()) . ' °C, ' . $weather->getWeatherDescription();
         } else {
             $weatherForecast = null;

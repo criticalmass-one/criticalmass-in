@@ -29,6 +29,12 @@
     <env name="SHELL_VERBOSITY" value="-1"/>
     <env name="FRIENDLYCAPTCHA_API_KEY" value="placeholder"/>
     <env name="FRIENDLYCAPTCHA_SITE_KEY" value="placeholder"/>
+
+        <!-- ###+ symfony/lock ### -->
+        <!-- Choose one of the stores below -->
+        <!-- postgresql+advisory://db_user:db_password@localhost/db_name -->
+        <env name="LOCK_DSN" value="flock"/>
+        <!-- ###- symfony/lock ### -->
   </php>
 
   <testsuites>

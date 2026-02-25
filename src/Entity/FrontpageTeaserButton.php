@@ -31,7 +31,7 @@ class FrontpageTeaserButton
     protected ?string $class = null;
 
     #[ORM\Column(type: 'smallint', nullable: true)]
-    protected int $position = 0;
+    protected ?int $position = 0;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     protected \DateTime $createdAt;
@@ -118,7 +118,7 @@ class FrontpageTeaserButton
 
     public function getPosition(): int
     {
-        return $this->position;
+        return $this->position ?? 0;
     }
 
     public function setCreatedAt(\DateTime $createdAt): FrontpageTeaserButton

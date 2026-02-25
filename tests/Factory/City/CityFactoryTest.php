@@ -64,31 +64,23 @@ class CityFactoryTest extends TestCase
         $this->assertEquals($expectedCity, $actualCity);
     }
 
-    /**
-     * This may fail sometimes when rand() offers the same colors
-     */
     public function testRandomColors(): void
     {
         $dateTime = new \DateTime();
 
-        $cityFactory1 = new CityFactory();
-        $cityFactory1
+        $cityFactory = new CityFactory();
+        $cityFactory
             ->withRandomColors()
             ->withCreatedAt($dateTime);
 
-        $city1 = $cityFactory1->build();
+        $city = $cityFactory->build();
 
-        $cityFactory2 = new CityFactory();
-        $cityFactory2
-            ->withRandomColors()
-            ->withCreatedAt($dateTime);
-
-        $city2 = $cityFactory2->build();
-
-        $this->assertNotEquals($city1, $city2);
-        $this->assertNotEquals($city1->getColorRed(), $city2->getColorRed());
-        $this->assertNotEquals($city1->getColorGreen(), $city2->getColorGreen());
-        $this->assertNotEquals($city1->getColorBlue(), $city2->getColorBlue());
+        $this->assertGreaterThanOrEqual(0, $city->getColorRed());
+        $this->assertLessThanOrEqual(255, $city->getColorRed());
+        $this->assertGreaterThanOrEqual(0, $city->getColorGreen());
+        $this->assertLessThanOrEqual(255, $city->getColorGreen());
+        $this->assertGreaterThanOrEqual(0, $city->getColorBlue());
+        $this->assertLessThanOrEqual(255, $city->getColorBlue());
     }
 
     public function testRegion(): void

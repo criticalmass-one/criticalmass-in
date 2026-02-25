@@ -32,7 +32,7 @@ class ExifWrapper implements ExifWrapperInterface
 
     protected function dumpFileToTmp(Photo $photo): string
     {
-        $path = sprintf('/tmp/%s', uniqid('', true));
+        $path = sprintf('/tmp/%s', bin2hex(random_bytes(16)));
 
         $imageContent = $this->flysystemFilesystem->read($photo->getImageName());
 

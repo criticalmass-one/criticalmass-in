@@ -45,7 +45,7 @@ class TrackValidator implements UploadValidatorInterface
     {
         //echo "checkForXmlContent";
         try {
-            $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
+            $this->simpleXml = new \SimpleXMLElement($this->rawFileContent, LIBXML_NONET | LIBXML_NOENT);
         } catch (Exception $e) {
             throw new NoXmlException();
         }

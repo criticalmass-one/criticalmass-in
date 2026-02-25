@@ -66,7 +66,7 @@ class SocialNetworkProfileController extends BaseController
         Request $request,
         SocialNetworkProfile $socialNetworkProfile,
     ): Response {
-        $this->serializer->deserializeInto($request->getContent(), $socialNetworkProfile);
+        $this->deserializeRequestInto($request, $socialNetworkProfile);
 
         $this->managerRegistry->getManager()->flush();
 
@@ -83,7 +83,7 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successfully created')]
     public function createSocialNetworkProfileAction(Request $request, City $city): JsonResponse
     {
-        $newSocialNetworkProfile = $this->serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
+        $newSocialNetworkProfile = $this->deserializeRequest($request, SocialNetworkProfile::class);
 
         $newSocialNetworkProfile
             ->setCity($city)

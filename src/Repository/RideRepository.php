@@ -463,7 +463,8 @@ class RideRepository extends ServiceEntityRepository
         if ($pastOnly) {
             $dateTime = new \DateTime();
 
-            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $dateTime->format('Y-m-d H:i:s') . '\''));
+            $builder->andWhere($builder->expr()->lt('ride.dateTime', ':pastDateTime'))
+                ->setParameter('pastDateTime', $dateTime);
         }
         $builder->orderBy('ride.dateTime', 'DESC');
 
@@ -543,11 +544,13 @@ class RideRepository extends ServiceEntityRepository
         $builder->where($builder->expr()->eq('region1.parent', $region->getId()));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
+            $builder->andWhere($builder->expr()->gt('ride.dateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
+            $builder->andWhere($builder->expr()->lt('ride.dateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         $builder->addOrderBy('city.city', 'ASC');
