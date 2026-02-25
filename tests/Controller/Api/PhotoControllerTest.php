@@ -25,10 +25,10 @@ class PhotoControllerTest extends AbstractApiControllerTestCase
         $this->assertEquals($photo->getLongitude(), $response['longitude']);
         $this->assertEquals($photo->getDescription(), $response['description']);
         $this->assertEquals($photo->getLocation(), $response['location']);
-        $this->assertEquals($photo->getImageName(), $response['imageName']);
+        $this->assertEquals($photo->getImageName(), $response['image_name']);
         $this->assertArrayHasKey('views', $response);
-        $this->assertArrayHasKey('exifCreationDate', $response);
-        $this->assertArrayHasKey('creationDateTime', $response);
+        $this->assertArrayHasKey('exif_creation_date', $response);
+        $this->assertArrayHasKey('creation_date_time', $response);
     }
 
     public function testShowReturns404ForNonExistentPhoto(): void
@@ -80,12 +80,8 @@ class PhotoControllerTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        $this->assertArrayHasKey('exifExposure', $response);
-        $this->assertArrayHasKey('exifAperture', $response);
-        $this->assertArrayHasKey('exifIso', $response);
-        $this->assertArrayHasKey('exifFocalLength', $response);
-        $this->assertArrayHasKey('exifCamera', $response);
-        $this->assertArrayHasKey('exifCreationDate', $response);
+        // exif_creation_date is set in fixtures, other exif fields are null and skipped
+        $this->assertArrayHasKey('exif_creation_date', $response);
     }
 
     public function testShowResponseContainsImageMetadata(): void
@@ -102,8 +98,8 @@ class PhotoControllerTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        $this->assertArrayHasKey('imageName', $response);
-        $this->assertArrayHasKey('imageSize', $response);
-        $this->assertArrayHasKey('imageMimeType', $response);
+        // image_name is set in fixtures, image_size and image_mime_type are null and skipped
+        $this->assertArrayHasKey('image_name', $response);
+        $this->assertEquals('hamburg_ride_001.jpg', $response['image_name']);
     }
 }
