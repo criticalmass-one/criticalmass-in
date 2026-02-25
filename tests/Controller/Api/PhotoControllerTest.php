@@ -1,0 +1,105 @@
+<?php declare(strict_types=1);
+
+namespace Tests\Controller\Api;
+
+use App\Entity\Photo;
+
+class PhotoControllerTest extends AbstractApiControllerTestCase
+{
+    public function testShowReturnsPhotoDetails(): void
+    {
+        $photo = $this->entityManager
+            ->getRepository(Photo::class)
+            ->findOneBy(['imageName' => 'hamburg_ride_001.jpg']);
+
+        $this->assertNotNull($photo, 'Fixture photo should exist');
+
+        $this->client->request('GET', sprintf('/api/photo/%d', $photo->getId()));
+
+        $this->assertResponseStatusCode(200);
+
+        $response = $this->getJsonResponse();
+
+        $this->assertEquals($photo->getId(), $response['id']);
+        $this->assertEquals($photo->getLatitude(), $response['latitude']);
+        $this->assertEquals($photo->getLongitude(), $response['longitude']);
+        $this->assertEquals($photo->getDescription(), $response['description']);
+        $this->assertEquals($photo->getLocation(), $response['location']);
+        $this->assertEquals($photo->getImageName(), $response['image_name']);
+        $this->assertArrayHasKey('views', $response);
+        $this->assertArrayHasKey('exif_creation_date', $response);
+        $this->assertArrayHasKey('creation_date_time', $response);
+    }
+
+    public function testShowReturns404ForNonExistentPhoto(): void
+    {
+        $this->client->request('GET', '/api/photo/999999');
+
+        $this->assertResponseStatusCode(404);
+    }
+
+    public function testShowReturns404ForDeletedPhoto(): void
+    {
+        $photo = $this->entityManager
+            ->getRepository(Photo::class)
+            ->findOneBy(['imageName' => 'hamburg_ride_deleted.jpg']);
+
+        $this->assertNotNull($photo, 'Deleted fixture photo should exist');
+        $this->assertTrue($photo->isDeleted(), 'Photo should be marked as deleted');
+
+        $this->client->request('GET', sprintf('/api/photo/%d', $photo->getId()));
+
+        $this->assertResponseStatusCode(404);
+    }
+
+    public function testShowReturns404ForDisabledPhoto(): void
+    {
+        $photo = $this->entityManager
+            ->getRepository(Photo::class)
+            ->findOneBy(['imageName' => 'berlin_ride_disabled.jpg']);
+
+        $this->assertNotNull($photo, 'Disabled fixture photo should exist');
+        $this->assertFalse($photo->isEnabled(), 'Photo should be disabled');
+
+        $this->client->request('GET', sprintf('/api/photo/%d', $photo->getId()));
+
+        $this->assertResponseStatusCode(404);
+    }
+
+    public function testShowResponseContainsExifData(): void
+    {
+        $photo = $this->entityManager
+            ->getRepository(Photo::class)
+            ->findOneBy(['imageName' => 'hamburg_ride_001.jpg']);
+
+        $this->assertNotNull($photo, 'Fixture photo should exist');
+
+        $this->client->request('GET', sprintf('/api/photo/%d', $photo->getId()));
+
+        $this->assertResponseStatusCode(200);
+
+        $response = $this->getJsonResponse();
+
+        // exif_creation_date is set in fixtures, other exif fields are null and skipped
+        $this->assertArrayHasKey('exif_creation_date', $response);
+    }
+
+    public function testShowResponseContainsImageMetadata(): void
+    {
+        $photo = $this->entityManager
+            ->getRepository(Photo::class)
+            ->findOneBy(['imageName' => 'hamburg_ride_001.jpg']);
+
+        $this->assertNotNull($photo, 'Fixture photo should exist');
+
+        $this->client->request('GET', sprintf('/api/photo/%d', $photo->getId()));
+
+        $this->assertResponseStatusCode(200);
+
+        $response = $this->getJsonResponse();
+
+        // image_name is set in fixtures, image_size and image_mime_type are null and skipped
+        $this->assertArrayHasKey('image_name', $response);
+        $this->assertEquals('hamburg_ride_001.jpg', $response['image_name']);
+    }
+}
