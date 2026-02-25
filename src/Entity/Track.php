@@ -94,9 +94,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Groups(['timelapse', 'api-public'])]
     protected ?int $endPoint = null;
 
-    #[ORM\Column(type: 'string', length: 32, nullable: true)]
-    #[Ignore]
-    protected ?string $md5Hash = null;
 
     #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
@@ -108,16 +105,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?bool $deleted = false;
 
-    /**
-     * @deprecated
-     */
-    #[ORM\Column(type: 'text', nullable: true)]
-    #[Ignore]
-    protected ?string $latLngList = null;
-
-    #[ORM\Column(type: 'text', nullable: true)]
-    #[Ignore]
-    protected ?string $geoJson = null;
 
     /** @var Collection<int, TrackPolyline> */
     #[ORM\OneToMany(targetEntity: TrackPolyline::class, mappedBy: 'track', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -210,17 +197,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->user;
     }
 
-    public function setMd5Hash(string $md5Hash): Track
-    {
-        $this->md5Hash = $md5Hash;
-
-        return $this;
-    }
-
-    public function getMd5Hash(): ?string
-    {
-        return $this->md5Hash;
-    }
 
     public function getEnabled(): bool
     {
@@ -258,17 +234,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->rideEstimate;
     }
 
-    public function setLatLngList(string $latLngList): Track
-    {
-        $this->latLngList = $latLngList;
-
-        return $this;
-    }
-
-    public function getLatLngList(): string
-    {
-        return $this->latLngList;
-    }
 
     /** @return Collection<int, TrackPolyline> */
     public function getTrackPolylines(): Collection
@@ -452,17 +417,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return (int)$this->stravaActitityId;
     }
 
-    public function setGeoJson(string $geoJson): Track
-    {
-        $this->geoJson = $geoJson;
-
-        return $this;
-    }
-
-    public function getWaypointList(): ?string
-    {
-        return $this->geoJson;
-    }
 
     public function isReviewed(): bool
     {

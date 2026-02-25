@@ -92,7 +92,6 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
         $this->loadTrackProperties($track, $gpxFile);
         $this->addRideEstimate($track, $track->getRide());
-        $this->updateLatLngList($track);
         $this->updatePolyline($track);
 
         $this->registry->getManager()->flush();
@@ -107,8 +106,6 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $this->removeEstimateFromTrack($track);
 
         $this->updatePolyline($track);
-
-        $this->updateLatLngList($track);
 
         $this->updateTrackProperties($track);
 
@@ -150,10 +147,6 @@ class TrackEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    protected function updateLatLngList(Track $track): void
-    {
-        $track->setLatLngList($this->gpxService->generateLatLngList($track));
-    }
 
     protected function loadTrackProperties(Track $track, GpxFile $gpxFile): void
     {
