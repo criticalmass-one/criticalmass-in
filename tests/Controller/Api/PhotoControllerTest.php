@@ -2,14 +2,12 @@
 
 namespace Tests\Controller\Api;
 
-use App\DataFixtures\PhotoFixtures;
 use App\Entity\Photo;
 
 class PhotoControllerTest extends AbstractApiControllerTestCase
 {
     public function testShowReturnsPhotoDetails(): void
     {
-        /** @var Photo $photo */
         $photo = $this->entityManager
             ->getRepository(Photo::class)
             ->findOneBy(['imageName' => 'hamburg_ride_001.jpg']);
@@ -42,7 +40,6 @@ class PhotoControllerTest extends AbstractApiControllerTestCase
 
     public function testShowReturns404ForDeletedPhoto(): void
     {
-        /** @var Photo $photo */
         $photo = $this->entityManager
             ->getRepository(Photo::class)
             ->findOneBy(['imageName' => 'hamburg_ride_deleted.jpg']);
@@ -57,7 +54,6 @@ class PhotoControllerTest extends AbstractApiControllerTestCase
 
     public function testShowReturns404ForDisabledPhoto(): void
     {
-        /** @var Photo $photo */
         $photo = $this->entityManager
             ->getRepository(Photo::class)
             ->findOneBy(['imageName' => 'berlin_ride_disabled.jpg']);
@@ -72,10 +68,11 @@ class PhotoControllerTest extends AbstractApiControllerTestCase
 
     public function testShowResponseContainsExifData(): void
     {
-        /** @var Photo $photo */
         $photo = $this->entityManager
             ->getRepository(Photo::class)
             ->findOneBy(['imageName' => 'hamburg_ride_001.jpg']);
+
+        $this->assertNotNull($photo, 'Fixture photo should exist');
 
         $this->client->request('GET', sprintf('/api/photo/%d', $photo->getId()));
 
@@ -93,10 +90,11 @@ class PhotoControllerTest extends AbstractApiControllerTestCase
 
     public function testShowResponseContainsImageMetadata(): void
     {
-        /** @var Photo $photo */
         $photo = $this->entityManager
             ->getRepository(Photo::class)
             ->findOneBy(['imageName' => 'hamburg_ride_001.jpg']);
+
+        $this->assertNotNull($photo, 'Fixture photo should exist');
 
         $this->client->request('GET', sprintf('/api/photo/%d', $photo->getId()));
 
