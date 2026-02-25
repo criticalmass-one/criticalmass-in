@@ -105,6 +105,12 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?bool $deleted = false;
 
+    /**
+     * @deprecated
+     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Ignore]
+    protected ?string $latLngList = null;
 
     /** @var Collection<int, TrackPolyline> */
     #[ORM\OneToMany(targetEntity: TrackPolyline::class, mappedBy: 'track', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -234,6 +240,17 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->rideEstimate;
     }
 
+    public function setLatLngList(string $latLngList): Track
+    {
+        $this->latLngList = $latLngList;
+
+        return $this;
+    }
+
+    public function getLatLngList(): string
+    {
+        return $this->latLngList;
+    }
 
     /** @return Collection<int, TrackPolyline> */
     public function getTrackPolylines(): Collection
