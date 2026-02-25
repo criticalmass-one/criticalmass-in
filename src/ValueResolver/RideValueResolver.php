@@ -72,6 +72,10 @@ class RideValueResolver implements ValueResolverInterface
 
         $city = $citySlug->getCity();
 
+        if (!$city) {
+            return null;
+        }
+
         $rideRepository = $this->registry->getRepository(Ride::class);
 
         if (count($matches) === 0) {
