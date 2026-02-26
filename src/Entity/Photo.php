@@ -74,12 +74,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Groups(['photo-details'])]
     protected ?string $description = null;
 
-    #[DataQuery\Sortable]
-    #[ORM\Column(type: 'integer')]
-    #[Groups(['photo-details'])]
-    protected int $views = 0;
-
-
     #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
@@ -208,18 +202,6 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     public function setEnabled(bool $enabled): Photo
     {
         $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    public function getViews(): int
-    {
-        return $this->views;
-    }
-
-    public function setViews(int $views): Photo
-    {
-        $this->views = $views;
 
         return $this;
     }
