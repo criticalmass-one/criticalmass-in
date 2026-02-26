@@ -3,23 +3,34 @@
         body, html {
             margin: 0;
             padding: 0;
-            background-color: #f3f3f3;
-            font-family: Helvetica, Arial, sans-serif;
+            background-color: #f4f6f9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         .header {
-            background: linear-gradient(135deg, #337ab7, #2a9d8f);
+            background-color: #ffffff;
         }
 
         .header td {
-            padding: 30px 0;
+            padding: 32px 0 24px;
             text-align: center;
         }
 
-        .header h1 {
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: bold;
+        .header .logo {
+            color: #2a9d8f;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .divider td {
+            padding: 0 30px;
+        }
+
+        .divider hr {
+            border: none;
+            border-top: 2px solid #2a9d8f;
             margin: 0;
         }
 
@@ -28,69 +39,79 @@
         }
 
         .content td {
-            padding: 25px 30px;
+            padding: 32px 30px 16px;
+        }
+
+        .content .greeting {
+            font-size: 22px;
+            color: #1a1a2e;
+            font-weight: 700;
+            margin: 0 0 16px;
         }
 
         .content p {
-            color: #333333;
+            color: #4a4a68;
             font-size: 16px;
             line-height: 1.6;
             margin: 0 0 12px;
         }
 
-        .content .greeting {
-            font-size: 20px;
-            color: #2a9d8f;
-            font-weight: bold;
-            margin: 0 0 16px;
+        .button-wrapper {
+            background-color: #ffffff;
         }
 
         .button-wrapper td {
-            padding: 10px 30px 30px;
-            background-color: #ffffff;
+            padding: 12px 30px 36px;
         }
 
         .button a {
             background-color: #2a9d8f;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: bold;
+            color: #ffffff !important;
+            font-size: 16px;
+            font-weight: 600;
             text-decoration: none;
-            border-radius: 8px;
-            padding: 14px 32px;
+            border-radius: 6px;
+            padding: 14px 36px;
+            display: inline-block;
         }
 
         .footer {
-            background-color: #f8f8f8;
+            background-color: #ffffff;
+            border-top: 1px solid #e8eaed;
         }
 
         .footer td {
-            padding: 25px 20px;
+            padding: 24px 30px;
             text-align: center;
         }
 
         .footer p {
-            color: #888888;
+            color: #9a9ab0;
             font-size: 13px;
             line-height: 1.5;
-            margin: 0 0 6px;
+            margin: 0 0 4px;
         }
 
-        .footer .community-hint {
+        .footer a {
             color: #2a9d8f;
-            font-size: 14px;
-            margin-top: 10px;
+            text-decoration: none;
         }
     </style>
 
     <container>
         <row class="header">
             <columns>
-                <h1>&#x1F6B2; criticalmass.in</h1>
+                <center>
+                    <a class="logo" href="https://criticalmass.in">criticalmass.in</a>
+                </center>
             </columns>
         </row>
 
-        <spacer size="16"></spacer>
+        <row class="divider">
+            <columns>
+                <hr>
+            </columns>
+        </row>
 
         <row class="content">
             <columns>
@@ -102,18 +123,16 @@
         <row class="button-wrapper">
             <columns>
                 <center>
-                    <button class="button" href="{{ loginUrl }}">Jetzt einloggen &#x1F6B2;</button>
+                    <button class="button" href="{{ loginUrl }}">Jetzt einloggen</button>
                 </center>
             </columns>
         </row>
-
-        <spacer size="16"></spacer>
 
         <row class="footer">
             <columns>
                 <p>Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.</p>
                 <p>Der Link ist {{ expirationText }} g&uuml;ltig.</p>
-                <p class="community-hint">Gemeinsam auf die Stra&szlig;e &mdash; deine Critical-Mass-Community</p>
+                <p style="margin-top: 12px;"><a href="https://criticalmass.in/content/impress">Impressum</a></p>
             </columns>
         </row>
     </container>
