@@ -24,14 +24,31 @@ class RideIcalGenerator implements RideIcalGeneratorInterface
 
     public function generateForRide(Ride $ride): RideIcalGenerator
     {
-        $vevent = [];
+        $this->addRideEvent($ride);
+
+        return $this;
+    }
+
+    /** @param Ride[] $rides */
+    public function generateForRides(array $rides): RideIcalGenerator
+    {
+        foreach ($rides as $ride) {
+            $this->addRideEvent($ride);
+        }
+
+        return $this;
+    }
+
+    protected function addRideEvent(Ride $ride): void
+    {
+        $vevent = $this->calendar->add('VEVENT');
 
         if ($ride->getTitle()) {
-            $vevent['SUMMARY'] = $ride->getTitle();
+            $vevent->add('SUMMARY', $ride->getTitle());
         }
 
         if ($ride->getDescription()) {
-            $vevent['DESCRIPTION'] = $ride->getDescription();
+            $vevent->add('DESCRIPTION', $ride->getDescription());
         }
 
         if ($ride->getDateTime()) {
@@ -44,31 +61,23 @@ class RideIcalGenerator implements RideIcalGeneratorInterface
             $endDateTime = clone $ride->getDateTime();
             $endDateTime->setTimezone($timezone)->add($durationInterval);
 
-            $vevent['DTSTART'] = $startDateTime;
-            $vevent['DTEND'] = $endDateTime;
+            $vevent->add('DTSTART', $startDateTime);
+            $vevent->add('DTEND', $endDateTime);
         }
 
         if ($ride->getLocation()) {
-            $vevent['LOCATION'] = $ride->getLocation();
+            $vevent->add('LOCATION', $ride->getLocation());
         }
 
         if ($ride->getLatitude() && $ride->getLongitude()) {
-            $vevent['GEO'] = sprintf('%f;%f', $ride->getLatitude(), $ride->getLongitude());
+            $vevent->add('GEO', sprintf('%f;%f', $ride->getLatitude(), $ride->getLongitude()));
         }
 
         if ($uid = $this->generateUid($ride)) {
-            $vevent['UID'] = $uid;
+            $vevent->add('UID', $uid);
         }
 
-        $vevent['URL'] = $this->objectRouter->generate($ride, null, [], Router::ABSOLUTE_URL);
-
-        $this->calendar->VEVENT = $vevent;
-
-        if (!$uid) {
-            unset($this->calendar->VEVENT->UID);
-        }
-
-        return $this;
+        $vevent->add('URL', $this->objectRouter->generate($ride, null, [], Router::ABSOLUTE_URL));
     }
 
     protected function retrieveTimezone(Ride $ride): \DateTimeZone
