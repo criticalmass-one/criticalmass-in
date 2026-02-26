@@ -5,14 +5,17 @@ namespace App\Model\RideGenerator;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use Carbon\Carbon;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CycleExecutable
 {
     protected ?string $citySlug = null;
 
+    #[Ignore]
     protected ?City $city = null;
 
+    #[Ignore]
     protected ?CityCycle $cityCycle = null;
 
     #[Assert\GreaterThanOrEqual('1992-09-01', message: 'Vor September 1992 können keine Touren angelegt werden — das ist übrigens das Datum der allerersten Critical Mass in San Francisco.')]
