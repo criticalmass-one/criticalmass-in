@@ -1598,12 +1598,6 @@ parameters:
 			path: src/Criticalmass/Router/AbstractRouter.php
 
 		-
-			message: '#^Access to an undefined property App\\Criticalmass\\Router\\DelegatedRouter\\AbstractDelegatedRouter\:\:\$objectRouter\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Criticalmass/Router/DelegatedRouter/AbstractDelegatedRouter.php
-
-		-
 			message: '#^Method App\\Criticalmass\\Router\\DelegatedRouter\\BoardRouter\:\:generate\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
