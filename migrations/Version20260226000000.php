@@ -16,8 +16,8 @@ final class Version20260226000000 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE track DROP COLUMN md5_hash');
-        $this->addSql('ALTER TABLE track DROP COLUMN geo_json');
+        $this->addSql('ALTER TABLE track DROP COLUMN IF EXISTS md5_hash');
+        $this->addSql('ALTER TABLE track DROP COLUMN IF EXISTS geo_json');
     }
 
     public function down(Schema $schema): void
