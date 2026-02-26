@@ -8,10 +8,15 @@ when@prod:
                 excluded_404s:
                     # regex: exclude all 404 errors from the logs
                     - ^/
+                excluded_http_codes: [400, 405]
             nested:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: debug
+                level: warning
+            deprecation:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+                channels: ["deprecation"]
             console:
                 type:   console
                 process_psr_3_messages: false
