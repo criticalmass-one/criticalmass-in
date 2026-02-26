@@ -8,6 +8,7 @@ use App\Repository\RideRepository;
 use App\Controller\AbstractController;
 use App\Entity\Subride;
 use App\Form\Type\SubrideType;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,7 @@ class SubrideController extends AbstractController
         name: 'caldera_criticalmass_subride_add',
         priority: 20
     )]
-    public function addAction(Request $request, Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
+    public function addAction(Request $request, #[MapEntity(disabled: true)] Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
     {
         $subride = new Subride();
         $subride
@@ -87,7 +88,7 @@ class SubrideController extends AbstractController
         name: 'caldera_criticalmass_subride_edit',
         priority: 20
     )]
-    public function editAction(Request $request, Subride $subride, ObjectRouterInterface $objectRouter): Response
+    public function editAction(Request $request, #[MapEntity] Subride $subride, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(SubrideType::class, $subride, [
             'action' => $objectRouter->generate($subride, 'caldera_criticalmass_subride_edit'),
@@ -138,7 +139,7 @@ class SubrideController extends AbstractController
     )]
     public function preparecopyAction(
         RideRepository $rideRepository,
-        Ride $ride
+        #[MapEntity(disabled: true)] Ride $ride
     ): Response {
         $oldRide = $rideRepository->getPreviousRideWithSubrides($ride);
 
@@ -155,7 +156,7 @@ class SubrideController extends AbstractController
         priority: 20
     )]
     public function copyAction(
-        Ride $oldRide,
+        #[MapEntity(disabled: true)] Ride $oldRide,
         string $newDate,
         ObjectRouterInterface $objectRouter,
         RideRepository $rideRepository

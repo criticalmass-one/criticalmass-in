@@ -12,6 +12,7 @@ use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,7 +56,7 @@ class PhotoManagementController extends AbstractController
 
     #[IsGranted('edit', 'photo')]
     #[Route('/managephotos/{id}/delete', name: 'caldera_criticalmass_photo_delete', priority: 170)]
-    public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
+    public function deleteAction(Request $request, #[MapEntity] Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -71,7 +72,7 @@ class PhotoManagementController extends AbstractController
     public function manageAction(
         Request $request,
         PaginatorInterface $paginator,
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         PhotoRepository $photoRepository
     ): Response {
         $query = $photoRepository->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
@@ -90,7 +91,7 @@ class PhotoManagementController extends AbstractController
 
     #[IsGranted('edit', 'photo')]
     #[Route('/photo/{id}/toggle', name: 'caldera_criticalmass_photo_toggle', priority: 170)]
-    public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
+    public function toggleAction(Request $request, #[MapEntity] Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -103,7 +104,7 @@ class PhotoManagementController extends AbstractController
 
     #[IsGranted('edit', 'photo')]
     #[Route('/photo/{id}/featured', name: 'caldera_criticalmass_photo_featured', priority: 170)]
-    public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
+    public function featuredPhotoAction(Request $request, #[MapEntity] Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -118,7 +119,7 @@ class PhotoManagementController extends AbstractController
     #[Route('/photo/{id}/place', name: 'caldera_criticalmass_photo_place_single', priority: 170)]
     public function placeSingleAction(
         Request $request,
-        Photo $photo,
+        #[MapEntity] Photo $photo,
         ObjectRouterInterface $objectRouter,
         ManagerRegistry $registry
     ): Response {
@@ -172,7 +173,7 @@ class PhotoManagementController extends AbstractController
     public function relocateAction(
         TrackRepository $trackRepository,
         PhotoRepository $photoRepository,
-        Ride $ride
+        #[MapEntity(disabled: true)] Ride $ride
     ): Response {
         $photos = $photoRepository->findPhotosByUserAndRide($this->getUser(), $ride);
 
@@ -187,7 +188,7 @@ class PhotoManagementController extends AbstractController
 
     #[IsGranted('edit', 'photo')]
     #[Route('/photo/{id}/rotate', name: 'caldera_criticalmass_photo_rotate', priority: 170)]
-    public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
+    public function rotateAction(Request $request, #[MapEntity] Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $this->saveReferer($request);
 
@@ -210,7 +211,7 @@ class PhotoManagementController extends AbstractController
     #[Route('/photo/{id}/censor', name: 'caldera_criticalmass_photo_censor_short', options: ['expose' => true], priority: 170)]
     public function censorAction(
         Request $request,
-        Photo $photo,
+        #[MapEntity] Photo $photo,
         PhotoManipulatorInterface $photoManipulator,
         ?UserInterface $user = null
     ): Response {

@@ -5,6 +5,7 @@ namespace App\Controller\Ride;
 use App\Criticalmass\Ical\RideIcalGeneratorInterface;
 use App\Entity\Ride;
 use App\Controller\AbstractController;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -17,7 +18,7 @@ class CalendarController extends AbstractController
     )]
     public function icalAction(
         RideIcalGeneratorInterface $rideIcalGenerator,
-        Ride $ride
+        #[MapEntity(disabled: true)] Ride $ride
     ): Response {
         $content = $rideIcalGenerator
             ->generateForRide($ride)

@@ -9,6 +9,7 @@ use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,7 +43,7 @@ class TrackManagementController extends AbstractController
 
     #[IsGranted('edit', 'track')]
     #[Route('/{id}/toggle', name: 'toggle', methods: ['POST'], priority: 150)]
-    public function toggleAction(Request $request, EventDispatcherInterface $eventDispatcher, Track $track): Response
+    public function toggleAction(Request $request, EventDispatcherInterface $eventDispatcher, #[MapEntity] Track $track): Response
     {
         if (!$this->isCsrfTokenValid('track_toggle_' . $track->getId(), $request->request->get('_token'))) {
             throw $this->createAccessDeniedException('Invalid CSRF token.');
@@ -63,7 +64,7 @@ class TrackManagementController extends AbstractController
 
     #[IsGranted('edit', 'track')]
     #[Route('/{id}/delete', name: 'delete', methods: ['POST'], priority: 150)]
-    public function deleteAction(Request $request, Track $track, EventDispatcherInterface $eventDispatcher): Response
+    public function deleteAction(Request $request, #[MapEntity] Track $track, EventDispatcherInterface $eventDispatcher): Response
     {
         if (!$this->isCsrfTokenValid('track_delete_' . $track->getId(), $request->request->get('_token'))) {
             throw $this->createAccessDeniedException('Invalid CSRF token.');

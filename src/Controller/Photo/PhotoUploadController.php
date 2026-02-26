@@ -6,6 +6,7 @@ use App\Criticalmass\Image\PhotoUploader\PhotoUploaderInterface;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class PhotoUploadController extends AbstractController
     #[Route('/{citySlug}/{rideIdentifier}/addphoto', name: 'caldera_criticalmass_gallery_photos_upload_ride', priority: 170)]
     public function uploadAction(
         Request $request,
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         PhotoUploaderInterface $photoUploader,
         ?UserInterface $user = null
     ): Response {

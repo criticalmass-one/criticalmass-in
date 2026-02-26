@@ -9,6 +9,7 @@ use App\Entity\Region;
 use App\Entity\Ride;
 use App\Repository\RegionRepository;
 use App\Repository\RideRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -22,7 +23,7 @@ class StatisticController extends AbstractController
     public function citystatisticAction(
         SeoPageInterface $seoPage,
         RideRepository $rideRepository,
-        City $city
+        #[MapEntity(disabled: true)] City $city
     ): Response {
         $rides = $rideRepository->findRidesForCity($city);
 

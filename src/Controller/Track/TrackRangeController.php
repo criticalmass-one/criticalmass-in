@@ -7,6 +7,7 @@ use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Entity\Track;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Form\Type\TrackRangeType;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ class TrackRangeController extends AbstractController
     #[Route('/track/range/{id}', name: 'caldera_criticalmass_track_range', priority: 270)]
     public function rangeAction(
         Request $request,
-        Track $track,
+        #[MapEntity] Track $track,
         GpxServiceInterface $gpxService,
         EventDispatcherInterface $eventDispatcher
     ): Response {

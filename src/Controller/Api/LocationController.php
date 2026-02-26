@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\Location;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -17,7 +18,7 @@ class LocationController extends BaseController
     #[OA\Tag(name: 'Location')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listLocationAction(City $city): JsonResponse
+    public function listLocationAction(#[MapEntity(disabled: true)] City $city): JsonResponse
     {
         $locationList = $this->managerRegistry->getRepository(Location::class)->findLocationsByCity($city);
 
@@ -32,7 +33,7 @@ class LocationController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'locationSlug', in: 'path', description: 'Slug of the location', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function showLocationAction(Location $location): JsonResponse
+    public function showLocationAction(#[MapEntity] Location $location): JsonResponse
     {
         return $this->createStandardResponse($location);
     }

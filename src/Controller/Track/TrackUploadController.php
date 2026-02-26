@@ -11,6 +11,7 @@ use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorExce
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\Track;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,7 +26,7 @@ class TrackUploadController extends AbstractController
         name: 'caldera_criticalmass_track_upload',
         priority: 270
     )]
-    public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackValidator $trackValidator): Response
+    public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, #[MapEntity(disabled: true)] Ride $ride, TrackValidator $trackValidator): Response
     {
         $track = new Track();
 

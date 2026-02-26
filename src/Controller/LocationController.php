@@ -7,6 +7,7 @@ use App\Entity\Location;
 use App\Entity\Ride;
 use App\Repository\LocationRepository;
 use App\Repository\RideRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,7 +16,7 @@ class LocationController extends AbstractController
 {
     public function listlocationsAction(
         LocationRepository $locationRepository,
-        City $city
+        #[MapEntity(disabled: true)] City $city
     ): Response {
         $locations = $locationRepository->findLocationsByCity($city);
 
@@ -32,7 +33,7 @@ class LocationController extends AbstractController
     public function showAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,
-        Location $location
+        #[MapEntity] Location $location
     ): Response {
         $rides = $rideRepository->findRidesForLocation($location);
 
@@ -54,7 +55,7 @@ class LocationController extends AbstractController
     public function rideAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,
-        Ride $ride
+        #[MapEntity(disabled: true)] Ride $ride
     ): Response {
         $location = $locationRepository->findLocationForRide($ride);
 

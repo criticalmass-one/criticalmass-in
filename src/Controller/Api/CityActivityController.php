@@ -7,6 +7,7 @@ use App\Entity\CityActivity;
 use App\Serializer\CriticalSerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -25,7 +26,7 @@ class CityActivityController extends BaseController
     #[OA\Tag(name: 'CityActivity')]
     #[OA\RequestBody(description: 'JSON representation of the city activity data', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 201, description: 'Activity score created successfully')]
-    public function createAction(Request $request, City $city): JsonResponse
+    public function createAction(Request $request, #[MapEntity(disabled: true)] City $city): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 

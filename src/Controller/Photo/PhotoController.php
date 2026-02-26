@@ -10,6 +10,7 @@ use App\Entity\Track;
 use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
 use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,7 +24,7 @@ class PhotoController extends AbstractController
         SeoPageInterface $seoPage,
         TrackRepository $trackRepository,
         ExifWrapperInterface $exifWrapper,
-        Photo $photo
+        #[MapEntity] Photo $photo
     ): Response {
         if (!$photo->isEnabled() || $photo->isDeleted()) {
             throw $this->createAccessDeniedException();

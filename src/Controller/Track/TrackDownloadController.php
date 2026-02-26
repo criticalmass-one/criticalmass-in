@@ -5,6 +5,7 @@ namespace App\Controller\Track;
 use League\Flysystem\Filesystem;
 use App\Controller\AbstractController;
 use App\Entity\Track;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -14,7 +15,7 @@ class TrackDownloadController extends AbstractController
 {
     #[IsGranted('edit', 'track')]
     #[Route('/track/download/{id}', name: 'caldera_criticalmass_track_download', priority: 270)]
-    public function downloadAction(Track $track, UploaderHelper $uploaderHelper): Response
+    public function downloadAction(#[MapEntity] Track $track, UploaderHelper $uploaderHelper): Response
     {
         /** @var Filesystem $filesystem */
         $filesystem = $this->get('oneup_flysystem.flysystem_track_track_filesystem');

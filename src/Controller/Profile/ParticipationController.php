@@ -10,6 +10,7 @@ use App\Entity\Participation;
 use App\Event\Participation\ParticipationDeletedEvent;
 use App\Event\Participation\ParticipationUpdatedEvent;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,7 +68,7 @@ class ParticipationController extends AbstractController
         Request $request,
         ManagerRegistry $registry,
         EventDispatcherInterface $eventDispatcher,
-        Participation $participation
+        #[MapEntity] Participation $participation
     ): Response {
         $status = $request->query->get('status', 'maybe');
 
@@ -92,7 +93,7 @@ class ParticipationController extends AbstractController
     public function deleteAction(
         ManagerRegistry $registry,
         EventDispatcherInterface $eventDispatcher,
-        Participation $participation
+        #[MapEntity] Participation $participation
     ): Response {
         $registry->getManager()->remove($participation);
         $registry->getManager()->flush();

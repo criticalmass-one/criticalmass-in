@@ -24,21 +24,21 @@ class PostController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/post/write/city/{id}', name: 'caldera_criticalmass_timeline_post_write_city', priority: 120)]
-    public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
+    public function writeCityAction(Request $request, #[MapEntity] City $city, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $city, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
     #[Route('/post/write/ride/{id}', name: 'caldera_criticalmass_timeline_post_write_ride', priority: 120)]
-    public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
+    public function writeRideAction(Request $request, #[MapEntity] Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $ride, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
     #[Route('/post/write/photo/{id}', name: 'caldera_criticalmass_timeline_post_write_photo', priority: 120)]
-    public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
+    public function writePhotoAction(Request $request, #[MapEntity] Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $photo, $objectRouter);
     }

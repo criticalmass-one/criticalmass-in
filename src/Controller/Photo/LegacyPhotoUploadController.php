@@ -8,6 +8,7 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\LegacyPhotoUploadType;
 use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class LegacyPhotoUploadController extends AbstractController
         name: 'caldera_criticalmass_gallery_legacy_photos_upload_ride',
         priority: 170
     )]
-    public function uploadAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, ?UserInterface $user = null): Response
+    public function uploadAction(Request $request, #[MapEntity(disabled: true)] Ride $ride, PhotoUploaderInterface $photoUploader, ?UserInterface $user = null): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->uploadPostAction($request, $ride, $photoUploader, $user);

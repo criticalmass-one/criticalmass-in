@@ -7,6 +7,7 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use App\Entity\Ride;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,7 +26,7 @@ class RideController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identify the requested ride', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function showAction(Ride $ride): JsonResponse
+    public function showAction(#[MapEntity(disabled: true)] Ride $ride): JsonResponse
     {
         $context = ['groups' => 'ride-details'];
 
@@ -39,7 +40,7 @@ class RideController extends BaseController
     #[OA\Tag(name: 'Ride')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function showCurrentAction(Request $request, City $city): JsonResponse
+    public function showCurrentAction(Request $request, #[MapEntity(disabled: true)] City $city): JsonResponse
     {
         $cycleMandatory = $request->query->getBoolean('cycleMandatory', false);
         $slugsAllowed = $request->query->getBoolean('slugsAllowed', true);
@@ -170,7 +171,7 @@ class RideController extends BaseController
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride to be created', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of ride', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function createRideAction(Request $request, City $city, ValidatorInterface $validator): JsonResponse
+    public function createRideAction(Request $request, #[MapEntity(disabled: true)] City $city, ValidatorInterface $validator): JsonResponse
     {
         /** @var Ride $ride */
         $ride = $this->deserializeRequest($request, Ride::class);
@@ -222,7 +223,7 @@ class RideController extends BaseController
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride to be updated', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of ride', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function updateRideAction(Request $request, Ride $ride, ValidatorInterface $validator): JsonResponse
+    public function updateRideAction(Request $request, #[MapEntity(disabled: true)] Ride $ride, ValidatorInterface $validator): JsonResponse
     {
         $this->deserializeRequestInto($request, $ride);
 

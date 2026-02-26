@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Ride;
 use App\Entity\Subride;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -20,7 +21,7 @@ class SubrideController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride (date or slug)', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listSubrideAction(Ride $ride): JsonResponse
+    public function listSubrideAction(#[MapEntity(disabled: true)] Ride $ride): JsonResponse
     {
         $subrideList = $this->managerRegistry->getRepository(Subride::class)->findByRide($ride);
 
@@ -36,7 +37,7 @@ class SubrideController extends BaseController
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride (date or slug)', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the subride', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function showSubrideAction(Subride $subride): JsonResponse
+    public function showSubrideAction(#[MapEntity] Subride $subride): JsonResponse
     {
         return $this->createStandardResponse($subride);
     }

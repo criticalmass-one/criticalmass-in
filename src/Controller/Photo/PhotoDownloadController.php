@@ -5,6 +5,7 @@ namespace App\Controller\Photo;
 use App\Controller\AbstractController;
 use App\Entity\Photo;
 use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,7 +19,7 @@ class PhotoDownloadController extends AbstractController
     #[IsGranted('ROLE_PHOTO_DOWNLOAD')]
     public function downloadAction(
         UploaderHelper $uploaderHelper,
-        Photo $photo,
+        #[MapEntity] Photo $photo,
         string $uploadDestinationPhoto
     ): BinaryFileResponse {
         if (!$photo->isEnabled() || $photo->isDeleted()) {

@@ -11,6 +11,7 @@ use App\Form\Type\RideSocialPreviewType;
 use App\Form\Type\RideType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,7 +25,7 @@ class RideManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/add-ride', name: 'caldera_criticalmass_ride_add', priority: 70)]
-    public function addAction(Request $request, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
+    public function addAction(Request $request, EntityManagerInterface $entityManager, #[MapEntity(disabled: true)] City $city, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $ride = new Ride();
         $ride
@@ -93,7 +94,7 @@ class RideManagementController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/{rideIdentifier}/edit', name: 'caldera_criticalmass_ride_edit', priority: 70)]
-    public function editAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
+    public function editAction(Request $request, #[MapEntity(disabled: true)] Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $form = $this->createForm(RideType::class, $ride, [
             'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_edit'),
@@ -162,7 +163,7 @@ class RideManagementController extends AbstractController
         EntityManagerInterface $entityManager,
         Request $request,
         ObjectRouterInterface $objectRouter,
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         ?UserInterface $user = null
     ): Response {
         $form = $this->createForm(RideSocialPreviewType::class, $ride, [
@@ -213,7 +214,7 @@ class RideManagementController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/{rideIdentifier}/disable', name: 'caldera_criticalmass_ride_disable', priority: 70)]
-    public function disableAction(Request $request, ManagerRegistry $registry, Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): RedirectResponse
+    public function disableAction(Request $request, ManagerRegistry $registry, #[MapEntity(disabled: true)] Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): RedirectResponse
     {
         if (Request::METHOD_POST === $request->getMethod()) {
             $disableForm = $this->createForm(RideDisableType::class, $ride);
@@ -231,7 +232,7 @@ class RideManagementController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/{rideIdentifier}/enable', name: 'caldera_criticalmass_ride_enable', methods: ['POST'], priority: 70)]
-    public function enableAction(Request $request, ManagerRegistry $registry, Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): RedirectResponse
+    public function enableAction(Request $request, ManagerRegistry $registry, #[MapEntity(disabled: true)] Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): RedirectResponse
     {
         if (!$this->isCsrfTokenValid('ride_enable_' . $ride->getId(), $request->request->get('_token'))) {
             throw $this->createAccessDeniedException('Invalid CSRF token.');

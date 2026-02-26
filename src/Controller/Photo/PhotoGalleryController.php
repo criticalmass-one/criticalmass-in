@@ -9,6 +9,7 @@ use App\Entity\Ride;
 use App\Repository\PhotoRepository;
 use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -27,7 +28,7 @@ class PhotoGalleryController extends AbstractController
         Request $request,
         PaginatorInterface $paginator,
         PhotoRepository $photoRepository,
-        Ride $ride
+        #[MapEntity(disabled: true)] Ride $ride
     ): Response {
         if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
             throw $this->createAccessDeniedException();

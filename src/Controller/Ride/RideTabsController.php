@@ -15,13 +15,14 @@ use App\Repository\SocialNetworkProfileRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideTabsController extends AbstractController
 {
     public function renderPhotosTabAction(
         PhotoRepository $photoRepository,
-        Ride $ride
+        #[MapEntity(disabled: true)] Ride $ride
     ): Response {
         $photos = $photoRepository->findPhotosByRide($ride);
 
@@ -34,7 +35,7 @@ class RideTabsController extends AbstractController
 
     public function renderTracksTabAction(
         TrackRepository $trackRepository,
-        Ride $ride
+        #[MapEntity(disabled: true)] Ride $ride
     ): Response {
         $tracks = $trackRepository->findTracksByRide($ride);
 
@@ -45,7 +46,7 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderPostsTabAction(Ride $ride): Response
+    public function renderPostsTabAction(#[MapEntity(disabled: true)] Ride $ride): Response
     {
         return $this->render('RideTabs/PostsTab.html.twig', [
             'ride' => $ride,
@@ -53,7 +54,7 @@ class RideTabsController extends AbstractController
     }
 
     public function renderSubridesTabAction(
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         SubrideRepository $subrideRepository
     ): Response {
         $subrides = $subrideRepository->getSubridesForRide($ride);
@@ -65,7 +66,7 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderStatisticTabAction(Ride $ride): Response
+    public function renderStatisticTabAction(#[MapEntity(disabled: true)] Ride $ride): Response
     {
         return $this->render('RideTabs/StatisticTab.html.twig', [
             'ride' => $ride,
@@ -77,7 +78,7 @@ class RideTabsController extends AbstractController
         LocationRepository $locationRepository,
         WeatherRepository $weatherRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         ObjectRouterInterface $objectRouter
     ): Response {
         /**
