@@ -374,7 +374,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
         return $this->title;
     }
 
-    public function setDescription(string $description): Ride
+    public function setDescription(?string $description = null): Ride
     {
         $this->description = $description;
 
@@ -386,7 +386,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
         return $this->description;
     }
 
-    public function setSocialDescription(string $socialDescription): Ride
+    public function setSocialDescription(?string $socialDescription = null): Ride
     {
         $this->socialDescription = $socialDescription;
 

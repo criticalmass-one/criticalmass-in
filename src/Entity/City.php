@@ -368,7 +368,7 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
         return $this->slugs;
     }
 
-    public function setDescription(string $description): City
+    public function setDescription(?string $description = null): City
     {
         $this->description = $description;
 
