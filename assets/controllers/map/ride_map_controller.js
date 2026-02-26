@@ -37,6 +37,9 @@ export default class extends BaseMapController {
         if (trackLayer) {
             this.fitTo(trackLayer);
         }
+
+        this.element.__leafletMap = this.map;
+        document.dispatchEvent(new CustomEvent('ride-map:ready', { detail: { map: this.map } }));
     }
 
     addLocationMarker() {
