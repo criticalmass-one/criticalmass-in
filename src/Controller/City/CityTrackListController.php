@@ -7,6 +7,7 @@ use App\Entity\City;
 use App\Entity\Track;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class CityTrackListController extends AbstractController
 {
     #[Route('/{citySlug}/tracks', name: 'caldera_criticalmass_city_listtracks', priority: 100)]
-    public function listTracksAction(Request $request, City $city, ManagerRegistry $registry, PaginatorInterface $paginator): Response
+    public function listTracksAction(Request $request, #[MapEntity(disabled: true)] City $city, ManagerRegistry $registry, PaginatorInterface $paginator): Response
     {
         $query = $registry->getRepository(Track::class)->findByCityQuery($city, 'DESC');
 

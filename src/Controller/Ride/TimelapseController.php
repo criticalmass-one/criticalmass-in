@@ -7,6 +7,7 @@ use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Repository\TrackRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -19,7 +20,7 @@ class TimelapseController extends AbstractController
     )]
     public function showAction(
         TrackRepository $trackRepository,
-        Ride $ride
+        #[MapEntity(disabled: true)] Ride $ride
     ): Response {
         $tracks = $trackRepository->findTracksByRide($ride);
 
@@ -35,7 +36,7 @@ class TimelapseController extends AbstractController
         options: ['expose' => true],
         priority: 135
     )]
-    public function loadtrackAction(GpxServiceInterface $gpxService, Track $track): Response
+    public function loadtrackAction(GpxServiceInterface $gpxService, #[MapEntity] Track $track): Response
     {
         $list = $gpxService->generateTimeLatLngList($track);
 

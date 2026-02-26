@@ -14,6 +14,7 @@ use App\Factory\City\CityFactoryInterface;
 use App\Form\Type\CityType;
 use App\Repository\RegionRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -130,7 +131,7 @@ class CityManagementController extends AbstractController
     public function editAction(
         Request $request,
         EventDispatcherInterface $eventDispatcher,
-        City $city,
+        #[MapEntity(disabled: true)] City $city,
         ObjectRouterInterface $objectRouter,
         ?UserInterface $user = null
     ): Response {

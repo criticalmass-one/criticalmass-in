@@ -7,6 +7,7 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -22,7 +23,7 @@ class PhotoController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Provide a ride identifier', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listRidePhotosAction(Ride $ride): JsonResponse
+    public function listRidePhotosAction(#[MapEntity(disabled: true)] Ride $ride): JsonResponse
     {
         $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);
 

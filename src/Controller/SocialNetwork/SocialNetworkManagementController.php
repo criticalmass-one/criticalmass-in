@@ -10,6 +10,7 @@ use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileEditType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class SocialNetworkManagementController extends AbstractController
     )]
     public function editAction(
         Request $request,
-        SocialNetworkProfile $socialNetworkProfile,
+        #[MapEntity] SocialNetworkProfile $socialNetworkProfile,
         ObjectRouterInterface $objectRouter,
         SocialNetworkHelperInterface $socialNetworkHelper
     ): Response {
@@ -92,7 +93,7 @@ class SocialNetworkManagementController extends AbstractController
     public function disableAction(
         Request $request,
         EntityManagerInterface $entityManager,
-        SocialNetworkProfile $socialNetworkProfile,
+        #[MapEntity] SocialNetworkProfile $socialNetworkProfile,
         SocialNetworkHelper $socialNetworkHelper
     ): Response {
         if (!$this->isCsrfTokenValid('socialnetwork_disable_' . $socialNetworkProfile->getId(), $request->request->get('_token'))) {

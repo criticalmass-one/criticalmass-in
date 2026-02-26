@@ -17,6 +17,7 @@ use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -56,7 +57,7 @@ class RideController extends AbstractController
         TrackRepository $trackRepository,
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
-        ?Ride $ride = null
+        #[MapEntity(disabled: true)] ?Ride $ride = null
     ): Response {
         if (!$ride) {
             return $this->redirectToRoute('caldera_criticalmass_calendar');

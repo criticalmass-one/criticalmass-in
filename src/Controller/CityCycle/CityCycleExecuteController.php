@@ -10,6 +10,7 @@ use App\Model\RideGenerator\CycleExecutable;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +36,7 @@ class CityCycleExecuteController extends AbstractController
     #[Route('/{citySlug}/cycles/{id}/execute', name: 'caldera_criticalmass_citycycle_execute', priority: 80)]
     public function executeAction(
         Request $request,
-        CityCycle $cityCycle,
+        #[MapEntity] CityCycle $cityCycle,
         SerializerInterface $serializer
     ): Response {
         $dateTime = new Carbon();
@@ -82,7 +83,7 @@ class CityCycleExecuteController extends AbstractController
     #[Route('/{citySlug}/cycles/{id}/execute-persist', name: 'caldera_criticalmass_citycycle_execute_persist', priority: 80)]
     public function executePersistAction(
         Request $request,
-        CityCycle $cityCycle,
+        #[MapEntity] CityCycle $cityCycle,
         SessionInterface $session,
         ManagerRegistry $registry,
         SerializerInterface $serializer,

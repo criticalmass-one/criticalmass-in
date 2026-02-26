@@ -7,6 +7,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackTimeEvent;
 use App\Controller\AbstractController;
 use App\Entity\Track;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -29,7 +30,7 @@ class TrackTimeController extends AbstractController
         ObjectRouterInterface $objectRouter,
         EventDispatcherInterface $eventDispatcher,
         GpxServiceInterface $gpxService,
-        Track $track
+        #[MapEntity] Track $track
     ): Response {
         $form = $this->createFormBuilder($track)
             ->setAction($objectRouter->generate($track, 'caldera_criticalmass_track_time'))

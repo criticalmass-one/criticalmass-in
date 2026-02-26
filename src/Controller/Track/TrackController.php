@@ -5,6 +5,7 @@ namespace App\Controller\Track;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -17,7 +18,7 @@ class TrackController extends AbstractController
         name: 'caldera_criticalmass_track_view',
         priority: 150
     )]
-    public function viewAction(Track $track): Response
+    public function viewAction(#[MapEntity] Track $track): Response
     {
         return $this->render('Track/view.html.twig', [
             'track' => $track,
@@ -30,7 +31,7 @@ class TrackController extends AbstractController
         name: 'caldera_criticalmass_track_approve',
         priority: 150
     )]
-    public function approveAction(Track $track, ManagerRegistry $registry): Response
+    public function approveAction(#[MapEntity] Track $track, ManagerRegistry $registry): Response
     {
         $track->setReviewed(true);
 

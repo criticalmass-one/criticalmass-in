@@ -12,6 +12,7 @@ use App\Event\Track\TrackUploadedEvent;
 use Carbon\Carbon;
 use Strava\API\OAuth;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -131,7 +132,7 @@ class StravaMassImportController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/trackimport/stravaimport', name: 'caldera_criticalmass_trackmassimport_import', priority: 310)]
-    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
+    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, #[MapEntity(disabled: true)] Ride $ride, TrackImporterInterface $trackImporter): Response
     {
         $activityId = (int)$request->get('activityId');
 

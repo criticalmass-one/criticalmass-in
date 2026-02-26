@@ -6,6 +6,7 @@ use App\Controller\AbstractController;
 use App\Criticalmass\Participation\Manager\ParticipationManagerInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -24,7 +25,7 @@ class ParticipationController extends AbstractController
         Request $request,
         ParticipationManagerInterface $participationManager,
         ObjectRouterInterface $objectRouter,
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         string $status
     ): Response {
         if (!$this->isCsrfTokenValid('participation_' . $ride->getId(), $request->request->get('_token'))) {

@@ -12,6 +12,7 @@ use App\EntityInterface\SocialNetworkProfileAble;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactory;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,7 +27,7 @@ class SocialNetworkListController extends AbstractController
     )]
     public function listCityAction(
         ObjectRouterInterface $router,
-        City $city,
+        #[MapEntity(disabled: true)] City $city,
         SocialNetworkProfileFactory $socialNetworkProfileFactory,
         SocialNetworkHelperInterface $socialNetworkHelper,
         UserInterface $user
@@ -54,7 +55,7 @@ class SocialNetworkListController extends AbstractController
     )]
     public function listRideAction(
         ObjectRouterInterface $router,
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory,
         SocialNetworkHelperInterface $socialNetworkHelper,
         ?UserInterface $user = null

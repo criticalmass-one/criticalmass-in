@@ -8,6 +8,7 @@ use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Form\Type\RideEstimateType;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class RideEstimateController extends AbstractController
     )]
     public function addestimateAction(
         Request $request,
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         ?UserInterface $user = null
@@ -59,7 +60,7 @@ class RideEstimateController extends AbstractController
     )]
     public function anonymousestimateAction(
         Request $request,
-        Ride $ride,
+        #[MapEntity(disabled: true)] Ride $ride,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         ?UserInterface $user = null

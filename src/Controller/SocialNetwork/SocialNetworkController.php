@@ -13,6 +13,7 @@ use App\Entity\SocialNetworkProfile;
 use App\EntityInterface\SocialNetworkProfileAble;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,8 +40,8 @@ class SocialNetworkController extends AbstractController
         ObjectRouterInterface $objectRouter,
         SocialNetworkProfileFactoryInterface $networkProfileFactory,
         SocialNetworkHelperInterface $socialNetworkHelper,
-        ?City $city = null,
-        ?Ride $ride = null,
+        #[MapEntity(disabled: true)] ?City $city = null,
+        #[MapEntity(disabled: true)] ?Ride $ride = null,
         ?UserInterface $user = null
     ): Response {
         if (!$user) {

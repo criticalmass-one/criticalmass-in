@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,7 +24,7 @@ class SocialNetworkFeedItemController extends BaseController
     #[OA\Parameter(name: 'uniqueIdentifier', in: 'query', description: 'Filter by unique identifier of the feed item', schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'networkIdentifier', in: 'query', description: 'Filter by social network identifier (e.g. twitter, facebook, instagram)', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listSocialNetworkFeedItemsCityAction(Request $request, City $city): JsonResponse
+    public function listSocialNetworkFeedItemsCityAction(Request $request, #[MapEntity(disabled: true)] City $city): JsonResponse
     {
         $uniqueIdentifier = $request->get('uniqueIdentifier');
         $networkIdentifier = $request->get('networkIdentifier');
@@ -42,7 +43,7 @@ class SocialNetworkFeedItemController extends BaseController
     #[OA\Parameter(name: 'feedItemId', in: 'path', description: 'Id of the feed item to update', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\RequestBody(description: 'JSON representation of the feed item properties to update', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem): JsonResponse
+    public function updateSocialNetworkFeedItemAction(Request $request, #[MapEntity] SocialNetworkFeedItem $socialNetworkFeedItem): JsonResponse
     {
         $this->deserializeRequestInto($request, $socialNetworkFeedItem);
 

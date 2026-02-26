@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
 use App\Repository\CityCycleRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use OpenApi\Attributes as OA;
@@ -28,8 +29,8 @@ class CycleController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function listAction(
         Request $request,
-        ?City $city = null,
-        ?Region $region = null
+        #[MapEntity(disabled: true)] ?City $city = null,
+        #[MapEntity(disabled: true)] ?Region $region = null
     ): JsonResponse {
         $validNow = $request->query->getBoolean('validNow');
         $dayOfWeek = $request->query->getInt('dayOfWeek');
@@ -61,7 +62,7 @@ class CycleController extends BaseController
     #[OA\Tag(name: 'Cycles')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listCyclesCityAction(City $city, CityCycleRepository $cityCycleRepository): JsonResponse
+    public function listCyclesCityAction(#[MapEntity(disabled: true)] City $city, CityCycleRepository $cityCycleRepository): JsonResponse
     {
         $cycleList = $cityCycleRepository->findByCity($city);
 
@@ -76,7 +77,7 @@ class CycleController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the cycle to create', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successfully created')]
-    public function createCycleAction(Request $request, City $city): JsonResponse
+    public function createCycleAction(Request $request, #[MapEntity(disabled: true)] City $city): JsonResponse
     {
         $newCycle = $this->deserializeRequest($request, CityCycle::class);
 

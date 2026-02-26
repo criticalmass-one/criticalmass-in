@@ -8,6 +8,7 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Form\Type\CityCycleType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class CityCycleManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/cycles/add', name: 'caldera_criticalmass_citycycle_add', priority: 80)]
-    public function addAction(Request $request, City $city, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
+    public function addAction(Request $request, #[MapEntity(disabled: true)] City $city, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $cityCycle = new CityCycle();
         $cityCycle
@@ -73,7 +74,7 @@ class CityCycleManagementController extends AbstractController
     #[Route('/{citySlug}/cycles/{id}/edit', name: 'caldera_criticalmass_citycycle_edit', priority: 80)]
     public function editAction(
         Request $request,
-        CityCycle $cityCycle,
+        #[MapEntity] CityCycle $cityCycle,
         ObjectRouterInterface $objectRouter,
         ?UserInterface $user = null
     ): Response {
@@ -128,7 +129,7 @@ class CityCycleManagementController extends AbstractController
     #[Route('/{citySlug}/cycles/{id}/disable', name: 'caldera_criticalmass_citycycle_disable', methods: ['POST'], priority: 80)]
     public function disableAction(
         Request $request,
-        CityCycle $cityCycle,
+        #[MapEntity] CityCycle $cityCycle,
         ManagerRegistry $managerRegistry,
         ObjectRouterInterface $objectRouter
     ): Response {

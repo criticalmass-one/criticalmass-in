@@ -9,6 +9,7 @@ use App\Entity\Track;
 use App\Event\Track\TrackDeletedEvent;
 use Doctrine\Persistence\ManagerRegistry;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -27,7 +28,7 @@ class TrackController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride (date or slug)', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listRideTrackAction(Ride $ride): JsonResponse
+    public function listRideTrackAction(#[MapEntity(disabled: true)] Ride $ride): JsonResponse
     {
         $trackList = $this->managerRegistry->getRepository(Track::class)->findByRide($ride);
 
@@ -41,7 +42,7 @@ class TrackController extends BaseController
     #[OA\Tag(name: 'Track')]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the track', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function viewAction(Track $track, ?UserInterface $user = null): JsonResponse
+    public function viewAction(#[MapEntity] Track $track, ?UserInterface $user = null): JsonResponse
     {
         $groups = ['api-public'];
 
@@ -130,7 +131,7 @@ class TrackController extends BaseController
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the track to delete', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: 302, description: 'Redirects to track list on success')]
     #[OA\Response(response: 403, description: 'Returned when user lacks edit permissions')]
-    public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
+    public function deleteAction(#[MapEntity] Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
     {
         $track->setDeleted(true);
 

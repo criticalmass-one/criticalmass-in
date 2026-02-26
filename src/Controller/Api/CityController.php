@@ -7,6 +7,7 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -99,7 +100,7 @@ class CityController extends BaseController
     #[OA\Tag(name: 'City')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function showAction(City $city): JsonResponse
+    public function showAction(#[MapEntity(disabled: true)] City $city): JsonResponse
     {
         $groups = ['ride-list'];
 

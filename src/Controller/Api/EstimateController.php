@@ -11,6 +11,7 @@ use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
 use App\Serializer\CriticalSerializerInterface;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,7 +100,7 @@ class EstimateController extends BaseController
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the estimate data', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function createRideEstimateAction(Request $request, Ride $ride): JsonResponse
+    public function createRideEstimateAction(Request $request, #[MapEntity(disabled: true)] Ride $ride): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);

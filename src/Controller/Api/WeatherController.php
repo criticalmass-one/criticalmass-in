@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Ride;
 use App\Entity\Weather;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -40,7 +41,7 @@ class WeatherController extends BaseController
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride (date or slug)', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the weather data', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 201, description: 'Returned when weather data was successfully created')]
-    public function addWeatherAction(Request $request, Ride $ride): JsonResponse
+    public function addWeatherAction(Request $request, #[MapEntity(disabled: true)] Ride $ride): JsonResponse
     {
         /** @var Weather $weather */
         $weather = $this->deserializeRequest($request, Weather::class, ['groups' => ['weather']]);

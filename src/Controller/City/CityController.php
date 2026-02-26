@@ -11,6 +11,7 @@ use App\Repository\LocationRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +21,7 @@ class CityController extends AbstractController
     #[Route('/{citySlug}/missingstats', name: 'caldera_criticalmass_city_missingstats', priority: 100)]
     public function missingStatsAction(
         RideRepository $rideRepository,
-        City $city
+        #[MapEntity(disabled: true)] City $city
     ): Response {
         return $this->render('City/missing_stats.html.twig', [
             'city' => $city,
@@ -31,7 +32,7 @@ class CityController extends AbstractController
     #[Route('/{citySlug}/list', name: 'caldera_criticalmass_city_listrides', priority: 170)]
     public function listRidesAction(
         RideRepository $rideRepository,
-        City $city
+        #[MapEntity(disabled: true)] City $city
     ): Response {
         return $this->render('City/ride_list.html.twig', [
             'city' => $city,
@@ -43,7 +44,7 @@ class CityController extends AbstractController
     public function listGalleriesAction(
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
-        City $city
+        #[MapEntity(disabled: true)] City $city
     ): Response {
         $seoPage->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
@@ -70,7 +71,7 @@ class CityController extends AbstractController
         BlockedCityRepository $blockedCityRepository,
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
-        ?City $city = null
+        #[MapEntity(disabled: true)] ?City $city = null
     ): Response {
         if (!$city) {
             $citySlug = $request->get('citySlug');
@@ -116,7 +117,7 @@ class CityController extends AbstractController
     #[Route('/{citySlug}/locations', name: 'caldera_criticalmass_city_locations', priority: 100)]
     public function getlocationsAction(
         RideRepository $rideRepository,
-        City $city
+        #[MapEntity(disabled: true)] City $city
     ): Response {
         return new Response(json_encode($rideRepository->getLocationsForCity($city)), Response::HTTP_OK, [
             'Content-Type' => 'text/json',

@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
 use OpenApi\Attributes as OA;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,7 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Parameter(name: 'autoFetch', in: 'query', description: 'Filter by auto-fetch setting', schema: new OA\Schema(type: 'boolean'))]
     #[OA\Parameter(name: 'entities', in: 'query', description: 'Comma-separated list of entity class names to filter by', schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listSocialNetworkProfilesAction(Request $request, ?City $city = null): JsonResponse
+    public function listSocialNetworkProfilesAction(Request $request, #[MapEntity(disabled: true)] ?City $city = null): JsonResponse
     {
         $networkIdentifier = $request->get('networkIdentifier');
         $autoFetch = (bool)$request->get('autoFetch');
@@ -46,7 +47,7 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Tag(name: 'Social Network Profile')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function listSocialNetworkProfilesCityAction(City $city): JsonResponse
+    public function listSocialNetworkProfilesCityAction(#[MapEntity(disabled: true)] City $city): JsonResponse
     {
         $profileList = $this->managerRegistry->getRepository(SocialNetworkProfile::class)->findByCity($city);
 
@@ -64,7 +65,7 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function updateSocialNetworkProfileAction(
         Request $request,
-        SocialNetworkProfile $socialNetworkProfile,
+        #[MapEntity] SocialNetworkProfile $socialNetworkProfile,
     ): Response {
         $this->deserializeRequestInto($request, $socialNetworkProfile);
 
@@ -81,7 +82,7 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the social network profile to create', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successfully created')]
-    public function createSocialNetworkProfileAction(Request $request, City $city): JsonResponse
+    public function createSocialNetworkProfileAction(Request $request, #[MapEntity(disabled: true)] City $city): JsonResponse
     {
         $newSocialNetworkProfile = $this->deserializeRequest($request, SocialNetworkProfile::class);
 

@@ -42,7 +42,7 @@ class BoardController extends AbstractController
         ThreadRepository $threadRepository,
         ObjectRouterInterface $objectRouter,
         #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
-        ?City $city = null
+        #[MapEntity(disabled: true)] ?City $city = null
     ): Response {
         if (!$board && !$city) {
             throw $this->createNotFoundException();
@@ -72,7 +72,7 @@ class BoardController extends AbstractController
     #[Route('/{citySlug}/thread/{threadSlug}', name: 'caldera_criticalmass_board_viewcitythread', priority: 240)]
     public function viewThreadAction(
         PostRepository $postRepository,
-        Thread $thread
+        #[MapEntity(disabled: true)] Thread $thread
     ): Response {
         $posts = $postRepository->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
@@ -91,7 +91,7 @@ class BoardController extends AbstractController
         Request $request,
         ObjectRouterInterface $objectRouter,
         #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
-        ?City $city = null
+        #[MapEntity(disabled: true)] ?City $city = null
     ): Response {
         $board = $board ?? $city;
 
