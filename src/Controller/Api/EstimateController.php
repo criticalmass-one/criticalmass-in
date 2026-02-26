@@ -7,10 +7,14 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use App\Entity\User;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
+use App\Event\RideEstimate\RideEstimateUpdatedEvent;
 use App\Model\CreateEstimateModel;
+use App\Repository\RideEstimateRepository;
 use App\Serializer\CriticalSerializerInterface;
 use OpenApi\Attributes as OA;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +27,8 @@ class EstimateController extends BaseController
         CriticalSerializerInterface $serializer,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly DataQueryManagerInterface $dataQueryManager,
+        private readonly RideEstimateRepository $rideEstimateRepository,
+        private readonly Security $security,
         ManagerRegistry $managerRegistry,
     )
     {
@@ -57,7 +63,7 @@ class EstimateController extends BaseController
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
 
-        $rideEstimation = $this->createRideEstimate($estimateModel);
+        [$rideEstimation, $isUpdate] = $this->createOrUpdateRideEstimate($estimateModel);
 
         if (!$rideEstimation) {
             throw new BadRequestHttpException();
@@ -66,7 +72,11 @@ class EstimateController extends BaseController
         $this->managerRegistry->getManager()->persist($rideEstimation);
         $this->managerRegistry->getManager()->flush();
 
-        $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
+        if ($isUpdate) {
+            $this->eventDispatcher->dispatch(new RideEstimateUpdatedEvent($rideEstimation), RideEstimateUpdatedEvent::NAME);
+        } else {
+            $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
+        }
 
         return $this->createStandardResponse($rideEstimation);
     }
@@ -104,7 +114,7 @@ class EstimateController extends BaseController
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
 
-        $rideEstimation = $this->createRideEstimate($estimateModel, $ride);
+        [$rideEstimation, $isUpdate] = $this->createOrUpdateRideEstimate($estimateModel, $ride);
 
         if (!$rideEstimation) {
             throw new BadRequestHttpException();
@@ -113,12 +123,19 @@ class EstimateController extends BaseController
         $this->managerRegistry->getManager()->persist($rideEstimation);
         $this->managerRegistry->getManager()->flush();
 
-        $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
+        if ($isUpdate) {
+            $this->eventDispatcher->dispatch(new RideEstimateUpdatedEvent($rideEstimation), RideEstimateUpdatedEvent::NAME);
+        } else {
+            $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
+        }
 
         return $this->createStandardResponse($rideEstimation);
     }
 
-    protected function createRideEstimate(CreateEstimateModel $model, ?Ride $ride = null): ?RideEstimate
+    /**
+     * @return array{0: ?RideEstimate, 1: bool}
+     */
+    protected function createOrUpdateRideEstimate(CreateEstimateModel $model, ?Ride $ride = null): array
     {
         if (!$model->getDateTime()) {
             $model->setDateTime(new \DateTime());
@@ -128,21 +145,37 @@ class EstimateController extends BaseController
             $ride = $this->findNearestRide($model);
 
             if (!$ride) {
-                return null;
+                return [null, false];
             }
         }
 
-        $estimate = new RideEstimate();
+        $isUpdate = false;
+        $estimate = null;
+        $user = $this->security->getUser();
+
+        if ($user instanceof User) {
+            $estimate = $this->rideEstimateRepository->findByUserAndRide($user, $ride);
+        }
+
+        if ($estimate) {
+            $isUpdate = true;
+        } else {
+            $estimate = new RideEstimate();
+            $estimate->setRide($ride);
+
+            if ($user instanceof User) {
+                $estimate->setUser($user);
+            }
+        }
 
         $estimate
             ->setEstimatedParticipants($model->getEstimation())
             ->setLatitude($model->getLatitude())
             ->setLongitude($model->getLongitude())
             ->setDateTime($model->getDateTime())
-            ->setSource($model->getSource())
-            ->setRide($ride);
+            ->setSource($model->getSource());
 
-        return $estimate;
+        return [$estimate, $isUpdate];
     }
 
     protected function findNearestRide(CreateEstimateModel $model): ?Ride

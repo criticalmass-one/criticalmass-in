@@ -4,10 +4,13 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
+use App\Event\RideEstimate\RideEstimateUpdatedEvent;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use App\Entity\User;
 use App\Form\Type\RideEstimateType;
+use App\Repository\RideEstimateRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,14 +29,26 @@ class RideEstimateController extends AbstractController
     public function addestimateAction(
         Request $request,
         Ride $ride,
+        RideEstimateRepository $rideEstimateRepository,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         ?UserInterface $user = null
     ): Response {
-        $rideEstimate = new RideEstimate();
-        $rideEstimate
-            ->setUser($user)
-            ->setRide($ride);
+        $isUpdate = false;
+        $rideEstimate = null;
+
+        if ($user instanceof User) {
+            $rideEstimate = $rideEstimateRepository->findByUserAndRide($user, $ride);
+        }
+
+        if ($rideEstimate) {
+            $isUpdate = true;
+        } else {
+            $rideEstimate = new RideEstimate();
+            $rideEstimate
+                ->setUser($user)
+                ->setRide($ride);
+        }
 
         $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
             'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_addestimate')
@@ -46,7 +61,11 @@ class RideEstimateController extends AbstractController
             $manager->persist($estimateForm->getData());
             $manager->flush();
 
-            $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
+            if ($isUpdate) {
+                $eventDispatcher->dispatch(new RideEstimateUpdatedEvent($rideEstimate), RideEstimateUpdatedEvent::NAME);
+            } else {
+                $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
+            }
         }
 
         return $this->redirect($objectRouter->generate($ride));
@@ -60,14 +79,27 @@ class RideEstimateController extends AbstractController
     public function anonymousestimateAction(
         Request $request,
         Ride $ride,
+        RideEstimateRepository $rideEstimateRepository,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         ?UserInterface $user = null
     ): Response {
-        $rideEstimate = new RideEstimate();
-        $rideEstimate
-            ->setUser($this->getUser())
-            ->setRide($ride);
+        $isUpdate = false;
+        $rideEstimate = null;
+        $currentUser = $this->getUser();
+
+        if ($currentUser instanceof User) {
+            $rideEstimate = $rideEstimateRepository->findByUserAndRide($currentUser, $ride);
+        }
+
+        if ($rideEstimate) {
+            $isUpdate = true;
+        } else {
+            $rideEstimate = new RideEstimate();
+            $rideEstimate
+                ->setUser($currentUser)
+                ->setRide($ride);
+        }
 
         $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
             'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_addestimate_anonymous')
@@ -80,7 +112,11 @@ class RideEstimateController extends AbstractController
             $manager->persist($estimateForm->getData());
             $manager->flush();
 
-            $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
+            if ($isUpdate) {
+                $eventDispatcher->dispatch(new RideEstimateUpdatedEvent($rideEstimate), RideEstimateUpdatedEvent::NAME);
+            } else {
+                $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
+            }
 
             return $this->redirect($objectRouter->generate($ride));
         }

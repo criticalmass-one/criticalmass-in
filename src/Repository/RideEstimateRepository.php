@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -52,6 +53,11 @@ class RideEstimateRepository extends ServiceEntityRepository
         $result = $query->getResult();
 
         return $result;
+    }
+
+    public function findByUserAndRide(User $user, Ride $ride): ?RideEstimate
+    {
+        return $this->findOneBy(['user' => $user, 'ride' => $ride]);
     }
 
     public function findByRideAndParticipants(Ride $ride, int $estimatedParticipants): ?RideEstimate
