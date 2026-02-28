@@ -4,10 +4,14 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
+use App\Event\RideEstimate\RideEstimateDeletedEvent;
+use App\Event\RideEstimate\RideEstimateUpdatedEvent;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use App\Form\Type\RideEstimateEditType;
 use App\Form\Type\RideEstimateType;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,5 +93,64 @@ class RideEstimateController extends AbstractController
             'estimateForm' => $estimateForm->createView(),
             'ride' => $ride,
         ]);
+    }
+
+    #[IsGranted('edit', 'rideEstimate')]
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/editestimate/{id}',
+        name: 'caldera_criticalmass_ride_editestimate',
+        priority: 60
+    )]
+    public function editAction(
+        Request $request,
+        #[MapEntity(mapping: ['id' => 'id'])] RideEstimate $rideEstimate,
+        Ride $ride,
+        EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter,
+    ): Response {
+        $form = $this->createForm(RideEstimateEditType::class, $rideEstimate);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->managerRegistry->getManager()->flush();
+
+            $eventDispatcher->dispatch(new RideEstimateUpdatedEvent($rideEstimate), RideEstimateUpdatedEvent::NAME);
+
+            return $this->redirect($objectRouter->generate($ride));
+        }
+
+        return $this->render('RideEstimate/edit.html.twig', [
+            'form' => $form->createView(),
+            'ride' => $ride,
+            'rideEstimate' => $rideEstimate,
+        ]);
+    }
+
+    #[IsGranted('delete', 'rideEstimate')]
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/deleteestimate/{id}',
+        name: 'caldera_criticalmass_ride_deleteestimate',
+        methods: ['POST'],
+        priority: 60
+    )]
+    public function deleteAction(
+        Request $request,
+        #[MapEntity(mapping: ['id' => 'id'])] RideEstimate $rideEstimate,
+        Ride $ride,
+        EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter,
+    ): Response {
+        if (!$this->isCsrfTokenValid('rideestimate_delete_' . $rideEstimate->getId(), $request->request->get('_token'))) {
+            return $this->redirect($objectRouter->generate($ride));
+        }
+
+        $eventDispatcher->dispatch(new RideEstimateDeletedEvent($rideEstimate), RideEstimateDeletedEvent::NAME);
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->remove($rideEstimate);
+        $manager->flush();
+
+        return $this->redirect($objectRouter->generate($ride));
     }
 }
