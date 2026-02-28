@@ -21,7 +21,7 @@ class SocialNetworkFeedItem
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'SocialNetworkProfile', inversedBy: 'feedItems')]
-    #[ORM\JoinColumn(name: 'social_network_profile_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'social_network_profile_id', referencedColumnName: 'id', nullable: false)]
     #[Ignore]
     protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
