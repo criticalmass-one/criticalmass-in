@@ -141,6 +141,13 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
             $response = $this->getJsonResponse();
             $this->assertIsArray($response);
             $this->assertArrayHasKey('id', $response);
+
+            $feedItem = $this->entityManager->getRepository(SocialNetworkFeedItem::class)->find($response['id']);
+
+            if ($feedItem) {
+                $this->entityManager->remove($feedItem);
+                $this->entityManager->flush();
+            }
         }
     }
 
