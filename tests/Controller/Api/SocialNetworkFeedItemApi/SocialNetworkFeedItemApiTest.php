@@ -118,9 +118,9 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
 
         $newFeedItemData = [
             'social_network_profile_id' => $profile->getId(),
-            'uniqueidentifier' => 'test-' . uniqid(),
+            'unique_identifier' => 'test-' . uniqid(),
             'text' => 'Test feed item content',
-            'datetime' => time(),
+            'date_time' => time(),
             'hidden' => false,
             'deleted' => false,
         ];
@@ -135,15 +135,67 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
         );
 
         $statusCode = $this->client->getResponse()->getStatusCode();
-        // Note: The endpoint may return 500 due to bugs in the controller.
-        // Ideally should return 201 (created) or 409 (conflict).
-        $this->assertContains($statusCode, [201, 409, 500], 'Should return 201 (created), 409 (conflict), or 500 (server error - known issue)');
+        $this->assertContains($statusCode, [201, 409], 'Should return 201 (created) or 409 (conflict)');
 
         if ($statusCode === 201) {
             $response = $this->getJsonResponse();
             $this->assertIsArray($response);
             $this->assertArrayHasKey('id', $response);
+
+            $feedItem = $this->entityManager->getRepository(SocialNetworkFeedItem::class)->find($response['id']);
+
+            if ($feedItem) {
+                $this->entityManager->remove($feedItem);
+                $this->entityManager->flush();
+            }
         }
+    }
+
+    #[TestDox('PUT /api/{citySlug}/socialnetwork-feeditems returns 400 without social_network_profile_id')]
+    public function testCreateFeedItemWithoutProfileReturns400(): void
+    {
+        $newFeedItemData = [
+            'unique_identifier' => 'test-' . uniqid(),
+            'text' => 'Test feed item without profile',
+            'date_time' => time(),
+            'hidden' => false,
+            'deleted' => false,
+        ];
+
+        $this->client->request(
+            'PUT',
+            '/api/hamburg/socialnetwork-feeditems',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($newFeedItemData)
+        );
+
+        $this->assertResponseStatusCode(400);
+    }
+
+    #[TestDox('PUT /api/{citySlug}/socialnetwork-feeditems returns 400 for invalid social_network_profile_id')]
+    public function testCreateFeedItemWithInvalidProfileReturns400(): void
+    {
+        $newFeedItemData = [
+            'social_network_profile_id' => 999999,
+            'unique_identifier' => 'test-' . uniqid(),
+            'text' => 'Test feed item with invalid profile',
+            'date_time' => time(),
+            'hidden' => false,
+            'deleted' => false,
+        ];
+
+        $this->client->request(
+            'PUT',
+            '/api/hamburg/socialnetwork-feeditems',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($newFeedItemData)
+        );
+
+        $this->assertResponseStatusCode(400);
     }
 
     #[TestDox('PUT /api/{citySlug}/socialnetwork-feeditems returns 409 for duplicate')]
@@ -161,9 +213,9 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
 
         $duplicateData = [
             'social_network_profile_id' => $existingFeedItem->getSocialNetworkProfile()->getId(),
-            'uniqueidentifier' => $existingFeedItem->getUniqueIdentifier(),
+            'unique_identifier' => $existingFeedItem->getUniqueIdentifier(),
             'text' => 'Duplicate content',
-            'datetime' => time(),
+            'date_time' => time(),
             'hidden' => false,
             'deleted' => false,
         ];
@@ -193,8 +245,8 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
         }
 
         $feedItem = $response[0];
-        $this->assertArrayHasKey('datetime', $feedItem);
-        $this->assertIsInt($feedItem['datetime'], 'dateTime should be a Unix timestamp');
+        $this->assertArrayHasKey('date_time', $feedItem);
+        $this->assertIsInt($feedItem['date_time'], 'dateTime should be a Unix timestamp');
     }
 
     #[TestDox('Feed item hidden and deleted are booleans')]

@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
+use App\Entity\SocialNetworkProfile;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -62,9 +63,24 @@ class SocialNetworkFeedItemController extends BaseController
     #[OA\Response(response: 409, description: 'Returned when feed item already exists')]
     public function createSocialNetworkFeedItemAction(Request $request): JsonResponse
     {
+        $requestData = json_decode($request->getContent(), true);
+        $socialNetworkProfileId = $requestData['social_network_profile_id'] ?? null;
+
+        if (!$socialNetworkProfileId) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['Please provide a social_network_profile_id.']);
+        }
+
+        $socialNetworkProfile = $this->managerRegistry->getRepository(SocialNetworkProfile::class)->find($socialNetworkProfileId);
+
+        if (!$socialNetworkProfile) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, [sprintf('Social network profile with id %d not found.', $socialNetworkProfileId)]);
+        }
+
         $newSocialNetworkFeedItem = $this->deserializeRequest($request, SocialNetworkFeedItem::class);
 
-        $newSocialNetworkFeedItem->setCreatedAt(new \DateTime());
+        $newSocialNetworkFeedItem
+            ->setSocialNetworkProfile($socialNetworkProfile)
+            ->setCreatedAt(new \DateTime());
 
         try {
             $manager = $this->managerRegistry->getManager();
