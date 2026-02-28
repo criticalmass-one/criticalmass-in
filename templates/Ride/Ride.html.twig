@@ -232,6 +232,13 @@
                 </button>
             </li>
             {% if pastRide and ride.enabled %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="estimates-tab" data-bs-toggle="tab" data-bs-target="#estimates" type="button" role="tab" aria-controls="estimates" aria-selected="false">
+                        <i class="far fa-users me-1"></i>
+                        Teilnehmer*innenzahlen
+                        <span class="badge bg-secondary ms-1">{{ ride.estimates|length }}</span>
+                    </button>
+                </li>
                 {% if feature('photos') %}
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
@@ -259,6 +266,7 @@
             {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
 
             {% if pastRide and ride.enabled %}
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderEstimatesTabAction', { 'ride': ride } )) }}
                 {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
             {% endif %}
         </div>

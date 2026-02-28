@@ -54,6 +54,21 @@ class RideEstimateRepository extends ServiceEntityRepository
         return $result;
     }
 
+    /** @return list<RideEstimate> */
+    public function findEstimatesByRide(Ride $ride): array
+    {
+        $builder = $this->createQueryBuilder('e');
+
+        $builder
+            ->select('e')
+            ->where($builder->expr()->eq('e.ride', ':ride'))
+            ->andWhere($builder->expr()->isNotNull('e.estimatedParticipants'))
+            ->setParameter('ride', $ride)
+            ->addOrderBy('e.createdAt', 'DESC');
+
+        return $builder->getQuery()->getResult();
+    }
+
     public function findByRideAndParticipants(Ride $ride, int $estimatedParticipants): ?RideEstimate
     {
         $qb = $this->createQueryBuilder('e');
