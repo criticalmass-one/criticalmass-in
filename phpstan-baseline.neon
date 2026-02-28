@@ -428,6 +428,13 @@ parameters:
 			path: src/Controller/CityCycle/CityCycleController.php
 
 		-
+			message: '#^Method App\\Controller\\CityCycle\\CityCycleExecuteController\:\:fetchRidePreview\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Controller/CityCycle/CityCycleExecuteController.php
+			reportUnmatched: false
+
+		-
 			message: '#^Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface\:\:getFlashBag\(\)\.$#'
 			identifier: method.notFound
 			count: 1
