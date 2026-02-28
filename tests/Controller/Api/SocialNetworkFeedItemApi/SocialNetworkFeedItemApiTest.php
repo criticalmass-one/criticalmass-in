@@ -118,9 +118,9 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
 
         $newFeedItemData = [
             'social_network_profile_id' => $profile->getId(),
-            'uniqueidentifier' => 'test-' . uniqid(),
+            'unique_identifier' => 'test-' . uniqid(),
             'text' => 'Test feed item content',
-            'datetime' => time(),
+            'date_time' => time(),
             'hidden' => false,
             'deleted' => false,
         ];
@@ -148,9 +148,9 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
     public function testCreateFeedItemWithoutProfileReturns400(): void
     {
         $newFeedItemData = [
-            'uniqueidentifier' => 'test-' . uniqid(),
+            'unique_identifier' => 'test-' . uniqid(),
             'text' => 'Test feed item without profile',
-            'datetime' => time(),
+            'date_time' => time(),
             'hidden' => false,
             'deleted' => false,
         ];
@@ -172,9 +172,9 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
     {
         $newFeedItemData = [
             'social_network_profile_id' => 999999,
-            'uniqueidentifier' => 'test-' . uniqid(),
+            'unique_identifier' => 'test-' . uniqid(),
             'text' => 'Test feed item with invalid profile',
-            'datetime' => time(),
+            'date_time' => time(),
             'hidden' => false,
             'deleted' => false,
         ];
@@ -206,9 +206,9 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
 
         $duplicateData = [
             'social_network_profile_id' => $existingFeedItem->getSocialNetworkProfile()->getId(),
-            'uniqueidentifier' => $existingFeedItem->getUniqueIdentifier(),
+            'unique_identifier' => $existingFeedItem->getUniqueIdentifier(),
             'text' => 'Duplicate content',
-            'datetime' => time(),
+            'date_time' => time(),
             'hidden' => false,
             'deleted' => false,
         ];
@@ -238,8 +238,8 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
         }
 
         $feedItem = $response[0];
-        $this->assertArrayHasKey('datetime', $feedItem);
-        $this->assertIsInt($feedItem['datetime'], 'dateTime should be a Unix timestamp');
+        $this->assertArrayHasKey('date_time', $feedItem);
+        $this->assertIsInt($feedItem['date_time'], 'dateTime should be a Unix timestamp');
     }
 
     #[TestDox('Feed item hidden and deleted are booleans')]
