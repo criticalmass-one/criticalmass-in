@@ -236,7 +236,7 @@
                     <button class="nav-link" id="estimates-tab" data-bs-toggle="tab" data-bs-target="#estimates" type="button" role="tab" aria-controls="estimates" aria-selected="false">
                         <i class="far fa-users me-1"></i>
                         Teilnehmer*innenzahlen
-                        <span class="badge bg-secondary ms-1">{{ ride.estimates|length }}</span>
+                        <span class="badge bg-secondary ms-1">{{ ride.estimates|filter(e => e.estimatedParticipants is not null)|length }}</span>
                     </button>
                 </li>
                 {% if feature('photos') %}
