@@ -78,7 +78,7 @@ class SocialNetworkFeedItem
         return $this;
     }
 
-    public function getSocialNetworkProfile(): SocialNetworkProfile
+    public function getSocialNetworkProfile(): ?SocialNetworkProfile
     {
         return $this->socialNetworkProfile;
     }
