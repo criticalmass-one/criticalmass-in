@@ -59,7 +59,7 @@ class SocialNetworkTwigExtension extends AbstractExtension
     public function networkIcon($param): string
     {
         if ($param instanceof SocialNetworkFeedItem) {
-            $networkIdentifier = $param->getSocialNetworkProfile()->getNetwork();
+            $networkIdentifier = $param->getSocialNetworkProfile()?->getNetwork();
         } elseif ($param instanceof SocialNetworkProfile) {
             $networkIdentifier = $param->getNetwork();
         } elseif (is_string($param)) {
