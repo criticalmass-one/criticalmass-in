@@ -60,29 +60,29 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[SerializedName('name')]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $city = null;
 
     #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected ?string $description = null;
 
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $latitude = 0.0;
 
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list', 'ride-details'])]
+    #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $longitude = 0.0;
 
     #[DataQuery\DefaultBooleanValue(value: true)]
@@ -157,7 +157,7 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     protected bool $enableBoard = false;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'api-write'])]
     protected string $timezone = 'Europe/Berlin';
 
     #[ORM\Column(type: 'integer', nullable: true)]
