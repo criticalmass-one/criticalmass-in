@@ -2,7 +2,6 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {% if profileAbleType == 'city' %}
         {{ breadcrumb.item(profileAble.city, object_path(profileAble)) }}
         {{ breadcrumb.active('Soziale Netzwerke') }}

@@ -4,7 +4,6 @@
 {% block title %}Übersicht zum Treffpunkt {{ location.title }} der {{ location.city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(location.city.city, object_path(location.city)) }}
     {% if ride %}
         {{ breadcrumb.item(ride.title, object_path(ride)) }}
