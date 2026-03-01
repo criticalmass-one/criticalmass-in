@@ -22,7 +22,7 @@
                     {% for item in pagination %}
                         {% set network = getNetwork(item.socialNetworkProfile.network) %}
                         <div class="d-flex align-items-start mb-4 pb-4 {{ not loop.last ? 'border-bottom' : '' }}">
-                            <div class="me-3 text-center" style="min-width: 80px; width: 80px;">
+                            <div class="d-none d-md-block me-3 text-center" style="min-width: 80px; width: 80px;">
                                 {% if network %}
                                     <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-2" style="width: 42px; height: 42px; background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
                                         <i class="fab {{ network.icon }}"></i>
@@ -32,14 +32,21 @@
                                     <i class="fab fa-3x {{ network_icon(item.socialNetworkProfile.network) }} text-muted"></i>
                                 {% endif %}
                             </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-start mb-1">
-                                    <h6 class="mb-0">
-                                        <a href="{{ item.permalink }}" class="text-decoration-none">
-                                            {{ item.title ?? 'Beitrag' }}
-                                        </a>
-                                    </h6>
-                                    <small class="text-muted ms-2 text-nowrap" title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
+                            <div class="flex-grow-1 min-width-0">
+                                <div class="mb-1">
+                                    <div class="d-flex align-items-center mb-1">
+                                        {% if network %}
+                                            <span class="d-inline-flex d-md-none align-items-center justify-content-center rounded-circle me-2" style="width: 28px; height: 28px; background-color: {{ network.backgroundColor }}; color: {{ network.textColor }}; font-size: 0.75rem;">
+                                                <i class="fab {{ network.icon }}"></i>
+                                            </span>
+                                        {% endif %}
+                                        <h6 class="mb-0 text-truncate">
+                                            <a href="{{ item.permalink }}" class="text-decoration-none">
+                                                {{ item.title ?? 'Beitrag' }}
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <small class="text-muted" title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
                                         {{ item.dateTime|date('d.m.Y') }} &middot; {{ item.dateTime|time_ago_in_words }}
                                     </small>
                                 </div>
