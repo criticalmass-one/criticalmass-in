@@ -22,20 +22,12 @@ class SocialNetworkProfileFactory implements SocialNetworkProfileFactoryInterfac
 
         $this->socialNetworkProfile
             ->setEnabled(true)
-            ->setMainNetwork(false)
             ->setCreatedAt(new \DateTime());
     }
 
     public function withEnabled(bool $enabled): SocialNetworkProfileFactoryInterface
     {
         $this->socialNetworkProfile->setEnabled($enabled);
-
-        return $this;
-    }
-
-    public function withMainNetwork(bool $mainNetwork): SocialNetworkProfileFactoryInterface
-    {
-        $this->socialNetworkProfile->setMainNetwork($mainNetwork);
 
         return $this;
     }

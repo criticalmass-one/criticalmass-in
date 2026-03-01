@@ -49,10 +49,6 @@ class SocialNetworkProfile
 
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
-    protected bool $mainNetwork = false;
-
-    #[ORM\Column(type: 'boolean')]
-    #[Ignore]
     protected bool $enabled = true;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -174,26 +170,6 @@ class SocialNetworkProfile
     public function setNetwork($network): SocialNetworkProfile
     {
         $this->network = $network;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getMainNetwork(): bool
-    {
-        return $this->mainNetwork;
-    }
-
-    public function isMainNetwork(): bool
-    {
-        return $this->mainNetwork;
-    }
-
-    public function setMainNetwork(bool $mainNetwork): SocialNetworkProfile
-    {
-        $this->mainNetwork = $mainNetwork;
 
         return $this;
     }
