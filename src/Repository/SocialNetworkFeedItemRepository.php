@@ -72,6 +72,14 @@ class SocialNetworkFeedItemRepository extends ServiceEntityRepository
         return $qb;
     }
 
+    public function findByCityQueryBuilder(City $city, string $orderDirection = 'DESC'): QueryBuilder
+    {
+        $qb = $this->createDefaultQueryBuilder($city);
+        $qb->orderBy('snfi.dateTime', $orderDirection);
+
+        return $qb;
+    }
+
     public function findByCity(City $city, string $orderDirection = 'DESC'): array
     {
         $qb = $this->createDefaultQueryBuilder($city);
