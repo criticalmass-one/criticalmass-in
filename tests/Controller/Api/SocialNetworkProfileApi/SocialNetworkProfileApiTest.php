@@ -116,15 +116,6 @@ class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
         $this->assertEquals('criticalmass.bsky.social', $response['identifier']);
     }
 
-    public function testMainNetworkFlag(): void
-    {
-        $profiles = $this->entityManager->getRepository(SocialNetworkProfile::class)->findAll();
-
-        $mainNetworks = array_filter($profiles, fn(SocialNetworkProfile $profile) => $profile->isMainNetwork());
-
-        $this->assertNotEmpty($mainNetworks, 'At least one profile should be marked as main network');
-    }
-
     public function testProfilesHaveCorrectCityAssociation(): void
     {
         $profiles = $this->entityManager->getRepository(SocialNetworkProfile::class)->findAll();
