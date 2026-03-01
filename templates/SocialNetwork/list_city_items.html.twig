@@ -22,7 +22,7 @@
                     {% for item in pagination %}
                         {% set network = getNetwork(item.socialNetworkProfile.network) %}
                         <div class="d-flex align-items-start mb-4 pb-4 {{ not loop.last ? 'border-bottom' : '' }}">
-                            <div class="me-3 text-center" style="min-width: 50px;">
+                            <div class="me-3 text-center" style="min-width: 80px; width: 80px;">
                                 {% if network %}
                                     <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-2" style="width: 42px; height: 42px; background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
                                         <i class="fab {{ network.icon }}"></i>
