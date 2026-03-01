@@ -44,16 +44,6 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label class="control-label" for="">Hauptkonto:</label>
-                        {{ form_widget(form.mainNetwork, { 'attr' : { 'class': 'form-control'} }) }}
-                        <p class="help-block">
-                            Handelt es sich bei diesem Konto um das Hauptkonto in diesem Netzwerk?
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row">
                      <div class="col-md-12 form-group">
                          <div class="btn-group pull-right">
                              {% set cancel_path = object_path(profileAble, 'criticalmass_socialnetwork_' ~ profileAbleType ~ '_list') %}
