@@ -6,7 +6,6 @@
 {% block title %}Fotos hochladen{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.title, object_path(city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
     {{ breadcrumb.active('Fotos hochladen') }}
