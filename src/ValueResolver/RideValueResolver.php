@@ -40,11 +40,15 @@ class RideValueResolver implements ValueResolverInterface
     {
         $parts = explode('-', $rideDate);
 
-        return match (count($parts)) {
-            2 => new \DateTime("{$parts[0]}-{$parts[1]}-01"),
-            3 => new \DateTime("{$parts[0]}-{$parts[1]}-{$parts[2]}"),
-            default => null,
-        };
+        try {
+            return match (count($parts)) {
+                2 => new \DateTime("{$parts[0]}-{$parts[1]}-01"),
+                3 => new \DateTime("{$parts[0]}-{$parts[1]}-{$parts[2]}"),
+                default => null,
+            };
+        } catch (\Exception) {
+            return null;
+        }
     }
 
     private function findRideById(Request $request): ?Ride
