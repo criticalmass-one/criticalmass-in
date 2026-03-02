@@ -56,7 +56,7 @@ class RideValueResolver implements ValueResolverInterface
     private function findRideBySlugs(Request $request): ?Ride
     {
         $citySlug = $request->get('citySlug');
-        $rideIdentifier = $request->get('rideIdentifier');
+        $rideIdentifier = rtrim($request->get('rideIdentifier'), '-');
 
         if (!$citySlug || !$rideIdentifier) {
             return null;
