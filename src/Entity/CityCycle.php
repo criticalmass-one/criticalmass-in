@@ -172,6 +172,10 @@ class CityCycle implements RouteableInterface
 
     public function setDayOfWeek(int $dayOfWeek): CityCycle
     {
+        if ($dayOfWeek < 0 || $dayOfWeek > 6) {
+            throw new \InvalidArgumentException(sprintf('dayOfWeek must be between 0 and 6, %d given.', $dayOfWeek));
+        }
+
         $this->dayOfWeek = $dayOfWeek;
 
         return $this;
