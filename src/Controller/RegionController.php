@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\CityRepository;
 use App\Repository\RegionRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 class RegionController extends AbstractController
@@ -30,6 +31,10 @@ class RegionController extends AbstractController
             $region = $regionRepository->findOneBySlug($slug1);
         } else {
             $region = $regionRepository->find(1);
+        }
+
+        if (null === $region) {
+            throw new NotFoundHttpException();
         }
 
         $cities = $cityRepository->findCitiesOfRegion($region);
