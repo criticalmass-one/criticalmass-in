@@ -49,7 +49,6 @@
         "symfony/webpack-encore-bundle": "^2.4",
         "ext-json": "*",
         "ext-zip": "*",
-        "doctrine/annotations": "^2.0",
         "league/commonmark": "^2.6",
         "nesbot/carbon": "^3.0",
         "iamstuartwilson/strava": "^1.4",
