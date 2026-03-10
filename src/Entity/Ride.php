@@ -882,7 +882,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     public function getDisabledReason(): ?RideDisabledReasonEnum
     {
-        return $this->disabledReason !== null ? RideDisabledReasonEnum::from($this->disabledReason) : null;
+        return $this->disabledReason !== null ? RideDisabledReasonEnum::tryFrom($this->disabledReason) : null;
     }
 
     public function setDisabledReason(?RideDisabledReasonEnum $disabledReason = null): Ride
