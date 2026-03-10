@@ -181,7 +181,8 @@ class RideRepository extends ServiceEntityRepository
             ->where($builder->expr()->eq('r.city', ':city'))
             ->andWhere($builder->expr()->eq('r.slug', ':slug'))
             ->setParameter('city', $city)
-            ->setParameter('slug', $slug);
+            ->setParameter('slug', $slug)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -199,7 +200,8 @@ class RideRepository extends ServiceEntityRepository
             ->where($builder->expr()->eq('cs.slug', ':citySlug'))
             ->andWhere($builder->expr()->eq('r.slug', ':rideSlug'))
             ->setParameter('citySlug', $citySlug)
-            ->setParameter('rideSlug', $rideSlug);
+            ->setParameter('rideSlug', $rideSlug)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -338,7 +340,8 @@ class RideRepository extends ServiceEntityRepository
             ->andWhere($builder->expr()->lt('r.dateTime', ':untilDateTime'))
             ->setParameter('citySlug', $citySlug)
             ->setParameter('fromDateTime', $fromDateTime)
-            ->setParameter('untilDateTime', $untilDateTime);
+            ->setParameter('untilDateTime', $untilDateTime)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
