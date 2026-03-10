@@ -74,6 +74,10 @@ class PhotoGalleryController extends AbstractController
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
+            if (null === $photo->getRide()) {
+                continue;
+            }
+
             /** @var City $city */
             $city = $photo->getRide()->getCity();
             $citySlug = $city->getSlug();
