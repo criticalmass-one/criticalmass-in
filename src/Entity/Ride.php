@@ -101,7 +101,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 512, nullable: true)]
     #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $location = null;
 
