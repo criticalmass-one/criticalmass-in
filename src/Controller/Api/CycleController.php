@@ -103,4 +103,41 @@ class CycleController extends BaseController
 
         return $this->createStandardResponse($newCycle);
     }
+
+    /**
+     * Update an existing cycle.
+     */
+    #[Route(path: '/api/{citySlug}/cycles/{cycleId}', name: 'caldera_criticalmass_rest_cycles_update', methods: ['POST'], priority: 190)]
+    #[OA\Tag(name: 'Cycles')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'cycleId', in: 'path', description: 'Id of the cycle to update', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\RequestBody(description: 'JSON representation of the cycle properties to update', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully updated')]
+    public function updateCycleAction(Request $request, City $city, int $cycleId, CityCycleRepository $cityCycleRepository, ValidatorInterface $validator): JsonResponse
+    {
+        $cycle = $cityCycleRepository->find($cycleId);
+
+        if (!$cycle || $cycle->getCity()->getId() !== $city->getId()) {
+            return new JsonResponse(['error' => 'Cycle not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $this->deserializeRequestInto($request, $cycle);
+        $cycle->setUpdatedAt(new \DateTime());
+
+        $errors = $validator->validate($cycle);
+
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getPropertyPath() . ': ' . $error->getMessage();
+            }
+
+            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
+        }
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->flush();
+
+        return $this->createStandardResponse($cycle);
+    }
 }
