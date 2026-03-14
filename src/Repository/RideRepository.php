@@ -515,7 +515,7 @@ class RideRepository extends ServiceEntityRepository
                 ->setParameter('fromDateTime', $fromDateTime);
         }
 
-        if ($fromDateTime) {
+        if ($untilDateTime) {
             $builder
                 ->andWhere($builder->expr()->lt('ride.dateTime', ':untilDateTime'))
                 ->setParameter('untilDateTime', $untilDateTime);
