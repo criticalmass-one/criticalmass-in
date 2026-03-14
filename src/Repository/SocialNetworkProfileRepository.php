@@ -8,6 +8,7 @@ use App\Entity\SocialNetworkProfile;
 use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 class SocialNetworkProfileRepository extends ServiceEntityRepository
@@ -69,6 +70,60 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
         $builder->orderBy('snp.createdAt');
 
         return $builder->getQuery()->getResult();
+    }
+
+    /**
+     * @param array<string> $entityClassNames
+     * @return array{paginator: Paginator<SocialNetworkProfile>, totalItems: int}
+     */
+    public function findPaginatedByProperties(int $page, int $size, ?string $networkIdentifier = null, ?bool $autoFetch = null, ?City $city = null, array $entityClassNames = []): array
+    {
+        $builder = $this->createQueryBuilder('snp');
+
+        $builder
+            ->where($builder->expr()->eq('snp.enabled', ':enabled'))
+            ->setParameter('enabled', true);
+
+        if ($networkIdentifier) {
+            $builder
+                ->andWhere($builder->expr()->eq('snp.network', ':network'))
+                ->setParameter('network', $networkIdentifier);
+        }
+
+        if ($autoFetch) {
+            $builder
+                ->andWhere($builder->expr()->eq('snp.autoFetch', ':autoFetch'))
+                ->setParameter('autoFetch', $autoFetch);
+        }
+
+        if ($city) {
+            $builder
+                ->andWhere($builder->expr()->eq('snp.city', ':city'))
+                ->setParameter('city', $city);
+        }
+
+        $allowedEntityFields = ['city', 'ride', 'subride', 'user'];
+
+        foreach ($entityClassNames as $entityClassName) {
+            if (!in_array($entityClassName, $allowedEntityFields, true)) {
+                continue;
+            }
+
+            $builder->andWhere($builder->expr()->isNotNull(sprintf('snp.%s', $entityClassName)));
+        }
+
+        $builder->orderBy('snp.createdAt');
+
+        $builder
+            ->setFirstResult($page * $size)
+            ->setMaxResults($size);
+
+        $paginator = new Paginator($builder->getQuery());
+
+        return [
+            'paginator' => $paginator,
+            'totalItems' => count($paginator),
+        ];
     }
 
     public function findByProfileable(SocialNetworkProfileAble $profileAble): array

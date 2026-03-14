@@ -7,7 +7,7 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 {
-    public function testListSocialNetworkProfiles(): void
+    public function testListSocialNetworkProfilesReturnsPaginatedResponse(): void
     {
         $this->client->request('GET', '/api/socialnetwork-profiles');
 
@@ -15,9 +15,50 @@ class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        $this->assertIsArray($response);
-        $this->assertNotEmpty($response);
-        $this->assertArrayHasKey('network', $response[0]);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('meta', $response);
+        $this->assertIsArray($response['data']);
+        $this->assertArrayHasKey('page', $response['meta']);
+        $this->assertArrayHasKey('size', $response['meta']);
+        $this->assertArrayHasKey('totalItems', $response['meta']);
+        $this->assertArrayHasKey('totalPages', $response['meta']);
+    }
+
+    public function testListSocialNetworkProfilesDefaultPagination(): void
+    {
+        $this->client->request('GET', '/api/socialnetwork-profiles');
+
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+
+        $this->assertEquals(0, $response['meta']['page']);
+        $this->assertEquals(100, $response['meta']['size']);
+    }
+
+    public function testListSocialNetworkProfilesCustomPagination(): void
+    {
+        $this->client->request('GET', '/api/socialnetwork-profiles?page=0&size=2');
+
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+
+        $this->assertEquals(0, $response['meta']['page']);
+        $this->assertEquals(2, $response['meta']['size']);
+        $this->assertLessThanOrEqual(2, count($response['data']));
+    }
+
+    public function testListSocialNetworkProfilesHasData(): void
+    {
+        $this->client->request('GET', '/api/socialnetwork-profiles');
+
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+
+        $this->assertNotEmpty($response['data']);
+        $this->assertArrayHasKey('network', $response['data'][0]);
     }
 
     public function testListSocialNetworkProfilesForHamburg(): void
@@ -61,10 +102,10 @@ class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        $this->assertIsArray($response);
-        $this->assertNotEmpty($response);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertNotEmpty($response['data']);
 
-        foreach ($response as $profile) {
+        foreach ($response['data'] as $profile) {
             $this->assertEquals('twitter', $profile['network']);
         }
     }

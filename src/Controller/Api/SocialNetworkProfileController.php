@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class SocialNetworkProfileController extends BaseController
 {
     /**
-     * Search for social network profiles.
+     * Search for social network profiles with pagination.
      *
      * You can filter the results by providing optional query parameters.
      */
@@ -22,11 +22,15 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Parameter(name: 'networkIdentifier', in: 'query', description: 'Filter by social network identifier (e.g. twitter, facebook, instagram)', schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'autoFetch', in: 'query', description: 'Filter by auto-fetch setting', schema: new OA\Schema(type: 'boolean'))]
     #[OA\Parameter(name: 'entities', in: 'query', description: 'Comma-separated list of entity class names to filter by', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'page', in: 'query', description: 'Page number (0-based)', schema: new OA\Schema(type: 'integer', default: 0))]
+    #[OA\Parameter(name: 'size', in: 'query', description: 'Number of items per page (max 1000)', schema: new OA\Schema(type: 'integer', default: 100))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function listSocialNetworkProfilesAction(Request $request, ?City $city = null): JsonResponse
     {
         $networkIdentifier = $request->get('networkIdentifier');
         $autoFetch = (bool)$request->get('autoFetch');
+        $page = max(0, $request->query->getInt('page', 0));
+        $size = min(1000, max(1, $request->query->getInt('size', 100)));
 
         if ($entities = $request->get('entities')) {
             $entityClassNames = explode(',', $entities);
@@ -34,9 +38,11 @@ class SocialNetworkProfileController extends BaseController
             $entityClassNames = [];
         }
 
-        $profileList = $this->managerRegistry->getRepository(SocialNetworkProfile::class)->findByProperties($networkIdentifier, $autoFetch, $city, $entityClassNames);
+        /** @var \App\Repository\SocialNetworkProfileRepository $repository */
+        $repository = $this->managerRegistry->getRepository(SocialNetworkProfile::class);
+        $result = $repository->findPaginatedByProperties($page, $size, $networkIdentifier, $autoFetch, $city, $entityClassNames);
 
-        return $this->createStandardResponse($profileList);
+        return $this->createPaginatedResponse($result['paginator'], $result['totalItems'], $page, $size);
     }
 
     /**
