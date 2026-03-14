@@ -56,4 +56,29 @@ abstract class BaseController extends AbstractController
     {
         return new JsonResponse($this->serializer->serialize($responseObject, 'json', $context), $httpStatus, $headerList, true);
     }
+
+    /**
+     * @param iterable<object> $items
+     * @param array<string, mixed> $context
+     */
+    protected function createPaginatedResponse(iterable $items, int $totalItems, int $page, int $size, array $context = []): JsonResponse
+    {
+        $data = [];
+
+        foreach ($items as $item) {
+            $data[] = json_decode($this->serializer->serialize($item, 'json', $context), true);
+        }
+
+        $response = [
+            'data' => $data,
+            'meta' => [
+                'page' => $page,
+                'size' => $size,
+                'totalItems' => $totalItems,
+                'totalPages' => $size > 0 ? (int) ceil($totalItems / $size) : 0,
+            ],
+        ];
+
+        return new JsonResponse($response);
+    }
 }

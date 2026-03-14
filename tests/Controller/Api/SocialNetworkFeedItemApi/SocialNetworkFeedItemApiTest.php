@@ -12,14 +12,43 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 #[TestDox('SocialNetworkFeedItem API Tests')]
 class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
 {
-    #[TestDox('GET /api/{citySlug}/socialnetwork-feeditems returns array')]
-    public function testFeedItemListReturnsArray(): void
+    #[TestDox('GET /api/{citySlug}/socialnetwork-feeditems returns paginated response')]
+    public function testFeedItemListReturnsPaginatedResponse(): void
     {
         $this->client->request('GET', '/api/hamburg/socialnetwork-feeditems');
         $this->assertResponseIsSuccessful();
 
         $response = $this->getJsonResponse();
-        $this->assertIsArray($response);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('meta', $response);
+        $this->assertIsArray($response['data']);
+        $this->assertArrayHasKey('page', $response['meta']);
+        $this->assertArrayHasKey('size', $response['meta']);
+        $this->assertArrayHasKey('totalItems', $response['meta']);
+        $this->assertArrayHasKey('totalPages', $response['meta']);
+    }
+
+    #[TestDox('GET /api/{citySlug}/socialnetwork-feeditems returns default pagination meta')]
+    public function testFeedItemListDefaultPagination(): void
+    {
+        $this->client->request('GET', '/api/hamburg/socialnetwork-feeditems');
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertEquals(0, $response['meta']['page']);
+        $this->assertEquals(100, $response['meta']['size']);
+    }
+
+    #[TestDox('GET /api/{citySlug}/socialnetwork-feeditems respects page and size parameters')]
+    public function testFeedItemListCustomPagination(): void
+    {
+        $this->client->request('GET', '/api/hamburg/socialnetwork-feeditems?page=0&size=2');
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertEquals(0, $response['meta']['page']);
+        $this->assertEquals(2, $response['meta']['size']);
+        $this->assertLessThanOrEqual(2, count($response['data']));
     }
 
     #[TestDox('GET /api/{citySlug}/socialnetwork-feeditems returns feed items matching SOCIAL_NETWORK_FEED_ITEM_SCHEMA')]
@@ -30,11 +59,11 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        if (empty($response)) {
+        if (empty($response['data'])) {
             $this->markTestSkipped('No social network feed items found');
         }
 
-        foreach ($response as $index => $feedItem) {
+        foreach ($response['data'] as $index => $feedItem) {
             $this->assertIsArray($feedItem, "Feed item at index {$index} should be an array");
             JsonStructureValidator::assertMatchesSchema(
                 ApiSchemaDefinitions::SOCIAL_NETWORK_FEED_ITEM_SCHEMA,
@@ -51,7 +80,8 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
         $this->assertResponseIsSuccessful();
 
         $response = $this->getJsonResponse();
-        $this->assertIsArray($response);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertIsArray($response['data']);
     }
 
     #[TestDox('GET /api/{citySlug}/socialnetwork-feeditems supports networkIdentifier filter')]
@@ -61,7 +91,8 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
         $this->assertResponseIsSuccessful();
 
         $response = $this->getJsonResponse();
-        $this->assertIsArray($response);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertIsArray($response['data']);
     }
 
     #[TestDox('GET /api/{invalidCity}/socialnetwork-feeditems returns 404')]
@@ -240,11 +271,11 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        if (empty($response)) {
+        if (empty($response['data'])) {
             $this->markTestSkipped('No feed items found');
         }
 
-        $feedItem = $response[0];
+        $feedItem = $response['data'][0];
         $this->assertArrayHasKey('date_time', $feedItem);
         $this->assertIsInt($feedItem['date_time'], 'dateTime should be a Unix timestamp');
     }
@@ -257,13 +288,31 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        if (empty($response)) {
+        if (empty($response['data'])) {
             $this->markTestSkipped('No feed items found');
         }
 
-        foreach ($response as $feedItem) {
+        foreach ($response['data'] as $feedItem) {
             $this->assertIsBool($feedItem['hidden']);
             $this->assertIsBool($feedItem['deleted']);
         }
+    }
+
+    #[TestDox('Pagination totalPages is calculated correctly')]
+    public function testPaginationTotalPagesCalculation(): void
+    {
+        $this->client->request('GET', '/api/hamburg/socialnetwork-feeditems?size=1');
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $totalItems = $response['meta']['totalItems'];
+        $totalPages = $response['meta']['totalPages'];
+
+        if ($totalItems === 0) {
+            $this->markTestSkipped('No feed items found');
+        }
+
+        $this->assertEquals($totalItems, $totalPages, 'With size=1, totalPages should equal totalItems');
+        $this->assertCount(1, $response['data']);
     }
 }

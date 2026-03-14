@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 class SocialNetworkFeedItemRepository extends ServiceEntityRepository
@@ -106,5 +107,75 @@ class SocialNetworkFeedItemRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return array{paginator: Paginator<SocialNetworkFeedItem>, totalItems: int}
+     */
+    public function findPaginatedByCityAndProperties(City $city, int $page, int $size, ?string $uniqueIdentifier = null, ?string $networkIdentifier = null): array
+    {
+        $qb = $this->createDefaultQueryBuilder($city);
+        $qb->orderBy('snfi.dateTime', 'DESC');
+
+        if ($uniqueIdentifier) {
+            $qb
+                ->andWhere($qb->expr()->eq('snfi.uniqueIdentifier', ':uniqueIdentifier'))
+                ->setParameter('uniqueIdentifier', $uniqueIdentifier);
+        }
+
+        if ($networkIdentifier) {
+            $qb
+                ->andWhere($qb->expr()->eq('snp.network', ':networkIdentifier'))
+                ->setParameter('networkIdentifier', $networkIdentifier);
+        }
+
+        $qb
+            ->setFirstResult($page * $size)
+            ->setMaxResults($size);
+
+        $paginator = new Paginator($qb->getQuery());
+
+        return [
+            'paginator' => $paginator,
+            'totalItems' => count($paginator),
+        ];
+    }
+
+    /**
+     * @return array{paginator: Paginator<SocialNetworkFeedItem>, totalItems: int}
+     */
+    public function findPaginatedByProperties(int $page, int $size, ?string $networkIdentifier = null, ?int $profileId = null, ?\DateTime $since = null): array
+    {
+        $qb = $this->createDefaultQueryBuilder();
+        $qb->orderBy('snfi.dateTime', 'DESC');
+
+        if ($networkIdentifier) {
+            $qb
+                ->andWhere($qb->expr()->eq('snp.network', ':networkIdentifier'))
+                ->setParameter('networkIdentifier', $networkIdentifier);
+        }
+
+        if ($profileId) {
+            $qb
+                ->andWhere($qb->expr()->eq('snp.id', ':profileId'))
+                ->setParameter('profileId', $profileId);
+        }
+
+        if ($since) {
+            $qb
+                ->andWhere($qb->expr()->gte('snfi.dateTime', ':since'))
+                ->setParameter('since', $since);
+        }
+
+        $qb
+            ->setFirstResult($page * $size)
+            ->setMaxResults($size);
+
+        $paginator = new Paginator($qb->getQuery());
+
+        return [
+            'paginator' => $paginator,
+            'totalItems' => count($paginator),
+        ];
     }
 }
