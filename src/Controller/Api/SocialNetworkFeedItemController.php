@@ -14,6 +14,35 @@ use Symfony\Component\Routing\Attribute\Route;
 class SocialNetworkFeedItemController extends BaseController
 {
     /**
+     * Retrieve a paginated list of social network feed items across all cities.
+     *
+     * You can filter the results by providing optional query parameters.
+     */
+    #[Route(path: '/api/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_list', methods: ['GET'], priority: 200)]
+    #[OA\Tag(name: 'Social Network Feed Item')]
+    #[OA\Parameter(name: 'networkIdentifier', in: 'query', description: 'Filter by social network identifier (e.g. twitter, facebook, instagram)', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'profileId', in: 'query', description: 'Filter by social network profile id', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'since', in: 'query', description: 'Filter items newer than this Unix timestamp', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'page', in: 'query', description: 'Page number (0-based)', schema: new OA\Schema(type: 'integer', default: 0))]
+    #[OA\Parameter(name: 'size', in: 'query', description: 'Number of items per page (max 1000)', schema: new OA\Schema(type: 'integer', default: 100))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function listSocialNetworkFeedItemsAction(Request $request): JsonResponse
+    {
+        $networkIdentifier = $request->get('networkIdentifier');
+        $profileId = $request->query->getInt('profileId') ?: null;
+        $sinceTimestamp = $request->query->getInt('since') ?: null;
+        $since = $sinceTimestamp ? (new \DateTime())->setTimestamp($sinceTimestamp) : null;
+        $page = max(0, $request->query->getInt('page', 0));
+        $size = min(1000, max(1, $request->query->getInt('size', 100)));
+
+        /** @var \App\Repository\SocialNetworkFeedItemRepository $repository */
+        $repository = $this->managerRegistry->getRepository(SocialNetworkFeedItem::class);
+        $paginatedResult = $repository->findPaginatedByProperties($page, $size, $networkIdentifier, $profileId, $since);
+
+        return $this->createPaginatedResponse($paginatedResult);
+    }
+
+    /**
      * Retrieve a paginated list of social network feed items assigned to profiles of a city.
      *
      * You can filter the results by providing optional query parameters.

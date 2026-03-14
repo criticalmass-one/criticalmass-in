@@ -315,4 +315,54 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
         $this->assertEquals($totalItems, $totalPages, 'With size=1, totalPages should equal totalItems');
         $this->assertCount(1, $response['data']);
     }
+
+    #[TestDox('GET /api/socialnetwork-feeditems returns paginated response')]
+    public function testGlobalFeedItemListReturnsPaginatedResponse(): void
+    {
+        $this->client->request('GET', '/api/socialnetwork-feeditems');
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('meta', $response);
+        $this->assertIsArray($response['data']);
+        $this->assertArrayHasKey('page', $response['meta']);
+        $this->assertArrayHasKey('size', $response['meta']);
+        $this->assertArrayHasKey('totalItems', $response['meta']);
+        $this->assertArrayHasKey('totalPages', $response['meta']);
+    }
+
+    #[TestDox('GET /api/socialnetwork-feeditems supports networkIdentifier filter')]
+    public function testGlobalFeedItemListWithNetworkIdentifierFilter(): void
+    {
+        $this->client->request('GET', '/api/socialnetwork-feeditems?networkIdentifier=twitter');
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertArrayHasKey('data', $response);
+        $this->assertIsArray($response['data']);
+    }
+
+    #[TestDox('GET /api/socialnetwork-feeditems supports since filter')]
+    public function testGlobalFeedItemListWithSinceFilter(): void
+    {
+        $this->client->request('GET', '/api/socialnetwork-feeditems?since=' . strtotime('-1 year'));
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertArrayHasKey('data', $response);
+        $this->assertIsArray($response['data']);
+    }
+
+    #[TestDox('GET /api/socialnetwork-feeditems supports custom pagination')]
+    public function testGlobalFeedItemListCustomPagination(): void
+    {
+        $this->client->request('GET', '/api/socialnetwork-feeditems?page=0&size=2');
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertEquals(0, $response['meta']['page']);
+        $this->assertEquals(2, $response['meta']['size']);
+        $this->assertLessThanOrEqual(2, count($response['data']));
+    }
 }
