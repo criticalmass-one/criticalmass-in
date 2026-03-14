@@ -6,6 +6,7 @@ use App\Controller\AbstractController;
 use App\Criticalmass\Api\Errors;
 use App\Serializer\CriticalSerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use MalteHuebner\DataQueryBundle\PaginatedResult\PaginatedResult;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,24 +59,23 @@ abstract class BaseController extends AbstractController
     }
 
     /**
-     * @param iterable<object> $items
      * @param array<string, mixed> $context
      */
-    protected function createPaginatedResponse(iterable $items, int $totalItems, int $page, int $size, array $context = []): JsonResponse
+    protected function createPaginatedResponse(PaginatedResult $paginatedResult, array $context = []): JsonResponse
     {
         $data = [];
 
-        foreach ($items as $item) {
+        foreach ($paginatedResult->getData() as $item) {
             $data[] = json_decode($this->serializer->serialize($item, 'json', $context), true);
         }
 
         $response = [
             'data' => $data,
             'meta' => [
-                'page' => $page,
-                'size' => $size,
-                'totalItems' => $totalItems,
-                'totalPages' => $size > 0 ? (int) ceil($totalItems / $size) : 0,
+                'page' => $paginatedResult->getPage(),
+                'size' => $paginatedResult->getSize(),
+                'totalItems' => $paginatedResult->getTotalItems(),
+                'totalPages' => $paginatedResult->getTotalPages(),
             ],
         ];
 
