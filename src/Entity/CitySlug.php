@@ -6,6 +6,7 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Table(name: 'cityslug')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CitySlugRepository')]
@@ -24,6 +25,7 @@ class CitySlug implements RouteableInterface
 
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'slugs', fetch: 'EAGER')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?City $city = null;
 
     public function __construct(?string $slug = null)
