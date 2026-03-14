@@ -141,3 +141,11 @@ services:
                 track_file: '@oneup_flysystem.flysystem_track_track_filesystem'
 
     Sabre\VObject\Component\VCalendar: ~
+
+    MalteHuebner\DataQueryBundle\PaginatedResult\PaginatedResult:
+        shared: false
+        arguments:
+            $data: []
+            $page: 0
+            $size: 0
+            $totalItems: 0

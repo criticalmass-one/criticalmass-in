@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d86c391fe4c25b0d1d91006597411ac",
+    "content-hash": "2b165b5a9fdb728c7ef56d910bf997a0",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -3543,16 +3543,16 @@
         },
         {
             "name": "maltehuebner/dataquery-bundle",
-            "version": "0.9.1",
+            "version": "0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/dataquery-bundle.git",
-                "reference": "e9aada786b6fc40a74f3d8330171190a2ae93602"
+                "reference": "a54a180939757ce61f75e23b50a79709aa986b4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/e9aada786b6fc40a74f3d8330171190a2ae93602",
-                "reference": "e9aada786b6fc40a74f3d8330171190a2ae93602",
+                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/a54a180939757ce61f75e23b50a79709aa986b4c",
+                "reference": "a54a180939757ce61f75e23b50a79709aa986b4c",
                 "shasum": ""
             },
             "require": {
@@ -3588,9 +3588,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maltehuebner/dataquery-bundle/issues",
-                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.9.1"
+                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.11"
             },
-            "time": "2026-02-10T09:15:45+00:00"
+            "time": "2026-03-14T08:46:51+00:00"
         },
         {
             "name": "maltehuebner/ordered-entities-bundle",
