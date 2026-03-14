@@ -141,6 +141,6 @@ class PhotoUploader implements PhotoUploaderInterface
     {
         $filenameParts = explode('/', $sourceFilename);
 
-        return array_shift($filenameParts);
+        return array_pop($filenameParts);
     }
 }
