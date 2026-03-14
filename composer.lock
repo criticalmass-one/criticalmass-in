@@ -3543,16 +3543,16 @@
         },
         {
             "name": "maltehuebner/dataquery-bundle",
-            "version": "0.11",
+            "version": "0.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/dataquery-bundle.git",
-                "reference": "a54a180939757ce61f75e23b50a79709aa986b4c"
+                "reference": "3be287efb7599efd0c9c7009bc9413d3c8904071"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/a54a180939757ce61f75e23b50a79709aa986b4c",
-                "reference": "a54a180939757ce61f75e23b50a79709aa986b4c",
+                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/3be287efb7599efd0c9c7009bc9413d3c8904071",
+                "reference": "3be287efb7599efd0c9c7009bc9413d3c8904071",
                 "shasum": ""
             },
             "require": {
@@ -3588,9 +3588,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maltehuebner/dataquery-bundle/issues",
-                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.11"
+                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.11.1"
             },
-            "time": "2026-03-14T08:46:51+00:00"
+            "time": "2026-03-14T10:53:56+00:00"
         },
         {
             "name": "maltehuebner/ordered-entities-bundle",
