@@ -15,7 +15,7 @@ class RidePhotoCollector extends AbstractTimelineCollector
 
         /** @var Photo $photoEntity */
         foreach ($photoEntities as $photoEntity) {
-            if (null === $photoEntity->getRide() || null === $photoEntity->getUser()) {
+            if (null === $photoEntity->getRide()) {
                 continue;
             }
 
