@@ -126,8 +126,13 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         $accessor = PropertyAccess::createPropertyAccessor();
         $accessor->setValue($user, $this->properties[$resourceOwnerName], $username);
 
+        $nickname = $response->getNickname();
+
+        if ($nickname !== '') {
+            $user->setUsername($nickname);
+        }
+
         $user
-            ->setUsername($response->getNickname())
             ->setEnabled(true)
             ->setLastLogin(new \DateTime())
         ;
