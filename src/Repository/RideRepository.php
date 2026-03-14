@@ -348,7 +348,7 @@ class RideRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function getPreviousRideWithSubrides(Ride $ride): array
+    public function getPreviousRideWithSubrides(Ride $ride): ?Ride
     {
         $builder = $this->createQueryBuilder('r');
 
@@ -364,9 +364,7 @@ class RideRepository extends ServiceEntityRepository
 
         $query = $builder->getQuery();
 
-        $result = $query->getOneOrNullResult();
-
-        return $result;
+        return $query->getOneOrNullResult();
     }
 
     public function getLocationsForCity(City $city): array
