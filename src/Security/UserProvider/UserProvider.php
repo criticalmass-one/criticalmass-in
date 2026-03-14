@@ -128,7 +128,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
 
         $nickname = $response->getNickname();
 
-        if ($nickname !== null) {
+        if ($nickname !== '') {
             $user->setUsername($nickname);
         }
 
