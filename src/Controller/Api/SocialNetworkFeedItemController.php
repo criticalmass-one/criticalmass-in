@@ -37,9 +37,9 @@ class SocialNetworkFeedItemController extends BaseController
 
         /** @var \App\Repository\SocialNetworkFeedItemRepository $repository */
         $repository = $this->managerRegistry->getRepository(SocialNetworkFeedItem::class);
-        $result = $repository->findPaginatedByProperties($page, $size, $networkIdentifier, $profileId, $since);
+        $paginatedResult = $repository->findPaginatedByProperties($page, $size, $networkIdentifier, $profileId, $since);
 
-        return $this->createPaginatedResponse($result['paginator'], $result['totalItems'], $page, $size);
+        return $this->createPaginatedResponse($paginatedResult);
     }
 
     /**

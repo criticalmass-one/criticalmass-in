@@ -40,9 +40,9 @@ class SocialNetworkProfileController extends BaseController
 
         /** @var \App\Repository\SocialNetworkProfileRepository $repository */
         $repository = $this->managerRegistry->getRepository(SocialNetworkProfile::class);
-        $result = $repository->findPaginatedByProperties($page, $size, $networkIdentifier, $autoFetch, $city, $entityClassNames);
+        $paginatedResult = $repository->findPaginatedByProperties($page, $size, $networkIdentifier, $autoFetch, $city, $entityClassNames);
 
-        return $this->createPaginatedResponse($result['paginator'], $result['totalItems'], $page, $size);
+        return $this->createPaginatedResponse($paginatedResult);
     }
 
     /**

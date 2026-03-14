@@ -10,6 +10,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use MalteHuebner\DataQueryBundle\PaginatedResult\PaginatedResult;
 
 class SocialNetworkProfileRepository extends ServiceEntityRepository
 {
@@ -74,9 +75,8 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
 
     /**
      * @param array<string> $entityClassNames
-     * @return array{paginator: Paginator<SocialNetworkProfile>, totalItems: int}
      */
-    public function findPaginatedByProperties(int $page, int $size, ?string $networkIdentifier = null, ?bool $autoFetch = null, ?City $city = null, array $entityClassNames = []): array
+    public function findPaginatedByProperties(int $page, int $size, ?string $networkIdentifier = null, ?bool $autoFetch = null, ?City $city = null, array $entityClassNames = []): PaginatedResult
     {
         $builder = $this->createQueryBuilder('snp');
 
@@ -119,11 +119,9 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
             ->setMaxResults($size);
 
         $paginator = new Paginator($builder->getQuery());
+        $totalItems = count($paginator);
 
-        return [
-            'paginator' => $paginator,
-            'totalItems' => count($paginator),
-        ];
+        return new PaginatedResult(iterator_to_array($paginator), $page, $size, $totalItems);
     }
 
     public function findByProfileable(SocialNetworkProfileAble $profileAble): array
