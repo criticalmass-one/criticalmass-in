@@ -35,7 +35,8 @@ class NominatimCityBridge extends AbstractNominatimCityBridge
 
     protected function createCity(array $result): ?City
     {
-        $region = $this->doctrine->getRepository(Region::class)->findOneByName($result['address']['state']);
+        $state = $result['address']['state'] ?? null;
+        $region = $state !== null ? $this->doctrine->getRepository(Region::class)->findOneByName($state) : null;
 
         $cityName = $this->getCityNameFromResult($result);
 

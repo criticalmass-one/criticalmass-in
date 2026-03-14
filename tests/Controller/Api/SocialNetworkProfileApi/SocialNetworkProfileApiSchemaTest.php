@@ -20,9 +20,11 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         $this->assertIsArray($response);
-        $this->assertNotEmpty($response, 'Social network profile list should not be empty');
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('meta', $response);
+        $this->assertNotEmpty($response['data'], 'Social network profile list should not be empty');
 
-        foreach ($response as $index => $profile) {
+        foreach ($response['data'] as $index => $profile) {
             $this->assertIsArray($profile, "Profile at index {$index} should be an array");
             JsonStructureValidator::assertMatchesSchema(
                 ApiSchemaDefinitions::SOCIAL_NETWORK_PROFILE_SCHEMA,
@@ -70,7 +72,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
             'threads_profile', 'threads_post', 'flickr', 'google', 'homepage',
         ];
 
-        foreach ($response as $profile) {
+        foreach ($response['data'] as $profile) {
             $this->assertIsString($profile['network']);
             $this->assertContains(
                 $profile['network'],
@@ -88,7 +90,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        foreach ($response as $profile) {
+        foreach ($response['data'] as $profile) {
             $this->assertIsString($profile['identifier']);
             $this->assertNotEmpty($profile['identifier']);
         }
@@ -102,7 +104,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        foreach ($response as $profile) {
+        foreach ($response['data'] as $profile) {
             $this->assertIsInt($profile['city_id']);
             $this->assertGreaterThan(0, $profile['city_id']);
         }
@@ -116,7 +118,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        foreach ($response as $profile) {
+        foreach ($response['data'] as $profile) {
             $this->assertIsBool($profile['auto_fetch']);
             $this->assertIsBool($profile['auto_publish']);
         }
@@ -130,7 +132,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        foreach ($response as $profile) {
+        foreach ($response['data'] as $profile) {
             if (isset($profile['created_at']) && $profile['created_at'] !== null) {
                 $this->assertIsInt($profile['created_at']);
                 $this->assertGreaterThan(0, $profile['created_at'], 'created_at should be a positive timestamp');
@@ -219,7 +221,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        foreach ($response as $profile) {
+        foreach ($response['data'] as $profile) {
             $this->assertIsInt($profile['id']);
             $this->assertGreaterThan(0, $profile['id']);
         }

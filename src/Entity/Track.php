@@ -8,6 +8,8 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
+use MalteHuebner\OrderedEntitiesBundle\Attribute as OE;
 use App\Enum\PolylineResolution;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,7 +27,7 @@ use Vich\UploaderBundle\Mapping\Attribute as Vich;
 #[ORM\Table(name: 'track')]
 #[ORM\Entity(repositoryClass: 'App\Repository\TrackRepository')]
 #[ORM\Index(fields: ['creationDateTime'], name: 'track_creation_date_time_index')]
-class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable
+class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
@@ -46,6 +48,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Groups(['timelapse', 'api-private'])]
     protected ?string $username = null;
 
+    #[OE\Identical]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'tracks')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     #[Ignore]
@@ -60,6 +63,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?RideEstimate $rideEstimate = null;
 
+    #[OE\Order(direction: 'DESC')]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
@@ -95,6 +99,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     protected ?int $endPoint = null;
 
 
+    #[OE\Boolean(value: true)]
     #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]

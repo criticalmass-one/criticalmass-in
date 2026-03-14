@@ -83,7 +83,7 @@
         "beberlei/doctrineextensions": "^1.5",
         "sibyx/phpgpx": "^1.3",
         "twig/intl-extra": "^3.23",
-        "maltehuebner/dataquery-bundle": "0.9.1",
+        "maltehuebner/dataquery-bundle": "^0.11",
         "symfony/rate-limiter": "7.2.*",
         "symfony/lock": "^7.2"
     },
@@ -107,6 +107,7 @@
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
+            "cache:warmup": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "test:db:reset": [
