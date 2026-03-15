@@ -2,9 +2,11 @@
 
 namespace App\Controller\Api;
 
+use App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClientInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
 use OpenApi\Attributes as OA;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,8 +89,12 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the social network profile to create', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successfully created')]
-    public function createSocialNetworkProfileAction(Request $request, City $city): JsonResponse
-    {
+    public function createSocialNetworkProfileAction(
+        Request $request,
+        City $city,
+        FeedsApiClientInterface $feedsApiClient,
+        LoggerInterface $logger,
+    ): JsonResponse {
         $newSocialNetworkProfile = $this->deserializeRequest($request, SocialNetworkProfile::class);
 
         $newSocialNetworkProfile
@@ -98,6 +104,20 @@ class SocialNetworkProfileController extends BaseController
         $manager = $this->managerRegistry->getManager();
         $manager->persist($newSocialNetworkProfile);
         $manager->flush();
+
+        if ($newSocialNetworkProfile->getIdentifier() && $newSocialNetworkProfile->getNetwork()) {
+            try {
+                $feedsProfile = $feedsApiClient->createProfile(
+                    $newSocialNetworkProfile->getIdentifier(),
+                    $newSocialNetworkProfile->getNetwork(),
+                );
+
+                $newSocialNetworkProfile->setFeedsProfileId($feedsProfile->getId());
+                $manager->flush();
+            } catch (\Exception $e) {
+                $logger->error('Failed to create profile in Feeds API: ' . $e->getMessage());
+            }
+        }
 
         return $this->createStandardResponse($newSocialNetworkProfile);
     }

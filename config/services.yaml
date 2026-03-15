@@ -58,6 +58,8 @@ services:
             $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
             $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
             cachePrefix: 'media/cache'
+            $feedsApiUrl: '%env(FEEDS_API_URL)%'
+            $feedsApiToken: '%env(FEEDS_API_TOKEN)%'
 
     App\:
         resource: '../src/*'
@@ -98,6 +100,15 @@ services:
 
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
+
+    App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface:
+        alias: App\Criticalmass\SocialNetwork\FeedsApi\FeedsNetworkManager
+
+    App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClientInterface:
+        alias: App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClient
+
+    App\Criticalmass\SocialNetwork\FeedsApi\FeedItemProviderInterface:
+        alias: App\Criticalmass\SocialNetwork\FeedsApi\FeedItemProvider
 
     App\Criticalmass\Timeline\TimelineInterface:
         alias: App\Criticalmass\Timeline\CachedTimeline

@@ -4,12 +4,14 @@ namespace App\Controller\SocialNetwork;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClientInterface;
 use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelper;
 use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileEditType;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,13 +95,24 @@ class SocialNetworkManagementController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SocialNetworkProfile $socialNetworkProfile,
-        SocialNetworkHelper $socialNetworkHelper
+        SocialNetworkHelper $socialNetworkHelper,
+        FeedsApiClientInterface $feedsApiClient,
+        LoggerInterface $logger,
     ): Response {
         if (!$this->isCsrfTokenValid('socialnetwork_disable_' . $socialNetworkProfile->getId(), $request->request->get('_token'))) {
             throw $this->createAccessDeniedException('Invalid CSRF token.');
         }
 
+        if ($socialNetworkProfile->getFeedsProfileId()) {
+            try {
+                $feedsApiClient->deleteProfile($socialNetworkProfile->getFeedsProfileId());
+            } catch (\Exception $e) {
+                $logger->error('Failed to delete profile from Feeds API: ' . $e->getMessage());
+            }
+        }
+
         $socialNetworkProfile->setEnabled(false);
+        $socialNetworkProfile->setFeedsProfileId(null);
 
         $entityManager->flush();
 
