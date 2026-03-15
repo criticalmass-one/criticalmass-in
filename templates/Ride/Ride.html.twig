@@ -39,8 +39,15 @@
                     style="min-height: 300px;"
                     data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
                     data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
-                    data-map--ride-map-latitude-value="{{ ride.latitude }}"
-                    data-map--ride-map-longitude-value="{{ ride.longitude }}"
+                    {% if ride.latitude and ride.longitude %}
+                        data-map--ride-map-latitude-value="{{ ride.latitude }}"
+                        data-map--ride-map-longitude-value="{{ ride.longitude }}"
+                        data-map--ride-map-has-location-value="true"
+                    {% else %}
+                        data-map--ride-map-latitude-value="{{ ride.city.latitude }}"
+                        data-map--ride-map-longitude-value="{{ ride.city.longitude }}"
+                        data-map--ride-map-has-location-value="false"
+                    {% endif %}
                 ></div>
                 <button type="button" class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 shadow" style="z-index: 1000;" data-action="map-expand#toggle" title="Karte vergrößern">
                     <i class="far fa-expand" data-map-expand-target="icon"></i>

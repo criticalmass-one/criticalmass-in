@@ -12,7 +12,8 @@ export default class extends BaseMapController {
         citySlug: String,
         rideIdentifier: String,
         latitude: Number,
-        longitude: Number
+        longitude: Number,
+        hasLocation: { type: Boolean, default: true }
     };
 
     async connect() {
@@ -26,10 +27,12 @@ export default class extends BaseMapController {
 
         this.map.setView(
             [this.latitudeValue, this.longitudeValue],
-            14
+            this.hasLocationValue ? 14 : 12
         );
 
-        this.addLocationMarker();
+        if (this.hasLocationValue) {
+            this.addLocationMarker();
+        }
 
         const trackLayer = await this.loadTracks();
         this.loadPhotos();
