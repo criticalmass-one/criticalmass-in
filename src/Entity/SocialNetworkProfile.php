@@ -83,6 +83,10 @@ class SocialNetworkProfile
     #[Groups(['ride-list'])]
     protected $additionalData;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['ride-list'])]
+    protected ?int $feedsProfileId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -278,6 +282,18 @@ class SocialNetworkProfile
     public function setAdditionalData(?array $additionalData): self
     {
         $this->additionalData = json_encode($additionalData);
+
+        return $this;
+    }
+
+    public function getFeedsProfileId(): ?int
+    {
+        return $this->feedsProfileId;
+    }
+
+    public function setFeedsProfileId(?int $feedsProfileId): self
+    {
+        $this->feedsProfileId = $feedsProfileId;
 
         return $this;
     }
