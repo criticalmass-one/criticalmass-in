@@ -10,7 +10,7 @@ class StravaActivityDetectorTest extends AbstractNetworkDetectorTestCase
 
         $this->assertEquals('strava_activity', $network->getIdentifier());
 
-        $network = $this->detect('https://www.strava.com/activities/3355136046?share_sig=7PPQLS101587897695&utm_medium=social&utm_source=android_share');
+        $network = $this->detect('https://www.strava.com/activities/3351499309/');
 
         $this->assertEquals('strava_activity', $network->getIdentifier());
     }

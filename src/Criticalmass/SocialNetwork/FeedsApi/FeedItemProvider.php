@@ -4,9 +4,7 @@ namespace App\Criticalmass\SocialNetwork\FeedsApi;
 
 use App\Criticalmass\SocialNetwork\FeedsApi\Dto\FeedItem;
 use App\Entity\City;
-use App\Entity\SocialNetworkProfile;
 use App\Repository\SocialNetworkProfileRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
@@ -14,7 +12,7 @@ class FeedItemProvider implements FeedItemProviderInterface
 {
     public function __construct(
         private readonly FeedsApiClientInterface $feedsApiClient,
-        private readonly ManagerRegistry $managerRegistry,
+        private readonly SocialNetworkProfileRepository $profileRepository,
         private readonly CacheInterface $cache,
     ) {
     }
@@ -76,9 +74,7 @@ class FeedItemProvider implements FeedItemProviderInterface
     /** @return int[] */
     private function getFeedsProfileIdsForCity(City $city): array
     {
-        /** @var SocialNetworkProfileRepository $repository */
-        $repository = $this->managerRegistry->getRepository(SocialNetworkProfile::class);
-        $profiles = $repository->findByCity($city);
+        $profiles = $this->profileRepository->findByCity($city);
 
         $ids = [];
 

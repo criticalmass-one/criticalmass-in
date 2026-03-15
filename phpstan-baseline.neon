@@ -4897,6 +4897,48 @@ parameters:
 			path: tests/Repository/RideRepositoryTest.php
 
 		-
+			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\Dto\\FeedItemTest\:\:createSampleApiResponse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/FeedsApi/Dto/FeedItemTest.php
+
+		-
+			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\Dto\\ProfileTest\:\:createSampleApiResponse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/FeedsApi/Dto/ProfileTest.php
+
+		-
+			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$limit, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
+			count: 2
+			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
+
+		-
+			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$since, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
+			count: 2
+			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
+
+		-
+			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$until, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
+			count: 2
+			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
+
+		-
+			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\FeedsApiClientTest\:\:createMockResponse\(\) has parameter \$body with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/FeedsApi/FeedsApiClientTest.php
+
+		-
+			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\FeedsNetworkManagerTest\:\:createNetworks\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/FeedsApi/FeedsNetworkManagerTest.php
+
+		-
 			message: '#^Method App\\Criticalmass\\SocialNetwork\\NetworkManager\\NetworkManagerInterface@anonymous/tests/SocialNetwork/Helper/SocialNetworkDetector/AbstractNetworkDetectorTestCase\.php\:26\:\:__construct\(\) has parameter \$networks with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1

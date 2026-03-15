@@ -67,7 +67,32 @@ class Network implements NetworkInterface
 
     public function accepts(string $url): bool
     {
-        return (bool) preg_match($this->profileUrlPattern, $url);
+        $pattern = $this->convertPattern($this->profileUrlPattern);
+
+        return (bool) preg_match($pattern, $url);
+    }
+
+    private function convertPattern(string $pattern): string
+    {
+        if (strlen($pattern) < 2) {
+            return $pattern;
+        }
+
+        $delimiter = $pattern[0];
+        $lastDelimiterPos = strrpos($pattern, $delimiter, 1);
+
+        if ($lastDelimiterPos === false) {
+            return $pattern;
+        }
+
+        $body = substr($pattern, 1, $lastDelimiterPos - 1);
+        $modifiers = substr($pattern, $lastDelimiterPos + 1);
+
+        // Remove existing escaping of the old delimiter, then escape the new one
+        $body = str_replace('\\' . $delimiter, $delimiter, $body);
+        $body = str_replace('~', '\\~', $body);
+
+        return '~' . $body . '~' . $modifiers;
     }
 
     public static function fromApiResponse(array $data): self
