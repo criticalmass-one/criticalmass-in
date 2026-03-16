@@ -157,17 +157,35 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     protected function loadTrackProperties(Track $track, GpxFile $gpxFile): void
     {
-        $gpxTrack = $gpxFile->tracks[0];
-        $gpxStats = $gpxTrack->stats;
-        $pointCounter = count($gpxTrack->getPoints());
+        $pointCounter = 0;
+        $totalDistance = 0.0;
+        $startedAt = null;
+        $finishedAt = null;
+
+        foreach ($gpxFile->tracks as $gpxTrack) {
+            $pointCounter += count($gpxTrack->getPoints());
+            $gpxStats = $gpxTrack->stats;
+
+            if ($gpxStats->distance) {
+                $totalDistance += $gpxStats->distance;
+            }
+
+            if (null === $startedAt || $gpxStats->startedAt < $startedAt) {
+                $startedAt = $gpxStats->startedAt;
+            }
+
+            if (null === $finishedAt || $gpxStats->finishedAt > $finishedAt) {
+                $finishedAt = $gpxStats->finishedAt;
+            }
+        }
 
         $track
             ->setPoints($pointCounter)
             ->setStartPoint(0)
             ->setEndPoint($pointCounter - 1)
-            ->setStartDateTime($gpxStats->startedAt)
-            ->setEndDateTime($gpxStats->finishedAt)
-            ->setDistance($gpxStats->distance / 1000) // phpGPX returns meters, we store kilometers
+            ->setStartDateTime($startedAt)
+            ->setEndDateTime($finishedAt)
+            ->setDistance($totalDistance / 1000) // phpGPX returns meters, we store kilometers
         ;
     }
 
