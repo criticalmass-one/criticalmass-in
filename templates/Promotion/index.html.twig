@@ -51,11 +51,11 @@
                     <tbody>
                     {% for ride in rideList %}
                         <tr>
-                            <td>
+                            <td data-order="{{ ride.dateTime|date('U') }}">
                                 {{ ride.dateTime|date('d.m.Y') }}
                             </td>
 
-                            <td>
+                            <td data-order="{{ ride.dateTime|date('U') }}">
                                 {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
                             </td>
 
