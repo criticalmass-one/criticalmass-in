@@ -6,7 +6,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
-use Twig\Environment;
 
 class CachedTimeline extends Timeline
 {
@@ -14,7 +13,7 @@ class CachedTimeline extends Timeline
 
     public function execute(): TimelineInterface
     {
-        $cacheKey = 'criticalmass-timeline-content';
+        $cacheKey = 'criticalmass-timeline-json-v1';
 
         if ($this->startDateTime) {
             $cacheKey .= '-start-' . $this->startDateTime->format('Y-m-d');
@@ -25,7 +24,7 @@ class CachedTimeline extends Timeline
         }
 
         $cache = new FilesystemAdapter(
-            'criticalmass-timeline',
+            'criticalmass-timeline-json',
             self::TTL
         );
 

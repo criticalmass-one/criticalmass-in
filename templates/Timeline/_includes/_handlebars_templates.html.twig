@@ -1,0 +1,627 @@
+<template id="timeline-user-column">
+{% verbatim %}
+<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center">
+    {{#if user.avatarUrl}}
+        <img class="media-object round-media-object img-responsive img-fluid"
+             src="{{user.avatarUrl}}"/>
+    {{/if}}
+
+    <p class="hidden-xs">
+        <strong>
+            {{user.username}}
+        </strong>
+    </p>
+
+    <p>
+        <small>
+            <time title="{{dateTimeFormatted}} Uhr">
+                {{timeAgo}}
+            </time>
+        </small>
+    </p>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-social-column">
+{% verbatim %}
+<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center">
+    <p>
+        <small>
+            <time title="{{dateTimeFormatted}} Uhr">
+                {{timeAgo}}
+            </time>
+        </small>
+    </p>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-cityCreated-template">
+{% verbatim %}
+<div class="row margin-bottom-medium">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat eine neue Stadt hinzugefuegt:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{cityUrl}}">
+                    <h4>
+                        {{cityName}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div
+                    id="map-{{uniqId}}"
+                    class="map"
+                    data-controller="map--map"
+                    style="height: 150px;"
+                    data-map--map-center-latitude-value="{{latitude}}"
+                    data-map--map-center-longitude-value="{{longitude}}"
+                    data-map--map-zoom-value="13"
+                    data-map--map-lock-map-value="true"
+                    data-map--map-marker-latitude-value="{{latitude}}"
+                    data-map--map-marker-longitude-value="{{longitude}}"
+                    data-map--map-marker-type-value="city"
+                    data-map--map-vector-value="false"
+                >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-cityEdit-template">
+{% verbatim %}
+<div class="row margin-bottom-medium">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat eine Stadt editiert:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{cityUrl}}">
+                    <h4>
+                        {{cityName}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        {{#if latitude}}
+        <div class="row">
+            <div class="col-md-12">
+                <div
+                    id="map-{{uniqId}}"
+                    class="map"
+                    data-controller="map--map"
+                    style="height: 150px;"
+                    data-map--map-center-latitude-value="{{latitude}}"
+                    data-map--map-center-longitude-value="{{longitude}}"
+                    data-map--map-zoom-value="13"
+                    data-map--map-lock-map-value="true"
+                    data-map--map-marker-latitude-value="{{latitude}}"
+                    data-map--map-marker-longitude-value="{{longitude}}"
+                    data-map--map-marker-type-value="city"
+                    data-map--map-vector-value="false"
+                >
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-rideComment-template">
+{% verbatim %}
+<div class="row margin-bottom-medium timeline-item-ride{{#unless rideEnabled}}--disabled{{/unless}}">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat eine Tour kommentiert:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{rideUrl}}#post-{{postId}}">
+                    <h4>
+                        {{rideTitle}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    {{message}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-rideEdit-template">
+{% verbatim %}
+<div class="row margin-bottom-medium timeline-item-ride{{#unless rideEnabled}}--disabled{{/unless}}">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat eine Tour editiert:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{rideUrl}}">
+                    <h4>
+                        {{rideTitle}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        {{#if latitude}}
+        <div class="row">
+            <div class="col-md-12">
+                <div
+                    id="map-{{uniqId}}"
+                    class="map timeline-item-ride-map"
+                    data-controller="map--map"
+                    style="height: 150px;"
+                    data-map--map-center-latitude-value="{{latitude}}"
+                    data-map--map-center-longitude-value="{{longitude}}"
+                    data-map--map-zoom-value="13"
+                    data-map--map-lock-map-value="true"
+                    data-map--map-marker-latitude-value="{{latitude}}"
+                    data-map--map-marker-longitude-value="{{longitude}}"
+                    data-map--map-marker-type-value="ride"
+                    data-map--map-vector-value="false"
+                >
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-ridePhoto-template">
+{% verbatim %}
+<div class="row margin-bottom-medium timeline-item-ride{{#unless rideEnabled}}--disabled{{/unless}}">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat
+                <a href="{{photoGalleryUrl}}">
+                    {{photoCount}} Fotos
+                </a> zur Tour
+                <strong class="ride-title">
+                    <a href="{{rideUrl}}">
+                        {{rideTitle}}
+                    </a>
+                </strong>
+                hochgeladen
+            </div>
+        </div>
+
+        <div class="row">
+            {{#each previewPhotos}}
+            <div class="col-md-4">
+                <a href="{{photoUrl}}">
+                    <img src="{{imageUrl}}" class="img-responsive thumbnail" />
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-photoComment-template">
+{% verbatim %}
+<div class="row margin-bottom-medium">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat {{postCount}} Fotos kommentiert:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{rideUrl}}">
+                    <h4>
+                        {{rideTitle}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        {{#each posts}}
+        <div class="row">
+            <div class="col-md-4">
+                <a href="{{photoUrl}}">
+                    <img src="{{imageUrl}}" class="img-responsive img-thumbnail" />
+                </a>
+            </div>
+
+            <div class="col-md-8">
+                <p>
+                    {{{messageHtml}}}
+                </p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-rideParticipationEstimate-template">
+{% verbatim %}
+<div class="row margin-bottom-medium timeline-item-ride{{#unless rideEnabled}}--disabled{{/unless}}">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                schaetzt, dass {{estimatedParticipants}} Radfahrer an
+                <strong class="ride-title">
+                    <a href="{{rideUrl}}">
+                        {{rideTitle}}
+                    </a>
+                </strong>
+                teilgenommen haben.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="flipcounter">
+                    <div class="flipbreak">
+
+                    </div>
+                    {{#each counterDigits}}
+                    <div class="digit">
+                        {{this}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-rideTrack-template">
+{% verbatim %}
+<div class="row margin-bottom-medium timeline-item-ride{{#unless rideEnabled}}--disabled{{/unless}}">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat einen Track hochgeladen:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{rideUrl}}">
+                    <h4>
+                        {{rideTitle}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        {{#if polyline}}
+        <div class="row">
+            <div class="col-md-12">
+                <div
+                    id="map-{{uniqId}}"
+                    class="map timeline-item-ride-map"
+                    data-controller="map--map"
+                    style="height: 150px;"
+                    data-map--map-center-latitude-value="{{latitude}}"
+                    data-map--map-center-longitude-value="{{longitude}}"
+                    data-map--map-zoom-value="13"
+                    data-map--map-lock-map-value="true"
+                    data-map--map-polyline-color-value="{{polylineColor}}"
+                    data-map--map-polyline-value="{{polyline}}"
+                    data-map--map-vector-value="false"
+                >
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <dl>
+                    <dt>
+                        Datum:
+                    </dt>
+
+                    <dd>
+                        {{rideDate}}
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <dl>
+                    <dt>
+                        Laenge:
+                    </dt>
+
+                    <dd>
+                        {{distanceFormatted}}
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <dl>
+                    <dt>
+                        Dauer:
+                    </dt>
+
+                    <dd>
+                        {{durationFormatted}}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-thread-template">
+{% verbatim %}
+<div class="row margin-bottom-medium">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat ein neues Diskussionsthema begonnen:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{threadUrl}}">
+                    <h4>
+                        {{title}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    {{{textHtml}}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-threadPost-template">
+{% verbatim %}
+<div class="row margin-bottom-medium">
+    {{> userColumn}}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{user.username}}
+                </strong>
+                hat auf ein Diskussionsthema geantwortet:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{threadUrl}}">
+                    <h4>
+                        {{threadTitle}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    {{{textHtml}}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+</template>
+
+<template id="timeline-socialNetworkFeedItem-template">
+{% verbatim %}
+<div class="row margin-bottom-medium">
+    {{> socialColumn}}
+
+    {{#ifEquals network "twitter"}}
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{cityUrl}}">
+                    <strong>
+                        {{cityName}}
+                    </strong>
+                </a>
+                hat getwittert:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    <a href="{{permalink}}">
+                        {{text}}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/ifEquals}}
+
+    {{#ifEquals network "homepage"}}
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{cityUrl}}">
+                    <strong>
+                        {{cityName}}
+                    </strong>
+                </a>
+                hat gebloggt:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{permalink}}">
+                    <h4>
+                        {{title}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    {{textTrimmed}}
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/ifEquals}}
+
+    {{#ifEquals network "instagram_profile"}}
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{cityUrl}}">
+                    <strong>
+                        {{cityName}}
+                    </strong>
+                </a>
+                hat etwas auf Instagram veroeffentlicht:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    <a href="{{permalink}}">
+                        {{text}}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/ifEquals}}
+
+    {{#ifEquals network "mastodon"}}
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{cityUrl}}">
+                    <strong>
+                        {{cityName}}
+                    </strong>
+                </a>
+                hat etwas auf Mastodon veroeffentlicht:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    <a href="{{permalink}}">
+                        {{text}}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/ifEquals}}
+</div>
+{% endverbatim %}
+</template>

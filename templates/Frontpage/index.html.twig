@@ -3,6 +3,7 @@
 {% block title %}criticalmass.in{% endblock %}
 
 {% block masterContent %}
+    {% include 'Timeline/_includes/_handlebars_templates.html.twig' %}
     {% include('Template/Navigation/_full_navigation.html.twig') %}
 
     <div class="container-fluid margin-bottom-medium">
@@ -38,7 +39,26 @@
 
                 <div class="row margin-top-medium">
                     <div class="col-md-12">
-                        {{ include('Timeline/timeline.html.twig') }}
+                        <div data-controller="timeline"
+                             data-timeline-api-url-value="{{ apiUrl }}"
+                             data-timeline-initial-limit-value="10"
+                             data-timeline-batch-size-value="20">
+                            <div data-timeline-target="loading" class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Lädt…</span>
+                                </div>
+                            </div>
+
+                            <div data-timeline-target="items"></div>
+
+                            <div class="text-center my-4">
+                                <button class="btn btn-primary d-none"
+                                        data-timeline-target="loadMore"
+                                        data-action="timeline#loadMore">
+                                    Mehr laden
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
