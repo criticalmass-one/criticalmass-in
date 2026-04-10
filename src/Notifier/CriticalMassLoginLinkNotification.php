@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 
 class CriticalMassLoginLinkNotification extends LoginLinkNotification
 {
-    public function __construct(private LoginLinkDetails $loginLinkDetails, string $subject, array $channels = [])
+    public function __construct(private LoginLinkDetails $loginLinkDetails, string $subject, array $channels = [], private string $senderAddress = 'noreply@criticalmass.in')
     {
         parent::__construct($loginLinkDetails, $subject, $channels);
     }
@@ -19,7 +19,7 @@ class CriticalMassLoginLinkNotification extends LoginLinkNotification
     public function asEmailMessage(EmailRecipientInterface $recipient, ?string $transport = null): ?EmailMessage
     {
         $email = (new TemplatedEmail())
-            ->from(new Address('noreply@criticalmass.in', 'criticalmass.in'))
+            ->from(new Address($this->senderAddress, 'criticalmass.in'))
             ->to($recipient->getEmail())
             ->subject($this->getSubject())
             ->htmlTemplate('email/login_link.html.twig')

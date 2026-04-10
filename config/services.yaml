@@ -22,7 +22,7 @@ parameters:
     facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
-    notification.mail.sender_address: noreply@criticalmass.in
+    notification.mail.sender_address: '%env(MAILER_SENDER)%'
     request_listener.http_port: 80
     request_listener.https_port: 443
     upload_destination.track: '%kernel.project_dir%/public/tracks'
