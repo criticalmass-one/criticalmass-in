@@ -19,7 +19,7 @@ class CriticalMassLoginLinkNotification extends LoginLinkNotification
     public function asEmailMessage(EmailRecipientInterface $recipient, ?string $transport = null): ?EmailMessage
     {
         $email = (new TemplatedEmail())
-            ->from(new Address('malte@criticalmass.in', 'criticalmass.in'))
+            ->from(new Address('noreply@criticalmass.in', 'criticalmass.in'))
             ->to($recipient->getEmail())
             ->subject($this->getSubject())
             ->htmlTemplate('email/login_link.html.twig')
