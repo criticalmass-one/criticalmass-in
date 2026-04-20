@@ -1,7 +1,7 @@
-<footer id="footer" style="margin-top: 50px;">
+<footer id="footer">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3">
+        <div class="row g-4">
+            <div class="col-6 col-md-3">
                 <h5>
                     <a href="{{ path('caldera_criticalmass_frontpage') }}" title="zur Startseite von criticalmass.in">
                         Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
@@ -62,7 +62,7 @@
                 </ul>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <h5>
                     <a href="https://criticalmass.blog/" title="zum Critical-Mass-Weblog">
                         Aus dem Blog
@@ -78,13 +78,13 @@
                                 {{ blog_article.title }}
                             </a>
 
-                            <time class="text-muted">{{ blog_article.dateTime|date('d.m.Y') }}</time>
+                            <time class="d-block text-muted" style="font-size:0.75rem">{{ blog_article.dateTime|date('d.m.Y') }}</time>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <h5>
                     Critical-Mass-Aktionen
                 </h5>
@@ -94,11 +94,11 @@
                 </ul>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <h5>
                     <a href="{{ path('caldera_criticalmass_city_list') }}"
-                       title="zur Liste der Städte mit einer Critical-Mass-Radtour">
-                        Critical-Mass-Städte
+                       title="zur Liste der Staedte mit einer Critical-Mass-Radtour">
+                        Critical-Mass-Staedte
                     </a>
                 </h5>
 
@@ -107,67 +107,32 @@
 
                     <li>
                         <a href="{{ path('caldera_criticalmass_city_list') }}" id="footer-citylist-link">
-                            Städteliste
+                            Staedteliste
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <ul class="list-unstyled">
-                    <li>
-                        Kartendaten und Geocoding von <a href="https://www.openstreetmap.org/">OpenStreetMap</a>,
-                        <span class="text-nowrap">&copy; OpenStreetMap-Mitwirkende</span>,
-                        <a href="https://www.openstreetmap.org/copyright">lizensiert unter <span class="text-nowrap">CC BY-SA 2.0</span></a>
-                    </li>
-                    <li>
-                        Wetterdaten von <a href="https://openweathermap.org">OpenWeatherMap</a>,
-                        <a href="https://creativecommons.org/licenses/by-sa/4.0/">lizensiert unter <span class="text-nowrap">CC BY-SA 4.0</span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <hr class="my-3" style="border-color:var(--app-border)"/>
 
         <div class="row">
-            <div class="col-md-12 text-muted text-center">
-                <ul class="list-inline">
-                    <li>
-                        <a href="https://luft.jetzt/"
-                           title="Aktuelle Luftmesswerte aus deiner Umgebung: Feinstaub, Stickoxide und Ozon">
-                            Luft<sup>jetzt</sup>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://radverkehrsforum.de/"
-                           title="Diskussionen und Informationen rund um den Radverkehr in Deutschland">
-                            Radverkehrsforum
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://fahrradsternfahrt.hamburg/"
-                           title="Fahrradsternfahrt Hamburg — die größte Fahrrad-Demonstaton in Norddeutschland">
-                            Fahrradsternfahrt Hamburg
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://luenedrohne.de/"
-                           title="LüneDrohne — Drohnenfotos aus Lüneburg">
-                            Lünedrohne
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://luenedrohne.de/"
-                           title="Lünedrohne — Drohnenfotos aus Lüneburg">
-                            Lünedrohne
-                        </a>
-                    </li>
-                </ul>
+            <div class="col-12 text-center" style="font-size:0.8rem;color:var(--app-text-secondary)">
+                <p class="mb-1">
+                    Kartendaten und Geocoding von <a href="https://www.openstreetmap.org/">OpenStreetMap</a>,
+                    <span class="text-nowrap">&copy; OpenStreetMap-Mitwirkende</span>,
+                    <a href="https://www.openstreetmap.org/copyright">lizensiert unter <span class="text-nowrap">CC BY-SA 2.0</span></a>
+                </p>
+                <p class="mb-2">
+                    Wetterdaten von <a href="https://openweathermap.org">OpenWeatherMap</a>,
+                    <a href="https://creativecommons.org/licenses/by-sa/4.0/">lizensiert unter <span class="text-nowrap">CC BY-SA 4.0</span></a>
+                </p>
+                <p class="mb-0" style="font-size:0.75rem">
+                    <a href="https://luft.jetzt/" class="me-2">Luft<sup>jetzt</sup></a>
+                    <a href="https://radverkehrsforum.de/" class="me-2">Radverkehrsforum</a>
+                    <a href="https://fahrradsternfahrt.hamburg/" class="me-2">Fahrradsternfahrt Hamburg</a>
+                    <a href="https://luenedrohne.de/">Luenedrohne</a>
+                </p>
             </div>
         </div>
     </div>
