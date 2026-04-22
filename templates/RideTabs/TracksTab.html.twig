@@ -39,7 +39,7 @@
         <div class="col-lg-8">
             {% if tracks|length > 0 %}
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+                    <table class="table table-hover align-middle" data-controller="datatable">
                         <thead class="table-light">
                             <tr>
                                 <th class="text-center" style="width: 40px;">
@@ -60,21 +60,21 @@
                                     <td>
                                         <i class="far fa-user text-muted me-1"></i>{{ track.user.username }}
                                     </td>
-                                    <td class="text-end">
+                                    <td class="text-end" data-order="{{ track.getDurationInSeconds()|default(0) }}">
                                         {% if track.getDurationInterval() %}
                                             <span class="text-muted">{{ human_duration(track.getDurationInSeconds()) }}</span>
                                         {% else %}
                                             <span class="text-muted">-</span>
                                         {% endif %}
                                     </td>
-                                    <td class="text-end">
+                                    <td class="text-end" data-order="{{ track.distance|default(0) }}">
                                         {% if track.distance %}
                                             <strong>{{ track.distance|round(1) }}</strong> <small class="text-muted">km</small>
                                         {% else %}
                                             <span class="text-muted">-</span>
                                         {% endif %}
                                     </td>
-                                    <td class="text-end d-none d-md-table-cell">
+                                    <td class="text-end d-none d-md-table-cell" data-order="{{ average_velocity(track)|default(0) }}">
                                         {% set track_average_velocity = average_velocity(track) %}
                                         {% if track_average_velocity %}
                                             <span class="text-muted">{{ track_average_velocity|round(1) }} km/h</span>
