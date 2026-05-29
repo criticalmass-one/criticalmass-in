@@ -300,4 +300,77 @@ class RideApiWriteTest extends AbstractApiControllerTestCase
         $this->assertIsArray($response);
         $this->assertEquals('Second Slug Event', $response['title']);
     }
+
+    #[TestDox('PUT /api/{citySlug}/{rideIdentifier} accepts ride_type and persists it')]
+    public function testCreateRideWithRideTypeIsPersisted(): void
+    {
+        $cities = $this->entityManager->getRepository(City::class)->findAll();
+        $this->assertNotEmpty($cities);
+
+        $city = $cities[0];
+        $citySlug = $city->getMainSlugString();
+
+        $randomDays = random_int(10951, 14600); // 30-40 years in the future to avoid conflicts
+        $futureDate = (new \DateTime())->modify("+$randomDays days")->format('Y-m-d');
+
+        $rideData = [
+            'title' => 'Test Ride with rideType',
+            'date_time' => (new \DateTime($futureDate . ' 19:00:00'))->getTimestamp(),
+            'ride_type' => 'TOUR',
+        ];
+
+        $this->client->request(
+            'PUT',
+            sprintf('/api/%s/%s', $citySlug, $futureDate),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($rideData)
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertArrayHasKey('id', $response);
+        $this->assertSame('TOUR', $response['ride_type']);
+
+        $persistedRide = $this->entityManager->getRepository(Ride::class)->find($response['id']);
+        $this->assertNotNull($persistedRide);
+        $this->assertSame('TOUR', $persistedRide->getRideType()?->value);
+    }
+
+    #[TestDox('POST /api/{citySlug}/{rideIdentifier} updates ride_type on existing ride')]
+    public function testUpdateRideTypeOnExistingRide(): void
+    {
+        $rides = $this->entityManager->getRepository(Ride::class)->findAll();
+        $this->assertNotEmpty($rides);
+
+        $ride = $rides[0];
+        $rideId = $ride->getId();
+        $citySlug = $ride->getCity()->getMainSlugString();
+        $dateString = $ride->getDateTime()->format('Y-m-d');
+
+        $updateData = [
+            'ride_type' => 'KIDICAL_MASS',
+        ];
+
+        $this->client->request(
+            'POST',
+            sprintf('/api/%s/%s', $citySlug, $dateString),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($updateData)
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $response = $this->getJsonResponse();
+        $this->assertSame('KIDICAL_MASS', $response['ride_type']);
+
+        $this->entityManager->clear();
+        $persistedRide = $this->entityManager->getRepository(Ride::class)->find($rideId);
+        $this->assertNotNull($persistedRide);
+        $this->assertSame('KIDICAL_MASS', $persistedRide->getRideType()?->value);
+    }
 }
