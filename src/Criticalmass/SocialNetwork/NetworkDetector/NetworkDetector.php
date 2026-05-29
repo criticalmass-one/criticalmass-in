@@ -3,7 +3,6 @@
 namespace App\Criticalmass\SocialNetwork\NetworkDetector;
 
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
-use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 
 class NetworkDetector implements NetworkDetectorInterface

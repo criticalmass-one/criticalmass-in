@@ -2,23 +2,26 @@
 
 namespace App\Criticalmass\Timeline\Item;
 
-use App\Entity\SocialNetworkFeedItem;
+use App\Criticalmass\SocialNetwork\FeedsApi\Dto\FeedItem;
 
 class SocialNetworkFeedItemItem extends AbstractItem
 {
-    protected ?SocialNetworkFeedItem $socialNetworkFeedItem = null;
+    protected ?FeedItem $feedItem = null;
 
-    public function getSocialNetworkFeedItem(): SocialNetworkFeedItem
+    public function getFeedItem(): ?FeedItem
     {
-        return $this->socialNetworkFeedItem;
+        return $this->feedItem;
     }
 
-    public function setSocialNetworkFeedItem(SocialNetworkFeedItem $socialNetworkFeedItem): SocialNetworkFeedItemItem
+    public function setFeedItem(FeedItem $feedItem): self
     {
-        $this->socialNetworkFeedItem = $socialNetworkFeedItem;
+        $this->feedItem = $feedItem;
 
-        $this->tabName = $socialNetworkFeedItem->getSocialNetworkProfile()?->getNetwork() ?? 'standard';
-        
+        $dateTime = \DateTime::createFromInterface($feedItem->getDateTime());
+        $this->setDateTime($dateTime);
+
+        $this->tabName = 'social_feed';
+
         return $this;
     }
 }

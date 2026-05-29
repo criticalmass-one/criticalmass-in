@@ -3,9 +3,8 @@
 namespace App\Controller\SocialNetwork;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\SocialNetwork\FeedsApi\FeedItemProviderInterface;
 use App\Entity\City;
-use App\Repository\SocialNetworkFeedItemRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,20 +19,15 @@ class SocialNetworkItemListController extends AbstractController
     public function listCityItemsAction(
         City $city,
         Request $request,
-        PaginatorInterface $paginator,
-        SocialNetworkFeedItemRepository $feedItemRepository,
+        FeedItemProviderInterface $feedItemProvider,
     ): Response {
-        $queryBuilder = $feedItemRepository->findByCityQueryBuilder($city);
-
-        $pagination = $paginator->paginate(
-            $queryBuilder,
-            $request->query->getInt('page', 1),
-            30
-        );
+        $page = $request->query->getInt('page', 1);
+        $items = $feedItemProvider->getFeedItemsForCity($city, $page);
 
         return $this->render('SocialNetwork/list_city_items.html.twig', [
-            'pagination' => $pagination,
+            'items' => $items,
             'city' => $city,
+            'page' => $page,
         ]);
     }
 }

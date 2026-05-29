@@ -4,7 +4,6 @@ namespace App\Twig\Extension;
 
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
-use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -58,14 +57,16 @@ class SocialNetworkTwigExtension extends AbstractExtension
 
     public function networkIcon($param): string
     {
-        if ($param instanceof SocialNetworkFeedItem) {
-            $networkIdentifier = $param->getSocialNetworkProfile()?->getNetwork();
-        } elseif ($param instanceof SocialNetworkProfile) {
+        if ($param instanceof SocialNetworkProfile) {
             $networkIdentifier = $param->getNetwork();
         } elseif (is_string($param)) {
             $networkIdentifier = $param;
         } else {
-            throw new \InvalidArgumentException('Parameter must be instance of SocialNetworkFeedItem or SocialNetworkProfile or a string identifying the network.');
+            throw new \InvalidArgumentException('Parameter must be instance of SocialNetworkProfile or a string identifying the network.');
+        }
+
+        if (!$this->networkManager->hasNetwork($networkIdentifier)) {
+            return 'far fa-globe';
         }
 
         /** @var NetworkInterface $network */
