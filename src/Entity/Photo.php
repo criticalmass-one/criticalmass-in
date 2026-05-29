@@ -11,7 +11,7 @@ use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\Attribute as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -43,6 +43,7 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Ignore]
     protected ?User $user = null;
 
+    #[OE\Identical]
     #[DataQuery\Queryable]
     #[Routing\RouteParameter(name: 'rideIdentifier')]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'photos')]
@@ -74,11 +75,13 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Groups(['photo-details'])]
     protected ?string $description = null;
 
+    #[OE\Boolean(value: true)]
     #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
     protected bool $enabled = true;
 
+    #[OE\Boolean(value: false)]
     #[DataQuery\DefaultBooleanValue(alias: 'isDeleted', value: false)]
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
@@ -161,6 +164,7 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[Groups(['photo-details'])]
     protected ?string $exifCamera = null;
 
+    #[OE\Order(direction: 'ASC')]
     #[DataQuery\DateTimeQueryable(format: 'strict_date_hour_minute_second', pattern: 'Y-m-d\TH:i:s')]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
