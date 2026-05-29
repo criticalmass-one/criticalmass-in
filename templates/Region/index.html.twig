@@ -28,12 +28,58 @@
                 {% endif %}
             </h1>
 
-            {% if app.getUser() and region.isLevel(3) %}
-                <a href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
-                   class="btn btn-success btn-sm">
-                    <i class="far fa-plus me-1"></i>
-                    Stadt hinzufügen
-                </a>
+            {% if app.getUser() %}
+                <div class="btn-group">
+                    {% if not region.isWorld() %}
+                        {% if region.isLevel(1) %}
+                            <a href="{{ path('caldera_criticalmass_region_edit_1', { slug1: region.slug }) }}"
+                               class="btn btn-outline-secondary btn-sm">
+                                <i class="far fa-edit me-1"></i>
+                                Region bearbeiten
+                            </a>
+                        {% elseif region.isLevel(2) %}
+                            <a href="{{ path('caldera_criticalmass_region_edit_2', { slug1: region.parent.slug, slug2: region.slug }) }}"
+                               class="btn btn-outline-secondary btn-sm">
+                                <i class="far fa-edit me-1"></i>
+                                Region bearbeiten
+                            </a>
+                        {% elseif region.isLevel(3) %}
+                            <a href="{{ path('caldera_criticalmass_region_edit_3', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
+                               class="btn btn-outline-secondary btn-sm">
+                                <i class="far fa-edit me-1"></i>
+                                Region bearbeiten
+                            </a>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if region.isWorld() %}
+                        <a href="{{ path('caldera_criticalmass_region_add_world') }}"
+                           class="btn btn-success btn-sm">
+                            <i class="far fa-plus me-1"></i>
+                            Region hinzufügen
+                        </a>
+                    {% elseif region.isLevel(1) %}
+                        <a href="{{ path('caldera_criticalmass_region_add_1', { slug1: region.slug }) }}"
+                           class="btn btn-success btn-sm">
+                            <i class="far fa-plus me-1"></i>
+                            Region hinzufügen
+                        </a>
+                    {% elseif region.isLevel(2) %}
+                        <a href="{{ path('caldera_criticalmass_region_add_2', { slug1: region.parent.slug, slug2: region.slug }) }}"
+                           class="btn btn-success btn-sm">
+                            <i class="far fa-plus me-1"></i>
+                            Region hinzufügen
+                        </a>
+                    {% endif %}
+
+                    {% if region.isLevel(3) %}
+                        <a href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
+                           class="btn btn-success btn-sm">
+                            <i class="far fa-plus me-1"></i>
+                            Stadt hinzufügen
+                        </a>
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
 
