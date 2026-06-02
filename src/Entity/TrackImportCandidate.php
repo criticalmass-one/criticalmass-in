@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: 'App\Repository\TrackImportCandidateRepository')]
 class TrackImportCandidate
 {
+    public const CANDIDATE_SOURCE_STRAVA = 'CANDIDATE_SOURCE_STRAVA';
+    public const CANDIDATE_SOURCE_UPLOAD = 'CANDIDATE_SOURCE_UPLOAD';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -20,11 +23,23 @@ class TrackImportCandidate
     protected ?User $user = null;
 
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Ride', inversedBy: 'trackImportCandidates')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Ride $ride = null;
 
-    #[ORM\Column(type: 'bigint')]
+    #[ORM\Column(type: 'string', length: 255, options: ['default' => 'CANDIDATE_SOURCE_STRAVA'])]
+    protected string $source = self::CANDIDATE_SOURCE_STRAVA;
+
+    #[ORM\Column(type: 'bigint', nullable: true)]
     protected ?int $activityId = null;
+
+    #[ORM\Column(type: 'string', length: 40, nullable: true)]
+    protected ?string $fileHash = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $trackFilename = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $originalName = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     protected ?string $name = null;
@@ -96,19 +111,19 @@ class TrackImportCandidate
         return $this->ride;
     }
 
-    public function setRide(Ride $ride): TrackImportCandidate
+    public function setRide(?Ride $ride): TrackImportCandidate
     {
         $this->ride = $ride;
 
         return $this;
     }
 
-    public function getActivityId(): int
+    public function getActivityId(): ?int
     {
-        return (int)$this->activityId;
+        return $this->activityId === null ? null : (int) $this->activityId;
     }
 
-    public function setActivityId(int $activityId): TrackImportCandidate
+    public function setActivityId(?int $activityId): TrackImportCandidate
     {
         $this->activityId = $activityId;
 
@@ -213,7 +228,7 @@ class TrackImportCandidate
 
     public function getEndCoord(): CoordInterface
     {
-        return new Coord($this-$this->endLatitude, $this->endLongitude);
+        return new Coord($this->endLatitude, $this->endLongitude);
     }
 
     public function setEndCoord(CoordInterface $endCoord): TrackImportCandidate
@@ -280,6 +295,54 @@ class TrackImportCandidate
     public function setRejected(bool $rejected): TrackImportCandidate
     {
         $this->rejected = $rejected;
+
+        return $this;
+    }
+
+    public function getSource(): string
+    {
+        return $this->source;
+    }
+
+    public function setSource(string $source): TrackImportCandidate
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    public function getFileHash(): ?string
+    {
+        return $this->fileHash;
+    }
+
+    public function setFileHash(?string $fileHash): TrackImportCandidate
+    {
+        $this->fileHash = $fileHash;
+
+        return $this;
+    }
+
+    public function getTrackFilename(): ?string
+    {
+        return $this->trackFilename;
+    }
+
+    public function setTrackFilename(?string $trackFilename): TrackImportCandidate
+    {
+        $this->trackFilename = $trackFilename;
+
+        return $this;
+    }
+
+    public function getOriginalName(): ?string
+    {
+        return $this->originalName;
+    }
+
+    public function setOriginalName(?string $originalName): TrackImportCandidate
+    {
+        $this->originalName = $originalName;
 
         return $this;
     }
