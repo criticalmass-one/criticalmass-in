@@ -30,6 +30,7 @@ use Vich\UploaderBundle\Mapping\Attribute as Vich;
 class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
+    const TRACK_SOURCE_FIT = 'TRACK_SOURCE_FIT';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
     const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
     const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';

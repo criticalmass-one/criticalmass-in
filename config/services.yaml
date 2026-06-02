@@ -84,6 +84,9 @@ services:
     App\Criticalmass\Geo\GpxService\GpxServiceInterface:
         alias: App\Criticalmass\Geo\GpxService\GpxService
 
+    App\Criticalmass\Geo\FitService\FitToGpxConverterInterface:
+        alias: App\Criticalmass\Geo\FitService\FitToGpxConverter
+
     App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
