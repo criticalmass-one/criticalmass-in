@@ -59,6 +59,12 @@
                                     </td>
                                     <td>
                                         <i class="far fa-user text-muted me-1"></i>{{ track.user.username }}
+                                        {% if track.source == 'TRACK_SOURCE_STRAVA' and track.stravaActivityId %}
+                                            <a class="ms-2 small fw-bold text-decoration-underline"
+                                               style="color: #FC5200;"
+                                               href="https://www.strava.com/activities/{{ track.stravaActivityId }}"
+                                               target="_blank" rel="noopener" title="View on Strava">View on Strava</a>
+                                        {% endif %}
                                     </td>
                                     <td class="text-end">
                                         {% if track.getDurationInterval() %}
@@ -87,6 +93,13 @@
                         </tbody>
                     </table>
                 </div>
+
+                {% if tracks|filter(track => track.source == 'TRACK_SOURCE_STRAVA')|length %}
+                    <p class="text-muted small mt-2 mb-0">
+                        <a href="https://www.strava.com" target="_blank" rel="noopener"
+                           class="text-decoration-none fw-bold" style="color: #FC5200;">Powered by Strava</a>
+                    </p>
+                {% endif %}
             {% else %}
                 <div class="card bg-light border-0">
                     <div class="card-body text-center py-5">

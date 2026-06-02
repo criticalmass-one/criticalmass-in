@@ -65,6 +65,12 @@
                                         <i class="far fa-download me-1"></i>
                                         Track importieren
                                     </a>
+                                    <a class="d-block mt-2 small fw-bold text-decoration-underline"
+                                       style="color: #FC5200;"
+                                       href="https://www.strava.com/activities/{{ activity.id }}"
+                                       target="_blank" rel="noopener">
+                                        View on Strava
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -92,5 +98,10 @@
                 </div>
             {% endif %}
         </div>
+
+        <p class="text-center text-muted small mt-4 mb-0">
+            <a href="https://www.strava.com" target="_blank" rel="noopener"
+               class="text-decoration-none fw-bold" style="color: #FC5200;">Powered by Strava</a>
+        </p>
     </div>
 {% endblock %}

@@ -112,6 +112,12 @@
                                         </a>
                                     </div>
 
+                                    <a class="d-block mt-2 small fw-bold text-decoration-underline"
+                                       style="color: #FC5200;"
+                                       href="https://www.strava.com/activities/{{ candidate.activityId }}"
+                                       target="_blank" rel="noopener">
+                                        View on Strava
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -120,5 +126,10 @@
             {% else %}
             {% endif %}
         </div>
+
+        <p class="text-center text-muted small mt-4 mb-0">
+            <a href="https://www.strava.com" target="_blank" rel="noopener"
+               class="text-decoration-none fw-bold" style="color: #FC5200;">Powered by Strava</a>
+        </p>
     </div>
 {% endblock %}
