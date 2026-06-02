@@ -124,7 +124,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     private Collection $trackPolylines;
 
     #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
-    #[Assert\File(maxSize: '20M', mimeTypes: ['application/gpx+xml', 'application/xml', 'text/xml', 'application/octet-stream'])]
+    #[Assert\File(maxSize: '20M', mimeTypes: ['application/gpx+xml', 'application/xml', 'text/xml', 'application/octet-stream', 'application/vnd.ant.fit'])]
     protected ?File $trackFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
