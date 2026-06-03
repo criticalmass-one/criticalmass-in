@@ -50,6 +50,7 @@ services:
             $uploadDestinationPhoto: '%upload_destination.photo%'
             $uploadDestinationTrack: '%upload_destination.track%'
             $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
+            $trackFilesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
             $stravaClientId: '%strava.client_id%'
             $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
