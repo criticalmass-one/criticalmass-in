@@ -55,6 +55,30 @@ class BulkTrackReviewControllerTest extends AbstractControllerTestCase
         $this->assertEquals($trackCountBefore + 1, $this->countTracksForRide($ride->getId()), 'A track should be created from the candidate');
     }
 
+    public function testConfirmWithMissingFileKeepsCandidateAndDoesNotCrash(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getPastRideForCity('hamburg');
+        $this->assertNotNull($ride);
+
+        // A matched candidate whose stored file is absent must not abort with a 500.
+        $candidate = $this->createStoredCandidate('testuser@criticalmass.in', $ride, false);
+        $candidateId = $candidate->getId();
+
+        $trackCountBefore = $this->countTracksForRide($ride->getId());
+
+        $token = $this->reviewToken($client);
+        $client->request('POST', sprintf('%s/%d/confirm', self::REVIEW_URL, $candidateId), ['_token' => $token]);
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $em = static::getContainer()->get('doctrine')->getManager();
+        $this->assertNotNull($em->getRepository(TrackImportCandidate::class)->find($candidateId), 'Candidate with a missing file should be kept for review');
+        $this->assertEquals($trackCountBefore, $this->countTracksForRide($ride->getId()), 'No track should be created when the file is missing');
+    }
+
     public function testRejectRemovesCandidate(): void
     {
         $client = static::createClient();
@@ -95,7 +119,7 @@ class BulkTrackReviewControllerTest extends AbstractControllerTestCase
         return $token->attr('value');
     }
 
-    private function createStoredCandidate(string $email, ?Ride $ride): TrackImportCandidate
+    private function createStoredCandidate(string $email, ?Ride $ride, bool $writeFile = true): TrackImportCandidate
     {
         $em = static::getContainer()->get('doctrine')->getManager();
         /** @var User $user */
@@ -104,9 +128,11 @@ class BulkTrackReviewControllerTest extends AbstractControllerTestCase
         $hash = sha1(uniqid('candidate', true));
         $storagePath = sprintf('candidates/%s.gpx', $hash);
 
-        /** @var FilesystemOperator $trackFilesystem */
-        $trackFilesystem = static::getContainer()->get('oneup_flysystem.flysystem_track_track_filesystem');
-        $trackFilesystem->write($storagePath, $this->minimalGpx());
+        if ($writeFile) {
+            /** @var FilesystemOperator $trackFilesystem */
+            $trackFilesystem = static::getContainer()->get('oneup_flysystem.flysystem_track_track_filesystem');
+            $trackFilesystem->write($storagePath, $this->minimalGpx());
+        }
 
         $candidate = new TrackImportCandidate();
         $candidate

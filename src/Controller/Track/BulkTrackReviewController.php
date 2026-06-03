@@ -8,6 +8,7 @@ use App\Entity\TrackImportCandidate;
 use App\Entity\User;
 use App\Repository\TrackImportCandidateRepository;
 use League\Flysystem\FilesystemOperator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,14 +44,24 @@ class BulkTrackReviewController extends AbstractController
         Request $request,
         #[MapEntity(id: 'id')] TrackImportCandidate $candidate,
         FileTrackImporterInterface $fileTrackImporter,
+        LoggerInterface $logger,
         #[CurrentUser] User $user,
     ): Response {
         $this->assertCsrf($request, 'bulk_track_review');
         $this->assertOwnership($candidate, $user);
 
-        if ($candidate->getRide() !== null) {
+        if ($candidate->getRide() === null) {
+            return $this->redirectToRoute('caldera_criticalmass_track_bulkupload_review');
+        }
+
+        $rideTitle = $candidate->getRide()->getTitle();
+
+        try {
             $fileTrackImporter->importCandidate($candidate);
-            $this->addFlash('success', sprintf('Track für „%s" wurde importiert.', $candidate->getRide()->getTitle()));
+            $this->addFlash('success', sprintf('Track für „%s" wurde importiert.', $rideTitle));
+        } catch (\RuntimeException $exception) {
+            $logger->error('Bulk track confirm failed', ['candidate' => $candidate->getId(), 'exception' => $exception]);
+            $this->addFlash('danger', sprintf('Track für „%s" konnte nicht importiert werden.', $rideTitle));
         }
 
         return $this->redirectToRoute('caldera_criticalmass_track_bulkupload_review');
@@ -61,6 +72,7 @@ class BulkTrackReviewController extends AbstractController
     public function confirmAllAction(
         Request $request,
         FileTrackImporterInterface $fileTrackImporter,
+        LoggerInterface $logger,
         #[CurrentUser] User $user,
     ): Response {
         $this->assertCsrf($request, 'bulk_track_review');
@@ -70,13 +82,24 @@ class BulkTrackReviewController extends AbstractController
         $candidates = $repository->findMatchedUploadCandidatesForUser($user);
 
         $imported = 0;
+        $failed = 0;
 
         foreach ($candidates as $candidate) {
-            $fileTrackImporter->importCandidate($candidate);
-            ++$imported;
+            try {
+                $fileTrackImporter->importCandidate($candidate);
+                ++$imported;
+            } catch (\RuntimeException $exception) {
+                // A single broken candidate must not abort the whole batch.
+                $logger->error('Bulk track confirm-all failed for candidate', ['candidate' => $candidate->getId(), 'exception' => $exception]);
+                ++$failed;
+            }
         }
 
         $this->addFlash('success', sprintf('%d zugeordnete Track(s) wurden importiert.', $imported));
+
+        if ($failed > 0) {
+            $this->addFlash('warning', sprintf('%d Datei(en) konnten nicht importiert werden und bleiben zur Prüfung erhalten.', $failed));
+        }
 
         return $this->redirectToRoute('caldera_criticalmass_track_bulkupload_review');
     }
