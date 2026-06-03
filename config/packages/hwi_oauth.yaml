@@ -8,9 +8,3 @@ hwi_oauth:
             client_secret:       '%facebook.app_secret%'
             scope:               email
             infos_url:           https://graph.facebook.com/me?fields=id,name,email,first_name,last_name,gender
-        strava:
-            type:                strava
-            client_id:           '%strava.client_id%'
-            client_secret:       '%strava.secret%'
-            options:
-                use_authorization_to_get_token: false

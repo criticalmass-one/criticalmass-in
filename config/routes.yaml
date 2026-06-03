@@ -8,9 +8,6 @@ api_controllers:
 facebook_login:
   path: /login/check-facebook
 
-strava_login:
-  path: /login/check-strava
-
 controllers:
   resource: ../src/Controller/
   type: attribute

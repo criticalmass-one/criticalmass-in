@@ -129,7 +129,6 @@ services:
         arguments:
             $properties:
                 'facebook': 'facebookId'
-                'strava': 'stravaId'
 
     App\Command\Upload\UploadMappingResolverInterface:
         alias: App\Command\Upload\UploadMappingResolver
