@@ -20,8 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 /**
  * Review and confirmation of bulk-uploaded track candidates (the upload replacement for
  * the former Strava mass import). Matched candidates can be confirmed individually or all
- * at once; parked (unmatched) candidates can only be discarded. Strava review lives in
- * StravaMassImportController and is left untouched.
+ * at once; parked (unmatched) candidates can only be discarded.
  */
 class BulkTrackReviewController extends AbstractController
 {

@@ -14,23 +14,6 @@ class TrackImportCandidateRepository extends ServiceEntityRepository
         parent::__construct($registry, TrackImportCandidate::class);
     }
 
-    public function findCandidatesForUser(User $user): array
-    {
-        $builder = $this->createQueryBuilder('tic');
-
-        $builder
-            ->where($builder->expr()->eq('tic.rejected', ':rejected'))
-            ->setParameter('rejected', false)
-            ->andWhere($builder->expr()->eq('tic.user', ':user'))
-            ->setParameter('user', $user)
-            ->join('tic.ride', 'r')
-            ->orderBy('r.dateTime', 'ASC');
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
     /**
      * Upload candidates of the user that have been matched to a ride and await confirmation.
      *

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84322ef888d1b75561f948904cfa94c7",
+    "content-hash": "85f838e6f2091177e7d094cc65116940",
     "packages": [
         {
             "name": "adriangibbons/php-fit-file-analysis",
@@ -2403,49 +2403,6 @@
                 }
             ],
             "time": "2025-05-29T20:23:24+00:00"
-        },
-        {
-            "name": "iamstuartwilson/strava",
-            "version": "1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/iamstuartwilson/strava.git",
-                "reference": "2196338ee4961f81ef9ac23f6214549525e3a89f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/iamstuartwilson/strava/zipball/2196338ee4961f81ef9ac23f6214549525e3a89f",
-                "reference": "2196338ee4961f81ef9ac23f6214549525e3a89f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Iamstuartwilson\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Stuart Wilson",
-                    "email": "bonjour@iamstuartwilson.com"
-                }
-            ],
-            "description": "PHP implementation of the Strava V3 API",
-            "support": {
-                "issues": "https://github.com/iamstuartwilson/strava/issues",
-                "source": "https://github.com/iamstuartwilson/strava/tree/1.4.0"
-            },
-            "time": "2019-09-23T08:46:48+00:00"
         },
         {
             "name": "imagine/imagine",

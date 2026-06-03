@@ -14,9 +14,6 @@ parameters:
     database_user: '%env(DATABASE_USER)%'
     database_password: '%env(DATABASE_PASSWORD)%'
     track.gap_width: 10
-    strava.client_id: '%env(STRAVA_CLIENT_ID)%'
-    strava.token: '%env(STRAVA_TOKEN)%'
-    strava.secret: '%env(STRAVA_SECRET)%'
     facebook.app_id: '%env(FACEBOOK_APP_ID)%'
     facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
     facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
@@ -51,8 +48,6 @@ services:
             $uploadDestinationTrack: '%upload_destination.track%'
             $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
             $trackFilesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
-            $stravaClientId: '%strava.client_id%'
-            $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
             $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'

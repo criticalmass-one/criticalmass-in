@@ -415,15 +415,14 @@ parameters:
 			path: src/Controller/CityCycle/CityCycleController.php
 
 		-
-			message: '#^Method App\\Controller\\CityCycle\\CityCycleExecuteController\:\:fetchRidePreview\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Controller/CityCycle/CityCycleExecuteController.php
-			reportUnmatched: false
-
-		-
 			message: '#^Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface\:\:getFlashBag\(\)\.$#'
 			identifier: method.notFound
+			count: 1
+			path: src/Controller/CityCycle/CityCycleExecuteController.php
+
+		-
+			message: '#^Method App\\Controller\\CityCycle\\CityCycleExecuteController\:\:fetchRidePreview\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Controller/CityCycle/CityCycleExecuteController.php
 
@@ -758,84 +757,6 @@ parameters:
 			path: src/Controller/Template/FooterController.php
 
 		-
-			message: '#^Instantiated class Strava\\API\\OAuth not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Controller/Track/StravaController.php
-
-		-
-			message: '#^Method App\\Controller\\Track\\StravaController\:\:initOauthForRide\(\) has invalid return type Strava\\API\\OAuth\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Controller/Track/StravaController.php
-
-		-
-			message: '#^Parameter \#1 \$clientId of class Iamstuartwilson\\StravaApi constructor expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Controller/Track/StravaController.php
-
-		-
-			message: '#^Parameter \#1 \$response of static method App\\Criticalmass\\Strava\\Token\\StravaTokenStorage\:\:createFromStravaResponse\(\) expects stdClass, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Controller/Track/StravaController.php
-
-		-
-			message: '#^Parameter \#1 \$user of method App\\Criticalmass\\Strava\\Importer\\TrackImporterInterface\:\:setUser\(\) expects App\\Entity\\User, Symfony\\Component\\Security\\Core\\User\\UserInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Controller/Track/StravaController.php
-
-		-
-			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\TrackImportCandidate\>\:\:findCandidatesForUser\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
-			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\TrackImportCandidate\>\:\:findOneByActivityId\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
-			message: '#^Call to method getAccessToken\(\) on an unknown class Strava\\API\\OAuth\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
-			message: '#^Call to method getAuthorizationUrl\(\) on an unknown class Strava\\API\\OAuth\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
-			message: '#^Instantiated class Strava\\API\\OAuth not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
-			message: '#^Method App\\Controller\\Track\\StravaMassImportController\:\:initOauth\(\) has invalid return type Strava\\API\\OAuth\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
-			message: '#^Parameter \#1 \$user of method App\\Criticalmass\\Strava\\Importer\\TrackImporterInterface\:\:setUser\(\) expects App\\Entity\\User, Symfony\\Component\\Security\\Core\\User\\UserInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
-			message: '#^Parameter \#2 \$default of method Symfony\\Component\\HttpFoundation\\ParameterBag\:\:getInt\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 2
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
 			message: '#^Call to an undefined method App\\Controller\\Track\\TrackDownloadController\:\:get\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -1146,69 +1067,6 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: src/Criticalmass/Imagine/DataLoader/RemoteStreamLoader.php
-
-		-
-			message: '#^Call to method getAthleteActivities\(\) on an unknown class Strava\\API\\Client\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ActivityLoader/ActivityLoader.php
-
-		-
-			message: '#^Instantiated class Strava\\API\\Client not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ActivityLoader/ActivityLoader.php
-
-		-
-			message: '#^Instantiated class Strava\\API\\Service\\REST not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ActivityLoader/ActivityLoader.php
-
-		-
-			message: '#^Method App\\Criticalmass\\MassTrackImport\\ActivityLoader\\ActivityLoader\:\:load\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ActivityLoader/ActivityLoader.php
-
-		-
-			message: '#^Property App\\Criticalmass\\MassTrackImport\\ActivityLoader\\ActivityLoader\:\:\$client has unknown class Strava\\API\\Client as its type\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ActivityLoader/ActivityLoader.php
-
-		-
-			message: '#^Method App\\Criticalmass\\MassTrackImport\\ActivityLoader\\ActivityLoaderInterface\:\:load\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ActivityLoader/ActivityLoaderInterface.php
-
-		-
-			message: '#^Method App\\Criticalmass\\MassTrackImport\\Converter\\StravaActivityConverter\:\:convert\(\) has parameter \$content with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/MassTrackImport/Converter/StravaActivityConverter.php
-
-		-
-			message: '#^Method App\\Criticalmass\\MassTrackImport\\MassTrackImporter\:\:execute\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/MassTrackImport/MassTrackImporter.php
-
-		-
-			message: '#^Method App\\Criticalmass\\MassTrackImport\\MassTrackImporter\:\:getUser\(\) should return App\\Entity\\User but returns Symfony\\Component\\Security\\Core\\User\\UserInterface\|null\.$#'
-			identifier: return.type
-			count: 1
-			path: src/Criticalmass/MassTrackImport/MassTrackImporter.php
-
-		-
-			message: '#^Method App\\Criticalmass\\MassTrackImport\\MassTrackImporterInterface\:\:execute\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/MassTrackImport/MassTrackImporterInterface.php
-
-
-
 
 		-
 			message: '#^Method App\\Criticalmass\\MassTrackImport\\TrackDecider\\RideResult\:\:getVoterResults\(\) return type has no value type specified in iterable type array\.$#'
@@ -1851,96 +1709,6 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: src/Criticalmass/Statistic/RideEstimateHandler/RideEstimateHandler.php
-
-		-
-			message: '#^Constant App\\Criticalmass\\Strava\\Importer\\TrackImporter\:\:API_URI is unused\.$#'
-			identifier: classConstant.unused
-			count: 1
-			path: src/Criticalmass/Strava/Importer/TrackImporter.php
-
-		-
-			message: '#^Constant App\\Criticalmass\\Strava\\Importer\\TrackImporter\:\:RESOULUTION is unused\.$#'
-			identifier: classConstant.unused
-			count: 1
-			path: src/Criticalmass/Strava/Importer/TrackImporter.php
-
-		-
-			message: '#^Parameter \#1 \$streams of static method App\\Criticalmass\\Strava\\Stream\\StreamFactory\:\:build\(\) expects stdClass, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Criticalmass/Strava/Importer/TrackImporter.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Strava\\Importer\\TrackImporter\:\:\$activity \(stdClass\|null\) does not accept string\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: src/Criticalmass/Strava/Importer/TrackImporter.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Strava\\Importer\\TrackImporter\:\:\$activity \(stdClass\|null\) is never assigned stdClass so it can be removed from the property type\.$#'
-			identifier: property.unusedType
-			count: 1
-			path: src/Criticalmass/Strava/Importer/TrackImporter.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Strava\\Importer\\TrackImporter\:\:\$types has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: src/Criticalmass/Strava/Importer/TrackImporter.php
-
-		-
-			message: '#^Method App\\Criticalmass\\Strava\\Stream\\Stream\:\:getData\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/Strava/Stream/Stream.php
-
-		-
-			message: '#^Method App\\Criticalmass\\Strava\\Stream\\Stream\:\:setData\(\) has parameter \$data with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/Strava/Stream/Stream.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Strava\\Stream\\Stream\:\:\$data has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: src/Criticalmass/Strava/Stream/Stream.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Strava\\Stream\\Stream\:\:\$originalSize has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: src/Criticalmass/Strava/Stream/Stream.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Strava\\Stream\\Stream\:\:\$resolution has no type specified\.$#'
-			identifier: missingType.property
-			count: 1
-			path: src/Criticalmass/Strava/Stream/Stream.php
-
-		-
-			message: '#^Argument of an invalid type stdClass supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: src/Criticalmass/Strava/Stream/StreamFactory.php
-
-		-
-			message: '#^Method App\\Criticalmass\\Strava\\Stream\\StreamList\:\:getStreamList\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/Strava/Stream/StreamList.php
-
-		-
-			message: '#^Method App\\Criticalmass\\Strava\\Stream\\StreamList\:\:setStreamList\(\) has parameter \$streamList with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/Strava/Stream/StreamList.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Strava\\Stream\\StreamList\:\:\$streamList type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/Strava/Stream/StreamList.php
 
 		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
@@ -2909,12 +2677,6 @@ parameters:
 			path: src/Entity/Ride.php
 
 		-
-			message: '#^Parameter \#1 \$ride of method App\\Entity\\TrackImportCandidate\:\:setRide\(\) expects App\\Entity\\Ride, null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Entity/Ride.php
-
-		-
 			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
 			identifier: argument.type
 			count: 4
@@ -3119,22 +2881,16 @@ parameters:
 			path: src/Entity/Track.php
 
 		-
-			message: '#^Property App\\Entity\\TrackPolyline\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
-			identifier: property.unusedType
-			count: 1
-			path: src/Entity/TrackPolyline.php
-
-		-
-			message: '#^Binary operation "\-" between \$this\(App\\Entity\\TrackImportCandidate\) and float\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: src/Entity/TrackImportCandidate.php
-
-		-
 			message: '#^Property App\\Entity\\TrackImportCandidate\:\:\$createdAt \(DateTime\|null\) does not accept DateTimeInterface\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: src/Entity/TrackImportCandidate.php
+
+		-
+			message: '#^Property App\\Entity\\TrackPolyline\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/TrackPolyline.php
 
 		-
 			message: '#^Method App\\Entity\\User\:\:getCycles\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
@@ -4037,12 +3793,6 @@ parameters:
 			path: src/Repository/TrackImportCandidateRepository.php
 
 		-
-			message: '#^Method App\\Repository\\TrackImportCandidateRepository\:\:findCandidatesForUser\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Repository/TrackImportCandidateRepository.php
-
-		-
 			message: '#^Class App\\Repository\\TrackRepository extends generic class Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository but does not specify its types\: T$#'
 			identifier: missingType.generics
 			count: 1
@@ -4835,24 +4585,6 @@ parameters:
 			path: tests/Controller/RideControllerTest.php
 
 		-
-			message: '#^Method Tests\\Criticalmass\\MassTrackImport\\Converter\\StravaActivityConverterTest\:\:activityTypeProvider\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Criticalmass/MassTrackImport/Converter/StravaActivityConverterTest.php
-
-		-
-			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
-			identifier: method.alreadyNarrowedType
-			count: 3
-			path: tests/Criticalmass/MassTrackImport/MassTrackImporterTest.php
-
-		-
-			message: '#^Method Tests\\Criticalmass\\MassTrackImport\\MassTrackImporterTest\:\:createStravaActivity\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Criticalmass/MassTrackImport/MassTrackImporterTest.php
-
-		-
 			message: '#^Method Tests\\Geo\\Entity\\PositionTest\:\:testAccuracy\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -4931,12 +4663,6 @@ parameters:
 			path: tests/IcalGenerator/RideIcalGeneratorTest.php
 
 		-
-			message: '#^Method Tests\\Message\\ImportTrackCandidateMessageTest\:\:activityTypeProvider\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Message/ImportTrackCandidateMessageTest.php
-
-		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
@@ -4959,36 +4685,6 @@ parameters:
 			identifier: method.notFound
 			count: 2
 			path: tests/Repository/RideRepositoryTest.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Geo\\GpxService\\GpxServiceInterface\:\:expects\(\)\.$#'
-			identifier: method.notFound
-			count: 4
-			path: tests/Strava/Importer/TrackImporterIntegrationTest.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Geo\\GpxService\\GpxServiceInterface\:\:method\(\)\.$#'
-			identifier: method.notFound
-			count: 8
-			path: tests/Strava/Importer/TrackImporterIntegrationTest.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\UploadFaker\\UploadFakerInterface\:\:expects\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: tests/Strava/Importer/TrackImporterIntegrationTest.php
-
-		-
-			message: '#^Call to an undefined method Doctrine\\ORM\\EntityManager\:\:expects\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: tests/Strava/Importer/TrackImporterIntegrationTest.php
-
-		-
-			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertNotNull\(\) with App\\Criticalmass\\Strava\\Stream\\Stream will always evaluate to true\.$#'
-			identifier: method.alreadyNarrowedType
-			count: 1
-			path: tests/Strava/Stream/StreamFactoryTest.php
 
 		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array\<Twig\\TwigFunction\> will always evaluate to true\.$#'
