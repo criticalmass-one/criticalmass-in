@@ -27,6 +27,13 @@ class BulkTrackUploadController extends AbstractController
     private const CANDIDATE_DIRECTORY = 'candidates';
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/trackupload/bulk', name: 'caldera_criticalmass_track_bulkupload', methods: ['GET'], priority: 310)]
+    public function pageAction(): Response
+    {
+        return $this->render('Track/bulk-upload.html.twig');
+    }
+
+    #[IsGranted('ROLE_USER')]
     #[Route('/trackupload/bulk/file', name: 'caldera_criticalmass_track_bulkupload_file', methods: ['POST'], priority: 310)]
     public function uploadFileAction(
         Request $request,
