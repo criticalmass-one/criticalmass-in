@@ -8,6 +8,7 @@ use App\Entity\Track;
 use App\Entity\TrackImportCandidate;
 use App\Entity\User;
 use League\Flysystem\FilesystemOperator;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class BulkTrackReviewControllerTest extends AbstractControllerTestCase
 {
@@ -108,7 +109,7 @@ class BulkTrackReviewControllerTest extends AbstractControllerTestCase
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
-    private function reviewToken($client): string
+    private function reviewToken(KernelBrowser $client): string
     {
         $crawler = $client->request('GET', self::REVIEW_URL);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

@@ -2909,12 +2909,6 @@ parameters:
 			path: src/Entity/Ride.php
 
 		-
-			message: '#^Parameter \#1 \$ride of method App\\Entity\\TrackImportCandidate\:\:setRide\(\) expects App\\Entity\\Ride, null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Entity/Ride.php
-
-		-
 			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
 			identifier: argument.type
 			count: 4
@@ -3123,12 +3117,6 @@ parameters:
 			identifier: property.unusedType
 			count: 1
 			path: src/Entity/TrackPolyline.php
-
-		-
-			message: '#^Binary operation "\-" between \$this\(App\\Entity\\TrackImportCandidate\) and float\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: src/Entity/TrackImportCandidate.php
 
 		-
 			message: '#^Property App\\Entity\\TrackImportCandidate\:\:\$createdAt \(DateTime\|null\) does not accept DateTimeInterface\.$#'
