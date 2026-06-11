@@ -35,11 +35,19 @@ class UploadedTrackCandidateFactory
     {
         $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
 
-        $gpxFile = match ($extension) {
-            'fit' => $this->fitToGpxConverter->convertFileToGpxFile($filePath),
-            'gpx' => $this->gpxService->loadFromFile($filePath),
-            default => throw new \RuntimeException(sprintf('Unsupported file type ".%s" — only .gpx and .fit are allowed.', $extension)),
-        };
+        if (!in_array($extension, ['gpx', 'fit'], true)) {
+            throw new \RuntimeException(sprintf('Das Dateiformat „.%s“ wird nicht unterstützt — bitte lade nur GPX- oder FIT-Dateien hoch.', $extension));
+        }
+
+        try {
+            $gpxFile = $extension === 'fit'
+                ? $this->fitToGpxConverter->convertFileToGpxFile($filePath)
+                : $this->gpxService->loadFromFile($filePath);
+        } catch (\Throwable $exception) {
+            // phpGPX and the FIT parser throw arbitrary exceptions on corrupt files;
+            // normalise them so callers only ever deal with the documented RuntimeException.
+            throw new \RuntimeException(sprintf('Die Datei konnte nicht gelesen werden: %s', $exception->getMessage()), 0, $exception);
+        }
 
         $points = $this->extractUsablePoints($gpxFile);
 
@@ -50,7 +58,7 @@ class UploadedTrackCandidateFactory
         $endTime = $lastPoint->time;
 
         if ($startTime === null || $endTime === null) {
-            throw new \RuntimeException('The uploaded track has no timestamps and cannot be matched to a ride.');
+            throw new \RuntimeException('Der Track enthält keine Zeitstempel und kann deshalb keiner Tour zugeordnet werden.');
         }
 
         $hash = sha1_file($filePath);
@@ -79,7 +87,7 @@ class UploadedTrackCandidateFactory
     private function extractUsablePoints(GpxFile $gpxFile): array
     {
         if (count($gpxFile->tracks) === 0) {
-            throw new \RuntimeException('The uploaded file contains no track.');
+            throw new \RuntimeException('Die Datei enthält keinen Track.');
         }
 
         $points = array_values(array_filter(
@@ -88,7 +96,7 @@ class UploadedTrackCandidateFactory
         ));
 
         if (count($points) < self::MINIMUM_POINTS) {
-            throw new \RuntimeException('The uploaded track has no usable GPS coordinates.');
+            throw new \RuntimeException('Der Track enthält keine verwertbaren GPS-Koordinaten.');
         }
 
         return $points;
