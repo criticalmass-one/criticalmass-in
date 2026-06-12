@@ -44,17 +44,17 @@ class BulkTrackUploadController extends AbstractController
         #[CurrentUser] ?User $user = null,
     ): JsonResponse {
         if (!$this->isCsrfTokenValid('bulk_track_upload', (string) $request->request->get('_token'))) {
-            return $this->statusResponse('error', 'Invalid CSRF token.', Response::HTTP_FORBIDDEN);
+            return $this->statusResponse('error', 'Ungültiges Sicherheits-Token — bitte lade die Seite neu.', Response::HTTP_FORBIDDEN);
         }
 
         if (!$user instanceof User) {
-            return $this->statusResponse('error', 'Authentication required.', Response::HTTP_FORBIDDEN);
+            return $this->statusResponse('error', 'Bitte melde dich an, um Tracks hochzuladen.', Response::HTTP_FORBIDDEN);
         }
 
         $uploadedFile = $request->files->get('file');
 
         if (!$uploadedFile instanceof UploadedFile) {
-            return $this->statusResponse('error', 'No file was uploaded.', Response::HTTP_BAD_REQUEST);
+            return $this->statusResponse('error', 'Es wurde keine Datei übertragen.', Response::HTTP_BAD_REQUEST);
         }
 
         try {
@@ -71,7 +71,7 @@ class BulkTrackUploadController extends AbstractController
         $fileHash = (string) $candidate->getFileHash();
 
         if ($this->candidateAlreadyExists($user, $fileHash)) {
-            return $this->statusResponse('duplicate', 'This file has already been uploaded.');
+            return $this->statusResponse('duplicate', 'Diese Datei hast du bereits hochgeladen.');
         }
 
         $storagePath = sprintf('%s/%s.gpx', self::CANDIDATE_DIRECTORY, $fileHash);
@@ -83,7 +83,7 @@ class BulkTrackUploadController extends AbstractController
         if ($rideResult !== null) {
             $proposalPersister->persist($rideResult);
 
-            return $this->statusResponse('matched', sprintf('Assigned to ride "%s".', $rideResult->getRide()->getTitle()));
+            return $this->statusResponse('matched', sprintf('Der Tour „%s“ zugeordnet.', $rideResult->getRide()->getTitle()));
         }
 
         // No confident ride match → park the candidate without a ride for manual review.
@@ -94,7 +94,7 @@ class BulkTrackUploadController extends AbstractController
         $manager->persist($candidate);
         $manager->flush();
 
-        return $this->statusResponse('parked', 'No matching ride found — kept for review.');
+        return $this->statusResponse('parked', 'Keine passende Tour gefunden — die Datei wurde zur manuellen Prüfung gespeichert.');
     }
 
     private function candidateAlreadyExists(User $user, string $fileHash): bool

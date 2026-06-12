@@ -7,11 +7,12 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class RideQueryTest extends AbstractApiControllerTestCase
 {
-    #[TestDox('Querying for Hamburg with past ride date will only return Hamburg photos.')]
+    #[TestDox('Querying for the past Hamburg ride will only return its photos.')]
     public function testPhotoListWithRideQueryForHamburg(): void
     {
-        $rideDate = (new \DateTime('-1 month last friday'))->format('Y-m-d');
-        $this->client->request('GET', '/api/photo?citySlug=hamburg&rideIdentifier=' . $rideDate);
+        $rideId = $this->queryMostRecentPastRideId('hamburg');
+
+        $this->client->request('GET', sprintf('/api/photo?citySlug=hamburg&rideIdentifier=%d', $rideId));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -27,11 +28,12 @@ class RideQueryTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Querying for Berlin with past ride date will only return Berlin photos.')]
+    #[TestDox('Querying for the past Berlin ride will only return its photos.')]
     public function testPhotoListWithRideQueryForBerlin(): void
     {
-        $rideDate = (new \DateTime('-1 month last friday'))->format('Y-m-d');
-        $this->client->request('GET', '/api/photo?citySlug=berlin&rideIdentifier=' . $rideDate);
+        $rideId = $this->queryMostRecentPastRideId('berlin');
+
+        $this->client->request('GET', sprintf('/api/photo?citySlug=berlin&rideIdentifier=%d', $rideId));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -47,13 +49,30 @@ class RideQueryTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Expect an error when providing a non existent slug for city and ride.')]
+    #[TestDox('Querying for a non existent slug for city and ride returns 404 not found.')]
     public function testPhotoListWithCityQueryForNonExistentCity(): void
     {
-        $this->client->catchExceptions(false);
-
-        // Non-existent city slug causes an exception in CityQuery
-        $this->expectException(\Error::class);
         $this->client->request('GET', '/api/photo?citySlug=foobarcity&rideIdentifier=1245');
+
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * The photo fixtures are attached to the most recent past ride of a city.
+     */
+    private function queryMostRecentPastRideId(string $citySlug): int
+    {
+        $this->client->request('GET', '/api/ride?citySlug=' . $citySlug);
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $rideList = $this->getJsonResponse();
+
+        $pastRideList = array_filter($rideList, fn(array $ride): bool => $ride['date_time'] < time());
+        $this->assertNotEmpty($pastRideList, sprintf('Should have a past ride for %s', $citySlug));
+
+        usort($pastRideList, fn(array $a, array $b): int => $b['date_time'] <=> $a['date_time']);
+
+        return $pastRideList[0]['id'];
     }
 }
