@@ -16,7 +16,3 @@ framework:
                     max_delay: 0
 
             # failed: 'doctrine://default?queue_name=failed'
-
-        routing:
-            # Route messages to the async transport
-            'App\Message\ImportTrackCandidateMessage': async

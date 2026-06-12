@@ -10,13 +10,6 @@
                     <i class="far fa-plus me-1"></i>Track hinzufügen
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    {% if feature('strava_track_upload') %}
-                        <li>
-                            <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
-                                <i class="fab fa-strava text-orange me-2"></i>Von Strava importieren
-                            </a>
-                        </li>
-                    {% endif %}
                     <li>
                         <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}" title="Track hochladen">
                             <i class="far fa-upload me-2"></i>GPX-Datei hochladen

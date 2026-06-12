@@ -32,7 +32,7 @@ class LoginControllerTest extends AbstractControllerTestCase
         $this->assertGreaterThan(0, $emailInput->count(), 'Login page should contain an email input field');
     }
 
-    public function testLoginPageContainsSocialLoginButtons(): void
+    public function testLoginPageContainsFacebookButNoStravaLogin(): void
     {
         $client = static::createClient();
 
@@ -41,8 +41,9 @@ class LoginControllerTest extends AbstractControllerTestCase
         $facebookLink = $crawler->filter('a:contains("Facebook")');
         $this->assertGreaterThan(0, $facebookLink->count(), 'Login page should contain a Facebook login link');
 
+        // "Login with Strava" has been removed — make sure it does not come back.
         $stravaLink = $crawler->filter('a:contains("Strava")');
-        $this->assertGreaterThan(0, $stravaLink->count(), 'Login page should contain a Strava login link');
+        $this->assertSame(0, $stravaLink->count(), 'Login page should no longer offer a Strava login link');
     }
 
     public function testLoginFormSubmitDoesNotCrash(): void
