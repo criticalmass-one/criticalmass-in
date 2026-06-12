@@ -28,12 +28,20 @@ class CityApiQueryTest extends AbstractApiControllerTestCase
         $this->assertResponseIsSuccessful();
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
-        // Region may not exist in test fixtures - just verify API returns valid response
         $this->assertIsArray($data);
+        $this->assertNotEmpty($data, 'Should return cities in Schleswig-Holstein');
 
-        // Note: Region filter requires proper region fixtures setup.
-        // If regions are not configured, all cities may be returned or empty array.
-        // We only verify that the API call succeeds.
+        // Kiel is the only Schleswig-Holstein city in the fixtures
+        foreach ($data as $city) {
+            $this->assertStringContainsStringIgnoringCase('kiel', $city['name']);
+        }
+    }
+
+    public function testFilterByNonExistentRegionReturnsNotFound(): void
+    {
+        $this->client->request('GET', '/api/city?regionSlug=atlantis');
+
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testLimitSize(): void
