@@ -19,7 +19,10 @@ class RegionQuery extends AbstractQuery implements OrmQueryInterface, ElasticQue
     #[Constraints\Type(Region::class)]
     protected Region $region;
 
-    #[DataQuery\RequiredQueryParameter(parameterName: 'regionSlug')]
+    #[DataQuery\RequiredQueryParameter(
+        parameterName: 'regionSlug',
+        repositoryMethod: 'findOneBySlug'
+    )]
     public function setRegion(Region $region): RegionQuery
     {
         $this->region = $region;
