@@ -79,6 +79,12 @@ Alle aus denselben Bausteinen, kein neues Vokabular nötig:
 
 ## Schritte / PR-Schnitt
 
+> **Stand 13.06.2026:** PR 1 = [#1406](https://github.com/criticalmass-one/criticalmass-in/pull/1406) (offen) ·
+> PR 2 = [#1407](https://github.com/criticalmass-one/criticalmass-in/pull/1407) (offen, gestapelt) ·
+> Arbeitspakete als Issues: PR 3 → #1408 · PR 4 → #1409 · PR 5 → #1410 · PR 6 → #1411 ·
+> PR 7 → #1412 · PR 8 → #1413 · PR 9 → #1414 · PR 10 → #1415 · PR 11 → #1416 ·
+> Übersicht/Epic: #1417
+
 1. **PR 1 — Fundament (rein additiv, bricht nichts):**
    Branch `feature/redesign-activity`. Fonts via @fontsource; Bootstrap-Variablen in
    `assets/scss/bootstrap5.scss` überschreiben (`$primary`, `$font-family-base`,
