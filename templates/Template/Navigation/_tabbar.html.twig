@@ -1,0 +1,40 @@
+{# Redesign „Aktivität": mobile Tab-Leiste — Referenz design-prototypes/06-feed-aktiv.html #}
+{% set currentRoute = app.request.attributes.get('_route') ?? '' %}
+
+<nav class="cm-tabbar" aria-label="Hauptnavigation (mobil)">
+    <a href="{{ path('caldera_criticalmass_frontpage') }}"
+       class="{{ currentRoute == 'caldera_criticalmass_frontpage' ? 'active' }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+        Start
+    </a>
+    <a href="{{ path('caldera_criticalmass_explore') }}"
+       class="{{ currentRoute == 'caldera_criticalmass_explore' ? 'active' }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+        Karte
+    </a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a href="{{ path('caldera_criticalmass_track_bulkupload') }}"
+           class="{{ currentRoute == 'caldera_criticalmass_track_bulkupload' ? 'active' }}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+            Hochladen
+        </a>
+    {% endif %}
+    <a href="{{ path('caldera_criticalmass_calendar') }}"
+       class="{{ currentRoute starts with 'caldera_criticalmass_calendar' ? 'active' }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+        Kalender
+    </a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a href="{{ path('criticalmass_user_usermanagement') }}"
+           class="{{ currentRoute == 'criticalmass_user_usermanagement' ? 'active' }}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+            Profil
+        </a>
+    {% else %}
+        <a href="{{ path('login') }}"
+           class="{{ currentRoute == 'login' ? 'active' }}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+            Anmelden
+        </a>
+    {% endif %}
+</nav>
