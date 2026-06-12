@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp 7 · Feed App — criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0f12;
+  --fg: #eceef2;
+  --dim: #8b93a1;
+  --hair: #23252b;
+  --raise: #16181d;
+  --accent: #d9ff3d;
+  --live: #ff4a3a;
+  --sans: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { color-scheme: dark; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 72px;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+.col { max-width: 620px; margin: 0 auto; padding: 0 16px; }
+
+/* ---------- Topbar ---------- */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(14,15,18,.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--hair);
+}
+.top .col { display: flex; align-items: center; gap: 14px; height: 54px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 1.02rem; }
+.brand .patch {
+  width: 13px; height: 20px;
+  background: var(--accent);
+  clip-path: polygon(0 0, 100% 12%, 100% 100%, 0 88%);
+  box-shadow: 0 0 12px rgba(217,255,61,.5);
+}
+.top .icons { margin-left: auto; display: flex; gap: 6px; }
+.iconbtn {
+  width: 36px; height: 36px;
+  border-radius: 99px;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.iconbtn:hover { background: var(--raise); }
+.iconbtn .dot {
+  position: absolute;
+  top: 7px; right: 7px;
+  width: 8px; height: 8px;
+  border-radius: 99px;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+
+/* ---------- Stories ---------- */
+.stories {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 16px 16px 14px;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--hair);
+}
+.stories::-webkit-scrollbar { display: none; }
+.story { flex: none; width: 66px; text-align: center; }
+.story .ring {
+  width: 62px; height: 62px;
+  margin: 0 auto;
+  border-radius: 99px;
+  padding: 3px;
+  background: linear-gradient(135deg, #3a3f49, #23252b);
+}
+.story.today .ring { background: linear-gradient(135deg, var(--accent), #6f9c1f); }
+.story.live .ring { background: linear-gradient(135deg, var(--live), #ff8a3a); animation: pulse 2s ease infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 5px rgba(255,74,58,.12); } }
+@media (prefers-reduced-motion: reduce) { .story.live .ring { animation: none; } }
+.story .face {
+  width: 100%; height: 100%;
+  border-radius: 99px;
+  background: var(--raise);
+  border: 2.5px solid var(--bg);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: .82rem;
+}
+.story .name { font-size: .68rem; font-weight: 600; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.story .t { font-size: .64rem; color: var(--dim); }
+.story.live .t { color: var(--live); font-weight: 700; }
+.story.today .t { color: var(--accent); }
+
+/* ---------- Compose ---------- */
+.compose {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--hair);
+}
+.ava {
+  width: 40px; height: 40px;
+  border-radius: 99px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: .85rem;
+  color: #0e0f12;
+}
+.ava.s { width: 22px; height: 22px; font-size: .58rem; border: 2px solid var(--bg); }
+.ava.kk { background: #6fd3c7; }
+.ava.bb { background: #b3a6ff; }
+.ava.cb { background: #f0a6e8; }
+.ava.lk { background: #ffd27d; }
+.ava.mh { background: #c5ccd9; }
+.ava.st { background: #9fe8b0; }
+.compose input {
+  flex: 1;
+  background: var(--raise);
+  border: 1px solid var(--hair);
+  border-radius: 99px;
+  padding: 10px 18px;
+  font: inherit;
+  color: var(--fg);
+  min-width: 0;
+}
+.compose input::placeholder { color: var(--dim); }
+.compose .go {
+  flex: none;
+  width: 40px; height: 40px;
+  border-radius: 99px;
+  border: 0;
+  background: var(--accent);
+  color: #11130a;
+  display: grid;
+  place-items: center;
+}
+
+/* ---------- Posts ---------- */
+.post { padding: 16px 16px 10px; border-bottom: 1px solid var(--hair); }
+.post-head { display: flex; gap: 11px; }
+.post-head .who { font-size: .95rem; line-height: 1.35; min-width: 0; }
+.post-head .who b { font-weight: 700; }
+.post-head .who .what { color: #c4c9d4; }
+.post-head .time { margin-left: auto; color: var(--dim); font-size: .8rem; white-space: nowrap; }
+.kind {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+.kind.live { color: var(--live); }
+.post-body { margin: 10px 0 6px 51px; }
+.post-body p.txt { color: #c4c9d4; font-size: .94rem; margin-bottom: 10px; }
+
+/* Inhalte */
+.ridecard {
+  border: 1px solid var(--hair);
+  background: var(--raise);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+.ridecard .row { display: flex; gap: 14px; align-items: center; }
+.datebox {
+  flex: none;
+  width: 56px;
+  text-align: center;
+  border: 1.5px solid var(--accent);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.datebox .m { background: var(--accent); color: #11130a; font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 2.5px 0; }
+.datebox .d { font-size: 1.35rem; font-weight: 700; padding: 3px 0 4px; }
+.ridecard h3 { font-size: 1.05rem; font-weight: 700; }
+.ridecard .sub { color: var(--dim); font-size: .84rem; margin-top: 1px; }
+.ridecard .join { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+.pillbtn {
+  border: 1px solid var(--hair);
+  background: transparent;
+  color: var(--fg);
+  border-radius: 99px;
+  padding: 7px 15px;
+  font-weight: 600;
+  font-size: .85rem;
+}
+.pillbtn.hot { background: var(--accent); border-color: var(--accent); color: #11130a; font-weight: 700; }
+.ridecard .join .n { color: var(--dim); font-size: .8rem; margin-left: auto; }
+
+.darkmap { border-radius: 16px; display: block; width: 100%; height: auto; border: 1px solid var(--hair); }
+.statline {
+  display: flex;
+  gap: 18px;
+  margin-top: 10px;
+  font-size: .86rem;
+  color: var(--dim);
+  flex-wrap: wrap;
+}
+.statline b { color: var(--fg); font-weight: 700; font-feature-settings: "tnum"; }
+
+.photos2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; border-radius: 16px; overflow: hidden; }
+.photos2 .ph { aspect-ratio: 4/3; position: relative; }
+.photos2 .ph::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(0,0,0,.5) 1px, transparent 1.4px); background-size: 4px 4px; opacity: .5; }
+.ph.q1 { background: linear-gradient(140deg, #41523c, #1d2b22); }
+.ph.q2 { background: linear-gradient(150deg, #4f4434, #2b2118); }
+.ph.q3 { background: linear-gradient(150deg, #34414f, #1a242e); }
+.ph.q4 { background: linear-gradient(130deg, #4d3a47, #281c26); display: grid; place-items: center; color: #fff; font-weight: 700; }
+.ph.q4::before { content: "+1"; font-size: 1.1rem; position: relative; z-index: 1; }
+
+.estrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--hair);
+  background: var(--raise);
+  border-radius: 16px;
+  padding: 13px 16px;
+}
+.estrow .big {
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: .04em;
+  color: var(--accent);
+  font-feature-settings: "tnum";
+}
+.estrow .lbl { font-size: .88rem; color: #c4c9d4; }
+.estrow .lbl b { color: var(--fg); }
+
+/* Aktionen */
+.acts { display: flex; gap: 2px; margin: 6px 0 2px 40px; }
+.acts button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: 0;
+  color: var(--dim);
+  font-size: .84rem;
+  font-weight: 600;
+  border-radius: 99px;
+  padding: 7px 12px;
+}
+.acts button:hover { background: var(--raise); color: var(--fg); }
+.acts button svg { stroke: currentColor; }
+.acts button.rang { color: var(--accent); }
+
+/* ---------- Tabbar ---------- */
+.tabbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 50;
+  background: rgba(14,15,18,.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--hair);
+  display: flex;
+  padding: 6px 10px calc(6px + env(safe-area-inset-bottom));
+}
+.tabbar .col-inner { max-width: 620px; margin: 0 auto; display: flex; flex: 1; }
+.tabbar a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--dim);
+  font-size: .6rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  padding: 4px 0;
+}
+.tabbar a svg { stroke: currentColor; }
+.tabbar a.on { color: var(--accent); }
+
+.proto-back {
+  position: fixed;
+  bottom: 84px;
+  right: 14px;
+  z-index: 60;
+  font-size: .72rem;
+  font-weight: 600;
+  background: var(--raise);
+  border: 1px solid var(--hair);
+  border-radius: 99px;
+  padding: 6px 12px;
+  color: var(--dim);
+}
+
+@media (min-width: 720px) {
+  body { padding-bottom: 24px; }
+  .tabbar { display: none; }
+  .top .icons { gap: 2px; }
+  .top nav.deskt { display: flex; gap: 2px; margin-left: 18px; }
+  .top nav.deskt a {
+    color: var(--dim);
+    font-size: .88rem;
+    font-weight: 600;
+    padding: 6px 11px;
+    border-radius: 99px;
+  }
+  .top nav.deskt a:hover { background: var(--raise); color: var(--fg); }
+  .top nav.deskt a.on { color: var(--fg); background: var(--raise); }
+  .proto-back { bottom: 14px; }
+}
+@media (max-width: 719px) {
+  .top nav.deskt { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="col">
+    <a class="brand" href="#"><span class="patch"></span>criticalmass.in</a>
+    <nav class="deskt">
+      <a class="on" href="#">Feed</a>
+      <a href="#">Karte</a>
+      <a href="#">Kalender</a>
+      <a href="#">Forum</a>
+    </nav>
+    <span class="icons">
+      <button class="iconbtn" aria-label="Suche">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      </button>
+      <button class="iconbtn" aria-label="Mitteilungen">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        <span class="dot"></span>
+      </button>
+      <span class="ava mh" style="width:32px;height:32px;font-size:.72rem">MH</span>
+    </span>
+  </div>
+</header>
+
+<main class="col" style="padding:0">
+
+  <!-- Stories: Heute unterwegs -->
+  <div class="stories" aria-label="Heute unterwegs">
+    <a class="story live" href="#">
+      <span class="ring"><span class="face">LX</span></span>
+      <span class="name">Lisboa</span>
+      <span class="t">rollt jetzt</span>
+    </a>
+    <a class="story today" href="#">
+      <span class="ring"><span class="face">FK</span></span>
+      <span class="name">Falkensee</span>
+      <span class="t">17:00</span>
+    </a>
+    <a class="story today" href="#">
+      <span class="ring"><span class="face">DN</span></span>
+      <span class="name">Düren</span>
+      <span class="t">18:00</span>
+    </a>
+    <a class="story today" href="#">
+      <span class="ring"><span class="face">PIT</span></span>
+      <span class="name">Pittsburgh</span>
+      <span class="t">18:00</span>
+    </a>
+    <a class="story today" href="#">
+      <span class="ring"><span class="face">D</span></span>
+      <span class="name">Düsseldorf</span>
+      <span class="t">19:00</span>
+    </a>
+    <a class="story today" href="#">
+      <span class="ring"><span class="face">F</span></span>
+      <span class="name">Frankfurt</span>
+      <span class="t">19:00</span>
+    </a>
+    <a class="story today" href="#">
+      <span class="ring"><span class="face">TK</span></span>
+      <span class="name">T-Köpenick</span>
+      <span class="t">19:00</span>
+    </a>
+    <a class="story" href="#">
+      <span class="ring"><span class="face">HH</span></span>
+      <span class="name">Hamburg</span>
+      <span class="t">Fr 26.06.</span>
+    </a>
+    <a class="story" href="#">
+      <span class="ring"><span class="face">B</span></span>
+      <span class="name">Berlin</span>
+      <span class="t">Fr 26.06.</span>
+    </a>
+  </div>
+
+  <!-- Compose -->
+  <div class="compose">
+    <span class="ava mh">MH</span>
+    <input type="text" placeholder="Was rollt bei dir? Foto, Track oder Schätzung …">
+    <button class="go" aria-label="Beitragen">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+  </div>
+
+  <!-- Tour der Woche -->
+  <article class="post">
+    <div class="post-head">
+      <span class="ava" style="background:var(--accent)">HH</span>
+      <div class="who">
+        <span class="kind">Tour der Woche</span><br>
+        <b>Critical Mass Hamburg</b> <span class="what">— letzter Freitag im Monat</span>
+      </div>
+      <span class="time">in 14 Tagen</span>
+    </div>
+    <div class="post-body">
+      <div class="ridecard">
+        <div class="row">
+          <div class="datebox"><div class="m">Juni</div><div class="d">26</div></div>
+          <div>
+            <h3>19:00 · Alstervorland</h3>
+            <p class="sub">Höhe Milchstraße · zuletzt ~ 2.400 Räder</p>
+          </div>
+        </div>
+        <div class="join">
+          <button class="pillbtn hot">Dabei!</button>
+          <button class="pillbtn">Vielleicht</button>
+          <button class="pillbtn">iCal</button>
+          <span class="n">132 dabei · 41 vielleicht</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Live -->
+  <article class="post">
+    <div class="post-head">
+      <span class="ava" style="background:#ff9d8a">LX</span>
+      <div class="who">
+        <span class="kind live">● Live</span><br>
+        <b>Lisboa</b> <span class="what">rollt — seit 21:00 ab Marquês de Pombal</span>
+      </div>
+      <span class="time">jetzt</span>
+    </div>
+    <div class="post-body">
+      <p class="txt">Dienstags-Masse mit lauer Luft. Telegram-Gruppe meldet ~ 200 Räder am Start.</p>
+    </div>
+    <div class="acts">
+      <button class="rang">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        28
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+        6
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 9V5l7 7-7 7v-4c-7 0-10 2-11 5 0-7 4-11 11-11z"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- Track -->
+  <article class="post">
+    <div class="post-head">
+      <span class="ava bb">b</span>
+      <div class="who">
+        <b>birnenblau</b> <span class="what">hat einen Track nachgetragen</span><br>
+        <span class="what" style="color:var(--dim);font-size:.84rem">Critical Mass Berlin · 28.11.2025</span>
+      </div>
+      <span class="time">vor 8 Tg</span>
+    </div>
+    <div class="post-body">
+      <svg class="darkmap" viewBox="0 0 600 220" aria-hidden="true">
+        <rect width="600" height="220" fill="#13151a"/>
+        <g stroke="#1e2127" stroke-width="1.5">
+          <line x1="80" y1="0" x2="80" y2="220"/><line x1="180" y1="0" x2="180" y2="220"/>
+          <line x1="300" y1="0" x2="300" y2="220"/><line x1="420" y1="0" x2="420" y2="220"/>
+          <line x1="520" y1="0" x2="520" y2="220"/>
+          <line x1="0" y1="60" x2="600" y2="60"/><line x1="0" y1="120" x2="600" y2="120"/>
+          <line x1="0" y1="175" x2="600" y2="175"/>
+        </g>
+        <defs>
+          <filter id="g7" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M70,170 L140,158 L180,105 L265,92 L330,125 L415,108 L480,62 L545,82"
+          fill="none" stroke="#d9ff3d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#g7)"/>
+        <circle cx="70" cy="170" r="5.5" fill="#ff4a3a"/>
+        <circle cx="545" cy="82" r="5.5" fill="#eceef2"/>
+      </svg>
+      <p class="statline">
+        <span><b>25,58 km</b> Strecke</span>
+        <span><b>2:14 h</b> Fahrzeit</span>
+        <span><b>11,4 km/h</b> Masse-Tempo</span>
+      </p>
+    </div>
+    <div class="acts">
+      <button class="rang">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        9
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+        2
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 9V5l7 7-7 7v-4c-7 0-10 2-11 5 0-7 4-11 11-11z"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- Fotos -->
+  <article class="post">
+    <div class="post-head">
+      <span class="ava cb">CB</span>
+      <div class="who">
+        <b>CM Bonn</b> <span class="what">hat 4 Fotos zur Maimasse hochgeladen</span><br>
+        <span class="what" style="color:var(--dim);font-size:.84rem">Tour vom 29.05.2026 · Rheinufer</span>
+      </div>
+      <span class="time">vor 1 Wo</span>
+    </div>
+    <div class="post-body">
+      <div class="photos2">
+        <a class="ph q1" href="#"></a>
+        <a class="ph q2" href="#"></a>
+        <a class="ph q3" href="#"></a>
+        <a class="ph q4" href="#"></a>
+      </div>
+    </div>
+    <div class="acts">
+      <button class="rang">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        14
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+        3
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 9V5l7 7-7 7v-4c-7 0-10 2-11 5 0-7 4-11 11-11z"/></svg>
+      </button>
+    </div>
+  </article>
+
+  <!-- Schätzung -->
+  <article class="post">
+    <div class="post-head">
+      <span class="ava kk">KK</span>
+      <div class="who">
+        <b>Katrin Kiesel</b> <span class="what">hat die Masse in Norderstedt geschätzt</span><br>
+        <span class="what" style="color:var(--dim);font-size:.84rem">Tour vom 05.06.2026</span>
+      </div>
+      <span class="time">vor 3 Tg</span>
+    </div>
+    <div class="post-body">
+      <div class="estrow">
+        <span class="big">12</span>
+        <span class="lbl"><b>Radfahrende.</b> Der Mittelwert aller Schätzungen
+        wird zur offiziellen Teilnehmendenzahl.</span>
+        <button class="pillbtn" style="flex:none">Mitschätzen</button>
+      </div>
+    </div>
+    <div class="acts">
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        3
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+        1
+      </button>
+    </div>
+  </article>
+
+  <!-- Forum -->
+  <article class="post">
+    <div class="post-head">
+      <span class="ava lk">LK</span>
+      <div class="who">
+        <b>Lotte</b> <span class="what">im Board Hamburg:</span>
+      </div>
+      <span class="time">vor 5 Std</span>
+    </div>
+    <div class="post-body">
+      <p class="txt">„Route im Juni mal Richtung Hafen? Beim letzten Mal war auf der
+      Kennedybrücke ordentlich was los — Vorschläge für den Treffpunkt danach?"</p>
+      <p class="statline"><span><b>14</b> Antworten</span><span>zuletzt vor 40 min</span></p>
+    </div>
+    <div class="acts">
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        7
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+        Antworten
+      </button>
+    </div>
+  </article>
+
+  <!-- Neue Stadt -->
+  <article class="post" style="border-bottom:0">
+    <div class="post-head">
+      <span class="ava st">ST</span>
+      <div class="who">
+        <span class="kind">Neue Stadt</span><br>
+        <b>Stirling</b> <span class="what">ist neu dabei — erste Masse Sa, 20. Juni, 10:00</span>
+      </div>
+      <span class="time">vor 2 Tg</span>
+    </div>
+    <div class="acts" style="margin-top:10px">
+      <button class="rang">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        21
+      </button>
+      <button>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Folgen
+      </button>
+    </div>
+  </article>
+
+</main>
+
+<!-- Tabbar mobil -->
+<nav class="tabbar">
+  <div class="col-inner">
+    <a class="on" href="#">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+      Feed
+    </a>
+    <a href="#">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+      Karte
+    </a>
+    <a href="#">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      Beitragen
+    </a>
+    <a href="#">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+      Kalender
+    </a>
+    <a href="#">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+      Profil
+    </a>
+  </div>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

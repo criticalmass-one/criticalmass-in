@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp 3 · Fahrplan — criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fcfbf7;
+  --ink: #121110;
+  --mid: #6d6a63;
+  --rule: #d9d6cc;
+  --rule-strong: #121110;
+  --green: #008f4c;     /* Signalgrün */
+  --red: #d8232a;       /* Störungsrot */
+  --board: #15181a;
+  --amber: #ffb000;
+  --sans: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-feature-settings: "tnum";
+}
+a { color: inherit; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+
+/* ---------- Kopf ---------- */
+header.mast { padding: 1.6rem 0 .9rem; }
+.mast-top {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.mast h1 {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  text-transform: uppercase;
+  letter-spacing: .015em;
+  line-height: .95;
+}
+.mast h1 .dot { color: var(--green); }
+.mast .issue {
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--mid);
+  margin-left: auto;
+  text-align: right;
+}
+nav.mainnav {
+  margin-top: 1.1rem;
+  border-top: 3px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+}
+nav.mainnav a {
+  font-family: var(--cond);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: .95rem;
+  text-decoration: none;
+  padding: .55rem 1.1rem .5rem;
+  border-right: 1px solid var(--rule);
+}
+nav.mainnav a:first-child { padding-left: 0; }
+nav.mainnav a[aria-current] { color: var(--green); }
+nav.mainnav a:hover { background: #f1efe7; }
+nav.mainnav .right { margin-left: auto; border-right: 0; border-left: 1px solid var(--rule); }
+
+/* ---------- Intro-Zeile ---------- */
+.standfirst {
+  padding: 1.4rem 0 1.6rem;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 2rem;
+}
+.standfirst p.big {
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 42rem;
+}
+.standfirst p.big b { color: var(--green); }
+.standfirst .note {
+  font-size: .85rem;
+  color: var(--mid);
+  border-left: 3px solid var(--green);
+  padding-left: .9rem;
+  align-self: center;
+}
+
+/* ---------- Abfahrtstafel ---------- */
+.board {
+  background: var(--board);
+  color: var(--amber);
+  font-family: var(--mono);
+  border-radius: 4px;
+  padding: 1.1rem 1.2rem 1.3rem;
+  overflow-x: auto;
+}
+.board .board-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  color: #e8e6df;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: .8rem;
+}
+.board .clock { font-family: var(--mono); font-size: .85rem; color: var(--amber); }
+.board .clock .blink { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .board .clock .blink { animation: none; } }
+.board table { width: 100%; border-collapse: collapse; min-width: 560px; }
+.board th {
+  text-align: left;
+  font-weight: 400;
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  color: #8c8f93;
+  padding: .25rem .8rem .45rem 0;
+  border-bottom: 1px solid #2a2e31;
+}
+.board td {
+  padding: .5rem .8rem .5rem 0;
+  border-bottom: 1px solid #232729;
+  font-size: .95rem;
+  white-space: nowrap;
+}
+.board td.t { font-weight: 600; width: 5.2ch; }
+.board td.city { color: #fff; font-family: var(--sans); font-weight: 600; }
+.board td.meet { color: #b9bcbf; font-family: var(--sans); font-weight: 400; font-size: .88rem; }
+.board td.info { font-size: .78rem; }
+.board td.info .ok { color: #46d17e; }
+.board td.info .warn { color: #ff5a4e; }
+.board tr:last-child td { border-bottom: 0; }
+
+/* ---------- Wochen-Fahrplan ---------- */
+section.plan { padding: 2.6rem 0 1rem; }
+.plan h2, .meldungen h2, .ticket-sec h2 {
+  font-family: var(--cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: .04em;
+  border-bottom: 3px solid var(--rule-strong);
+  padding-bottom: .35rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.plan h2 small, .meldungen h2 small {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: .8rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--mid);
+  margin-left: auto;
+}
+.dayrow { border-bottom: 1px solid var(--rule); padding: .9rem 0; display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem; }
+.dayrow:last-of-type { border-bottom: 3px solid var(--rule-strong); }
+.dayrow .day {
+  font-family: var(--cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+}
+.dayrow .day small { display: block; font-family: var(--sans); font-weight: 400; font-size: .75rem; color: var(--mid); text-transform: none; letter-spacing: 0; }
+.stops { display: flex; flex-wrap: wrap; gap: .45rem .55rem; }
+.stop {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .5rem;
+  border: 1px solid var(--rule);
+  background: #fff;
+  text-decoration: none;
+  padding: .32rem .6rem .32rem .5rem;
+  border-radius: 3px;
+  font-size: .9rem;
+  transition: border-color .12s ease;
+}
+.stop:hover { border-color: var(--ink); }
+.stop .cc {
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--ink);
+  padding: .12rem .3rem;
+  border-radius: 2px;
+  letter-spacing: .05em;
+}
+.stop .cc.at { background: var(--red); }
+.stop .cc.pt { background: var(--green); }
+.stop .cc.us { background: #1f4ea1; }
+.stop .cc.uk { background: #5b3a8c; }
+.stop b { font-weight: 600; }
+.stop .tt { font-family: var(--mono); font-size: .8rem; color: var(--mid); }
+.plan .all {
+  display: inline-block;
+  margin-top: 1.1rem;
+  font-family: var(--cond);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  padding: .5rem 1rem;
+  border-radius: 3px;
+}
+.plan .all:hover { background: var(--ink); color: var(--bg); }
+
+/* ---------- Fahrkarte ---------- */
+.ticket-sec { padding: 2.2rem 0; }
+.ticket {
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(170px, 1fr);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  background: #fff;
+  max-width: 720px;
+  position: relative;
+}
+.ticket .main { padding: 1.3rem 1.5rem 1.4rem; }
+.ticket .rip {
+  border-left: 2px dashed var(--rule);
+  padding: 1.3rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.ticket .kopf {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .1em;
+  font-size: .8rem;
+  color: var(--mid);
+  margin-bottom: .7rem;
+}
+.ticket .kopf b { color: var(--green); }
+.ticket .strecke {
+  font-family: var(--cond);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.ticket .strecke span { color: var(--mid); font-size: .65em; }
+.ticket dl {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: .9rem 2rem;
+  margin-top: 1.1rem;
+  justify-content: start;
+}
+.ticket dt {
+  font-size: .62rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--mid);
+}
+.ticket dd { font-family: var(--mono); font-weight: 500; font-size: .98rem; }
+.ticket .rip svg { width: 74px; height: 74px; }
+.ticket .rip .hint { font-size: .7rem; color: var(--mid); line-height: 1.45; }
+.ticket .stempel {
+  position: absolute;
+  top: -14px;
+  right: 16px;
+  background: var(--green);
+  color: #fff;
+  font-family: var(--cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .72rem;
+  padding: .3rem .7rem;
+  border-radius: 3px;
+}
+.ticket-actions { margin-top: 1.2rem; display: flex; gap: .8rem; flex-wrap: wrap; }
+.ticket-actions a {
+  font-family: var(--cond);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: .9rem;
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  padding: .45rem .9rem;
+}
+.ticket-actions a.go { background: var(--green); border-color: var(--green); color: #fff; }
+.ticket-actions a:hover { opacity: .85; }
+
+/* ---------- Meldungen ---------- */
+.meldungen { padding: 1.6rem 0 3rem; }
+.meldung-list { border-bottom: 3px solid var(--rule-strong); }
+.meldung {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr auto;
+  gap: 1rem;
+  padding: .7rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: .92rem;
+  align-items: baseline;
+}
+.meldung:last-child { border-bottom: 0; }
+.meldung .ts { font-family: var(--mono); font-size: .75rem; color: var(--mid); }
+.meldung .typ {
+  font-family: var(--mono);
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--green);
+  white-space: nowrap;
+}
+.meldung .typ.foto { color: #1f4ea1; }
+.meldung .typ.zahl { color: var(--red); }
+.meldung a { font-weight: 600; }
+
+/* ---------- Fuß ---------- */
+footer {
+  border-top: 3px solid var(--rule-strong);
+  padding: 1.6rem 0 2.6rem;
+  font-size: .8rem;
+  color: var(--mid);
+}
+footer .cols { display: flex; flex-wrap: wrap; gap: 1.6rem; justify-content: space-between; }
+footer nav { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); text-decoration: underline; }
+
+.proto-back {
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  z-index: 50;
+  font-size: .75rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: .35rem .7rem;
+  color: var(--mid);
+}
+
+/* ---------- Mobil ---------- */
+@media (max-width: 760px) {
+  .standfirst { grid-template-columns: 1fr; gap: 1rem; }
+  .dayrow { grid-template-columns: 1fr; gap: .5rem; }
+  .ticket { grid-template-columns: 1fr; }
+  .ticket .rip { border-left: 0; border-top: 2px dashed var(--rule); flex-direction: row; align-items: center; }
+  .ticket dl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem 1.2rem; }
+  .ticket dd { white-space: normal; }
+  .mast .issue { margin-left: 0; text-align: left; width: 100%; }
+  .meldung { grid-template-columns: 1fr; gap: .15rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="mast-top">
+      <h1>criticalmass<span class="dot">.</span>in</h1>
+      <p class="issue">Fahrplan der gemeinsamen Ausfahrten<br>Ausgabe Juni 2026 · gültig bis auf Widerruf</p>
+    </div>
+    <nav class="mainnav">
+      <a href="#" aria-current="page">Abfahrten</a>
+      <a href="#">Städte</a>
+      <a href="#">Kalender</a>
+      <a href="#">Statistik</a>
+      <a href="#">Forum</a>
+      <a class="right" href="#">Anmelden</a>
+    </nav>
+  </header>
+
+  <section class="standfirst">
+    <p class="big">Kein Betreiber, kein Tarif, keine Verspätungs&shy;entschädigung:
+      Die Critical Mass fährt trotzdem pünktlich — <b>jeden letzten Freitag im Monat</b>,
+      in über 600 Städten. Hier steht, wann und wo.</p>
+    <p class="note">Es gilt §&nbsp;27 StVO: Mehr als 15 Radfahrende dürfen als
+      geschlossener Verband fahren. Zwei nebeneinander. Die Masse ist der Verband.</p>
+  </section>
+
+  <section aria-label="Abfahrtstafel">
+    <div class="board">
+      <div class="board-head">
+        <span>Abfahrten · Freitag, 12. Juni 2026</span>
+        <span class="clock">17<span class="blink">:</span>42</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Zeit</th><th>Stadt</th><th>Treffpunkt</th><th>Hinweis</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="t">17:00</td><td class="city">Falkensee</td><td class="meet">Bahnhofsvorplatz</td><td class="info"><span class="ok">fährt</span></td></tr>
+          <tr><td class="t">17:00</td><td class="city">Oranienburg</td><td class="meet">Schlossplatz</td><td class="info"><span class="ok">fährt</span></td></tr>
+          <tr><td class="t">18:00</td><td class="city">Bergisch Gladbach</td><td class="meet">Konrad-Adenauer-Platz</td><td class="info"><span class="ok">fährt</span></td></tr>
+          <tr><td class="t">18:00</td><td class="city">Düren</td><td class="meet">siehe Karte</td><td class="info"><span class="ok">fährt</span></td></tr>
+          <tr><td class="t">18:00</td><td class="city">Witten</td><td class="meet">Rathausplatz</td><td class="info"><span class="warn">Regen gemeldet</span></td></tr>
+          <tr><td class="t">18:30</td><td class="city">Fellbach</td><td class="meet">Guntram-Palm-Platz</td><td class="info"><span class="ok">fährt</span></td></tr>
+          <tr><td class="t">19:00</td><td class="city">Düsseldorf</td><td class="meet">Fürstenplatz</td><td class="info"><span class="ok">fährt</span></td></tr>
+          <tr><td class="t">19:00</td><td class="city">Frankfurt am Main</td><td class="meet">Opernplatz</td><td class="info"><span class="ok">fährt</span></td></tr>
+          <tr><td class="t">19:00</td><td class="city">Pittsburgh</td><td class="meet">Dippy the Dinosaur</td><td class="info"><span class="ok">fährt</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="plan">
+    <h2>Die nächsten 14 Tage <small>43 Abfahrten · alle Zeiten Ortszeit</small></h2>
+
+    <div class="dayrow">
+      <div class="day">Sa, 13. Juni<small>morgen</small></div>
+      <div class="stops">
+        <a class="stop" href="#"><span class="cc">DE</span><b>Pinneberg</b><span class="tt">20:45</span></a>
+      </div>
+    </div>
+    <div class="dayrow">
+      <div class="day">Di, 16. Juni</div>
+      <div class="stops">
+        <a class="stop" href="#"><span class="cc pt">PT</span><b>Lisboa</b><span class="tt">21:00</span></a>
+      </div>
+    </div>
+    <div class="dayrow">
+      <div class="day">Fr, 19. Juni</div>
+      <div class="stops">
+        <a class="stop" href="#"><span class="cc">DE</span><b>Fürth</b><span class="tt">18:00</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>Hannover</b><span class="tt">20:00</span></a>
+        <a class="stop" href="#"><span class="cc us">US</span><b>Los Angeles</b><span class="tt">18:30</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>Mannheim</b><span class="tt">18:45</span></a>
+        <a class="stop" href="#"><span class="cc at">AT</span><b>Wien</b><span class="tt">17:00</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>Wiesbaden</b><span class="tt">18:30</span></a>
+      </div>
+    </div>
+    <div class="dayrow">
+      <div class="day">Sa, 20. Juni</div>
+      <div class="stops">
+        <a class="stop" href="#"><span class="cc">DE</span><b>Herrenberg</b><span class="tt">11:00</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>Kaiserslautern</b><span class="tt">11:00</span></a>
+        <a class="stop" href="#"><span class="cc uk">UK</span><b>Stirling</b><span class="tt">10:00</span></a>
+      </div>
+    </div>
+    <div class="dayrow">
+      <div class="day">So, 21. Juni</div>
+      <div class="stops">
+        <a class="stop" href="#"><span class="cc">DE</span><b>Köln</b><span class="tt">13:00</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>Stuttgart</b><span class="tt">09:00</span></a>
+      </div>
+    </div>
+    <div class="dayrow">
+      <div class="day">Fr, 26. Juni<small>letzter Freitag — der große Tag</small></div>
+      <div class="stops">
+        <a class="stop" href="#"><span class="cc">DE</span><b>Hamburg</b><span class="tt">19:00</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>Berlin</b><span class="tt">20:00</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>München</b><span class="tt">19:00</span></a>
+        <a class="stop" href="#"><span class="cc at">AT</span><b>Graz</b><span class="tt">17:00</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>Bonn</b><span class="tt">18:00</span></a>
+        <a class="stop" href="#"><span class="cc">DE</span><b>Dresden</b><span class="tt">18:50</span></a>
+        <a class="stop" href="#"><span class="cc">+37</span><b>weitere</b></a>
+      </div>
+    </div>
+
+    <a class="all" href="#">Vollständiger Fahrplan · Kalenderansicht</a>
+  </section>
+
+  <section class="ticket-sec">
+    <h2>Deine nächste Fahrt</h2>
+    <article class="ticket" aria-label="Tourkarte Hamburg">
+      <span class="stempel">Einsteigen ohne Fahrschein</span>
+      <div class="main">
+        <div class="kopf">
+          <span>Critical Mass · Verbandsfahrt</span>
+          <b>Gültig: 26.06.2026</b>
+        </div>
+        <p class="strecke">Hamburg <span>ab Alstervorland, Höhe Milchstraße</span></p>
+        <dl>
+          <div><dt>Abfahrt</dt><dd>19:00</dd></div>
+          <div><dt>Dauer</dt><dd>± 2 Std</dd></div>
+          <div><dt>Tempo</dt><dd>gemütlich</dd></div>
+          <div><dt>Strecke</dt><dd>entsteht unterwegs</dd></div>
+          <div><dt>Zuletzt dabei</dt><dd>~ 2.400</dd></div>
+          <div><dt>Rückfahrt</dt><dd>eigene</dd></div>
+        </dl>
+        <div class="ticket-actions">
+          <a class="go" href="#">Ich fahre mit</a>
+          <a href="#">iCal</a>
+          <a href="#">Tour ansehen</a>
+        </div>
+      </div>
+      <div class="rip">
+        <svg viewBox="0 0 74 74" aria-hidden="true">
+          <rect width="74" height="74" fill="#fff"/>
+          <g fill="#121110">
+            <rect x="4" y="4" width="18" height="18"/><rect x="8" y="8" width="10" height="10" fill="#fff"/>
+            <rect x="52" y="4" width="18" height="18"/><rect x="56" y="8" width="10" height="10" fill="#fff"/>
+            <rect x="4" y="52" width="18" height="18"/><rect x="8" y="56" width="10" height="10" fill="#fff"/>
+            <rect x="28" y="4" width="6" height="6"/><rect x="40" y="10" width="6" height="6"/>
+            <rect x="28" y="16" width="6" height="6"/><rect x="34" y="28" width="6" height="6"/>
+            <rect x="10" y="28" width="6" height="6"/><rect x="22" y="34" width="6" height="6"/>
+            <rect x="4" y="40" width="6" height="6"/><rect x="16" y="40" width="6" height="6"/>
+            <rect x="46" y="28" width="6" height="6"/><rect x="58" y="34" width="6" height="6"/>
+            <rect x="64" y="46" width="6" height="6"/><rect x="46" y="40" width="6" height="6"/>
+            <rect x="52" y="52" width="6" height="6"/><rect x="34" y="46" width="6" height="6"/>
+            <rect x="28" y="58" width="6" height="6"/><rect x="40" y="64" width="6" height="6"/>
+            <rect x="58" y="64" width="6" height="6"/><rect x="64" y="58" width="6" height="6"/>
+          </g>
+        </svg>
+        <p class="hint">Kein echter Code — Critical Mass braucht kein Ticket.
+        In den Kalender legen reicht.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="meldungen">
+    <h2>Meldungen aus dem Netz <small>Schätzungen · Tracks · Fotos</small></h2>
+    <div class="meldung-list">
+      <div class="meldung">
+        <span class="ts">vor 3 Tagen</span>
+        <span>Katrin schätzt <a href="#">12 Radfahrende</a> bei der Critical Mass Norderstedt — Mittelwert bestätigt.</span>
+        <span class="typ zahl">Schätzung</span>
+      </div>
+      <div class="meldung">
+        <span class="ts">vor 5 Tagen</span>
+        <span><a href="#">1 neues Foto</a> zur Tour Norderstedt, 5. Juni — freigegeben.</span>
+        <span class="typ foto">Foto</span>
+      </div>
+      <div class="meldung">
+        <span class="ts">vor 8 Tagen</span>
+        <span>Track zur <a href="#">Critical Mass Berlin</a> hochgeladen: 36,23 km in 3 h 44 min.</span>
+        <span class="typ">Track</span>
+      </div>
+      <div class="meldung">
+        <span class="ts">vor 10 Tagen</span>
+        <span><a href="#">4 Fotos</a> zur Tour Bonn, 29. Mai — Galerie aktualisiert.</span>
+        <span class="typ foto">Foto</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="cols">
+      <nav>
+        <a href="#">Über die Critical Mass</a>
+        <a href="#">FAQ</a>
+        <a href="#">API</a>
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </nav>
+      <span>Karten © OpenStreetMap-Mitwirkende · Open Source · keine Werbung, kein Tracking</span>
+    </div>
+  </footer>
+</div>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

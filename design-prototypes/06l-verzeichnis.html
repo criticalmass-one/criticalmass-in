@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Städte — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.5; font-size: 15px; padding-bottom: 70px; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top nav a.on { color: var(--ink); background: #f2f3f5; font-weight: 700; }
+.top .grow { flex: 1; }
+.search { display: flex; align-items: center; gap: 8px; background: #f2f3f5; border-radius: 9px; padding: 7px 12px; color: var(--dim); font-size: .88rem; min-width: 180px; }
+.upload-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; border: 0; border-radius: 9px; font-weight: 700; font-size: .9rem; padding: 8px 14px; }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.mh { background: #3d4350; }
+
+.shell { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; padding: 22px 16px 40px; align-items: start; }
+.maincol { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.pagehead h1 { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; }
+.pagehead .sub { color: var(--dim); font-size: .88rem; margin-top: 2px; }
+
+.tabs { display: flex; gap: 2px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; overflow-x: auto; }
+.tabs a { flex: 1; text-align: center; font-weight: 700; font-size: .88rem; color: var(--dim); border-radius: 9px; padding: 8px 14px; white-space: nowrap; }
+.tabs a.on { background: #f2f3f5; color: var(--ink); }
+.tabs a .n { font-family: var(--mono); font-size: .72rem; margin-left: 5px; }
+
+.landgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.land { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 15px 17px; display: flex; gap: 13px; align-items: center; }
+.land:hover { border-color: #c9cdd3; }
+.land .flag { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: .76rem; flex: none; font-family: var(--mono); }
+.land b { font-weight: 800; display: block; }
+.land .x { font-size: .8rem; color: var(--dim); }
+.land .go { margin-left: auto; font-family: var(--mono); font-size: .8rem; color: var(--dim); }
+
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.box .bhead { display: flex; align-items: baseline; padding: 14px 18px 12px; border-bottom: 1px solid var(--line); }
+.box .bhead h2 { font-size: 1rem; font-weight: 800; }
+.box .bhead span { margin-left: auto; font-family: var(--mono); font-size: .72rem; color: var(--dim); }
+.crow { display: flex; gap: 12px; padding: 11px 18px; border-bottom: 1px solid var(--line); align-items: center; }
+.crow:last-of-type { border-bottom: 0; }
+.crow:hover { background: #fafbfc; }
+.crow .dot { width: 34px; height: 34px; flex: none; border-radius: 99px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: .68rem; }
+.crow b { font-weight: 700; display: block; line-height: 1.25; }
+.crow .when { font-size: .8rem; color: var(--dim); }
+.crow .when .hl { color: var(--accent); font-weight: 700; }
+.crow .x { margin-left: auto; font-family: var(--mono); font-size: .78rem; color: var(--dim); text-align: right; white-space: nowrap; }
+.allhits { display: block; text-align: center; padding: 12px; font-size: .86rem; font-weight: 700; color: var(--accent); border-top: 1px solid var(--line); }
+.allhits:hover { background: #fff4ee; }
+
+.rail { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 76px; }
+.rbox { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.rbox h4 { font-size: .95rem; font-weight: 800; margin-bottom: 10px; }
+.mapcta {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.mapcta .mini { display: block; height: 110px; background: #e9ecef; position: relative; overflow: hidden; }
+.mapcta .mini i { position: absolute; border-radius: 99px; background: var(--accent); border: 2px solid #fff; }
+.mapcta .lbl { padding: 10px 14px; font-weight: 700; font-size: .9rem; display: flex; align-items: center; }
+.mapcta .lbl span { margin-left: auto; color: var(--accent); }
+.newrow { display: flex; gap: 10px; align-items: baseline; padding: 7px 6px; border-radius: 8px; font-size: .9rem; }
+.newrow:hover { background: #f6f7f8; }
+.newrow .d { font-family: var(--mono); font-size: .74rem; color: var(--dim); flex: none; width: 56px; }
+.newrow b { font-weight: 700; }
+.newrow .x { margin-left: auto; color: var(--dim); font-size: .76rem; }
+.kbtn { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--card); border-radius: 9px; padding: 8px 15px; font-weight: 700; font-size: .88rem; color: var(--ink); }
+.kbtn.solid { background: var(--accent); border-color: var(--accent); color: #fff; width: 100%; justify-content: center; }
+.kbtn.solid:hover { background: var(--accent-deep); }
+.rbox .hint { font-size: .8rem; color: var(--dim); margin-top: 10px; }
+.fine { font-size: .75rem; color: var(--dim); line-height: 1.6; padding: 0 6px; }
+
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; }
+  .top nav, .search { display: none; }
+  .landgrid { grid-template-columns: 1fr; }
+  .tabbar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a href="06e-karte.html">Karte</a>
+      <a href="06c-kalender.html">Kalender</a>
+      <a class="on" href="#">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="search" href="06j-suche.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      Stadt oder Tour suchen
+    </a>
+    <a class="upload-btn" href="06h-hochladen.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 16V5m0 0 -4 4m4-4 4 4M5 19h14"/></svg>
+      Hochladen
+    </a>
+    <a class="ava mh" href="06d-profil.html">MH</a>
+  </div>
+</header>
+
+<div class="shell">
+
+  <main class="maincol">
+
+    <div class="pagehead">
+      <h1>Städte</h1>
+      <p class="sub">612 Städte auf 5 Kontinenten — jede mit eigener Seite, eigenem Board und eigener Statistik.</p>
+    </div>
+
+    <nav class="tabs">
+      <a class="on" href="#">Europa<span class="n">486</span></a>
+      <a href="#">Nordamerika<span class="n">74</span></a>
+      <a href="#">Südamerika<span class="n">28</span></a>
+      <a href="#">Asien<span class="n">16</span></a>
+      <a href="#">Ozeanien<span class="n">8</span></a>
+    </nav>
+
+    <div class="landgrid">
+      <a class="land" href="#">
+        <span class="flag" style="background:#16181c">DE</span>
+        <span><b>Deutschland</b><span class="x">214 Städte · zuletzt neu: Eberswalde</span></span>
+        <span class="go">→</span>
+      </a>
+      <a class="land" href="#">
+        <span class="flag" style="background:#d8232a">AT</span>
+        <span><b>Österreich</b><span class="x">18 Städte · größte: Wien</span></span>
+        <span class="go">→</span>
+      </a>
+      <a class="land" href="#">
+        <span class="flag" style="background:#b3404a">CH</span>
+        <span><b>Schweiz</b><span class="x">14 Städte · größte: Zürich</span></span>
+        <span class="go">→</span>
+      </a>
+      <a class="land" href="#">
+        <span class="flag" style="background:#1e7d4f">PT</span>
+        <span><b>Portugal</b><span class="x">6 Städte · größte: Lisboa</span></span>
+        <span class="go">→</span>
+      </a>
+      <a class="land" href="#">
+        <span class="flag" style="background:#5b3a8c">UK</span>
+        <span><b>Großbritannien</b><span class="x">24 Städte · zuletzt neu: Stirling</span></span>
+        <span class="go">→</span>
+      </a>
+      <a class="land" href="#">
+        <span class="flag" style="background:#2b6cb0">…</span>
+        <span><b>Alle Länder</b><span class="x">31 Länder in Europa</span></span>
+        <span class="go">→</span>
+      </a>
+    </div>
+
+    <section class="box">
+      <div class="bhead"><h2>Deutschland — die Größten</h2><span>nach Rädern im Mai</span></div>
+      <a class="crow" href="06b-stadt.html">
+        <span class="dot" style="background:var(--accent)">HH</span>
+        <span><b>Hamburg</b><span class="when"><span class="hl">Fr 26.06. · 19:00</span> · Alstervorland</span></span>
+        <span class="x">~ 2.400</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#5a4fa0">B</span>
+        <span><b>Berlin</b><span class="when">Fr 26.06. · 20:00 · Mariannenplatz</span></span>
+        <span class="x">~ 1.900</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#0e7c82">M</span>
+        <span><b>München</b><span class="when">Fr 26.06. · 19:00</span></span>
+        <span class="x">~ 1.100</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#c98024">H</span>
+        <span><b>Hannover</b><span class="when">Fr 19.06. · 20:00</span></span>
+        <span class="x">~ 900</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#2b6cb0">HB</span>
+        <span><b>Bremen</b><span class="when">Fr 26.06. · 19:00</span></span>
+        <span class="x">~ 800</span>
+      </a>
+      <a class="allhits" href="#">Alle 214 Städte in Deutschland (A–Z)</a>
+    </section>
+
+  </main>
+
+  <aside class="rail">
+    <div class="rbox">
+      <h4>Lieber auf der Karte?</h4>
+      <a class="mapcta" href="06e-karte.html">
+        <span class="mini">
+          <i style="width:12px;height:12px;top:34px;left:48px"></i>
+          <i style="width:8px;height:8px;top:58px;left:88px"></i>
+          <i style="width:10px;height:10px;top:28px;left:150px"></i>
+          <i style="width:8px;height:8px;top:66px;left:190px"></i>
+          <i style="width:14px;height:14px;top:44px;left:236px"></i>
+        </span>
+        <span class="lbl">Karte öffnen <span>→</span></span>
+      </a>
+    </div>
+
+    <div class="rbox">
+      <h4>Neu dabei</h4>
+      <a class="newrow" href="#"><span class="d">10.06.</span><b>Stirling</b><span class="x">Schottland</span></a>
+      <a class="newrow" href="#"><span class="d">28.05.</span><b>Eberswalde</b><span class="x">Deutschland</span></a>
+      <a class="newrow" href="#"><span class="d">14.05.</span><b>Coimbra</b><span class="x">Portugal</span></a>
+      <a class="newrow" href="#"><span class="d">02.05.</span><b>Boise</b><span class="x">USA</span></a>
+    </div>
+
+    <div class="rbox">
+      <h4>Deine Stadt fehlt?</h4>
+      <a class="kbtn solid" href="06n-tour-anlegen.html">Stadt &amp; erste Tour eintragen</a>
+      <p class="hint">Drei Felder genügen — Name, Datum, Uhrzeit. Den Rest ergänzt die Community.</p>
+    </div>
+
+    <p class="fine">Jede Stadtseite gehört der Community — wie in einem Wiki kann jede:r
+    mit Konto Texte, Treffpunkte und Termine pflegen.</p>
+  </aside>
+
+</div>
+
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a href="06e-karte.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="06h-hochladen.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a href="06c-kalender.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="06d-profil.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

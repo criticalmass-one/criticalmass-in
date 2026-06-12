@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design-Prototypen — criticalmass.in</title>
+<style>
+:root {
+  --bg: #f5f5f2;
+  --fg: #1d1d1b;
+  --dim: #65655e;
+  --line: #d9d9d2;
+  --card: #ffffff;
+  --accent: #d9492c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.55;
+  padding: 2.5rem 1.25rem 4rem;
+}
+.wrap { max-width: 1080px; margin: 0 auto; }
+h1 { font-size: 1.9rem; letter-spacing: -.01em; }
+.sub { color: var(--dim); margin: .5rem 0 0; max-width: 50rem; }
+h2.round {
+  margin-top: 2.6rem;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: baseline;
+  gap: .8rem;
+}
+h2.round .tag {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 99px;
+  padding: .2rem .65rem;
+}
+h2.round .tag.old { background: #9a9a90; }
+h2.round small { color: var(--dim); font-weight: 400; font-size: .85rem; }
+.grid {
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  gap: 1.6rem;
+}
+.grid.three { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.proto {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.preview {
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+  background: #eee;
+}
+.preview iframe {
+  width: 1280px;
+  height: 1120px;
+  border: 0;
+  transform: scale(0.40625);
+  transform-origin: top left;
+  pointer-events: none;
+}
+.preview a.cover { position: absolute; inset: 0; }
+.body { padding: 1.3rem 1.4rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+.body .nr { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.body h3 { font-size: 1.25rem; margin: .25rem 0 .15rem; }
+.body .claim { font-size: .9rem; color: var(--dim); font-style: italic; }
+.swatches { display: flex; gap: .4rem; margin: .9rem 0; }
+.swatches i { width: 26px; height: 26px; border-radius: 6px; border: 1px solid rgba(0,0,0,.12); }
+.body p.why { font-size: .92rem; margin-bottom: .6rem; }
+.facts { font-size: .82rem; color: var(--dim); margin-bottom: 1rem; }
+.body .open {
+  margin-top: auto;
+  align-self: start;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .9rem;
+  color: #fff;
+  background: var(--fg);
+  border-radius: 8px;
+  padding: .55rem 1rem;
+}
+.body .open:hover { opacity: .85; }
+.mobilelink {
+  margin-top: 2.2rem;
+  display: block;
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 1.1rem 1.4rem;
+  font-size: .92rem;
+  color: var(--dim);
+  text-decoration: none;
+}
+.mobilelink b { color: var(--fg); }
+details.older { margin-top: 2.4rem; }
+details.older summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 1rem 1.2rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--dim);
+}
+details.older[open] summary { border-radius: 10px 10px 0 0; }
+details.older .inner {
+  border: 1px solid var(--line);
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  background: #fafaf7;
+  padding: 1.2rem 1.4rem 1.6rem;
+}
+@media (max-width: 980px) { .grid, .grid.three { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  .preview { height: 220px; }
+  .preview iframe { transform: scale(0.30); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Design-Prototypen für criticalmass.in</h1>
+  <p class="sub">Klickbare, responsive HTML-Prototypen mit echten Inhalten der Plattform.
+  Aktuelle Richtung: <strong>soziales Netzwerk mit Timeline auf der Startseite</strong> —
+  der bestehende Aktivitäten-Feed (Schätzungen, Fotos, Tracks, Stadt-News) wird vom Anhängsel
+  zum Herzstück. Drei Varianten, gleiche Inhalte, unterschiedlicher Charakter.</p>
+
+  <h2 class="round"><span class="tag">Runde 2 · aktuell</span> Netzwerk-Richtung <small>Timeline zuerst, „Klingeln" statt Likes</small></h2>
+  <div class="grid three">
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="05-feed-hell.html" title="Vorschau Feed Community" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="05-feed-hell.html" aria-label="Prototyp Feed Community öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 5</span>
+        <h3>Community</h3>
+        <p class="claim">Drei Spalten, hell, freundlich — das klassische Netzwerk.</p>
+        <div class="swatches">
+          <i style="background:#faf9f6"></i><i style="background:#211f1b"></i>
+          <i style="background:#d9492c"></i><i style="background:#2e7d54"></i>
+          <i style="background:#3563a8"></i>
+        </div>
+        <p class="why">Navigation links, Timeline in der Mitte, „Bald unterwegs" rechts.
+        Beitragstypen als farbige Chips (Track, Fotos, Schätzung, Forum, Stadt), Verfassen-Box
+        mit „Was rollt bei dir?", Tour der Woche angepinnt. Statt Like: <strong>Klingeln</strong>.
+        Mobil: Tab-Leiste mit zentralem Beitragen-Knopf.</p>
+        <p class="facts">Hanken Grotesk · warmes Weiß + Klingel-Rot · 3 Spalten → 1 Spalte</p>
+        <a class="open" href="05-feed-hell.html">Prototyp öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06-feed-aktiv.html" title="Vorschau Feed Aktivität" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06-feed-aktiv.html" aria-label="Prototyp Feed Aktivität öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6 · ★ Favorit</span>
+        <h3>Aktivität</h3>
+        <p class="claim">Der Feed als Fahrtenbuch — Karten und Zahlen im Mittelpunkt.</p>
+        <div class="swatches">
+          <i style="background:#f2f3f5"></i><i style="background:#16181c"></i>
+          <i style="background:#f4581c"></i><i style="background:#1e7d4f"></i>
+          <i style="background:#ffffff"></i>
+        </div>
+        <p class="why">Jeder Beitrag ist eine Aktivität mit großer Routenkarte, Statistikband
+        (km, Fahrzeit, Masse-Tempo, Wetter) und Kudos-Leiste mit Avataren. Rechts das
+        Städte-Ranking („Mai-Bilanz") und kommende Touren. Vertraut für alle, die
+        Sport-Plattformen kennen — aber fürs Kollektiv statt fürs Ego.</p>
+        <p class="facts">Archivo + Plex Mono · kühles Grau + Warnwesten-Orange · 2 Spalten → 1 Spalte</p>
+        <a class="open" href="06-feed-aktiv.html">Prototyp öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="07-feed-app.html" title="Vorschau Feed App" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="07-feed-app.html" aria-label="Prototyp Feed App öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 7</span>
+        <h3>App</h3>
+        <p class="claim">Eine zentrierte dunkle Spalte — fühlt sich nach App an, ist aber Web.</p>
+        <div class="swatches">
+          <i style="background:#0e0f12"></i><i style="background:#16181d"></i>
+          <i style="background:#d9ff3d"></i><i style="background:#ff4a3a"></i>
+          <i style="background:#eceef2"></i>
+        </div>
+        <p class="why">Oben eine <strong>Stories-Leiste „Heute unterwegs"</strong>: Städte,
+        die heute fahren, als Ringe — live = rot, heute = gelbgrün. Darunter der kompakte Feed
+        mit Hairline-Trennern, leuchtenden Track-Karten und Live-Beiträgen. Dark-Mode-first,
+        weil die Masse abends rollt. Mobil wie Desktop dieselbe ruhige Spalte.</p>
+        <p class="facts">Space Grotesk · Asphalt + Reflektor-Gelbgrün · Stories + Tab-Leiste</p>
+        <a class="open" href="07-feed-app.html">Prototyp öffnen</a>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="round"><span class="tag">Vertiefung</span> Prototyp 6 als System <small>Tour- und Stadtseite im selben Stil, klickbar verlinkt</small></h2>
+  <div class="grid">
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06a-tour.html" title="Vorschau Tourseite" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06a-tour.html" aria-label="Tourseite öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6a</span>
+        <h3>Tourseite</h3>
+        <p class="claim">Critical Mass Hamburg, 26. Juni — die wichtigste Seite der Plattform.</p>
+        <p class="why">Treffpunkt-Karte mit pulsierendem Pin, Dabei!-Leiste mit Facepile,
+        Statistikband (zuletzt ~2.400, Ø Strecke, 178. Masse), Tabs wie im Bestand
+        (Details, Kommentare, Mini-Masses, Galerie, Tracks), „Critical Love Story" als
+        nummerierte Regeln. Rechts: Treffpunkt mit ÖPNV-Linien, Wetter, letzte Massen.</p>
+        <a class="open" href="06a-tour.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06b-stadt.html" title="Vorschau Stadtseite" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06b-stadt.html" aria-label="Stadtseite öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6b</span>
+        <h3>Stadtseite</h3>
+        <p class="claim">Hamburg als folgbares Profil mit eigenem Feed.</p>
+        <p class="why">Cover mit Routenlinien, Stadt-Avatar, Folgen-Button und Follower-Zeile,
+        Statistikband, Tabs (Feed, Touren, Statistik, Infos). Der Stadt-Feed zeigt Tour-Ankündigung,
+        Tracks, Fotos und die ausgezählte Maimasse. Rechts: Monats-Balkendiagramm,
+        rotierende Treffpunkte, Social-Links, Nachbarstädte.</p>
+        <a class="open" href="06b-stadt.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06c-kalender.html" title="Vorschau Kalender" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06c-kalender.html" aria-label="Kalender öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6c</span>
+        <h3>Kalender</h3>
+        <p class="claim">Juni 2026 als Monatsraster — der große Freitag sticht heraus.</p>
+        <p class="why">Desktop: klassisches Monatsgitter mit Touren-Chips pro Tag, „Heute"
+        orange umrandet, der 26. Juni als hervorgehobener „Großer Freitag" (43 Touren),
+        gefahrene Massen grün abgehakt (Norderstedt: 12 Räder). Mobil wird daraus bewusst
+        eine Agenda-Liste — ein 7-Spalten-Raster taugt nicht für 390 px.</p>
+        <a class="open" href="06c-kalender.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06d-profil.html" title="Vorschau Profil" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06d-profil.html" aria-label="Profil öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6d</span>
+        <h3>Profil</h3>
+        <p class="claim">Das eigene Fahrtenbuch — Massen, Tracks, Fotos, Spoke Cards.</p>
+        <p class="why">Profilkopf mit Statistikband (34 Massen, 612 km in der Masse 2026),
+        „Spoke Cards" als augenzwinkernde Abzeichen (12 Monate in Folge, Allwetter),
+        eigene Aktivitäten als Feed, Jahres-Balkendiagramm der Masse-Kilometer.
+        Rechts: Deine Städte und der Konto-Bereich inkl. Datenexport — Tracks gehören dir.</p>
+        <a class="open" href="06d-profil.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06e-karte.html" title="Vorschau Karte" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06e-karte.html" aria-label="Karte öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6e</span>
+        <h3>Karte / Entdecken</h3>
+        <p class="claim">612 Städte auf einen Blick — sortiert nach Entfernung.</p>
+        <p class="why">Vollflächige Karte mit Cluster-Pins (Orange) und Stadt-Pins, links das
+        Listen-Panel mit Filterchips (Alle, Heute, Großer Freitag, Neu) und „deine Stadt"
+        hervorgehoben. Mobil wird das Panel zum Bottom-Sheet unter der halben Karte —
+        wie man es von Karten-Apps kennt.</p>
+        <a class="open" href="06e-karte.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06f-forum.html" title="Vorschau Forum" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06f-forum.html" aria-label="Forum öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6f</span>
+        <h3>Forum</h3>
+        <p class="claim">„Gerade diskutiert" zuerst, Boards danach.</p>
+        <p class="why">Aktive Threads als Zeilen mit Board-Chip, Avatar und Antwortzahl
+        (heiße Themen mit Orange-Punkt), darunter die Boards als Karten — Allgemein plus
+        ein Board je Stadt, wie im Bestand. Rechts: Neues Thema, kurze Hausordnung,
+        aktivste Boards der letzten 30 Tage.</p>
+        <a class="open" href="06f-forum.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06g-galerie.html" title="Vorschau Galerie" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06g-galerie.html" aria-label="Galerie öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6g</span>
+        <h3>Foto-Galerie</h3>
+        <p class="claim">Die Maimasse in 23 Bildern — mit Fotograf:in an jedem Bild.</p>
+        <p class="why">Masonry-Raster mit gemischten Formaten, Credit-Pill auf jedem Foto,
+        Kopf mit Statistikband (Fotos, Fotograf:innen, Klingeln, Lizenz). Rechts die
+        Foto-Hausordnung (Gesichter verpixeln, Kennzeichen automatisch) und weitere
+        Galerien. Mobil zweispaltig.</p>
+        <a class="open" href="06g-galerie.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06h-hochladen.html" title="Vorschau Hochladen" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06h-hochladen.html" aria-label="Hochladen öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6h</span>
+        <h3>Hochladen</h3>
+        <p class="claim">Reinwerfen, zuordnen lassen, fertig — der echte Upload-Flow.</p>
+        <p class="why">Dropzone für GPX/FIT (FIT wird automatisch zu GPX), darunter die
+        Upload-Liste mit den drei echten Zuständen der automatischen Tour-Zuordnung:
+        sicher zugeordnet (grün), bitte prüfen mit Auswahl (gelb), geparkt (grau).
+        Tabs für Fotos und Schätzungen. Rechts erklärt, wie der Abgleich funktioniert.</p>
+        <a class="open" href="06h-hochladen.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06i-statistik.html" title="Vorschau Statistik" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06i-statistik.html" aria-label="Statistik öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6i</span>
+        <h3>Statistik</h3>
+        <p class="claim">15 Jahre Daten — Kurve, Top 10 und Rekorde.</p>
+        <p class="why">Gesamtzahlen als großes Statistikband, Monatskurve über zwei Jahre
+        (Sommerberge, Wintertäler), Top 10 mit Balken. Rechts die Rekorde: größte Masse,
+        längster Track, kälteste Masse mit Track. Alles aus Community-Daten — steht auch dran.</p>
+        <a class="open" href="06i-statistik.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06j-suche.html" title="Vorschau Suche" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06j-suche.html" aria-label="Suche öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6j</span>
+        <h3>Suche</h3>
+        <p class="claim">„ham" → Hamburg, Hamm, vier Touren und ein Forumsthread.</p>
+        <p class="why">Eine zentrierte Spalte: großes Suchfeld, Ergebnis-Tabs
+        (Alle/Städte/Touren/Forum), Treffer als Zeilen mit markiertem Suchbegriff und
+        Kontext (nächster Termin orange). Unten Suchtipps für Datum, Personen, Tracks.</p>
+        <a class="open" href="06j-suche.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06k-anmelden.html" title="Vorschau Anmelden" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06k-anmelden.html" aria-label="Anmelden öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6k + 6o</span>
+        <h3>Anmelden &amp; Registrieren</h3>
+        <p class="claim">Eine Karte, zwei Felder, drei Versprechen.</p>
+        <p class="why">Zentrierte Auth-Karte mit Umschalter: Anmelden (6k) und die
+        Registrierung als Zwei-Schritte-Flow (6o — E-Mail bestätigen, dann Name &amp;
+        Passwort mit Stärke-Anzeige). FriendlyCaptcha-Hinweis („läuft lokal, ohne Google")
+        und drei Versprechen: keine Klarnamenpflicht, kein Tracking, Konto selbst löschbar.</p>
+        <a class="open" href="06k-anmelden.html">Anmelden öffnen</a>
+        &nbsp;
+        <a class="open" href="06o-registrieren.html" style="background:transparent;color:var(--fg);border:1px solid var(--line)">Registrieren öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06l-verzeichnis.html" title="Vorschau Verzeichnis" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06l-verzeichnis.html" aria-label="Verzeichnis öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6l</span>
+        <h3>Städte-Verzeichnis</h3>
+        <p class="claim">612 Städte, sortiert nach Kontinent, Land und Größe.</p>
+        <p class="why">Kontinent-Tabs mit Zählern, Länder als Karten (zuletzt neue Stadt
+        als Teaser), darunter die größten Städte des Landes als Liste. Rechts: Karten-CTA,
+        „Neu dabei" und der Einstieg „Deine Stadt fehlt?". Das Topbar-Menü „Städte" führt
+        jetzt hierher.</p>
+        <a class="open" href="06l-verzeichnis.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06m-mitteilungen.html" title="Vorschau Mitteilungen" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06m-mitteilungen.html" aria-label="Mitteilungen öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6m</span>
+        <h3>Mitteilungen</h3>
+        <p class="claim">Geklingelt, geantwortet, neue Tour — mit Typ-Icons am Avatar.</p>
+        <p class="why">Schmale Spalte, nach Tagen gruppiert, ungelesen mit Orange-Punkt
+        und zartem Hintergrund. Jeder Typ (Klingeln, Antwort, Tour, Track-Zuordnung) hat
+        ein kleines Icon am Avatar. Darunter die Einstellungen als Schalter-Liste —
+        E-Mail-Zusammenfassung standardmäßig aus.</p>
+        <a class="open" href="06m-mitteilungen.html">Seite öffnen</a>
+      </div>
+    </article>
+
+    <article class="proto">
+      <div class="preview">
+        <iframe src="06n-tour-anlegen.html" title="Vorschau Tour eintragen" loading="lazy" tabindex="-1"></iframe>
+        <a class="cover" href="06n-tour-anlegen.html" aria-label="Tour eintragen öffnen"></a>
+      </div>
+      <div class="body">
+        <span class="nr">Prototyp 6n</span>
+        <h3>Tour eintragen</h3>
+        <p class="claim">Drei Felder Pflicht, alles andere zum Aufklappen.</p>
+        <p class="why">Stadt, Datum, Uhrzeit — fertig. Treffpunkt mit Karten-Picker und
+        Titel/Beschreibung sind optionale Aufklapp-Abschnitte. Rechts die Live-Vorschau
+        als Datums-Badge-Karte und die Hinweise (Rhythmus-Automatik, keine Freigabe nötig,
+        „keine Route nötig — die entsteht unterwegs").</p>
+        <a class="open" href="06n-tour-anlegen.html">Seite öffnen</a>
+      </div>
+    </article>
+
+  </div>
+
+  <a class="mobilelink" href="_mobile-check.html">
+    <b>Mobil-Vorschau öffnen →</b> &nbsp; Alle Prototypen nebeneinander im
+    Smartphone-Rahmen (390 px), ohne das Browserfenster verkleinern zu müssen.
+  </a>
+
+  <details class="older">
+    <summary>Runde 1 — vier verworfene Richtungen (Plakat, Nachtfahrt, Fahrplan, Atlas)</summary>
+    <div class="inner">
+      <p style="font-size:.9rem;color:var(--dim);margin-bottom:1rem">Erste Erkundung mit vier
+      thematischen Metaphern. Zurückgestellt zugunsten der Netzwerk-Richtung — Elemente daraus
+      (Klingel-Interaktion, dunkle Track-Karten, Tab-Leiste) leben in Runde 2 weiter.</p>
+      <p style="font-size:.95rem">
+        <a href="01-plakat.html"><strong>1 · Plakat</strong></a> — DIY/Spoke-Card-Ästhetik, laut und plakativ &nbsp;·&nbsp;
+        <a href="02-nachtfahrt.html"><strong>2 · Nachtfahrt</strong></a> — dunkel, Lichtspuren, Countdown &nbsp;·&nbsp;
+        <a href="03-fahrplan.html"><strong>3 · Fahrplan</strong></a> — ÖPNV-Sprache, Abfahrtstafel, Mitfahrkarte &nbsp;·&nbsp;
+        <a href="04-atlas.html"><strong>4 · Atlas</strong></a> — redaktionelles Kartenwerk mit Tafeln und Register
+      </p>
+    </div>
+  </details>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statistik — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.5; font-size: 15px; padding-bottom: 70px; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top .grow { flex: 1; }
+.search { display: flex; align-items: center; gap: 8px; background: #f2f3f5; border-radius: 9px; padding: 7px 12px; color: var(--dim); font-size: .88rem; min-width: 180px; }
+.upload-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; border: 0; border-radius: 9px; font-weight: 700; font-size: .9rem; padding: 8px 14px; }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.mh { background: #3d4350; }
+
+.shell { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; padding: 22px 16px 40px; align-items: start; }
+.maincol { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.pagehead h1 { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; }
+.pagehead .sub { color: var(--dim); font-size: .88rem; margin-top: 2px; }
+
+.tabs { display: flex; gap: 2px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; overflow-x: auto; }
+.tabs a { flex: 1; text-align: center; font-weight: 700; font-size: .88rem; color: var(--dim); border-radius: 9px; padding: 8px 12px; white-space: nowrap; }
+.tabs a.on { background: #f2f3f5; color: var(--ink); }
+.tabs a:hover:not(.on) { color: var(--ink); }
+
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.box .bhead { display: flex; align-items: baseline; padding: 14px 18px 12px; }
+.box .bhead h2 { font-size: 1rem; font-weight: 800; }
+.box .bhead span { margin-left: auto; font-family: var(--mono); font-size: .72rem; color: var(--dim); }
+.statband { display: flex; border-top: 1px solid var(--line); background: #fafbfc; flex-wrap: wrap; }
+.statband > div { flex: 1 1 25%; padding: 14px 18px; }
+.statband > div + div { border-left: 1px solid var(--line); }
+.statband .v { font-family: var(--mono); font-weight: 600; font-size: 1.35rem; }
+.statband .k { font-size: .7rem; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; margin-top: 1px; }
+
+.chartwrap { padding: 8px 12px 14px; }
+svg.line { width: 100%; height: auto; display: block; }
+
+.rank { padding: 4px 10px 12px; }
+.rankrow { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 7px 8px; border-radius: 8px; font-size: .94rem; }
+.rankrow:hover { background: #f6f7f8; }
+.rankrow .nr { font-family: var(--mono); font-size: .8rem; color: var(--dim); }
+.rankrow .city { font-weight: 700; }
+.rankrow .bar { height: 5px; border-radius: 4px; background: #ffe0d1; position: relative; margin-top: 5px; }
+.rankrow .bar i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--accent); }
+.rankrow .n { font-family: var(--mono); font-size: .88rem; font-weight: 600; }
+.rank .note { font-size: .76rem; color: var(--dim); padding: 8px; }
+
+.rail { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 76px; }
+.rbox { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.rbox h4 { font-size: .95rem; font-weight: 800; margin-bottom: 10px; }
+.rec { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.rec:last-child { border-bottom: 0; }
+.rec .v { font-family: var(--mono); font-weight: 600; font-size: 1.05rem; color: var(--accent); flex: none; min-width: 74px; }
+.rec .t b { font-weight: 700; display: block; font-size: .9rem; }
+.rec .t span { font-size: .78rem; color: var(--dim); }
+.fine { font-size: .75rem; color: var(--dim); line-height: 1.6; padding: 0 6px; }
+
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; }
+  .top nav, .search { display: none; }
+  .statband > div { flex: 1 1 40%; border-top: 1px solid var(--line); margin-top: -1px; }
+  .tabbar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a href="06e-karte.html">Karte</a>
+      <a href="06c-kalender.html">Kalender</a>
+      <a href="06l-verzeichnis.html">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="search" href="06j-suche.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      Stadt oder Tour suchen
+    </a>
+    <a class="upload-btn" href="06h-hochladen.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 16V5m0 0 -4 4m4-4 4 4M5 19h14"/></svg>
+      Hochladen
+    </a>
+    <a class="ava mh" href="06d-profil.html">MH</a>
+  </div>
+</header>
+
+<div class="shell">
+
+  <main class="maincol">
+
+    <div class="pagehead">
+      <h1>Statistik</h1>
+      <p class="sub">Was die Masse weltweit zusammenträgt — alle Zahlen aus Schätzungen, Tracks und Fotos der Community.</p>
+    </div>
+
+    <nav class="tabs">
+      <a class="on" href="#">Überblick</a>
+      <a href="#">Top 10</a>
+      <a href="#">Monate</a>
+      <a href="#">Städte</a>
+    </nav>
+
+    <section class="box">
+      <div class="bhead"><h2>Seit 2011 gesammelt</h2><span>Stand: 12.06.2026</span></div>
+      <div class="statband">
+        <div><div class="v">612</div><div class="k">Städte</div></div>
+        <div><div class="v">31.480</div><div class="k">Touren</div></div>
+        <div><div class="v">18.240</div><div class="k">Tracks</div></div>
+        <div><div class="v">92.118</div><div class="k">Fotos</div></div>
+      </div>
+    </section>
+
+    <section class="box">
+      <div class="bhead"><h2>Radfahrende pro Monat, alle Städte</h2><span>Jul 24 – Mai 26</span></div>
+      <div class="chartwrap">
+        <svg class="line" viewBox="0 0 720 260" aria-label="Teilnehmende pro Monat">
+          <g stroke="#edeef1" stroke-width="1.5">
+            <line x1="30" y1="40" x2="690" y2="40"/>
+            <line x1="30" y1="103" x2="690" y2="103"/>
+            <line x1="30" y1="167" x2="690" y2="167"/>
+            <line x1="30" y1="230" x2="690" y2="230"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="10" fill="#a0a6b1">
+            <text x="2" y="44">30k</text>
+            <text x="2" y="107">20k</text>
+            <text x="2" y="171">10k</text>
+            <text x="30" y="250">Jul 24</text>
+            <text x="195" y="250">Jan 25</text>
+            <text x="378" y="250">Jul 25</text>
+            <text x="555" y="250">Jan 26</text>
+            <text x="660" y="250">Mai 26</text>
+          </g>
+          <path d="M30,230 L30,78 L60,65 L90,110 L120,148 L150,186 L180,205 L210,205 L240,198 L270,173 L300,141 L330,116 L360,91 L390,72 L420,59 L450,103 L480,141 L510,179 L540,198 L570,198 L600,192 L630,167 L660,135 L690,110 L690,230 Z"
+            fill="rgba(244,88,28,.10)"/>
+          <polyline points="30,78 60,65 90,110 120,148 150,186 180,205 210,205 240,198 270,173 300,141 330,116 360,91 390,72 420,59 450,103 480,141 510,179 540,198 570,198 600,192 630,167 660,135 690,110"
+            fill="none" stroke="#f4581c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="420" cy="59" r="5" fill="#f4581c"/>
+          <text x="420" y="44" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" fill="#d8450e" text-anchor="middle">27.300 · Aug 25</text>
+          <circle cx="690" cy="110" r="5" fill="#fff" stroke="#f4581c" stroke-width="2.5"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="box">
+      <div class="bhead"><h2>Top 10 im Mai 2026</h2><span>geschätzte Räder</span></div>
+      <div class="rank">
+        <a class="rankrow" href="06b-stadt.html"><span class="nr">1</span><span><span class="city">Hamburg</span><span class="bar"><i style="width:100%"></i></span></span><span class="n">2.400</span></a>
+        <a class="rankrow" href="#"><span class="nr">2</span><span><span class="city">Berlin</span><span class="bar"><i style="width:79%"></i></span></span><span class="n">1.900</span></a>
+        <a class="rankrow" href="#"><span class="nr">3</span><span><span class="city">München</span><span class="bar"><i style="width:46%"></i></span></span><span class="n">1.100</span></a>
+        <a class="rankrow" href="#"><span class="nr">4</span><span><span class="city">Hannover</span><span class="bar"><i style="width:38%"></i></span></span><span class="n">900</span></a>
+        <a class="rankrow" href="#"><span class="nr">5</span><span><span class="city">Köln</span><span class="bar"><i style="width:35%"></i></span></span><span class="n">850</span></a>
+        <a class="rankrow" href="#"><span class="nr">6</span><span><span class="city">Bremen</span><span class="bar"><i style="width:33%"></i></span></span><span class="n">800</span></a>
+        <a class="rankrow" href="#"><span class="nr">7</span><span><span class="city">Wien</span><span class="bar"><i style="width:29%"></i></span></span><span class="n">700</span></a>
+        <a class="rankrow" href="#"><span class="nr">8</span><span><span class="city">Lisboa</span><span class="bar"><i style="width:27%"></i></span></span><span class="n">650</span></a>
+        <a class="rankrow" href="#"><span class="nr">9</span><span><span class="city">Dresden</span><span class="bar"><i style="width:22%"></i></span></span><span class="n">520</span></a>
+        <a class="rankrow" href="#"><span class="nr">10</span><span><span class="city">Stuttgart</span><span class="bar"><i style="width:20%"></i></span></span><span class="n">480</span></a>
+        <p class="note">Mittelwerte der Community-Schätzungen · <a href="#" style="text-decoration:underline">Methodik</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <aside class="rail">
+    <div class="rbox">
+      <h4>Rekorde</h4>
+      <div class="rec"><span class="v">5.200</span><span class="t"><b>Größte erfasste Masse</b><span>Hamburg · August 2025</span></span></div>
+      <div class="rec"><span class="v">38,82 km</span><span class="t"><b>Längster Track</b><span>Berlin · Juni 2024 · 3 h 43 min</span></span></div>
+      <div class="rec"><span class="v">178</span><span class="t"><b>Meiste Massen in Folge</b><span>Hamburg · seit August 2011</span></span></div>
+      <div class="rec"><span class="v">−7 °C</span><span class="t"><b>Kälteste Masse mit Track</b><span>Dresden · Januar 2024</span></span></div>
+    </div>
+
+    <div class="rbox">
+      <h4>Dieses Jahr bisher</h4>
+      <div class="rec"><span class="v">2.218</span><span class="t"><b>Touren gefahren</b><span>Januar – Mai 2026</span></span></div>
+      <div class="rec"><span class="v">14</span><span class="t"><b>Neue Städte</b><span>zuletzt: Stirling (Schottland)</span></span></div>
+      <div class="rec"><span class="v">1.604</span><span class="t"><b>Tracks hochgeladen</b><span>davon 38 % als FIT</span></span></div>
+    </div>
+
+    <p class="fine">Alle Auswertungen entstehen aus dem, was die Community einträgt —
+    es gibt kein Tracking und keine Zählung im Hintergrund.
+    <a href="#" style="text-decoration:underline">Rohdaten per API</a></p>
+  </aside>
+
+</div>
+
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a href="06e-karte.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="06h-hochladen.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a href="06c-kalender.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="06d-profil.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

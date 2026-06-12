@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hochladen — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --amber: #b07814;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 70px;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- Topbar ---------- */
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top .grow { flex: 1; }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.mh { background: #3d4350; }
+
+/* ---------- Layout ---------- */
+.shell { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; padding: 22px 16px 40px; align-items: start; }
+.maincol { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.pagehead h1 { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; }
+.pagehead .sub { color: var(--dim); font-size: .88rem; margin-top: 2px; }
+
+/* ---------- Typ-Tabs ---------- */
+.tabs { display: flex; gap: 2px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; }
+.tabs a { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; font-size: .9rem; color: var(--dim); border-radius: 9px; padding: 9px 12px; }
+.tabs a.on { background: #f2f3f5; color: var(--ink); }
+.tabs a:hover:not(.on) { color: var(--ink); }
+.tabs svg { stroke: currentColor; }
+
+/* ---------- Dropzone ---------- */
+.drop {
+  background: var(--card);
+  border: 2px dashed #c9cdd3;
+  border-radius: 16px;
+  padding: 44px 24px;
+  text-align: center;
+  transition: border-color .15s ease;
+}
+.drop:hover { border-color: var(--accent); }
+.drop .ic {
+  width: 58px; height: 58px;
+  margin: 0 auto 14px;
+  border-radius: 18px;
+  background: #fff4ee;
+  display: grid;
+  place-items: center;
+}
+.drop h2 { font-size: 1.1rem; font-weight: 800; }
+.drop p { color: var(--dim); font-size: .88rem; margin-top: 4px; }
+.drop .kbtn { margin-top: 16px; }
+.kbtn { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--card); border-radius: 9px; padding: 8px 15px; font-weight: 700; font-size: .88rem; color: var(--ink); }
+.kbtn:hover { border-color: #c9cdd3; }
+.kbtn.solid { background: var(--accent); border-color: var(--accent); color: #fff; }
+.kbtn.solid:hover { background: var(--accent-deep); }
+.kbtn.sm { padding: 6px 12px; font-size: .82rem; }
+
+/* ---------- Upload-Liste ---------- */
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.box .bhead { display: flex; align-items: baseline; padding: 14px 18px 12px; border-bottom: 1px solid var(--line); }
+.box .bhead h2 { font-size: 1rem; font-weight: 800; }
+.box .bhead span { margin-left: auto; font-family: var(--mono); font-size: .74rem; color: var(--dim); }
+.file { padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.file:last-child { border-bottom: 0; }
+.file .frow { display: flex; gap: 12px; align-items: center; }
+.ficon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  font-family: var(--mono);
+  font-size: .6rem;
+  font-weight: 600;
+  color: #fff;
+  background: #3d4350;
+}
+.ficon.fit { background: #5a4fa0; }
+.file .fname { min-width: 0; }
+.file .fname b { font-weight: 700; font-size: .94rem; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file .fname .fmeta { font-size: .78rem; color: var(--dim); font-family: var(--mono); }
+.scta { margin-left: auto; flex: none; display: flex; gap: 8px; align-items: center; }
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .76rem;
+  font-weight: 800;
+  border-radius: 99px;
+  padding: 4px 11px;
+  white-space: nowrap;
+}
+.status.ok { background: #e8f3ed; color: var(--green); }
+.status.check { background: #fdf3e0; color: var(--amber); }
+.status.parked { background: #f2f3f5; color: var(--dim); }
+.assign {
+  margin: 12px 0 0 52px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 11px 14px;
+  font-size: .88rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: #fafbfc;
+}
+.assign .q { color: var(--dim); }
+.assign b { font-weight: 700; }
+.assign .opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.assign .opt {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 99px;
+  padding: 5px 13px;
+  font-size: .82rem;
+  font-weight: 700;
+}
+.assign .opt:hover { border-color: var(--accent); color: var(--accent); }
+.note-fit {
+  margin: 8px 0 0 52px;
+  font-size: .78rem;
+  color: var(--dim);
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+}
+.note-fit .tick { color: var(--green); font-weight: 800; }
+
+/* ---------- Rail ---------- */
+.rail { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 76px; }
+.rbox { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.rbox h4 { font-size: .95rem; font-weight: 800; margin-bottom: 10px; }
+.step { display: flex; gap: 10px; align-items: baseline; padding: 5px 0; font-size: .88rem; color: #3c4048; }
+.step .nr { font-family: var(--mono); font-size: .72rem; font-weight: 600; color: var(--accent); flex: none; }
+.step b { font-weight: 700; }
+.lastrow { display: flex; gap: 10px; align-items: baseline; padding: 7px 6px; border-radius: 8px; font-size: .88rem; }
+.lastrow:hover { background: #f6f7f8; }
+.lastrow .d { font-family: var(--mono); font-size: .76rem; color: var(--dim); flex: none; width: 70px; }
+.lastrow b { font-weight: 700; }
+.lastrow .x { margin-left: auto; color: var(--dim); font-size: .76rem; }
+.fine { font-size: .75rem; color: var(--dim); line-height: 1.6; padding: 0 6px; }
+
+/* ---------- Mobil ---------- */
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; }
+  .top nav { display: none; }
+  .scta { margin-left: 0; }
+  .file .frow { flex-wrap: wrap; }
+  .assign, .note-fit { margin-left: 0; }
+  .tabbar {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55;
+    background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .tabbar a.on { color: var(--accent); }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a href="06e-karte.html">Karte</a>
+      <a href="06c-kalender.html">Kalender</a>
+      <a href="06l-verzeichnis.html">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="ava mh" href="06d-profil.html">MH</a>
+  </div>
+</header>
+
+<div class="shell">
+
+  <main class="maincol">
+
+    <div class="pagehead">
+      <h1>Hochladen</h1>
+      <p class="sub">Tracks, Fotos oder Schätzungen — alles landet bei der passenden Tour.</p>
+    </div>
+
+    <nav class="tabs">
+      <a class="on" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 17c3-1 4-7 7-7s3 5 6 5 3-3 3-3"/><circle cx="4" cy="17" r="1.6"/><circle cx="20" cy="12" r="1.6"/></svg>
+        Tracks (GPX/FIT)
+      </a>
+      <a href="06g-galerie.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5.5" width="17" height="13.5" rx="2.5"/><circle cx="9" cy="10.5" r="1.6"/><path d="m4.5 17 4.5-4 3.5 3 3-2.5 4 3.5"/></svg>
+        Fotos
+      </a>
+      <a href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 20V9M12 20V4M19 20v-7"/></svg>
+        Schätzung
+      </a>
+    </nav>
+
+    <!-- Dropzone -->
+    <div class="drop">
+      <span class="ic">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f4581c" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4"/><path d="M4 16.5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1.5"/></svg>
+      </span>
+      <h2>GPX- oder FIT-Dateien hierher ziehen</h2>
+      <p>Auch mehrere auf einmal — jede Datei wird einzeln hochgeladen und zugeordnet.</p>
+      <button class="kbtn solid">Dateien auswählen</button>
+    </div>
+
+    <!-- Uploads -->
+    <section class="box">
+      <div class="bhead">
+        <h2>Deine Uploads</h2>
+        <span>3 Dateien · 2,4 MB</span>
+      </div>
+
+      <div class="file">
+        <div class="frow">
+          <span class="ficon fit">FIT</span>
+          <span class="fname">
+            <b>2026-05-29-feierabend.fit</b>
+            <span class="fmeta">812 KB · hochgeladen 21:48</span>
+          </span>
+          <span class="scta">
+            <span class="status ok">✓ Zugeordnet</span>
+            <a class="kbtn sm" href="06b-stadt.html">Ansehen</a>
+          </span>
+        </div>
+        <p class="note-fit"><span class="tick">✓</span>FIT automatisch in GPX umgewandelt ·
+        erkannt: <b style="color:var(--ink)">Maimasse Hamburg, 29.05.2026</b> (Datum, Start und Route passen)</p>
+      </div>
+
+      <div class="file">
+        <div class="frow">
+          <span class="ficon">GPX</span>
+          <span class="fname">
+            <b>berlin-november.gpx</b>
+            <span class="fmeta">1,1 MB · hochgeladen 21:49</span>
+          </span>
+          <span class="scta">
+            <span class="status check">? Bitte prüfen</span>
+          </span>
+        </div>
+        <div class="assign">
+          <span class="q">Zwei Touren kommen infrage — welche war's?</span>
+          <span class="opts">
+            <button class="opt">CM Berlin · 28.11.2025</button>
+            <button class="opt">CM Treptow-Köpenick · 28.11.2025</button>
+            <button class="opt" style="color:var(--dim)">Keine davon</button>
+          </span>
+        </div>
+      </div>
+
+      <div class="file">
+        <div class="frow">
+          <span class="ficon">GPX</span>
+          <span class="fname">
+            <b>tour-irgendwann.gpx</b>
+            <span class="fmeta">486 KB · hochgeladen 21:49</span>
+          </span>
+          <span class="scta">
+            <span class="status parked">geparkt</span>
+            <button class="kbtn sm">Tour wählen</button>
+          </span>
+        </div>
+        <p class="note-fit">Keine passende Tour gefunden — der Track wartet in deinem Profil,
+        bis du ihn zuordnest oder löschst.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rail -->
+  <aside class="rail">
+    <div class="rbox">
+      <h4>So funktioniert die Zuordnung</h4>
+      <div class="step"><span class="nr">01</span><span><b>Hochladen.</b> FIT-Dateien werden automatisch zu GPX normalisiert.</span></div>
+      <div class="step"><span class="nr">02</span><span><b>Abgleich.</b> Datum, Startpunkt und Strecke werden mit allen Touren verglichen.</span></div>
+      <div class="step"><span class="nr">03</span><span><b>Zuordnung.</b> Passt alles eindeutig, landet der Track direkt an der Tour — sonst fragen wir nach.</span></div>
+    </div>
+
+    <div class="rbox">
+      <h4>Deine letzten Uploads</h4>
+      <a class="lastrow" href="#"><span class="d">29.05.</span><b>Maimasse Hamburg</b><span class="x">21,7 km</span></a>
+      <a class="lastrow" href="#"><span class="d">24.04.</span><b>Aprilmasse Hamburg</b><span class="x">18,9 km</span></a>
+      <a class="lastrow" href="#"><span class="d">27.03.</span><b>CM Lüneburg</b><span class="x">14,2 km</span></a>
+    </div>
+
+    <p class="fine">Dein Track gehört dir: jederzeit als GPX exportieren oder löschen —
+    ohne Rückfrage, ohne Frist. Es gibt keinen Umweg über Drittanbieter.</p>
+  </aside>
+
+</div>
+
+<!-- Mobile Tabbar -->
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a href="06e-karte.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a class="on" href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a href="06c-kalender.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="06d-profil.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

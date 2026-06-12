@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mitteilungen — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.5; font-size: 15px; padding-bottom: 70px; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top .grow { flex: 1; }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.s { width: 38px; height: 38px; font-size: .8rem; }
+.ava.mh { background: #3d4350; }
+.ava.kk { background: #0e7c82; }
+.ava.cb { background: #b76fc4; }
+.ava.bb { background: #5a4fa0; }
+.ava.lg { background: #1e7d4f; }
+.ava.sys { background: var(--accent); }
+
+.shell { max-width: 680px; margin: 0 auto; padding: 26px 16px 40px; display: flex; flex-direction: column; gap: 18px; }
+.pagehead { display: flex; align-items: baseline; gap: 14px; }
+.pagehead h1 { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; }
+.pagehead a { margin-left: auto; font-size: .84rem; font-weight: 700; color: var(--accent); }
+
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.dayhead { padding: 11px 18px 9px; font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--dim); border-bottom: 1px solid var(--line); background: #fafbfc; }
+.note { display: flex; gap: 13px; padding: 14px 18px; border-bottom: 1px solid var(--line); align-items: flex-start; position: relative; }
+.note:last-child { border-bottom: 0; }
+.note:hover { background: #fafbfc; }
+.note .t { min-width: 0; flex: 1; font-size: .94rem; }
+.note .t b { font-weight: 700; }
+.note .t .obj { color: var(--accent-deep); font-weight: 600; }
+.note .sub { font-size: .8rem; color: var(--dim); margin-top: 2px; }
+.note .when { flex: none; font-family: var(--mono); font-size: .74rem; color: var(--dim); white-space: nowrap; }
+.note.unread { background: #fffaf7; }
+.note.unread::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px; height: 7px;
+  border-radius: 99px;
+  background: var(--accent);
+}
+.note .ic {
+  position: absolute;
+  left: 40px;
+  top: 38px;
+  width: 20px; height: 20px;
+  border-radius: 99px;
+  border: 2.5px solid #fff;
+  display: grid;
+  place-items: center;
+}
+.ic.bell { background: var(--accent); }
+.ic.chat { background: #2b6cb0; }
+.ic.ride { background: #16181c; }
+.ic.track { background: var(--green); }
+
+.settings { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.settings h4 { font-size: .95rem; font-weight: 800; margin-bottom: 6px; }
+.settings .hint { font-size: .8rem; color: var(--dim); margin-bottom: 12px; }
+.swrow { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: .92rem; }
+.swrow .d { font-size: .78rem; color: var(--dim); display: block; }
+.swrow .sw {
+  margin-left: auto;
+  width: 40px; height: 23px;
+  border-radius: 99px;
+  background: var(--green);
+  position: relative;
+  flex: none;
+}
+.swrow .sw::after {
+  content: "";
+  position: absolute;
+  top: 2.5px; right: 2.5px;
+  width: 18px; height: 18px;
+  border-radius: 99px;
+  background: #fff;
+}
+.swrow .sw.off { background: #cdd1d8; }
+.swrow .sw.off::after { right: auto; left: 2.5px; }
+.fine { font-size: .76rem; color: var(--dim); text-align: center; }
+
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 900px) {
+  .top nav { display: none; }
+  .tabbar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a href="06e-karte.html">Karte</a>
+      <a href="06c-kalender.html">Kalender</a>
+      <a href="06l-verzeichnis.html">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="ava mh" href="06d-profil.html">MH</a>
+  </div>
+</header>
+
+<div class="shell">
+
+  <div class="pagehead">
+    <h1>Mitteilungen</h1>
+    <a href="#">Alle als gelesen markieren</a>
+  </div>
+
+  <section class="box">
+    <div class="dayhead">Heute</div>
+    <a class="note unread" href="06a-tour.html">
+      <span style="position:relative">
+        <span class="ava s kk">KK</span>
+        <span class="ic chat">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+        </span>
+      </span>
+      <span class="t"><b>Katrin</b> hat auf deinen Kommentar geantwortet:
+        „Familien-Gruppe ist notiert — wir bringen Luftballons mit."
+        <span class="sub">Critical Mass Hamburg · 26.06.2026</span>
+      </span>
+      <span class="when">vor 2 Std</span>
+    </a>
+    <a class="note unread" href="#">
+      <span style="position:relative">
+        <span class="ava s cb">CB</span>
+        <span class="ic bell">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/></svg>
+        </span>
+      </span>
+      <span class="t"><b>CM Bonn</b> und <b>3 weitere</b> haben für deinen Track geklingelt.
+        <span class="sub">Maimasse Hamburg · 21,7 km</span>
+      </span>
+      <span class="when">vor 4 Std</span>
+    </a>
+    <a class="note unread" href="06a-tour.html">
+      <span style="position:relative">
+        <span class="ava s lg">LG</span>
+        <span class="ic ride">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9.5h16"/></svg>
+        </span>
+      </span>
+      <span class="t">Neue Tour in <b>Lüneburg</b>, einer deiner Städte:
+        <span class="obj">Fr 26.06. · 18:00 · Am Sande</span>
+      </span>
+      <span class="when">vor 6 Std</span>
+    </a>
+  </section>
+
+  <section class="box">
+    <div class="dayhead">Diese Woche</div>
+    <a class="note" href="06b-stadt.html">
+      <span style="position:relative">
+        <span class="ava s sys">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="m5 12 4.5 4.5L19 7"/></svg>
+        </span>
+        <span class="ic track">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M4 17c3-1 4-7 7-7s3 5 6 5 3-3 3-3"/></svg>
+        </span>
+      </span>
+      <span class="t">Dein Track wurde der <b>Maimasse Hamburg</b> zugeordnet —
+        Datum, Start und Route passten eindeutig.
+        <span class="sub">2026-05-29-feierabend.fit → GPX</span>
+      </span>
+      <span class="when">29.05.</span>
+    </a>
+    <a class="note" href="#">
+      <span style="position:relative">
+        <span class="ava s bb">b</span>
+        <span class="ic chat">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+        </span>
+      </span>
+      <span class="t"><b>birnenblau</b> hat dich im Forum erwähnt:
+        „…wie @malte schon sagte, hinten links sammeln."
+        <span class="sub">Board Hamburg · Route im Juni mal Richtung Hafen?</span>
+      </span>
+      <span class="when">Mi</span>
+    </a>
+    <a class="note" href="06g-galerie.html">
+      <span style="position:relative">
+        <span class="ava s kk">KK</span>
+        <span class="ic bell">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/></svg>
+        </span>
+      </span>
+      <span class="t"><b>Katrin</b> hat für deine 2 Fotos geklingelt.
+        <span class="sub">Galerie Maimasse Hamburg</span>
+      </span>
+      <span class="when">Mo</span>
+    </a>
+  </section>
+
+  <section class="settings">
+    <h4>Was dich erreicht</h4>
+    <p class="hint">Mitteilungen kommen nur hier an — E-Mails gibt's höchstens wöchentlich gebündelt, wenn du willst.</p>
+    <div class="swrow"><span>Klingeln für deine Beiträge<span class="d">Tracks, Fotos, Schätzungen</span></span><span class="sw"></span></div>
+    <div class="swrow"><span>Antworten &amp; Erwähnungen<span class="d">Kommentare und Forum</span></span><span class="sw"></span></div>
+    <div class="swrow"><span>Neue Touren deiner Städte<span class="d">Hamburg, Lüneburg, Berlin</span></span><span class="sw"></span></div>
+    <div class="swrow"><span>Wöchentliche E-Mail-Zusammenfassung<span class="d">freitags, vor der Masse</span></span><span class="sw off"></span></div>
+  </section>
+
+  <p class="fine">Mitteilungen älter als 90 Tage werden automatisch gelöscht.</p>
+
+</div>
+
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a href="06e-karte.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="06h-hochladen.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a href="06c-kalender.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="06d-profil.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

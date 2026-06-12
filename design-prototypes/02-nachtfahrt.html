@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp 2 · Nachtfahrt — criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --asphalt: #0c0e12;
+  --panel: #14171d;
+  --panel-2: #1a1e26;
+  --line: #262b35;
+  --fg: #e9edf3;
+  --fg-dim: #9aa3b2;
+  --reflex: #d9ff3d;     /* Reflektor-Gelbgrün */
+  --katzenauge: #ff4a3a; /* Rücklicht */
+  --frontlicht: #bfe3ff;
+  --sans: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { color-scheme: dark; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--asphalt);
+  color: var(--fg);
+  line-height: 1.55;
+  padding-bottom: 76px; /* Platz für Tabbar auf Mobil */
+}
+a { color: inherit; }
+
+/* ---------- Header ---------- */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: .9rem 1.25rem;
+  background: rgba(12,14,18,.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+}
+.brand .patch {
+  width: 14px;
+  height: 22px;
+  background: var(--reflex);
+  clip-path: polygon(0 0, 100% 12%, 100% 100%, 0 88%);
+  box-shadow: 0 0 14px rgba(217,255,61,.55);
+}
+.top nav { display: flex; gap: 1.4rem; margin-left: auto; }
+.top nav a {
+  text-decoration: none;
+  font-size: .9rem;
+  color: var(--fg-dim);
+}
+.top nav a:hover, .top nav a[aria-current] { color: var(--fg); }
+.top .login {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .35rem .95rem;
+  font-size: .85rem;
+  text-decoration: none;
+  color: var(--fg);
+}
+.top .login:hover { border-color: var(--reflex); color: var(--reflex); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4.5rem 1.25rem 3.5rem;
+  overflow: hidden;
+}
+.hero-route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: .8;
+}
+.hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0,1.3fr) minmax(280px, 1fr);
+  gap: 3rem;
+  align-items: center;
+}
+.label {
+  font-family: var(--mono);
+  font-size: .75rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--reflex);
+}
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1.04;
+  margin: .8rem 0 1rem;
+  letter-spacing: -.015em;
+}
+.hero h1 small {
+  display: block;
+  font-size: .42em;
+  font-weight: 500;
+  color: var(--fg-dim);
+  letter-spacing: 0;
+  margin-top: .55rem;
+}
+.hero p.sub { color: var(--fg-dim); max-width: 30rem; }
+.hero .actions { display: flex; gap: .9rem; margin-top: 1.8rem; flex-wrap: wrap; }
+.btn {
+  font-weight: 600;
+  font-size: .9rem;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: .75rem 1.25rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.btn.primary {
+  background: var(--reflex);
+  border-color: var(--reflex);
+  color: #11130a;
+  box-shadow: 0 0 22px rgba(217,255,61,.28);
+}
+.btn.primary:hover { box-shadow: 0 0 34px rgba(217,255,61,.45); }
+.btn:not(.primary):hover { border-color: var(--fg-dim); }
+
+/* Countdown */
+.count-card {
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.6rem;
+}
+.count-card .where {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+.count-card .where strong { font-size: 1.15rem; }
+.count-card .where span { font-family: var(--mono); font-size: .8rem; color: var(--fg-dim); }
+.digits { display: flex; gap: .6rem; }
+.digit {
+  flex: 1;
+  background: var(--asphalt);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-align: center;
+  padding: .8rem .2rem .6rem;
+}
+.digit b {
+  font-family: var(--mono);
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  font-weight: 600;
+  color: var(--reflex);
+  text-shadow: 0 0 18px rgba(217,255,61,.4);
+}
+.digit span {
+  display: block;
+  font-family: var(--mono);
+  font-size: .62rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--fg-dim);
+  margin-top: .35rem;
+}
+.count-card .meet {
+  margin-top: 1.2rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--line);
+  font-size: .9rem;
+  color: var(--fg-dim);
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+}
+.count-card .meet svg { flex: none; }
+.count-card .meet b { color: var(--fg); font-weight: 600; }
+
+/* ---------- Abschnitte ---------- */
+section.block { max-width: 1200px; margin: 0 auto; padding: 2.6rem 1.25rem; }
+.block-head { display: flex; align-items: baseline; gap: .4rem 1rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
+.block-head h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.01em; }
+.block-head a { margin-left: auto; font-size: .85rem; color: var(--fg-dim); text-decoration: none; }
+.block-head a:hover { color: var(--reflex); }
+
+/* Heute-Reihe */
+.tonight {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: .9rem;
+}
+.ride {
+  display: flex;
+  align-items: center;
+  gap: .95rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: .95rem 1.05rem;
+  text-decoration: none;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.ride:hover { border-color: var(--reflex); transform: translateY(-2px); }
+.ride .time {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--reflex);
+  background: rgba(217,255,61,.08);
+  border: 1px solid rgba(217,255,61,.25);
+  border-radius: 8px;
+  padding: .35rem .5rem;
+  white-space: nowrap;
+}
+.ride .name { font-weight: 600; line-height: 1.25; }
+.ride .place { display: block; font-size: .78rem; color: var(--fg-dim); font-weight: 400; }
+.ride.live .time { color: var(--katzenauge); border-color: rgba(255,74,58,.4); background: rgba(255,74,58,.08); }
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--katzenauge);
+  margin-left: auto;
+  box-shadow: 0 0 0 0 rgba(255,74,58,.6);
+  animation: pulse 1.8s ease-out infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,74,58,.55); }
+  100% { box-shadow: 0 0 0 12px rgba(255,74,58,0); }
+}
+@media (prefers-reduced-motion: reduce) { .live-dot { animation: none; } }
+
+/* Tacho-Kacheln */
+.dash {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: .9rem;
+}
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+}
+.tile .v {
+  font-family: var(--mono);
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+.tile .v sup { font-size: .55em; color: var(--fg-dim); font-weight: 400; margin-left: .2rem; }
+.tile .k {
+  font-size: .75rem;
+  color: var(--fg-dim);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-top: .3rem;
+}
+.tile.hl { border-color: rgba(217,255,61,.35); }
+.tile.hl .v { color: var(--reflex); }
+.dash-note { margin-top: .9rem; font-size: .8rem; color: var(--fg-dim); }
+.dash-note a { color: var(--frontlicht); }
+
+/* Karte-Teaser */
+.mapteaser {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(90,169,255,.08), transparent 50%),
+    radial-gradient(ellipse at 75% 70%, rgba(217,255,61,.05), transparent 45%),
+    var(--panel);
+  min-height: 300px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.mapteaser svg.dots { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mapteaser .cta {
+  position: relative;
+  margin: 1.4rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.mapteaser .cta p { font-size: .9rem; color: var(--fg-dim); }
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+  padding: 2.5rem 1.25rem 3rem;
+}
+.foot { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between; }
+.foot nav { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.foot a { color: var(--fg-dim); text-decoration: none; font-size: .85rem; }
+.foot a:hover { color: var(--reflex); }
+.foot .sig { font-family: var(--mono); font-size: .75rem; color: var(--fg-dim); }
+
+/* ---------- Mobile Tabbar ---------- */
+.tabbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 50;
+  display: none;
+  background: rgba(16,19,24,.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+  padding: .45rem .5rem calc(.45rem + env(safe-area-inset-bottom));
+}
+.tabbar a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
+  text-decoration: none;
+  font-size: .62rem;
+  letter-spacing: .04em;
+  color: var(--fg-dim);
+  padding: .3rem 0;
+}
+.tabbar a svg { stroke: currentColor; }
+.tabbar a.active { color: var(--reflex); }
+
+.proto-back {
+  position: fixed;
+  bottom: 90px;
+  right: 14px;
+  z-index: 60;
+  font-size: .72rem;
+  text-decoration: none;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .35rem .8rem;
+  color: var(--fg-dim);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 2.2rem; }
+  .top nav { display: none; }
+  .tabbar { display: flex; }
+}
+@media (min-width: 901px) {
+  body { padding-bottom: 0; }
+  .proto-back { bottom: 14px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#"><span class="patch" aria-hidden="true"></span>criticalmass.in</a>
+  <nav>
+    <a href="#" aria-current="page">Start</a>
+    <a href="#">Städte</a>
+    <a href="#">Kalender</a>
+    <a href="#">Karte</a>
+    <a href="#">Forum</a>
+  </nav>
+  <a class="login" href="#">Anmelden</a>
+</header>
+
+<section class="hero">
+  <svg class="hero-route" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="7" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <polyline points="-40,420 140,400 230,300 330,330 420,250 560,280 660,180 800,220 920,140 1080,190 1240,120"
+      fill="none" stroke="rgba(90,169,255,.16)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="-40,420 140,400 230,300 330,330 420,250 560,280 660,180 800,220 920,140 1080,190 1240,120"
+      fill="none" stroke="rgba(217,255,61,.5)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+      filter="url(#glow)" stroke-dasharray="14 10" class="trail"/>
+    <style>
+      .trail { animation: ride 9s linear infinite; }
+      @keyframes ride { to { stroke-dashoffset: -240; } }
+      @media (prefers-reduced-motion: reduce) { .trail { animation: none; } }
+    </style>
+  </svg>
+
+  <div class="hero-grid">
+    <div>
+      <span class="label">Letzter Freitag im Monat · 19:00</span>
+      <h1>Nachts gehört<br>die Stadt allen.
+        <small>Critical Mass — gemeinsame Ausfahrten in über 600 Städten.
+        Kein Verein, keine Anmeldung. Einfach hinkommen.</small>
+      </h1>
+      <div class="actions">
+        <a class="btn primary" href="#">Tour in deiner Nähe</a>
+        <a class="btn" href="#">Wie funktioniert das?</a>
+      </div>
+    </div>
+
+    <div class="count-card" aria-label="Countdown zur nächsten Tour">
+      <div class="where">
+        <strong>Critical Mass Hamburg</strong>
+        <span>FR 26.06. · 19:00</span>
+      </div>
+      <div class="digits" id="countdown">
+        <div class="digit"><b data-u="d">–</b><span>Tage</span></div>
+        <div class="digit"><b data-u="h">–</b><span>Std</span></div>
+        <div class="digit"><b data-u="m">–</b><span>Min</span></div>
+        <div class="digit"><b data-u="s">–</b><span>Sek</span></div>
+      </div>
+      <p class="meet">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#d9ff3d" stroke-width="1.5" aria-hidden="true">
+          <path d="M8 14s5-4.6 5-8a5 5 0 0 0-10 0c0 3.4 5 8 5 8z"/><circle cx="8" cy="6" r="1.8"/>
+        </svg>
+        Treffpunkt: <b>Alstervorland, Höhe Milchstraße</b>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="block-head">
+    <h2>Heute unterwegs</h2>
+    <a href="#">Alle 43 Touren der nächsten 14 Tage →</a>
+  </div>
+  <div class="tonight">
+    <a class="ride live" href="#">
+      <span class="time">jetzt</span>
+      <span class="name">Lisboa<span class="place">Marquês de Pombal · seit 21:00</span></span>
+      <span class="live-dot" aria-hidden="true"></span>
+    </a>
+    <a class="ride" href="#">
+      <span class="time">17:00</span>
+      <span class="name">Falkensee<span class="place">Bahnhofsvorplatz</span></span>
+    </a>
+    <a class="ride" href="#">
+      <span class="time">18:00</span>
+      <span class="name">Düren<span class="place">Treffpunkt auf der Karte</span></span>
+    </a>
+    <a class="ride" href="#">
+      <span class="time">18:00</span>
+      <span class="name">Pittsburgh<span class="place">Dippy the Dinosaur</span></span>
+    </a>
+    <a class="ride" href="#">
+      <span class="time">19:00</span>
+      <span class="name">Düsseldorf<span class="place">Fürstenplatz</span></span>
+    </a>
+    <a class="ride" href="#">
+      <span class="time">19:00</span>
+      <span class="name">Frankfurt<span class="place">Opernplatz</span></span>
+    </a>
+    <a class="ride" href="#">
+      <span class="time">19:00</span>
+      <span class="name">Hagen<span class="place">Treffpunkt auf der Karte</span></span>
+    </a>
+    <a class="ride" href="#">
+      <span class="time">19:00</span>
+      <span class="name">Treptow-Köpenick<span class="place">Treffpunkt auf der Karte</span></span>
+    </a>
+  </div>
+</section>
+
+<section class="block">
+  <div class="block-head">
+    <h2>Nach der Fahrt</h2>
+    <a href="#">Track hochladen →</a>
+  </div>
+  <div class="dash">
+    <div class="tile hl"><div class="v">36,23<sup>km</sup></div><div class="k">Letzter Track · Berlin</div></div>
+    <div class="tile"><div class="v">3:44<sup>h</sup></div><div class="k">Fahrzeit</div></div>
+    <div class="tile"><div class="v">9,7<sup>km/h</sup></div><div class="k">Masse-Tempo</div></div>
+    <div class="tile"><div class="v">12<sup>±</sup></div><div class="k">Schätzung Norderstedt</div></div>
+    <div class="tile"><div class="v">4<sup>neu</sup></div><div class="k">Fotos aus Bonn</div></div>
+  </div>
+  <p class="dash-note">GPX- und FIT-Dateien werden direkt hochgeladen — dein Track gehört dir,
+    nicht einer Plattform. <a href="#">Mehr zur Datenhaltung</a></p>
+</section>
+
+<section class="block">
+  <div class="block-head">
+    <h2>Wo fährt die Masse?</h2>
+  </div>
+  <div class="mapteaser">
+    <svg class="dots" viewBox="0 0 1160 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="rgba(191,227,255,.65)">
+        <circle cx="520" cy="96" r="3"/><circle cx="548" cy="118" r="2.4"/><circle cx="566" cy="88" r="2"/>
+        <circle cx="538" cy="74" r="2"/><circle cx="586" cy="120" r="2.6"/><circle cx="602" cy="96" r="2"/>
+        <circle cx="498" cy="120" r="2.2"/><circle cx="556" cy="146" r="2"/><circle cx="618" cy="142" r="2"/>
+        <circle cx="470" cy="92" r="2"/><circle cx="445" cy="120" r="2.4"/><circle cx="430" cy="150" r="2"/>
+        <circle cx="252" cy="130" r="2.6"/><circle cx="208" cy="148" r="2"/><circle cx="232" cy="170" r="2"/>
+        <circle cx="180" cy="120" r="2"/><circle cx="300" cy="208" r="2.4"/><circle cx="330" cy="236" r="2"/>
+        <circle cx="840" cy="190" r="2.4"/><circle cx="884" cy="170" r="2"/><circle cx="960" cy="226" r="2.6"/>
+        <circle cx="1020" cy="250" r="2"/><circle cx="700" cy="220" r="2"/><circle cx="660" cy="250" r="2"/>
+      </g>
+      <g fill="#d9ff3d">
+        <circle cx="540" cy="100" r="4.5"><animate attributeName="opacity" values="1;.3;1" dur="2.4s" repeatCount="indefinite"/></circle>
+        <circle cx="402" cy="186" r="4.5"><animate attributeName="opacity" values=".3;1;.3" dur="2.4s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+    <div class="cta">
+      <a class="btn primary" href="#">Karte öffnen</a>
+      <p>612 Städte · zuletzt dazugekommen: Stirling&nbsp;(Schottland)</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <nav>
+      <a href="#">Über die Critical Mass</a>
+      <a href="#">FAQ</a>
+      <a href="#">API</a>
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </nav>
+    <span class="sig">karten © openstreetmap · open source · seit 2011 im sattel</span>
+  </div>
+</footer>
+
+<nav class="tabbar" aria-label="Hauptnavigation">
+  <a href="#" class="active">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 11.5 12 4l9 7.5M5.5 10v9h13v-9"/></svg>
+    Start
+  </a>
+  <a href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s7-6.1 7-11a7 7 0 0 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="9.6" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Konto
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+<script>
+(function () {
+  var target = new Date("2026-06-26T19:00:00+02:00").getTime();
+  var els = {
+    d: document.querySelector('[data-u="d"]'),
+    h: document.querySelector('[data-u="h"]'),
+    m: document.querySelector('[data-u="m"]'),
+    s: document.querySelector('[data-u="s"]')
+  };
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function tick() {
+    var diff = Math.max(0, target - Date.now());
+    var d = Math.floor(diff / 864e5);
+    var h = Math.floor(diff % 864e5 / 36e5);
+    var m = Math.floor(diff % 36e5 / 6e4);
+    var s = Math.floor(diff % 6e4 / 1e3);
+    els.d.textContent = d;
+    els.h.textContent = pad(h);
+    els.m.textContent = pad(m);
+    els.s.textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+
+</body>
+</html>

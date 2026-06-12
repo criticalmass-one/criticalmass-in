@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp 1 · Plakat — criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f3efe5;
+  --paper-2: #ebe6d8;
+  --ink: #181511;
+  --pink: #ff2e7e;
+  --blue: #2438e8;
+  --orange: #ff571f;
+  --display: "Anton", "Arial Narrow", sans-serif;
+  --text: "Archivo", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--text);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+  position: relative;
+}
+/* Papierkorn */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .35;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.06"/></feComponentTransfer></filter><rect width="240" height="240" filter="url(%23n)"/></svg>');
+  z-index: 5;
+}
+a { color: inherit; }
+
+/* ---------- Topbar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 3px solid var(--ink);
+  flex-wrap: wrap;
+}
+.brand {
+  font-family: var(--display);
+  font-size: 1.35rem;
+  letter-spacing: .02em;
+  text-transform: lowercase;
+  background: #fff;
+  border: 3px solid var(--ink);
+  padding: .15rem .6rem .25rem;
+  transform: rotate(-1.5deg);
+  text-decoration: none;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.topbar nav {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+.topbar nav a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: .8rem;
+  letter-spacing: .12em;
+  border-bottom: 3px solid transparent;
+  padding-bottom: .15rem;
+}
+.topbar nav a:hover { border-color: var(--pink); }
+.topbar nav a.cta {
+  border: 3px solid var(--ink);
+  padding: .35rem .8rem;
+  background: var(--pink);
+  color: #fff;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+  gap: 3rem;
+  padding: 4rem 1.25rem 4.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+.kicker {
+  display: inline-block;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .8rem;
+  border: 2px solid var(--ink);
+  padding: .3rem .7rem;
+  background: var(--paper-2);
+  transform: rotate(-.6deg);
+  margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(3.2rem, 9.5vw, 7.5rem);
+  line-height: .92;
+  text-transform: uppercase;
+  letter-spacing: .005em;
+}
+.hero h1 .outline {
+  color: transparent;
+  -webkit-text-stroke: 3px var(--pink);
+  text-stroke: 3px var(--pink);
+}
+.hero p.lead {
+  margin-top: 1.5rem;
+  font-size: 1.15rem;
+  max-width: 34rem;
+}
+.hero .actions { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn {
+  font-family: var(--text);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .85rem;
+  text-decoration: none;
+  border: 3px solid var(--ink);
+  padding: .8rem 1.3rem;
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 5px 5px 0 rgba(24,21,17,.35);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 rgba(24,21,17,.35); }
+.btn.ghost { background: transparent; color: var(--ink); box-shadow: none; }
+.btn.ghost:hover { background: var(--paper-2); transform: none; }
+
+/* ---------- Spoke Card ---------- */
+.spokecard {
+  background: #fff;
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  padding: 2.6rem 1.6rem 1.6rem;
+  transform: rotate(2deg);
+  position: relative;
+  max-width: 340px;
+  justify-self: center;
+}
+.spokecard .hole {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+}
+.spokecard .label {
+  text-transform: uppercase;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  color: var(--blue);
+  text-align: center;
+}
+.spokecard .city {
+  font-family: var(--display);
+  font-size: 2.6rem;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  margin: .4rem 0 1rem;
+}
+.spokecard .date-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .8rem;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  padding: .7rem 0;
+}
+.spokecard .date-row .big {
+  font-family: var(--display);
+  font-size: 3.4rem;
+  line-height: 1;
+  color: var(--pink);
+}
+.spokecard .date-row .rest { font-weight: 600; line-height: 1.3; }
+.spokecard dl {
+  margin: 1rem 0 1.2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .3rem .8rem;
+  font-size: .95rem;
+}
+.spokecard dt { font-weight: 700; text-transform: uppercase; font-size: .7rem; letter-spacing: .1em; align-self: center; }
+.spokecard dd { font-weight: 600; }
+.spokecard .card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+.spokecard .card-actions .btn { text-align: center; padding: .65rem .5rem; box-shadow: none; }
+.spokecard .card-actions .btn.primary { background: var(--blue); color: #fff; }
+.spokecard .stamp {
+  position: absolute;
+  right: -22px;
+  top: -18px;
+  border: 3px solid var(--orange);
+  color: var(--orange);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: .65rem;
+  letter-spacing: .14em;
+  padding: .35rem .6rem;
+  transform: rotate(8deg);
+  background: rgba(255,255,255,.85);
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee span {
+  display: inline-block;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  padding: .55rem 0;
+  animation: slide 40s linear infinite;
+}
+.marquee em { font-style: normal; color: var(--pink); }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .marquee span { animation: none; } }
+
+/* ---------- Flyerwand ---------- */
+.wall { max-width: 1200px; margin: 0 auto; padding: 4rem 1.25rem 2rem; }
+.wall-head { display: flex; align-items: baseline; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+.wall-head h2, .after h2 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  text-transform: uppercase;
+}
+.wall-head .count { font-weight: 600; color: var(--blue); }
+.flyers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.8rem;
+}
+.flyer {
+  background: #fff;
+  border: 3px solid var(--ink);
+  padding: 1.2rem 1.2rem 1.4rem;
+  position: relative;
+  text-decoration: none;
+  display: block;
+  transition: transform .12s ease;
+}
+.flyer::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 90px;
+  height: 24px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(244, 240, 228, .65);
+  border-left: 1px dashed rgba(24,21,17,.25);
+  border-right: 1px dashed rgba(24,21,17,.25);
+}
+.flyer:nth-child(3n)   { transform: rotate(-1.3deg); }
+.flyer:nth-child(3n+1) { transform: rotate(.9deg); }
+.flyer:nth-child(4n)   { transform: rotate(1.6deg); }
+.flyer:hover { transform: rotate(0) scale(1.02); z-index: 2; }
+.flyer .day {
+  display: inline-block;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: .7rem;
+  letter-spacing: .12em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: .25rem .5rem;
+}
+.flyer:nth-child(3n) .day { background: var(--pink); color: #fff; }
+.flyer:nth-child(4n) .day { background: var(--blue); color: #fff; }
+.flyer .city {
+  font-family: var(--display);
+  font-size: 1.9rem;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin: .6rem 0 .4rem;
+}
+.flyer .meta { font-size: .9rem; font-weight: 600; }
+.flyer .meta .time { color: var(--orange); font-weight: 900; }
+.wall-more { margin-top: 2.4rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ---------- Danach ---------- */
+.after { max-width: 1200px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+.after h2 { margin-bottom: .4rem; }
+.after .sub { max-width: 38rem; margin-bottom: 2.2rem; }
+.after-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.8rem; }
+.after-card {
+  border: 3px solid var(--ink);
+  background: var(--paper-2);
+  padding: 1.4rem;
+}
+.after-card h3 { font-family: var(--display); text-transform: uppercase; font-size: 1.4rem; margin-bottom: .6rem; }
+.after-card p { font-size: .95rem; margin-bottom: 1rem; }
+.after-card .fact {
+  background: #fff;
+  border: 2px solid var(--ink);
+  padding: .6rem .8rem;
+  font-weight: 700;
+  font-size: .9rem;
+  margin-bottom: 1rem;
+}
+.after-card .fact small { display: block; font-weight: 500; color: rgba(24,21,17,.65); }
+.after-card svg { display: block; margin-bottom: .8rem; }
+.flip {
+  display: inline-flex;
+  gap: 3px;
+  margin-bottom: .8rem;
+}
+.flip b {
+  font-family: var(--display);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 1.6rem;
+  padding: .15rem .45rem;
+  border-radius: 3px;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 3px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3rem 1.25rem 5rem;
+}
+.foot-inner { max-width: 1200px; margin: 0 auto; }
+footer .wordmark {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 8vw, 5rem);
+  text-transform: lowercase;
+  line-height: 1;
+  color: var(--paper);
+}
+footer .claim { color: var(--pink); font-weight: 700; margin: .6rem 0 2rem; }
+footer nav { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: .85rem; }
+footer nav a { color: var(--paper); text-decoration: none; border-bottom: 2px solid rgba(243,239,229,.3); }
+footer nav a:hover { border-color: var(--pink); }
+footer .credits { margin-top: 2rem; font-size: .75rem; color: rgba(243,239,229,.55); }
+
+.proto-back {
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  z-index: 50;
+  font-size: .75rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: #fff;
+  border: 2px solid var(--ink);
+  padding: .35rem .7rem;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* ---------- Mobil ---------- */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 2.5rem; }
+  .spokecard { transform: rotate(1deg); justify-self: start; }
+  .topbar nav { gap: .9rem; }
+}
+@media (max-width: 520px) {
+  .flyer, .flyer:nth-child(n) { transform: none; }
+  .topbar { gap: .8rem; }
+  .topbar nav a:not(.cta) { font-size: .72rem; }
+  .spokecard { max-width: 100%; }
+  .spokecard .stamp { right: 4px; top: -16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#">criticalmass.in</a>
+  <nav>
+    <a href="#">Städte</a>
+    <a href="#">Kalender</a>
+    <a href="#">Fotos</a>
+    <a href="#">Forum</a>
+    <a class="cta" href="#">Anmelden</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="kicker">Jeden letzten Freitag im Monat · überall</span>
+    <h1>Wir sind<br>der <span class="outline">Verkehr.</span></h1>
+    <p class="lead">Critical Mass ist keine Veranstaltung und hat keinen Chef. Sie findet statt,
+      weil du hinkommst — gemeinsam, langsam, laut und mit Klingel. criticalmass.in sagt dir,
+      wann und wo sich die Masse in über 600 Städten trifft.</p>
+    <div class="actions">
+      <a class="btn" href="#wall">Nächste Tour finden</a>
+      <a class="btn ghost" href="#">Was ist Critical Mass?</a>
+    </div>
+  </div>
+
+  <aside class="spokecard" aria-label="Nächste Tour">
+    <span class="hole" aria-hidden="true"></span>
+    <p class="label">Nächste Tour in deiner Nähe</p>
+    <p class="city">Hamburg</p>
+    <div class="date-row">
+      <span class="big">26.</span>
+      <span class="rest">Juni 2026<br>Freitag</span>
+    </div>
+    <dl>
+      <dt>Start</dt><dd>19:00 Uhr</dd>
+      <dt>Treffpunkt</dt><dd>Alstervorland, Höhe Milchstraße</dd>
+      <dt>Zuletzt</dt><dd>~ 2.400 Radfahrende</dd>
+    </dl>
+    <div class="card-actions">
+      <a class="btn primary" href="#">Dabei?</a>
+      <a class="btn ghost" href="#">Kalender</a>
+    </div>
+    <span class="stamp">Eintritt frei · für immer</span>
+  </aside>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <span>Wir behindern nicht den Verkehr — <em>wir sind der Verkehr</em> — Wir behindern nicht den Verkehr — <em>wir sind der Verkehr</em> — Wir behindern nicht den Verkehr — <em>wir sind der Verkehr</em> — Wir behindern nicht den Verkehr — <em>wir sind der Verkehr</em> — </span>
+</div>
+
+<section class="wall" id="wall">
+  <div class="wall-head">
+    <h2>Bald unterwegs</h2>
+    <span class="count">43 Touren in den nächsten 14 Tagen</span>
+  </div>
+  <div class="flyers">
+    <a class="flyer" href="#">
+      <span class="day">Fr · 12. Juni</span>
+      <span class="city">Düsseldorf</span>
+      <span class="meta"><span class="time">19:00</span> · Fürstenplatz</span>
+    </a>
+    <a class="flyer" href="#">
+      <span class="day">Fr · 12. Juni</span>
+      <span class="city">Darmstadt</span>
+      <span class="meta"><span class="time">19:00</span> · Treffpunkt auf der Karte</span>
+    </a>
+    <a class="flyer" href="#">
+      <span class="day">Fr · 12. Juni</span>
+      <span class="city">Essen</span>
+      <span class="meta"><span class="time">19:00</span> · Treffpunkt auf der Karte</span>
+    </a>
+    <a class="flyer" href="#">
+      <span class="day">Di · 16. Juni</span>
+      <span class="city">Lisboa</span>
+      <span class="meta"><span class="time">21:00</span> · Marquês de Pombal</span>
+    </a>
+    <a class="flyer" href="#">
+      <span class="day">Fr · 19. Juni</span>
+      <span class="city">Wien</span>
+      <span class="meta"><span class="time">17:00</span> · Schwarzenbergplatz</span>
+    </a>
+    <a class="flyer" href="#">
+      <span class="day">Fr · 19. Juni</span>
+      <span class="city">Los Angeles</span>
+      <span class="meta"><span class="time">18:30</span> · Treffpunkt auf der Karte</span>
+    </a>
+    <a class="flyer" href="#">
+      <span class="day">So · 21. Juni</span>
+      <span class="city">Köln</span>
+      <span class="meta"><span class="time">13:00</span> · Treffpunkt auf der Karte</span>
+    </a>
+    <a class="flyer" href="#">
+      <span class="day">Fr · 26. Juni</span>
+      <span class="city">Berlin</span>
+      <span class="meta"><span class="time">20:00</span> · Mariannenplatz</span>
+    </a>
+    <a class="flyer" href="#">
+      <span class="day">Fr · 26. Juni</span>
+      <span class="city">Hamburg</span>
+      <span class="meta"><span class="time">19:00</span> · Alstervorland</span>
+    </a>
+  </div>
+  <div class="wall-more">
+    <a class="btn ghost" href="#">Alle Städte</a>
+    <a class="btn ghost" href="#">Kalender ansehen</a>
+    <a class="btn ghost" href="#">Karte öffnen</a>
+  </div>
+</section>
+
+<section class="after">
+  <h2>Und danach?</h2>
+  <p class="sub">Die Masse lebt davon, dass alle etwas zurücklegen — Kilometer, Fotos, Zahlen.
+    Ohne Konto kannst du gucken, mit Konto kannst du mitmachen.</p>
+  <div class="after-grid">
+    <article class="after-card">
+      <svg width="120" height="54" viewBox="0 0 120 54" aria-hidden="true">
+        <polyline points="4,44 22,40 30,22 52,16 68,28 88,20 108,34 116,24"
+          fill="none" stroke="#2438e8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="4" cy="44" r="4" fill="#ff2e7e"/>
+        <circle cx="116" cy="24" r="4" fill="#181511"/>
+      </svg>
+      <h3>Track hochladen</h3>
+      <div class="fact">36,23 km · 3 h 44 min
+        <small>zuletzt: Critical Mass Berlin</small></div>
+      <p>GPX oder FIT aufs Portal werfen — die Route landet bei der Tour und in der Statistik.</p>
+      <a class="btn ghost" href="#">Hochladen</a>
+    </article>
+    <article class="after-card">
+      <div class="flip" aria-hidden="true"><b>0</b><b>0</b><b>1</b><b>2</b></div>
+      <h3>Masse schätzen</h3>
+      <div class="fact">12 Radfahrende in Norderstedt
+        <small>geschätzt von Katrin, vor 3 Tagen</small></div>
+      <p>Wie viele waren es? Deine Schätzung zählt — der Mittelwert wird zur offiziellen Zahl.</p>
+      <a class="btn ghost" href="#">Schätzen</a>
+    </article>
+    <article class="after-card">
+      <svg width="120" height="54" viewBox="0 0 120 54" aria-hidden="true">
+        <rect x="4" y="10" width="40" height="34" fill="none" stroke="#181511" stroke-width="3"/>
+        <rect x="40" y="6" width="40" height="34" fill="#fff" stroke="#181511" stroke-width="3" transform="rotate(4 60 23)"/>
+        <rect x="76" y="12" width="40" height="34" fill="none" stroke="#ff2e7e" stroke-width="3" transform="rotate(-3 96 29)"/>
+      </svg>
+      <h3>Fotos teilen</h3>
+      <div class="fact">4 neue Fotos aus Bonn
+        <small>Tour vom 29. Mai 2026</small></div>
+      <p>Lade deine Bilder hoch und markiere, wer einverstanden ist. Gesichter? Verpixeln geht direkt im Portal.</p>
+      <a class="btn ghost" href="#">Galerie</a>
+    </article>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="wordmark">criticalmass.in</div>
+    <p class="claim">Hej, wir fahren Fahrrad!</p>
+    <nav>
+      <a href="#">Über die Critical Mass</a>
+      <a href="#">FAQ</a>
+      <a href="#">API</a>
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+      <a href="#">Quellcode auf GitHub</a>
+    </nav>
+    <p class="credits">Karten: OpenStreetMap-Mitwirkende · Wetter: OpenWeatherMap · Open Source seit Tag eins</p>
+  </div>
+</footer>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>malte · Profil — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 70px;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- Topbar ---------- */
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top .grow { flex: 1; }
+.search { display: flex; align-items: center; gap: 8px; background: #f2f3f5; border-radius: 9px; padding: 7px 12px; color: var(--dim); font-size: .88rem; min-width: 180px; }
+.upload-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; border: 0; border-radius: 9px; font-weight: 700; font-size: .9rem; padding: 8px 14px; }
+.upload-btn:hover { background: var(--accent-deep); }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.xl { width: 76px; height: 76px; font-size: 1.5rem; border-radius: 24px; }
+.ava.l { width: 44px; height: 44px; font-size: .95rem; }
+.ava.xs { width: 24px; height: 24px; font-size: .6rem; border: 2px solid #fff; }
+.ava.mh { background: #3d4350; }
+.ava.kk { background: #0e7c82; }
+.ava.bb { background: #5a4fa0; }
+.ava.hh { background: #f4581c; }
+
+/* ---------- Layout ---------- */
+.shell { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; padding: 22px 16px 40px; align-items: start; }
+.maincol { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+
+/* ---------- Profil-Hero ---------- */
+.hero { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.hero .head { display: flex; gap: 16px; padding: 18px 18px 14px; align-items: center; flex-wrap: wrap; }
+.hero h1 { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+.hero .sub { color: var(--dim); font-size: .9rem; margin-top: 2px; }
+.hero .sub a { font-weight: 600; color: var(--ink); }
+.hero .sub a:hover { color: var(--accent); }
+.hero .acts { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.kbtn { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--card); border-radius: 9px; padding: 8px 15px; font-weight: 700; font-size: .88rem; color: var(--ink); }
+.kbtn:hover { border-color: #c9cdd3; }
+.kbtn.sm { padding: 7px 13px; font-size: .85rem; }
+.kbtn svg { stroke: currentColor; }
+.spokecards { display: flex; gap: 8px; padding: 0 18px 16px; flex-wrap: wrap; }
+.spoke {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px dashed #c9cdd3;
+  border-radius: 99px;
+  padding: 5px 13px 5px 8px;
+  font-size: .8rem;
+  font-weight: 700;
+  color: #3c4048;
+}
+.spoke i {
+  width: 20px; height: 20px;
+  border-radius: 99px;
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  font-size: .62rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--green);
+}
+.spoke.gold i { background: #c98024; }
+.spoke.blue i { background: #2b6cb0; }
+.statband { display: flex; border-top: 1px solid var(--line); background: #fafbfc; }
+.statband > div { flex: 1; padding: 12px 18px; }
+.statband > div + div { border-left: 1px solid var(--line); }
+.statband .v { font-family: var(--mono); font-weight: 600; font-size: 1.15rem; }
+.statband .v small { font-size: .68em; color: var(--dim); margin-left: 2px; }
+.statband .k { font-size: .7rem; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; margin-top: 1px; }
+
+/* ---------- Tabs ---------- */
+.tabs { display: flex; gap: 2px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; overflow-x: auto; }
+.tabs a { flex: 1; text-align: center; font-weight: 700; font-size: .88rem; color: var(--dim); border-radius: 9px; padding: 8px 12px; white-space: nowrap; }
+.tabs a.on { background: #f2f3f5; color: var(--ink); }
+.tabs a:hover:not(.on) { color: var(--ink); }
+.tabs a .n { font-family: var(--mono); font-size: .72rem; color: var(--dim); margin-left: 4px; }
+
+/* ---------- Aktivitätskarten ---------- */
+.activity { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.act-head { display: flex; gap: 12px; padding: 14px 18px 10px; align-items: center; }
+.act-head .who { line-height: 1.3; min-width: 0; }
+.act-head .who b { font-weight: 700; }
+.act-head .who .sub { color: var(--dim); font-size: .82rem; }
+.act-head .badge { margin-left: auto; font-family: var(--mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--dim); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; white-space: nowrap; }
+.act-title { padding: 0 18px 12px; }
+.act-title h3 { font-size: 1.1rem; font-weight: 800; letter-spacing: -.015em; }
+.act-title .where { color: var(--dim); font-size: .86rem; margin-top: 2px; }
+.actmap { display: block; width: 100%; height: auto; }
+.statrow { display: flex; border-top: 1px solid var(--line); background: #fafbfc; }
+.statrow > div { flex: 1; padding: 11px 18px; }
+.statrow > div + div { border-left: 1px solid var(--line); }
+.statrow .v { font-family: var(--mono); font-weight: 600; font-size: 1.1rem; }
+.statrow .v small { font-size: .68em; color: var(--dim); margin-left: 2px; }
+.statrow .k { font-size: .7rem; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+.kudosbar { display: flex; align-items: center; gap: 10px; padding: 11px 18px; flex-wrap: wrap; }
+.kudosbar .note { color: var(--dim); font-size: .84rem; }
+.kudosbar .note b { color: var(--ink); }
+.kudosbar .spacer { flex: 1; }
+.facepile { display: flex; }
+.facepile .ava.xs + .ava.xs { margin-left: -8px; }
+
+.joincard { display: flex; gap: 14px; align-items: center; border: 1px solid var(--line); border-radius: 12px; margin: 0 18px 16px; padding: 13px 16px; flex-wrap: wrap; }
+.datebadge { flex: none; width: 52px; border: 2px solid var(--ink); border-radius: 11px; text-align: center; overflow: hidden; }
+.datebadge .m { background: var(--ink); color: #fff; font-size: .6rem; font-weight: 800; letter-spacing: .12em; padding: 2.5px 0; text-transform: uppercase; }
+.datebadge .d { font-size: 1.25rem; font-weight: 800; padding: 3px 0 4px; }
+.joincard h4 { font-size: 1rem; font-weight: 800; }
+.joincard .sub { color: var(--dim); font-size: .84rem; }
+.joincard .right { margin-left: auto; }
+
+.photoband2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.photoband2 .ph { position: relative; min-height: 140px; }
+.photoband2 .ph::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(22,24,28,.35) 1px, transparent 1.4px); background-size: 4px 4px; opacity: .45; }
+.ph.g1 { background: linear-gradient(140deg, #c5b8d6, #6a5a86); }
+.ph.g2 { background: linear-gradient(150deg, #d8b8a8, #97614c); }
+
+/* ---------- Rechte Spalte ---------- */
+.rail { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 76px; }
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.box h4 { font-size: .95rem; font-weight: 800; display: flex; align-items: baseline; margin-bottom: 12px; }
+.box h4 small { margin-left: auto; font-weight: 600; color: var(--dim); font-size: .76rem; }
+.chart { width: 100%; height: auto; display: block; }
+.chart-note { font-size: .74rem; color: var(--dim); margin-top: 8px; }
+.cityrow { display: flex; gap: 10px; align-items: center; padding: 7px 8px; border-radius: 8px; font-size: .9rem; }
+.cityrow:hover { background: #f6f7f8; }
+.cityrow .cm { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: .68rem; flex: none; }
+.cityrow b { font-weight: 700; }
+.cityrow .x { margin-left: auto; color: var(--dim); font-size: .78rem; text-align: right; }
+.settings { display: flex; flex-direction: column; }
+.settings a { display: flex; gap: 11px; align-items: center; padding: 8px; border-radius: 8px; font-size: .9rem; font-weight: 600; }
+.settings a:hover { background: #f6f7f8; }
+.settings svg { flex: none; stroke: var(--dim); }
+.settings .out { color: #b3404a; }
+.settings .out svg { stroke: #b3404a; }
+.fine { font-size: .75rem; color: var(--dim); line-height: 1.6; padding: 0 6px; }
+
+/* ---------- Mobil ---------- */
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; }
+  .top nav, .search { display: none; }
+  .statband { flex-wrap: wrap; }
+  .statband > div { flex: 1 1 40%; border-top: 1px solid var(--line); margin-top: -1px; }
+  .hero .acts { margin-left: 0; }
+  .tabbar {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55;
+    background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .tabbar a.on { color: var(--accent); }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a href="06e-karte.html">Karte</a>
+      <a href="06c-kalender.html">Kalender</a>
+      <a href="06l-verzeichnis.html">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="search" href="06j-suche.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      Stadt oder Tour suchen
+    </a>
+    <a class="upload-btn" href="06h-hochladen.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 16V5m0 0 -4 4m4-4 4 4M5 19h14"/></svg>
+      Hochladen
+    </a>
+    <span class="ava mh">MH</span>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- Hauptspalte -->
+  <main class="maincol">
+
+    <section class="hero">
+      <div class="head">
+        <span class="ava xl mh">MH</span>
+        <div>
+          <h1>malte</h1>
+          <p class="sub">Fährt mit seit 2014 · meistens bei <a href="06b-stadt.html">Critical Mass Hamburg</a></p>
+        </div>
+        <span class="acts">
+          <button class="kbtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 16.5 14.5 6a2.6 2.6 0 0 1 3.7 3.7L7.7 20.2 3.5 21z"/></svg>
+            Profil bearbeiten
+          </button>
+        </span>
+      </div>
+      <div class="spokecards" aria-label="Spoke Cards">
+        <span class="spoke"><i>12</i>12 Monate in Folge</span>
+        <span class="spoke gold"><i>❄</i>Allwetter — auch im Januar</span>
+        <span class="spoke blue"><i>4</i>4 Städte besucht</span>
+      </div>
+      <div class="statband">
+        <div><div class="v">34</div><div class="k">Massen gesamt</div></div>
+        <div><div class="v">7</div><div class="k">Dieses Jahr</div></div>
+        <div><div class="v">612<small>km</small></div><div class="k">In der Masse 2026</div></div>
+        <div><div class="v">18</div><div class="k">Tracks</div></div>
+      </div>
+    </section>
+
+    <nav class="tabs">
+      <a class="on" href="#">Aktivität</a>
+      <a href="#">Tracks<span class="n">18</span></a>
+      <a href="#">Fotos<span class="n">41</span></a>
+      <a href="#">Teilnahmen<span class="n">34</span></a>
+    </nav>
+
+    <!-- Angekündigte Teilnahme -->
+    <article class="activity">
+      <div class="act-head">
+        <span class="ava l mh">MH</span>
+        <div class="who">
+          <b>malte</b>
+          <div class="sub">vor 2 Tagen · Teilnahme angekündigt</div>
+        </div>
+        <span class="badge">Dabei</span>
+      </div>
+      <div class="joincard">
+        <span class="datebadge"><span class="m">Juni</span><span class="d">26</span></span>
+        <span>
+          <h4>Critical Mass Hamburg</h4>
+          <p class="sub">Freitag · 19:00 · Alstervorland — mit 131 anderen</p>
+        </span>
+        <a class="kbtn sm right" href="06a-tour.html">Zur Tour</a>
+      </div>
+    </article>
+
+    <!-- Eigener Track -->
+    <article class="activity">
+      <div class="act-head">
+        <span class="ava l mh">MH</span>
+        <div class="who">
+          <b>malte</b>
+          <div class="sub">29. Mai · GPX-Upload · Maimasse Hamburg</div>
+        </div>
+        <span class="badge">Track</span>
+      </div>
+      <div class="act-title">
+        <h3>Maimasse — vorne mitgerollt</h3>
+        <div class="where">Tour vom 29.05.2026 · Start Alstervorland</div>
+      </div>
+      <svg class="actmap" viewBox="0 0 760 220" aria-hidden="true">
+        <rect width="760" height="220" fill="#e9ecef"/>
+        <g stroke="#d9dde2" stroke-width="1.5">
+          <line x1="100" y1="0" x2="100" y2="220"/><line x1="220" y1="0" x2="220" y2="220"/>
+          <line x1="350" y1="0" x2="350" y2="220"/><line x1="500" y1="0" x2="500" y2="220"/>
+          <line x1="640" y1="0" x2="640" y2="220"/>
+          <line x1="0" y1="55" x2="760" y2="55"/><line x1="0" y1="120" x2="760" y2="120"/>
+          <line x1="0" y1="180" x2="760" y2="180"/>
+        </g>
+        <path d="M470,28 C528,22 570,48 580,92 C589,130 569,170 522,182 C480,191 448,172 438,140 C428,108 434,56 470,28 Z" fill="#d4e0ea" stroke="#bccddd" stroke-width="1.5"/>
+        <path d="M450,90 L490,55 L548,70 L568,115 L540,160 L488,170 L450,140 L395,155 L325,132 L250,150 L185,128 L155,85 L215,65 L295,90 L365,70 L420,105 L450,90"
+          fill="none" stroke="#f4581c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="450" cy="90" r="7" fill="#16181c"/>
+      </svg>
+      <div class="statrow">
+        <div><div class="v">21,7<small>km</small></div><div class="k">Strecke</div></div>
+        <div><div class="v">1:58<small>h</small></div><div class="k">Fahrzeit</div></div>
+        <div><div class="v">11,0<small>km/h</small></div><div class="k">Masse-Tempo</div></div>
+      </div>
+      <div class="kudosbar">
+        <span class="facepile">
+          <span class="ava xs kk">K</span><span class="ava xs bb">b</span>
+        </span>
+        <span class="note"><b>11× geklingelt</b></span>
+        <span class="spacer"></span>
+        <button class="kbtn sm">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          Klingeln
+        </button>
+      </div>
+    </article>
+
+    <!-- Eigene Fotos -->
+    <article class="activity">
+      <div class="act-head">
+        <span class="ava l mh">MH</span>
+        <div class="who">
+          <b>malte</b>
+          <div class="sub">29. Mai · 2 Fotos · Maimasse Hamburg</div>
+        </div>
+        <span class="badge">Galerie</span>
+      </div>
+      <div class="act-title">
+        <h3>Kurz vorm Start am Alstervorland</h3>
+      </div>
+      <div class="photoband2">
+        <a class="ph g1" href="#"></a>
+        <a class="ph g2" href="#"></a>
+      </div>
+      <div class="kudosbar">
+        <span class="note"><b>6× geklingelt</b> · 1 Kommentar</span>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Rechte Spalte -->
+  <aside class="rail">
+
+    <div class="box">
+      <h4>Deine Masse-Kilometer <small>2021–2026</small></h4>
+      <svg class="chart" viewBox="0 0 304 140" aria-label="Kilometer pro Jahr">
+        <g font-family="IBM Plex Mono, monospace" font-size="9" fill="#707684" text-anchor="middle">
+          <rect x="8"   y="71" width="34" height="49" rx="4" fill="#e3e5e8"/><text x="25" y="136">21</text>
+          <rect x="58"  y="42" width="34" height="78" rx="4" fill="#e3e5e8"/><text x="75" y="136">22</text>
+          <rect x="108" y="48" width="34" height="72" rx="4" fill="#e3e5e8"/><text x="125" y="136">23</text>
+          <rect x="158" y="26" width="34" height="94" rx="4" fill="#e3e5e8"/><text x="175" y="136">24</text>
+          <rect x="208" y="1"  width="34" height="119" rx="4" fill="#e3e5e8"/><text x="225" y="136">25</text>
+          <rect x="258" y="66" width="34" height="54" rx="4" fill="#f4581c"/><text x="275" y="136">26</text>
+        </g>
+        <text x="225" y="14" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#707684" text-anchor="middle">312</text>
+        <text x="275" y="60" font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="600" fill="#f4581c" text-anchor="middle">142</text>
+      </svg>
+      <p class="chart-note">Kilometer aus deinen hochgeladenen Tracks · 2026 läuft noch</p>
+    </div>
+
+    <div class="box">
+      <h4>Deine Städte</h4>
+      <a class="cityrow" href="06b-stadt.html">
+        <span class="cm" style="background:#f4581c">HH</span>
+        <b>Hamburg</b><span class="x">28 Massen</span>
+      </a>
+      <a class="cityrow" href="#">
+        <span class="cm" style="background:#1e7d4f">LG</span>
+        <b>Lüneburg</b><span class="x">4 Massen</span>
+      </a>
+      <a class="cityrow" href="#">
+        <span class="cm" style="background:#5a4fa0">B</span>
+        <b>Berlin</b><span class="x">2 Massen</span>
+      </a>
+    </div>
+
+    <div class="box">
+      <h4>Konto</h4>
+      <div class="settings">
+        <a href="#">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+          Profil &amp; Foto
+        </a>
+        <a href="06m-mitteilungen.html">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          Mitteilungen
+        </a>
+        <a href="#">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+          Tracks verwalten
+        </a>
+        <a href="#">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M2 17h20v2H2z"/></svg>
+          Datenexport (GPX, Fotos)
+        </a>
+        <a class="out" href="#">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 12H4m0 0 3.5-3.5M4 12l3.5 3.5M10 4h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-8"/></svg>
+          Abmelden
+        </a>
+      </div>
+    </div>
+
+    <p class="fine">Deine Tracks und Fotos gehören dir — Export jederzeit, Löschung ohne Rückfrage.</p>
+  </aside>
+
+</div>
+
+<!-- Mobile Tabbar -->
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a href="06e-karte.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="06h-hochladen.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a href="06c-kalender.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a class="on" href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

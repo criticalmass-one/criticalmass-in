@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp 5 · Feed Community — criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf9f6;
+  --card: #ffffff;
+  --line: #e7e3da;
+  --ink: #211f1b;
+  --dim: #79746a;
+  --accent: #d9492c;        /* Klingel-Rot */
+  --accent-soft: #fbeae6;
+  --track: #2e7d54;
+  --foto: #3563a8;
+  --tour: #d9492c;
+  --stadt: #7a4fa3;
+  --forum: #0f7e84;
+  --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-size: 15px;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 620px) 320px;
+  gap: 28px;
+  padding: 0 20px;
+  align-items: start;
+}
+
+/* ---------- Linke Navigation ---------- */
+.sidenav {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 0 18px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  font-size: 1.12rem;
+  letter-spacing: -.01em;
+  margin: 0 10px 22px;
+}
+.logo .mark {
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+.sidenav nav { display: flex; flex-direction: column; gap: 2px; }
+.sidenav nav a {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  font-weight: 600;
+  font-size: .98rem;
+  color: #3c3933;
+}
+.sidenav nav a svg { flex: none; stroke: currentColor; }
+.sidenav nav a:hover { background: #f1eee7; }
+.sidenav nav a.active { color: var(--ink); background: #f1eee7; font-weight: 800; }
+.sidenav nav a .pill {
+  margin-left: auto;
+  background: var(--accent);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 700;
+  border-radius: 99px;
+  padding: 1px 7px;
+}
+.contribute {
+  margin: 18px 8px 0;
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: .98rem;
+  font-weight: 700;
+}
+.contribute:hover { filter: brightness(1.05); }
+.me {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+.me:hover { background: #f1eee7; }
+.me small { color: var(--dim); display: block; font-weight: 500; }
+.me b { font-size: .92rem; }
+
+/* ---------- Avatare ---------- */
+.ava {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: .92rem;
+  color: #fff;
+}
+.ava.s { width: 34px; height: 34px; border-radius: 10px; font-size: .8rem; }
+.ava.kk { background: #0f7e84; }
+.ava.bb { background: #5a4fa0; }
+.ava.cb { background: #b76fc4; }
+.ava.lk { background: #c98024; }
+.ava.st { background: #2e7d54; }
+.ava.mh { background: #444; }
+
+/* ---------- Mitte: Feed ---------- */
+.feed { padding: 22px 0 90px; display: flex; flex-direction: column; gap: 16px; }
+.feed-tabs {
+  display: flex;
+  gap: 4px;
+  background: #f1eee7;
+  border-radius: 12px;
+  padding: 4px;
+  position: sticky;
+  top: 10px;
+  z-index: 20;
+  box-shadow: 0 6px 18px rgba(33,31,27,.06);
+}
+.feed-tabs button {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  border-radius: 9px;
+  padding: 8px 10px;
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--dim);
+}
+.feed-tabs button.on { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(33,31,27,.12); }
+
+.compose {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+.compose .row { display: flex; gap: 12px; align-items: center; }
+.compose input {
+  flex: 1;
+  border: 0;
+  background: #f4f1ea;
+  border-radius: 99px;
+  padding: 11px 18px;
+  font: inherit;
+  color: var(--ink);
+}
+.compose input::placeholder { color: var(--dim); }
+.compose .types { display: flex; gap: 6px; margin-top: 12px; padding-left: 54px; flex-wrap: wrap; }
+.compose .types button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 99px;
+  padding: 6px 13px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: #3c3933;
+}
+.compose .types button:hover { border-color: #cfc9bc; background: #faf8f3; }
+.compose .types svg { stroke: var(--accent); }
+
+/* ---------- Beitrag ---------- */
+.post {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 16px 10px;
+}
+.post.pinned { border-color: #f0c9bf; box-shadow: 0 1px 0 #f0c9bf; }
+.pin-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+  font-size: .78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 10px;
+}
+.post-head { display: flex; gap: 12px; align-items: flex-start; }
+.post-head .who { font-size: .95rem; line-height: 1.35; }
+.post-head .who b { font-weight: 800; }
+.post-head .who .what { color: #3c3933; }
+.post-head .who .meta { color: var(--dim); font-size: .82rem; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.tchip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .72rem;
+  font-weight: 800;
+  border-radius: 6px;
+  padding: 1.5px 7px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.tchip.track { background: #e7f3ec; color: var(--track); }
+.tchip.foto { background: #e9eff9; color: var(--foto); }
+.tchip.zahl { background: var(--accent-soft); color: var(--accent); }
+.tchip.stadt { background: #f1e9f8; color: var(--stadt); }
+.tchip.forum { background: #e4f2f3; color: var(--forum); }
+.post-body { margin: 12px 0 4px 54px; }
+.post-body p.txt { color: #34312b; margin-bottom: 10px; }
+
+/* Inhaltstypen */
+.ridebox {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.ridebox .top { display: flex; gap: 16px; padding: 14px 16px; align-items: center; }
+.datebadge {
+  flex: none;
+  width: 62px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  text-align: center;
+  overflow: hidden;
+}
+.datebadge .m { background: var(--ink); color: #fff; font-size: .66rem; font-weight: 800; letter-spacing: .12em; padding: 3px 0; text-transform: uppercase; }
+.datebadge .d { font-size: 1.5rem; font-weight: 800; padding: 4px 0 5px; }
+.ridebox h3 { font-size: 1.12rem; font-weight: 800; letter-spacing: -.01em; }
+.ridebox .sub { color: var(--dim); font-size: .88rem; margin-top: 2px; }
+.ridebox .joinbar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  background: #fcfbf8;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.joinbar .counts { font-size: .84rem; color: var(--dim); margin-right: auto; }
+.joinbar .counts b { color: var(--ink); }
+.btn {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 99px;
+  padding: 7px 15px;
+  font-weight: 700;
+  font-size: .86rem;
+}
+.btn:hover { border-color: #cfc9bc; }
+.btn.yes { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.yes:hover { filter: brightness(1.06); }
+
+.trackbox { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.trackbox svg.map { display: block; width: 100%; height: auto; background: #eef0e9; }
+.statrow { display: flex; border-top: 1px solid var(--line); }
+.statrow div { flex: 1; padding: 10px 14px; }
+.statrow div + div { border-left: 1px solid var(--line); }
+.statrow .v { font-weight: 800; font-size: 1.05rem; font-feature-settings: "tnum"; }
+.statrow .k { font-size: .74rem; color: var(--dim); text-transform: uppercase; letter-spacing: .06em; }
+
+.fotogrid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-radius: 14px; overflow: hidden; }
+.fotogrid .ph { aspect-ratio: 16/10; position: relative; }
+.fotogrid .ph::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(33,31,27,.35) 1px, transparent 1.4px); background-size: 4px 4px; opacity: .5; }
+.ph.a { background: linear-gradient(140deg, #c9d6b8, #6f8f6a); }
+.ph.b { background: linear-gradient(160deg, #e3c9a8, #ad7647); }
+.ph.c { background: linear-gradient(150deg, #b8c6d6, #5a7d99); }
+.ph.d { background: linear-gradient(130deg, #d6b8c4, #99607d); }
+
+.zahlbox {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.zahlbox .flip { display: inline-flex; gap: 3px; }
+.zahlbox .flip b {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 1.45rem;
+  font-weight: 800;
+  padding: 4px 9px;
+  font-feature-settings: "tnum";
+}
+.zahlbox .lbl { font-size: .9rem; color: #34312b; }
+.zahlbox .lbl b { font-weight: 800; }
+.zahlbox .agree { margin-left: auto; }
+
+.cityedit {
+  border-left: 3px solid var(--stadt);
+  background: #faf7fd;
+  border-radius: 0 12px 12px 0;
+  padding: 10px 14px;
+  font-size: .92rem;
+  color: #4a4456;
+}
+.cityedit b { font-weight: 700; }
+
+.quote {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 13px 16px;
+  font-size: .95rem;
+  color: #34312b;
+}
+.quote .board { font-size: .78rem; color: var(--forum); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 5px; }
+.quote .answers { color: var(--dim); font-size: .84rem; margin-top: 8px; }
+
+/* Aktionen */
+.actions {
+  display: flex;
+  gap: 4px;
+  margin: 8px 0 2px 42px;
+}
+.actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--dim);
+  font-weight: 700;
+  font-size: .86rem;
+  border-radius: 99px;
+  padding: 7px 13px;
+}
+.actions button:hover { background: #f4f1ea; color: var(--ink); }
+.actions button svg { stroke: currentColor; }
+.actions button.rang { color: var(--accent); }
+.actions button.rang svg { fill: var(--accent); stroke: var(--accent); }
+
+/* ---------- Rechte Spalte ---------- */
+.rail { position: sticky; top: 0; padding: 22px 0; display: flex; flex-direction: column; gap: 16px; max-height: 100dvh; overflow-y: auto; }
+.widget {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+.widget h4 { font-size: .98rem; font-weight: 800; margin-bottom: 10px; display: flex; align-items: baseline; }
+.widget h4 a { margin-left: auto; font-size: .78rem; color: var(--accent); font-weight: 700; }
+.dayhead { font-size: .74rem; font-weight: 800; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; margin: 10px 0 4px; }
+.upline { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; border-radius: 8px; }
+.upline:hover { background: #faf8f3; }
+.upline .t { font-feature-settings: "tnum"; font-weight: 800; font-size: .88rem; width: 44px; flex: none; }
+.upline .c { font-weight: 600; font-size: .92rem; }
+.upline .p { color: var(--dim); font-size: .8rem; margin-left: auto; text-align: right; }
+.upline.live .t { color: var(--accent); }
+.livedot { width: 7px; height: 7px; border-radius: 99px; background: var(--accent); display: inline-block; margin-right: 4px; animation: blink 1.6s ease infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { .livedot { animation: none; } }
+.citytag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 5px 12px 5px 7px;
+  font-size: .84rem;
+  font-weight: 700;
+  margin: 3px 4px 3px 0;
+}
+.citytag i {
+  width: 18px; height: 18px;
+  border-radius: 99px;
+  font-style: normal;
+  font-size: .62rem;
+  font-weight: 800;
+  color: #fff;
+  display: grid;
+  place-items: center;
+}
+.rail .fine { font-size: .76rem; color: var(--dim); line-height: 1.6; padding: 0 4px; }
+.rail .fine a { text-decoration: underline; text-decoration-color: #d8d2c5; }
+
+/* ---------- Topbar + Tabbar (mobil) ---------- */
+.topbar, .tabbar { display: none; }
+
+.proto-back {
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  z-index: 60;
+  font-size: .75rem;
+  font-weight: 700;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 6px 12px;
+  color: var(--dim);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .shell { grid-template-columns: 220px minmax(0, 1fr); }
+  .rail { display: none; }
+}
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0, 1fr); padding: 0 12px; }
+  .sidenav { display: none; }
+  .topbar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(250,249,246,.93);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 16px;
+    align-items: center;
+    gap: 10px;
+    margin: 0 -12px;
+  }
+  .topbar .logo { margin: 0; font-size: 1.02rem; }
+  .topbar .right { margin-left: auto; display: flex; gap: 14px; align-items: center; }
+  .feed-tabs { top: 56px; }
+  .tabbar {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  .tabbar a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: .62rem;
+    font-weight: 700;
+    color: var(--dim);
+    padding: 4px 0;
+  }
+  .tabbar a svg { stroke: currentColor; }
+  .tabbar a.on { color: var(--accent); }
+  .tabbar .plus {
+    flex: none;
+    width: 46px; height: 46px;
+    margin-top: -16px;
+    border-radius: 16px;
+    background: var(--accent);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 6px 16px rgba(217,73,44,.4);
+  }
+  .post-body { margin-left: 0; }
+  .actions { margin-left: -6px; }
+  .compose .types { padding-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="logo"><span class="mark">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+  </span>criticalmass.in</span>
+  <span class="right">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#211f1b" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+    <span class="ava s mh">MH</span>
+  </span>
+</header>
+
+<div class="shell">
+
+  <!-- Linke Spalte -->
+  <aside class="sidenav">
+    <a class="logo" href="#"><span class="mark">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+    </span>criticalmass.in</a>
+    <nav>
+      <a class="active" href="#">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+        Timeline
+      </a>
+      <a href="#">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>
+        Entdecken
+      </a>
+      <a href="#">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+        Kalender
+      </a>
+      <a href="#">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+        Städte
+      </a>
+      <a href="#">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5.5" width="17" height="13.5" rx="2.5"/><circle cx="9" cy="10.5" r="1.6"/><path d="m4.5 17 4.5-4 3.5 3 3-2.5 4 3.5"/></svg>
+        Fotos
+      </a>
+      <a href="#">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+        Forum
+      </a>
+      <a href="#">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        Mitteilungen
+        <span class="pill">3</span>
+      </a>
+    </nav>
+    <button class="contribute">Beitragen</button>
+    <a class="me" href="#">
+      <span class="ava s mh">MH</span>
+      <span><b>malte</b><small>Hamburg · 34 Massen</small></span>
+    </a>
+  </aside>
+
+  <!-- Mitte -->
+  <main class="feed">
+    <div class="feed-tabs" role="tablist">
+      <button class="on">Alles</button>
+      <button>Deine Städte</button>
+      <button>Touren</button>
+      <button>Fotos &amp; Tracks</button>
+    </div>
+
+    <div class="compose">
+      <div class="row">
+        <span class="ava mh">MH</span>
+        <input type="text" placeholder="Was rollt bei dir, malte?">
+      </div>
+      <div class="types">
+        <button>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5.5" width="17" height="13.5" rx="2.5"/><circle cx="9" cy="10.5" r="1.6"/><path d="m4.5 17 4.5-4 3.5 3 3-2.5 4 3.5"/></svg>
+          Foto
+        </button>
+        <button>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 17c3-1 4-7 7-7s3 5 6 5 3-3 3-3"/><circle cx="4" cy="17" r="1.6"/><circle cx="20" cy="12" r="1.6"/></svg>
+          Track (GPX/FIT)
+        </button>
+        <button>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 20V9M12 20V4M19 20v-7"/></svg>
+          Schätzung
+        </button>
+      </div>
+    </div>
+
+    <!-- Angepinnt: Tour der Woche -->
+    <article class="post pinned">
+      <span class="pin-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 17v5M7 4h10l-1.5 7.5 3 3.5H5.5l3-3.5z"/></svg>
+        Tour der Woche · letzter Freitag im Monat
+      </span>
+      <div class="ridebox">
+        <div class="top">
+          <div class="datebadge"><div class="m">Juni</div><div class="d">26</div></div>
+          <div>
+            <h3>Critical Mass Hamburg</h3>
+            <p class="sub">Freitag · 19:00 Uhr · Alstervorland, Höhe Milchstraße</p>
+          </div>
+        </div>
+        <div class="joinbar">
+          <span class="counts"><b>132</b> dabei · <b>41</b> vielleicht · zuletzt ~ 2.400 Räder</span>
+          <button class="btn yes">Dabei!</button>
+          <button class="btn">Vielleicht</button>
+          <button class="btn">iCal</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Forum-Thread -->
+    <article class="post">
+      <div class="post-head">
+        <span class="ava lk">LK</span>
+        <div class="who">
+          <b>Lotte</b> <span class="what">hat ein Thema gestartet</span>
+          <div class="meta"><span class="tchip forum">Forum</span> Board Hamburg · vor 5 Std</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <a class="quote" href="#" style="display:block">
+          <div class="board">Critical Mass Hamburg</div>
+          „Route im Juni mal Richtung Hafen? Beim letzten Mal war auf der Kennedybrücke
+          ordentlich was los — Vorschläge für den Treffpunkt danach?"
+          <div class="answers">14 Antworten · zuletzt vor 40 Minuten</div>
+        </a>
+      </div>
+      <div class="actions">
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          7
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+          Antworten
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 9V5l7 7-7 7v-4c-7 0-10 2-11 5 0-7 4-11 11-11z"/></svg>
+          Teilen
+        </button>
+      </div>
+    </article>
+
+    <!-- Schätzung -->
+    <article class="post">
+      <div class="post-head">
+        <span class="ava kk">KK</span>
+        <div class="who">
+          <b>Katrin Kiesel</b> <span class="what">hat die Masse in Norderstedt geschätzt</span>
+          <div class="meta"><span class="tchip zahl">Schätzung</span> Tour vom 5. Juni · vor 3 Tagen</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <div class="zahlbox">
+          <span class="flip"><b>0</b><b>0</b><b>1</b><b>2</b></span>
+          <span class="lbl"><b>12 Radfahrende</b> bei der Critical Mass Norderstedt.<br>
+          Klein, aber jeden Monat pünktlich.</span>
+          <button class="btn agree">Auch schätzen</button>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="rang">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          3 · geklingelt
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+          1
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 9V5l7 7-7 7v-4c-7 0-10 2-11 5 0-7 4-11 11-11z"/></svg>
+          Teilen
+        </button>
+      </div>
+    </article>
+
+    <!-- Track -->
+    <article class="post">
+      <div class="post-head">
+        <span class="ava bb">b</span>
+        <div class="who">
+          <b>birnenblau</b> <span class="what">hat einen Track nachgetragen</span>
+          <div class="meta"><span class="tchip track">Track</span> Critical Mass Berlin · 28.11.2025 · vor 8 Tagen</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <div class="trackbox">
+          <svg class="map" viewBox="0 0 600 210" aria-hidden="true">
+            <rect width="600" height="210" fill="#edf0e7"/>
+            <g stroke="#dde3d2" stroke-width="1.5">
+              <line x1="70" y1="0" x2="70" y2="210"/><line x1="160" y1="0" x2="160" y2="210"/>
+              <line x1="260" y1="0" x2="260" y2="210"/><line x1="370" y1="0" x2="370" y2="210"/>
+              <line x1="480" y1="0" x2="480" y2="210"/>
+              <line x1="0" y1="55" x2="600" y2="55"/><line x1="0" y1="115" x2="600" y2="115"/>
+              <line x1="0" y1="170" x2="600" y2="170"/>
+            </g>
+            <path d="M60,160 L130,150 L170,100 L250,90 L310,120 L390,105 L450,60 L520,80 L560,50"
+              fill="none" stroke="#2e7d54" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="60" cy="160" r="6" fill="#d9492c"/>
+            <circle cx="560" cy="50" r="6" fill="#211f1b"/>
+          </svg>
+          <div class="statrow">
+            <div><div class="v">25,58 km</div><div class="k">Strecke</div></div>
+            <div><div class="v">2:14 h</div><div class="k">Fahrzeit</div></div>
+            <div><div class="v">11,4 km/h</div><div class="k">Masse-Tempo</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="rang">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          9 · geklingelt
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+          2
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 9V5l7 7-7 7v-4c-7 0-10 2-11 5 0-7 4-11 11-11z"/></svg>
+          Teilen
+        </button>
+      </div>
+    </article>
+
+    <!-- Fotos -->
+    <article class="post">
+      <div class="post-head">
+        <span class="ava cb">CB</span>
+        <div class="who">
+          <b>CM Bonn</b> <span class="what">hat 4 Fotos hochgeladen</span>
+          <div class="meta"><span class="tchip foto">Fotos</span> Tour vom 29. Mai · vor 1 Woche</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <div class="fotogrid">
+          <a class="ph a" href="#"></a>
+          <a class="ph b" href="#"></a>
+          <a class="ph c" href="#"></a>
+          <a class="ph d" href="#"></a>
+        </div>
+      </div>
+      <div class="actions">
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          14 · geklingelt
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 12a8 8 0 1 0-3.1 6.3L20 19.5l-.8-3A8 8 0 0 0 20 12z"/></svg>
+          3
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 9V5l7 7-7 7v-4c-7 0-10 2-11 5 0-7 4-11 11-11z"/></svg>
+          Teilen
+        </button>
+      </div>
+    </article>
+
+    <!-- Neue Stadt -->
+    <article class="post">
+      <div class="post-head">
+        <span class="ava st">S</span>
+        <div class="who">
+          <b>Stirling</b> <span class="what">ist neu auf criticalmass.in</span>
+          <div class="meta"><span class="tchip stadt">Neue Stadt</span> Schottland · vor 2 Tagen</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <div class="cityedit" style="border-color:#2e7d54;background:#f3faf5;color:#3c5446">
+          Erste Masse: <b>Samstag, 20. Juni, 10:00 Uhr</b> — Treffpunkt The Thistles.
+          Willkommen im Netz der 612 Städte!
+        </div>
+      </div>
+      <div class="actions">
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 4a5.5 5.5 0 0 0-5.5 5.5c0 4-1.6 5.4-2.5 6h16c-.9-.6-2.5-2-2.5-6A5.5 5.5 0 0 0 12 4z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          21 · geklingelt
+        </button>
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Stadt folgen
+        </button>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Rechte Spalte -->
+  <aside class="rail">
+    <div class="widget">
+      <h4>Bald unterwegs <a href="#">Kalender →</a></h4>
+      <div class="dayhead">Heute · Freitag, 12. Juni</div>
+      <a class="upline live" href="#"><span class="t"><span class="livedot"></span>jetzt</span><span class="c">Lisboa</span><span class="p">seit 21:00</span></a>
+      <a class="upline" href="#"><span class="t">17:00</span><span class="c">Falkensee</span><span class="p">Bahnhof</span></a>
+      <a class="upline" href="#"><span class="t">18:00</span><span class="c">Düren</span><span class="p">Karte</span></a>
+      <a class="upline" href="#"><span class="t">18:00</span><span class="c">Pittsburgh</span><span class="p">Dippy</span></a>
+      <a class="upline" href="#"><span class="t">19:00</span><span class="c">Düsseldorf</span><span class="p">Fürstenplatz</span></a>
+      <a class="upline" href="#"><span class="t">19:00</span><span class="c">Frankfurt</span><span class="p">Opernplatz</span></a>
+      <div class="dayhead">Fr, 19. Juni</div>
+      <a class="upline" href="#"><span class="t">17:00</span><span class="c">Wien</span><span class="p">Schwarzenbergpl.</span></a>
+      <a class="upline" href="#"><span class="t">18:30</span><span class="c">Los Angeles</span><span class="p">Karte</span></a>
+      <a class="upline" href="#"><span class="t">20:00</span><span class="c">Hannover</span><span class="p">Karte</span></a>
+      <div class="dayhead">Fr, 26. Juni — der große Freitag</div>
+      <a class="upline" href="#"><span class="t">19:00</span><span class="c">Hamburg</span><span class="p">Alstervorland</span></a>
+      <a class="upline" href="#"><span class="t">20:00</span><span class="c">Berlin</span><span class="p">Mariannenplatz</span></a>
+      <a class="upline" href="#"><span class="t">+41</span><span class="c">weitere Städte</span><span class="p">→</span></a>
+    </div>
+
+    <div class="widget">
+      <h4>Städte folgen</h4>
+      <a class="citytag" href="#"><i style="background:#d9492c">HH</i>Hamburg</a>
+      <a class="citytag" href="#"><i style="background:#5a4fa0">B</i>Berlin</a>
+      <a class="citytag" href="#"><i style="background:#0f7e84">K</i>Köln</a>
+      <a class="citytag" href="#"><i style="background:#c98024">W</i>Wien</a>
+      <a class="citytag" href="#"><i style="background:#2e7d54">ST</i>Stirling</a>
+      <a class="citytag" href="#"><i style="background:#3563a8">LX</i>Lisboa</a>
+    </div>
+
+    <p class="fine">
+      <a href="#">Über die Critical Mass</a> · <a href="#">FAQ</a> · <a href="#">API</a> ·
+      <a href="#">Impressum</a> · <a href="#">Datenschutz</a><br>
+      Karten © OpenStreetMap · Open Source · kein Tracking, nur Fahrradspuren
+    </p>
+  </aside>
+
+</div>
+
+<!-- Mobile Tabbar -->
+<nav class="tabbar">
+  <a class="on" href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Start
+  </a>
+  <a href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>
+    Entdecken
+  </a>
+  <a class="plus" href="#" aria-label="Beitragen">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+  </a>
+  <a href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>
