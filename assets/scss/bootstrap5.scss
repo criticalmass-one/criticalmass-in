@@ -5,14 +5,35 @@
 @import "../../node_modules/bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
-$primary: #337ab7;
-$secondary: #6c757d;
-$success: #5cb85c;
-$info: #5bc0de;
-$warning: #f0ad4e;
-$danger: #d9534f;
-$light: #f8f9fa;
-$dark: #343a40;
+// Redesign „Aktivität" — Tokens siehe design-prototypes/UMSETZUNG.md
+$primary: #f4581c;
+$secondary: #707684;
+$success: #1e7d4f;
+$info: #2b6cb0;
+$warning: #b07814;
+$danger: #d8232a;
+$light: #f2f3f5;
+$dark: #16181c;
+
+$body-bg: #f2f3f5;
+$body-color: #16181c;
+$border-color: #e3e5e8;
+
+$font-family-sans-serif: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "IBM Plex Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+$headings-font-weight: 800;
+
+$border-radius: .65rem;
+$border-radius-sm: .5rem;
+$border-radius-lg: .9rem;
+$border-radius-xl: 1rem;
+
+$btn-font-weight: 700;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+$card-border-color: #e3e5e8;
+$card-cap-bg: #fafbfc;
 
 // Breadcrumbs
 $breadcrumb-divider: quote("/");

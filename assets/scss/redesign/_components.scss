@@ -1,0 +1,292 @@
+// Redesign „Aktivität" — Komponenten (Präfix cm-, additiv zu Bootstrap)
+// 1:1 aus den Prototypen design-prototypes/06*.html portiert.
+
+// ---------- Buttons ----------
+.cm-kbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--cm-line);
+  background: var(--cm-card);
+  border-radius: var(--cm-radius-btn);
+  padding: 8px 15px;
+  font-weight: 700;
+  font-size: .88rem;
+  color: var(--cm-ink);
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover { border-color: #c9cdd3; color: var(--cm-ink); }
+  svg { stroke: currentColor; flex: none; }
+
+  &.cm-kbtn-solid {
+    background: var(--cm-accent);
+    border-color: var(--cm-accent);
+    color: #fff;
+    &:hover { background: var(--cm-accent-deep); color: #fff; }
+  }
+  &.cm-kbtn-rung {
+    border-color: var(--cm-accent);
+    color: var(--cm-accent);
+    background: var(--cm-accent-soft);
+  }
+  &.cm-kbtn-sm { padding: 6px 12px; font-size: .82rem; }
+}
+
+// ---------- Avatare ----------
+.cm-ava {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--cm-radius-pill);
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: .78rem;
+  color: #fff;
+  background: #3d4350;
+  text-decoration: none;
+
+  &.cm-ava-l { width: 44px; height: 44px; font-size: .95rem; }
+  &.cm-ava-xl { width: 76px; height: 76px; font-size: 1.5rem; border-radius: 24px; }
+  &.cm-ava-xs { width: 24px; height: 24px; font-size: .6rem; border: 2px solid #fff; }
+}
+.cm-facepile {
+  display: inline-flex;
+  .cm-ava-xs + .cm-ava-xs { margin-left: -8px; }
+}
+
+// ---------- Aktivitätskarte ----------
+.cm-activity {
+  background: var(--cm-card);
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-radius-card);
+  overflow: hidden;
+}
+.cm-act-head {
+  display: flex;
+  gap: 12px;
+  padding: 14px 18px 10px;
+  align-items: center;
+
+  .cm-who { line-height: 1.3; min-width: 0; b { font-weight: 700; } }
+  .cm-sub { color: var(--cm-dim); font-size: .82rem; }
+  .cm-badge {
+    margin-left: auto;
+    font-family: var(--cm-font-mono);
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--cm-dim);
+    border: 1px solid var(--cm-line);
+    border-radius: 6px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+}
+.cm-act-title {
+  padding: 0 18px 12px;
+  h3, .h3 { font-size: 1.12rem; font-weight: 800; letter-spacing: -.015em; margin: 0; }
+  .cm-where { color: var(--cm-dim); font-size: .86rem; margin-top: 2px; }
+}
+
+// ---------- Statistikband ----------
+.cm-statband {
+  display: flex;
+  border-top: 1px solid var(--cm-line);
+  border-bottom: 1px solid var(--cm-line);
+  background: #fafbfc;
+
+  > div { flex: 1; padding: 12px 18px; }
+  > div + div { border-left: 1px solid var(--cm-line); }
+  .cm-v {
+    font-family: var(--cm-font-mono);
+    font-weight: 600;
+    font-size: 1.25rem;
+    small { font-size: .68em; color: var(--cm-dim); margin-left: 2px; }
+  }
+  .cm-k {
+    font-size: .72rem;
+    color: var(--cm-dim);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-top: 1px;
+  }
+
+  @media (max-width: 767.98px) {
+    flex-wrap: wrap;
+    > div { flex: 1 1 40%; border-top: 1px solid var(--cm-line); margin-top: -1px; }
+    .cm-v { font-size: 1.05rem; }
+  }
+}
+
+// ---------- Kudos / Klingeln ----------
+.cm-kudosbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 18px;
+  flex-wrap: wrap;
+
+  .cm-note { color: var(--cm-dim); font-size: .84rem; b { color: var(--cm-ink); } }
+  .cm-spacer { flex: 1; }
+}
+
+// ---------- Tabs (Segmented Control) ----------
+.cm-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--cm-card);
+  border: 1px solid var(--cm-line);
+  border-radius: 12px;
+  padding: 4px;
+  overflow-x: auto;
+
+  a, button {
+    flex: 1;
+    text-align: center;
+    font-weight: 700;
+    font-size: .88rem;
+    color: var(--cm-dim);
+    border-radius: var(--cm-radius-btn);
+    padding: 8px 12px;
+    white-space: nowrap;
+    text-decoration: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover { color: var(--cm-ink); }
+    &.active { background: var(--cm-bg); color: var(--cm-ink); }
+    .cm-n { font-family: var(--cm-font-mono); font-size: .72rem; color: var(--cm-dim); margin-left: 4px; }
+  }
+}
+
+// ---------- Terminzeile („Bald unterwegs") ----------
+.cm-dayhead {
+  font-size: .7rem;
+  font-weight: 800;
+  color: var(--cm-dim);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin: 8px 8px 2px;
+}
+.cm-uprow {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: .9rem;
+  text-decoration: none;
+  color: var(--cm-ink);
+
+  &:hover { background: #f6f7f8; color: var(--cm-ink); }
+  .cm-t { font-family: var(--cm-font-mono); font-size: .8rem; font-weight: 600; width: 52px; flex: none; }
+  .cm-c { font-weight: 700; }
+  .cm-p { margin-left: auto; color: var(--cm-dim); font-size: .78rem; text-align: right; }
+  &.cm-live .cm-t { color: var(--cm-accent); }
+}
+
+// ---------- Datums-Badge ----------
+.cm-datebadge {
+  flex: none;
+  width: 56px;
+  border: 2px solid var(--cm-ink);
+  border-radius: 11px;
+  text-align: center;
+  overflow: hidden;
+
+  .cm-m {
+    display: block;
+    background: var(--cm-ink);
+    color: #fff;
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    padding: 2.5px 0;
+    text-transform: uppercase;
+  }
+  .cm-d { display: block; font-size: 1.35rem; font-weight: 800; padding: 3px 0 4px; }
+}
+
+// ---------- Ranking ----------
+.cm-rankrow {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 8px;
+  border-radius: 8px;
+  font-size: .94rem;
+  text-decoration: none;
+  color: var(--cm-ink);
+
+  &:hover { background: #f6f7f8; color: var(--cm-ink); }
+  .cm-nr { font-family: var(--cm-font-mono); font-size: .8rem; color: var(--cm-dim); }
+  .cm-city { font-weight: 700; }
+  .cm-bar {
+    display: block;
+    height: 5px;
+    border-radius: 4px;
+    background: #ffe0d1;
+    position: relative;
+    margin-top: 5px;
+    i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--cm-accent); }
+  }
+  .cm-n { font-family: var(--cm-font-mono); font-size: .88rem; font-weight: 600; }
+}
+
+// ---------- Status-Chips (Upload-Zuordnung) ----------
+.cm-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .76rem;
+  font-weight: 800;
+  border-radius: var(--cm-radius-pill);
+  padding: 4px 11px;
+  white-space: nowrap;
+
+  &.cm-status-ok { background: var(--cm-green-soft); color: var(--cm-green); }
+  &.cm-status-check { background: var(--cm-amber-soft); color: var(--cm-amber); }
+  &.cm-status-parked { background: var(--cm-bg); color: var(--cm-dim); }
+}
+
+// ---------- Mobile Tab-Leiste ----------
+.cm-tabbar {
+  display: none;
+
+  @media (max-width: 991.98px) {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--cm-line);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+
+    a {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: .62rem;
+      font-weight: 700;
+      color: var(--cm-dim);
+      padding: 4px 0;
+      text-decoration: none;
+
+      svg { stroke: currentColor; }
+      &.active { color: var(--cm-accent); }
+    }
+  }
+}
+// Platz für die Tab-Leiste auf Mobil
+@media (max-width: 991.98px) {
+  body.cm-has-tabbar { padding-bottom: 70px; }
+}

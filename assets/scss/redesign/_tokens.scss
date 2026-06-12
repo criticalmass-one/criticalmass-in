@@ -1,0 +1,24 @@
+// Redesign „Aktivität" — Design-Tokens als CSS Custom Properties
+// Referenz: design-prototypes/06-feed-aktiv.html + UMSETZUNG.md
+
+:root {
+  --cm-bg: #f2f3f5;
+  --cm-card: #ffffff;
+  --cm-line: #e3e5e8;
+  --cm-ink: #16181c;
+  --cm-dim: #707684;
+  --cm-accent: #f4581c;
+  --cm-accent-deep: #d8450e;
+  --cm-accent-soft: #fff4ee;
+  --cm-green: #1e7d4f;
+  --cm-green-soft: #e8f3ed;
+  --cm-amber: #b07814;
+  --cm-amber-soft: #fdf3e0;
+
+  --cm-font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --cm-font-mono: "IBM Plex Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  --cm-radius-card: 14px;
+  --cm-radius-btn: 9px;
+  --cm-radius-pill: 99px;
+}
