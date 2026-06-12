@@ -17,12 +17,17 @@ composer test:run          # Just run PHPUnit (no DB reset)
 composer test:api          # Only API test suite
 vendor/bin/phpunit tests/Path/To/TestFile.php              # Single test file
 vendor/bin/phpunit --filter testMethodName                  # Single test method
+# Controller/DB tests need MariaDB up (docker-compose up); otherwise they fail with
+# "getaddrinfo for mysql failed". Pure unit tests (no DB) run standalone.
+# Use `php bin/console ...` (the bare `bin/console` may report "permission denied").
 ```
 
 ### Static Analysis
 ```bash
 vendor/bin/phpstan analyse                  # PHPStan level 6
 # Baseline: phpstan-baseline.neon — update when adding accepted errors
+# If the parallel run crashes in a worker (seen on PHP 8.5), analyse specific
+# paths single-process: vendor/bin/phpstan analyse <paths> --debug
 ```
 
 ### Frontend Assets
@@ -53,6 +58,15 @@ docker-compose up -d      # MariaDB (port 8002), Redis, Memcached, Mailcatcher (
 ### Custom Entity Router
 
 Notable pattern: entities are annotated with `#[Routing\DefaultRoute]` and `#[Routing\RouteParameter]` attributes. The `DelegatedRouterManager` in `src/Criticalmass/Router/` generates canonical URLs for any entity by introspecting these attributes. Used extensively in Twig via `RouterTwigExtension`.
+
+### Track Upload (GPX/FIT)
+
+Users add ride tracks by **file upload**, not via the Strava API. The Strava data-import path is being retired: the API Agreement's retention/deletion rules (Policy §6.2/§6.3/§7.4) forbid permanently and publicly archiving API-sourced data (see PR #1389 / epic #1388). Two flows:
+
+- **Single upload** per ride: `TrackUploadController` (`/{city}/{ride}/addtrack`) → `VichFileType` → `TrackValidator` → `TrackUploadedEvent` → `TrackEventSubscriber` enrichment.
+- **Bulk upload**: `BulkTrackUploadController` (per-file POST, Dropzone — one request per file) → `UploadedTrackCandidateFactory` → `TrackImportCandidate` → `TrackDecider` (voters in `Criticalmass/MassTrackImport/Voter/`, threshold 0.75, wired via `TrackVoterPass`) assigns a ride or parks the candidate → `FileTrackImporter` turns a confirmed candidate into a `Track`.
+
+**FIT files are normalised to GPX on ingest** (`Criticalmass/Geo/FitService/FitToGpxConverter`), so everything downstream stays GPX-only. `TrackImportCandidate` is source-agnostic (`source`, `fileHash`, `originalName`).
 
 ### Frontend (`assets/`)
 

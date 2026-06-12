@@ -10,29 +10,17 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class ProposalPersister implements ProposalPersisterInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var array $existentStravaActivityIds */
-    protected $existentStravaActivityIds = [];
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(private readonly ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function persist(RideResult $rideResult): RideResult
     {
-        $user = $rideResult->getActivity()->getUser();
-
-        $this->loadOldStravaActivityIds($user);
-
+        $candidate = $rideResult->getActivity();
         $manager = $this->registry->getManager();
 
-        if (!$rideResult->isMatch() ||
-            !in_array($rideResult->getActivity()->getActivityId(), $this->existentStravaActivityIds)
-        ) {
-            $manager->persist($rideResult->getActivity());
+        if (!$this->isDuplicate($candidate)) {
+            $manager->persist($candidate);
         }
 
         $manager->flush();
@@ -40,24 +28,57 @@ class ProposalPersister implements ProposalPersisterInterface
         return $rideResult;
     }
 
-    protected function loadOldStravaActivityIds(User $user): ProposalPersister
+    private function isDuplicate(TrackImportCandidate $candidate): bool
     {
-        $tracks = $this->registry->getRepository(Track::class)->findByUser($user);
+        $user = $candidate->getUser();
+
+        if ($candidate->getSource() === TrackImportCandidate::CANDIDATE_SOURCE_UPLOAD) {
+            $fileHash = $candidate->getFileHash();
+
+            return $fileHash !== null && in_array($fileHash, $this->loadExistingFileHashes($user), true);
+        }
+
+        return in_array($candidate->getActivityId(), $this->loadExistingStravaActivityIds($user), true);
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function loadExistingStravaActivityIds(User $user): array
+    {
+        $activityIds = [];
 
         /** @var Track $track */
-        foreach ($tracks as $track) {
+        foreach ($this->registry->getRepository(Track::class)->findBy(['user' => $user]) as $track) {
             if ($track->getStravaActivityId()) {
-                $this->existentStravaActivityIds[] = $track->getStravaActivityId();
+                $activityIds[] = (int) $track->getStravaActivityId();
             }
         }
 
-        $proposals = $this->registry->getRepository(TrackImportCandidate::class)->findByUser($user);
-
-        /** @var TrackImportCandidate $proposal */
-        foreach ($proposals as $proposal) {
-            $this->existentStravaActivityIds[] = $proposal->getActivityId();
+        /** @var TrackImportCandidate $candidate */
+        foreach ($this->registry->getRepository(TrackImportCandidate::class)->findBy(['user' => $user]) as $candidate) {
+            if ($candidate->getActivityId() !== null) {
+                $activityIds[] = $candidate->getActivityId();
+            }
         }
 
-        return $this;
+        return $activityIds;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function loadExistingFileHashes(User $user): array
+    {
+        $hashes = [];
+
+        /** @var TrackImportCandidate $candidate */
+        foreach ($this->registry->getRepository(TrackImportCandidate::class)->findBy(['user' => $user]) as $candidate) {
+            if ($candidate->getSource() === TrackImportCandidate::CANDIDATE_SOURCE_UPLOAD && $candidate->getFileHash() !== null) {
+                $hashes[] = $candidate->getFileHash();
+            }
+        }
+
+        return $hashes;
     }
 }

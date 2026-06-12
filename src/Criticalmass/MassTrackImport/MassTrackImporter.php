@@ -42,7 +42,7 @@ class MassTrackImporter implements MassTrackImporterInterface
 
             $message = new ImportTrackCandidateMessage(
                 userId: $user->getId(),
-                activityId: $activity->getActivityId(),
+                activityId: (int) $activity->getActivityId(),
                 name: $activity->getName(),
                 distance: $activity->getDistance(),
                 elapsedTime: $activity->getElapsedTime(),

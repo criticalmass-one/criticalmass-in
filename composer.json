@@ -85,7 +85,8 @@
         "twig/intl-extra": "^3.23",
         "maltehuebner/dataquery-bundle": "^0.11",
         "symfony/rate-limiter": "7.2.*",
-        "symfony/lock": "^7.2"
+        "symfony/lock": "^7.2",
+        "adriangibbons/php-fit-file-analysis": "^3.2"
     },
     "require-dev": {
         "symfony/browser-kit": "^7.2",

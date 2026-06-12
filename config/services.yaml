@@ -50,6 +50,7 @@ services:
             $uploadDestinationPhoto: '%upload_destination.photo%'
             $uploadDestinationTrack: '%upload_destination.track%'
             $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
+            $trackFilesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
             $stravaClientId: '%strava.client_id%'
             $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
@@ -83,6 +84,9 @@ services:
 
     App\Criticalmass\Geo\GpxService\GpxServiceInterface:
         alias: App\Criticalmass\Geo\GpxService\GpxService
+
+    App\Criticalmass\Geo\FitService\FitToGpxConverterInterface:
+        alias: App\Criticalmass\Geo\FitService\FitToGpxConverter
 
     App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
         arguments:

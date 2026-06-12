@@ -85,6 +85,7 @@ class Builder extends AbstractBuilder
             $menu['Benutzerkonto']->addChild('Profilfarbe wählen', ['route' => 'criticalmass_user_profile_color']);
             $menu['Benutzerkonto']->addChild('Tourübersicht', ['route' => 'criticalmass_user_participation_list']);
             $menu['Benutzerkonto']->addChild('Deine Tracks', ['route' => 'caldera_criticalmass_track_list']);
+            $menu['Benutzerkonto']->addChild('Tracks hochladen', ['route' => 'caldera_criticalmass_track_bulkupload']);
             $menu['Benutzerkonto']->addChild('Deine Fotos', ['route' => 'caldera_criticalmass_photo_user_list']);
 
             $menu['Benutzerkonto']->addChild('divider2', ['attributes' => ['class' => 'dropdown-divider-wrapper']]);

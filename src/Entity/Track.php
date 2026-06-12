@@ -30,6 +30,7 @@ use Vich\UploaderBundle\Mapping\Attribute as Vich;
 class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
+    const TRACK_SOURCE_FIT = 'TRACK_SOURCE_FIT';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
     const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
     const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
@@ -123,7 +124,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     private Collection $trackPolylines;
 
     #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
-    #[Assert\File(maxSize: '20M', mimeTypes: ['application/gpx+xml', 'application/xml', 'text/xml', 'application/octet-stream'])]
+    #[Assert\File(maxSize: '20M', mimeTypes: ['application/gpx+xml', 'application/xml', 'text/xml', 'application/octet-stream', 'application/vnd.ant.fit'])]
     protected ?File $trackFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
