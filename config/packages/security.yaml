@@ -10,6 +10,14 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        # MCP-Endpunkte: stateless, per OAuth2-Bearer-Token (Resource Server)
+        # geschützt. Muss VOR der `main`-Firewall (pattern .*) stehen.
+        mcp:
+            pattern:    ^/mcp
+            stateless:  true
+            provider:   users
+            oauth2:     true
+
         main:
             login_link:
                 check_route: login_check
@@ -38,6 +46,12 @@ security:
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/register, role: PUBLIC_ACCESS }
         - { path: ^/resetting, role: PUBLIC_ACCESS }
+
+        # OAuth2 / MCP
+        - { path: ^/token, role: PUBLIC_ACCESS }
+        - { path: ^/authorize, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/oauth2/consent, role: ROLE_USER }
+        - { path: ^/mcp, role: ROLE_USER }
 
 
     role_hierarchy:
