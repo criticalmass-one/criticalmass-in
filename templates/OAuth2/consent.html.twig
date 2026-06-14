@@ -27,7 +27,7 @@
                             <p>Folgende Berechtigungen werden angefragt:</p>
                             <ul>
                                 {% for scope in scopes %}
-                                    <li>{{ scope_labels[scope|string]|default(scope) }}</li>
+                                    <li>{{ scope_labels[scope ~ '']|default(scope) }}</li>
                                 {% endfor %}
                             </ul>
                         {% endif %}
