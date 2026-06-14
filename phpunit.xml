@@ -35,6 +35,13 @@
         <!-- postgresql+advisory://db_user:db_password@localhost/db_name -->
         <env name="LOCK_DSN" value="flock"/>
         <!-- ###- symfony/lock ### -->
+
+        <!-- ###+ league/oauth2-server-bundle ### -->
+        <env name="OAUTH_PRIVATE_KEY" value="%kernel.project_dir%/config/jwt/private.pem"/>
+        <env name="OAUTH_PUBLIC_KEY" value="%kernel.project_dir%/config/jwt/public.pem"/>
+        <env name="OAUTH_PASSPHRASE" value="4feea038ea350f02dec2127262801035"/>
+        <env name="OAUTH_ENCRYPTION_KEY" value="39f557bd1b22e879cf2453e50ebc6b64"/>
+        <!-- ###- league/oauth2-server-bundle ### -->
   </php>
 
   <testsuites>

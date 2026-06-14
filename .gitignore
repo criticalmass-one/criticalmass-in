@@ -95,5 +95,10 @@ phpstan.neon
 ###< claude-code ###
 
 ###> jwt ###
-config/jwt/
+config/jwt/*
+!config/jwt/test
 ###< jwt ###
+
+###> league/oauth2-server-bundle ###
+/config/jwt/*.pem
+###< league/oauth2-server-bundle ###
