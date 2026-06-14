@@ -48,7 +48,9 @@ security:
         - { path: ^/resetting, role: PUBLIC_ACCESS }
 
         # OAuth2 / MCP
+        - { path: '^/\.well-known/oauth', role: PUBLIC_ACCESS }
         - { path: ^/token, role: PUBLIC_ACCESS }
+        - { path: ^/oauth2/register, role: PUBLIC_ACCESS }
         - { path: ^/authorize, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/oauth2/consent, role: ROLE_USER }
         - { path: ^/mcp, role: ROLE_USER }
