@@ -49,6 +49,7 @@ final class McpServerTest extends WebTestCase
             new Scope('ride:read'),
             new Scope('city:read'),
             new Scope('participation:write'),
+            new Scope('ride:write'),
         );
         $clientManager->save($oauthClient);
     }
@@ -80,6 +81,12 @@ final class McpServerTest extends WebTestCase
         $readNames = $this->toolNames($this->rpc($readToken, 'tools/list'));
         self::assertContains('list_rides', $readNames);
         self::assertNotContains('set_participation', $readNames);
+        self::assertNotContains('create_ride', $readNames);
+
+        $writeToken = $this->obtainAccessToken('ride:write');
+        $writeNames = $this->toolNames($this->rpc($writeToken, 'tools/list'));
+        self::assertContains('create_ride', $writeNames);
+        self::assertContains('update_ride', $writeNames);
     }
 
     public function testToolCallEnforcesScope(): void

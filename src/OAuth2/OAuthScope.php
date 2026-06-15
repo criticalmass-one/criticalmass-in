@@ -21,6 +21,11 @@ enum OAuthScope: string
     case ParticipationWrite = 'participation:write';
     case EstimateWrite = 'estimate:write';
     case WeatherWrite = 'weather:write';
+    case RideWrite = 'ride:write';
+    case CityWrite = 'city:write';
+    case CycleWrite = 'cycle:write';
+    case SocialNetworkWrite = 'socialnetwork:write';
+    case ActivityWrite = 'activity:write';
 
     public function label(): string
     {
@@ -34,6 +39,11 @@ enum OAuthScope: string
             self::ParticipationWrite => 'Teilnahme an Rides melden',
             self::EstimateWrite => 'Teilnehmerzahlen schätzen',
             self::WeatherWrite => 'Wetterdaten zu Rides melden',
+            self::RideWrite => 'Rides anlegen und bearbeiten',
+            self::CityWrite => 'Städte anlegen',
+            self::CycleWrite => 'Termin-Zyklen anlegen und bearbeiten',
+            self::SocialNetworkWrite => 'Social-Network-Profile und -Feeds verwalten',
+            self::ActivityWrite => 'Aktivitäts-Scores von Städten melden',
         };
     }
 

@@ -37,6 +37,11 @@ Client Registration → Login + Consent → Token → MCP.
 | `participation:write` | Teilnahme an Rides melden |
 | `estimate:write` | Teilnehmerzahlen schätzen |
 | `weather:write` | Wetterdaten zu Rides melden |
+| `ride:write` | Rides anlegen und bearbeiten |
+| `city:write` | Städte anlegen |
+| `cycle:write` | Termin-Zyklen anlegen und bearbeiten |
+| `socialnetwork:write` | Social-Network-Profile und -Feeds verwalten |
+| `activity:write` | Aktivitäts-Scores von Städten melden |
 
 `tools/list` zeigt nur Werkzeuge, deren Scope das Token besitzt; `tools/call`
 weist fehlende Scopes ab. Quelle der Wahrheit ist `App\OAuth2\OAuthScope`.
@@ -65,14 +70,22 @@ Die Tools spiegeln die REST-API (`/api/*`).
 | `set_participation` | `participation:write` | Teilnahme melden (`yes`/`maybe`/`no`) |
 | `create_ride_estimate` | `estimate:write` | `POST /api/estimate` |
 | `set_weather` | `weather:write` | `PUT /api/{citySlug}/{rideIdentifier}/weather` |
+| `create_ride`, `update_ride` | `ride:write` | `PUT`/`POST /api/{citySlug}/{rideIdentifier}` |
+| `create_city` | `city:write` | `PUT /api/{citySlug}` |
+| `create_cycle`, `update_cycle` | `cycle:write` | `PUT`/`POST /api/{citySlug}/cycles` |
+| `create_social_profile`, `update_social_profile` | `socialnetwork:write` | `/api/{citySlug}/socialnetwork-profiles` |
+| `create_social_feeditem`, `update_social_feeditem` | `socialnetwork:write` | `/api/{citySlug}/socialnetwork-feeditems` |
+| `create_city_activity` | `activity:write` | `POST /api/city/{citySlug}/activity` |
 
-Neue Werkzeuge implementieren `App\Mcp\Tool\McpToolInterface` (Listen-Tools
-erben von `AbstractDataQueryTool`) und werden über den Tag `app.mcp_tool`
+Schreibende Tools erben von `AbstractWriteTool` (Deserialisierung mit der Group
+`api-write`, Validierung, Persistenz wie im API-BaseController), lesende
+Listen-Tools von `AbstractDataQueryTool`. Alle implementieren
+`App\Mcp\Tool\McpToolInterface` und werden über den Tag `app.mcp_tool`
 automatisch registriert.
 
-Noch nicht als Tool gespiegelt (bewusst zurückgehalten, da mächtig/
-maschinennah): Entitäts-Anlage/-Änderung (`create_ride`, `create_city`,
-`create_cycle`), Social-Network-Profile/-Feeds und City-Activity.
+Mächtige Schreib-Tools (Anlage/Änderung von Rides, Städten, Cycles, Social-
+Network-Daten, Aktivitäts-Scores) sind über eigene `*:write`-Scopes abgesichert
+und damit nur mit ausdrücklicher Nutzer-Zustimmung im OAuth-Consent nutzbar.
 
 ## Client einrichten
 

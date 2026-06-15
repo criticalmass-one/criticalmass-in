@@ -27,6 +27,11 @@ league_oauth2_server:
             - participation:write
             - estimate:write
             - weather:write
+            - ride:write
+            - city:write
+            - cycle:write
+            - socialnetwork:write
+            - activity:write
         default:
             - ride:read
             - track:read
