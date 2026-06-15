@@ -165,8 +165,15 @@ abstract class AbstractMcpTestCase extends WebTestCase
         return (string) $token['access_token'];
     }
 
-    protected function createCity(string $name = 'Hamburg', string $slug = 'hamburg'): City
+    /**
+     * Legt eine Test-Stadt an. Ohne expliziten Slug wird ein eindeutiger
+     * erzeugt, damit Tests nicht mit Fixtures-Städten (z. B. "hamburg" in CI)
+     * kollidieren — der OAuth-/Slug-Resolver würde sonst die Fixture-Stadt wählen.
+     */
+    protected function createCity(string $name = 'Teststadt', ?string $slug = null): City
     {
+        $slug ??= 'mcp-' . substr(md5(uniqid('', true)), 0, 12);
+
         $city = new City();
         $city->setCity($name);
         $city->setTitle('Critical Mass ' . $name);
