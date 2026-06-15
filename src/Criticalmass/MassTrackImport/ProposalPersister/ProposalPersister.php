@@ -5,7 +5,6 @@ namespace App\Criticalmass\MassTrackImport\ProposalPersister;
 use App\Criticalmass\MassTrackImport\TrackDecider\RideResult;
 use App\Entity\Track;
 use App\Entity\TrackImportCandidate;
-use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ProposalPersister implements ProposalPersisterInterface
@@ -31,54 +30,33 @@ class ProposalPersister implements ProposalPersisterInterface
     private function isDuplicate(TrackImportCandidate $candidate): bool
     {
         $user = $candidate->getUser();
+        $candidateRepository = $this->registry->getRepository(TrackImportCandidate::class);
 
+        // Gezielte Existenz-Abfrage statt die gesamte Track-/Candidate-Collection
+        // des Users zu hydratisieren und per in_array zu prüfen.
         if ($candidate->getSource() === TrackImportCandidate::CANDIDATE_SOURCE_UPLOAD) {
             $fileHash = $candidate->getFileHash();
 
-            return $fileHash !== null && in_array($fileHash, $this->loadExistingFileHashes($user), true);
+            return $fileHash !== null && null !== $candidateRepository->findOneBy([
+                'user' => $user,
+                'source' => TrackImportCandidate::CANDIDATE_SOURCE_UPLOAD,
+                'fileHash' => $fileHash,
+            ]);
         }
 
-        return in_array($candidate->getActivityId(), $this->loadExistingStravaActivityIds($user), true);
-    }
+        $activityId = $candidate->getActivityId();
 
-    /**
-     * @return list<int>
-     */
-    private function loadExistingStravaActivityIds(User $user): array
-    {
-        $activityIds = [];
-
-        /** @var Track $track */
-        foreach ($this->registry->getRepository(Track::class)->findBy(['user' => $user]) as $track) {
-            if ($track->getStravaActivityId()) {
-                $activityIds[] = (int) $track->getStravaActivityId();
-            }
+        if ($activityId === null) {
+            return false;
         }
 
-        /** @var TrackImportCandidate $candidate */
-        foreach ($this->registry->getRepository(TrackImportCandidate::class)->findBy(['user' => $user]) as $candidate) {
-            if ($candidate->getActivityId() !== null) {
-                $activityIds[] = $candidate->getActivityId();
-            }
-        }
-
-        return $activityIds;
-    }
-
-    /**
-     * @return list<string>
-     */
-    private function loadExistingFileHashes(User $user): array
-    {
-        $hashes = [];
-
-        /** @var TrackImportCandidate $candidate */
-        foreach ($this->registry->getRepository(TrackImportCandidate::class)->findBy(['user' => $user]) as $candidate) {
-            if ($candidate->getSource() === TrackImportCandidate::CANDIDATE_SOURCE_UPLOAD && $candidate->getFileHash() !== null) {
-                $hashes[] = $candidate->getFileHash();
-            }
-        }
-
-        return $hashes;
+        // 'stravaActitityId' ist der (verschriebene) Property-/Feldname in Track.
+        return null !== $this->registry->getRepository(Track::class)->findOneBy([
+            'user' => $user,
+            'stravaActitityId' => $activityId,
+        ]) || null !== $candidateRepository->findOneBy([
+            'user' => $user,
+            'activityId' => $activityId,
+        ]);
     }
 }

@@ -282,6 +282,11 @@ class RideRepository extends ServiceEntityRepository
 
         $builder
             ->select('ride')
+            // Stadt (+ Haupt-Slug für object_path) eager laden: die Kalenderliste
+            // rendert je Zeile ride.city.city und object_path(ride.city) → sonst N+1.
+            ->addSelect('city', 'mainSlug')
+            ->leftJoin('ride.city', 'city')
+            ->leftJoin('city.mainSlug', 'mainSlug')
             ->where($builder->expr()->gt('ride.dateTime', ':startDateTime'))
             ->andWhere($builder->expr()->lt('ride.dateTime', ':endDateTime'))
             ->addOrderBy('ride.dateTime', 'ASC')
