@@ -3245,12 +3245,6 @@ parameters:
 			path: src/Enum/RideTypeEnum.php
 
 		-
-			message: '#^Call to an undefined method App\\Event\\Photo\\PhotoUpdatedEvent\:\:getTmpFilename\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/EventSubscriber/PhotoEventSubscriber.php
-
-		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\Track\>\:\:findByUserAndRide\(\)\.$#'
 			identifier: method.notFound
 			count: 1
