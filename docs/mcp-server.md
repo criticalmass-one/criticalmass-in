@@ -29,23 +29,50 @@ Client Registration → Login + Consent → Token → MCP.
 | Scope | Bedeutung |
 |---|---|
 | `ride:read` | Termine und Rides lesen |
+| `city:read` | Städte, Orte und Cycles lesen |
 | `track:read` | Tracks lesen |
+| `photo:read` | Fotos lesen |
+| `post:read` | Forenbeiträge lesen |
 | `track:write` | Tracks erstellen und bearbeiten |
 | `participation:write` | Teilnahme an Rides melden |
 | `estimate:write` | Teilnehmerzahlen schätzen |
+| `weather:write` | Wetterdaten zu Rides melden |
 
 `tools/list` zeigt nur Werkzeuge, deren Scope das Token besitzt; `tools/call`
 weist fehlende Scopes ab. Quelle der Wahrheit ist `App\OAuth2\OAuthScope`.
 
 ## Werkzeuge
 
-| Tool | Scope | Beschreibung |
-|---|---|---|
-| `list_city_rides` | `ride:read` | Rides einer Stadt (per Slug) auflisten |
-| `set_participation` | `participation:write` | Eigene Teilnahme (`yes`/`maybe`/`no`) melden |
+Die Tools spiegeln die REST-API (`/api/*`).
 
-Neue Werkzeuge implementieren `App\Mcp\Tool\McpToolInterface` und werden über
-den Tag `app.mcp_tool` automatisch registriert.
+| Tool | Scope | Gespiegelter Endpunkt |
+|---|---|---|
+| `list_rides` | `ride:read` | `GET /api/ride` (Filter: Stadt, Region, Typ, Datum, Geo) |
+| `get_ride` | `ride:read` | `GET /api/{citySlug}/{rideIdentifier}` |
+| `get_current_ride` | `ride:read` | `GET /api/{citySlug}/current` |
+| `list_subrides` | `ride:read` | `GET /api/{citySlug}/{rideIdentifier}/subride` |
+| `list_cities` | `city:read` | `GET /api/city` |
+| `get_city` | `city:read` | `GET /api/{citySlug}` |
+| `list_locations` | `city:read` | `GET /api/{citySlug}/location` |
+| `list_city_cycles` | `city:read` | `GET /api/{citySlug}/cycles` |
+| `list_tracks` | `track:read` | `GET /api/track` |
+| `get_track` | `track:read` | `GET /api/track/{id}` |
+| `list_ride_tracks` | `track:read` | `GET /api/{citySlug}/{rideIdentifier}/listTracks` |
+| `list_photos` | `photo:read` | `GET /api/photo` |
+| `get_photo` | `photo:read` | `GET /api/photo/{id}` |
+| `list_ride_photos` | `photo:read` | `GET /api/{citySlug}/{rideIdentifier}/listPhotos` |
+| `list_posts` | `post:read` | `GET /api/post` |
+| `set_participation` | `participation:write` | Teilnahme melden (`yes`/`maybe`/`no`) |
+| `create_ride_estimate` | `estimate:write` | `POST /api/estimate` |
+| `set_weather` | `weather:write` | `PUT /api/{citySlug}/{rideIdentifier}/weather` |
+
+Neue Werkzeuge implementieren `App\Mcp\Tool\McpToolInterface` (Listen-Tools
+erben von `AbstractDataQueryTool`) und werden über den Tag `app.mcp_tool`
+automatisch registriert.
+
+Noch nicht als Tool gespiegelt (bewusst zurückgehalten, da mächtig/
+maschinennah): Entitäts-Anlage/-Änderung (`create_ride`, `create_city`,
+`create_cycle`), Social-Network-Profile/-Feeds und City-Activity.
 
 ## Client einrichten
 

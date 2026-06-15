@@ -45,7 +45,11 @@ final class McpServerTest extends WebTestCase
         $oauthClient->setActive(true);
         $oauthClient->setGrants(new Grant('authorization_code'), new Grant('refresh_token'));
         $oauthClient->setRedirectUris(new RedirectUri(self::REDIRECT_URI));
-        $oauthClient->setScopes(new Scope('ride:read'), new Scope('participation:write'));
+        $oauthClient->setScopes(
+            new Scope('ride:read'),
+            new Scope('city:read'),
+            new Scope('participation:write'),
+        );
         $clientManager->save($oauthClient);
     }
 
@@ -68,12 +72,13 @@ final class McpServerTest extends WebTestCase
     {
         $fullToken = $this->obtainAccessToken('ride:read participation:write');
         $names = $this->toolNames($this->rpc($fullToken, 'tools/list'));
-        self::assertContains('list_city_rides', $names);
+        self::assertContains('list_rides', $names);
+        self::assertContains('get_ride', $names);
         self::assertContains('set_participation', $names);
 
         $readToken = $this->obtainAccessToken('ride:read');
         $readNames = $this->toolNames($this->rpc($readToken, 'tools/list'));
-        self::assertContains('list_city_rides', $readNames);
+        self::assertContains('list_rides', $readNames);
         self::assertNotContains('set_participation', $readNames);
     }
 
@@ -95,12 +100,26 @@ final class McpServerTest extends WebTestCase
         $token = $this->obtainAccessToken('ride:read');
 
         $result = $this->rpc($token, 'tools/call', [
-            'name' => 'list_city_rides',
-            'arguments' => ['citySlug' => 'gibt-es-nicht'],
+            'name' => 'get_ride',
+            'arguments' => ['citySlug' => 'gibt-es-nicht', 'rideIdentifier' => '2026-01-01'],
         ]);
 
         self::assertTrue($result['result']['isError']);
-        self::assertStringContainsString('Unbekannte Stadt', $result['result']['content'][0]['text']);
+        self::assertStringContainsString('Kein Ride gefunden', $result['result']['content'][0]['text']);
+    }
+
+    public function testDataQueryToolReturnsJsonList(): void
+    {
+        $token = $this->obtainAccessToken('ride:read');
+
+        $result = $this->rpc($token, 'tools/call', [
+            'name' => 'list_rides',
+            'arguments' => ['size' => 5],
+        ]);
+
+        self::assertFalse($result['result']['isError']);
+        $decoded = json_decode($result['result']['content'][0]['text'], true);
+        self::assertIsArray($decoded);
     }
 
     public function testUnknownMethodReturnsJsonRpcError(): void

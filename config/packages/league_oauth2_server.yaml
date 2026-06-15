@@ -16,12 +16,17 @@ league_oauth2_server:
     resource_server:
         public_key: '%env(resolve:OAUTH_PUBLIC_KEY)%'
     scopes:
+        # Reihenfolge muss App\OAuth2\OAuthScope entsprechen (OAuthScopeTest).
         available:
             - ride:read
+            - city:read
             - track:read
+            - photo:read
+            - post:read
             - track:write
             - participation:write
             - estimate:write
+            - weather:write
         default:
             - ride:read
             - track:read
