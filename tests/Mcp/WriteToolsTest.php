@@ -119,7 +119,7 @@ final class WriteToolsTest extends AbstractMcpTestCase
     public function testCreateRideEstimatePersists(): void
     {
         $city = $this->createCity('Hamburg', 'hamburg');
-        $this->createRide($city, '2026-09-01 19:00:00');
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
         $token = $this->obtainAccessToken('estimate:write');
 
         $result = $this->callTool($token, 'create_ride_estimate', [
@@ -129,13 +129,14 @@ final class WriteToolsTest extends AbstractMcpTestCase
         ]);
 
         self::assertFalse($result['isError'], $result['text']);
-        self::assertCount(1, $this->em()->getRepository(RideEstimate::class)->findAll());
+        // Auf den neu angelegten Ride scopen (DB enthält in CI Fixtures).
+        self::assertCount(1, $this->em()->getRepository(RideEstimate::class)->findBy(['ride' => $ride]));
     }
 
     public function testSetWeatherPersists(): void
     {
         $city = $this->createCity('Hamburg', 'hamburg');
-        $this->createRide($city, '2026-09-01 19:00:00');
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
         $token = $this->obtainAccessToken('weather:write');
 
         $result = $this->callTool($token, 'set_weather', [
@@ -145,12 +146,12 @@ final class WriteToolsTest extends AbstractMcpTestCase
         ]);
 
         self::assertFalse($result['isError'], $result['text']);
-        self::assertCount(1, $this->em()->getRepository(Weather::class)->findAll());
+        self::assertCount(1, $this->em()->getRepository(Weather::class)->findBy(['ride' => $ride]));
     }
 
     public function testCreateCyclePersists(): void
     {
-        $this->createCity('Hamburg', 'hamburg');
+        $city = $this->createCity('Hamburg', 'hamburg');
         $token = $this->obtainAccessToken('cycle:write');
 
         $result = $this->callTool($token, 'create_cycle', [
@@ -159,12 +160,12 @@ final class WriteToolsTest extends AbstractMcpTestCase
         ]);
 
         self::assertFalse($result['isError'], $result['text']);
-        self::assertCount(1, $this->em()->getRepository(\App\Entity\CityCycle::class)->findAll());
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\CityCycle::class)->findBy(['city' => $city]));
     }
 
     public function testCreateSocialProfilePersists(): void
     {
-        $this->createCity('Hamburg', 'hamburg');
+        $city = $this->createCity('Hamburg', 'hamburg');
         $token = $this->obtainAccessToken('socialnetwork:write');
 
         $result = $this->callTool($token, 'create_social_profile', [
@@ -173,7 +174,7 @@ final class WriteToolsTest extends AbstractMcpTestCase
         ]);
 
         self::assertFalse($result['isError'], $result['text']);
-        self::assertCount(1, $this->em()->getRepository(\App\Entity\SocialNetworkProfile::class)->findAll());
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\SocialNetworkProfile::class)->findBy(['city' => $city]));
     }
 
     public function testCreateCityActivityPersistsAndUpdatesScore(): void
@@ -193,7 +194,7 @@ final class WriteToolsTest extends AbstractMcpTestCase
         ]);
 
         self::assertFalse($result['isError'], $result['text']);
-        self::assertCount(1, $this->em()->getRepository(\App\Entity\CityActivity::class)->findAll());
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\CityActivity::class)->findBy(['city' => $city]));
 
         $cityId = $city->getId();
         $this->em()->clear();
