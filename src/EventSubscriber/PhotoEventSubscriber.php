@@ -10,6 +10,8 @@ use App\Event\Photo\PhotoDeletedEvent;
 use App\Event\Photo\PhotoUpdatedEvent;
 use App\Event\Photo\PhotoUploadedEvent;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PhotoEventSubscriber implements EventSubscriberInterface
@@ -17,12 +19,14 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     protected ManagerRegistry $registry;
     protected PhotoGpsInterface $photoGps;
     protected ExifHandlerInterface $exifHandler;
+    protected LoggerInterface $logger;
 
-    public function __construct(ManagerRegistry $registry, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler)
+    public function __construct(ManagerRegistry $registry, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler, ?LoggerInterface $logger = null)
     {
         $this->registry = $registry;
         $this->photoGps = $photoGps;
         $this->exifHandler = $exifHandler;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public static function getSubscribedEvents(): array
@@ -48,7 +52,10 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
-        $this->handleExifData($photoUpdatedEvent->getPhoto(), $photoUpdatedEvent->getTmpFilename());
+        // PhotoUpdatedEvent trägt keine temporäre Upload-Datei (anders als
+        // PhotoUploadedEvent) — die EXIF-Daten werden aus der bereits
+        // persistierten Foto-Datei gelesen.
+        $this->handleExifData($photoUpdatedEvent->getPhoto());
         $this->locate($photoUpdatedEvent->getPhoto());
 
         $this->registry->getManager()->flush();
@@ -70,7 +77,12 @@ class PhotoEventSubscriber implements EventSubscriberInterface
                     ->execute()
                     ->getPhoto();
             } catch (\Exception $exception) {
-
+                // Geolokalisierung ist best-effort; Fehler dürfen den Upload nicht
+                // abbrechen, sollen aber nicht spurlos verschwinden.
+                $this->logger->error('Photo geolocation failed', [
+                    'photo' => $photo->getId(),
+                    'exception' => $exception,
+                ]);
             }
         }
     }
