@@ -48,7 +48,10 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
-        $this->handleExifData($photoUpdatedEvent->getPhoto(), $photoUpdatedEvent->getTmpFilename());
+        // PhotoUpdatedEvent trägt keine temporäre Upload-Datei (anders als
+        // PhotoUploadedEvent) — die EXIF-Daten werden aus der bereits
+        // persistierten Foto-Datei gelesen.
+        $this->handleExifData($photoUpdatedEvent->getPhoto());
         $this->locate($photoUpdatedEvent->getPhoto());
 
         $this->registry->getManager()->flush();
