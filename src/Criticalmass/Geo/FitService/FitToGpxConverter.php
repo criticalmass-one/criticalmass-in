@@ -50,7 +50,10 @@ class FitToGpxConverter implements FitToGpxConverterInterface
             $point->latitude = (float) $latitude;
             $point->longitude = (float) $longitudes[$timestamp];
             $point->elevation = isset($altitudes[$timestamp]) ? (float) $altitudes[$timestamp] : null;
-            $point->time = (new \DateTime())->setTimestamp((int) $timestamp);
+            // FIT-Zeitstempel sind Unix/UTC. `@<timestamp>` erzeugt eine DateTime
+            // in UTC (unabhängig von der Server-Zeitzone), damit die minutengenaue
+            // Ride-Auto-Zuordnung (DateTimeVoter) korrekt matcht.
+            $point->time = new \DateTime('@' . (int) $timestamp);
 
             $points[] = $point;
         }

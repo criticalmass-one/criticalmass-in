@@ -45,6 +45,23 @@ class FitToGpxConverterTest extends TestCase
         }
     }
 
+    public function testTrackPointTimesAreInterpretedAsUtc(): void
+    {
+        // Auf einem nicht-UTC-Server würde eine zeitzonenlose Interpretation die
+        // Zeitstempel verschieben. Default-TZ temporär umstellen und prüfen, dass
+        // die Punktzeit trotzdem UTC (+00:00) trägt.
+        $originalTimezone = date_default_timezone_get();
+        date_default_timezone_set('America/New_York');
+
+        try {
+            $points = (new FitToGpxConverter())->convertFileToGpxFile(self::FIXTURE)->tracks[0]->getPoints();
+
+            self::assertSame('+00:00', $points[0]->time->format('P'), 'FIT timestamps must be interpreted as UTC.');
+        } finally {
+            date_default_timezone_set($originalTimezone);
+        }
+    }
+
     public function testConvertFileToXmlStringProducesGpxTrackpoints(): void
     {
         $xml = (new FitToGpxConverter())->convertFileToXmlString(self::FIXTURE);
