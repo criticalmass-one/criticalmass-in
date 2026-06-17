@@ -1,0 +1,54 @@
+league_oauth2_server:
+    authorization_server:
+        private_key: '%env(resolve:OAUTH_PRIVATE_KEY)%'
+        private_key_passphrase: '%env(resolve:OAUTH_PASSPHRASE)%'
+        encryption_key: '%env(resolve:OAUTH_ENCRYPTION_KEY)%'
+        # Auth-Code + PKCE + Refresh: das ist der Flow, den MCP-Clients
+        # (ChatGPT-/Claude-Connectoren) erwarten. Client-Credentials/Password aus.
+        enable_auth_code_grant: true
+        enable_refresh_token_grant: true
+        enable_client_credentials_grant: false
+        enable_password_grant: false
+        enable_implicit_grant: false
+        access_token_ttl: PT1H
+        refresh_token_ttl: P1M
+        require_code_challenge_for_public_clients: true
+    resource_server:
+        public_key: '%env(resolve:OAUTH_PUBLIC_KEY)%'
+    scopes:
+        # Reihenfolge muss App\OAuth2\OAuthScope entsprechen (OAuthScopeTest).
+        available:
+            - ride:read
+            - city:read
+            - track:read
+            - photo:read
+            - post:read
+            - track:write
+            - participation:write
+            - estimate:write
+            - weather:write
+            - ride:write
+            - city:write
+            - cycle:write
+            - socialnetwork:write
+            - activity:write
+        default:
+            - ride:read
+            - track:read
+    persistence:
+        doctrine:
+            entity_manager: default
+
+when@test:
+    league_oauth2_server:
+        authorization_server:
+            # Eingecheckte, unverschlüsselte Test-Keys (kein Geheimnis).
+            private_key: '%kernel.project_dir%/config/jwt/test/private.pem'
+            private_key_passphrase: null
+            # Im Test zusätzlich aktiviert, damit der Token-Round-Trip headless
+            # (ohne Browser-Login/Consent) verifizierbar ist.
+            enable_client_credentials_grant: true
+        resource_server:
+            public_key: '%kernel.project_dir%/config/jwt/test/public.pem'
+        persistence:
+            in_memory: null
