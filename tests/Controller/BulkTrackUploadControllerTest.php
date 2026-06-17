@@ -141,6 +141,31 @@ class BulkTrackUploadControllerTest extends AbstractControllerTestCase
         }
     }
 
+    public function testUnparseableFileReturnsError(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $crawler = $client->request('GET', self::PAGE_URL);
+        $token = $this->extractUploadToken($crawler->html());
+
+        $garbage = tempnam(sys_get_temp_dir(), 'notgpx');
+        file_put_contents($garbage, 'this is neither valid GPX nor a FIT file');
+
+        try {
+            $client->request('POST', self::UPLOAD_URL, ['_token' => $token], [
+                'file' => $this->uploadedFile($garbage),
+            ]);
+
+            $this->assertEquals(422, $client->getResponse()->getStatusCode());
+
+            $payload = json_decode((string) $client->getResponse()->getContent(), true);
+            $this->assertEquals('error', $payload['status']);
+        } finally {
+            @unlink($garbage);
+        }
+    }
+
     private function uploadedFile(string $path): \Symfony\Component\HttpFoundation\File\UploadedFile
     {
         return new \Symfony\Component\HttpFoundation\File\UploadedFile($path, basename($path), 'application/gpx+xml', null, true);
