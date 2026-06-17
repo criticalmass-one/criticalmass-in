@@ -66,3 +66,24 @@ DirectoryIndex index.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+# Härtung der Upload-Verzeichnisse (#1395). Diese liegen im Web-Root; als
+# Defense-in-Depth wird hier für sie die Ausführung von Skripten unterbunden und
+# MIME-Sniffing abgeschaltet. Greift zusätzlich zum content-basierten Vich-Namer.
+<IfModule mod_authz_core.c>
+    <If "%{REQUEST_URI} =~ m#^/(tracks|photos|cities|rides|teaser|users)/.+\.(?i:php[0-9]?|phtml|phar|pl|py|cgi|asp|sh)$#">
+        Require all denied
+    </If>
+</IfModule>
+
+<IfModule mod_headers.c>
+    # nosniff für alle Upload-Pfade (bricht Inline-Bilder nicht).
+    <If "%{REQUEST_URI} =~ m#^/(tracks|photos|cities|rides|teaser|users)/#">
+        Header always set X-Content-Type-Options "nosniff"
+    </If>
+
+    # GPX/FIT-Tracks als Download ausliefern, nicht im Browser rendern lassen.
+    <If "%{REQUEST_URI} =~ m#^/tracks/#">
+        Header always set Content-Disposition "attachment"
+    </If>
+</IfModule>
