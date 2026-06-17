@@ -48,6 +48,7 @@ class LoginController extends AbstractController
         UserRepository $userRepository,
         Request $request,
         RateLimiterFactory $loginLimiter,
+        RateLimiterFactory $loginEmailLimiter,
         #[Autowire('%notification.mail.sender_address%')] string $senderAddress
     ): Response {
         $limiter = $loginLimiter->create($request->getClientIp());
@@ -70,6 +71,13 @@ class LoginController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $email = $data['email'];
+
+            // Pro-E-Mail-Drosselung gegen Magic-Link-Spam/Mailbomb auf fremde Adressen.
+            if (false === $loginEmailLimiter->create($email)->consume()->isAccepted()) {
+                $this->addFlash('error', 'Zu viele Anmeldelinks für diese E-Mail. Bitte versuche es später erneut.');
+
+                return $this->redirectToRoute('login');
+            }
 
             $user = $userRepository->findOneBy(['email' => $email]);
 
