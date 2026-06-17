@@ -1,6 +1,27 @@
-<div class="container">
-    <nav id="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
-        {{ include('Template/Navigation/_navbar_header.html.twig') }}
-        {{ include('Template/Navigation/_navbar_content.html.twig') }}
-    </nav>
+<header class="app-header">
+    <div class="container">
+        <nav id="navigation" class="navbar navbar-expand-lg">
+            {{ include('Template/Navigation/_navbar_header.html.twig') }}
+            {{ include('Template/Navigation/_navbar_content.html.twig') }}
+        </nav>
+    </div>
+</header>
+
+{# Offcanvas menu for mobile #}
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="mobileMenuLabel" style="font-weight:800;background:var(--app-accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            criticalmass.in
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Schliessen"></button>
+    </div>
+    <div class="offcanvas-body">
+        {{ knp_menu_render('main_menu') }}
+
+        <hr/>
+
+        <div class="px-3 pb-3">
+            {{ include('Template/Navigation/_navbar_search.html.twig') }}
+        </div>
+    </div>
 </div>

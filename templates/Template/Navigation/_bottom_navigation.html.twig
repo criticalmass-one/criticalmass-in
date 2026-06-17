@@ -1,0 +1,40 @@
+<nav class="app-bottom-nav" aria-label="App-Navigation">
+    <ul class="app-bottom-nav__list">
+        <li class="app-bottom-nav__item">
+            <a href="{{ path('caldera_criticalmass_frontpage') }}"
+               class="app-bottom-nav__link {% if app.request.attributes.get('_route') == 'caldera_criticalmass_frontpage' %}app-bottom-nav__link--active{% endif %}">
+                <i class="fas fa-home"></i>
+                <span>Start</span>
+            </a>
+        </li>
+        <li class="app-bottom-nav__item">
+            <a href="{{ path('caldera_criticalmass_city_list') }}"
+               class="app-bottom-nav__link {% if 'city' in app.request.attributes.get('_route')|default('') %}app-bottom-nav__link--active{% endif %}">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Staedte</span>
+            </a>
+        </li>
+        <li class="app-bottom-nav__item">
+            <a href="{{ path('caldera_criticalmass_search_query') }}"
+               class="app-bottom-nav__link {% if 'search' in app.request.attributes.get('_route')|default('') %}app-bottom-nav__link--active{% endif %}">
+                <i class="fas fa-search"></i>
+                <span>Suche</span>
+            </a>
+        </li>
+        <li class="app-bottom-nav__item">
+            {% if app.user %}
+                <a href="{{ path('caldera_criticalmass_user_overview') }}"
+                   class="app-bottom-nav__link {% if 'user' in app.request.attributes.get('_route')|default('') or 'profile' in app.request.attributes.get('_route')|default('') %}app-bottom-nav__link--active{% endif %}">
+                    <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}"
+                   class="app-bottom-nav__link">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
