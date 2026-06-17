@@ -1,0 +1,62 @@
+{# Redesign „Aktivität": Topbar — Referenz design-prototypes/06-feed-aktiv.html #}
+{% set currentRoute = app.request.attributes.get('_route') ?? '' %}
+
+<header class="cm-top" id="navigation">
+    <div class="cm-top-inner">
+        <a class="cm-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
+            <span class="cm-mark" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+            </span>
+            {% trans %}criticalmass.logoname{% endtrans %}
+        </a>
+
+        <nav class="cm-top-nav" aria-label="Hauptnavigation">
+            <a href="{{ path('caldera_criticalmass_timeline_index') }}"
+               class="{{ currentRoute == 'caldera_criticalmass_timeline_index' ? 'active' }}">Timeline</a>
+            <a href="{{ path('caldera_criticalmass_explore') }}"
+               class="{{ currentRoute == 'caldera_criticalmass_explore' ? 'active' }}">Karte</a>
+            <a href="{{ path('caldera_criticalmass_calendar') }}"
+               class="{{ currentRoute starts with 'caldera_criticalmass_calendar' ? 'active' }}">Kalender</a>
+            <a href="{{ path('caldera_criticalmass_city_list') }}"
+               class="{{ currentRoute == 'caldera_criticalmass_city_list' or currentRoute starts with 'caldera_criticalmass_region' ? 'active' }}">Städte</a>
+            <a href="{{ path('caldera_criticalmass_board_overview') }}"
+               class="{{ currentRoute starts with 'caldera_criticalmass_board' ? 'active' }}">Forum</a>
+            <a href="{{ path('caldera_criticalmass_statistic_overview') }}"
+               class="{{ currentRoute starts with 'caldera_criticalmass_statistic' ? 'active' }}">Statistik</a>
+        </nav>
+
+        <span class="cm-top-grow"></span>
+
+        <form class="cm-search" role="search"
+              action="{{ path('caldera_criticalmass_search_query') }}"
+              data-controller="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input id="search-input" type="text"
+                   placeholder="Stadt oder Tour suchen"
+                   name="query"
+                   data-search-target="input"
+                   autocomplete="off"/>
+            <div class="dropdown-menu position-absolute w-100 d-none" data-search-target="results"></div>
+            <button type="submit" class="visually-hidden">{% trans %}criticalmass.navigation.search.search{% endtrans %}</button>
+        </form>
+
+        <span class="cm-top-actions">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="cm-kbtn cm-kbtn-solid" href="{{ path('caldera_criticalmass_track_bulkupload') }}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2.2" aria-hidden="true"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+                    Hochladen
+                </a>
+                <a class="cm-ava"
+                   href="{{ path('criticalmass_user_usermanagement') }}"
+                   title="{{ app.user.username }}"
+                   style="background: rgb({{ app.user.colorRed }}, {{ app.user.colorGreen }}, {{ app.user.colorBlue }})">
+                    {{- app.user.username|slice(0, 1)|upper -}}
+                </a>
+            {% else %}
+                <a class="cm-kbtn" href="{{ path('login') }}">
+                    {% trans %}criticalmass.navigation.account.login{% endtrans %}
+                </a>
+            {% endif %}
+        </span>
+    </div>
+</header>

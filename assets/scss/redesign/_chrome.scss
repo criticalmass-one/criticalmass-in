@@ -1,0 +1,114 @@
+// Redesign „Aktivität" — Chrome: Topbar (Desktop) und Tab-Leiste (Mobil)
+// Referenz: design-prototypes/06-feed-aktiv.html (Kopfzeile)
+
+.cm-top {
+  position: sticky;
+  top: 0;
+  z-index: 1040;
+  background: var(--cm-card);
+  border-bottom: 1px solid var(--cm-line);
+}
+
+.cm-top-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 16px;
+  height: 56px;
+}
+
+.cm-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+  color: var(--cm-ink);
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover { color: var(--cm-ink); }
+
+  .cm-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--cm-accent);
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+}
+
+.cm-top-nav {
+  display: flex;
+  gap: 4px;
+
+  a {
+    font-weight: 600;
+    font-size: .92rem;
+    color: var(--cm-dim);
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover { background: var(--cm-bg); color: var(--cm-ink); }
+    &.active { color: var(--cm-ink); background: var(--cm-bg); font-weight: 700; }
+  }
+}
+
+.cm-top-grow { flex: 1; }
+
+.cm-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cm-bg);
+  border: 0;
+  border-radius: var(--cm-radius-btn);
+  padding: 7px 12px;
+  color: var(--cm-dim);
+  font-size: .88rem;
+  min-width: 200px;
+  position: relative;
+
+  svg { flex: none; stroke: currentColor; }
+
+  input {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    color: var(--cm-ink);
+    width: 100%;
+    min-width: 0;
+    outline: none;
+
+    &::placeholder { color: var(--cm-dim); }
+  }
+
+  // Typeahead-Ergebnisse (Stimulus search-controller)
+  .dropdown-menu { top: 100%; }
+}
+
+.cm-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+}
+
+// ---------- Responsive ----------
+@media (max-width: 991.98px) {
+  .cm-top-nav,
+  .cm-top .cm-search { display: none; }
+  .cm-top-inner { gap: 12px; }
+}
+
+// Platz für die mobile Tab-Leiste, nur wenn eine gerendert ist
+@media (max-width: 991.98px) {
+  body:has(.cm-tabbar) { padding-bottom: 70px; }
+}
