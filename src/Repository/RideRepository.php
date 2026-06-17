@@ -372,6 +372,46 @@ class RideRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    /**
+     * Vorheriger Ride DERSELBEN Stadt (#1353): das generische
+     * ordered-entities-Bundle scopt die City nicht zuverlässig und navigiert
+     * stadtübergreifend, daher hier eine explizit stadt-gescopte Abfrage.
+     */
+    public function getPreviousRide(Ride $ride): ?Ride
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->lt('r.dateTime', ':dateTime'))
+            ->andWhere($builder->expr()->eq('r.city', ':city'))
+            ->addOrderBy('r.dateTime', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('city', $ride->getCity())
+            ->setParameter('dateTime', $ride->getDateTime());
+
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Nächster Ride DERSELBEN Stadt (#1353).
+     */
+    public function getNextRide(Ride $ride): ?Ride
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':dateTime'))
+            ->andWhere($builder->expr()->eq('r.city', ':city'))
+            ->addOrderBy('r.dateTime', 'ASC')
+            ->setMaxResults(1)
+            ->setParameter('city', $ride->getCity())
+            ->setParameter('dateTime', $ride->getDateTime());
+
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
     public function getLocationsForCity(City $city): array
     {
         $builder = $this->createQueryBuilder('r');
