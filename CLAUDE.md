@@ -32,10 +32,29 @@ vendor/bin/phpstan analyse                  # PHPStan level 6
 
 ### Frontend Assets
 ```bash
-yarn dev          # Build once for development
-yarn watch        # Dev build with file watching
-yarn build        # Production build
+npm install --legacy-peer-deps   # Install (npm, NOT yarn — there is no yarn.lock;
+                                 # --legacy-peer-deps needed: encore 6 vs. webpack-cli 5)
+npm run dev       # Build once for development
+npm run watch     # Dev build with file watching
+npm run build     # Production build
 ```
+
+## Redesign „Aktivität" (laufend, seit Juni 2026)
+
+Die UI wird schrittweise auf das Design „Aktivität" umgestellt: Activity-Feed-Optik,
+Akzent `#f4581c` auf kühlem Grau, Archivo + IBM Plex Mono (selbst gehostet via
+@fontsource), „Klingeln" (Fahrradklingel) statt Likes.
+
+- **Referenz:** 16 verlinkte HTML-Prototypen in `design-prototypes/` (Einstieg
+  `index.html`, Mobil-Ansicht `_mobile-check.html`) — bei UI-Arbeit zuerst dort
+  nachsehen; neue Screens zuerst als Prototyp ergänzen.
+- **Plan & PR-Schnitt:** `design-prototypes/UMSETZUNG.md` (Tokens, Komponenten,
+  PR 1–11, Stolpersteine).
+- **Stand:** PR 1 (Fundament: Fonts, Bootstrap-Tokens, additive `cm-*`-Komponenten
+  in `assets/scss/redesign/`) → Branch `feature/redesign-activity`, PR #1406.
+  Folge-PRs werden darauf gestapelt, bis #1406 gemerged ist.
+- **Konvention:** Neue UI-Klassen tragen das Präfix `cm-`; Bestands-Styles nicht
+  entfernen, solange alte Templates sie nutzen (Bootstrap-3-Kompat-Layer zuletzt).
 
 ### Docker Services
 ```bash

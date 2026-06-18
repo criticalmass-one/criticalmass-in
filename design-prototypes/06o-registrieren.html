@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konto anlegen — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-size: 15px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.top { background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top .back { margin-left: auto; font-size: .88rem; font-weight: 600; color: var(--dim); }
+.top .back:hover { color: var(--ink); }
+
+.stage { flex: 1; display: grid; place-items: center; padding: 36px 16px 48px; }
+.auth { width: 100%; max-width: 420px; }
+.authcard { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 26px 26px 24px; box-shadow: 0 10px 30px rgba(22,24,28,.06); }
+.authcard .mark { width: 46px; height: 46px; border-radius: 14px; background: var(--accent); display: grid; place-items: center; margin: 0 auto 14px; }
+.authcard h1 { text-align: center; font-size: 1.3rem; font-weight: 800; letter-spacing: -.01em; }
+.authcard .sub { text-align: center; color: var(--dim); font-size: .88rem; margin-top: 3px; }
+.switch { display: flex; gap: 2px; background: #f2f3f5; border-radius: 11px; padding: 4px; margin: 18px 0 16px; }
+.switch a { flex: 1; text-align: center; font-weight: 700; font-size: .88rem; color: var(--dim); border-radius: 8px; padding: 8px; }
+.switch a.on { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(22,24,28,.1); }
+
+.steps { display: flex; gap: 8px; margin-bottom: 18px; }
+.stepchip {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 11px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--dim);
+}
+.stepchip .n {
+  width: 20px; height: 20px;
+  border-radius: 99px;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 600;
+  background: #e9ebee;
+  color: var(--dim);
+  flex: none;
+}
+.stepchip.done { border-color: #cfe5d8; background: #f4faf6; color: var(--green); }
+.stepchip.done .n { background: var(--green); color: #fff; }
+.stepchip.now { border-color: var(--accent); color: var(--ink); }
+.stepchip.now .n { background: var(--accent); color: #fff; }
+
+.field { margin-bottom: 13px; }
+.field label { display: block; font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--dim); margin-bottom: 5px; }
+.field input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #fafbfc;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font: inherit;
+  color: var(--ink);
+}
+.field input:focus { outline: 2px solid rgba(244,88,28,.4); border-color: var(--accent); }
+.field input.ok { border-color: #cfe5d8; background: #f7fbf8; }
+.field .hint { font-size: .76rem; color: var(--dim); margin-top: 5px; }
+.field .hint b { color: var(--green); font-weight: 700; }
+.strength { display: flex; gap: 4px; margin-top: 7px; }
+.strength i { flex: 1; height: 4px; border-radius: 4px; background: #e9ebee; }
+.strength i.on { background: var(--green); }
+
+.go { width: 100%; background: var(--accent); border: 0; color: #fff; font-weight: 800; font-size: 1rem; border-radius: 11px; padding: 13px; margin-top: 4px; }
+.go:hover { background: var(--accent-deep); }
+.captcha { margin-top: 13px; border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; display: flex; gap: 10px; align-items: center; font-size: .78rem; color: var(--dim); }
+.captcha .tick { width: 18px; height: 18px; border-radius: 6px; background: #e8f3ed; color: var(--green); display: grid; place-items: center; font-weight: 800; font-size: .7rem; flex: none; }
+.consent { font-size: .76rem; color: var(--dim); text-align: center; margin-top: 12px; }
+.consent a { text-decoration: underline; text-decoration-color: #d4d7db; }
+
+.below { text-align: center; font-size: .85rem; color: var(--dim); margin-top: 18px; }
+.below a { color: var(--accent); font-weight: 700; }
+.promise { margin-top: 22px; display: grid; gap: 8px; }
+.promise .p { display: flex; gap: 10px; align-items: baseline; font-size: .84rem; color: #3c4048; }
+.promise .nr { font-family: var(--mono); font-size: .7rem; font-weight: 600; color: var(--accent); flex: none; }
+footer { text-align: center; font-size: .75rem; color: var(--dim); padding: 0 16px 26px; }
+footer a { text-decoration: underline; text-decoration-color: #d4d7db; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <a class="back" href="06-feed-aktiv.html">Ohne Konto weiterstöbern →</a>
+  </div>
+</header>
+
+<main class="stage">
+  <div class="auth">
+    <div class="authcard">
+      <span class="mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      <h1>Steig auf.</h1>
+      <p class="sub">Ein Konto, zwei Schritte — mehr braucht es nicht.</p>
+
+      <nav class="switch">
+        <a href="06k-anmelden.html">Anmelden</a>
+        <a class="on" href="#">Konto anlegen</a>
+      </nav>
+
+      <div class="steps">
+        <span class="stepchip done"><span class="n">✓</span>E-Mail bestätigt</span>
+        <span class="stepchip now"><span class="n">2</span>Name &amp; Passwort</span>
+      </div>
+
+      <div class="field">
+        <label for="em">E-Mail</label>
+        <input id="em" type="email" value="malte@beispiel.de" class="ok" readonly>
+        <p class="hint"><b>✓ bestätigt</b> — Link aus der Mail geklickt</p>
+      </div>
+      <div class="field">
+        <label for="nick">Nutzername</label>
+        <input id="nick" type="text" value="malte">
+        <p class="hint">So sieht dich die Masse — ein Klarname ist nicht nötig.</p>
+      </div>
+      <div class="field">
+        <label for="pw">Passwort</label>
+        <input id="pw" type="password" value="••••••••••••••">
+        <span class="strength"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>
+        <p class="hint">Lang schlägt kompliziert — am besten 12+ Zeichen.</p>
+      </div>
+
+      <button class="go">Konto anlegen</button>
+      <div class="captcha">
+        <span class="tick">✓</span>
+        Anti-Roboter-Prüfung bestanden (FriendlyCaptcha — läuft lokal, ohne Google)
+      </div>
+      <p class="consent">Mit dem Anlegen akzeptierst du <a href="#">Datenschutz</a> und <a href="#">Hausordnung</a>. Mehr Kleingedrucktes gibt es nicht.</p>
+    </div>
+
+    <p class="below">Schon dabei? <a href="06k-anmelden.html">Anmelden</a></p>
+
+    <div class="promise">
+      <p class="p"><span class="nr">01</span>Keine Klarnamenpflicht — nenn dich, wie dich die Masse kennt.</p>
+      <p class="p"><span class="nr">02</span>Keine Werbung, kein Tracking, keine Weitergabe. Punkt.</p>
+      <p class="p"><span class="nr">03</span>Konto löschen geht jederzeit selbst — mitsamt allen Daten.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <a href="#">Impressum</a> · <a href="#">Datenschutz</a> · <a href="#">FAQ</a>
+</footer>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

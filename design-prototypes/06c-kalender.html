@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalender · Juni 2026 — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 70px;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- Topbar ---------- */
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top nav a.on { color: var(--ink); background: #f2f3f5; font-weight: 700; }
+.top .grow { flex: 1; }
+.search { display: flex; align-items: center; gap: 8px; background: #f2f3f5; border-radius: 9px; padding: 7px 12px; color: var(--dim); font-size: .88rem; min-width: 180px; }
+.upload-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; border: 0; border-radius: 9px; font-weight: 700; font-size: .9rem; padding: 8px 14px; }
+.upload-btn:hover { background: var(--accent-deep); }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.mh { background: #3d4350; }
+
+/* ---------- Layout ---------- */
+.shell { max-width: 1080px; margin: 0 auto; padding: 22px 16px 40px; }
+.calhead { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+.calhead h1 { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; }
+.calhead .nav { display: flex; gap: 6px; }
+.navbtn {
+  width: 36px; height: 36px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+}
+.navbtn:hover { border-color: #c9cdd3; }
+.calhead .legend { margin-left: auto; display: flex; gap: 14px; font-size: .8rem; color: var(--dim); flex-wrap: wrap; }
+.calhead .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 4px; margin-right: 5px; vertical-align: -1px; }
+.calhead .month-stat { font-family: var(--mono); font-size: .78rem; color: var(--dim); }
+.calhead .month-stat b { color: var(--accent); font-weight: 600; }
+
+/* ---------- Monatsraster (Desktop) ---------- */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+.dow {
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--dim);
+  padding: 4px 8px 6px;
+}
+.dow.we { color: #a0a6b1; }
+.day {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  min-height: 104px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.day .nr { font-family: var(--mono); font-size: .8rem; font-weight: 600; color: var(--dim); display: flex; align-items: center; gap: 6px; }
+.day .nr .tag { font-family: var(--sans); font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; border-radius: 99px; padding: 1px 7px; }
+.day.past { background: #f7f8f9; }
+.day.past .nr { color: #b4b9c2; }
+.day.empty { background: transparent; border: 0; }
+.day.today { border-color: var(--accent); border-width: 2px; padding: 7px; }
+.day.today .nr { color: var(--accent); }
+.day.today .nr .tag { background: var(--accent); color: #fff; }
+.day.big { background: #fff4ee; border-color: #f8c4ab; }
+.day.big .nr { color: var(--accent-deep); }
+.day.big .nr .tag { background: #16181c; color: #fff; }
+.chip {
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+  font-size: .76rem;
+  background: #f2f3f5;
+  border-radius: 6px;
+  padding: 3px 7px;
+  min-width: 0;
+}
+.chip:hover { background: #e8eaee; }
+.chip .t { font-family: var(--mono); font-size: .68rem; font-weight: 600; color: var(--dim); flex: none; }
+.chip b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chip.done { background: #e8f3ed; }
+.chip.done .t { color: var(--green); }
+.chip.hh { background: #16181c; }
+.chip.hh b, .chip.hh .t { color: #fff; }
+.more { font-size: .72rem; font-weight: 700; color: var(--accent); padding: 1px 7px; }
+.day.past .chip { opacity: .75; }
+
+/* ---------- Agenda (Mobil) ---------- */
+.cal-list { display: none; }
+
+/* ---------- Fuß ---------- */
+.fine { max-width: 1080px; margin: 18px auto 0; padding: 0 16px; font-size: .75rem; color: var(--dim); }
+.fine a { text-decoration: underline; text-decoration-color: #d4d7db; }
+
+/* ---------- Mobil ---------- */
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 860px) {
+  .top nav, .search { display: none; }
+  .cal-grid { display: none; }
+  .cal-list { display: block; }
+  .cal-list .dayblock { background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 12px; overflow: hidden; }
+  .cal-list .dayblock.today { border-color: var(--accent); border-width: 2px; }
+  .cal-list .dayblock.big { background: #fff4ee; border-color: #f8c4ab; }
+  .cal-list .dh {
+    display: flex; gap: 10px; align-items: baseline;
+    padding: 11px 16px 9px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 800; font-size: .95rem;
+  }
+  .cal-list .dh .wd { font-family: var(--mono); font-size: .74rem; font-weight: 600; color: var(--dim); }
+  .cal-list .dh .tag { margin-left: auto; font-size: .64rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; border-radius: 99px; padding: 2px 8px; background: var(--accent); color: #fff; }
+  .cal-list .dh .tag.dark { background: #16181c; }
+  .cal-list .row { display: flex; gap: 10px; align-items: baseline; padding: 9px 16px; border-bottom: 1px solid var(--line); font-size: .92rem; }
+  .cal-list .row:last-child { border-bottom: 0; }
+  .cal-list .row .t { font-family: var(--mono); font-size: .8rem; font-weight: 600; width: 48px; flex: none; color: var(--dim); }
+  .cal-list .row b { font-weight: 700; }
+  .cal-list .row .p { margin-left: auto; color: var(--dim); font-size: .78rem; text-align: right; }
+  .cal-list .row.done .t { color: var(--green); }
+  .tabbar {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55;
+    background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .tabbar a.on { color: var(--accent); }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a href="06e-karte.html">Karte</a>
+      <a class="on" href="#">Kalender</a>
+      <a href="06l-verzeichnis.html">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="search" href="06j-suche.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      Stadt oder Tour suchen
+    </a>
+    <a class="upload-btn" href="06h-hochladen.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 16V5m0 0 -4 4m4-4 4 4M5 19h14"/></svg>
+      Hochladen
+    </a>
+    <a class="ava mh" href="06d-profil.html">MH</a>
+  </div>
+</header>
+
+<div class="shell">
+
+  <div class="calhead">
+    <span class="nav">
+      <button class="navbtn" aria-label="Mai 2026">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m14.5 5-7 7 7 7"/></svg>
+      </button>
+      <button class="navbtn" aria-label="Juli 2026">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9.5 5 7 7-7 7"/></svg>
+      </button>
+    </span>
+    <h1>Juni 2026</h1>
+    <span class="month-stat"><b>58 Touren</b> weltweit · davon 43 am großen Freitag</span>
+    <span class="legend">
+      <span><i style="background:#fff4ee;border:1px solid #f8c4ab"></i>letzter Freitag</span>
+      <span><i style="background:#e8f3ed"></i>gefahren</span>
+      <span><i style="border:2px solid var(--accent)"></i>heute</span>
+    </span>
+  </div>
+
+  <!-- Desktop: Monatsraster -->
+  <div class="cal-grid">
+    <div class="dow">Mo</div><div class="dow">Di</div><div class="dow">Mi</div><div class="dow">Do</div><div class="dow">Fr</div><div class="dow we">Sa</div><div class="dow we">So</div>
+
+    <div class="day past"><span class="nr">1</span></div>
+    <div class="day past"><span class="nr">2</span></div>
+    <div class="day past"><span class="nr">3</span></div>
+    <div class="day past"><span class="nr">4</span></div>
+    <div class="day past">
+      <span class="nr">5</span>
+      <a class="chip done" href="#"><span class="t">✓</span><b>Norderstedt</b></a>
+      <span class="more" style="color:var(--green)">12 Räder gezählt</span>
+    </div>
+    <div class="day past"><span class="nr">6</span></div>
+    <div class="day past"><span class="nr">7</span></div>
+
+    <div class="day past"><span class="nr">8</span></div>
+    <div class="day past"><span class="nr">9</span></div>
+    <div class="day past"><span class="nr">10</span></div>
+    <div class="day past"><span class="nr">11</span></div>
+    <div class="day today">
+      <span class="nr">12 <span class="tag">Heute</span></span>
+      <a class="chip" href="#"><span class="t">17:00</span><b>Falkensee</b></a>
+      <a class="chip" href="#"><span class="t">19:00</span><b>Düsseldorf</b></a>
+      <a class="chip" href="#"><span class="t">19:00</span><b>Frankfurt</b></a>
+      <a class="more" href="#">+6 weitere</a>
+    </div>
+    <div class="day">
+      <span class="nr">13</span>
+      <a class="chip" href="#"><span class="t">20:45</span><b>Pinneberg</b></a>
+    </div>
+    <div class="day"><span class="nr">14</span></div>
+
+    <div class="day">
+      <span class="nr">15</span>
+      <a class="chip" href="#"><span class="t">18:00</span><b>Coburg</b></a>
+      <a class="chip" href="#"><span class="t">19:00</span><b>Gelsenkirchen</b></a>
+    </div>
+    <div class="day">
+      <span class="nr">16</span>
+      <a class="chip" href="#"><span class="t">21:00</span><b>Lisboa</b></a>
+    </div>
+    <div class="day"><span class="nr">17</span></div>
+    <div class="day"><span class="nr">18</span></div>
+    <div class="day">
+      <span class="nr">19</span>
+      <a class="chip" href="#"><span class="t">17:00</span><b>Wien</b></a>
+      <a class="chip" href="#"><span class="t">18:30</span><b>Los Angeles</b></a>
+      <a class="chip" href="#"><span class="t">20:00</span><b>Hannover</b></a>
+      <a class="more" href="#">+3 weitere</a>
+    </div>
+    <div class="day">
+      <span class="nr">20</span>
+      <a class="chip" href="#"><span class="t">10:00</span><b>Stirling</b></a>
+      <a class="chip" href="#"><span class="t">11:00</span><b>Herrenberg</b></a>
+      <a class="chip" href="#"><span class="t">11:00</span><b>Kaiserslautern</b></a>
+    </div>
+    <div class="day">
+      <span class="nr">21</span>
+      <a class="chip" href="#"><span class="t">09:00</span><b>Stuttgart</b></a>
+      <a class="chip" href="#"><span class="t">13:00</span><b>Köln</b></a>
+    </div>
+
+    <div class="day"><span class="nr">22</span></div>
+    <div class="day"><span class="nr">23</span></div>
+    <div class="day">
+      <span class="nr">24</span>
+      <a class="chip" href="#"><span class="t">17:30</span><b>Bruchsal</b></a>
+    </div>
+    <div class="day">
+      <span class="nr">25</span>
+      <a class="chip" href="#"><span class="t">18:00</span><b>Dessau</b></a>
+      <a class="chip" href="#"><span class="t">19:00</span><b>Boise</b></a>
+    </div>
+    <div class="day big">
+      <span class="nr">26 <span class="tag">Großer Freitag</span></span>
+      <a class="chip hh" href="06a-tour.html"><span class="t">19:00</span><b>Hamburg</b></a>
+      <a class="chip" href="#"><span class="t">18:00</span><b>Lüneburg</b></a>
+      <a class="chip" href="#"><span class="t">20:00</span><b>Berlin</b></a>
+      <a class="more" href="#">+40 weltweit</a>
+    </div>
+    <div class="day"><span class="nr">27</span></div>
+    <div class="day"><span class="nr">28</span></div>
+
+    <div class="day"><span class="nr">29</span></div>
+    <div class="day"><span class="nr">30</span></div>
+    <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
+  </div>
+
+  <!-- Mobil: Agenda -->
+  <div class="cal-list">
+    <div class="dayblock today">
+      <div class="dh"><span class="wd">FR</span>12. Juni<span class="tag">Heute</span></div>
+      <a class="row" href="#"><span class="t">17:00</span><b>Falkensee</b><span class="p">Bahnhofsvorplatz</span></a>
+      <a class="row" href="#"><span class="t">18:00</span><b>Düren</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">18:00</span><b>Pittsburgh</b><span class="p">Dippy</span></a>
+      <a class="row" href="#"><span class="t">19:00</span><b>Düsseldorf</b><span class="p">Fürstenplatz</span></a>
+      <a class="row" href="#"><span class="t">19:00</span><b>Frankfurt</b><span class="p">Opernplatz</span></a>
+      <a class="row" href="#"><span class="t">19:00</span><b>Treptow-Köpenick</b><span class="p">Karte</span></a>
+    </div>
+    <div class="dayblock">
+      <div class="dh"><span class="wd">SA</span>13. Juni</div>
+      <a class="row" href="#"><span class="t">20:45</span><b>Pinneberg</b><span class="p">Karte</span></a>
+    </div>
+    <div class="dayblock">
+      <div class="dh"><span class="wd">MO</span>15. Juni</div>
+      <a class="row" href="#"><span class="t">18:00</span><b>Coburg</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">19:00</span><b>Gelsenkirchen</b><span class="p">Karte</span></a>
+    </div>
+    <div class="dayblock">
+      <div class="dh"><span class="wd">DI</span>16. Juni</div>
+      <a class="row" href="#"><span class="t">21:00</span><b>Lisboa</b><span class="p">Marquês de Pombal</span></a>
+    </div>
+    <div class="dayblock">
+      <div class="dh"><span class="wd">FR</span>19. Juni</div>
+      <a class="row" href="#"><span class="t">17:00</span><b>Wien</b><span class="p">Schwarzenbergplatz</span></a>
+      <a class="row" href="#"><span class="t">18:00</span><b>Fürth</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">18:30</span><b>Los Angeles</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">18:30</span><b>Wiesbaden</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">18:45</span><b>Mannheim</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">20:00</span><b>Hannover</b><span class="p">Karte</span></a>
+    </div>
+    <div class="dayblock">
+      <div class="dh"><span class="wd">SA</span>20. Juni</div>
+      <a class="row" href="#"><span class="t">10:00</span><b>Stirling</b><span class="p">The Thistles</span></a>
+      <a class="row" href="#"><span class="t">11:00</span><b>Herrenberg</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">11:00</span><b>Kaiserslautern</b><span class="p">Karte</span></a>
+    </div>
+    <div class="dayblock">
+      <div class="dh"><span class="wd">SO</span>21. Juni</div>
+      <a class="row" href="#"><span class="t">09:00</span><b>Stuttgart</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">13:00</span><b>Köln</b><span class="p">Karte</span></a>
+    </div>
+    <div class="dayblock">
+      <div class="dh"><span class="wd">MI</span>24. Juni</div>
+      <a class="row" href="#"><span class="t">17:30</span><b>Bruchsal</b><span class="p">Karte</span></a>
+    </div>
+    <div class="dayblock">
+      <div class="dh"><span class="wd">DO</span>25. Juni</div>
+      <a class="row" href="#"><span class="t">18:00</span><b>Dessau</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">19:00</span><b>Boise</b><span class="p">Karte</span></a>
+    </div>
+    <div class="dayblock big">
+      <div class="dh"><span class="wd">FR</span>26. Juni<span class="tag dark">Großer Freitag · 43 Touren</span></div>
+      <a class="row" href="06a-tour.html"><span class="t">19:00</span><b>Hamburg</b><span class="p">Alstervorland</span></a>
+      <a class="row" href="#"><span class="t">18:00</span><b>Lüneburg</b><span class="p">Am Sande</span></a>
+      <a class="row" href="#"><span class="t">18:00</span><b>Bonn</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">18:50</span><b>Dresden</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">19:00</span><b>München</b><span class="p">Karte</span></a>
+      <a class="row" href="#"><span class="t">20:00</span><b>Berlin</b><span class="p">Mariannenplatz</span></a>
+      <a class="row" href="#"><span class="t">+37</span><b>weitere weltweit</b><span class="p">→</span></a>
+    </div>
+  </div>
+
+</div>
+
+<p class="fine">Alle Zeiten Ortszeit · Touren ohne Uhrzeit stehen erst kurz vorher fest ·
+<a href="06n-tour-anlegen.html">Tour eintragen</a> — drei Felder genügen.</p>
+
+<!-- Mobile Tabbar -->
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a href="06e-karte.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="06h-hochladen.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a class="on" href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="06d-profil.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

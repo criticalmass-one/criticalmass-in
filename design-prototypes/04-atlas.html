@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp 4 · Atlas — criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f7f2e7;
+  --paper-deep: #efe8d8;
+  --ink: #211e19;
+  --ink-soft: #5c564b;
+  --terra: #b4451f;
+  --mapblue: #2b4a7d;
+  --moss: #50653f;
+  --hair: #cfc6b2;
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--serif);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+}
+a { color: inherit; }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 0 1.4rem; }
+
+/* ---------- Masthead ---------- */
+header.mast {
+  text-align: center;
+  padding: 2.6rem 1rem 1.6rem;
+  border-bottom: 1px solid var(--ink);
+  position: relative;
+}
+.mast .over {
+  font-family: var(--sans);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .3em;
+  color: var(--ink-soft);
+}
+.mast h1 {
+  font-weight: 600;
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  font-variation-settings: "opsz" 144;
+  letter-spacing: .01em;
+  line-height: 1.05;
+  margin: .5rem 0 .4rem;
+}
+.mast h1 em { font-style: italic; font-weight: 400; color: var(--terra); }
+.mast .issue {
+  font-family: var(--sans);
+  font-size: .75rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+nav.mainnav {
+  border-bottom: 1px solid var(--ink);
+  display: flex;
+  justify-content: center;
+  gap: 2.4rem;
+  padding: .7rem 1rem;
+  flex-wrap: wrap;
+  font-family: var(--sans);
+}
+nav.mainnav a {
+  text-decoration: none;
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+nav.mainnav a:hover, nav.mainnav a[aria-current] { color: var(--terra); }
+
+/* ---------- Lead ---------- */
+.lead-sec {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 3rem;
+  padding: 3rem 0 2.6rem;
+  border-bottom: 1px solid var(--hair);
+}
+.kicker {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: var(--terra);
+  display: block;
+  margin-bottom: .9rem;
+}
+.lead-sec h2 {
+  font-size: clamp(1.9rem, 4.4vw, 3rem);
+  font-weight: 500;
+  line-height: 1.12;
+  margin-bottom: 1.2rem;
+  font-variation-settings: "opsz" 100;
+}
+.lead-sec .body {
+  font-size: 1.04rem;
+  color: #36322a;
+}
+.lead-sec .body p + p { margin-top: .9rem; }
+.lead-sec .body p:first-child::first-letter {
+  font-size: 3.4em;
+  float: left;
+  line-height: .82;
+  padding: .06em .12em 0 0;
+  font-weight: 600;
+  color: var(--terra);
+}
+.lead-sec .more {
+  display: inline-block;
+  margin-top: 1.4rem;
+  font-family: var(--sans);
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 2px solid var(--terra);
+  padding-bottom: .2rem;
+}
+
+/* Nächste-Fahrt-Kasten */
+.nextbox {
+  border: 1px solid var(--ink);
+  background: var(--paper-deep);
+  padding: 1.6rem 1.6rem 1.4rem;
+  align-self: start;
+  position: relative;
+}
+.nextbox::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(33,30,25,.25);
+  pointer-events: none;
+}
+.nextbox .rubrik {
+  font-family: var(--sans);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+.nextbox h3 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.05;
+}
+.nextbox .when {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--terra);
+  margin: .5rem 0 1.1rem;
+}
+.nextbox dl {
+  font-family: var(--sans);
+  font-size: .88rem;
+  border-top: 1px solid var(--hair);
+}
+.nextbox dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--hair);
+}
+.nextbox dt { color: var(--ink-soft); }
+.nextbox dd { font-weight: 600; text-align: right; }
+.nextbox .acts { display: flex; gap: .7rem; margin-top: 1.2rem; }
+.nextbox .acts a {
+  flex: 1;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: .6rem .4rem;
+  border: 1px solid var(--ink);
+}
+.nextbox .acts a.first { background: var(--ink); color: var(--paper); }
+.nextbox .acts a:hover { opacity: .8; }
+
+/* ---------- Tafel (Kartenplatte) ---------- */
+.plate-sec { padding: 3rem 0; border-bottom: 1px solid var(--hair); }
+.plate-sec .sechead, .gaz .sechead, .plates .sechead {
+  display: flex;
+  align-items: baseline;
+  gap: .4rem 1.2rem;
+  margin-bottom: 1.8rem;
+  flex-wrap: wrap;
+}
+.sechead h2 {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+.sechead .nr {
+  font-family: var(--sans);
+  font-size: .72rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--terra);
+}
+.sechead .lnk {
+  margin-left: auto;
+  font-family: var(--sans);
+  font-size: .8rem;
+  text-decoration: none;
+  border-bottom: 1px solid var(--hair);
+}
+.sechead .lnk:hover { border-color: var(--terra); color: var(--terra); }
+.plate {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 0;
+  border: 1px solid var(--ink);
+  background: #fbf8f0;
+}
+.plate .map {
+  padding: 1.2rem;
+  border-right: 1px solid var(--ink);
+}
+.plate .map svg { width: 100%; height: auto; display: block; }
+.plate .legend {
+  padding: 1.6rem 1.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+}
+.plate .legend h3 { font-size: 1.45rem; font-weight: 600; line-height: 1.15; }
+.plate .legend .sub { font-style: italic; color: var(--ink-soft); margin: .4rem 0 1.2rem; }
+.plate table {
+  font-family: var(--sans);
+  font-size: .85rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+.plate td { padding: .45rem 0; border-bottom: 1px solid var(--hair); }
+.plate td:last-child { text-align: right; font-weight: 600; font-feature-settings: "tnum"; }
+.plate .legend .quelle {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  font-size: .72rem;
+  font-family: var(--sans);
+  color: var(--ink-soft);
+}
+
+/* ---------- Register / Gazetteer ---------- */
+.gaz { padding: 3rem 0; border-bottom: 1px solid var(--hair); }
+.gaz-cols {
+  columns: 3;
+  column-gap: 3rem;
+  column-rule: 1px solid var(--hair);
+  font-family: var(--sans);
+  font-size: .9rem;
+}
+.gaz-group { break-inside: avoid; margin-bottom: 1.5rem; }
+.gaz-group h4 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--terra);
+  margin-bottom: .5rem;
+}
+.gaz-row {
+  display: flex;
+  align-items: baseline;
+  gap: .4rem;
+  padding: .22rem 0;
+  text-decoration: none;
+}
+.gaz-row .city { font-weight: 500; white-space: nowrap; }
+.gaz-row .dots {
+  flex: 1;
+  border-bottom: 2px dotted var(--hair);
+  transform: translateY(-3px);
+  min-width: 1rem;
+}
+.gaz-row .when { font-feature-settings: "tnum"; color: var(--ink-soft); white-space: nowrap; font-size: .85rem; }
+.gaz-row:hover .city { color: var(--terra); }
+.gaz-foot {
+  margin-top: 1.6rem;
+  font-family: var(--sans);
+  font-size: .8rem;
+  color: var(--ink-soft);
+}
+.gaz-foot a { color: var(--terra); }
+
+/* ---------- Bildtafeln ---------- */
+.plates { padding: 3rem 0; }
+.plate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+.figure { text-decoration: none; }
+.figure .img {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(180,69,31,.5), transparent 60%),
+    radial-gradient(circle at 75% 70%, rgba(43,74,125,.55), transparent 55%),
+    linear-gradient(160deg, #d8c9a8, #8e9b8a);
+}
+.figure .img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(33,30,25,.5) 1px, transparent 1.4px);
+  background-size: 5px 5px;
+  mix-blend-mode: overlay;
+}
+.figure .img .tag {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  font-family: var(--sans);
+  font-size: .66rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: .25rem .5rem;
+}
+.figure figcaption {
+  font-size: .88rem;
+  margin-top: .6rem;
+  color: var(--ink-soft);
+}
+.figure figcaption b { color: var(--ink); font-weight: 600; }
+
+/* ---------- Kolophon ---------- */
+footer {
+  border-top: 1px solid var(--ink);
+  margin-top: 1rem;
+  padding: 2.2rem 0 3rem;
+  text-align: center;
+}
+footer .sig { font-style: italic; color: var(--ink-soft); margin-bottom: 1.1rem; }
+footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+  font-family: var(--sans);
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+footer nav a { text-decoration: none; }
+footer nav a:hover { color: var(--terra); }
+footer .colophon {
+  margin-top: 1.4rem;
+  font-family: var(--sans);
+  font-size: .7rem;
+  color: var(--ink-soft);
+}
+
+.proto-back {
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  z-index: 50;
+  font-family: var(--sans);
+  font-size: .75rem;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--hair);
+  padding: .35rem .7rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Mobil ---------- */
+@media (max-width: 900px) {
+  .gaz-cols { columns: 2; }
+}
+@media (max-width: 720px) {
+  .lead-sec { grid-template-columns: 1fr; gap: 2rem; }
+  .plate { grid-template-columns: 1fr; }
+  .plate .map { border-right: 0; border-bottom: 1px solid var(--ink); }
+  .gaz-cols { columns: 1; }
+  nav.mainnav { gap: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <span class="over">Seit 2011 · Eine Karte der gemeinsamen Fahrt</span>
+  <h1>Critical <em>Mass</em></h1>
+  <p class="issue"><span>criticalmass.in</span><span>№ 178 — Juni 2026</span><span>612 Städte, 5 Kontinente</span></p>
+</header>
+<nav class="mainnav">
+  <a href="#" aria-current="page">Atlas</a>
+  <a href="#">Städte</a>
+  <a href="#">Kalender</a>
+  <a href="#">Tafeln</a>
+  <a href="#">Statistik</a>
+  <a href="#">Anmelden</a>
+</nav>
+
+<div class="wrap">
+
+  <section class="lead-sec">
+    <article>
+      <span class="kicker">Aus den Städten · Hamburg</span>
+      <h2>Breiter, länger, weiter: eine Stadt geizt nicht mit Superlativen</h2>
+      <div class="body">
+        <p>Immer am letzten Freitag im Monat geht's in Hamburg auf die Räder, ganz unabhängig
+        vom berühmten hanseatischen Wetter. Bei Schnee und Eis düsen fünfhundert Radfahrer
+        durch die Hansestadt, an sommerlichen Abenden beinahe sechstausend. Das kann dann
+        schon eine Weile dauern, bis alle über die Kreuzung rüber sind.</p>
+        <p>Als erste schriftlich überlieferte Masse gilt der 31. März 2000, an dem sich
+        15 Radfahrer vor der U-Bahn-Station St.&nbsp;Pauli zu einer gemeinsamen Radtour trafen —
+        damals reichte es selten für die notwendigen 16, um als Verband auf der Fahrbahn zu fahren.</p>
+      </div>
+      <a class="more" href="#">Die ganze Stadtgeschichte lesen</a>
+    </article>
+
+    <aside class="nextbox" aria-label="Nächste Fahrt">
+      <p class="rubrik">Nächste Fahrt</p>
+      <h3>Hamburg</h3>
+      <p class="when">Freitag, der 26. Juni 2026, um 19 Uhr</p>
+      <dl>
+        <div><dt>Treffpunkt</dt><dd>Alstervorland, Höhe Milchstraße</dd></div>
+        <div><dt>Zuletzt dabei</dt><dd>rund 2.400 Räder</dd></div>
+        <div><dt>Wetter</dt><dd>18°, trocken</dd></div>
+        <div><dt>Mitfahren</dt><dd>einfach hinkommen</dd></div>
+      </dl>
+      <div class="acts">
+        <a class="first" href="#">Ich bin dabei</a>
+        <a href="#">In den Kalender</a>
+      </div>
+    </aside>
+  </section>
+
+  <section class="plate-sec">
+    <div class="sechead">
+      <span class="nr">Tafel XLII</span>
+      <h2>Die Route der letzten Berliner Masse</h2>
+      <a class="lnk" href="#">Alle Tracks ansehen</a>
+    </div>
+    <figure class="plate">
+      <div class="map">
+        <svg viewBox="0 0 560 360" role="img" aria-label="Stilisierte Routenkarte der Critical Mass Berlin">
+          <defs>
+            <pattern id="wasser" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="7" stroke="#b9c6dd" stroke-width="1.2"/>
+            </pattern>
+          </defs>
+          <rect width="560" height="360" fill="#fbf8f0"/>
+          <!-- Spree -->
+          <path d="M0,210 C90,195 150,235 230,225 C320,214 360,170 440,175 C490,178 530,160 560,150 L560,196 C520,206 480,222 430,220 C350,217 320,260 230,268 C150,275 80,240 0,252 Z"
+            fill="url(#wasser)" stroke="#9eb0cf" stroke-width="1"/>
+          <!-- Stadtraster, angedeutet -->
+          <g stroke="#ddd5c2" stroke-width="1">
+            <line x1="60" y1="0" x2="60" y2="360"/><line x1="140" y1="0" x2="140" y2="360"/>
+            <line x1="240" y1="0" x2="240" y2="360"/><line x1="330" y1="0" x2="330" y2="360"/>
+            <line x1="430" y1="0" x2="430" y2="360"/><line x1="500" y1="0" x2="500" y2="360"/>
+            <line x1="0" y1="60" x2="560" y2="60"/><line x1="0" y1="130" x2="560" y2="130"/>
+            <line x1="0" y1="300" x2="560" y2="300"/>
+          </g>
+          <!-- Route -->
+          <path d="M285,190 L240,170 L190,185 L150,150 L120,95 L175,70 L260,85 L330,60 L400,90 L455,75 L490,120 L440,150 L390,140 L350,185 L395,235 L350,290 L270,300 L210,275 L170,300 L120,275 L160,230 L220,240 L285,190"
+            fill="none" stroke="#2b4a7d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M285,190 L240,170 L190,185 L150,150 L120,95"
+            fill="none" stroke="#b4451f" stroke-width="3" stroke-dasharray="1 7" stroke-linecap="round"/>
+          <!-- Start -->
+          <g transform="translate(285,190)">
+            <circle r="7" fill="#b4451f"/>
+            <circle r="11" fill="none" stroke="#b4451f" stroke-width="1.4"/>
+          </g>
+          <text x="297" y="186" font-family="Archivo, sans-serif" font-size="11" fill="#211e19" font-weight="600">Mariannenplatz, 20:00</text>
+          <!-- Nordpfeil -->
+          <g transform="translate(522,38)">
+            <path d="M0,14 L5,-14 L10,14 L5,8 Z" fill="#211e19"/>
+            <text x="1" y="30" font-family="Archivo, sans-serif" font-size="11" fill="#211e19">N</text>
+          </g>
+          <!-- Maßstab -->
+          <g transform="translate(24,330)">
+            <line x1="0" y1="0" x2="90" y2="0" stroke="#211e19" stroke-width="2"/>
+            <line x1="0" y1="-5" x2="0" y2="5" stroke="#211e19" stroke-width="2"/>
+            <line x1="45" y1="-4" x2="45" y2="4" stroke="#211e19" stroke-width="1.4"/>
+            <line x1="90" y1="-5" x2="90" y2="5" stroke="#211e19" stroke-width="2"/>
+            <text x="100" y="4" font-family="Archivo, sans-serif" font-size="11" fill="#211e19">2 km</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption class="legend">
+        <h3>Berlin, 27. Juni 2025</h3>
+        <p class="sub">Aufgezeichnet von birnenblau, geprüft und beschnitten.</p>
+        <table>
+          <tr><td>Strecke</td><td>36,23 km</td></tr>
+          <tr><td>Fahrzeit</td><td>3 h 44 min</td></tr>
+          <tr><td>Masse-Tempo</td><td>9,7 km/h</td></tr>
+          <tr><td>Stationen</td><td>Kreuzberg · Mitte · Tiergarten</td></tr>
+          <tr><td>Dateiformat</td><td>GPX, selbst hochgeladen</td></tr>
+        </table>
+        <p class="quelle">Grundkarte © OpenStreetMap-Mitwirkende. Die Route entsteht
+        bei jeder Masse neu — niemand kennt sie vorher.</p>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="gaz">
+    <div class="sechead">
+      <span class="nr">Register</span>
+      <h2>Wo demnächst gefahren wird</h2>
+      <a class="lnk" href="#">Vollständiges Register · Karte</a>
+    </div>
+    <div class="gaz-cols">
+      <div class="gaz-group">
+        <h4>Freitag, 12. Juni</h4>
+        <a class="gaz-row" href="#"><span class="city">Bergisch Gladbach</span><span class="dots"></span><span class="when">18:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Darmstadt</span><span class="dots"></span><span class="when">19:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Düsseldorf</span><span class="dots"></span><span class="when">19:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Essen</span><span class="dots"></span><span class="when">19:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Frankfurt am Main</span><span class="dots"></span><span class="when">19:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Pittsburgh</span><span class="dots"></span><span class="when">18:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Witten</span><span class="dots"></span><span class="when">18:00</span></a>
+      </div>
+      <div class="gaz-group">
+        <h4>Di–Sa, 16.–20. Juni</h4>
+        <a class="gaz-row" href="#"><span class="city">Lisboa</span><span class="dots"></span><span class="when">Di 21:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Hannover</span><span class="dots"></span><span class="when">Fr 20:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Los Angeles</span><span class="dots"></span><span class="when">Fr 18:30</span></a>
+        <a class="gaz-row" href="#"><span class="city">Mannheim</span><span class="dots"></span><span class="when">Fr 18:45</span></a>
+        <a class="gaz-row" href="#"><span class="city">Wien</span><span class="dots"></span><span class="when">Fr 17:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Stirling</span><span class="dots"></span><span class="when">Sa 10:00</span></a>
+      </div>
+      <div class="gaz-group">
+        <h4>Der große Freitag, 26. Juni</h4>
+        <a class="gaz-row" href="#"><span class="city">Berlin</span><span class="dots"></span><span class="when">20:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Bonn</span><span class="dots"></span><span class="when">18:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Dresden</span><span class="dots"></span><span class="when">18:50</span></a>
+        <a class="gaz-row" href="#"><span class="city">Graz</span><span class="dots"></span><span class="when">17:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">Hamburg</span><span class="dots"></span><span class="when">19:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">München</span><span class="dots"></span><span class="when">19:00</span></a>
+        <a class="gaz-row" href="#"><span class="city">… und 37 weitere</span><span class="dots"></span><span class="when">→</span></a>
+      </div>
+    </div>
+    <p class="gaz-foot">Alle Zeiten Ortszeit. Keine Stadt dabei, in der du wohnst?
+      <a href="#">Trag deine Masse ein</a> — drei Felder genügen.</p>
+  </section>
+
+  <section class="plates">
+    <div class="sechead">
+      <span class="nr">Tafeln XLIII–XLV</span>
+      <h2>Zuletzt eingegangene Bilder</h2>
+      <a class="lnk" href="#">Alle Galerien</a>
+    </div>
+    <div class="plate-grid">
+      <figure class="figure">
+        <a href="#"><div class="img"><span class="tag">Tafel XLIII</span></div></a>
+        <figcaption><b>Bonn, 29. Mai 2026.</b> Vier Aufnahmen vom Sammeln
+        am Rheinufer, eingereicht von CM&nbsp;Bonn.</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="#"><div class="img"><span class="tag">Tafel XLIV</span></div></a>
+        <figcaption><b>Norderstedt, 5. Juni 2026.</b> Zwölf Räder vor dem Rathaus —
+        klein, aber regelmäßig.</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="#"><div class="img"><span class="tag">Tafel XLV</span></div></a>
+        <figcaption><b>Berlin, 28. November 2025.</b> Wintermasse bei 2 Grad,
+        25,58 km durch Mitte und Kreuzberg.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p class="sig">„Wir behindern nicht den Verkehr — wir sind der Verkehr."</p>
+  <nav>
+    <a href="#">Über die Critical Mass</a>
+    <a href="#">FAQ</a>
+    <a href="#">API</a>
+    <a href="#">Impressum</a>
+    <a href="#">Datenschutz</a>
+  </nav>
+  <p class="colophon">Gesetzt in Fraunces und Archivo · Karten © OpenStreetMap-Mitwirkende ·
+  Open Source seit Tag eins</p>
+</footer>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

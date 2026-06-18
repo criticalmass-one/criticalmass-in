@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karte · Entdecken — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-size: 15px;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- Topbar ---------- */
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1480px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top nav a.on { color: var(--ink); background: #f2f3f5; font-weight: 700; }
+.top .grow { flex: 1; }
+.upload-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; border: 0; border-radius: 9px; font-weight: 700; font-size: .9rem; padding: 8px 14px; }
+.upload-btn:hover { background: var(--accent-deep); }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.mh { background: #3d4350; }
+
+/* ---------- Karte + Panel ---------- */
+.stage {
+  display: flex;
+  height: calc(100dvh - 56px);
+  max-width: 1480px;
+  margin: 0 auto;
+}
+.panel {
+  width: 372px;
+  flex: none;
+  background: var(--card);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.panel .phead { padding: 16px 16px 12px; border-bottom: 1px solid var(--line); }
+.panel h1 { font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em; }
+.panel .sub { color: var(--dim); font-size: .82rem; margin-top: 1px; }
+.filters { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+.fchip {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 99px;
+  padding: 5px 13px;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--dim);
+}
+.fchip.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.fchip:hover:not(.on) { border-color: #c9cdd3; color: var(--ink); }
+.plist { overflow-y: auto; flex: 1; padding: 8px; }
+.crow {
+  display: flex;
+  gap: 12px;
+  padding: 11px 10px;
+  border-radius: 12px;
+  align-items: center;
+}
+.crow:hover { background: #f6f7f8; }
+.crow .dot {
+  width: 34px; height: 34px;
+  flex: none;
+  border-radius: 99px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: .68rem;
+}
+.crow .t { min-width: 0; }
+.crow b { font-weight: 700; display: block; line-height: 1.25; }
+.crow .when { font-size: .8rem; color: var(--dim); }
+.crow .when .hl { color: var(--accent); font-weight: 700; }
+.crow .dist { margin-left: auto; text-align: right; font-family: var(--mono); font-size: .74rem; color: var(--dim); white-space: nowrap; }
+.crow .dist b { display: block; font-family: var(--sans); font-size: .78rem; font-weight: 700; color: var(--ink); }
+.crow.me { background: #fff4ee; }
+.crow.me:hover { background: #ffeadf; }
+.pfoot { padding: 10px 16px; border-top: 1px solid var(--line); font-size: .76rem; color: var(--dim); }
+
+/* Kartenfläche */
+.maparea { position: relative; flex: 1; min-width: 0; background: #e9ecef; }
+.maparea svg.map { position: absolute; inset: 0; width: 100%; height: 100%; }
+.float-search {
+  position: absolute;
+  top: 14px; left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 9px 16px;
+  font-size: .88rem;
+  color: var(--dim);
+  box-shadow: 0 4px 14px rgba(22,24,28,.08);
+  min-width: 230px;
+}
+.zoomers {
+  position: absolute;
+  top: 14px; right: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.zbtn {
+  width: 38px; height: 38px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  box-shadow: 0 4px 14px rgba(22,24,28,.08);
+  display: grid;
+  place-items: center;
+}
+.zbtn:hover { border-color: #c9cdd3; }
+.legend {
+  position: absolute;
+  bottom: 14px; left: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 13px;
+  font-size: .78rem;
+  color: var(--dim);
+  box-shadow: 0 4px 14px rgba(22,24,28,.08);
+}
+.legend b { color: var(--ink); }
+.legend .hl { color: var(--accent); font-weight: 700; }
+
+/* Map-Pins als HTML über SVG */
+.pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border-radius: 99px;
+  color: #fff;
+  font-weight: 800;
+  font-family: var(--mono);
+  border: 2.5px solid #fff;
+  box-shadow: 0 3px 10px rgba(22,24,28,.25);
+  background: #3d4350;
+}
+.pin.cluster { background: var(--accent); }
+.pin.s { width: 30px; height: 30px; font-size: .68rem; }
+.pin.m { width: 38px; height: 38px; font-size: .76rem; }
+.pin.l { width: 48px; height: 48px; font-size: .85rem; }
+.pin.city { background: #16181c; }
+.pin.hot { background: var(--accent); }
+.pin.hot::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 99px;
+  border: 2px solid rgba(244,88,28,.45);
+  animation: ring 2.4s ease infinite;
+}
+@keyframes ring { 70% { transform: scale(1.25); opacity: 0; } 100% { transform: scale(1.25); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .pin.hot::after { animation: none; } }
+.pinlabel {
+  position: absolute;
+  transform: translate(-50%, 8px);
+  background: #16181c;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 700;
+  border-radius: 7px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+
+/* ---------- Mobil ---------- */
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 900px) {
+  body { padding-bottom: 0; }
+  .top nav { display: none; }
+  .stage { flex-direction: column; height: calc(100dvh - 56px); }
+  .maparea { order: 1; flex: none; height: 44%; }
+  .panel {
+    order: 2;
+    width: auto;
+    flex: 1;
+    border-right: 0;
+    border-radius: 18px 18px 0 0;
+    margin-top: -16px;
+    z-index: 5;
+    box-shadow: 0 -8px 24px rgba(22,24,28,.1);
+  }
+  .panel::before {
+    content: "";
+    display: block;
+    width: 42px; height: 5px;
+    border-radius: 99px;
+    background: #d6d9de;
+    margin: 9px auto 2px;
+  }
+  .plist { padding-bottom: 76px; }
+  .float-search { display: none; }
+  .tabbar {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55;
+    background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .tabbar a.on { color: var(--accent); }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a class="on" href="#">Karte</a>
+      <a href="06c-kalender.html">Kalender</a>
+      <a href="06l-verzeichnis.html">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="upload-btn" href="06h-hochladen.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 16V5m0 0 -4 4m4-4 4 4M5 19h14"/></svg>
+      Hochladen
+    </a>
+    <a class="ava mh" href="06d-profil.html">MH</a>
+  </div>
+</header>
+
+<div class="stage">
+
+  <!-- Linkes Panel -->
+  <aside class="panel">
+    <div class="phead">
+      <h1>Entdecken</h1>
+      <p class="sub">612 Städte weltweit · sortiert nach Entfernung</p>
+      <div class="filters">
+        <button class="fchip on">Alle</button>
+        <button class="fchip">Heute</button>
+        <button class="fchip">Großer Freitag</button>
+        <button class="fchip">Neu</button>
+      </div>
+    </div>
+    <div class="plist">
+      <a class="crow me" href="06b-stadt.html">
+        <span class="dot" style="background:var(--accent)">HH</span>
+        <span class="t"><b>Hamburg</b><span class="when"><span class="hl">Fr 26.06. · 19:00</span> · Alstervorland</span></span>
+        <span class="dist"><b>deine Stadt</b>~ 2.400 Räder</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#0e7c82">NO</span>
+        <span class="t"><b>Norderstedt</b><span class="when">Fr 03.07. · 19:00 · Rathaus</span></span>
+        <span class="dist"><b>14 km</b>12 Räder</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#5a4fa0">PI</span>
+        <span class="t"><b>Pinneberg</b><span class="when"><span class="hl">Sa 13.06. · 20:45</span></span></span>
+        <span class="dist"><b>23 km</b>~ 60 Räder</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#1e7d4f">LG</span>
+        <span class="t"><b>Lüneburg</b><span class="when">Fr 26.06. · 18:00 · Am Sande</span></span>
+        <span class="dist"><b>43 km</b>~ 180 Räder</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#2b6cb0">HB</span>
+        <span class="t"><b>Bremen</b><span class="when">Fr 26.06. · 19:00</span></span>
+        <span class="dist"><b>95 km</b>~ 800 Räder</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#c98024">H</span>
+        <span class="t"><b>Hannover</b><span class="when">Fr 19.06. · 20:00</span></span>
+        <span class="dist"><b>132 km</b>~ 900 Räder</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#b76fc4">B</span>
+        <span class="t"><b>Berlin</b><span class="when">Fr 26.06. · 20:00 · Mariannenplatz</span></span>
+        <span class="dist"><b>255 km</b>~ 1.900 Räder</span>
+      </a>
+      <a class="crow" href="#">
+        <span class="dot" style="background:#8c5e2a">ST</span>
+        <span class="t"><b>Stirling</b><span class="when"><span class="hl">Neu</span> · Sa 20.06. · 10:00</span></span>
+        <span class="dist"><b>1.012 km</b>erste Masse</span>
+      </a>
+    </div>
+    <p class="pfoot">Stadt fehlt? <a href="06n-tour-anlegen.html" style="text-decoration:underline">Trag deine Masse ein</a> — drei Felder genügen.</p>
+  </aside>
+
+  <!-- Karte -->
+  <main class="maparea">
+    <svg class="map" viewBox="0 0 1000 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="1000" height="760" fill="#e9ecef"/>
+      <g stroke="#dde1e6" stroke-width="1.5">
+        <line x1="125" y1="0" x2="125" y2="760"/><line x1="250" y1="0" x2="250" y2="760"/>
+        <line x1="375" y1="0" x2="375" y2="760"/><line x1="500" y1="0" x2="500" y2="760"/>
+        <line x1="625" y1="0" x2="625" y2="760"/><line x1="750" y1="0" x2="750" y2="760"/>
+        <line x1="875" y1="0" x2="875" y2="760"/>
+        <line x1="0" y1="95" x2="1000" y2="95"/><line x1="0" y1="190" x2="1000" y2="190"/>
+        <line x1="0" y1="285" x2="1000" y2="285"/><line x1="0" y1="380" x2="1000" y2="380"/>
+        <line x1="0" y1="475" x2="1000" y2="475"/><line x1="0" y1="570" x2="1000" y2="570"/>
+        <line x1="0" y1="665" x2="1000" y2="665"/>
+      </g>
+      <!-- Nordsee / Ostsee -->
+      <path d="M0,0 L1000,0 L1000,52 C900,70 840,40 760,76 C690,108 640,70 560,96 C470,124 420,80 330,108 C240,134 160,96 80,124 C50,134 20,128 0,140 Z" fill="#d4e0ea"/>
+      <!-- Elbe -->
+      <path d="M330,108 C360,200 320,300 370,380 C410,444 380,540 420,640" fill="none" stroke="#c3d2e0" stroke-width="7" stroke-linecap="round"/>
+      <!-- Weser/Rhein angedeutet -->
+      <path d="M240,130 C250,240 210,340 240,460" fill="none" stroke="#cdd9e4" stroke-width="5" stroke-linecap="round"/>
+      <path d="M95,300 C120,420 90,540 130,660" fill="none" stroke="#cdd9e4" stroke-width="6" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Pins -->
+    <span class="pin l hot" style="top:24%; left:36%">HH</span>
+    <span class="pinlabel" style="top:30.5%; left:36%">Hamburg · Fr 19:00</span>
+    <span class="pin s city" style="top:19%; left:39%">NO</span>
+    <span class="pin s city" style="top:21%; left:31%">PI</span>
+    <span class="pin s city" style="top:33%; left:42%">LG</span>
+    <span class="pin m city" style="top:30%; left:24%">HB</span>
+    <span class="pin m city" style="top:47%; left:31%">H</span>
+    <span class="pin l city" style="top:34%; left:70%">B</span>
+    <span class="pin m cluster" style="top:58%; left:12%">23</span>
+    <span class="pin l cluster" style="top:66%; left:38%">47</span>
+    <span class="pin m cluster" style="top:80%; left:60%">19</span>
+    <span class="pin s cluster" style="top:12%; left:76%">7</span>
+
+    <span class="float-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      Stadt oder Region suchen
+    </span>
+    <span class="zoomers">
+      <button class="zbtn">+</button>
+      <button class="zbtn">−</button>
+      <button class="zbtn" aria-label="Mein Standort">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16181c" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22"/></svg>
+      </button>
+    </span>
+    <span class="legend"><b>612 Städte</b> · <span class="hl">43 Touren</span> in den nächsten 14 Tagen · Karte © OpenStreetMap</span>
+  </main>
+
+</div>
+
+<!-- Mobile Tabbar -->
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a class="on" href="#">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="06h-hochladen.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a href="06c-kalender.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="06d-profil.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

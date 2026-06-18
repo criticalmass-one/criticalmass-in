@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critical Mass Hamburg · 26.06.2026 — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  font-size: 15px;
+  padding-bottom: 70px;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- Topbar (wie Feed) ---------- */
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top nav a.on { color: var(--ink); background: #f2f3f5; font-weight: 700; }
+.top .grow { flex: 1; }
+.search { display: flex; align-items: center; gap: 8px; background: #f2f3f5; border-radius: 9px; padding: 7px 12px; color: var(--dim); font-size: .88rem; min-width: 180px; }
+.upload-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; border: 0; border-radius: 9px; font-weight: 700; font-size: .9rem; padding: 8px 14px; }
+.upload-btn:hover { background: var(--accent-deep); }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.xs { width: 26px; height: 26px; font-size: .6rem; border: 2px solid #fff; }
+.ava.kk { background: #0e7c82; }
+.ava.bb { background: #5a4fa0; }
+.ava.cb { background: #b76fc4; }
+.ava.lk { background: #c98024; }
+.ava.mh { background: #3d4350; }
+.ava.an { background: #1e7d4f; }
+.ava.vh { background: #2b6cb0; }
+
+/* ---------- Layout ---------- */
+.shell { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; padding: 22px 16px 40px; align-items: start; }
+.maincol { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.crumbs { grid-column: 1 / -1; font-size: .84rem; color: var(--dim); display: flex; gap: 7px; flex-wrap: wrap; }
+.crumbs a:hover { color: var(--ink); text-decoration: underline; }
+.crumbs b { color: var(--ink); font-weight: 600; }
+
+/* ---------- Tour-Hero ---------- */
+.hero { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.heromap { display: block; width: 100%; height: auto; }
+.hero-body { padding: 16px 18px 0; }
+.hero-head { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+.hero-head .when {
+  font-family: var(--mono);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--accent);
+  font-weight: 600;
+}
+.hero-head h1 { font-size: 1.55rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+.hero-head .sub { color: var(--dim); font-size: .92rem; margin-top: 3px; }
+.hero-head .sub a { font-weight: 600; color: var(--ink); }
+.hero-head .sub a:hover { color: var(--accent); }
+.countchip {
+  margin-left: auto;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 14px;
+  text-align: center;
+}
+.countchip .n { font-family: var(--mono); font-weight: 600; font-size: 1.15rem; }
+.countchip .k { font-size: .68rem; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+.joinrow { display: flex; gap: 8px; align-items: center; padding: 14px 0 16px; flex-wrap: wrap; }
+.kbtn {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid var(--line); background: var(--card);
+  border-radius: 9px; padding: 8px 15px;
+  font-weight: 700; font-size: .88rem; color: var(--ink);
+}
+.kbtn:hover { border-color: #c9cdd3; }
+.kbtn.solid { background: var(--accent); border-color: var(--accent); color: #fff; }
+.kbtn.solid:hover { background: var(--accent-deep); }
+.kbtn svg { stroke: currentColor; }
+.joinrow .who { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.facepile { display: flex; }
+.facepile .ava.xs + .ava.xs { margin-left: -8px; }
+.joinrow .who .note { font-size: .82rem; color: var(--dim); }
+.joinrow .who .note b { color: var(--ink); }
+.statband { display: flex; border-top: 1px solid var(--line); background: #fafbfc; }
+.statband > div { flex: 1; padding: 12px 18px; }
+.statband > div + div { border-left: 1px solid var(--line); }
+.statband .v { font-family: var(--mono); font-weight: 600; font-size: 1.15rem; }
+.statband .v small { font-size: .68em; color: var(--dim); margin-left: 2px; }
+.statband .k { font-size: .7rem; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; margin-top: 1px; }
+
+/* ---------- Tabs ---------- */
+.tabs { display: flex; gap: 2px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; overflow-x: auto; }
+.tabs a {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  font-size: .88rem;
+  color: var(--dim);
+  border-radius: 9px;
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+.tabs a.on { background: #f2f3f5; color: var(--ink); }
+.tabs a:hover:not(.on) { color: var(--ink); }
+.tabs a .n { font-family: var(--mono); font-size: .72rem; color: var(--dim); margin-left: 4px; }
+
+/* ---------- Inhaltskarten ---------- */
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.box h2 { font-size: 1.02rem; font-weight: 800; margin-bottom: 12px; display: flex; align-items: baseline; }
+.box h2 small { margin-left: auto; font-weight: 600; color: var(--dim); font-size: .76rem; }
+.lovestory { display: grid; gap: 10px; }
+.rule { display: flex; gap: 12px; align-items: baseline; }
+.rule .nr {
+  flex: none;
+  font-family: var(--mono);
+  font-size: .76rem;
+  font-weight: 600;
+  color: var(--accent);
+  border: 1px solid #ffd4bf;
+  background: #fff4ee;
+  border-radius: 7px;
+  padding: 2px 8px;
+}
+.rule p { font-size: .94rem; color: #3c4048; }
+.rule p b { color: var(--ink); }
+.lovestory .src { font-size: .78rem; color: var(--dim); margin-top: 4px; }
+
+/* Kommentare */
+.comment { display: flex; gap: 11px; padding: 12px 0; border-top: 1px solid var(--line); }
+.comment:first-of-type { border-top: 0; padding-top: 0; }
+.comment .body { min-width: 0; }
+.comment .meta { font-size: .82rem; color: var(--dim); }
+.comment .meta b { color: var(--ink); font-size: .92rem; }
+.comment p { font-size: .93rem; color: #3c4048; margin-top: 2px; }
+.comment .r { font-size: .78rem; color: var(--dim); margin-top: 5px; display: flex; gap: 14px; }
+.comment .r a:hover { color: var(--accent); }
+.writebox { display: flex; gap: 10px; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line); }
+.writebox input { flex: 1; border: 1px solid var(--line); background: #fafbfc; border-radius: 99px; padding: 9px 16px; font: inherit; min-width: 0; }
+.writebox input::placeholder { color: var(--dim); }
+
+/* ---------- Rechte Spalte ---------- */
+.rail { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 76px; }
+.rail .box { padding: 16px 18px; }
+.meetrow { display: flex; gap: 12px; }
+.meetrow .pin { flex: none; width: 38px; height: 38px; border-radius: 10px; background: #fff4ee; display: grid; place-items: center; }
+.meetrow b { font-size: .95rem; }
+.meetrow .d { font-size: .82rem; color: var(--dim); }
+.transit { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.tline {
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 5px;
+  padding: 3px 8px;
+}
+.tline.u1 { background: #0b5ca2; }
+.tline.bus { background: #e7873a; }
+.tline.s11 { background: #149533; }
+.transit .walk { font-size: .78rem; color: var(--dim); align-self: center; }
+.pastrow { display: flex; gap: 10px; align-items: baseline; padding: 8px 6px; border-radius: 8px; font-size: .9rem; }
+.pastrow:hover { background: #f6f7f8; }
+.pastrow .d { font-family: var(--mono); font-size: .8rem; color: var(--dim); width: 78px; flex: none; }
+.pastrow .n { font-weight: 700; }
+.pastrow .x { margin-left: auto; color: var(--dim); font-size: .78rem; text-align: right; }
+.wetter { display: flex; align-items: center; gap: 14px; }
+.wetter .t { font-family: var(--mono); font-weight: 600; font-size: 1.6rem; }
+.wetter .d { font-size: .84rem; color: var(--dim); }
+.fine { font-size: .75rem; color: var(--dim); line-height: 1.6; padding: 0 6px; }
+.fine a { text-decoration: underline; text-decoration-color: #d4d7db; }
+
+/* ---------- Mobil ---------- */
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; }
+  .top nav, .search { display: none; }
+  .statband { flex-wrap: wrap; }
+  .statband > div { flex: 1 1 40%; border-top: 1px solid var(--line); margin-top: -1px; }
+  .countchip { margin-left: 0; }
+  .joinrow .who { margin-left: 0; }
+  .tabbar {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55;
+    background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .tabbar a.on { color: var(--accent); }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a href="06e-karte.html">Karte</a>
+      <a class="on" href="06c-kalender.html">Kalender</a>
+      <a href="06l-verzeichnis.html">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="search" href="06j-suche.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      Stadt oder Tour suchen
+    </a>
+    <a class="upload-btn" href="06h-hochladen.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 16V5m0 0 -4 4m4-4 4 4M5 19h14"/></svg>
+      Hochladen
+    </a>
+    <a class="ava mh" href="06d-profil.html">MH</a>
+  </div>
+</header>
+
+<div class="shell">
+
+  <p class="crumbs">
+    <a href="06-feed-aktiv.html">Timeline</a> ›
+    <a href="06b-stadt.html">Hamburg</a> ›
+    <b>Critical Mass · 26. Juni 2026</b>
+  </p>
+
+  <!-- Hauptspalte -->
+  <main class="maincol">
+
+    <section class="hero">
+      <svg class="heromap" viewBox="0 0 760 280" aria-hidden="true">
+        <rect width="760" height="280" fill="#e9ecef"/>
+        <g stroke="#d9dde2" stroke-width="1.5">
+          <line x1="100" y1="0" x2="100" y2="280"/><line x1="220" y1="0" x2="220" y2="280"/>
+          <line x1="350" y1="0" x2="350" y2="280"/><line x1="500" y1="0" x2="500" y2="280"/>
+          <line x1="640" y1="0" x2="640" y2="280"/>
+          <line x1="0" y1="60" x2="760" y2="60"/><line x1="0" y1="140" x2="760" y2="140"/>
+          <line x1="0" y1="215" x2="760" y2="215"/>
+        </g>
+        <!-- Außenalster -->
+        <path d="M430,40 C500,30 560,60 575,120 C588,172 560,225 500,240 C450,252 408,230 395,185 C382,140 385,80 430,40 Z" fill="#d4e0ea" stroke="#bccddd" stroke-width="1.5"/>
+        <text x="468" y="148" font-family="Archivo" font-size="12" fill="#8aa0b4" font-style="italic">Außenalster</text>
+        <!-- Parkstreifen Alstervorland -->
+        <path d="M388,60 C376,110 376,170 398,222 L362,232 C340,175 342,105 360,52 Z" fill="#dde7d6"/>
+        <!-- Treffpunkt-Pin -->
+        <g transform="translate(380,128)">
+          <circle r="26" fill="rgba(244,88,28,.14)">
+            <animate attributeName="r" values="20;30;20" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <path d="M0,12 C-9,1 -12,-5 -12,-12 A12,12 0 1 1 12,-12 C12,-5 9,1 0,12 Z" fill="#f4581c"/>
+          <circle cy="-11" r="4.5" fill="#fff"/>
+        </g>
+        <g transform="translate(403,103)">
+          <rect x="0" y="0" width="186" height="26" rx="7" fill="#16181c"/>
+          <text x="12" y="17" font-family="Archivo" font-size="12" font-weight="700" fill="#fff">Treffpunkt · Alstervorland</text>
+        </g>
+      </svg>
+      <div class="hero-body">
+        <div class="hero-head">
+          <div>
+            <span class="when">Freitag · 26. Juni 2026 · 19:00 Uhr</span>
+            <h1>Critical Mass Hamburg</h1>
+            <p class="sub">Alstervorland, Höhe Milchstraße · <a href="06b-stadt.html">Stadtseite Hamburg →</a></p>
+          </div>
+          <span class="countchip"><span class="n">in 14 Tg</span><span class="k">Countdown</span></span>
+        </div>
+        <div class="joinrow">
+          <button class="kbtn solid">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="m4.5 12.5 5 5 10-11"/></svg>
+            Dabei!
+          </button>
+          <button class="kbtn">Vielleicht</button>
+          <button class="kbtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+            iCal
+          </button>
+          <button class="kbtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 9V5l7 7-7 7v-4c-7 0-10 2-11 5 0-7 4-11 11-11z"/></svg>
+            Teilen
+          </button>
+          <span class="who">
+            <span class="facepile">
+              <span class="ava xs kk">K</span><span class="ava xs bb">b</span><span class="ava xs lk">L</span><span class="ava xs vh">V</span><span class="ava xs an">A</span>
+            </span>
+            <span class="note"><b>132 dabei</b> · 41 vielleicht</span>
+          </span>
+        </div>
+      </div>
+      <div class="statband">
+        <div><div class="v">~ 2.400</div><div class="k">Räder zuletzt (Mai)</div></div>
+        <div><div class="v">19,4<small>km</small></div><div class="k">Ø Strecke</div></div>
+        <div><div class="v">2:05<small>h</small></div><div class="k">Ø Dauer</div></div>
+        <div><div class="v">178.</div><div class="k">Masse seit 2011</div></div>
+      </div>
+    </section>
+
+    <nav class="tabs">
+      <a class="on" href="#">Details</a>
+      <a href="#">Kommentare<span class="n">3</span></a>
+      <a href="#">Mini-Masses<span class="n">0</span></a>
+      <a href="06g-galerie.html">Galerie<span class="n">–</span></a>
+      <a href="#">Tracks<span class="n">–</span></a>
+    </nav>
+
+    <section class="box">
+      <h2>Critical Love Story <small>so rollt die Masse</small></h2>
+      <div class="lovestory">
+        <div class="rule"><span class="nr">01</span><p><b>Bleibt stets freundlich und respektvoll</b> — gegenüber allen, auch denen im Auto.</p></div>
+        <div class="rule"><span class="nr">02</span><p><b>Zum Schutz der Masse an Kreuzungen corken:</b> Querverkehr kurz aufhalten, bis alle durch sind.</p></div>
+        <div class="rule"><span class="nr">03</span><p><b>Bleibt zusammen.</b> Die Masse fährt so schnell wie ihre Langsamsten — vorne langsam, hinten lückenlos.</p></div>
+        <div class="rule"><span class="nr">04</span><p><b>Rettungsgasse geht vor.</b> Blaulicht hat immer Vorfahrt, Masse hin oder her.</p></div>
+        <p class="src">Es gilt § 27 StVO: Ab 16 Radfahrenden fahren wir als geschlossener Verband — zwei nebeneinander.</p>
+      </div>
+    </section>
+
+    <section class="box">
+      <h2>Kommentare <small>3 Beiträge</small></h2>
+      <div class="comment">
+        <span class="ava lk">LK</span>
+        <div class="body">
+          <p class="meta"><b>Lotte</b> · vor 5 Std</p>
+          <p>Route im Juni mal Richtung Hafen? Beim letzten Mal war auf der Kennedybrücke ordentlich was los.</p>
+          <p class="r"><a href="#">Antworten</a><a href="#">Klingeln · 4</a></p>
+        </div>
+      </div>
+      <div class="comment">
+        <span class="ava an">A</span>
+        <div class="body">
+          <p class="meta"><b>Anna</b> · vor 3 Std</p>
+          <p>Gibt's wieder eine Familien-Gruppe weiter hinten? Wir kommen mit Lastenrad und zwei Kindern.</p>
+          <p class="r"><a href="#">Antworten</a><a href="#">Klingeln · 2</a></p>
+        </div>
+      </div>
+      <div class="comment">
+        <span class="ava bb">b</span>
+        <div class="body">
+          <p class="meta"><b>birnenblau</b> · vor 1 Std</p>
+          <p>@Anna klar — sammeln hinten links, Tempo ist dort entspannt. Einfach nach den Anhängern Ausschau halten.</p>
+          <p class="r"><a href="#">Antworten</a><a href="#">Klingeln · 5</a></p>
+        </div>
+      </div>
+      <div class="writebox">
+        <span class="ava mh">MH</span>
+        <input type="text" placeholder="Frag die Masse …">
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rechte Spalte -->
+  <aside class="rail">
+    <div class="box">
+      <h2 style="margin-bottom:14px">Treffpunkt</h2>
+      <div class="meetrow">
+        <span class="pin">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#f4581c" stroke-width="2.2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+        </span>
+        <div>
+          <b>Alstervorland, Höhe Milchstraße</b>
+          <p class="d">Wiese am Westufer der Außenalster — sammeln ab 18:30, Abfahrt pünktlich 19:00.</p>
+        </div>
+      </div>
+      <div class="transit">
+        <span class="tline u1">U1 Hallerstraße</span>
+        <span class="tline s11">S11 Dammtor</span>
+        <span class="tline bus">Bus 109</span>
+        <span class="walk">+ 5 min mit dem Rad</span>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2 style="margin-bottom:10px">Wetter zur Abfahrt</h2>
+      <div class="wetter">
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#f4a51c" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/></svg>
+        <div>
+          <span class="t">18°C</span>
+          <p class="d">leicht bewölkt, trocken · Wind 12 km/h aus West</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2 style="margin-bottom:8px">Letzte Massen in Hamburg <small><a href="06b-stadt.html" style="text-decoration:underline">alle →</a></small></h2>
+      <a class="pastrow" href="#"><span class="d">29.05.2026</span><span class="n">~ 2.400</span><span class="x">4 Tracks · 23 Fotos</span></a>
+      <a class="pastrow" href="#"><span class="d">24.04.2026</span><span class="n">~ 1.900</span><span class="x">3 Tracks · 11 Fotos</span></a>
+      <a class="pastrow" href="#"><span class="d">27.03.2026</span><span class="n">~ 1.200</span><span class="x">2 Tracks · 8 Fotos</span></a>
+      <a class="pastrow" href="#"><span class="d">27.02.2026</span><span class="n">~ 1.100</span><span class="x">1 Track · 4 Fotos</span></a>
+    </div>
+
+    <p class="fine">
+      Critical Mass hat keinen Veranstalter — diese Seite pflegt die Community.
+      <a href="#">Tour bearbeiten</a> · <a href="#">Fehler melden</a><br><br>
+      Karten © OpenStreetMap-Mitwirkende · Wetter: OpenWeatherMap
+    </p>
+  </aside>
+
+</div>
+
+<!-- Mobile Tabbar -->
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a href="06e-karte.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="06h-hochladen.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a class="on" href="06c-kalender.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="06d-profil.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>

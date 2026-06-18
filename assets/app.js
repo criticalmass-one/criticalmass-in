@@ -1,4 +1,14 @@
 import './bootstrap.js';
+
+// Redesign „Aktivität": selbst gehostete Schriften (DSGVO — kein Google-CDN)
+import '@fontsource/archivo/400.css';
+import '@fontsource/archivo/500.css';
+import '@fontsource/archivo/600.css';
+import '@fontsource/archivo/700.css';
+import '@fontsource/archivo/800.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
+
 import './scss/criticalmass.scss';
 import 'dropzone/dist/dropzone.css';
 import 'friendly-challenge/widget';

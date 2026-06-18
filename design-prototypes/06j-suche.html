@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suche — Prototyp 6 · criticalmass.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e3e5e8;
+  --ink: #16181c;
+  --dim: #707684;
+  --accent: #f4581c;
+  --accent-deep: #d8450e;
+  --green: #1e7d4f;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: clip; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.5; font-size: 15px; padding-bottom: 70px; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.top { position: sticky; top: 0; z-index: 50; background: var(--card); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 0 16px; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; }
+.brand .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.top nav { display: flex; gap: 4px; }
+.top nav a { font-weight: 600; font-size: .92rem; color: var(--dim); padding: 6px 12px; border-radius: 8px; }
+.top nav a:hover { background: #f2f3f5; color: var(--ink); }
+.top .grow { flex: 1; }
+.ava { width: 34px; height: 34px; border-radius: 99px; flex: none; display: grid; place-items: center; font-weight: 800; font-size: .78rem; color: #fff; }
+.ava.mh { background: #3d4350; }
+.ava.lk { background: #c98024; }
+
+.shell { max-width: 720px; margin: 0 auto; padding: 30px 16px 40px; display: flex; flex-direction: column; gap: 18px; }
+
+.bigsearch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  padding: 13px 22px;
+  box-shadow: 0 6px 18px rgba(22,24,28,.07);
+}
+.bigsearch svg { flex: none; stroke: var(--dim); }
+.bigsearch input { flex: 1; border: 0; font: inherit; font-size: 1.05rem; font-weight: 600; color: var(--ink); outline: none; min-width: 0; }
+.bigsearch .kbd { font-family: var(--mono); font-size: .68rem; color: var(--dim); border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px; }
+
+.tabs { display: flex; gap: 2px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; }
+.tabs a { flex: 1; text-align: center; font-weight: 700; font-size: .88rem; color: var(--dim); border-radius: 9px; padding: 8px 12px; white-space: nowrap; }
+.tabs a.on { background: #f2f3f5; color: var(--ink); }
+.tabs a .n { font-family: var(--mono); font-size: .72rem; margin-left: 5px; }
+
+.group { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.group .ghead { padding: 12px 18px 10px; border-bottom: 1px solid var(--line); font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--dim); }
+.hit { display: flex; gap: 13px; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--line); }
+.hit:last-child { border-bottom: 0; }
+.hit:hover { background: #fafbfc; }
+.hit .ic { width: 38px; height: 38px; border-radius: 11px; flex: none; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: .76rem; }
+.hit .t { min-width: 0; flex: 1; }
+.hit b { font-weight: 700; }
+.hit b mark { background: #ffe4d6; color: inherit; border-radius: 3px; padding: 0 1px; }
+.hit .sub { display: block; font-size: .8rem; color: var(--dim); }
+.hit .x { flex: none; font-family: var(--mono); font-size: .76rem; color: var(--dim); text-align: right; }
+.hit .x .hl { color: var(--accent); font-weight: 600; }
+.allhits { display: block; text-align: center; padding: 11px; font-size: .85rem; font-weight: 700; color: var(--accent); }
+.allhits:hover { background: #fff4ee; }
+.fine { font-size: .78rem; color: var(--dim); text-align: center; line-height: 1.7; }
+.fine code { font-family: var(--mono); font-size: .74rem; background: #e9ebee; border-radius: 5px; padding: 1px 6px; }
+
+.tabbar { display: none; }
+.proto-back { position: fixed; bottom: 14px; right: 14px; z-index: 60; font-size: .75rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; color: var(--dim); }
+@media (max-width: 900px) {
+  .top nav { display: none; }
+  .tabbar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 55; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: .62rem; font-weight: 700; color: var(--dim); padding: 4px 0; }
+  .tabbar a svg { stroke: currentColor; }
+  .proto-back { bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="06-feed-aktiv.html">
+      <span class="mark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 9.5 9H8m1.5 0h5L18 17M12 17l-1.5-6"/></svg>
+      </span>
+      criticalmass.in
+    </a>
+    <nav>
+      <a href="06-feed-aktiv.html">Timeline</a>
+      <a href="06e-karte.html">Karte</a>
+      <a href="06c-kalender.html">Kalender</a>
+      <a href="06l-verzeichnis.html">Städte</a>
+      <a href="06f-forum.html">Forum</a>
+    </nav>
+    <span class="grow"></span>
+    <a class="ava mh" href="06d-profil.html">MH</a>
+  </div>
+</header>
+
+<div class="shell">
+
+  <div class="bigsearch">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+    <input type="text" value="ham" autofocus>
+    <span class="kbd">ESC</span>
+  </div>
+
+  <nav class="tabs">
+    <a class="on" href="#">Alle<span class="n">7</span></a>
+    <a href="#">Städte<span class="n">2</span></a>
+    <a href="#">Touren<span class="n">4</span></a>
+    <a href="#">Forum<span class="n">1</span></a>
+  </nav>
+
+  <section class="group">
+    <div class="ghead">Städte</div>
+    <a class="hit" href="06b-stadt.html">
+      <span class="ic" style="background:var(--accent)">HH</span>
+      <span class="t"><b><mark>Ham</mark>burg</b><span class="sub">Deutschland · 178 Massen seit 2011 · zuletzt ~ 2.400 Räder</span></span>
+      <span class="x"><span class="hl">Fr 26.06.</span><br>19:00</span>
+    </a>
+    <a class="hit" href="#">
+      <span class="ic" style="background:#3d4350">HA</span>
+      <span class="t"><b><mark>Ham</mark>m (Westf.)</b><span class="sub">Deutschland · zuletzt 40 Räder</span></span>
+      <span class="x">Fr 19.06.<br>19:00</span>
+    </a>
+  </section>
+
+  <section class="group">
+    <div class="ghead">Touren</div>
+    <a class="hit" href="06a-tour.html">
+      <span class="ic" style="background:#16181c">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+      </span>
+      <span class="t"><b>Critical Mass <mark>Ham</mark>burg · 26.06.2026</b><span class="sub">Alstervorland, Höhe Milchstraße · 132 dabei</span></span>
+      <span class="x"><span class="hl">in 14 Tg</span></span>
+    </a>
+    <a class="hit" href="#">
+      <span class="ic" style="background:#1e7d4f">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="m5 12 4.5 4.5L19 7"/></svg>
+      </span>
+      <span class="t"><b>Maimasse <mark>Ham</mark>burg · 29.05.2026</b><span class="sub">~ 2.400 Räder · 4 Tracks · 23 Fotos</span></span>
+      <span class="x">gefahren</span>
+    </a>
+    <a class="hit" href="#">
+      <span class="ic" style="background:#1e7d4f">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="m5 12 4.5 4.5L19 7"/></svg>
+      </span>
+      <span class="t"><b>Aprilmasse <mark>Ham</mark>burg · 24.04.2026</b><span class="sub">~ 1.900 Räder · 3 Tracks · 11 Fotos</span></span>
+      <span class="x">gefahren</span>
+    </a>
+    <a class="allhits" href="#">Alle 4 Touren anzeigen</a>
+  </section>
+
+  <section class="group">
+    <div class="ghead">Forum</div>
+    <a class="hit" href="06f-forum.html">
+      <span class="ava lk" style="border-radius:11px">LK</span>
+      <span class="t"><b>Route im Juni mal Richtung <mark>Ha</mark>fen?</b><span class="sub">Board <mark>Ham</mark>burg · 14 Antworten · vor 40 min</span></span>
+    </a>
+  </section>
+
+  <p class="fine">Tipp: <code>26.06.</code> findet alle Touren an dem Tag ·
+  <code>@katrin</code> findet Menschen · <code>#track</code> sucht nur in Tracks</p>
+
+</div>
+
+<nav class="tabbar">
+  <a href="06-feed-aktiv.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11.2 12 4l9 7.2M5.5 9.8V20h13V9.8"/></svg>
+    Timeline
+  </a>
+  <a href="06e-karte.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="9.8" r="2.4"/></svg>
+    Karte
+  </a>
+  <a href="06h-hochladen.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 16V5m0 0-4 4m4-4 4 4M5 19h14"/></svg>
+    Hochladen
+  </a>
+  <a href="06c-kalender.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Kalender
+  </a>
+  <a href="06d-profil.html">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8.4" r="3.4"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>
+    Profil
+  </a>
+</nav>
+
+<a class="proto-back" href="index.html">← Übersicht</a>
+
+</body>
+</html>
