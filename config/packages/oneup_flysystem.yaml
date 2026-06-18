@@ -18,6 +18,9 @@ oneup_flysystem:
         track_track_adapter:
             local:
                 location: '%upload_destination.track%'
+        photo_candidate_adapter:
+            local:
+                location: '%upload_destination.photo_candidate%'
 
     filesystems:
         flysystem_photo_photo:
@@ -43,3 +46,7 @@ oneup_flysystem:
         flysystem_track_track:
             adapter: track_track_adapter
             mount: flysystem_track_track
+
+        flysystem_photo_candidate:
+            adapter: photo_candidate_adapter
+            mount: flysystem_photo_candidate
