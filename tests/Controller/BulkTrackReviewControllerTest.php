@@ -14,14 +14,15 @@ class BulkTrackReviewControllerTest extends AbstractControllerTestCase
 {
     private const REVIEW_URL = '/trackupload/review';
 
-    public function testReviewPageAccessibleWhenLoggedIn(): void
+    public function testReviewPageRedirectsToUnifiedReview(): void
     {
         $client = static::createClient();
         $this->loginAs($client, 'testuser@criticalmass.in');
 
         $client->request('GET', self::REVIEW_URL);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertStringEndsWith('/upload/review', (string) $client->getResponse()->headers->get('Location'));
     }
 
     public function testReviewPageRedirectsAnonymous(): void
@@ -111,11 +112,13 @@ class BulkTrackReviewControllerTest extends AbstractControllerTestCase
 
     private function reviewToken(KernelBrowser $client): string
     {
-        $crawler = $client->request('GET', self::REVIEW_URL);
+        // Track review now lives on the unified review page; grab a token from one of
+        // the track forms (they post to /trackupload/review/* and use bulk_track_review).
+        $crawler = $client->request('GET', '/upload/review');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $token = $crawler->filter('input[name="_token"]')->first();
-        $this->assertGreaterThan(0, $token->count(), 'Review page should expose a CSRF token');
+        $token = $crawler->filter('form[action*="trackupload/review"] input[name="_token"]')->first();
+        $this->assertGreaterThan(0, $token->count(), 'Review page should expose a track CSRF token');
 
         return $token->attr('value');
     }
