@@ -3,119 +3,21 @@
 namespace App\Controller\Track;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\MassTrackImport\ProposalPersister\ProposalPersisterInterface;
-use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
-use App\Criticalmass\MassTrackImport\UploadedTrackCandidate\UploadedTrackCandidateFactory;
-use App\Entity\TrackImportCandidate;
-use App\Entity\User;
-use League\Flysystem\FilesystemOperator;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * Per-file endpoint for the bulk track upload (Dropzone sends one request per file).
- * Each file is parsed, stored as normalised GPX, and either matched to a ride or
- * parked for manual review — the upload replacement for the former Strava mass import.
+ * The standalone bulk track upload has been folded into the unified upload, which
+ * handles tracks and photos through one form. This route is kept so existing links
+ * and bookmarks keep working — it now redirects to the unified upload page.
  */
 class BulkTrackUploadController extends AbstractController
 {
-    private const CANDIDATE_DIRECTORY = 'candidates';
-
     #[IsGranted('ROLE_USER')]
     #[Route('/trackupload/bulk', name: 'caldera_criticalmass_track_bulkupload', methods: ['GET'], priority: 310)]
     public function pageAction(): Response
     {
-        return $this->render('Track/bulk-upload.html.twig');
-    }
-
-    #[IsGranted('ROLE_USER')]
-    #[Route('/trackupload/bulk/file', name: 'caldera_criticalmass_track_bulkupload_file', methods: ['POST'], priority: 310)]
-    public function uploadFileAction(
-        Request $request,
-        UploadedTrackCandidateFactory $candidateFactory,
-        TrackDeciderInterface $trackDecider,
-        ProposalPersisterInterface $proposalPersister,
-        FilesystemOperator $trackFilesystem,
-        RateLimiterFactory $uploadLimiter,
-        #[CurrentUser] ?User $user = null,
-    ): JsonResponse {
-        if (!$this->isCsrfTokenValid('bulk_track_upload', (string) $request->request->get('_token'))) {
-            return $this->statusResponse('error', 'Ungültiges Sicherheits-Token — bitte lade die Seite neu.', Response::HTTP_FORBIDDEN);
-        }
-
-        if (!$user instanceof User) {
-            return $this->statusResponse('error', 'Bitte melde dich an, um Tracks hochzuladen.', Response::HTTP_FORBIDDEN);
-        }
-
-        if (false === $uploadLimiter->create('user-' . $user->getId())->consume()->isAccepted()) {
-            return $this->statusResponse('error', 'Zu viele Uploads in kurzer Zeit. Bitte warte einen Moment.', Response::HTTP_TOO_MANY_REQUESTS);
-        }
-
-        $uploadedFile = $request->files->get('file');
-
-        if (!$uploadedFile instanceof UploadedFile) {
-            return $this->statusResponse('error', 'Es wurde keine Datei übertragen.', Response::HTTP_BAD_REQUEST);
-        }
-
-        try {
-            $parsed = $candidateFactory->createFromUpload(
-                $uploadedFile->getPathname(),
-                $uploadedFile->getClientOriginalName(),
-                $user,
-            );
-        } catch (\RuntimeException $exception) {
-            return $this->statusResponse('error', $exception->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $candidate = $parsed->getCandidate();
-        $fileHash = (string) $candidate->getFileHash();
-
-        if ($this->candidateAlreadyExists($user, $fileHash)) {
-            return $this->statusResponse('duplicate', 'Diese Datei hast du bereits hochgeladen.');
-        }
-
-        $storagePath = sprintf('%s/%s.gpx', self::CANDIDATE_DIRECTORY, $fileHash);
-        $trackFilesystem->write($storagePath, $parsed->getGpxXml());
-        $candidate->setTrackFilename($storagePath);
-
-        $rideResult = $trackDecider->decide($candidate);
-
-        if ($rideResult !== null) {
-            $proposalPersister->persist($rideResult);
-
-            return $this->statusResponse('matched', sprintf('Der Tour „%s“ zugeordnet.', $rideResult->getRide()->getTitle()));
-        }
-
-        // No confident ride match → park the candidate without a ride for manual review.
-        // (The decider may have pre-set a below-threshold ride, so reset it explicitly.)
-        $candidate->setRide(null);
-
-        $manager = $this->managerRegistry->getManager();
-        $manager->persist($candidate);
-        $manager->flush();
-
-        return $this->statusResponse('parked', 'Keine passende Tour gefunden — die Datei wurde zur manuellen Prüfung gespeichert.');
-    }
-
-    private function candidateAlreadyExists(User $user, string $fileHash): bool
-    {
-        return null !== $this->managerRegistry->getRepository(TrackImportCandidate::class)->findOneBy([
-            'user' => $user,
-            'fileHash' => $fileHash,
-        ]);
-    }
-
-    /**
-     * @param 'matched'|'parked'|'duplicate'|'error' $status
-     */
-    private function statusResponse(string $status, string $message, int $httpStatus = Response::HTTP_OK): JsonResponse
-    {
-        return new JsonResponse(['status' => $status, 'message' => $message], $httpStatus);
+        return $this->redirectToRoute('caldera_criticalmass_unified_upload');
     }
 }
