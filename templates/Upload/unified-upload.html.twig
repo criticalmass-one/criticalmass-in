@@ -1,0 +1,52 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Tracks &amp; Fotos hochladen{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.active('Hochladen') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container"
+         data-controller="unified-upload"
+         data-unified-upload-upload-url-value="{{ path('caldera_criticalmass_unified_upload_file') }}"
+         data-unified-upload-csrf-token-value="{{ csrf_token('unified_upload') }}">
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1>
+                    <i class="far fa-cloud-upload text-muted me-2"></i>Tracks &amp; Fotos hochladen
+                </h1>
+                <p class="text-muted">
+                    Zieh deinen ganzen Kram einfach hierher: <strong>GPX-</strong> und <strong>FIT-Tracks</strong>
+                    werden automatisch der passenden Tour zugeordnet, <strong>Bilder</strong> (JPG, PNG, WebP, GIF, HEIC)
+                    landen als Galerie bei der passenden Tour. Anschließend kannst du alles prüfen und bestätigen.
+                    Was sich nicht eindeutig zuordnen lässt, wird zum späteren Prüfen geparkt.
+                </p>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-8 offset-md-2">
+                <div data-unified-upload-target="dashboard"></div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-8 offset-md-2">
+                <ul class="list-group d-none" data-unified-upload-target="results"></ul>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-8 offset-md-2 text-center">
+                <a href="{{ path('caldera_criticalmass_track_bulkupload_review') }}"
+                   class="btn btn-success d-none"
+                   data-unified-upload-target="reviewLink">
+                    <i class="far fa-clipboard-check me-1"></i>Hochgeladenes prüfen
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
