@@ -1,0 +1,258 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Hochgeladenes prüfen{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Hochladen', path('caldera_criticalmass_unified_upload')) }}
+    {{ breadcrumb.active('Prüfen') }}
+{% endblock %}
+
+{% macro ride_options(rides, selectedRide) %}
+    {% for ride in rides %}
+        <option value="{{ ride.id }}"{% if selectedRide and ride.id == selectedRide.id %} selected{% endif %}>
+            {{ ride.city.city }} — {{ ride.title }} ({{ ride.dateTime|date('H:i') }} Uhr)
+        </option>
+    {% endfor %}
+{% endmacro %}
+
+{% block content %}
+    <div class="container">
+        {% include 'Flash/_flash.html.twig' %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1><i class="far fa-clipboard-check text-muted me-2"></i>Hochgeladenes prüfen</h1>
+                <p class="text-muted">
+                    Bestätige die automatischen Zuordnungen oder ordne sie einer anderen Tour vom selben Tag zu.
+                    Fotos werden immer als ganze Galerie behandelt.
+                </p>
+            </div>
+        </div>
+
+        {# ============================ PHOTO GALLERIES ============================ #}
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h3>
+                    <i class="far fa-images text-success me-2"></i>Foto-Galerien
+                    <span class="badge bg-secondary">{{ photoGalleries|length }}</span>
+                </h3>
+            </div>
+        </div>
+
+        {% if photoGalleries|length %}
+            <div class="row g-4 mt-1">
+                {% for gallery in photoGalleries %}
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="far fa-calendar me-1 text-muted"></i>
+                                    {% if gallery.isDated %}{{ gallery.date|date('d.m.Y') }}{% else %}Ohne Datum{% endif %}
+                                    <span class="badge bg-secondary">{{ gallery.count }} Foto{{ gallery.count != 1 ? 's' : '' }}</span>
+                                </h5>
+
+                                <div class="d-flex flex-wrap gap-2 mb-3">
+                                    {% for candidate in gallery.candidates|slice(0, 8) %}
+                                        <img src="{{ path('caldera_criticalmass_unified_review_photo_preview', {'id': candidate.id}) }}"
+                                             alt="{{ candidate.originalName }}" loading="lazy"
+                                             class="rounded" style="width: 72px; height: 72px; object-fit: cover;"/>
+                                    {% endfor %}
+                                    {% if gallery.count > 8 %}
+                                        <span class="d-inline-flex align-items-center justify-content-center rounded bg-light text-muted"
+                                              style="width: 72px; height: 72px;">+{{ gallery.count - 8 }}</span>
+                                    {% endif %}
+                                </div>
+
+                                {% if gallery.canBeAssigned %}
+                                    <form method="post" class="row g-2 align-items-end"
+                                          action="{{ path('caldera_criticalmass_unified_review_photos_confirm', {'galleryKey': gallery.key}) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('unified_review') }}"/>
+                                        <div class="col-8">
+                                            <label class="form-label small mb-1">Tour</label>
+                                            <select name="rideId" class="form-select form-select-sm">
+                                                {{ _self.ride_options(gallery.sameDateRides, gallery.suggestedRide) }}
+                                            </select>
+                                        </div>
+                                        <div class="col-4 d-grid">
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                <i class="far fa-check me-1"></i>Zuordnen
+                                            </button>
+                                        </div>
+                                    </form>
+                                {% else %}
+                                    <p class="text-muted small mb-0">
+                                        Keine passende Tour an diesem Tag — du kannst die Galerie nur verwerfen.
+                                    </p>
+                                {% endif %}
+                            </div>
+
+                            <div class="card-footer bg-white border-0">
+                                <form method="post" class="d-grid"
+                                      action="{{ path('caldera_criticalmass_unified_review_photos_reject', {'galleryKey': gallery.key}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('unified_review') }}"/>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="far fa-trash me-1"></i>Galerie verwerfen
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">Keine Foto-Galerien zum Prüfen.</p>
+        {% endif %}
+
+        <hr class="my-5"/>
+
+        {# ============================ MATCHED TRACKS ============================ #}
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">
+                    <i class="far fa-link text-success me-2"></i>Zugeordnete Tracks
+                    <span class="badge bg-secondary">{{ matchedTracks|length }}</span>
+                </h3>
+
+                {% if matchedTracks|length %}
+                    <form method="post" action="{{ path('caldera_criticalmass_track_bulkupload_confirm_all') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('bulk_track_review') }}"/>
+                        <button type="submit" class="btn btn-success">
+                            <i class="far fa-check-double me-1"></i>Alle bestätigen
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if matchedTracks|length %}
+            <div class="row g-4 mt-1">
+                {% for candidate in matchedTracks %}
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-truncate" title="{{ candidate.originalName }}">
+                                    <i class="far fa-file-import text-muted me-1"></i>{{ candidate.originalName }}
+                                </h5>
+
+                                <div class="mb-3 rounded overflow-hidden"
+                                     data-controller="map--polyline-preview-map"
+                                     data-map--polyline-preview-map-polyline-value="{{ candidate.polyline }}"
+                                     style="height: 150px;"></div>
+
+                                <dl class="row mb-2 small">
+                                    <dt class="col-4">Tour:</dt>
+                                    <dd class="col-8"><a href="{{ object_path(candidate.ride) }}">{{ candidate.ride.title }}</a></dd>
+                                    <dt class="col-4">Distanz:</dt>
+                                    <dd class="col-8">{{ (candidate.distance / 1000)|round(2) }}&nbsp;km</dd>
+                                    <dt class="col-4">Start:</dt>
+                                    <dd class="col-8">{{ candidate.startDateTime|date('d.m.Y H:i') }}&nbsp;Uhr</dd>
+                                </dl>
+
+                                {% if trackReassignOptions[candidate.id]|length > 1 %}
+                                    <form method="post" class="row g-2 align-items-end"
+                                          action="{{ path('caldera_criticalmass_unified_review_track_reassign', {'id': candidate.id}) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('unified_review') }}"/>
+                                        <div class="col-8">
+                                            <select name="rideId" class="form-select form-select-sm">
+                                                {{ _self.ride_options(trackReassignOptions[candidate.id], candidate.ride) }}
+                                            </select>
+                                        </div>
+                                        <div class="col-4 d-grid">
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm">Umordnen</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+
+                            <div class="card-footer bg-white border-0">
+                                <div class="btn-group w-100">
+                                    <form method="post" class="d-grid"
+                                          action="{{ path('caldera_criticalmass_track_bulkupload_confirm', {'id': candidate.id}) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('bulk_track_review') }}"/>
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="far fa-check me-1"></i>Bestätigen</button>
+                                    </form>
+                                    <form method="post" class="d-grid"
+                                          action="{{ path('caldera_criticalmass_track_bulkupload_reject', {'id': candidate.id}) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('bulk_track_review') }}"/>
+                                        <button type="submit" class="btn btn-outline-danger btn-sm"><i class="far fa-times me-1"></i>Verwerfen</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted mt-2">Keine zugeordneten Tracks.</p>
+        {% endif %}
+
+        <hr class="my-5"/>
+
+        {# ============================ PARKED TRACKS ============================ #}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>
+                    <i class="far fa-unlink text-muted me-2"></i>Nicht zugeordnete Tracks
+                    <span class="badge bg-secondary">{{ parkedTracks|length }}</span>
+                </h3>
+                <p class="text-muted">Diese Tracks passten zu keiner Tour. Ordne sie einer Tour vom selben Tag zu oder verwirf sie.</p>
+            </div>
+        </div>
+
+        {% if parkedTracks|length %}
+            <div class="row g-4">
+                {% for candidate in parkedTracks %}
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-truncate" title="{{ candidate.originalName }}">
+                                    <i class="far fa-file text-muted me-1"></i>{{ candidate.originalName }}
+                                </h5>
+
+                                <div class="mb-3 rounded overflow-hidden"
+                                     data-controller="map--polyline-preview-map"
+                                     data-map--polyline-preview-map-polyline-value="{{ candidate.polyline }}"
+                                     style="height: 150px;"></div>
+
+                                <dl class="row mb-2 small">
+                                    <dt class="col-4">Distanz:</dt>
+                                    <dd class="col-8">{{ (candidate.distance / 1000)|round(2) }}&nbsp;km</dd>
+                                    <dt class="col-4">Start:</dt>
+                                    <dd class="col-8">{{ candidate.startDateTime|date('d.m.Y H:i') }}&nbsp;Uhr</dd>
+                                </dl>
+
+                                {% if trackReassignOptions[candidate.id]|length %}
+                                    <form method="post" class="row g-2 align-items-end"
+                                          action="{{ path('caldera_criticalmass_unified_review_track_reassign', {'id': candidate.id}) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('unified_review') }}"/>
+                                        <div class="col-8">
+                                            <select name="rideId" class="form-select form-select-sm">
+                                                {{ _self.ride_options(trackReassignOptions[candidate.id], null) }}
+                                            </select>
+                                        </div>
+                                        <div class="col-4 d-grid">
+                                            <button type="submit" class="btn btn-success btn-sm">Zuordnen</button>
+                                        </div>
+                                    </form>
+                                {% else %}
+                                    <p class="text-muted small mb-0">Keine Tour an diesem Tag.</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="card-footer bg-white border-0">
+                                <form method="post" class="d-grid"
+                                      action="{{ path('caldera_criticalmass_track_bulkupload_reject', {'id': candidate.id}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('bulk_track_review') }}"/>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="far fa-trash me-1"></i>Verwerfen</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">Keine nicht zugeordneten Tracks.</p>
+        {% endif %}
+    </div>
+{% endblock %}
