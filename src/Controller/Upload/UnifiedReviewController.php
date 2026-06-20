@@ -4,6 +4,7 @@ namespace App\Controller\Upload;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\PhotoImport\PhotoCandidateImporter\PhotoCandidateImporterInterface;
+use App\Criticalmass\PhotoImport\Review\CandidatePreviewThumbnailer;
 use App\Criticalmass\PhotoImport\Review\UploadReviewAssembler;
 use App\Entity\PhotoImportCandidate;
 use App\Entity\Ride;
@@ -153,6 +154,7 @@ class UnifiedReviewController extends AbstractController
     public function photoPreviewAction(
         #[MapEntity(id: 'id')] PhotoImportCandidate $candidate,
         FilesystemOperator $photoCandidateFilesystem,
+        CandidatePreviewThumbnailer $thumbnailer,
         #[CurrentUser] User $user,
     ): Response {
         if ($candidate->getUser() !== $user) {
@@ -165,8 +167,11 @@ class UnifiedReviewController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        return new Response($photoCandidateFilesystem->read($storagePath), Response::HTTP_OK, [
-            'Content-Type' => $candidate->getMimeType() ?? 'application/octet-stream',
+        $bytes = $photoCandidateFilesystem->read($storagePath);
+        $thumbnail = $thumbnailer->thumbnail($bytes);
+
+        return new Response($thumbnail ?? $bytes, Response::HTTP_OK, [
+            'Content-Type' => $thumbnail !== null ? 'image/jpeg' : ($candidate->getMimeType() ?? 'application/octet-stream'),
             'Cache-Control' => 'private, max-age=300',
         ]);
     }

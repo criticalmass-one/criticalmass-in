@@ -40,4 +40,42 @@ class PhotoImportCandidateRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Candidates that are rejected or older than the given threshold and were never
+     * confirmed (confirmed candidates are removed on import) — i.e. safe to purge.
+     *
+     * @return list<PhotoImportCandidate>
+     */
+    public function findPurgeable(\DateTimeInterface $expiredBefore): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->where($builder->expr()->orX(
+                $builder->expr()->eq('c.rejected', ':rejected'),
+                $builder->expr()->lt('c.createdAt', ':expiredBefore'),
+            ))
+            ->setParameter('rejected', true)
+            ->setParameter('expiredBefore', $expiredBefore)
+            ->orderBy('c.createdAt', 'ASC');
+
+        return $builder->getQuery()->getResult();
+    }
+
+    /**
+     * All staged file paths still referenced by a candidate row.
+     *
+     * @return list<string>
+     */
+    public function findReferencedStagedFilenames(): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c.stagedFilename')
+            ->where($builder->expr()->isNotNull('c.stagedFilename'));
+
+        return array_column($builder->getQuery()->getScalarResult(), 'stagedFilename');
+    }
 }
