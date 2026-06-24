@@ -397,6 +397,18 @@ parameters:
 			path: src/Controller/City/CityManagementController.php
 
 		-
+			message: '#^Call to an undefined method App\\Repository\\RegionRepository\:\:findOneBySlug\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: src/Controller/Region/RegionManagementController.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface\:\:getFlashBag\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Controller/Region/RegionManagementController.php
+
+		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\Track\>\:\:findByCityQuery\(\)\.$#'
 			identifier: method.notFound
 			count: 1
