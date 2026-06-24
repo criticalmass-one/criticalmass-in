@@ -1,0 +1,59 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% set title = 'Schätzung bearbeiten' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active(title) }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+
+        {{ include('Flash/_flash.html.twig') }}
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.estimatedParticipants, 'Geschätzte Teilnehmer*innen') }}
+                    {{ form_widget(form.estimatedParticipants, { 'attr': { 'class': 'form-control' } }) }}
+                    {{ form_errors(form.estimatedParticipants) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.dateTime, 'Zeitpunkt der Schätzung') }}
+                    {{ form_widget(form.dateTime, { 'attr': { 'class': 'form-control' } }) }}
+                    {{ form_errors(form.dateTime) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group float-end">
+                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_widget(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+{% endblock %}
