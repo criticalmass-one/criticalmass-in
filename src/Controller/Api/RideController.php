@@ -256,4 +256,28 @@ class RideController extends BaseController
 
         return $this->createStandardResponse($ride, ['groups' => ['ride-list']]);
     }
+
+    /**
+     * Enables or disables a ride. A disabled ride is kept but hidden (soft delete).
+     */
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/enabled', name: 'caldera_criticalmass_rest_ride_set_enabled', methods: ['POST'], priority: 190)]
+    #[OA\Tag(name: 'Ride')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON object with an "enabled" boolean', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 400, description: 'Returned when the "enabled" flag is missing or not a boolean')]
+    public function setRideEnabledAction(Request $request, Ride $ride): JsonResponse
+    {
+        $payload = json_decode($request->getContent(), true);
+
+        if (!is_array($payload) || !array_key_exists('enabled', $payload) || !is_bool($payload['enabled'])) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['enabled' => 'A boolean "enabled" flag is required.']);
+        }
+
+        $ride->setEnabled($payload['enabled']);
+        $this->managerRegistry->getManager()->flush();
+
+        return $this->createStandardResponse($ride, ['groups' => ['ride-list']]);
+    }
 }
