@@ -11,6 +11,7 @@ use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Subride;
 use App\Entity\Track;
+use App\Entity\Weather;
 use App\Mcp\Tool\McpToolException;
 use App\Repository\RideRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -156,5 +157,16 @@ final class EntityResolver
         }
 
         return $photo;
+    }
+
+    public function weather(int $id): Weather
+    {
+        $weather = $this->registry->getRepository(Weather::class)->find($id);
+
+        if (null === $weather) {
+            throw new McpToolException(sprintf('Kein Wetter-Eintrag mit der ID %d gefunden.', $id));
+        }
+
+        return $weather;
     }
 }

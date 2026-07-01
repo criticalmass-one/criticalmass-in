@@ -88,6 +88,30 @@ class SocialNetworkFeedItemController extends BaseController
     }
 
     /**
+     * Deletes a social network feed item.
+     */
+    #[Route(path: '/api/{citySlug}/socialnetwork-feeditems/{feedItemId}', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_delete', methods: ['DELETE'], priority: 190)]
+    #[OA\Tag(name: 'Social Network Feed Item')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'feedItemId', in: 'path', description: 'Id of the feed item to delete', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully deleted')]
+    #[OA\Response(response: 404, description: 'Returned when the feed item does not exist')]
+    public function deleteSocialNetworkFeedItemAction(int $feedItemId): JsonResponse
+    {
+        $feedItem = $this->managerRegistry->getRepository(SocialNetworkFeedItem::class)->find($feedItemId);
+
+        if (!$feedItem) {
+            return new JsonResponse(['error' => 'Feed item not found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->remove($feedItem);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedFeedItemId' => $feedItemId]);
+    }
+
+    /**
      * Create a new social network feed item and assign it to the provided profile.
      */
     #[Route(path: '/api/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_create', methods: ['PUT'], priority: 190)]

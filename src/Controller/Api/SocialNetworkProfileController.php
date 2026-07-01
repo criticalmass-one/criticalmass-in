@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\City;
+use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -100,5 +101,31 @@ class SocialNetworkProfileController extends BaseController
         $manager->flush();
 
         return $this->createStandardResponse($newSocialNetworkProfile);
+    }
+
+    /**
+     * Deletes a social network profile including its feed items.
+     */
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles/{id}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_delete', requirements: ['id' => '\d+'], methods: ['DELETE'], priority: 190)]
+    #[OA\Tag(name: 'Social Network Profile')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the social network profile to delete', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully deleted')]
+    public function deleteSocialNetworkProfileAction(SocialNetworkProfile $socialNetworkProfile): JsonResponse
+    {
+        $id = $socialNetworkProfile->getId();
+        $manager = $this->managerRegistry->getManager();
+
+        // Feed items reference the profile via a NOT NULL FK, remove them first.
+        $feedItems = $manager->getRepository(SocialNetworkFeedItem::class)->findBy(['socialNetworkProfile' => $socialNetworkProfile]);
+        foreach ($feedItems as $feedItem) {
+            $manager->remove($feedItem);
+        }
+        $manager->flush();
+
+        $manager->remove($socialNetworkProfile);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedProfileId' => $id, 'deletedFeedItems' => count($feedItems)]);
     }
 }
