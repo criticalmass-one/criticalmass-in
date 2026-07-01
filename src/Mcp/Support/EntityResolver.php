@@ -4,6 +4,7 @@ namespace App\Mcp\Support;
 
 use App\Entity\City;
 use App\Entity\CitySlug;
+use App\Entity\Location;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Mcp\Tool\McpToolException;
@@ -78,5 +79,29 @@ final class EntityResolver
         }
 
         return $estimate;
+    }
+
+    /**
+     * Löst eine Location über citySlug + Location-Slug auf.
+     */
+    public function location(string $citySlug, string $locationSlug): Location
+    {
+        $city = $this->city($citySlug);
+        $locationSlug = trim($locationSlug);
+
+        if ('' === $locationSlug) {
+            throw new McpToolException('locationSlug ist erforderlich.');
+        }
+
+        $location = $this->registry->getRepository(Location::class)->findOneBy([
+            'city' => $city,
+            'slug' => $locationSlug,
+        ]);
+
+        if (null === $location) {
+            throw new McpToolException(sprintf('Keine Location "%s" in Stadt "%s" gefunden.', $locationSlug, $citySlug));
+        }
+
+        return $location;
     }
 }

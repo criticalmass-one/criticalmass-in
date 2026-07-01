@@ -32,6 +32,7 @@ league_oauth2_server:
             - cycle:write
             - socialnetwork:write
             - activity:write
+            - location:write
         default:
             - ride:read
             - track:read
