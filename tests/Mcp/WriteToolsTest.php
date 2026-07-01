@@ -6,6 +6,7 @@ use App\Entity\CityActivity;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Weather;
 use App\Repository\ParticipationRepository;
@@ -672,6 +673,93 @@ final class WriteToolsTest extends AbstractMcpTestCase
         $this->em()->clear();
         $reloaded = $this->em()->getRepository(\App\Entity\Photo::class)->find($photoId);
         self::assertTrue($reloaded?->isDeleted());
+    }
+
+    public function testListRideWeatherReturnsIds(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $weather = $this->createWeather($ride);
+        $token = $this->obtainAccessToken('ride:read');
+
+        $result = $this->callTool($token, 'list_ride_weather', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        $ids = array_column($result['json'], 'id');
+        self::assertContains($weather->getId(), $ids);
+    }
+
+    public function testUpdateWeatherChangesTemperature(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $weather = $this->createWeather($ride);
+        $weatherId = $weather->getId();
+        $token = $this->obtainAccessToken('weather:write');
+
+        $result = $this->callTool($token, 'update_weather', [
+            'weatherId' => $weatherId,
+            'weather' => ['temperatureMax' => 28.5],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(Weather::class)->find($weatherId);
+        self::assertSame(28.5, $updated?->getTemperatureMax());
+    }
+
+    public function testDeleteWeatherRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $weather = $this->createWeather($ride);
+        $weatherId = $weather->getId();
+        $token = $this->obtainAccessToken('weather:write');
+
+        $result = $this->callTool($token, 'delete_weather', ['weatherId' => $weatherId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(Weather::class)->find($weatherId));
+    }
+
+    public function testDeleteSocialProfileRemovesItAndFeedItems(): void
+    {
+        $city = $this->createCity();
+        $profile = $this->createSocialProfile($city);
+        $feedItem = $this->createSocialFeedItem($profile);
+        $profileId = $profile->getId();
+        $feedItemId = $feedItem->getId();
+        $token = $this->obtainAccessToken('socialnetwork:write');
+
+        $result = $this->callTool($token, 'delete_social_profile', ['profileId' => $profileId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(SocialNetworkProfile::class)->find($profileId));
+        self::assertNull($this->em()->getRepository(SocialNetworkFeedItem::class)->find($feedItemId));
+    }
+
+    public function testDeleteSocialFeedItemRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $profile = $this->createSocialProfile($city);
+        $feedItem = $this->createSocialFeedItem($profile);
+        $feedItemId = $feedItem->getId();
+        $token = $this->obtainAccessToken('socialnetwork:write');
+
+        $result = $this->callTool($token, 'delete_social_feed_item', ['feedItemId' => $feedItemId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(SocialNetworkFeedItem::class)->find($feedItemId));
     }
 
     public function testWriteToolRejectedWithoutScope(): void

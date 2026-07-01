@@ -10,9 +10,12 @@ use App\Entity\Photo;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use App\Entity\SocialNetworkFeedItem;
+use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\Track;
 use App\Entity\User;
+use App\Entity\Weather;
 use App\OAuth2\OAuthScope;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Bundle\OAuth2ServerBundle\Manager\ClientManagerInterface;
@@ -286,6 +289,47 @@ abstract class AbstractMcpTestCase extends WebTestCase
         $this->em()->flush();
 
         return $post;
+    }
+
+    protected function createWeather(Ride $ride): Weather
+    {
+        $weather = new Weather();
+        $weather->setRide($ride);
+        $weather->setCreationDateTime(new \DateTime());
+        $weather->setTemperatureMin(10.0);
+        $weather->setTemperatureMax(20.0);
+        $this->em()->persist($weather);
+        $this->em()->flush();
+
+        return $weather;
+    }
+
+    protected function createSocialProfile(City $city, string $identifier = 'cm_test'): SocialNetworkProfile
+    {
+        $profile = new SocialNetworkProfile();
+        $profile->setCity($city);
+        $profile->setNetwork('twitter');
+        $profile->setIdentifier($identifier);
+        $profile->setCreatedAt(new \DateTime());
+        $this->em()->persist($profile);
+        $this->em()->flush();
+
+        return $profile;
+    }
+
+    protected function createSocialFeedItem(SocialNetworkProfile $profile, string $uniqueIdentifier = 'feed-1'): SocialNetworkFeedItem
+    {
+        $feedItem = new SocialNetworkFeedItem();
+        $feedItem->setSocialNetworkProfile($profile);
+        $feedItem->setUniqueIdentifier($uniqueIdentifier);
+        $feedItem->setTitle('Testmeldung');
+        $feedItem->setText('Testinhalt');
+        $feedItem->setDateTime(new \DateTime('2026-09-01 10:00:00'));
+        $feedItem->setCreatedAt(new \DateTime());
+        $this->em()->persist($feedItem);
+        $this->em()->flush();
+
+        return $feedItem;
     }
 
     protected function createCityCycle(City $city): CityCycle
