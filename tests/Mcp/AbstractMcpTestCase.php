@@ -7,6 +7,7 @@ use App\Entity\CityCycle;
 use App\Entity\CitySlug;
 use App\Entity\Location;
 use App\Entity\Photo;
+use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Subride;
@@ -272,6 +273,19 @@ abstract class AbstractMcpTestCase extends WebTestCase
         $this->em()->flush();
 
         return $estimate;
+    }
+
+    protected function createPost(City $city, string $message = 'Testbeitrag'): Post
+    {
+        $post = new Post();
+        $post->setCity($city);
+        $post->setMessage($message);
+        $post->setDateTime(new \DateTime('2026-09-01 12:00:00'));
+        $post->setEnabled(true);
+        $this->em()->persist($post);
+        $this->em()->flush();
+
+        return $post;
     }
 
     protected function createCityCycle(City $city): CityCycle

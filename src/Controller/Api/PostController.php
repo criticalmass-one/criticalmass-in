@@ -2,13 +2,17 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\City;
 use App\Entity\Post;
+use App\Repository\RideRepository;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PostController extends BaseController
 {
@@ -84,5 +88,179 @@ class PostController extends BaseController
         $postList = $dataQueryManager->query($queryParameterList, Post::class);
 
         return $this->createStandardResponse($postList, ['groups' => ['post-list']]);
+    }
+
+    /**
+     * Show a single post.
+     */
+    #[Route(path: '/api/post/{id}', name: 'caldera_criticalmass_rest_post_show', requirements: ['id' => '\d+'], methods: ['GET'], priority: 200)]
+    #[OA\Tag(name: 'Post')]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the post', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function showAction(Post $post): JsonResponse
+    {
+        return $this->createStandardResponse($post, ['groups' => ['post-list']]);
+    }
+
+    /**
+     * Creates a new post for a city, optionally attached to a ride.
+     */
+    #[Route(path: '/api/{citySlug}/post', name: 'caldera_criticalmass_rest_post_create', methods: ['PUT'], priority: 190)]
+    #[OA\Tag(name: 'Post')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of the post (message required, optional rideIdentifier)', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 400, description: 'Returned when the submitted post is invalid')]
+    public function createPostAction(Request $request, City $city, RideRepository $rideRepository, ValidatorInterface $validator): JsonResponse
+    {
+        $payload = json_decode($request->getContent(), true);
+
+        if (!is_array($payload)) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['body' => 'A JSON object is required.']);
+        }
+
+        try {
+            $dateTime = isset($payload['dateTime']) ? new \DateTime((string) $payload['dateTime']) : new \DateTime();
+        } catch (\Exception) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['dateTime' => 'dateTime is not a valid datetime.']);
+        }
+
+        $post = new Post();
+        $post
+            ->setCity($city)
+            ->setMessage((string) ($payload['message'] ?? ''))
+            ->setDateTime($dateTime)
+            ->setEnabled(true);
+
+        if (isset($payload['rideIdentifier']) && '' !== trim((string) $payload['rideIdentifier'])) {
+            $rideIdentifier = (string) $payload['rideIdentifier'];
+
+            try {
+                $ride = $rideRepository->findByCitySlugAndRideDate($city->getMainSlugString(), $rideIdentifier);
+            } catch (\Exception) {
+                $ride = null;
+            }
+
+            $ride ??= $rideRepository->findOneByCitySlugAndSlug($city->getMainSlugString(), $rideIdentifier);
+
+            if (null === $ride) {
+                return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['rideIdentifier' => 'Ride not found.']);
+            }
+
+            $post->setRide($ride);
+        }
+
+        if (isset($payload['latitude'])) {
+            $post->setLatitude((float) $payload['latitude']);
+        }
+
+        if (isset($payload['longitude'])) {
+            $post->setLongitude((float) $payload['longitude']);
+        }
+
+        if (null !== $errorResponse = $this->validatePost($post, $validator)) {
+            return $errorResponse;
+        }
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->persist($post);
+        $manager->flush();
+
+        return $this->createStandardResponse($post, ['groups' => ['post-list']]);
+    }
+
+    /**
+     * Updates an existing post.
+     */
+    #[Route(path: '/api/post/{id}', name: 'caldera_criticalmass_rest_post_update', requirements: ['id' => '\d+'], methods: ['POST'], priority: 200)]
+    #[OA\Tag(name: 'Post')]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the post', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\RequestBody(description: 'JSON representation of the post fields to update', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 400, description: 'Returned when the submitted post is invalid')]
+    public function updatePostAction(Request $request, Post $post, ValidatorInterface $validator): JsonResponse
+    {
+        $payload = json_decode($request->getContent(), true);
+
+        if (!is_array($payload)) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['body' => 'A JSON object is required.']);
+        }
+
+        if (array_key_exists('message', $payload)) {
+            $post->setMessage((string) $payload['message']);
+        }
+
+        if (array_key_exists('enabled', $payload)) {
+            if (!is_bool($payload['enabled'])) {
+                return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['enabled' => 'enabled must be a boolean.']);
+            }
+            $post->setEnabled($payload['enabled']);
+        }
+
+        if (array_key_exists('latitude', $payload)) {
+            $post->setLatitude((float) $payload['latitude']);
+        }
+
+        if (array_key_exists('longitude', $payload)) {
+            $post->setLongitude((float) $payload['longitude']);
+        }
+
+        if (array_key_exists('dateTime', $payload)) {
+            try {
+                $post->setDateTime(new \DateTime((string) $payload['dateTime']));
+            } catch (\Exception) {
+                return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['dateTime' => 'dateTime is not a valid datetime.']);
+            }
+        }
+
+        if (null !== $errorResponse = $this->validatePost($post, $validator)) {
+            return $errorResponse;
+        }
+
+        $this->managerRegistry->getManager()->flush();
+
+        return $this->createStandardResponse($post, ['groups' => ['post-list']]);
+    }
+
+    /**
+     * Deletes a post. Replies (child posts) are detached and kept.
+     */
+    #[Route(path: '/api/post/{id}', name: 'caldera_criticalmass_rest_post_delete', requirements: ['id' => '\d+'], methods: ['DELETE'], priority: 200)]
+    #[OA\Tag(name: 'Post')]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the post', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function deletePostAction(Post $post): JsonResponse
+    {
+        $id = $post->getId();
+        $manager = $this->managerRegistry->getManager();
+
+        $children = $manager->getRepository(Post::class)->findBy(['parent' => $post]);
+        foreach ($children as $child) {
+            $child->setParent(null);
+        }
+        $manager->flush();
+
+        $manager->remove($post);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedPostId' => $id]);
+    }
+
+    private function validatePost(Post $post, ValidatorInterface $validator): ?JsonResponse
+    {
+        $violations = $validator->validate($post);
+
+        $errors = [];
+
+        /** @var ConstraintViolation $violation */
+        foreach ($violations as $violation) {
+            $errors[$violation->getPropertyPath()] = $violation->getMessage();
+        }
+
+        if (0 < count($errors)) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, $errors);
+        }
+
+        return null;
     }
 }
