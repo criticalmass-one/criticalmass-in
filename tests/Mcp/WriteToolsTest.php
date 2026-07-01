@@ -547,6 +547,79 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertStringContainsString('Signaltyp', $result['text']);
     }
 
+    public function testCreatePostPersists(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('post:write');
+
+        $result = $this->callTool($token, 'create_post', [
+            'citySlug' => $city->getMainSlugString(),
+            'post' => ['message' => 'Hallo Welt'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\Post::class)->findBy(['city' => $city]));
+    }
+
+    public function testCreatePostRejectsBlankMessage(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('post:write');
+
+        $result = $this->callTool($token, 'create_post', [
+            'citySlug' => $city->getMainSlugString(),
+            'post' => ['message' => ''],
+        ]);
+
+        self::assertTrue($result['isError']);
+    }
+
+    public function testUpdatePostChangesMessage(): void
+    {
+        $city = $this->createCity();
+        $post = $this->createPost($city, 'Alt');
+        $token = $this->obtainAccessToken('post:write');
+
+        $result = $this->callTool($token, 'update_post', [
+            'postId' => $post->getId(),
+            'post' => ['message' => 'Neu'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $postId = $post->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\Post::class)->find($postId);
+        self::assertSame('Neu', $updated?->getMessage());
+    }
+
+    public function testDeletePostRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $post = $this->createPost($city);
+        $postId = $post->getId();
+        $token = $this->obtainAccessToken('post:write');
+
+        $result = $this->callTool($token, 'delete_post', ['postId' => $postId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(\App\Entity\Post::class)->find($postId));
+    }
+
+    public function testGetPostReturnsIt(): void
+    {
+        $city = $this->createCity();
+        $post = $this->createPost($city, 'Sichtbar');
+        $token = $this->obtainAccessToken('post:read');
+
+        $result = $this->callTool($token, 'get_post', ['postId' => $post->getId()]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertSame('Sichtbar', $result['json']['message']);
+    }
+
     public function testWriteToolRejectedWithoutScope(): void
     {
         $token = $this->obtainAccessToken('ride:read');

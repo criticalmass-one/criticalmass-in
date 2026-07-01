@@ -5,6 +5,7 @@ namespace App\Mcp\Support;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Location;
+use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Subride;
@@ -120,5 +121,16 @@ final class EntityResolver
         }
 
         return $subride;
+    }
+
+    public function post(int $id): Post
+    {
+        $post = $this->registry->getRepository(Post::class)->find($id);
+
+        if (null === $post) {
+            throw new McpToolException(sprintf('Kein Forenbeitrag mit der ID %d gefunden.', $id));
+        }
+
+        return $post;
     }
 }
