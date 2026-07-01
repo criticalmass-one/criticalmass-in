@@ -5,6 +5,7 @@ namespace App\Mcp\Support;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
+use App\Entity\RideEstimate;
 use App\Mcp\Tool\McpToolException;
 use App\Repository\RideRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -66,5 +67,16 @@ final class EntityResolver
         }
 
         return $ride;
+    }
+
+    public function rideEstimate(int $id): RideEstimate
+    {
+        $estimate = $this->registry->getRepository(RideEstimate::class)->find($id);
+
+        if (null === $estimate) {
+            throw new McpToolException(sprintf('Keine Schätzung mit der ID %d gefunden.', $id));
+        }
+
+        return $estimate;
     }
 }
