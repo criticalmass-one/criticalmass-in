@@ -5,10 +5,12 @@ namespace App\Mcp\Support;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Location;
+use App\Entity\Photo;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Subride;
+use App\Entity\Track;
 use App\Mcp\Tool\McpToolException;
 use App\Repository\RideRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -132,5 +134,27 @@ final class EntityResolver
         }
 
         return $post;
+    }
+
+    public function track(int $id): Track
+    {
+        $track = $this->registry->getRepository(Track::class)->find($id);
+
+        if (null === $track) {
+            throw new McpToolException(sprintf('Kein Track mit der ID %d gefunden.', $id));
+        }
+
+        return $track;
+    }
+
+    public function photo(int $id): Photo
+    {
+        $photo = $this->registry->getRepository(Photo::class)->find($id);
+
+        if (null === $photo) {
+            throw new McpToolException(sprintf('Kein Foto mit der ID %d gefunden.', $id));
+        }
+
+        return $photo;
     }
 }
