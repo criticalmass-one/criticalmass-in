@@ -252,7 +252,9 @@ abstract class AbstractMcpTestCase extends WebTestCase
         $subride = new Subride();
         $subride->setRide($ride);
         $subride->setTitle('Anfahrt Nord');
+        $subride->setLocation('Hauptbahnhof');
         $subride->setDateTime(new \DateTime('2026-09-01 18:00:00'));
+        $subride->setCreatedAt(new \DateTime());
         $this->em()->persist($subride);
         $this->em()->flush();
 
