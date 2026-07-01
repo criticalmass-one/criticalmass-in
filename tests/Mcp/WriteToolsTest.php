@@ -53,6 +53,57 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertStringContainsString('existiert bereits', $result['text']);
     }
 
+    public function testUpdateCityChangesTitle(): void
+    {
+        $city = $this->createCity('Alt-Stadt');
+        $token = $this->obtainAccessToken('city:write');
+
+        $result = $this->callTool($token, 'update_city', [
+            'citySlug' => $city->getMainSlugString(),
+            'city' => ['title' => 'Neuer Titel'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $cityId = $city->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\City::class)->find($cityId);
+        self::assertSame('Neuer Titel', $updated?->getTitle());
+    }
+
+    public function testSetCityEnabledDisablesCity(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('city:write');
+
+        $result = $this->callTool($token, 'set_city_enabled', [
+            'citySlug' => $city->getMainSlugString(),
+            'enabled' => false,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertFalse($result['json']['enabled']);
+
+        $cityId = $city->getId();
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(\App\Entity\City::class)->find($cityId);
+        self::assertFalse($reloaded?->isEnabled());
+    }
+
+    public function testSetCityEnabledRejectsNonBoolean(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('city:write');
+
+        $result = $this->callTool($token, 'set_city_enabled', [
+            'citySlug' => $city->getMainSlugString(),
+            'enabled' => 'nein',
+        ]);
+
+        self::assertTrue($result['isError']);
+        self::assertStringContainsString('Boolean', $result['text']);
+    }
+
     public function testCreateRidePersistsRide(): void
     {
         $city = $this->createCity();
