@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **criticalmass.in** — web platform for coordinating and documenting Critical Mass bicycle rides worldwide. Manages cities, rides/events, participants, GPS tracks, photos, forums, and statistics.
 
-**Stack:** Symfony 7.2, Doctrine ORM 3 / DBAL 4, PHP 8.2+, MariaDB 10.9+, Bootstrap 5, Webpack Encore with Stimulus
+**Stack:** Symfony 7.4 (LTS), Doctrine ORM 3 / DBAL 4, PHP 8.2+, MariaDB 10.9+, Bootstrap 5, Webpack Encore with Stimulus
 
 ## Common Commands
 
@@ -59,14 +59,18 @@ docker-compose up -d      # MariaDB (port 8002), Redis, Memcached, Mailcatcher (
 
 Notable pattern: entities are annotated with `#[Routing\DefaultRoute]` and `#[Routing\RouteParameter]` attributes. The `DelegatedRouterManager` in `src/Criticalmass/Router/` generates canonical URLs for any entity by introspecting these attributes. Used extensively in Twig via `RouterTwigExtension`.
 
-### Track Upload (GPX/FIT)
+### Unified Upload (tracks + photos)
 
-Users add ride tracks by **file upload**, not via the Strava API. The Strava data-import path is being retired: the API Agreement's retention/deletion rules (Policy §6.2/§6.3/§7.4) forbid permanently and publicly archiving API-sourced data (see PR #1389 / epic #1388). Two flows:
+Users upload GPX/FIT **tracks and photos through one form** at `/upload` (`UnifiedUploadController`, Uppy dashboard, one POST per file to `/upload/file`). The Strava data-import path is being retired: the API Agreement's retention/deletion rules (Policy §6.2/§6.3/§7.4) forbid permanently and publicly archiving API-sourced data (epic #1388). `UploadDispatcher` (`Criticalmass/Upload/`) routes each file by extension to a handler that parses it into a **candidate** and either matches it to a ride or parks it for review:
 
-- **Single upload** per ride: `TrackUploadController` (`/{city}/{ride}/addtrack`) → `VichFileType` → `TrackValidator` → `TrackUploadedEvent` → `TrackEventSubscriber` enrichment.
-- **Bulk upload**: `BulkTrackUploadController` (per-file POST, Dropzone — one request per file) → `UploadedTrackCandidateFactory` → `TrackImportCandidate` → `TrackDecider` (voters in `Criticalmass/MassTrackImport/Voter/`, threshold 0.75, wired via `TrackVoterPass`) assigns a ride or parks the candidate → `FileTrackImporter` turns a confirmed candidate into a `Track`.
+- **Tracks** (`.gpx`, `.fit`) → `TrackUploadHandler` → `UploadedTrackCandidateFactory` → `TrackImportCandidate` → `TrackDecider` (voters in `Criticalmass/MassTrackImport/Voter/`, threshold 0.75, wired via `TrackVoterPass`) → `FileTrackImporter` turns a confirmed candidate into a `Track`. FIT is normalised to GPX on ingest (`Geo/FitService/FitToGpxConverter`), so everything downstream stays GPX-only.
+- **Images** (`.jpg/.jpeg/.png/.webp/.gif/.heic/.heif`) → `PhotoUploadHandler` → `PhotoCandidateFactory` → `PhotoImportCandidate` (staged **outside the web root** in `var/photo-candidates`, #1395) → `PhotoDecider` (date + GPS proximity) → `PhotoCandidateImporter` turns a confirmed gallery into `Photo`s via the normal `PhotoUploadedEvent` enrichment. HEIC/HEIF are normalised to JPEG on ingest (`PhotoImport/Normalizer/ImagickPhotoNormalizer`, EXIF preserved for date/GPS matching).
 
-**FIT files are normalised to GPX on ingest** (`Criticalmass/Geo/FitService/FitToGpxConverter`), so everything downstream stays GPX-only. `TrackImportCandidate` is source-agnostic (`source`, `fileHash`, `originalName`).
+The photo pipeline in `Criticalmass/PhotoImport/` deliberately mirrors the track pipeline in `Criticalmass/MassTrackImport/` (`PhotoImportCandidate`↔`TrackImportCandidate`, factory/decider/importer, HEIC→JPEG ↔ FIT→GPX). Both candidate entities are source-agnostic (`source`/`fileHash`/`originalName`).
+
+Everything is confirmed on **one review page** at `/upload/review` (`UnifiedReviewController`): **photos are reviewed per whole gallery** (grouped by capture date via `UploadReviewAssembler`, never per single photo) — confirm to the suggested ride, reassign to another ride **on the same date**, or reject the whole gallery; tracks are confirmed/rejected or reassigned to a same-date ride. The old `/trackupload/bulk` (Dropzone) and `/trackupload/review` routes redirect here. Housekeeping: `criticalmass:photos:purge-import-candidates` (mirrors the track variant, #1387). Per-ride single uploads still exist: `TrackUploadController` (`/{city}/{ride}/addtrack`) and `PhotoUploadController` (`/{city}/{ride}/addphoto`).
+
+**Frontend note:** the uploader is **Uppy** (`assets/controllers/unified_upload_controller.js`), no Compressor plugin so image EXIF survives. The `@uppy/*` packages are declared in `package.json`, but `package-lock.json` is **frozen** — `webpack`/`@babel/core` are not declared deps and survive only via the committed lock, so any re-resolution (`npm install`/`yarn install`) breaks the tree; use `npm ci`, and regenerate the lock deliberately when adding frontend deps. Frontend assets are **not** built in CI.
 
 ### Frontend (`assets/`)
 
