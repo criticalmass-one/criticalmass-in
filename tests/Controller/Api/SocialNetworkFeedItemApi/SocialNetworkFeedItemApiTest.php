@@ -203,6 +203,12 @@ class SocialNetworkFeedItemApiTest extends AbstractApiControllerTestCase
         );
 
         $this->assertResponseStatusCode(400);
+
+        // The error body must carry the actual message, not an empty "[]" (#1366 follow-up).
+        $response = json_decode($this->client->getResponse()->getContent(), true);
+        $this->assertIsArray($response);
+        $this->assertArrayHasKey('errors', $response);
+        $this->assertContains('Please provide a social_network_profile_id.', $response['errors']);
     }
 
     #[TestDox('PUT /api/{citySlug}/socialnetwork-feeditems returns 400 for invalid social_network_profile_id')]
