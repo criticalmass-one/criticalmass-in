@@ -60,11 +60,13 @@ class RideValueResolver implements ValueResolverInterface
     private function findRideBySlugs(Request $request): ?Ride
     {
         $citySlug = $request->get('citySlug');
-        $rideIdentifier = rtrim($request->get('rideIdentifier'), '-');
+        $rideIdentifier = $request->get('rideIdentifier');
 
         if (!$citySlug || !$rideIdentifier) {
             return null;
         }
+
+        $rideIdentifier = rtrim($rideIdentifier, '-');
 
         preg_match('/^([0-9]{4})\-([0-9]{1,2})(?:\-?)([0-9]{1,2})?$/', $rideIdentifier, $matches);
 
