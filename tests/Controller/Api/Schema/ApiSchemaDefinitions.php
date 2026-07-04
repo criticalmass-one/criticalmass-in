@@ -259,26 +259,6 @@ final class ApiSchemaDefinitions
     ];
 
     // =========================================================================
-    // SocialNetworkFeedItem Schemas
-    // =========================================================================
-
-    /**
-     * Schema for SocialNetworkFeedItem
-     */
-    public const SOCIAL_NETWORK_FEED_ITEM_SCHEMA = [
-        'id' => 'int',
-        'unique_identifier' => 'string',
-        'permalink' => 'string|null',
-        'title' => 'string|null',
-        'text' => 'string',
-        'date_time' => 'int', // Unix timestamp
-        'hidden' => 'bool',
-        'deleted' => 'bool',
-        'created_at' => 'int', // Unix timestamp
-        'raw' => 'string|null',
-    ];
-
-    // =========================================================================
     // Weather Schemas
     // =========================================================================
 

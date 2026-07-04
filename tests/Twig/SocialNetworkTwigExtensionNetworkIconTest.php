@@ -4,16 +4,15 @@ namespace Tests\Twig;
 
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
-use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use App\Twig\Extension\SocialNetworkTwigExtension;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Regression coverage for #1305: a feed item whose SocialNetworkProfile was
- * removed makes getSocialNetworkProfile() return null. networkIcon() then
- * looked the network up by a null identifier and called getIcon() on the
- * missing entry, raising a TypeError (500).
+ * Regression coverage for #1305: a null network identifier (e.g. a profile that
+ * was removed, so a template passes item.socialNetworkProfile.network as null)
+ * must not crash networkIcon() with getIcon()-on-null. Unknown networks fall
+ * back to a generic icon.
  */
 class SocialNetworkTwigExtensionNetworkIconTest extends TestCase
 {
@@ -36,33 +35,23 @@ class SocialNetworkTwigExtensionNetworkIconTest extends TestCase
         return new SocialNetworkTwigExtension($networkManager);
     }
 
-    public function testFeedItemWithoutProfileReturnsNoIconInsteadOfCrashing(): void
+    public function testNullReturnsGenericIconInsteadOfCrashing(): void
     {
-        $feedItem = new SocialNetworkFeedItem();
-
-        self::assertNull($feedItem->getSocialNetworkProfile());
-        self::assertSame('', $this->createExtension()->networkIcon($feedItem));
+        self::assertSame('far fa-globe', $this->createExtension()->networkIcon(null));
     }
 
-    public function testNullReturnsNoIcon(): void
+    public function testUnknownNetworkReturnsGenericIcon(): void
     {
-        self::assertSame('', $this->createExtension()->networkIcon(null));
-    }
-
-    public function testUnknownNetworkReturnsNoIcon(): void
-    {
-        self::assertSame('', $this->createExtension()->networkIcon('does-not-exist'));
+        self::assertSame('far fa-globe', $this->createExtension()->networkIcon('does-not-exist'));
     }
 
     public function testKnownNetworkReturnsItsIcon(): void
     {
         $profile = (new SocialNetworkProfile())->setNetwork('twitter');
-        $feedItem = (new SocialNetworkFeedItem())->setSocialNetworkProfile($profile);
 
         $extension = $this->createExtension();
 
         self::assertSame('fa-twitter', $extension->networkIcon('twitter'));
         self::assertSame('fa-twitter', $extension->networkIcon($profile));
-        self::assertSame('fa-twitter', $extension->networkIcon($feedItem));
     }
 }

@@ -4,7 +4,6 @@ namespace App\Twig\Extension;
 
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
-use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -58,9 +57,7 @@ class SocialNetworkTwigExtension extends AbstractExtension
 
     public function networkIcon($param): string
     {
-        if ($param instanceof SocialNetworkFeedItem) {
-            $networkIdentifier = $param->getSocialNetworkProfile()?->getNetwork();
-        } elseif ($param instanceof SocialNetworkProfile) {
+        if ($param instanceof SocialNetworkProfile) {
             $networkIdentifier = $param->getNetwork();
         } elseif (is_string($param)) {
             $networkIdentifier = $param;
@@ -69,11 +66,14 @@ class SocialNetworkTwigExtension extends AbstractExtension
             // null for a feed item whose profile was removed (#1305).
             $networkIdentifier = null;
         } else {
-            throw new \InvalidArgumentException('Parameter must be instance of SocialNetworkFeedItem or SocialNetworkProfile or a string identifying the network.');
+            throw new \InvalidArgumentException('Parameter must be instance of SocialNetworkProfile or a string identifying the network.');
         }
 
+        // A removed profile yields a null identifier (#1305); an unknown network
+        // (e.g. one the Feeds API no longer lists) falls back to a generic icon
+        // instead of crashing on getIcon().
         if (null === $networkIdentifier || !$this->networkManager->hasNetwork($networkIdentifier)) {
-            return '';
+            return 'far fa-globe';
         }
 
         return $this->networkManager->getNetwork($networkIdentifier)->getIcon();
