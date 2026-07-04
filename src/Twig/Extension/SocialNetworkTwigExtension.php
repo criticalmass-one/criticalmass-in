@@ -69,12 +69,11 @@ class SocialNetworkTwigExtension extends AbstractExtension
             throw new \InvalidArgumentException('Parameter must be instance of SocialNetworkProfile or a string identifying the network.');
         }
 
-        if (!$this->networkManager->hasNetwork($networkIdentifier)) {
-            return 'far fa-globe';
-        }
-
+        // A removed profile yields a null identifier (#1305); an unknown network
+        // (e.g. one the Feeds API no longer lists) falls back to a generic icon
+        // instead of crashing on getIcon().
         if (null === $networkIdentifier || !$this->networkManager->hasNetwork($networkIdentifier)) {
-            return '';
+            return 'far fa-globe';
         }
 
         return $this->networkManager->getNetwork($networkIdentifier)->getIcon();
