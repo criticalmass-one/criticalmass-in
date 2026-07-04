@@ -64,6 +64,23 @@ class FeedsNetworkManagerTest extends TestCase
         });
     }
 
+    #[TestDox('degrades to an empty network list when the Feeds API fails')]
+    public function testReturnsEmptyWhenApiFails(): void
+    {
+        $this->cache->method('get')->willReturnCallback(function (string $key, callable $callback) {
+            $item = $this->createMock(ItemInterface::class);
+            $item->method('expiresAfter')->willReturn($item);
+
+            return $callback($item);
+        });
+
+        $this->feedsApiClient->method('getNetworks')
+            ->willThrowException(new \RuntimeException('Feeds API returned status 401'));
+
+        self::assertSame([], $this->manager->getNetworkList());
+        self::assertFalse($this->manager->hasNetwork('twitter'));
+    }
+
     #[TestDox('implements NetworkManagerInterface')]
     public function testImplementsInterface(): void
     {

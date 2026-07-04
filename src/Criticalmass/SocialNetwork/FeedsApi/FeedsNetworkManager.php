@@ -54,7 +54,18 @@ class FeedsNetworkManager implements NetworkManagerInterface
         return $this->cache->get('feeds_api_networks', function (ItemInterface $item): array {
             $item->expiresAfter(3600);
 
-            $networks = $this->feedsApiClient->getNetworks();
+            try {
+                $networks = $this->feedsApiClient->getNetworks();
+            } catch (\Throwable) {
+                // Don't let a Feeds API outage break every page that renders a
+                // network icon. Degrade to an empty list (networkIcon falls back
+                // to a generic icon) and retry on the next request rather than
+                // caching the empty result for an hour.
+                $item->expiresAfter(0);
+
+                return [];
+            }
+
             $indexed = [];
 
             foreach ($networks as $network) {

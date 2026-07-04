@@ -33,14 +33,20 @@ class FeedItemProvider implements FeedItemProviderInterface
 
             $allItems = [];
 
-            foreach ($profileIds as $profileId) {
-                $items = $this->feedsApiClient->getItems(
-                    profileId: $profileId,
-                    page: $page,
-                    orderDirection: 'desc',
-                );
+            try {
+                foreach ($profileIds as $profileId) {
+                    $items = $this->feedsApiClient->getItems(
+                        profileId: $profileId,
+                        page: $page,
+                        orderDirection: 'desc',
+                    );
 
-                $allItems = array_merge($allItems, $items);
+                    $allItems = array_merge($allItems, $items);
+                }
+            } catch (\Throwable) {
+                // The Feeds API being unavailable must not take the page down:
+                // show no social items rather than a 500.
+                return [];
             }
 
             usort($allItems, fn(FeedItem $a, FeedItem $b) => $b->getDateTime() <=> $a->getDateTime());
@@ -62,12 +68,17 @@ class FeedItemProvider implements FeedItemProviderInterface
         return $this->cache->get($cacheKey, function (ItemInterface $item) use ($since, $until, $limit): array {
             $item->expiresAfter(300);
 
-            return $this->feedsApiClient->getTimelineItems(
-                limit: $limit,
-                since: $since,
-                until: $until,
-                orderDirection: 'desc',
-            );
+            try {
+                return $this->feedsApiClient->getTimelineItems(
+                    limit: $limit,
+                    since: $since,
+                    until: $until,
+                    orderDirection: 'desc',
+                );
+            } catch (\Throwable) {
+                // A Feeds API outage must not break the timeline/home page.
+                return [];
+            }
         });
     }
 

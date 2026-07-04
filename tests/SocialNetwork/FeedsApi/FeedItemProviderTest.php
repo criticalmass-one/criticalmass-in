@@ -131,6 +131,33 @@ class FeedItemProviderTest extends TestCase
         $this->assertCount(1, $items);
     }
 
+    #[TestDox('returns empty array when the city feed API call fails')]
+    public function testReturnsEmptyWhenCityApiFails(): void
+    {
+        $this->setupCachePassthrough();
+        $this->profileRepository->method('findByCity')->willReturn([$this->createProfile(10)]);
+
+        $this->feedsApiClient->method('getItems')
+            ->willThrowException(new \RuntimeException('Feeds API returned status 401'));
+
+        $items = $this->provider->getFeedItemsForCity($this->createCity(1));
+
+        $this->assertSame([], $items);
+    }
+
+    #[TestDox('returns empty array when the timeline API call fails')]
+    public function testReturnsEmptyWhenTimelineApiFails(): void
+    {
+        $this->setupCachePassthrough();
+
+        $this->feedsApiClient->method('getTimelineItems')
+            ->willThrowException(new \RuntimeException('Feeds API returned status 500'));
+
+        $items = $this->provider->getTimelineItems();
+
+        $this->assertSame([], $items);
+    }
+
     #[TestDox('getTimelineItems passes date range to API client')]
     public function testGetTimelineItemsWithDateRange(): void
     {
