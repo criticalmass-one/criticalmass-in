@@ -1,6 +1,26 @@
 framework:
     rate_limiter:
+        # Login pro Client-IP (bestehend).
         login:
             policy: sliding_window
             limit: 5
+            interval: '15 minutes'
+
+        # Login zusätzlich pro E-Mail (gegen Magic-Link-Spam/Mailbomb).
+        login_email:
+            policy: sliding_window
+            limit: 5
+            interval: '15 minutes'
+
+        # Track-Uploads pro User (Bulk = eine Anfrage je Datei). Großzügig, damit
+        # legitime Bulk-Importe durchgehen, aber Missbrauch gedrosselt wird.
+        upload:
+            policy: token_bucket
+            limit: 150
+            rate: { interval: '1 minute', amount: 10 }
+
+        # Schreibende API-Endpunkte pro Client-IP (die /api-Firewall ist anonym).
+        api_write:
+            policy: sliding_window
+            limit: 120
             interval: '15 minutes'

@@ -12,6 +12,7 @@ use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\SocialNetworkProfileAble;
+use MalteHuebner\OrderedEntitiesBundle\Attribute as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Enum\RideDisabledReasonEnum;
 use App\Enum\RideTypeEnum;
@@ -53,6 +54,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Groups(['extended-ride-list', 'ride-details'])]
     protected ?CityCycle $cycle = null;
 
+    #[OE\Identical]
     #[DataQuery\Sortable]
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'rides', fetch: 'LAZY')]
@@ -93,6 +95,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Ignore]
     protected ?string $socialDescription = null;
 
+    #[OE\Order(direction: 'ASC')]
     #[DataQuery\Sortable]
     #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -204,6 +207,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Ignore]
     protected ?string $imageMimeType = null;
 
+    #[OE\Boolean(value: true)]
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     #[Groups(['ride-list', 'ride-details'])]
     protected bool $enabled = true;

@@ -1,7 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% block title %}Gpx-Datei hochladen{% endblock %}
+{% block title %}GPX-/FIT-Datei hochladen{% endblock %}
 
 {% block breadcrumb %}
     {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
@@ -14,13 +14,13 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h2>
-                    <i class="far fa-upload text-muted me-2"></i>Gpx-Datei hochladen
+                    <i class="far fa-upload text-muted me-2"></i>GPX- oder FIT-Datei hochladen
                 </h2>
 
                 <p>
                     Wenn du deine Fahrt bei der <strong>{{ ride.city.title }}</strong> am
                     <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> aufgezeichnet hast, kannst du
-                    hier deinen Track als GPX-Datei hochladen.
+                    hier deinen Track als GPX- oder FIT-Datei hochladen.
                 </p>
             </div>
         </div>
@@ -32,7 +32,7 @@
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-white">
                         <h5 class="card-title mb-0">
-                            <i class="far fa-file me-2"></i>Gpx-Datei hochladen
+                            <i class="far fa-file me-2"></i>GPX- oder FIT-Datei
                         </h5>
                     </div>
                     <div class="card-body">
@@ -46,7 +46,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Datei:</label>
-                            {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
+                            {{ form_widget(form.trackFile, {'attr': {'class': 'form-control', 'accept': '.gpx,.fit' }}) }}
                         </div>
                     </div>
                 </div>

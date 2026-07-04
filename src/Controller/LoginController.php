@@ -15,6 +15,7 @@ use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
 class LoginController extends AbstractController
@@ -46,7 +47,9 @@ class LoginController extends AbstractController
         LoginLinkHandlerInterface $loginLinkHandler,
         UserRepository $userRepository,
         Request $request,
-        RateLimiterFactory $loginLimiter
+        RateLimiterFactory $loginLimiter,
+        RateLimiterFactory $loginEmailLimiter,
+        #[Autowire('%notification.mail.sender_address%')] string $senderAddress
     ): Response {
         $limiter = $loginLimiter->create($request->getClientIp());
 
@@ -69,6 +72,13 @@ class LoginController extends AbstractController
             $data = $form->getData();
             $email = $data['email'];
 
+            // Pro-E-Mail-Drosselung gegen Magic-Link-Spam/Mailbomb auf fremde Adressen.
+            if (false === $loginEmailLimiter->create($email)->consume()->isAccepted()) {
+                $this->addFlash('error', 'Zu viele Anmeldelinks für diese E-Mail. Bitte versuche es später erneut.');
+
+                return $this->redirectToRoute('login');
+            }
+
             $user = $userRepository->findOneBy(['email' => $email]);
 
             if (!$user) {
@@ -80,7 +90,8 @@ class LoginController extends AbstractController
             // create a notification based on the login link details
             $notification = new CriticalMassLoginLinkNotification(
                 $loginLinkDetails,
-                'Dein Login auf criticalmass.in'
+                'Dein Login auf criticalmass.in',
+                senderAddress: $senderAddress
             );
             // create a recipient for this user
             $recipient = new Recipient($user->getEmail());

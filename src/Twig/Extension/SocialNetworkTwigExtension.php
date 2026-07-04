@@ -61,6 +61,10 @@ class SocialNetworkTwigExtension extends AbstractExtension
             $networkIdentifier = $param->getNetwork();
         } elseif (is_string($param)) {
             $networkIdentifier = $param;
+        } elseif (null === $param) {
+            // Templates pass e.g. item.socialNetworkProfile.network, which is
+            // null for a feed item whose profile was removed (#1305).
+            $networkIdentifier = null;
         } else {
             throw new \InvalidArgumentException('Parameter must be instance of SocialNetworkProfile or a string identifying the network.');
         }
@@ -69,10 +73,11 @@ class SocialNetworkTwigExtension extends AbstractExtension
             return 'far fa-globe';
         }
 
-        /** @var NetworkInterface $network */
-        $network = $this->networkManager->getNetworkList()[$networkIdentifier];
+        if (null === $networkIdentifier || !$this->networkManager->hasNetwork($networkIdentifier)) {
+            return '';
+        }
 
-        return $network->getIcon();
+        return $this->networkManager->getNetwork($networkIdentifier)->getIcon();
     }
 
     public function getNetwork(string $identifier): ?NetworkInterface

@@ -1,0 +1,240 @@
+<?php declare(strict_types=1);
+
+namespace Tests\Mcp;
+
+use App\Entity\CityActivity;
+use App\Entity\CityCycle;
+use App\Entity\Ride;
+use App\Entity\RideEstimate;
+use App\Entity\SocialNetworkProfile;
+use App\Entity\Weather;
+use App\Repository\ParticipationRepository;
+
+/**
+ * Integrationstests der schreibenden Tools: führen das Tool über /mcp aus und
+ * prüfen den persistierten Zustand. Assertions sind auf die im Test (in einer
+ * zurückgerollten Transaktion) angelegten Entities gescopt, damit CI-Fixtures
+ * nicht stören; Städte nutzen eindeutige Slugs.
+ */
+final class WriteToolsTest extends AbstractMcpTestCase
+{
+    private function uniqueSlug(): string
+    {
+        return 'mcp-new-' . substr(md5(uniqid('', true)), 0, 10);
+    }
+
+    public function testCreateCityPersistsCity(): void
+    {
+        // Die Slugs werden aus dem Namen abgeleitet (CitySlugHandler), daher über
+        // einen eindeutigen Namen verifizieren.
+        $name = 'Teststadt ' . substr(md5(uniqid('', true)), 0, 8);
+        $token = $this->obtainAccessToken('city:write');
+
+        $result = $this->callTool($token, 'create_city', [
+            'citySlug' => $this->uniqueSlug(),
+            'city' => ['city' => $name],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\City::class)->findBy(['city' => $name]));
+    }
+
+    public function testCreateCityRejectsDuplicateSlug(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('city:write');
+
+        $result = $this->callTool($token, 'create_city', [
+            'citySlug' => $city->getMainSlugString(),
+            'city' => ['city' => 'Hamburg'],
+        ]);
+
+        self::assertTrue($result['isError']);
+        self::assertStringContainsString('existiert bereits', $result['text']);
+    }
+
+    public function testCreateRidePersistsRide(): void
+    {
+        $city = $this->createCity();
+        $title = 'Oktober-Tour-' . uniqid();
+        $token = $this->obtainAccessToken('ride:write');
+
+        $result = $this->callTool($token, 'create_ride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-10-10',
+            'ride' => ['title' => $title],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(Ride::class)->findBy(['title' => $title]));
+    }
+
+    public function testUpdateRideChangesTitle(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00', 'Alt');
+        $token = $this->obtainAccessToken('ride:write');
+
+        $result = $this->callTool($token, 'update_ride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'ride' => ['title' => 'Neu'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $rideId = $ride->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(Ride::class)->find($rideId);
+        self::assertSame('Neu', $updated?->getTitle());
+    }
+
+    public function testSetParticipationPersistsForTokenUser(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('participation:write');
+
+        $result = $this->callTool($token, 'set_participation', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'status' => 'yes',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $participation = $this->client->getContainer()->get(ParticipationRepository::class)
+            ->findParticipationForUserAndRide($this->user, $ride);
+        self::assertNotNull($participation);
+    }
+
+    public function testSetParticipationRejectsInvalidStatus(): void
+    {
+        $city = $this->createCity();
+        $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('participation:write');
+
+        $result = $this->callTool($token, 'set_participation', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'status' => 'vielleicht-nicht',
+        ]);
+
+        self::assertTrue($result['isError']);
+    }
+
+    public function testCreateRideEstimatePersists(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('estimate:write');
+
+        $result = $this->callTool($token, 'create_ride_estimate', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'estimation' => 250,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(RideEstimate::class)->findBy(['ride' => $ride]));
+    }
+
+    public function testSetWeatherPersists(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('weather:write');
+
+        $result = $this->callTool($token, 'set_weather', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'weather' => ['temperatureMax' => 21.5, 'temperatureMin' => 12.0],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(Weather::class)->findBy(['ride' => $ride]));
+    }
+
+    public function testCreateCyclePersists(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('cycle:write');
+
+        $result = $this->callTool($token, 'create_cycle', [
+            'citySlug' => $city->getMainSlugString(),
+            'cycle' => ['dayOfWeek' => 5, 'weekOfMonth' => 0],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(CityCycle::class)->findBy(['city' => $city]));
+    }
+
+    public function testCreateSocialProfilePersists(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('socialnetwork:write');
+
+        $result = $this->callTool($token, 'create_social_profile', [
+            'citySlug' => $city->getMainSlugString(),
+            'profile' => ['network' => 'twitter', 'identifier' => 'cm_hamburg'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(SocialNetworkProfile::class)->findBy(['city' => $city]));
+    }
+
+    public function testCreateCityActivityPersistsAndUpdatesScore(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('activity:write');
+
+        $result = $this->callTool($token, 'create_city_activity', [
+            'citySlug' => $city->getMainSlugString(),
+            'score' => 0.42,
+            'details' => [
+                ['signalType' => 'participation', 'normalizedScore' => 0.5, 'rawCount' => 10],
+                ['signalType' => 'photo', 'normalizedScore' => 0.3, 'rawCount' => 4],
+                ['signalType' => 'track', 'normalizedScore' => 0.2, 'rawCount' => 2],
+                ['signalType' => 'social_feed', 'normalizedScore' => 0.7, 'rawCount' => 20],
+            ],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(CityActivity::class)->findBy(['city' => $city]));
+
+        $cityId = $city->getId();
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(\App\Entity\City::class)->find($cityId);
+        self::assertSame(0.42, $reloaded?->getActivityScore());
+    }
+
+    public function testCreateCityActivityRejectsMissingSignal(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('activity:write');
+
+        $result = $this->callTool($token, 'create_city_activity', [
+            'citySlug' => $city->getMainSlugString(),
+            'score' => 0.42,
+            'details' => [
+                ['signalType' => 'participation', 'normalizedScore' => 0.5, 'rawCount' => 10],
+            ],
+        ]);
+
+        self::assertTrue($result['isError']);
+        self::assertStringContainsString('Signaltyp', $result['text']);
+    }
+
+    public function testWriteToolRejectedWithoutScope(): void
+    {
+        $token = $this->obtainAccessToken('ride:read');
+
+        $result = $this->callTool($token, 'create_city', [
+            'citySlug' => $this->uniqueSlug(),
+            'city' => ['city' => 'Bremen'],
+        ]);
+
+        self::assertTrue($result['isError']);
+        self::assertStringContainsString('Fehlender Scope', $result['text']);
+    }
+}

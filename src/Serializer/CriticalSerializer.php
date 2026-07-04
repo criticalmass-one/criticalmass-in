@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -79,6 +80,7 @@ class CriticalSerializer implements CriticalSerializerInterface
 
         $normalizers = [
             new UnixTimestampDateTimeNormalizer(),
+            new BackedEnumNormalizer(),
             new ObjectNormalizer(
                 classMetadataFactory: $classMetadataFactory,
                 nameConverter: $nameConverter,

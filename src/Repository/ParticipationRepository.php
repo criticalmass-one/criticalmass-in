@@ -92,6 +92,11 @@ class ParticipationRepository extends ServiceEntityRepository
 
         $builder
             ->join('p.ride', 'r')
+            // Ride + Stadt (+ Haupt-Slug) eager laden: die Profilseite rendert je
+            // Teilnahme participation.ride.city.city / object_path → sonst N+1.
+            ->addSelect('r', 'c', 'mainSlug')
+            ->leftJoin('r.city', 'c')
+            ->leftJoin('c.mainSlug', 'mainSlug')
             ->where($builder->expr()->eq('p.user', ':user'))
             ->setParameter('user', $user)
             ->orderBy('r.dateTime', 'DESC');
