@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class SocialNetworkProfileController extends BaseController
 {
@@ -94,12 +95,24 @@ class SocialNetworkProfileController extends BaseController
         City $city,
         FeedsApiClientInterface $feedsApiClient,
         LoggerInterface $logger,
+        ValidatorInterface $validator,
     ): JsonResponse {
         $newSocialNetworkProfile = $this->deserializeRequest($request, SocialNetworkProfile::class);
 
         $newSocialNetworkProfile
             ->setCity($city)
             ->setCreatedAt(new \DateTime());
+
+        $errors = $validator->validate($newSocialNetworkProfile);
+
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getPropertyPath() . ': ' . $error->getMessage();
+            }
+
+            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
+        }
 
         $manager = $this->managerRegistry->getManager();
         $manager->persist($newSocialNetworkProfile);
