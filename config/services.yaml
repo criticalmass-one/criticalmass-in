@@ -112,6 +112,9 @@ services:
     App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface:
         alias: App\Criticalmass\SocialNetwork\FeedsApi\FeedsNetworkManager
 
+    App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClient:
+        lazy: true
+
     App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClientInterface:
         alias: App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClient
 

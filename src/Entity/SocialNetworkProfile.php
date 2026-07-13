@@ -43,6 +43,7 @@ class SocialNetworkProfile
     #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $identifier = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $network = null;
