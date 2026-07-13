@@ -1,0 +1,60 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Header-Bild für {{ city.city }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Header-Bild') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-12">
+                <h1>Header-Bild für {{ city.city }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    Hier kannst du ein Header-Bild für die Stadtseite von {{ city.city }} hochladen.
+                    Das Bild wird oben auf der Stadtseite angezeigt.
+                </p>
+
+                <p>
+                    <strong>Hinweis:</strong> Bitte lade nur Bilder hoch, an denen du das Urheber- oder Nutzungsrecht besitzt.
+                    Optimale Bildabmessungen sind 2.280 x 500 Pixel.
+                </p>
+
+                {% if city.imageName %}
+                    <div class="mb-4">
+                        <h5>Aktuelles Header-Bild:</h5>
+                        <img src="{{ vich_uploader_asset(city, 'imageFile') }}" alt="Header-Bild {{ city.city }}" class="img-fluid rounded">
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    {{ form_row(form.imageFile) }}
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ object_path(city) }}" class="btn btn-secondary">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
