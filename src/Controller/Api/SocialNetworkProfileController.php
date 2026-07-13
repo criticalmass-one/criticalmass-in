@@ -127,7 +127,7 @@ class SocialNetworkProfileController extends BaseController
 
                 $newSocialNetworkProfile->setFeedsProfileId($feedsProfile->getId());
                 $manager->flush();
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $logger->error('Failed to create profile in Feeds API: ' . $e->getMessage());
             }
         }
