@@ -20,6 +20,8 @@ class SecurityHeadersEventSubscriber implements EventSubscriberInterface
      * nichts, sammelt aber Verstöße (z. B. Inline-Skripte), bevor auf eine
      * erzwingende Policy umgestellt wird. `script-src` bewusst ohne
      * `unsafe-inline`, damit Inline-Skripte sichtbar werden.
+     * matomo.caldera.cc ist unser selbst gehostetes Matomo (Tracker-Loader
+     * matomo.js und das Opt-Out-Widget auf den Datenschutzseiten).
      */
     private const CONTENT_SECURITY_POLICY = "default-src 'self'; "
         . "base-uri 'self'; "
@@ -28,7 +30,7 @@ class SecurityHeadersEventSubscriber implements EventSubscriberInterface
         . "img-src 'self' data: https:; "
         . "font-src 'self' data: https:; "
         . "style-src 'self' 'unsafe-inline'; "
-        . "script-src 'self'; "
+        . "script-src 'self' https://matomo.caldera.cc; "
         . "connect-src 'self' https:";
 
     public function onResponse(ResponseEvent $event): void
