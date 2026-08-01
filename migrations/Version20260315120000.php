@@ -9,19 +9,19 @@ final class Version20260315120000 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Add feeds_profile_id to social_network_profile and drop social_network_feed_item table';
+        return 'Add feedsProfileId to social_network_profile and drop social_network_feed_item table';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE social_network_profile ADD feeds_profile_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE social_network_profile ADD feedsProfileId INT DEFAULT NULL');
 
         $this->addSql('DROP TABLE IF EXISTS social_network_feed_item');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE social_network_profile DROP COLUMN feeds_profile_id');
+        $this->addSql('ALTER TABLE social_network_profile DROP COLUMN feedsProfileId');
 
         $this->addSql('CREATE TABLE social_network_feed_item (
             id INT AUTO_INCREMENT NOT NULL,
