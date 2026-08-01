@@ -31,6 +31,9 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
+    # Staging für hochgeladene, noch nicht bestätigte Fotos — bewusst AUSSERHALB
+    # public/ (kein Web-Root, #1395), wird bei Bestätigung/Verwerfen geleert.
+    upload_destination.photo_candidate: '%kernel.project_dir%/var/photo-candidates'
     assets_version: '%env(ASSETS_VERSION)%'
     friendlycaptcha_api_key: '%env(FRIENDLYCAPTCHA_API_KEY)%'
     friendlycaptcha_site_key: '%env(FRIENDLYCAPTCHA_SITE_KEY)%'
@@ -51,6 +54,7 @@ services:
             $uploadDestinationTrack: '%upload_destination.track%'
             $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
             $trackFilesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
+            $photoCandidateFilesystem: '@oneup_flysystem.flysystem_photo_candidate_filesystem'
             $stravaClientId: '%strava.client_id%'
             $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
@@ -59,6 +63,8 @@ services:
             $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
             $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
             cachePrefix: 'media/cache'
+            $feedsApiUrl: '%env(FEEDS_API_URL)%'
+            $feedsApiToken: '%env(FEEDS_API_TOKEN)%'
 
     App\:
         resource: '../src/*'
@@ -102,6 +108,18 @@ services:
 
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
+
+    App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface:
+        alias: App\Criticalmass\SocialNetwork\FeedsApi\FeedsNetworkManager
+
+    App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClient:
+        lazy: true
+
+    App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClientInterface:
+        alias: App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClient
+
+    App\Criticalmass\SocialNetwork\FeedsApi\FeedItemProviderInterface:
+        alias: App\Criticalmass\SocialNetwork\FeedsApi\FeedItemProvider
 
     App\Criticalmass\Timeline\TimelineInterface:
         alias: App\Criticalmass\Timeline\CachedTimeline

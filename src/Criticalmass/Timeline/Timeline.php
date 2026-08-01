@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\Timeline;
 
-use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -28,7 +27,7 @@ class Timeline implements TimelineInterface
     ) {
     }
 
-    public function addCollector(AbstractTimelineCollector $collector): TimelineInterface
+    public function addCollector(TimelineCollectorInterface $collector): TimelineInterface
     {
         if ($this->checkFeatureStatusForCollector($collector)) {
             array_push($this->collectorList, $collector);
@@ -54,7 +53,7 @@ class Timeline implements TimelineInterface
 
     protected function process(): Timeline
     {
-        /** @var AbstractTimelineCollector $collector */
+        /** @var TimelineCollectorInterface $collector */
         foreach ($this->collectorList as $collector) {
             $collector->setDateRange($this->startDateTime, $this->endDateTime);
 

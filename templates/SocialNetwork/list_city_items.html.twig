@@ -17,28 +17,12 @@
                 </h5>
             </div>
             <div class="card-body">
-                {% if pagination|length > 0 %}
-                    {% for item in pagination %}
-                        {% set network = getNetwork(item.socialNetworkProfile.network) %}
+                {% if items|length > 0 %}
+                    {% for item in items %}
                         <div class="d-flex align-items-start mb-4 pb-4 {{ not loop.last ? 'border-bottom' : '' }}">
-                            <div class="d-none d-md-block me-3 text-center" style="min-width: 80px; width: 80px;">
-                                {% if network %}
-                                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle mb-2" style="width: 42px; height: 42px; background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                                        <i class="fab {{ network.icon }}"></i>
-                                    </span>
-                                    <div class="small text-muted">{{ network.name }}</div>
-                                {% else %}
-                                    <i class="fab fa-3x {{ network_icon(item.socialNetworkProfile.network) }} text-muted"></i>
-                                {% endif %}
-                            </div>
                             <div class="flex-grow-1" style="min-width: 0;">
                                 <div class="mb-1">
                                     <div class="d-flex align-items-center mb-1">
-                                        {% if network %}
-                                            <span class="d-inline-flex d-md-none align-items-center justify-content-center rounded-circle me-2" style="width: 28px; height: 28px; background-color: {{ network.backgroundColor }}; color: {{ network.textColor }}; font-size: 0.75rem;">
-                                                <i class="fab {{ network.icon }}"></i>
-                                            </span>
-                                        {% endif %}
                                         <h6 class="mb-0 text-truncate">
                                             <a href="{{ item.permalink }}" class="text-decoration-none">
                                                 {{ item.title ?? 'Beitrag' }}
@@ -52,15 +36,24 @@
 
                                 <p class="text-muted mb-2">{{ item.text|trim_intro }}</p>
 
-                                <a href="{{ item.permalink }}" class="btn btn-sm btn-outline-primary">
-                                    <i class="far fa-external-link me-1"></i>Weiterlesen
-                                </a>
+                                {% if item.permalink %}
+                                    <a href="{{ item.permalink }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="far fa-external-link me-1"></i>Weiterlesen
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}
 
                     <div class="d-flex justify-content-center mt-4">
-                        {{ knp_pagination_render(pagination) }}
+                        {% if page > 1 %}
+                            <a href="{{ path('criticalmass_socialnetwork_city_list_items', { citySlug: city.slug, page: page - 1 }) }}" class="btn btn-outline-secondary me-2">
+                                <i class="far fa-chevron-left me-1"></i>Zurück
+                            </a>
+                        {% endif %}
+                        <a href="{{ path('criticalmass_socialnetwork_city_list_items', { citySlug: city.slug, page: page + 1 }) }}" class="btn btn-outline-secondary">
+                            Weiter<i class="far fa-chevron-right ms-1"></i>
+                        </a>
                     </div>
                 {% else %}
                     <div class="text-center py-5">

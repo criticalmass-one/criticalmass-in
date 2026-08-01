@@ -2,26 +2,55 @@
 
 namespace App\Criticalmass\Timeline\Collector;
 
-use App\Entity\SocialNetworkFeedItem;
+use App\Criticalmass\SocialNetwork\FeedsApi\Dto\FeedItem;
+use App\Criticalmass\SocialNetwork\FeedsApi\FeedItemProviderInterface;
 use App\Criticalmass\Timeline\Item\SocialNetworkFeedItemItem;
 
-class SocialNetworkFeedItemCollector extends AbstractTimelineCollector
+class SocialNetworkFeedItemCollector implements TimelineCollectorInterface
 {
-    protected string $entityClass = SocialNetworkFeedItem::class;
+    protected array $items = [];
+    protected ?\DateTime $startDateTime = null;
+    protected ?\DateTime $endDateTime = null;
 
-    protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
+    public function __construct(
+        private readonly FeedItemProviderInterface $feedItemProvider,
+    ) {
+    }
+
+    public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): TimelineCollectorInterface
     {
-        /** @var SocialNetworkFeedItem $itemEntity */
-        foreach ($groupedEntities as $itemEntity) {
+        $this->startDateTime = $startDateTime;
+        $this->endDateTime = $endDateTime;
+
+        return $this;
+    }
+
+    public function execute(): TimelineCollectorInterface
+    {
+        $feedItems = $this->feedItemProvider->getTimelineItems(
+            since: $this->startDateTime,
+            until: $this->endDateTime,
+        );
+
+        foreach ($feedItems as $feedItem) {
             $item = new SocialNetworkFeedItemItem();
+            $item->setFeedItem($feedItem);
 
-            $item
-                ->setSocialNetworkFeedItem($itemEntity)
-                ->setDateTime($itemEntity->getDateTime());
-
-            $this->addItem($item);
+            $dateTimeString = $item->getDateTime()->format('Y-m-d-H-i-s');
+            $itemKey = $dateTimeString . '-' . $item->getUniqId();
+            $this->items[$itemKey] = $item;
         }
 
         return $this;
+    }
+
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    public function getRequiredFeatures(): array
+    {
+        return [];
     }
 }

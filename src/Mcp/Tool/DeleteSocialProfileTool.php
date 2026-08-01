@@ -2,7 +2,6 @@
 
 namespace App\Mcp\Tool;
 
-use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use App\OAuth2\OAuthScope;
 use Doctrine\Persistence\ManagerRegistry;
@@ -59,15 +58,9 @@ final class DeleteSocialProfileTool implements McpToolInterface
 
         $id = $profile->getId();
 
-        $feedItems = $manager->getRepository(SocialNetworkFeedItem::class)->findBy(['socialNetworkProfile' => $profile]);
-        foreach ($feedItems as $feedItem) {
-            $manager->remove($feedItem);
-        }
-        $manager->flush();
-
         $manager->remove($profile);
         $manager->flush();
 
-        return json_encode(['status' => 'ok', 'deletedProfileId' => $id, 'deletedFeedItems' => \count($feedItems)], JSON_THROW_ON_ERROR);
+        return json_encode(['status' => 'ok', 'deletedProfileId' => $id], JSON_THROW_ON_ERROR);
     }
 }
