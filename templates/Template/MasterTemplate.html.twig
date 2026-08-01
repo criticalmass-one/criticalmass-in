@@ -27,6 +27,10 @@
 
     {{ encore_entry_script_tags(entrypoint) }}
 
+    {# Matomo (selbst gehostet, cookielos, IP-anonymisiert — siehe Datenschutzerklärung).
+       Externe Datei statt Inline-Snippet, damit die CSP ohne unsafe-inline/Nonce auskommt. #}
+    <script src="{{ asset('js/matomo-init.js') }}" async></script>
+
 </head>
 
 <body class="{% if app.user %}logged-in{% else %}not-logged-in{% endif %} {% block bodyClass %}{% endblock %} with-top-navbar">

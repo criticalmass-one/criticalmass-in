@@ -2,13 +2,16 @@
 
 namespace App\Controller\Api;
 
+use App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClientInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
 use OpenApi\Attributes as OA;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class SocialNetworkProfileController extends BaseController
 {
@@ -87,18 +90,67 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the social network profile to create', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successfully created')]
-    public function createSocialNetworkProfileAction(Request $request, City $city): JsonResponse
-    {
+    public function createSocialNetworkProfileAction(
+        Request $request,
+        City $city,
+        FeedsApiClientInterface $feedsApiClient,
+        LoggerInterface $logger,
+        ValidatorInterface $validator,
+    ): JsonResponse {
         $newSocialNetworkProfile = $this->deserializeRequest($request, SocialNetworkProfile::class);
 
         $newSocialNetworkProfile
             ->setCity($city)
             ->setCreatedAt(new \DateTime());
 
+        $errors = $validator->validate($newSocialNetworkProfile);
+
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getPropertyPath() . ': ' . $error->getMessage();
+            }
+
+            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
+        }
+
         $manager = $this->managerRegistry->getManager();
         $manager->persist($newSocialNetworkProfile);
         $manager->flush();
 
+        if ($newSocialNetworkProfile->getIdentifier() && $newSocialNetworkProfile->getNetwork()) {
+            try {
+                $feedsProfile = $feedsApiClient->createProfile(
+                    $newSocialNetworkProfile->getIdentifier(),
+                    $newSocialNetworkProfile->getNetwork(),
+                );
+
+                $newSocialNetworkProfile->setFeedsProfileId($feedsProfile->getId());
+                $manager->flush();
+            } catch (\Throwable $e) {
+                $logger->error('Failed to create profile in Feeds API: ' . $e->getMessage());
+            }
+        }
+
         return $this->createStandardResponse($newSocialNetworkProfile);
+    }
+
+    /**
+     * Deletes a social network profile.
+     */
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles/{id}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_delete', requirements: ['id' => '\d+'], methods: ['DELETE'], priority: 190)]
+    #[OA\Tag(name: 'Social Network Profile')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the social network profile to delete', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully deleted')]
+    public function deleteSocialNetworkProfileAction(SocialNetworkProfile $socialNetworkProfile): JsonResponse
+    {
+        $id = $socialNetworkProfile->getId();
+        $manager = $this->managerRegistry->getManager();
+
+        $manager->remove($socialNetworkProfile);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedProfileId' => $id]);
     }
 }

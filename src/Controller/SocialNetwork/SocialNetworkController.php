@@ -5,6 +5,7 @@ namespace App\Controller\SocialNetwork;
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\SocialNetwork\EntityNetworkDetector\EntityNetworkDetectorInterface;
+use App\Criticalmass\SocialNetwork\FeedsApi\FeedsApiClientInterface;
 use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\City;
@@ -13,6 +14,7 @@ use App\Entity\SocialNetworkProfile;
 use App\EntityInterface\SocialNetworkProfileAble;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +41,8 @@ class SocialNetworkController extends AbstractController
         ObjectRouterInterface $objectRouter,
         SocialNetworkProfileFactoryInterface $networkProfileFactory,
         SocialNetworkHelperInterface $socialNetworkHelper,
+        FeedsApiClientInterface $feedsApiClient,
+        LoggerInterface $logger,
         ?City $city = null,
         ?Ride $ride = null,
         ?UserInterface $user = null
@@ -63,7 +67,7 @@ class SocialNetworkController extends AbstractController
         );
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addPostAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper, $city, $ride);
+            return $this->addPostAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper, $feedsApiClient, $logger, $city, $ride);
         }
 
         return $this->addGetAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper, $city, $ride);
@@ -75,6 +79,8 @@ class SocialNetworkController extends AbstractController
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
         SocialNetworkHelperInterface $socialNetworkHelper,
+        FeedsApiClientInterface $feedsApiClient,
+        LoggerInterface $logger,
         ?City $city = null,
         ?Ride $ride = null
     ): Response {
@@ -100,6 +106,18 @@ class SocialNetworkController extends AbstractController
 
             $this->managerRegistry->getManager()->persist($socialNetworkProfile);
             $this->managerRegistry->getManager()->flush();
+
+            try {
+                $feedsProfile = $feedsApiClient->createProfile(
+                    $socialNetworkProfile->getIdentifier(),
+                    $socialNetworkProfile->getNetwork(),
+                );
+
+                $socialNetworkProfile->setFeedsProfileId($feedsProfile->getId());
+                $this->managerRegistry->getManager()->flush();
+            } catch (\Exception $e) {
+                $logger->error('Failed to create profile in Feeds API: ' . $e->getMessage());
+            }
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 

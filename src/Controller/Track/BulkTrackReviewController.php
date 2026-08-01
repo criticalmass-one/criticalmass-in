@@ -27,15 +27,11 @@ class BulkTrackReviewController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/trackupload/review', name: 'caldera_criticalmass_track_bulkupload_review', methods: ['GET'], priority: 310)]
-    public function listAction(#[CurrentUser] User $user): Response
+    public function listAction(): Response
     {
-        /** @var TrackImportCandidateRepository $repository */
-        $repository = $this->managerRegistry->getRepository(TrackImportCandidate::class);
-
-        return $this->render('Track/bulk-review.html.twig', [
-            'matchedCandidates' => $repository->findMatchedUploadCandidatesForUser($user),
-            'parkedCandidates' => $repository->findParkedUploadCandidatesForUser($user),
-        ]);
+        // Track review has been folded into the unified review; keep the route for
+        // existing links/bookmarks and redirect to the combined page.
+        return $this->redirectToRoute('caldera_criticalmass_unified_review');
     }
 
     #[IsGranted('ROLE_USER')]
@@ -51,7 +47,7 @@ class BulkTrackReviewController extends AbstractController
         $this->assertOwnership($candidate, $user);
 
         if ($candidate->getRide() === null) {
-            return $this->redirectToRoute('caldera_criticalmass_track_bulkupload_review');
+            return $this->redirectToRoute('caldera_criticalmass_unified_review');
         }
 
         $rideTitle = $candidate->getRide()->getTitle();
@@ -64,7 +60,7 @@ class BulkTrackReviewController extends AbstractController
             $this->addFlash('danger', sprintf('Track für „%s" konnte nicht importiert werden.', $rideTitle));
         }
 
-        return $this->redirectToRoute('caldera_criticalmass_track_bulkupload_review');
+        return $this->redirectToRoute('caldera_criticalmass_unified_review');
     }
 
     #[IsGranted('ROLE_USER')]
@@ -101,7 +97,7 @@ class BulkTrackReviewController extends AbstractController
             $this->addFlash('warning', sprintf('%d Datei(en) konnten nicht importiert werden und bleiben zur Prüfung erhalten.', $failed));
         }
 
-        return $this->redirectToRoute('caldera_criticalmass_track_bulkupload_review');
+        return $this->redirectToRoute('caldera_criticalmass_unified_review');
     }
 
     #[IsGranted('ROLE_USER')]
@@ -127,7 +123,7 @@ class BulkTrackReviewController extends AbstractController
 
         $this->addFlash('info', 'Kandidat wurde verworfen.');
 
-        return $this->redirectToRoute('caldera_criticalmass_track_bulkupload_review');
+        return $this->redirectToRoute('caldera_criticalmass_unified_review');
     }
 
     private function assertCsrf(Request $request, string $tokenId): void
