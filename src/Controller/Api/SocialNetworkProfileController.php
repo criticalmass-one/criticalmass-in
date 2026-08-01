@@ -151,6 +151,6 @@ class SocialNetworkProfileController extends BaseController
         $manager->remove($socialNetworkProfile);
         $manager->flush();
 
-        return new JsonResponse(['status' => 'ok', 'deletedProfileId' => $id, 'deletedFeedItems' => count($feedItems)]);
+        return new JsonResponse(['status' => 'ok', 'deletedProfileId' => $id]);
     }
 }

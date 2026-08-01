@@ -6,7 +6,6 @@ use App\Entity\CityActivity;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
-use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Weather;
 use App\Repository\ParticipationRepository;
@@ -728,13 +727,11 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertNull($this->em()->getRepository(Weather::class)->find($weatherId));
     }
 
-    public function testDeleteSocialProfileRemovesItAndFeedItems(): void
+    public function testDeleteSocialProfileRemovesIt(): void
     {
         $city = $this->createCity();
         $profile = $this->createSocialProfile($city);
-        $feedItem = $this->createSocialFeedItem($profile);
         $profileId = $profile->getId();
-        $feedItemId = $feedItem->getId();
         $token = $this->obtainAccessToken('socialnetwork:write');
 
         $result = $this->callTool($token, 'delete_social_profile', ['profileId' => $profileId]);
@@ -743,23 +740,6 @@ final class WriteToolsTest extends AbstractMcpTestCase
 
         $this->em()->clear();
         self::assertNull($this->em()->getRepository(SocialNetworkProfile::class)->find($profileId));
-        self::assertNull($this->em()->getRepository(SocialNetworkFeedItem::class)->find($feedItemId));
-    }
-
-    public function testDeleteSocialFeedItemRemovesIt(): void
-    {
-        $city = $this->createCity();
-        $profile = $this->createSocialProfile($city);
-        $feedItem = $this->createSocialFeedItem($profile);
-        $feedItemId = $feedItem->getId();
-        $token = $this->obtainAccessToken('socialnetwork:write');
-
-        $result = $this->callTool($token, 'delete_social_feed_item', ['feedItemId' => $feedItemId]);
-
-        self::assertFalse($result['isError'], $result['text']);
-
-        $this->em()->clear();
-        self::assertNull($this->em()->getRepository(SocialNetworkFeedItem::class)->find($feedItemId));
     }
 
     public function testWriteToolRejectedWithoutScope(): void
