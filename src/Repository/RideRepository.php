@@ -15,6 +15,9 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class RideRepository extends ServiceEntityRepository
 {
+    /** a ride still counts as "current" for this many hours after its start time */
+    public const CURRENT_RIDE_GRACE_HOURS = 4;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Ride::class);
@@ -22,7 +25,8 @@ class RideRepository extends ServiceEntityRepository
 
     public function findCurrentRideForCity(City $city, bool $cycleMandatory = false, bool $slugsAllowed = true): ?Ride
     {
-        $dateTime = \DateTime::createFromFormat('U', (string)time()); // this will allow to mock the clock in functional tests
+        $dateTime = \DateTime::createFromFormat('U', (string)time()) // this will allow to mock the clock in functional tests
+            ->modify(sprintf('-%d hours', self::CURRENT_RIDE_GRACE_HOURS));
 
         $builder = $this->createQueryBuilder('r');
 
