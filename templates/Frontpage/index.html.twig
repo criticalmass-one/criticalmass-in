@@ -5,49 +5,44 @@
 {% block masterContent %}
     {% include('Template/Navigation/_full_navigation.html.twig') %}
 
-    <div class="container-fluid margin-bottom-medium">
-        <div class="row">
-            <div class="col-md-12">
-                {% include 'Frontpage/_carousel.html.twig' with { 'frontpageTeaserList': frontpageTeaserList } %}
-            </div>
-        </div>
+    {# Hero carousel #}
+    <div class="container-fluid px-0 px-md-3 mb-3">
+        {% include 'Frontpage/_carousel.html.twig' with { 'frontpageTeaserList': frontpageTeaserList } %}
     </div>
 
-    <div class="container margin-top-medium">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="no-margin-top">
-                            Hej, wir fahren Fahrrad!
-                        </h1>
+    {# Hero text #}
+    <section class="app-hero">
+        <h1>Hej, wir fahren Fahrrad!</h1>
+        <p class="lead">
+            In fast jeder grossen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer
+            gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
+        </p>
+        <a href="https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/" class="btn btn-pill">
+            <i class="far fa-bicycle"></i>
+            Erfahre mehr
+        </a>
+    </section>
 
-                        <p class="lead">
-                            In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer
-                            gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
-                        </p>
-
-                        <p class="text-center">
-                            <a href="https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/" class="btn btn-primary">
-                                <i class="far fa-bicycle"></i>
-                                Erfahre mehr über criticalmass.in
-                            </a>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row margin-top-medium">
-                    <div class="col-md-12">
-                        {{ include('Timeline/timeline.html.twig') }}
-                    </div>
+    {# Main content #}
+    <div class="container mt-n3 position-relative" style="z-index:1">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="app-stagger">
+                    {{ include('Timeline/timeline.html.twig') }}
                 </div>
             </div>
 
-            <div class="col-md-4">
-                {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     {% include('Template/Includes/_footer.html.twig') %}
+
+    {% include('Template/Navigation/_bottom_navigation.html.twig') %}
 {% endblock %}

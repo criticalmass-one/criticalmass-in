@@ -5,22 +5,30 @@
 
     {% include('Template/Includes/_github.html.twig') %}
 
-    {% block breadcrumbContainer %}
-        {% if block('breadcrumb') %}
-        <div class="container pt-4">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ path('caldera_criticalmass_frontpage') }}">Critical Mass</a>
-                </li>
-                {% block breadcrumb %}{% endblock %}
-            </ol>
+    <main class="app-content">
+        {% block breadcrumbContainer %}
+            {% if block('breadcrumb') %}
+            <div class="container pt-3 pb-1">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{{ path('caldera_criticalmass_frontpage') }}">Critical Mass</a>
+                        </li>
+                        {% block breadcrumb %}{% endblock %}
+                    </ol>
+                </nav>
+            </div>
+            {% endif %}
+        {% endblock %}
+
+        {{ render(controller('App\\Controller\\Template\\AlertController::showCurrentAlertsAction')) }}
+
+        <div class="app-animate">
+            {% block content %}{% endblock %}
         </div>
-        {% endif %}
-    {% endblock %}
-
-    {{ render(controller('App\\Controller\\Template\\AlertController::showCurrentAlertsAction')) }}
-
-    {% block content %}{% endblock %}
+    </main>
 
     {% include('Template/Includes/_footer.html.twig') %}
+
+    {% include('Template/Navigation/_bottom_navigation.html.twig') %}
 {% endblock %}
