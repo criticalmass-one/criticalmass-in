@@ -4,7 +4,10 @@ namespace Tests\Repository;
 
 use App\Entity\City;
 use App\Entity\Ride;
+use App\Repository\RideRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RideRepositoryTest extends KernelTestCase
@@ -55,8 +58,69 @@ class RideRepositoryTest extends KernelTestCase
         }
     }
 
+    #[Group('time-sensitive')]
+    public function testFindCurrentRideForCityIncludesRecentlyStartedRide(): void
+    {
+        [$city, $lastPastRide] = $this->getCityWithLastPastRide();
+
+        // two hours after the start the ride still counts as current
+        ClockMock::register(RideRepository::class);
+        ClockMock::withClockMock((clone $lastPastRide->getDateTime())->modify('+2 hours')->format('U'));
+
+        $currentRide = $this->entityManager->getRepository(Ride::class)->findCurrentRideForCity($city);
+
+        $this->assertNotNull($currentRide);
+        $this->assertEquals($lastPastRide->getId(), $currentRide->getId());
+    }
+
+    #[Group('time-sensitive')]
+    public function testFindCurrentRideForCityExcludesRideAfterGracePeriod(): void
+    {
+        [$city, $lastPastRide] = $this->getCityWithLastPastRide();
+
+        // one minute past the grace period the ride is not current anymore
+        ClockMock::register(RideRepository::class);
+        ClockMock::withClockMock(
+            (clone $lastPastRide->getDateTime())
+                ->modify(sprintf('+%d hours +1 minute', RideRepository::CURRENT_RIDE_GRACE_HOURS))
+                ->format('U')
+        );
+
+        $currentRide = $this->entityManager->getRepository(Ride::class)->findCurrentRideForCity($city);
+
+        if ($currentRide) {
+            $this->assertNotEquals($lastPastRide->getId(), $currentRide->getId());
+            $this->assertGreaterThan($lastPastRide->getDateTime(), $currentRide->getDateTime());
+        } else {
+            $this->assertNull($currentRide);
+        }
+    }
+
+    /** @return array{City, Ride} */
+    private function getCityWithLastPastRide(): array
+    {
+        $city = $this->entityManager->getRepository(City::class)->findOneBy(['city' => 'Hamburg']);
+        $this->assertNotNull($city, 'Hamburg fixture not found');
+
+        $lastPastRide = null;
+        $now = new \DateTime();
+
+        foreach ($this->entityManager->getRepository(Ride::class)->findRidesForCity($city, 'DESC') as $ride) {
+            if ($ride->getDateTime() < $now) {
+                $lastPastRide = $ride;
+                break;
+            }
+        }
+
+        $this->assertNotNull($lastPastRide, 'No past Hamburg ride in fixtures');
+
+        return [$city, $lastPastRide];
+    }
+
     protected function tearDown(): void
     {
+        ClockMock::withClockMock(false);
+
         parent::tearDown();
         $this->entityManager = null;
     }
