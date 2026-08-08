@@ -22,6 +22,23 @@ vendor/bin/phpunit --filter testMethodName                  # Single test method
 # Use `php bin/console ...` (the bare `bin/console` may report "permission denied").
 ```
 
+**Time-dependent tests:** `phpunit.dist.xml` wires Symfony's `SymfonyExtension` with
+`clock-mock-namespaces=App`, so unqualified `time()` calls inside `App\…` are mockable.
+That is why e.g. `RideRepository` builds "now" via
+`\DateTime::createFromFormat('U', (string)time())` — do not "simplify" this to
+`new \DateTime()`. Test pattern (see `tests/Repository/RideRepositoryTest.php`):
+tag the test `#[Group('time-sensitive')]`, then `ClockMock::register(TheClass::class)` +
+`ClockMock::withClockMock($timestamp)`; reset with `ClockMock::withClockMock(false)` in
+`tearDown()`. Fixtures compute ride dates **relative to load time**
+(`RideFixtures`: `"±N months last friday 19:00"`), so tests must not assume absolute
+dates — read the fixture entity's datetime from the DB and set the mock clock relative
+to it.
+
+**"Current ride" semantics:** `RideRepository::findCurrentRideForCity()` returns the next
+ride with `dateTime >= now − CURRENT_RIDE_GRACE_HOURS` (4 h), i.e. a ride that already
+started stays "current" during the grace period — on the city page, city list,
+`/api/{citySlug}/current` and the MCP `GetCurrentRideTool`.
+
 ### Static Analysis
 ```bash
 vendor/bin/phpstan analyse                  # PHPStan level 6
