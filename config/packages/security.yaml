@@ -22,6 +22,22 @@ security:
             login_link:
                 check_route: login_check
                 signature_properties: [ 'email' ]
+            # Passkeys als dritte Anmeldeart neben Magic Link und OAuth. Die Pfade sind
+            # sämtlich überschrieben: die Vorgaben des Bundles wären `/login/options`,
+            # `POST /login`, `/register/options` und `POST /register` — und `POST /login`
+            # gehört bereits `login_perform`.
+            webauthn:
+                authentication:
+                    enabled: true
+                    routes:
+                        options_path: /passkey/login/options
+                        result_path: /passkey/login
+                registration:
+                    # Standardmäßig aus, muss ausdrücklich eingeschaltet werden.
+                    enabled: true
+                    routes:
+                        options_path: /passkey/register/options
+                        result_path: /passkey/register
             provider: users
             pattern: .*
             context: user
@@ -50,6 +66,14 @@ security:
         # Related Origin Requests: der Browser holt diese Liste, bevor er einen Passkey
         # mit RP ID criticalmass.one auf criticalmass.in zulässt.
         - { path: '^/\.well-known/webauthn$', role: PUBLIC_ACCESS }
+
+        # Anmelden per Passkey muss anonym möglich sein.
+        - { path: ^/passkey/login, role: PUBLIC_ACCESS }
+        # Einen Passkey anlegen dagegen nie: wer hier durchkäme, könnte sich einen
+        # Authenticator auf ein fremdes Konto legen. Zweite Absicherung ist der
+        # CurrentUserEntityGuesser in services.yaml, der den Kontobezug aus der Sitzung
+        # nimmt statt aus dem Request-Body.
+        - { path: ^/passkey/register, role: ROLE_USER }
 
         # OAuth2 / MCP
         - { path: '^/\.well-known/oauth', role: PUBLIC_ACCESS }
