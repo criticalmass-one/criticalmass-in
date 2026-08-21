@@ -47,6 +47,10 @@ security:
         - { path: ^/register, role: PUBLIC_ACCESS }
         - { path: ^/resetting, role: PUBLIC_ACCESS }
 
+        # Related Origin Requests: der Browser holt diese Liste, bevor er einen Passkey
+        # mit RP ID criticalmass.one auf criticalmass.in zulässt.
+        - { path: '^/\.well-known/webauthn$', role: PUBLIC_ACCESS }
+
         # OAuth2 / MCP
         - { path: '^/\.well-known/oauth', role: PUBLIC_ACCESS }
         - { path: ^/token, role: PUBLIC_ACCESS }

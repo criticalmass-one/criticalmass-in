@@ -129,6 +129,15 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Ignore]
     private Collection $trackImportCandidates;
 
+    /**
+     * Stabile Kennung für WebAuthn. Bewusst nicht die E-Mail-Adresse: die lässt sich im
+     * Profil jederzeit ändern, und mit ihr als User-Handle wären danach alle Passkeys
+     * dieses Kontos unbrauchbar.
+     */
+    #[ORM\Column(type: 'string', length: 36, unique: true, nullable: true)]
+    #[Ignore]
+    private ?string $webauthnUserHandle = null;
+
     public function __construct()
     {
         $this->colorRed = random_int(0, 255);
@@ -616,6 +625,19 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    #[Ignore]
+    public function getWebauthnUserHandle(): ?string
+    {
+        return $this->webauthnUserHandle;
+    }
+
+    public function setWebauthnUserHandle(?string $webauthnUserHandle): self
+    {
+        $this->webauthnUserHandle = $webauthnUserHandle;
 
         return $this;
     }
