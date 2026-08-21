@@ -5,54 +5,54 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-10 offset-md-1">
                 <h1>Einloggen und losfahren!</h1>
 
                 <p class="lead">
-                    Du kannst dich entweder über ein gesellschaftliches Netzwerk oder über deine E-Mail-Adresse einloggen.
+                    Du kannst dich mit einem Passkey, über ein gesellschaftliches Netzwerk oder
+                    über deine E-Mail-Adresse einloggen.
                 </p>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-5 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Soziale Netzwerke
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <p>
-                                    Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen Klick!
-                                </p>
+        {{ include('Flash/_flash.html.twig') }}
 
-                                <div class="btn-group" role="group" aria-label="...">
-                                    <a class="btn btn-secondary" style="background-color: rgb(60, 90, 150); color: white;"
-                                       href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}"
-                                       title="Sign in with Facebook">
-                                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                                        Facebook
-                                    </a>
-                                    <a class="btn btn-secondary" style="background-color: rgb(249, 77, 31); color: white;"
-                                       href="{{ path('hwi_oauth_service_redirect', {'service': 'strava' }) }}"
-                                       title="Sign in with Strava">
-                                        <i class="fab fa-strava" aria-hidden="true"></i>
-                                        Strava
-                                    </a>
-                                </div>
-                            </div>
+        <div class="row g-3">
+            <div class="col-md-5 offset-md-1">
+                {# Blendet sich selbst aus, wenn der Browser kein WebAuthn kann. #}
+                <div class="card border-0 shadow-sm h-100"
+                     data-controller="passkey"
+                     data-passkey-conditional-value="true"
+                     data-passkey-redirect-url-value="{{ path('criticalmass_user_usermanagement') }}">
+                    <div class="card-header bg-white">
+                        <i class="far fa-key text-primary me-2"></i>Passkey
+                    </div>
+                    <div class="card-body d-flex flex-column text-center">
+                        <p>
+                            Melde dich per Fingerabdruck, Gesichtserkennung oder Geräte-PIN an &mdash;
+                            ohne auf eine Mail zu warten.
+                        </p>
+
+                        <div class="alert alert-danger text-start" data-passkey-target="status" hidden></div>
+
+                        <div class="mt-auto">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    data-action="passkey#login"
+                                    data-passkey-target="submit">
+                                <i class="far fa-key me-1"></i>Mit Passkey anmelden
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        E-Mail-Adresse
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white">
+                        <i class="far fa-envelope text-warning me-2"></i>E-Mail-Adresse
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <p>
                             Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
                         </p>
@@ -61,6 +61,34 @@
                         {{ form_row(login_form.email) }}
                         <div class="frc-captcha mb-3 mx-auto" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
                         {{ form_end(login_form) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-10 offset-md-1">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white">
+                        <i class="far fa-share-nodes text-secondary me-2"></i>Soziale Netzwerke
+                    </div>
+                    <div class="card-body text-center">
+                        <p>
+                            Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen Klick!
+                        </p>
+
+                        <div class="btn-group" role="group" aria-label="Anmeldung über soziale Netzwerke">
+                            <a class="btn btn-secondary" style="background-color: rgb(60, 90, 150); color: white;"
+                               href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}"
+                               title="Sign in with Facebook">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                Facebook
+                            </a>
+                            <a class="btn btn-secondary" style="background-color: rgb(249, 77, 31); color: white;"
+                               href="{{ path('hwi_oauth_service_redirect', {'service': 'strava' }) }}"
+                               title="Sign in with Strava">
+                                <i class="fab fa-strava" aria-hidden="true"></i>
+                                Strava
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
