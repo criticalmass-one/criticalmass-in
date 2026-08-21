@@ -164,3 +164,12 @@ services:
 
     Sabre\VObject\Component\VCalendar: ~
 
+
+    # Der Firewall-Authenticator verdrahtet für den Registrierungs-Endpunkt fest den
+    # RequestBodyUserEntityGuesser — der nimmt den Benutzernamen aus dem Request-Body.
+    # Damit könnte jemand einen Passkey auf ein fremdes Konto legen. Der Klassenname ist
+    # in der Factory hart referenziert und über die Bundle-Konfiguration nicht
+    # austauschbar, also biegen wir den Service auf die sitzungsbasierte Variante um:
+    # Ein Passkey lässt sich damit ausschließlich für das eigene, eingeloggte Konto anlegen.
+    Webauthn\Bundle\Security\Guesser\RequestBodyUserEntityGuesser:
+        alias: Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser
