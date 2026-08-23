@@ -22,6 +22,14 @@ security:
             login_link:
                 check_route: login_check
                 signature_properties: [ 'email' ]
+            # Brute-Force-Bremse auf dem Authenticator-Pfad, insbesondere auf
+            # /login_check: das Absenden des Login-Formulars ist bereits in
+            # LoginController gedrosselt, das Einloesen des Magic Links war es
+            # nicht. Gezaehlt wird pro IP + Kennung, ein erfolgreicher Login
+            # setzt den Zaehler zurueck.
+            login_throttling:
+                max_attempts: 5
+                interval: '15 minutes'
             provider: users
             pattern: .*
             context: user
