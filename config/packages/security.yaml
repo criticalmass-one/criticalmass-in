@@ -36,12 +36,19 @@ security:
                 oauth_user_provider:
                     service: App\Security\UserProvider\UserProvider
 
-        api:
-            pattern:    ^/api
-            stateless:  true
-            security: false
+        # Hinweis: Es gibt bewusst KEINE eigene `api`-Firewall mehr. Ein Block
+        # `api: { pattern: ^/api, security: false }` stand hier bis 2026-08 hinter
+        # `main` (Zeile ~21, `pattern: .*`) und war damit tote Konfiguration --
+        # `/api` lief immer schon unter `main`. Der Zugriffsschutz haengt deshalb
+        # allein an den `access_control`-Regeln weiter unten.
 
     access_control:
+        # API: Lesen bleibt oeffentlich (Apps, Partnerdienste, /api/doc),
+        # Schreiben erfordert eine Anmeldung. Reihenfolge ist bindend --
+        # die erste passende Regel gewinnt, deshalb steht das GET-Pattern zuerst.
+        - { path: ^/api, methods: [GET, HEAD, OPTIONS], role: PUBLIC_ACCESS }
+        - { path: ^/api, role: ROLE_USER }
+
         # URL of FOSUserBundle which need to be available to anonymous users
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/register, role: PUBLIC_ACCESS }

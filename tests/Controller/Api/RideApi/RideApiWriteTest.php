@@ -12,6 +12,13 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 #[TestDox('Ride API Write Operations')]
 class RideApiWriteTest extends AbstractApiControllerTestCase
 {
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loginAsApiUser();
+    }
     #[TestDox('PUT /api/{citySlug}/{rideIdentifier} creates new ride')]
     public function testCreateRide(): void
     {

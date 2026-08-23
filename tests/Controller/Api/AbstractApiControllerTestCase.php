@@ -3,6 +3,7 @@
 namespace Tests\Controller\Api;
 
 use App\Criticalmass\Util\ClassUtil;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Serializer\CriticalSerializerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -19,6 +20,30 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
         $this->client = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
     }
+
+    /**
+     * Schreibende /api-Endpunkte verlangen seit dem Absichern der API eine
+     * Anmeldung (`access_control: { path: ^/api, role: ROLE_USER }`). Tests, die
+     * PUT/POST auf /api absetzen, melden sich damit vorher an.
+     */
+    protected function loginAsApiUser(): void
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([]);
+
+        if (null === $user) {
+            $user = new User();
+            $user
+                ->setEmail('api-test@criticalmass.in')
+                ->setUsername('api-test')
+            ;
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        }
+
+        $this->client->loginUser($user, 'main');
+    }
+
     /**
      * @deprecated
      */

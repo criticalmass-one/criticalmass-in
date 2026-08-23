@@ -7,6 +7,13 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 {
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loginAsApiUser();
+    }
     public function testListSocialNetworkProfilesReturnsPaginatedResponse(): void
     {
         $this->client->request('GET', '/api/socialnetwork-profiles');
