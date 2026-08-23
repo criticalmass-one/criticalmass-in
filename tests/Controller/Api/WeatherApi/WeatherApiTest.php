@@ -8,6 +8,13 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class WeatherApiTest extends AbstractApiControllerTestCase
 {
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loginAsApiUser();
+    }
     public function testAddWeatherToRide(): void
     {
         $rides = $this->entityManager->getRepository(Ride::class)->findAll();

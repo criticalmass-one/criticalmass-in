@@ -12,7 +12,7 @@ doctrine:
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4
-            collate: utf8mb4_unicode_ci
+            collation: utf8mb4_unicode_ci
         server_version: 'mariadb-10.9.3'
         url: '%env(resolve:DATABASE_URL)%'
 
@@ -22,7 +22,6 @@ doctrine:
             time: App\DBAL\Type\UTCTimeType
 
     orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.default
         auto_mapping: true
         mappings:

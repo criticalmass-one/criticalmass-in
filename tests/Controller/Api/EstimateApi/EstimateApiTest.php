@@ -8,6 +8,13 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class EstimateApiTest extends AbstractApiControllerTestCase
 {
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loginAsApiUser();
+    }
     public function testEstimateFixturesExist(): void
     {
         $estimates = $this->entityManager->getRepository(RideEstimate::class)->findAll();

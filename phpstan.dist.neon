@@ -12,3 +12,6 @@ parameters:
     excludePaths:
         - src/Criticalmass/DataQuery/Query/HasCoordinatesQuery.php
         - src/Criticalmass/DataQuery/Query/LocationNameQuery.php
+        # Auto-generiert von symfony/dependency-injection, gitignored, existiert
+        # nur lokal -- "(?)" markiert den Pfad daher als optional.
+        - config/reference.php (?)

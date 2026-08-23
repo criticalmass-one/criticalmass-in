@@ -36,6 +36,14 @@ framework:
         cookie_secure: auto
         cookie_httponly: true
         cookie_samesite: lax
+        # Ohne diese Werte greift die php.ini des Hosts -- auf server2 heisst das
+        # gc_probability=0, also gar keine Garbage Collection: das Session-
+        # Verzeichnis war auf 1,26 Mio Dateien angewachsen und keine Sitzung ist
+        # jemals serverseitig abgelaufen. 1/100 Requests raeumt auf, Sitzungen
+        # verfallen nach 14 Tagen Inaktivitaet.
+        gc_probability: 1
+        gc_divisor: 100
+        gc_maxlifetime: 1209600
     fragments:
         path: /_fragment
     http_method_override: true
@@ -44,6 +52,15 @@ framework:
         json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
     router:
         strict_requirements: ~
+
+when@prod:
+    framework:
+        session:
+            # Produktion laeuft ausschliesslich ueber HTTPS. `auto` haengt an
+            # Request::isSecure() und liefert hinter einem TLS-terminierenden
+            # Proxy ohne gesetzte TRUSTED_PROXIES faelschlich ein Cookie ohne
+            # Secure-Flag.
+            cookie_secure: true
 
 when@test:
     framework:

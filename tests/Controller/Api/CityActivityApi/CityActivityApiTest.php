@@ -8,6 +8,13 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class CityActivityApiTest extends AbstractApiControllerTestCase
 {
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loginAsApiUser();
+    }
     public function testCreateActivityScoreForCity(): void
     {
         $city = $this->entityManager->getRepository(City::class)->findOneBy(['city' => 'Hamburg']);

@@ -9,6 +9,13 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 #[TestDox('Photo API Write Operations')]
 class PhotoApiWriteTest extends AbstractApiControllerTestCase
 {
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loginAsApiUser();
+    }
     #[TestDox('POST /api/photo/{id} accepts update request')]
     public function testUpdatePhoto(): void
     {

@@ -11,6 +11,13 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 #[TestDox('SocialNetworkProfile API Schema Validation')]
 class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 {
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loginAsApiUser();
+    }
     #[TestDox('GET /api/socialnetwork-profiles returns array of profiles matching SOCIAL_NETWORK_PROFILE_SCHEMA')]
     public function testSocialNetworkProfileListResponseSchema(): void
     {
