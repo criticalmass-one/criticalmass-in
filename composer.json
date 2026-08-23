@@ -62,7 +62,7 @@
         "symfony/framework-bundle": "^7.4",
         "symfony/dotenv": "^7.4",
         "jaybizzle/crawler-detect": "^1.2",
-        "nelmio/api-doc-bundle": "^4.10",
+        "nelmio/api-doc-bundle": "^5.0",
         "symfony/asset": "^7.4",
         "yohang/calendr": "^4.0",
         "presta/sitemap-bundle": "^4.0",
