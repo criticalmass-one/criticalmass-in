@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "751cd8bea8a53160df0f3b170749e66d",
+    "content-hash": "6ee6ea98b9eef9fa2d81d6347a739825",
     "packages": [
         {
             "name": "adriangibbons/php-fit-file-analysis",
@@ -4203,16 +4203,16 @@
         },
         {
             "name": "maltehuebner/ordered-entities-bundle",
-            "version": "0.3",
+            "version": "0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/ordered-entities-bundle.git",
-                "reference": "311492592ee5a46636031ceab74047b9edbcea0b"
+                "reference": "fc3ba1b094e94cea33bd3a88af9a1cfa8dbefb84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/311492592ee5a46636031ceab74047b9edbcea0b",
-                "reference": "311492592ee5a46636031ceab74047b9edbcea0b",
+                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/fc3ba1b094e94cea33bd3a88af9a1cfa8dbefb84",
+                "reference": "fc3ba1b094e94cea33bd3a88af9a1cfa8dbefb84",
                 "shasum": ""
             },
             "require": {
@@ -4238,9 +4238,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maltehuebner/ordered-entities-bundle/issues",
-                "source": "https://github.com/maltehuebner/ordered-entities-bundle/tree/0.3"
+                "source": "https://github.com/maltehuebner/ordered-entities-bundle/tree/0.4"
             },
-            "time": "2026-01-24T10:47:58+00:00"
+            "time": "2026-02-10T14:12:55+00:00"
         },
         {
             "name": "miljar/php-exif",
