@@ -33,6 +33,25 @@
             </div>
         {% endfor %}
 
+        {% if passkeyCounter == 0 %}
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="alert alert-info d-md-flex align-items-center gap-3" role="alert">
+                        <div>
+                            <i class="far fa-key me-2"></i>Mit einem Passkey meldest du dich per Fingerabdruck,
+                            Gesichtserkennung oder Geräte-PIN an, statt auf die Mail mit dem Anmeldelink zu warten.
+                            Der Anmeldelink funktioniert weiterhin.
+                        </div>
+
+                        <a class="btn btn-primary btn-sm text-nowrap ms-md-auto"
+                           href="{{ path('criticalmass_user_profile_passkey_list') }}">
+                            Passkey einrichten
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row">
             <div class="col-md-10 offset-md-1">
                 <div class="row g-3">

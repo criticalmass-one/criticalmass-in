@@ -67,6 +67,9 @@ security:
         # mit RP ID criticalmass.one auf criticalmass.in zulässt.
         - { path: '^/\.well-known/webauthn$', role: PUBLIC_ACCESS }
 
+        # Verweist Passwortmanager auf die Passkey-Verwaltung im Konto.
+        - { path: '^/\.well-known/passkey-endpoints$', role: PUBLIC_ACCESS }
+
         # Anmelden per Passkey muss anonym möglich sein.
         - { path: ^/passkey/login, role: PUBLIC_ACCESS }
         # Einen Passkey anlegen dagegen nie: wer hier durchkäme, könnte sich einen

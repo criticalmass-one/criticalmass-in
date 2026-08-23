@@ -24,3 +24,13 @@ webauthn:
         default:
             rp_id: 'localhost'
             user_verification: preferred
+
+    # /.well-known/passkey-endpoints nach der W3C-Passkey-Endpoints-Spezifikation. Sagt
+    # Passwortmanagern und Betriebssystemen, wo man bei uns einen Passkey anlegt und
+    # verwaltet, damit sie direkt dorthin verlinken können. Der Routenname wird zur
+    # Laufzeit über den Router zu einer absoluten URL aufgelöst — je nach angefragter
+    # Domain also criticalmass.in oder criticalmass.one.
+    passkey_endpoints:
+        enabled: true
+        enroll: 'criticalmass_user_profile_passkey_list'
+        manage: 'criticalmass_user_profile_passkey_list'
