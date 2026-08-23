@@ -41,7 +41,7 @@
         "symfony/apache-pack": "^1.0",
         "symfony/flex": "^2.0",
         "khill/php-duration": "^1.0",
-        "sabre/vobject": "^4.0",
+        "sabre/vobject": "^5.0",
         "oneup/flysystem-bundle": "^4.12.2",
         "flagception/flagception-bundle": "^6.0",
         "ext-fileinfo": "*",

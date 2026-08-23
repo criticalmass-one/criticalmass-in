@@ -4930,3 +4930,9 @@ parameters:
 			identifier: method.resultUnused
 			count: 1
 			path: tests/RideNamer/RideNamerListTest.php
+
+		-
+			message: '#^Method App\\Criticalmass\\Ical\\RideIcalGenerator\:\:__construct\(\) has parameter \$calendar with no value type specified in iterable type Sabre\\VObject\\Component\\VCalendar\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/Ical/RideIcalGenerator.php
