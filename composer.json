@@ -139,7 +139,7 @@
         },
         "audit": {
             "abandoned": "report",
-            "block-insecure": false
+            "block-insecure": true
         }
     },
     "extra": {
