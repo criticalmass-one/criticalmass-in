@@ -41,7 +41,11 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
             $this->entityManager->flush();
         }
 
-        $this->client->loginUser($user, 'main');
+        // Zweiter Parameter ist der Firewall-*Context*, nicht der Firewall-Name:
+        // die main-Firewall traegt `context: user`, der Token landet also unter
+        // `_security_user`. Mit 'main' schriebe loginUser() in einen Schluessel,
+        // den der ContextListener nie liest -- die Anfrage bliebe anonym.
+        $this->client->loginUser($user, 'user');
     }
 
     /**
