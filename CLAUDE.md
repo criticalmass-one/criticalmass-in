@@ -98,6 +98,12 @@ entstehen dabei implizit in `LoginController::createNewUser()`, einen `/register
 gibt es nicht), über **OAuth** (Facebook/Strava, HWIOAuthBundle) oder über einen
 **Passkey**.
 
+**Der Anmeldelink per Mail bleibt für jedes Konto verfügbar.** Passkeys kommen additiv
+dazu, sie ersetzen den Rückfallweg nicht — ein Opt-out („Konten mit genug Passkeys dürfen
+den Mail-Login abschalten") ist ausdrücklich **nicht** gewollt und soll auch nicht
+vorgeschlagen werden. Die bewusst akzeptierte Folge: Die Sicherheitsuntergrenze eines
+Kontos ist dauerhaft die Mailbox. Der Gegenwert ist, dass niemand sich aussperren kann.
+
 **Passkeys (WebAuthn)** laufen über `web-auth/webauthn-symfony-bundle`. Was daran nicht
 selbsterklärend ist:
 
