@@ -4,6 +4,7 @@ namespace App\ValueResolver;
 
 use App\Entity\City;
 use App\Entity\CitySlug;
+use App\Criticalmass\Util\RequestParameter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -27,7 +28,7 @@ class CityValueResolver implements ValueResolverInterface
         }
 
         $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug(
-            $request->get('citySlug')
+            RequestParameter::get($request, 'citySlug')
         );
 
         if (!$citySlug && $argument->isNullable()) {
