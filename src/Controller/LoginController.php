@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
@@ -47,8 +47,8 @@ class LoginController extends AbstractController
         LoginLinkHandlerInterface $loginLinkHandler,
         UserRepository $userRepository,
         Request $request,
-        RateLimiterFactory $loginLimiter,
-        RateLimiterFactory $loginEmailLimiter,
+        RateLimiterFactoryInterface $loginLimiter,
+        RateLimiterFactoryInterface $loginEmailLimiter,
         #[Autowire('%notification.mail.sender_address%')] string $senderAddress
     ): Response {
         $limiter = $loginLimiter->create($request->getClientIp());

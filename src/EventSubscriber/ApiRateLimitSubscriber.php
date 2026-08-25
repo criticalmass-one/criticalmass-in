@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 /**
  * Drosselt schreibende Zugriffe (POST/PUT/PATCH/DELETE) auf die anonyme
@@ -17,7 +17,7 @@ final class ApiRateLimitSubscriber implements EventSubscriberInterface
     private const WRITE_METHODS = ['POST', 'PUT', 'PATCH', 'DELETE'];
 
     public function __construct(
-        private readonly RateLimiterFactory $apiWriteLimiter,
+        private readonly RateLimiterFactoryInterface $apiWriteLimiter,
     ) {
     }
 

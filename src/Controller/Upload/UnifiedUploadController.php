@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -33,7 +33,7 @@ class UnifiedUploadController extends AbstractController
     public function uploadFileAction(
         Request $request,
         UploadDispatcherInterface $uploadDispatcher,
-        RateLimiterFactory $uploadLimiter,
+        RateLimiterFactoryInterface $uploadLimiter,
         #[CurrentUser] ?User $user = null,
     ): JsonResponse {
         if (!$this->isCsrfTokenValid('unified_upload', (string) $request->request->get('_token'))) {

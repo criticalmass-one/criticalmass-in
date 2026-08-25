@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class TimelineCollectorPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has(Timeline::class) || !$container->has(CachedTimeline::class)) {
             return;
