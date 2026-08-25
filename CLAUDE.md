@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **criticalmass.in** — web platform for coordinating and documenting Critical Mass bicycle rides worldwide. Manages cities, rides/events, participants, GPS tracks, photos, forums, and statistics.
 
-**Stack:** Symfony 7.4 (LTS), Doctrine ORM 3 / DBAL 4, PHP 8.2+, MariaDB 10.9+, Bootstrap 5, Webpack Encore with Stimulus
+**Stack:** Symfony 8.1, Doctrine ORM 3 / DBAL 4 (DoctrineBundle 3), PHP 8.4+ (prod: 8.5), MariaDB 10.9+, Bootstrap 5, Webpack Encore with Stimulus
 
 ## Common Commands
 
