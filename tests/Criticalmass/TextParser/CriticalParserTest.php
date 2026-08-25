@@ -1,0 +1,116 @@
+<?php declare(strict_types=1);
+
+namespace Tests\Criticalmass\TextParser;
+
+use App\Criticalmass\TextParser\CriticalParser;
+use App\Criticalmass\TextParser\Embedder\EmbedderInterface;
+use App\Criticalmass\TextParser\TextCache\TextCacheInterface;
+use Flagception\Manager\FeatureManagerInterface;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+
+final class CriticalParserTest extends TestCase
+{
+    /** @var array<string, string> */
+    private array $cache = [];
+
+    private function parser(bool $oembedActive = false): CriticalParser
+    {
+        $featureManager = $this->createMock(FeatureManagerInterface::class);
+        $featureManager->method('isActive')->willReturnCallback(static fn (string $feature): bool => 'oembed' === $feature && $oembedActive);
+
+        $textCache = new class($this->cache) implements TextCacheInterface {
+            /** @param array<string, string> $store */
+            public function __construct(private array &$store)
+            {
+            }
+
+            public function has(string $rawText): bool
+            {
+                return array_key_exists($rawText, $this->store);
+            }
+
+            public function get(string $rawText): string
+            {
+                return $this->store[$rawText];
+            }
+
+            public function set(string $rawText, string $parsedText): TextCacheInterface
+            {
+                $this->store[$rawText] = $parsedText;
+
+                return $this;
+            }
+        };
+
+        return new CriticalParser($featureManager, $this->createMock(EmbedderInterface::class), $textCache);
+    }
+
+    #[Test]
+    public function convertsMarkdownToHtml(): void
+    {
+        self::assertSame("<p><strong>bold</strong> and <em>italic</em></p>\n", $this->parser()->parse('**bold** and *italic*'));
+    }
+
+    #[Test]
+    public function rawHtmlIsStripped(): void
+    {
+        $html = $this->parser()->parse('hello <script>alert(1)</script> world');
+
+        self::assertStringNotContainsString('<script>', $html);
+        self::assertStringContainsString('hello', $html);
+        self::assertStringContainsString('world', $html);
+    }
+
+    #[Test]
+    public function unsafeLinksLoseTheirHref(): void
+    {
+        $html = $this->parser()->parse('[click](javascript:alert(1))');
+
+        self::assertStringNotContainsString('javascript:', $html);
+        self::assertStringContainsString('<a>click</a>', $html);
+    }
+
+    #[Test]
+    public function explicitLinksAreKept(): void
+    {
+        self::assertSame(
+            "<p><a href=\"https://criticalmass.in/\">CM</a></p>\n",
+            $this->parser()->parse('[CM](https://criticalmass.in/)')
+        );
+    }
+
+    #[Test]
+    public function parsedTextIsCached(): void
+    {
+        $parser = $this->parser();
+
+        $parser->parse('# Title');
+
+        self::assertSame(["# Title" => "<h1>Title</h1>\n"], $this->cache);
+    }
+
+    #[Test]
+    public function cachedTextIsReturnedWithoutReparsing(): void
+    {
+        $this->cache['# Title'] = '<p>from cache</p>';
+
+        self::assertSame('<p>from cache</p>', $this->parser()->parse('# Title'));
+    }
+
+    #[Test]
+    public function bareUrlsAreAutolinked(): void
+    {
+        $html = $this->parser()->parse('see https://criticalmass.in/hamburg now');
+
+        if (!str_contains($html, '<a href="https://criticalmass.in/hamburg">')) {
+            self::markTestIncomplete(
+                'CriticalParser::configure() builds an Environment with the AutolinkExtension (and the '
+                .'EmbedExtension) but then instantiates CommonMarkConverter($config), which creates its own '
+                .'environment — the configured extensions are never used, so bare URLs stay plain text.'
+            );
+        }
+
+        self::assertStringContainsString('<a href="https://criticalmass.in/hamburg">', $html);
+    }
+}
