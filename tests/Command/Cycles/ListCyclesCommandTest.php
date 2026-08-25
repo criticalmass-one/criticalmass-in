@@ -108,15 +108,9 @@ final class ListCyclesCommandTest extends TestCase
     {
         $tester = $this->tester([], null);
 
-        try {
-            $tester->execute(['citySlug' => 'atlantis']);
-        } catch (\Error $error) {
-            self::markTestIncomplete(
-                'ListCyclesCommand prints "No city found" but does not return, then calls getCity() on null: '
-                .$error->getMessage()
-            );
-        }
+        $tester->execute(['citySlug' => 'atlantis']);
 
+        self::assertSame(1, $tester->getStatusCode());
         self::assertStringContainsString('No city found with slug "atlantis"', $tester->getDisplay());
     }
 }

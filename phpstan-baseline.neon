@@ -31,12 +31,6 @@ parameters:
 			path: src/Command/Cycles/ListCyclesCommand.php
 
 		-
-			message: '#^Negated boolean expression is always false\.$#'
-			identifier: booleanNot.alwaysFalse
-			count: 1
-			path: src/Command/Cycles/ListCyclesCommand.php
-
-		-
 			message: '#^Variable \$citySlug in PHPDoc tag @var does not match assigned variable \$citySlugString\.$#'
 			identifier: varTag.differentVariable
 			count: 1
@@ -51,12 +45,6 @@ parameters:
 		-
 			message: '#^Method App\\Command\\DuplicateRides\\ListDuplicateRidesCommand\:\:handleDuplicates\(\) has parameter \$duplicateRides with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/Command/DuplicateRides/ListDuplicateRidesCommand.php
-
-		-
-			message: '#^Negated boolean expression is always false\.$#'
-			identifier: booleanNot.alwaysFalse
 			count: 1
 			path: src/Command/DuplicateRides/ListDuplicateRidesCommand.php
 

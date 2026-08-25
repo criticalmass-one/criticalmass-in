@@ -102,17 +102,12 @@ final class ListDuplicateRidesCommandTest extends TestCase
     public function unknownSlugIsReportedGracefully(): void
     {
         $tester = $this->tester();
-        $this->finder->method('findDuplicates')->willReturn([]);
+        $this->finder->expects(self::never())->method('setCity');
+        $this->finder->expects(self::never())->method('findDuplicates');
 
-        try {
-            $tester->execute(['citySlug' => 'atlantis']);
-        } catch (\Error $error) {
-            self::markTestIncomplete(
-                'ListDuplicateRidesCommand prints "No city found" but does not return, then calls getCity() on null: '
-                .$error->getMessage()
-            );
-        }
+        $tester->execute(['citySlug' => 'atlantis']);
 
+        self::assertSame(1, $tester->getStatusCode());
         self::assertStringContainsString('No city found with slug "atlantis"', $tester->getDisplay());
     }
 }
