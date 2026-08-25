@@ -1,4 +1,6 @@
 liip_imagine:
+    twig:
+        mode: lazy
     resolvers:
         default:
             web_path: ~
