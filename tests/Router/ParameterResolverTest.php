@@ -25,12 +25,16 @@ final class RouteableWithDate implements RouteableInterface
     #[RouteParameter(name: 'year', dateFormat: 'Y')]
     public \DateTime $when;
 
+    #[RouteParameter(name: 'day')]
+    public \DateTimeImmutable $day;
+
     #[RouteParameter(name: 'label')]
     public ?string $label = null;
 
     public function __construct()
     {
         $this->when = new \DateTime('2024-05-31 19:00:00');
+        $this->day = new \DateTimeImmutable('2024-05-31 19:00:00');
     }
 }
 
@@ -55,16 +59,13 @@ final class ParameterResolverTest extends TestCase
     #[Test]
     public function formatsDateTimePropertiesWithTheConfiguredFormat(): void
     {
-        try {
-            $value = $this->propertyResolver()->resolve(new RouteableWithDate(), 'year');
-        } catch (\Error $error) {
-            self::markTestIncomplete(
-                'PropertyParameterResolver calls ->getDateFormat() on the ReflectionAttribute instead of the '
-                .'RouteParameter instance, so any DateTime-typed route parameter crashes with: ' . $error->getMessage()
-            );
-        }
+        self::assertSame('2024', $this->propertyResolver()->resolve(new RouteableWithDate(), 'year'));
+    }
 
-        self::assertSame('2024', $value);
+    #[Test]
+    public function dateTimePropertiesWithoutFormatFallBackToIsoDate(): void
+    {
+        self::assertSame('2024-05-31', $this->propertyResolver()->resolve(new RouteableWithDate(), 'day'));
     }
 
     #[Test]

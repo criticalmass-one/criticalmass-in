@@ -1609,24 +1609,6 @@ parameters:
 			path: src/Criticalmass/Router/ObjectRouterInterface.php
 
 		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Router\\Attribute\\AttributeInterface\:\:getArguments\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/Router/ParameterResolver/PropertyParameterResolver.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Router\\Attribute\\AttributeInterface\:\:getDateFormat\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/Router/ParameterResolver/PropertyParameterResolver.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Router\\Attribute\\AttributeInterface\:\:getName\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/Router/ParameterResolver/PropertyParameterResolver.php
-
-		-
 			message: '#^Property App\\Criticalmass\\SocialNetwork\\EntityNetworkDetector\\EntityNetworkDetector\:\:\$networkList type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
