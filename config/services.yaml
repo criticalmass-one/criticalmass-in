@@ -164,3 +164,24 @@ services:
 
     Sabre\VObject\Component\VCalendar: ~
 
+
+    # --- migrated from config/services.xml (XML DI config was removed in Symfony 8) ---
+    App\Menu\Builder:
+        tags:
+            - { name: knp_menu.menu_builder, method: mainMenu, alias: main_menu }
+
+    salavert.twig.time_ago:
+        class: Salavert\Twig\Extension\TimeAgoExtension
+        arguments: ['@translator']
+        tags: ['twig.extension']
+
+    # --- migrated from config/services/imagine.xml ---
+    caldera.criticalmass.image.filter.blur:
+        class: App\Criticalmass\Image\Filter\BlurFilter
+        tags:
+            - { name: liip_imagine.filter.loader, loader: blur_filter }
+
+    caldera.criticalmass.image.filter.fast_blur:
+        class: App\Criticalmass\Image\Filter\FastBlurFilter
+        tags:
+            - { name: liip_imagine.filter.loader, loader: fast_blur_filter }
