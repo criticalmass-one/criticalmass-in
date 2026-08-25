@@ -3985,18 +3985,6 @@ parameters:
 			path: src/Twig/Extension/RouterTwigExtension.php
 
 		-
-			message: '#^Access to an undefined property App\\Twig\\Extension\\SeoTwigExtension\:\:\$encoding\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Twig/Extension/SeoTwigExtension.php
-
-		-
-			message: '#^Method App\\Twig\\Extension\\SeoTwigExtension\:\:normalize\(\) has parameter \$string with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/Twig/Extension/SeoTwigExtension.php
-
-		-
 			message: '#^Method App\\Twig\\Extension\\SiteTwigExtension\:\:daysSince\(\) has parameter \$dateTimeString with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
