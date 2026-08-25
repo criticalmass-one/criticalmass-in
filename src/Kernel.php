@@ -10,7 +10,6 @@ use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\RideNamerPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
 use App\DependencyInjection\Compiler\TrackVoterPass;
-use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -75,8 +74,6 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new RideNamerPass());
         $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
-
-        $container->addCompilerPass(new TwigSeoExtensionPass());
 
         $container->addCompilerPass(new TrackVoterPass());
         $container->registerForAutoconfiguration(VoterInterface::class)->addTag('mass_track_import.voter');

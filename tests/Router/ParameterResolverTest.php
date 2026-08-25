@@ -25,12 +25,16 @@ final class RouteableWithDate implements RouteableInterface
     #[RouteParameter(name: 'year', dateFormat: 'Y')]
     public \DateTime $when;
 
+    #[RouteParameter(name: 'day')]
+    public \DateTimeImmutable $day;
+
     #[RouteParameter(name: 'label')]
     public ?string $label = null;
 
     public function __construct()
     {
         $this->when = new \DateTime('2024-05-31 19:00:00');
+        $this->day = new \DateTimeImmutable('2024-05-31 19:00:00');
     }
 }
 
@@ -55,16 +59,13 @@ final class ParameterResolverTest extends TestCase
     #[Test]
     public function formatsDateTimePropertiesWithTheConfiguredFormat(): void
     {
-        try {
-            $value = $this->propertyResolver()->resolve(new RouteableWithDate(), 'year');
-        } catch (\Error $error) {
-            self::markTestIncomplete(
-                'PropertyParameterResolver calls ->getDateFormat() on the ReflectionAttribute instead of the '
-                .'RouteParameter instance, so any DateTime-typed route parameter crashes with: ' . $error->getMessage()
-            );
-        }
+        self::assertSame('2024', $this->propertyResolver()->resolve(new RouteableWithDate(), 'year'));
+    }
 
-        self::assertSame('2024', $value);
+    #[Test]
+    public function dateTimePropertiesWithoutFormatFallBackToIsoDate(): void
+    {
+        self::assertSame('2024-05-31', $this->propertyResolver()->resolve(new RouteableWithDate(), 'day'));
     }
 
     #[Test]
@@ -94,17 +95,14 @@ final class ParameterResolverTest extends TestCase
     {
         $resolver = new ClassParameterResolver(new ParameterBag(['app.default_city_slug' => 'hamburg']));
 
-        $value = $resolver->resolve(new RouteableWithDefaultParameter(), 'citySlug');
+        self::assertSame('hamburg', $resolver->resolve(new RouteableWithDefaultParameter(), 'citySlug'));
+    }
 
-        if (null === $value) {
-            self::markTestIncomplete(
-                'ClassParameterResolver::resolve() checks "$classAttribute instanceof DefaultParameter" on a '
-                .'ReflectionAttribute (never true, it would need ->newInstance() or ->getName()), so '
-                .'#[DefaultParameter] attributes are silently ignored and the resolver always returns null.'
-            );
-        }
-
-        self::assertSame('hamburg', $value);
+    #[Test]
+    public function classResolverReturnsNullForOtherRouteParametersAndUnknownContainerParameters(): void
+    {
+        self::assertNull((new ClassParameterResolver(new ParameterBag(['app.default_city_slug' => 'hamburg'])))->resolve(new RouteableWithDefaultParameter(), 'rideDate'));
+        self::assertNull((new ClassParameterResolver(new ParameterBag()))->resolve(new RouteableWithDefaultParameter(), 'citySlug'));
     }
 
     #[Test]

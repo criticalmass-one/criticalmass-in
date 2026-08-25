@@ -70,19 +70,12 @@ final class SiteTwigExtensionTest extends TestCase
     }
 
     #[Test]
-    public function hashtagToCityFilterHasAnImplementation(): void
+    public function registersNoFiltersAndEveryFunctionIsCallable(): void
     {
-        $filters = $this->extension->getFilters();
+        self::assertSame([], $this->extension->getFilters());
 
-        self::assertSame('hashtagToCity', $filters[0]->getName());
-
-        if (!is_callable($filters[0]->getCallable())) {
-            self::markTestIncomplete(
-                'SiteTwigExtension registers the "hashtagToCity" filter with [$this, "hashtagToCity"], '
-                .'but no such method exists — using the filter in a template would fail at render time.'
-            );
+        foreach ($this->extension->getFunctions() as $function) {
+            self::assertTrue(is_callable($function->getCallable()), $function->getName() . ' has no implementation');
         }
-
-        self::assertTrue(is_callable($filters[0]->getCallable()));
     }
 }

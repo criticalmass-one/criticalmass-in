@@ -34,11 +34,13 @@ class ListCyclesCommand extends Command
         /** @var string $citySlug */
         $citySlugString = $input->getArgument('citySlug');
 
-        /** @var CitySlug $citySlug */
+        /** @var CitySlug|null $citySlug */
         $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlugString);
 
         if (!$citySlug) {
             $output->writeln(sprintf('No city found with slug "%s"', $citySlugString));
+
+            return Command::FAILURE;
         }
 
         $city = $citySlug->getCity();

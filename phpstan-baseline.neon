@@ -31,12 +31,6 @@ parameters:
 			path: src/Command/Cycles/ListCyclesCommand.php
 
 		-
-			message: '#^Negated boolean expression is always false\.$#'
-			identifier: booleanNot.alwaysFalse
-			count: 1
-			path: src/Command/Cycles/ListCyclesCommand.php
-
-		-
 			message: '#^Variable \$citySlug in PHPDoc tag @var does not match assigned variable \$citySlugString\.$#'
 			identifier: varTag.differentVariable
 			count: 1
@@ -51,12 +45,6 @@ parameters:
 		-
 			message: '#^Method App\\Command\\DuplicateRides\\ListDuplicateRidesCommand\:\:handleDuplicates\(\) has parameter \$duplicateRides with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: src/Command/DuplicateRides/ListDuplicateRidesCommand.php
-
-		-
-			message: '#^Negated boolean expression is always false\.$#'
-			identifier: booleanNot.alwaysFalse
 			count: 1
 			path: src/Command/DuplicateRides/ListDuplicateRidesCommand.php
 
@@ -1609,30 +1597,6 @@ parameters:
 			path: src/Criticalmass/Router/ObjectRouterInterface.php
 
 		-
-			message: '#^Instanceof between ReflectionAttribute\<object\> and App\\Criticalmass\\Router\\Attribute\\DefaultParameter will always evaluate to false\.$#'
-			identifier: instanceof.alwaysFalse
-			count: 1
-			path: src/Criticalmass/Router/ParameterResolver/ClassParameterResolver.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Router\\Attribute\\AttributeInterface\:\:getArguments\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/Router/ParameterResolver/PropertyParameterResolver.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Router\\Attribute\\AttributeInterface\:\:getDateFormat\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/Router/ParameterResolver/PropertyParameterResolver.php
-
-		-
-			message: '#^Call to an undefined method App\\Criticalmass\\Router\\Attribute\\AttributeInterface\:\:getName\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/Router/ParameterResolver/PropertyParameterResolver.php
-
-		-
 			message: '#^Property App\\Criticalmass\\SocialNetwork\\EntityNetworkDetector\\EntityNetworkDetector\:\:\$networkList type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1989,12 +1953,6 @@ parameters:
 		-
 			message: '#^Call to an undefined method App\\Criticalmass\\Timeline\\Item\\AbstractItem\:\:setCityName\(\)\.$#'
 			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/Timeline/Collector/CityCreatedCollector.php
-
-		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
 			count: 1
 			path: src/Criticalmass/Timeline/Collector/CityCreatedCollector.php
 
@@ -2417,12 +2375,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: src/Entity/BlockedCity.php
-
-		-
-			message: '#^Access to an undefined property App\\Entity\\Board\:\:\$dateTime\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Entity/Board.php
 
 		-
 			message: '#^Method App\\Entity\\City\:\:getColor\(\) return type has no value type specified in iterable type array\.$#'
@@ -4019,18 +3971,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Twig/Extension/RouterTwigExtension.php
-
-		-
-			message: '#^Access to an undefined property App\\Twig\\Extension\\SeoTwigExtension\:\:\$encoding\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Twig/Extension/SeoTwigExtension.php
-
-		-
-			message: '#^Method App\\Twig\\Extension\\SeoTwigExtension\:\:normalize\(\) has parameter \$string with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/Twig/Extension/SeoTwigExtension.php
 
 		-
 			message: '#^Method App\\Twig\\Extension\\SiteTwigExtension\:\:daysSince\(\) has parameter \$dateTimeString with no type specified\.$#'

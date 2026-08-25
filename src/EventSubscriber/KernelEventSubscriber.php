@@ -39,16 +39,7 @@ class KernelEventSubscriber implements EventSubscriberInterface
     /* @todo this is the most stupid way to setup canonical, but it should do for now */
     protected function generateCanonicalUrl(Request $request): string
     {
-        $canonical = $request->getUri();
-
-        $canonical = str_replace([
-            'http',
-            'www.',
-        ], [
-            'https',
-            '',
-        ], $canonical);
-
-        return $canonical;
+        // force https and strip a leading "www." from the host, leave the rest of the URI untouched
+        return preg_replace('#^https?://(www\.)?#', 'https://', $request->getUri());
     }
 }

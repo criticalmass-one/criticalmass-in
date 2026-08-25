@@ -103,14 +103,14 @@ final class CriticalParserTest extends TestCase
     {
         $html = $this->parser()->parse('see https://criticalmass.in/hamburg now');
 
-        if (!str_contains($html, '<a href="https://criticalmass.in/hamburg">')) {
-            self::markTestIncomplete(
-                'CriticalParser::configure() builds an Environment with the AutolinkExtension (and the '
-                .'EmbedExtension) but then instantiates CommonMarkConverter($config), which creates its own '
-                .'environment — the configured extensions are never used, so bare URLs stay plain text.'
-            );
-        }
+        self::assertSame("<p>see <a href=\"https://criticalmass.in/hamburg\">https://criticalmass.in/hamburg</a> now</p>\n", $html);
+    }
 
-        self::assertStringContainsString('<a href="https://criticalmass.in/hamburg">', $html);
+    #[Test]
+    public function parsesTheSameWithTheOembedFeatureActive(): void
+    {
+        $html = $this->parser(true)->parse('see https://criticalmass.in/hamburg now');
+
+        self::assertSame("<p>see <a href=\"https://criticalmass.in/hamburg\">https://criticalmass.in/hamburg</a> now</p>\n", $html);
     }
 }

@@ -22,6 +22,7 @@ final class KernelEventSubscriberTest extends TestCase
         yield 'plain http' => ['http://criticalmass.in/hamburg', 'https://criticalmass.in/hamburg'];
         yield 'www is stripped' => ['http://www.criticalmass.in/hamburg', 'https://criticalmass.in/hamburg'];
         yield 'query string survives' => ['http://criticalmass.in/api/ride?citySlug=hamburg', 'https://criticalmass.in/api/ride?citySlug=hamburg'];
+        yield 'only the leading www is stripped' => ['http://www.criticalmass.in/www.hamburg?u=www.example.org', 'https://criticalmass.in/www.hamburg?u=www.example.org'];
     }
 
     private function canonicalFor(string $uri): string
@@ -59,17 +60,8 @@ final class KernelEventSubscriberTest extends TestCase
     #[Test]
     public function httpsUrlStaysHttps(): void
     {
-        $canonical = $this->canonicalFor('https://www.criticalmass.in/hamburg');
-
-        if ('httpss://criticalmass.in/hamburg' === $canonical) {
-            self::markTestIncomplete(
-                'KernelEventSubscriber::generateCanonicalUrl() does str_replace("http", "https") and thereby '
-                .'turns an https request URI into "httpss://…" — every canonical link / og:url generated for '
-                .'an HTTPS request is broken.'
-            );
-        }
-
-        self::assertSame('https://criticalmass.in/hamburg', $canonical);
+        self::assertSame('https://criticalmass.in/hamburg', $this->canonicalFor('https://www.criticalmass.in/hamburg'));
+        self::assertSame('https://criticalmass.in/hamburg', $this->canonicalFor('https://criticalmass.in/hamburg'));
     }
 
     #[Test]
