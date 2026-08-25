@@ -6,11 +6,11 @@ use App\Criticalmass\TextParser\Embedder\EmbedderInterface;
 use App\Criticalmass\TextParser\EmbedExtension\EmbedExtension;
 use App\Criticalmass\TextParser\TextCache\TextCacheInterface;
 use Flagception\Manager\FeatureManagerInterface;
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\MarkdownConverter;
 
 class CriticalParser implements TextParserInterface
 {
@@ -41,7 +41,7 @@ class CriticalParser implements TextParserInterface
             $environment->addExtension(new EmbedExtension($this->embedder));
         }
 
-        $this->converter = new CommonMarkConverter($config);
+        $this->converter = new MarkdownConverter($environment);
     }
 
     public function parse(string $text): string
