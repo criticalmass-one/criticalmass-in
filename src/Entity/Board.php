@@ -45,11 +45,6 @@ class Board implements BoardInterface, RouteableInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $slug = null;
 
-    public function __construct()
-    {
-        $this->dateTime = new \DateTime();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
