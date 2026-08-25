@@ -94,17 +94,14 @@ final class ParameterResolverTest extends TestCase
     {
         $resolver = new ClassParameterResolver(new ParameterBag(['app.default_city_slug' => 'hamburg']));
 
-        $value = $resolver->resolve(new RouteableWithDefaultParameter(), 'citySlug');
+        self::assertSame('hamburg', $resolver->resolve(new RouteableWithDefaultParameter(), 'citySlug'));
+    }
 
-        if (null === $value) {
-            self::markTestIncomplete(
-                'ClassParameterResolver::resolve() checks "$classAttribute instanceof DefaultParameter" on a '
-                .'ReflectionAttribute (never true, it would need ->newInstance() or ->getName()), so '
-                .'#[DefaultParameter] attributes are silently ignored and the resolver always returns null.'
-            );
-        }
-
-        self::assertSame('hamburg', $value);
+    #[Test]
+    public function classResolverReturnsNullForOtherRouteParametersAndUnknownContainerParameters(): void
+    {
+        self::assertNull((new ClassParameterResolver(new ParameterBag(['app.default_city_slug' => 'hamburg'])))->resolve(new RouteableWithDefaultParameter(), 'rideDate'));
+        self::assertNull((new ClassParameterResolver(new ParameterBag()))->resolve(new RouteableWithDefaultParameter(), 'citySlug'));
     }
 
     #[Test]

@@ -17,17 +17,15 @@ class ClassParameterResolver implements ParameterResolverInterface
     {
         $reflectionClass = new \ReflectionClass($routeable);
 
-        $classAttributes = $reflectionClass->getAttributes();
+        foreach ($reflectionClass->getAttributes(DefaultParameter::class) as $classAttribute) {
+            $defaultParameter = $classAttribute->newInstance();
 
-        foreach ($classAttributes as $classAttribute) {
-            if ($classAttribute instanceof DefaultParameter) {
-                if ($classAttribute->getRouteParameterName() !== $variableName) {
-                    continue;
-                }
+            if ($defaultParameter->getRouteParameterName() !== $variableName) {
+                continue;
+            }
 
-                if ($this->parameterBag->has($classAttribute->getParameterName())) {
-                    return $this->parameterBag->get($classAttribute->getParameterName());
-                }
+            if ($this->parameterBag->has($defaultParameter->getParameterName())) {
+                return $this->parameterBag->get($defaultParameter->getParameterName());
             }
         }
 
