@@ -24,6 +24,14 @@ class Kernel extends BaseKernel
 
     const CONFIG_EXTS = '.{php,yaml,yml}';
 
+    /**
+     * @return list<string> An array of allowed values for APP_ENV
+     */
+    private function getAllowedEnvs(): array
+    {
+        return ['prod', 'dev', 'test'];
+    }
+
     public function getCacheDir(): string
     {
         return $this->getProjectDir().'/var/cache/'.$this->environment;
