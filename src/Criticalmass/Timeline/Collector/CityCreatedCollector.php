@@ -13,7 +13,7 @@ class CityCreatedCollector extends AbstractTimelineCollector
     {
         /** @var City $city */
         foreach ($groupedEntities as $city) {
-            if ($city->getSlugs()) {
+            if (!$city->getSlugs()->isEmpty()) {
                 $item = new CityCreatedItem();
 
                 $item

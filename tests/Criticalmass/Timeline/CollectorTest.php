@@ -102,13 +102,6 @@ final class CollectorTest extends TestCase
         $collector = new CityCreatedCollector($this->registry(City::class, CityRepository::class, 'findForTimelineCityCreatedCollector', [$city]));
         $collector->execute();
 
-        if (1 === count($collector->getItems())) {
-            self::markTestIncomplete(
-                'CityCreatedCollector checks "if ($city->getSlugs())", but getSlugs() returns a Collection '
-                .'object which is always truthy — cities without any slug are not filtered out.'
-            );
-        }
-
         self::assertSame([], $collector->getItems());
     }
 
