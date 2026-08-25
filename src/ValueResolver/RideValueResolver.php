@@ -4,6 +4,7 @@ namespace App\ValueResolver;
 
 use App\Entity\CitySlug;
 use App\Entity\Ride;
+use App\Criticalmass\Util\RequestParameter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -53,14 +54,14 @@ class RideValueResolver implements ValueResolverInterface
 
     private function findRideById(Request $request): ?Ride
     {
-        $rideId = $request->get('rideId');
+        $rideId = RequestParameter::get($request, 'rideId');
         return $rideId ? $this->registry->getRepository(Ride::class)->find($rideId) : null;
     }
 
     private function findRideBySlugs(Request $request): ?Ride
     {
-        $citySlug = $request->get('citySlug');
-        $rideIdentifier = $request->get('rideIdentifier');
+        $citySlug = RequestParameter::get($request, 'citySlug');
+        $rideIdentifier = RequestParameter::get($request, 'rideIdentifier');
 
         if (!$citySlug || !$rideIdentifier) {
             return null;

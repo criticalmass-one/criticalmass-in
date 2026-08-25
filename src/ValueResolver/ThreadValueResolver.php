@@ -4,6 +4,7 @@ namespace App\ValueResolver;
 
 use App\Entity\Thread;
 use App\EntityInterface\PostableInterface;
+use App\Criticalmass\Util\RequestParameter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -24,7 +25,7 @@ class ThreadValueResolver implements ValueResolverInterface
             return [];
         }
 
-        $thread = $this->registry->getRepository(Thread::class)->findOneBySlug($request->get('threadSlug'));
+        $thread = $this->registry->getRepository(Thread::class)->findOneBySlug(RequestParameter::get($request, 'threadSlug'));
 
         if (!$thread && !$argument->isNullable()) {
             throw new NotFoundHttpException('Thead not found');

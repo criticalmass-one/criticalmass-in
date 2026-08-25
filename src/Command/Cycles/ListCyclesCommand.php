@@ -38,7 +38,7 @@ class ListCyclesCommand extends Command
         $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($citySlugString);
 
         if (!$citySlug) {
-            $output->writeln(sprintf('No city found with slug "%"', $citySlugString));
+            $output->writeln(sprintf('No city found with slug "%s"', $citySlugString));
         }
 
         $city = $citySlug->getCity();

@@ -22,7 +22,16 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+    const CONFIG_EXTS = '.{php,yaml,yml}';
+
+    /**
+     * @return list<string> An array of allowed values for APP_ENV
+     */
+    // @phpstan-ignore method.unused (called by the kernel trait)
+    private function getAllowedEnvs(): array
+    {
+        return ['prod', 'dev', 'test'];
+    }
 
     public function getCacheDir(): string
     {

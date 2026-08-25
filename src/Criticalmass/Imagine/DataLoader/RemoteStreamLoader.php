@@ -15,6 +15,9 @@ class RemoteStreamLoader implements LoaderInterface
         $this->imagine = $imagine;
     }
 
+    /**
+     * @return \Imagine\Image\ImageInterface
+     */
     public function find($path)
     {
         $scheme = parse_url($path, PHP_URL_SCHEME);

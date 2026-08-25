@@ -9,6 +9,7 @@ use App\Repository\LocationRepository;
 use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Routing\Attribute\Route;
 
 class LocationController extends AbstractController
@@ -32,7 +33,7 @@ class LocationController extends AbstractController
     public function showAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,
-        Location $location
+        #[MapEntity(mapping: ['slug' => 'slug'])] Location $location
     ): Response {
         $rides = $rideRepository->findRidesForLocation($location);
 

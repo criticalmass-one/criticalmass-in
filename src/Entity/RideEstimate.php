@@ -15,7 +15,7 @@ class RideEstimate
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'estimates', fetch: 'LAZY')]
+    #[ORM\ManyToOne(targetEntity: 'User', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
