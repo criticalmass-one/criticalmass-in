@@ -27,6 +27,7 @@ class Kernel extends BaseKernel
     /**
      * @return list<string> An array of allowed values for APP_ENV
      */
+    // @phpstan-ignore method.unused (called by the kernel trait)
     private function getAllowedEnvs(): array
     {
         return ['prod', 'dev', 'test'];

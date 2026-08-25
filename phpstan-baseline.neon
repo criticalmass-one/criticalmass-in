@@ -31,12 +31,6 @@ parameters:
 			path: src/Command/Cycles/ListCyclesCommand.php
 
 		-
-			message: '#^Call to sprintf contains 0 placeholders, 1 value given\.$#'
-			identifier: argument.sprintf
-			count: 1
-			path: src/Command/Cycles/ListCyclesCommand.php
-
-		-
 			message: '#^Negated boolean expression is always false\.$#'
 			identifier: booleanNot.alwaysFalse
 			count: 1
@@ -51,12 +45,6 @@ parameters:
 		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\CitySlug\>\:\:findOneBySlug\(\)\.$#'
 			identifier: method.notFound
-			count: 1
-			path: src/Command/DuplicateRides/ListDuplicateRidesCommand.php
-
-		-
-			message: '#^Call to sprintf contains 0 placeholders, 1 value given\.$#'
-			identifier: argument.sprintf
 			count: 1
 			path: src/Command/DuplicateRides/ListDuplicateRidesCommand.php
 
@@ -829,12 +817,6 @@ parameters:
 			path: src/Controller/Track/StravaMassImportController.php
 
 		-
-			message: '#^Parameter \#2 \$default of method Symfony\\Component\\HttpFoundation\\ParameterBag\:\:getInt\(\) expects int, string given\.$#'
-			identifier: argument.type
-			count: 2
-			path: src/Controller/Track/StravaMassImportController.php
-
-		-
 			message: '#^Call to an undefined method App\\Controller\\Track\\TrackDownloadController\:\:get\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -1119,12 +1101,6 @@ parameters:
 		-
 			message: '#^Method App\\Criticalmass\\Imagine\\DataLoader\\RemoteStreamLoader\:\:find\(\) has parameter \$path with no type specified\.$#'
 			identifier: missingType.parameter
-			count: 1
-			path: src/Criticalmass/Imagine/DataLoader/RemoteStreamLoader.php
-
-		-
-			message: '#^Method App\\Criticalmass\\Imagine\\DataLoader\\RemoteStreamLoader\:\:find\(\) should return Liip\\ImagineBundle\\Binary\\BinaryInterface\|string but returns Imagine\\Image\\ImageInterface\.$#'
-			identifier: return.type
 			count: 1
 			path: src/Criticalmass/Imagine/DataLoader/RemoteStreamLoader.php
 
@@ -1873,12 +1849,6 @@ parameters:
 			path: src/Criticalmass/TextParser/CriticalParser.php
 
 		-
-			message: '#^Readonly property App\\Criticalmass\\TextParser\\CriticalParser\:\:\$converter is already assigned\.$#'
-			identifier: assign.readOnlyProperty
-			count: 1
-			path: src/Criticalmass/TextParser/CriticalParser.php
-
-		-
 			message: '#^Readonly property App\\Criticalmass\\TextParser\\CriticalParser\:\:\$converter is assigned outside of the constructor\.$#'
 			identifier: property.readOnlyAssignNotInConstructor
 			count: 1
@@ -1903,12 +1873,6 @@ parameters:
 			path: src/Criticalmass/TextParser/EmbedExtension/EmbedProcessor.php
 
 		-
-			message: '#^Call to method replaceWith\(\) on an unknown class League\\CommonMark\\Inline\\Element\\Link\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Criticalmass/TextParser/EmbedExtension/EmbedProcessor.php
-
-		-
 			message: '#^Class League\\CommonMark\\Inline\\Element\\Link not found\.$#'
 			identifier: class.notFound
 			count: 1
@@ -1923,6 +1887,18 @@ parameters:
 		-
 			message: '#^Method App\\Criticalmass\\TextParser\\EmbedExtension\\EmbedProcessor\:\:__invoke\(\) has no return type specified\.$#'
 			identifier: missingType.return
+			count: 1
+			path: src/Criticalmass/TextParser/EmbedExtension/EmbedProcessor.php
+
+		-
+			message: '#^Parameter \#1 \$link of method App\\Criticalmass\\TextParser\\Embedder\\EmbedderInterface\:\:processEmbedInLink\(\) expects League\\CommonMark\\Inline\\Element\\Link, League\\CommonMark\\Node\\Node\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Criticalmass/TextParser/EmbedExtension/EmbedProcessor.php
+
+		-
+			message: '#^Parameter \#1 \$replacement of method League\\CommonMark\\Node\\Node\:\:replaceWith\(\) expects League\\CommonMark\\Node\\Node, League\\CommonMark\\Inline\\Element\\HtmlInline given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Criticalmass/TextParser/EmbedExtension/EmbedProcessor.php
 
@@ -3991,18 +3967,6 @@ parameters:
 			path: src/Security/Authorization/Voter/AbstractVoter.php
 
 		-
-			message: '#^Method App\\Security\\Authorization\\Voter\\AbstractVoter\:\:supports\(\) has parameter \$attribute with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: src/Security/Authorization/Voter/AbstractVoter.php
-
-		-
-			message: '#^Call to function method_exists\(\) with HWI\\Bundle\\OAuthBundle\\OAuth\\Response\\UserResponseInterface and ''getUserIdentifier'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Security/UserProvider/UserProvider.php
-
-		-
 			message: '#^Class App\\Security\\UserProvider\\UserProvider implements generic interface Symfony\\Component\\Security\\Core\\User\\UserProviderInterface but does not specify its types\: TUser$#'
 			identifier: missingType.generics
 			count: 1
@@ -4817,6 +4781,12 @@ parameters:
 			identifier: method.notFound
 			count: 2
 			path: tests/Repository/RideRepositoryTest.php
+
+		-
+			message: '#^Call to method App\\Criticalmass\\RideNamer\\RideNamerList\:\:getRideNamerByFqcn\(\) on a separate line has no effect\.$#'
+			identifier: method.resultUnused
+			count: 1
+			path: tests/RideNamer/RideNamerListTest.php
 
 		-
 			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\Dto\\FeedItemTest\:\:createSampleApiResponse\(\) return type has no value type specified in iterable type array\.$#'
