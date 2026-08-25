@@ -3,9 +3,7 @@
 namespace Tests\Criticalmass\TextParser;
 
 use App\Criticalmass\TextParser\CriticalParser;
-use App\Criticalmass\TextParser\Embedder\EmbedderInterface;
 use App\Criticalmass\TextParser\TextCache\TextCacheInterface;
-use Flagception\Manager\FeatureManagerInterface;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -14,11 +12,8 @@ final class CriticalParserTest extends TestCase
     /** @var array<string, string> */
     private array $cache = [];
 
-    private function parser(bool $oembedActive = false): CriticalParser
+    private function parser(): CriticalParser
     {
-        $featureManager = $this->createMock(FeatureManagerInterface::class);
-        $featureManager->method('isActive')->willReturnCallback(static fn (string $feature): bool => 'oembed' === $feature && $oembedActive);
-
         $textCache = new class($this->cache) implements TextCacheInterface {
             /** @param array<string, string> $store */
             public function __construct(private array &$store)
@@ -43,7 +38,7 @@ final class CriticalParserTest extends TestCase
             }
         };
 
-        return new CriticalParser($featureManager, $this->createMock(EmbedderInterface::class), $textCache);
+        return new CriticalParser($textCache);
     }
 
     #[Test]
@@ -102,14 +97,6 @@ final class CriticalParserTest extends TestCase
     public function bareUrlsAreAutolinked(): void
     {
         $html = $this->parser()->parse('see https://criticalmass.in/hamburg now');
-
-        self::assertSame("<p>see <a href=\"https://criticalmass.in/hamburg\">https://criticalmass.in/hamburg</a> now</p>\n", $html);
-    }
-
-    #[Test]
-    public function parsesTheSameWithTheOembedFeatureActive(): void
-    {
-        $html = $this->parser(true)->parse('see https://criticalmass.in/hamburg now');
 
         self::assertSame("<p>see <a href=\"https://criticalmass.in/hamburg\">https://criticalmass.in/hamburg</a> now</p>\n", $html);
     }
