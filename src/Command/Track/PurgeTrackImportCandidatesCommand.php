@@ -4,7 +4,6 @@ namespace App\Command\Track;
 
 use App\Entity\TrackImportCandidate;
 use App\Repository\TrackImportCandidateRepository;
-use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -49,7 +48,7 @@ class PurgeTrackImportCandidatesCommand extends Command
 
         $dryRun = (bool) $input->getOption('dry-run');
         $maxAgeDays = max(0, (int) $input->getOption('max-age'));
-        $expiredBefore = Carbon::now()->subDays($maxAgeDays);
+        $expiredBefore = (new \DateTime())->modify(sprintf('-%d days', $maxAgeDays));
 
         if ($dryRun) {
             $io->note('Dry run — nothing will be deleted.');

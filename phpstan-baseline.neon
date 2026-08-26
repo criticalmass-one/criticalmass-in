@@ -1183,18 +1183,6 @@ parameters:
 			path: src/Criticalmass/MassTrackImport/TrackDecider/TrackDecider.php
 
 		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
-			count: 1
-			path: src/Criticalmass/MassTrackImport/Voter/DateTimeVoter.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: src/Criticalmass/MassTrackImport/Voter/DateTimeVoter.php
-
-		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\Region\>\:\:findOneByName\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -4752,20 +4740,3 @@ parameters:
 			count: 1
 			path: tests/Twig/VelocityExtensionTest.php
 
-		-
-			message: '#^Call to method boot\(\) on an unknown class Oneup\\FlysystemBundle\\Tests\\App\\AppKernel\.$#'
-			identifier: class.notFound
-			count: 1
-			path: tests/symfony-container.php
-
-		-
-			message: '#^Call to method getContainer\(\) on an unknown class Oneup\\FlysystemBundle\\Tests\\App\\AppKernel\.$#'
-			identifier: class.notFound
-			count: 1
-			path: tests/symfony-container.php
-
-		-
-			message: '#^Instantiated class Oneup\\FlysystemBundle\\Tests\\App\\AppKernel not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: tests/symfony-container.php

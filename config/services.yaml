@@ -77,8 +77,31 @@ services:
 
     Symfony\Component\Routing\RouteCollection: ~
 
-    Sonata\SeoBundle\Seo\SeoPageInterface:
-        alias: sonata.seo.page.default
+    # Defaults for the <head> of every page; controllers override per page via SeoPageInterface.
+    App\Criticalmass\SeoPage\PageMetadata:
+        arguments:
+            $title: criticalmass.in
+            $metas:
+                name:
+                    keywords: 'Critical Mass, Fotos, Tracks, Live-Tracking'
+                    description: 'criticalmass.in sammelt Fotos und Tourdaten über die Critical Mass'
+                    robots: 'index, follow'
+                property:
+                    'fb:app_id': '216780188685195'
+                    'og:type': Website
+                    'og:title': 'criticalmass.in — Critical Mass, Touren, Photos und mehr'
+                    'og:site_name': criticalmass.in
+                    'og:description': 'criticalmass.in sammelt Fotos und Tourdaten über die Critical Mass'
+                    'og:locale': de_DE
+                http-equiv:
+                    'Content-Type': 'text/html; charset=utf-8'
+                charset:
+                    UTF-8: ''
+            $htmlAttributes:
+                xmlns: http://www.w3.org/1999/xhtml
+                'xmlns:og': http://opengraphprotocol.org/schema/
+                'xmlns:fb': http://www.facebook.com/2008/fbml
+            $headAttributes: []
 
     App\Criticalmass\Image\ExifWrapper\ExifWrapper:
         arguments:

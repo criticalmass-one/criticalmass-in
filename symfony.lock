@@ -160,16 +160,7 @@
         ]
     },
     "phpstan/phpstan": {
-        "version": "1.11",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "5e490cc197fb6bb1ae22e5abbc531ddc633b6767"
-        },
-        "files": [
-            "phpstan.dist.neon"
-        ]
+        "version": "2.2.9"
     },
     "phpunit/phpunit": {
         "version": "11.5",
@@ -188,42 +179,6 @@
     },
     "presta/sitemap-bundle": {
         "version": "v3.3.0"
-    },
-    "sonata-project/block-bundle": {
-        "version": "5.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "4.11",
-            "ref": "b4edd2a1e6ac1827202f336cac2771cb529de542"
-        },
-        "files": [
-            "config/packages/sonata_block.yaml"
-        ]
-    },
-    "sonata-project/exporter": {
-        "version": "2.13",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "2.4",
-            "ref": "93d6df022ef1dc24bdfa8667ddd560bbde89a7cc"
-        }
-    },
-    "sonata-project/form-extensions": {
-        "version": "2.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.4",
-            "ref": "9c8a1e8ce2b1f215015ed16652c4ed18eb5867fd"
-        },
-        "files": [
-            "config/packages/sonata_form.yaml"
-        ]
-    },
-    "sonata-project/seo-bundle": {
-        "version": "2.13.0"
     },
     "symfony/apache-pack": {
         "version": "1.0",

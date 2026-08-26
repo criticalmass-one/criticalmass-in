@@ -4,7 +4,6 @@ namespace App\Model\RideGenerator;
 
 use App\Entity\City;
 use App\Entity\CityCycle;
-use Carbon\Carbon;
 use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -26,8 +25,8 @@ class CycleExecutable
 
     public function __construct()
     {
-        $this->fromDate = new Carbon();
-        $this->untilDate = new Carbon();
+        $this->fromDate = new \DateTime();
+        $this->untilDate = new \DateTime();
     }
 
     public function getFromDate(): ?\DateTime
