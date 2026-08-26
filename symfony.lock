@@ -222,9 +222,6 @@
             "config/packages/sonata_form.yaml"
         ]
     },
-    "sonata-project/intl-bundle": {
-        "version": "2.14.1"
-    },
     "sonata-project/seo-bundle": {
         "version": "2.13.0"
     },
@@ -295,18 +292,6 @@
             "public/index.php",
             "src/Controller/.gitignore",
             "src/Kernel.php"
-        ]
-    },
-    "symfony/lock": {
-        "version": "7.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "5.2",
-            "ref": "8e937ff2b4735d110af1770f242c1107fdab4c8e"
-        },
-        "files": [
-            "config/packages/lock.yaml"
         ]
     },
     "symfony/mailer": {
