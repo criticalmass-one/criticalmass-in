@@ -1,7 +1,6 @@
 {
     "name": "calderacc/criticalmass",
     "type": "project",
-    "version": "0.1",
     "description": "Much critical mass stuff",
     "authors": [
         {
@@ -27,28 +26,22 @@
         "vich/uploader-bundle": "^2.4",
         "liip/imagine-bundle": "^2.17",
         "knplabs/knp-paginator-bundle": "^6.0",
-        "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
+        "emcconville/google-map-polyline-encoding-tool": "^1.2",
         "symfony/monolog-bundle": "^4.0",
         "hwi/oauth-bundle": "^2.5",
-        "malenki/slug": "1.0.0",
-        "sonata-project/intl-bundle": "^3.3",
+        "malenki/slug": "^1.0",
         "miljar/php-exif": "^0.6.5",
         "sonata-project/seo-bundle": "^3.9",
         "salavert/time-ago-in-words": "^1.8",
         "emcconville/point-reduction-algorithms": "^1.2",
-        "php-http/message": "^1.6",
         "symfony/security-bundle": "^8.1",
         "symfony/apache-pack": "^1.0",
         "symfony/flex": "^2.0",
-        "khill/php-duration": "^1.0",
         "sabre/vobject": "^4.0",
         "oneup/flysystem-bundle": "^4.12.2",
         "flagception/flagception-bundle": "^6.0",
         "ext-fileinfo": "*",
-        "ext-xmlwriter": "*",
         "symfony/webpack-encore-bundle": "^2.4",
-        "ext-json": "*",
-        "ext-zip": "*",
         "league/commonmark": "^2.6",
         "nesbot/carbon": "^3.0",
         "iamstuartwilson/strava": "^1.4",
@@ -59,7 +52,6 @@
         "symfony/doctrine-bridge": "^8.1",
         "symfony/framework-bundle": "^8.1",
         "symfony/dotenv": "^8.1",
-        "jaybizzle/crawler-detect": "^1.2",
         "nelmio/api-doc-bundle": "^5.11",
         "symfony/asset": "^8.1",
         "yohang/calendr": "^4.0",
@@ -70,8 +62,6 @@
         "symfony/cache": "^8.1",
         "symfony/notifier": "^8.1",
         "symfony/twig-bundle": "^8.1",
-        "twig/cssinliner-extra": "^3.10",
-        "twig/inky-extra": "^3.10",
         "symfony/serializer": "^8.1",
         "symfony/runtime": "^8.1",
         "symfony/stimulus-bundle": "^2.25",
@@ -83,7 +73,6 @@
         "twig/intl-extra": "^3.23",
         "maltehuebner/dataquery-bundle": "^0.11",
         "symfony/rate-limiter": "^8.1",
-        "symfony/lock": "^8.1",
         "adriangibbons/php-fit-file-analysis": "^3.2",
         "league/oauth2-server-bundle": "^1.2"
     },
@@ -95,16 +84,13 @@
         "symfony/stopwatch": "^8.1",
         "symfony/web-profiler-bundle": "^8.1",
         "rector/rector": "^2.0",
-        "doctrine/doctrine-fixtures-bundle": "^4.0"
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
+        "symfony/css-selector": "^8.1"
     },
     "conflict": {
         "symfony/symfony": "*"
     },
     "scripts": {
-        "post-install-cmd": [
-        ],
-        "post-update-cmd": [
-        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "cache:warmup": "symfony-cmd",
@@ -124,9 +110,6 @@
         "test": [
             "@test:db:reset",
             "@test:run"
-        ],
-        "tests": [
-            "@test"
         ]
     },
     "config": {
@@ -155,6 +138,5 @@
             "type": "vcs",
             "url": "https://github.com/maltehuebner/time-ago-in-words.git"
         }
-    ],
-    "minimum-stability": "stable"
+    ]
 }
