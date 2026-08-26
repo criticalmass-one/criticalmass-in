@@ -159,6 +159,9 @@
             "config/packages/oneup_flysystem.yaml"
         ]
     },
+    "phpstan/phpstan": {
+        "version": "2.2.9"
+    },
     "phpunit/phpunit": {
         "version": "11.5",
         "recipe": {
@@ -363,6 +366,19 @@
             "version": "2.8",
             "ref": "9e33a8a3794b603fb4be6c04ee5ecab901ce549e"
         }
+    },
+    "symfony/translation": {
+        "version": "8.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.3",
+            "ref": "620a1b84865ceb2ba304c8f8bf2a185fbf32a843"
+        },
+        "files": [
+            "config/packages/translation.yaml",
+            "translations/.gitignore"
+        ]
     },
     "symfony/twig-bundle": {
         "version": "8.1",
