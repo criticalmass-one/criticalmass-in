@@ -3,6 +3,7 @@
 namespace Tests\Criticalmass\SeoPage;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\SeoPage\PageMetadata;
 use App\Criticalmass\SeoPage\SeoPage;
 use App\Entity\City;
 use App\Entity\Photo;
@@ -10,14 +11,13 @@ use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Sonata\SeoBundle\Seo\SeoPage as SonataSeoPage;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Vich\UploaderBundle\Storage\StorageInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 final class SeoPageTest extends TestCase
 {
-    private SonataSeoPage $sonataPage;
+    private PageMetadata $page;
     private MockObject&StorageInterface $storage;
     private MockObject&CacheManager $cacheManager;
     private MockObject&ObjectRouterInterface $objectRouter;
@@ -25,12 +25,12 @@ final class SeoPageTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->sonataPage = new SonataSeoPage('criticalmass.in');
+        $this->page = new PageMetadata('criticalmass.in');
         $this->storage = $this->createMock(StorageInterface::class);
         $this->cacheManager = $this->createMock(CacheManager::class);
         $this->objectRouter = $this->createMock(ObjectRouterInterface::class);
 
-        $this->seoPage = new SeoPage($this->sonataPage, new UploaderHelper($this->storage), $this->cacheManager, $this->objectRouter);
+        $this->seoPage = new SeoPage($this->page, new UploaderHelper($this->storage), $this->cacheManager, $this->objectRouter);
     }
 
     #[Test]
@@ -38,8 +38,8 @@ final class SeoPageTest extends TestCase
     {
         $this->seoPage->setTitle('Critical Mass Hamburg');
 
-        self::assertSame('Critical Mass Hamburg', $this->sonataPage->getTitle());
-        self::assertSame('Critical Mass Hamburg', $this->sonataPage->getMetas()['property']['og:title'][0]);
+        self::assertSame('Critical Mass Hamburg', $this->page->getTitle());
+        self::assertSame('Critical Mass Hamburg', $this->page->getMetas()['property']['og:title']);
     }
 
     #[Test]
@@ -47,9 +47,9 @@ final class SeoPageTest extends TestCase
     {
         $this->seoPage->setDescription('Monthly ride');
 
-        $metas = $this->sonataPage->getMetas();
-        self::assertSame('Monthly ride', $metas['name']['description'][0]);
-        self::assertSame('Monthly ride', $metas['property']['og:description'][0]);
+        $metas = $this->page->getMetas();
+        self::assertSame('Monthly ride', $metas['name']['description']);
+        self::assertSame('Monthly ride', $metas['property']['og:description']);
     }
 
     #[Test]
@@ -57,8 +57,8 @@ final class SeoPageTest extends TestCase
     {
         $this->seoPage->setCanonicalLink('https://criticalmass.in/hamburg');
 
-        self::assertSame('https://criticalmass.in/hamburg', $this->sonataPage->getLinkCanonical());
-        self::assertSame('https://criticalmass.in/hamburg', $this->sonataPage->getMetas()['property']['og:url'][0]);
+        self::assertSame('https://criticalmass.in/hamburg', $this->page->getLinkCanonical());
+        self::assertSame('https://criticalmass.in/hamburg', $this->page->getMetas()['property']['og:url']);
     }
 
     #[Test]
@@ -72,7 +72,7 @@ final class SeoPageTest extends TestCase
 
         $this->seoPage->setCanonicalForObject($city);
 
-        self::assertSame('https://criticalmass.in/hamburg', $this->sonataPage->getLinkCanonical());
+        self::assertSame('https://criticalmass.in/hamburg', $this->page->getLinkCanonical());
     }
 
     #[Test]
@@ -87,10 +87,10 @@ final class SeoPageTest extends TestCase
 
         $this->seoPage->setPreviewPhoto($photo);
 
-        $metas = $this->sonataPage->getMetas();
-        self::assertSame('https://cdn/facebook_preview_image/uploads/ride.jpg', $metas['property']['og:image'][0]);
-        self::assertSame('https://cdn/twitter_summary_large_image/uploads/ride.jpg', $metas['name']['twitter:image'][0]);
-        self::assertSame('summary_large_image', $metas['name']['twitter:card'][0]);
+        $metas = $this->page->getMetas();
+        self::assertSame('https://cdn/facebook_preview_image/uploads/ride.jpg', $metas['property']['og:image']);
+        self::assertSame('https://cdn/twitter_summary_large_image/uploads/ride.jpg', $metas['name']['twitter:image']);
+        self::assertSame('summary_large_image', $metas['name']['twitter:card']);
     }
 
     #[Test]
@@ -100,7 +100,7 @@ final class SeoPageTest extends TestCase
 
         $this->seoPage->setPreviewPhoto(new Photo());
 
-        self::assertArrayNotHasKey('og:image', $this->sonataPage->getMetas()['property'] ?? []);
+        self::assertArrayNotHasKey('og:image', $this->page->getMetas()['property'] ?? []);
     }
 
     #[Test]

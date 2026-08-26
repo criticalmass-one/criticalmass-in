@@ -30,7 +30,6 @@
         "symfony/monolog-bundle": "^4.0",
         "hwi/oauth-bundle": "^2.5",
         "miljar/php-exif": "^0.6.5",
-        "sonata-project/seo-bundle": "^3.9",
         "salavert/time-ago-in-words": "^1.8",
         "emcconville/point-reduction-algorithms": "^1.2",
         "symfony/security-bundle": "^8.1",

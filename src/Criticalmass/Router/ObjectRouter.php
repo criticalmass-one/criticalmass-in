@@ -6,7 +6,7 @@ use App\Criticalmass\Router\DelegatedRouterManager\DelegatedRouterManagerInterfa
 use App\Criticalmass\Router\ParameterResolver\ClassParameterResolver;
 use App\Criticalmass\Router\ParameterResolver\PropertyParameterResolver;
 use App\EntityInterface\RouteableInterface;
-use Doctrine\Common\Util\ClassUtils;
+use Doctrine\ORM\Proxy\DefaultProxyClassNameResolver;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -61,7 +61,7 @@ class ObjectRouter extends AbstractRouter implements ObjectRouterInterface
 
     protected function getDefaultRouteName(RouteableInterface $routeable): ?string
     {
-        $realFqcn = ClassUtils::getRealClass(get_class($routeable));
+        $realFqcn = DefaultProxyClassNameResolver::getClass($routeable);
         $reflectionClass = new \ReflectionClass($realFqcn);
 
         $reflectionAttributes = $reflectionClass->getAttributes();

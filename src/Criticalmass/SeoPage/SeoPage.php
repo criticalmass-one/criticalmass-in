@@ -10,7 +10,7 @@ class SeoPage extends AbstractSeoPage
 {
     public function setTitle(string $title): SeoPageInterface
     {
-        $this->sonataSeoPage
+        $this->pageMetadata
             ->setTitle($title)
             ->addMeta('property', 'og:title', $title);
 
@@ -19,7 +19,7 @@ class SeoPage extends AbstractSeoPage
 
     public function setDescription(string $description): SeoPageInterface
     {
-        $this->sonataSeoPage
+        $this->pageMetadata
             ->addMeta('name', 'description', $description)
             ->addMeta('property', 'og:description', $description);
 
@@ -37,7 +37,7 @@ class SeoPage extends AbstractSeoPage
         $facebookPreviewPath = $this->cacheManager->getBrowserPath($imageFilename, 'facebook_preview_image');
         $twitterPreviewPath = $this->cacheManager->getBrowserPath($imageFilename, 'twitter_summary_large_image');
 
-        $this->sonataSeoPage
+        $this->pageMetadata
             ->addMeta('property', 'og:image', $facebookPreviewPath)
             ->addMeta('name', 'twitter:image', $twitterPreviewPath)
             ->addMeta('name', 'twitter:card', 'summary_large_image');
@@ -47,7 +47,7 @@ class SeoPage extends AbstractSeoPage
 
     public function setCanonicalLink(string $link): SeoPageInterface
     {
-        $this->sonataSeoPage
+        $this->pageMetadata
             ->setLinkCanonical($link)
             ->addMeta('property', 'og:url', $link);
 

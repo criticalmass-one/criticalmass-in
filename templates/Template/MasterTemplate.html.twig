@@ -3,13 +3,13 @@
 {% endif %}
 
 <!DOCTYPE html>
-<html {{ sonata_seo_html_attributes() }}>
-<head {{ sonata_seo_head_attributes() }}>
+<html {{ seo_html_attributes() }}>
+<head {{ seo_head_attributes() }}>
 
     {% if block('title') %}
         <title>{% block title %}{% endblock %} — criticalmass.in</title>
     {% else %}
-        {{ sonata_seo_title() }}
+        {{ seo_title() }}
     {% endif %}
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -17,9 +17,9 @@
     <meta name="mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
 
-    {{ sonata_seo_metadatas() }}
-    {{ sonata_seo_link_canonical() }}
-    {{ sonata_seo_lang_alternates() }}
+    {{ seo_metadatas() }}
+    {{ seo_link_canonical() }}
+    {{ seo_lang_alternates() }}
 
     {{ encore_entry_link_tags(entrypoint) }}
 
