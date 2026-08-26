@@ -9,7 +9,6 @@ use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
 use App\Event\Track\TrackUploadedEvent;
-use Carbon\Carbon;
 use Strava\API\OAuth;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -87,17 +86,12 @@ class StravaMassImportController extends AbstractController
     {
         $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));
 
-        $carbon = Carbon::createFromDate($year);
-        $startCarbon = $carbon->startOfYear();
-        $endCarbon = $carbon->endOfYear();
-
-        if ($endCarbon->greaterThanOrEqualTo(Carbon::now())) {
-            $endCarbon = Carbon::now();
-        }
+        $start = new \DateTime(sprintf('%d-01-01 00:00:00', $year));
+        $end = min(new \DateTime(sprintf('%d-12-31 23:59:59', $year)), new \DateTime());
 
         $massTrackImporter
-            ->setStartDateTime($startCarbon)
-            ->setEndDateTime($endCarbon)
+            ->setStartDateTime($start)
+            ->setEndDateTime($end)
             ->execute();
 
         return $this->redirectToRoute('caldera_criticalmass_trackmassimport_list');

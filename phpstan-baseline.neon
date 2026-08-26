@@ -1183,18 +1183,6 @@ parameters:
 			path: src/Criticalmass/MassTrackImport/TrackDecider/TrackDecider.php
 
 		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
-			count: 1
-			path: src/Criticalmass/MassTrackImport/Voter/DateTimeVoter.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: src/Criticalmass/MassTrackImport/Voter/DateTimeVoter.php
-
-		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\Region\>\:\:findOneByName\(\)\.$#'
 			identifier: method.notFound
 			count: 1

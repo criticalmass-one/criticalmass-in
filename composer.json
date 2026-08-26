@@ -42,7 +42,6 @@
         "ext-fileinfo": "*",
         "symfony/webpack-encore-bundle": "^2.4",
         "league/commonmark": "^2.6",
-        "nesbot/carbon": "^3.0",
         "iamstuartwilson/strava": "^1.4",
         "twig/extra-bundle": "^3.10",
         "nyholm/psr7": "^1.3",

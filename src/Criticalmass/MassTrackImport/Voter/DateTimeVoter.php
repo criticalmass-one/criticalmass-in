@@ -4,24 +4,23 @@ namespace App\Criticalmass\MassTrackImport\Voter;
 
 use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
-use Carbon\Carbon;
 
 class DateTimeVoter implements VoterInterface
 {
     public function vote(Ride $ride, TrackImportCandidate $model): float
     {
-        $rideDateTime = Carbon::instance($ride->getDateTime());
-        $modelDateTime = Carbon::instance($model->getStartDateTime());
+        $rideDateTime = $ride->getDateTime();
+        $modelDateTime = $model->getStartDateTime();
 
-        if (!$rideDateTime->isSameDay($modelDateTime)) {
+        if ($rideDateTime->format('Y-m-d') !== $modelDateTime->format('Y-m-d')) {
             return -1;
         }
 
-        if ($rideDateTime->equalTo($modelDateTime)) {
+        if ($rideDateTime->getTimestamp() === $modelDateTime->getTimestamp()) {
             return 1;
         }
 
-        $diff = $rideDateTime->diffInMinutes($modelDateTime, false);
+        $diff = ($modelDateTime->getTimestamp() - $rideDateTime->getTimestamp()) / 60;
 
         if (abs($diff) <= 15) {
             return 1.0;
@@ -47,10 +46,6 @@ class DateTimeVoter implements VoterInterface
             return 0.3;
         }
 
-        if ($rideDateTime->isSameDay($modelDateTime)) {
-            return 0.25;
-        }
-
-        return 0;
+        return 0.25;
     }
 }

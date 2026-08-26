@@ -7,8 +7,6 @@ use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Form\Type\ExecuteCityCycleType;
 use App\Model\RideGenerator\CycleExecutable;
-use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,15 +36,14 @@ class CityCycleExecuteController extends AbstractController
         CityCycle $cityCycle,
         SerializerInterface $serializer
     ): Response {
-        $dateTime = new Carbon();
-        $sixMonthInterval = new CarbonInterval('P6M');
+        $now = new \DateTime();
 
         $executeable = new CycleExecutable();
         $executeable
             ->setCityCycle($cityCycle)
             ->setCitySlug($cityCycle->getCity()->getMainSlug()->getSlug())
-            ->setFromDate($dateTime->startOfMonth())
-            ->setUntilDate((clone $dateTime)->add($sixMonthInterval)->endOfMonth());
+            ->setFromDate((clone $now)->modify('first day of this month')->setTime(0, 0))
+            ->setUntilDate((clone $now)->modify('+6 months')->modify('last day of this month')->setTime(23, 59, 59));
 
         $form = $this->createForm(ExecuteCityCycleType::class, $executeable);
         $form->add('submit', SubmitType::class);

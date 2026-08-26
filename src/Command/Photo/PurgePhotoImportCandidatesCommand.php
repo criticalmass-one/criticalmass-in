@@ -4,7 +4,6 @@ namespace App\Command\Photo;
 
 use App\Entity\PhotoImportCandidate;
 use App\Repository\PhotoImportCandidateRepository;
-use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
@@ -49,7 +48,7 @@ class PurgePhotoImportCandidatesCommand extends Command
 
         $dryRun = (bool) $input->getOption('dry-run');
         $maxAgeDays = max(0, (int) $input->getOption('max-age'));
-        $expiredBefore = Carbon::now()->subDays($maxAgeDays);
+        $expiredBefore = (new \DateTime())->modify(sprintf('-%d days', $maxAgeDays));
 
         if ($dryRun) {
             $io->note('Dry run — nothing will be deleted.');
