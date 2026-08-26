@@ -4740,20 +4740,3 @@ parameters:
 			count: 1
 			path: tests/Twig/VelocityExtensionTest.php
 
-		-
-			message: '#^Call to method boot\(\) on an unknown class Oneup\\FlysystemBundle\\Tests\\App\\AppKernel\.$#'
-			identifier: class.notFound
-			count: 1
-			path: tests/symfony-container.php
-
-		-
-			message: '#^Call to method getContainer\(\) on an unknown class Oneup\\FlysystemBundle\\Tests\\App\\AppKernel\.$#'
-			identifier: class.notFound
-			count: 1
-			path: tests/symfony-container.php
-
-		-
-			message: '#^Instantiated class Oneup\\FlysystemBundle\\Tests\\App\\AppKernel not found\.$#'
-			identifier: class.notFound
-			count: 1
-			path: tests/symfony-container.php

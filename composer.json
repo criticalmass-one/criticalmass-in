@@ -81,7 +81,6 @@
         "symfony/maker-bundle": "^1.11",
         "symfony/stopwatch": "^8.1",
         "symfony/web-profiler-bundle": "^8.1",
-        "rector/rector": "^2.0",
         "doctrine/doctrine-fixtures-bundle": "^4.0",
         "symfony/css-selector": "^8.1"
     },
