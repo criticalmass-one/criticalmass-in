@@ -12,7 +12,6 @@ use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
-use Malenki\Slug;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,9 +20,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class BoardController extends AbstractController
 {
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        private readonly SluggerInterface $slugger,
+    ) {
+        parent::__construct($managerRegistry);
+    }
+
     #[Route('/boards/overview', name: 'caldera_criticalmass_board_overview', priority: 240)]
     public function overviewAction(
         CityRepository $cityRepository,
@@ -126,7 +134,6 @@ class BoardController extends AbstractController
             $thread = new Thread();
             $post = new Post();
 
-            $slug = new Slug($data['title']);
 
             /* Okay, this is _really_ ugly */
             if ($board instanceof City) {
@@ -138,7 +145,7 @@ class BoardController extends AbstractController
             $thread->setTitle($data['title']);
             $thread->setFirstPost($post);
             $thread->setLastPost($post);
-            $thread->setSlug($slug->render());
+            $thread->setSlug($this->slugger->slug($data['title'])->lower()->toString());
 
             $board->setLastThread($thread);
             $board->incPostNumber();

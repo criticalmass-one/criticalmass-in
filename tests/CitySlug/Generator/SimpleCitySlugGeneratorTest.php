@@ -84,7 +84,7 @@ class SimpleCitySlugGeneratorTest extends TestCase
 
         $expectedCitySlug = new CitySlug();
         $expectedCitySlug->setCity($city)
-            ->setSlug('fa-bach');
+            ->setSlug('fassbach');
 
         $this->assertEquals($expectedCitySlug, $actualCitySlug);
     }
