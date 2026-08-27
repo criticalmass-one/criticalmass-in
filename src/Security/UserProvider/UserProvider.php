@@ -132,10 +132,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
             $user->setUsername($nickname);
         }
 
-        $user
-            ->setEnabled(true)
-            ->setLastLogin(new \DateTime())
-        ;
+        $user->setEnabled(true);
 
         if ($response->getEmail()) {
             $user->setEmail($response->getEmail());
