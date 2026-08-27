@@ -64,7 +64,6 @@
         "symfony/stimulus-bundle": "^2.25",
         "symfony/property-access": "^8.1",
         "symfony/property-info": "^8.1",
-        "symfony/messenger": "^8.1",
         "beberlei/doctrineextensions": "^1.5",
         "sibyx/phpgpx": "^1.3",
         "twig/intl-extra": "^3.23",
