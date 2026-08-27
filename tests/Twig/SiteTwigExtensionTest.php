@@ -23,24 +23,6 @@ final class SiteTwigExtensionTest extends TestCase
     }
 
     #[Test]
-    public function instanceofChecksTheClassHierarchy(): void
-    {
-        self::assertTrue($this->extension->instanceof(new Ride(), Ride::class));
-        self::assertTrue($this->extension->instanceof(new Ride(), \App\EntityInterface\RouteableInterface::class));
-        self::assertFalse($this->extension->instanceof(new Ride(), City::class));
-        self::assertFalse($this->extension->instanceof('ride', Ride::class));
-    }
-
-    #[Test]
-    public function todayComparesOnlyTheCalendarDate(): void
-    {
-        self::assertTrue($this->extension->today(new \DateTime('today 00:00:00')));
-        self::assertTrue($this->extension->today(new \DateTime('today 23:59:59')));
-        self::assertFalse($this->extension->today(new \DateTime('yesterday 23:59:59')));
-        self::assertFalse($this->extension->today(new \DateTime('tomorrow 00:00:00')));
-    }
-
-    #[Test]
     public function daysSinceCountsFullDays(): void
     {
         $twoDaysAgo = '@' . (time() - 2 * 86400);
@@ -57,16 +39,11 @@ final class SiteTwigExtensionTest extends TestCase
     }
 
     #[Test]
-    public function registersDaysSinceTodayAndInstanceofFunctions(): void
+    public function registersTheDaysSinceFunction(): void
     {
-        $names = array_map(
-            static fn (\Twig\TwigFunction $function): string => $function->getName(),
-            $this->extension->getFunctions()
-        );
+        $names = array_map(static fn (\Twig\TwigFunction $f) => $f->getName(), $this->extension->getFunctions());
 
-        self::assertContains('daysSince', $names);
-        self::assertContains('today', $names);
-        self::assertContains('instanceof', $names);
+        self::assertSame(['daysSince'], $names);
     }
 
     #[Test]

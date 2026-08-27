@@ -21,7 +21,6 @@ class SocialNetworkTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('network_icon', [$this, 'networkIcon']),
             new TwigFunction('getNetwork', [$this, 'getNetwork'], ['is_safe' => ['html']]),
         ];
     }
@@ -53,30 +52,6 @@ class SocialNetworkTwigExtension extends AbstractExtension
         }
 
        return $text;
-    }
-
-    public function networkIcon($param): string
-    {
-        if ($param instanceof SocialNetworkProfile) {
-            $networkIdentifier = $param->getNetwork();
-        } elseif (is_string($param)) {
-            $networkIdentifier = $param;
-        } elseif (null === $param) {
-            // Templates pass e.g. item.socialNetworkProfile.network, which is
-            // null for a feed item whose profile was removed (#1305).
-            $networkIdentifier = null;
-        } else {
-            throw new \InvalidArgumentException('Parameter must be instance of SocialNetworkProfile or a string identifying the network.');
-        }
-
-        // A removed profile yields a null identifier (#1305); an unknown network
-        // (e.g. one the Feeds API no longer lists) falls back to a generic icon
-        // instead of crashing on getIcon().
-        if (null === $networkIdentifier || !$this->networkManager->hasNetwork($networkIdentifier)) {
-            return 'far fa-globe';
-        }
-
-        return $this->networkManager->getNetwork($networkIdentifier)->getIcon();
     }
 
     public function getNetwork(string $identifier): ?NetworkInterface
