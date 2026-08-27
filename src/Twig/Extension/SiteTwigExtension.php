@@ -24,11 +24,6 @@ class SiteTwigExtension extends AbstractExtension
             new TwigFunction('daysSince', [$this, 'daysSince'], array(
                 'is_safe' => array('html')
             )),
-            new TwigFunction('today', [$this, 'today'], array(
-                'is_safe' => array('html')
-            )),
-            'instanceof' => new TwigFunction('instanceof', [$this, 'instanceof']),
-            'today' => new TwigFunction('today', [$this, 'today'])
         ];
     }
 
@@ -42,18 +37,6 @@ class SiteTwigExtension extends AbstractExtension
         $diffDays = floor($diffSeconds / (60 * 60 * 24));
 
         return $diffDays;
-    }
-
-    public function instanceof ($var, $instance): bool
-    {
-        return $var instanceof $instance;
-    }
-
-    public function today(\DateTime $dateTime): bool
-    {
-        $today = new \DateTime();
-
-        return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
     }
 
     public function getName(): string
