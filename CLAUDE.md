@@ -72,6 +72,33 @@ Everything is confirmed on **one review page** at `/upload/review` (`UnifiedRevi
 
 **Frontend note:** the uploader is **Uppy** (`assets/controllers/unified_upload_controller.js`), no Compressor plugin so image EXIF survives. The `@uppy/*` packages are declared in `package.json`, but `package-lock.json` is **frozen** — `webpack`/`@babel/core` are not declared deps and survive only via the committed lock, so any re-resolution (`npm install`/`yarn install`) breaks the tree; use `npm ci`, and regenerate the lock deliberately when adding frontend deps. Frontend assets are **not** built in CI.
 
+### Ride generation from city cycles
+
+Rides are not entered by hand — they are generated from `CityCycle` recurrence patterns by
+the **separate `ride-generator` app** (`POST /api/preview`, URL in
+`CRITICALMASS_RIDE_GENERATOR_URL`). The generated period runs out every few months and has
+to be refilled; on 2026-08-29 rides ended after August 2026 and Sept–Dec 2026 were generated
+(952 rides / ~240 cities).
+
+- **Bulk:** `bin/console criticalmass:cycles:generate-rides --from=YYYY-MM --until=YYYY-MM
+  [--city=slug] [--dry-run]` (`src/Command/Cycles/GenerateRidesCommand.php`) — iterates all
+  cities with an active cycle. **Idempotent**: the `SingleRideForDay` validator queries the
+  DB, so already-covered cities are skipped. The command therefore flushes **per city**;
+  don't batch the flush or the validator goes blind.
+- **Single cycle:** `CityCycleExecuteController` (`/{citySlug}/cycles/{id}/execute`) — the
+  admin UI, one cycle at a time.
+
+Two traps in the generator, both of which the UI still has:
+
+- **It returns one month too many.** `ApiController::preview` walks whole months and, depending
+  on the timezone offset of `fromDate`, hands back a ride of the month *after* `untilDate`
+  (`+02:00` leaks, `+00:00` does not). The command builds its dates in UTC **and** filters the
+  response to the requested range — keep both.
+- **`CycleExecutable::$cityCycle` is `#[Ignore]`**, so it is never serialized. The generator
+  only ever sees `citySlug` and fetches *all* cycles of that city (`validNow=true`); the
+  controller then stamps the one clicked cycle onto every result. The command instead maps each
+  ride back via `cycle.id` from the response.
+
 ### Frontend (`assets/`)
 
 Single Webpack Encore entry point (`assets/app.js`). Stimulus controllers in `assets/controllers/` — maps (Leaflet + MapLibre GL), charts (Chart.js), datatables, search, geocoding, ride date checking.
