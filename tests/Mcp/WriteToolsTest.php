@@ -432,6 +432,79 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertSame('treffpunkt', $result['json']['slug']);
     }
 
+    public function testCreateSubridePersists(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('subride:write');
+
+        $result = $this->callTool($token, 'create_subride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'subride' => ['title' => 'Anfahrt Süd', 'location' => 'Südbahnhof', 'dateTime' => '2026-09-01 18:00:00'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\Subride::class)->findBy(['ride' => $ride]));
+    }
+
+    public function testCreateSubrideRejectsMissingLocation(): void
+    {
+        $city = $this->createCity();
+        $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('subride:write');
+
+        $result = $this->callTool($token, 'create_subride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'subride' => ['title' => 'Ohne Ort', 'dateTime' => '2026-09-01 18:00:00'],
+        ]);
+
+        self::assertTrue($result['isError']);
+    }
+
+    public function testUpdateSubrideChangesTitle(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $subride = $this->createSubride($ride);
+        $token = $this->obtainAccessToken('subride:write');
+
+        $result = $this->callTool($token, 'update_subride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'subrideId' => $subride->getId(),
+            'subride' => ['title' => 'Anfahrt West'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $subrideId = $subride->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\Subride::class)->find($subrideId);
+        self::assertSame('Anfahrt West', $updated?->getTitle());
+    }
+
+    public function testDeleteSubrideRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $subride = $this->createSubride($ride);
+        $subrideId = $subride->getId();
+        $token = $this->obtainAccessToken('subride:write');
+
+        $result = $this->callTool($token, 'delete_subride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'subrideId' => $subrideId,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(\App\Entity\Subride::class)->find($subrideId));
+    }
+
     public function testCreateCityActivityPersistsAndUpdatesScore(): void
     {
         $city = $this->createCity();

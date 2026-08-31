@@ -7,6 +7,7 @@ use App\Entity\CitySlug;
 use App\Entity\Location;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use App\Entity\Subride;
 use App\Mcp\Tool\McpToolException;
 use App\Repository\RideRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -103,5 +104,21 @@ final class EntityResolver
         }
 
         return $location;
+    }
+
+    /**
+     * Löst einen Subride über citySlug + rideIdentifier + Subride-ID auf und
+     * stellt sicher, dass er zum Ride gehört.
+     */
+    public function subride(string $citySlug, string $rideIdentifier, int $subrideId): Subride
+    {
+        $ride = $this->ride($citySlug, $rideIdentifier);
+        $subride = $this->registry->getRepository(Subride::class)->find($subrideId);
+
+        if (null === $subride || $subride->getRide()->getId() !== $ride->getId()) {
+            throw new McpToolException(sprintf('Kein Subride mit der ID %d für diesen Ride gefunden.', $subrideId));
+        }
+
+        return $subride;
     }
 }
