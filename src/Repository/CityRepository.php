@@ -157,7 +157,20 @@ class CityRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public const ACTIVITY_SCORE_THRESHOLD = 0.15;
+    /**
+     * Cities scoring below this are treated as inactive and disappear from
+     * public lists and the frontpage; a NULL score stays visible.
+     *
+     * Set just above zero on purpose. A measured run over all 739 cities
+     * (2026-08-18) produced 695 cities with a score of exactly 0.0 -- no ride
+     * participations, photos, tracks or feed items within six months -- while
+     * the lowest non-zero score was 0.0441. Anything in between therefore hides
+     * exactly the cities with no signal at all, which is what "inactive" is
+     * meant to mean, and leaves the cutoff insensitive to small data shifts.
+     * A higher threshold would also make visibility depend on the social_feed
+     * signal, which is worth up to 0.15 on its own.
+     */
+    public const ACTIVITY_SCORE_THRESHOLD = 0.01;
 
     /** @return list<City> */
     public function findActiveCities(): array
