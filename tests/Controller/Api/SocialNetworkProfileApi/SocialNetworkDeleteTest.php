@@ -29,6 +29,9 @@ class SocialNetworkDeleteTest extends AbstractApiControllerTestCase
         parent::tearDown();
     }
 
+    /**
+     * @return array{City, SocialNetworkProfile}
+     */
     private function createProfile(): array
     {
         $slug = 'social-api-' . substr(md5(uniqid('', true)), 0, 12);

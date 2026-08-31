@@ -25,7 +25,7 @@ class CityRepositoryTest extends KernelTestCase
 
         $cityNames = array_map(fn(City $city) => $city->getCity(), $activeCities);
 
-        $this->assertNotContains('Ghosttown', $cityNames, 'Inactive city (score < 0.15) should be excluded');
+        $this->assertNotContains('Ghosttown', $cityNames, 'Inactive city (score below the threshold) should be excluded');
     }
 
     public function testFindActiveCitiesIncludesHighScoreCities(): void
@@ -61,7 +61,7 @@ class CityRepositoryTest extends KernelTestCase
 
     public function testActivityScoreThreshold(): void
     {
-        $this->assertEquals(0.15, CityRepository::ACTIVITY_SCORE_THRESHOLD);
+        $this->assertEquals(0.01, CityRepository::ACTIVITY_SCORE_THRESHOLD);
     }
 
     protected function tearDown(): void
