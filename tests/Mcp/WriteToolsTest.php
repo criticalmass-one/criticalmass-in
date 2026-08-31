@@ -140,6 +140,68 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertSame('Neu', $updated?->getTitle());
     }
 
+    public function testSetRideEnabledDisablesRide(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('ride:write');
+
+        $result = $this->callTool($token, 'set_ride_enabled', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'enabled' => false,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertFalse($result['json']['enabled']);
+
+        $rideId = $ride->getId();
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(Ride::class)->find($rideId);
+        self::assertFalse($reloaded?->isEnabled());
+    }
+
+    public function testDeleteCycleKeepsRides(): void
+    {
+        $city = $this->createCity();
+        $cycle = $this->createCityCycle($city);
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $ride->setCycle($cycle);
+        $this->em()->flush();
+
+        $cycleId = $cycle->getId();
+        $rideId = $ride->getId();
+        $token = $this->obtainAccessToken('cycle:write');
+
+        $result = $this->callTool($token, 'delete_cycle', [
+            'citySlug' => $city->getMainSlugString(),
+            'cycleId' => $cycleId,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(CityCycle::class)->find($cycleId));
+        $survivingRide = $this->em()->getRepository(Ride::class)->find($rideId);
+        self::assertNotNull($survivingRide, 'Ride must survive cycle deletion');
+        self::assertNull($survivingRide->getCycle());
+    }
+
+    public function testDeleteCycleRejectsForeignCity(): void
+    {
+        $city = $this->createCity();
+        $otherCity = $this->createCity('Andere-Stadt');
+        $cycle = $this->createCityCycle($otherCity);
+        $token = $this->obtainAccessToken('cycle:write');
+
+        $result = $this->callTool($token, 'delete_cycle', [
+            'citySlug' => $city->getMainSlugString(),
+            'cycleId' => $cycle->getId(),
+        ]);
+
+        self::assertTrue($result['isError']);
+    }
+
     public function testSetParticipationPersistsForTokenUser(): void
     {
         $city = $this->createCity();
