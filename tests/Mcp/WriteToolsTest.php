@@ -190,6 +190,75 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertCount(1, $this->em()->getRepository(RideEstimate::class)->findBy(['ride' => $ride]));
     }
 
+    public function testListRideEstimatesReturnsIds(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $estimate = $this->createRideEstimate($ride, 123);
+        $token = $this->obtainAccessToken('ride:read');
+
+        $result = $this->callTool($token, 'list_ride_estimates', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        $ids = array_column($result['json']['estimates'], 'id');
+        self::assertContains($estimate->getId(), $ids);
+    }
+
+    public function testUpdateRideEstimateChangesEstimation(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $estimate = $this->createRideEstimate($ride, 100);
+        $token = $this->obtainAccessToken('estimate:write');
+
+        $result = $this->callTool($token, 'update_ride_estimate', [
+            'estimateId' => $estimate->getId(),
+            'estimation' => 555,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $estimateId = $estimate->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(RideEstimate::class)->find($estimateId);
+        self::assertSame(555, $updated?->getEstimatedParticipants());
+    }
+
+    public function testDeleteRideEstimateRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $estimate = $this->createRideEstimate($ride, 100);
+        $token = $this->obtainAccessToken('estimate:write');
+
+        $estimateId = $estimate->getId();
+
+        $result = $this->callTool($token, 'delete_ride_estimate', [
+            'estimateId' => $estimateId,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(RideEstimate::class)->find($estimateId));
+    }
+
+    public function testUpdateRideEstimateRejectsUnknownId(): void
+    {
+        $token = $this->obtainAccessToken('estimate:write');
+
+        $result = $this->callTool($token, 'update_ride_estimate', [
+            'estimateId' => 999999999,
+            'estimation' => 10,
+        ]);
+
+        self::assertTrue($result['isError']);
+        self::assertStringContainsString('ID', $result['text']);
+    }
+
     public function testSetWeatherPersists(): void
     {
         $city = $this->createCity();

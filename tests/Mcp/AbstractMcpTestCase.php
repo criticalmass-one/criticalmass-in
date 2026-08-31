@@ -8,6 +8,7 @@ use App\Entity\CitySlug;
 use App\Entity\Location;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use App\Entity\RideEstimate;
 use App\Entity\Subride;
 use App\Entity\Track;
 use App\Entity\User;
@@ -256,6 +257,19 @@ abstract class AbstractMcpTestCase extends WebTestCase
         $this->em()->flush();
 
         return $subride;
+    }
+
+    protected function createRideEstimate(Ride $ride, int $participants = 100): RideEstimate
+    {
+        $estimate = new RideEstimate();
+        $estimate->setRide($ride);
+        $estimate->setEstimatedParticipants($participants);
+        $estimate->setDateTime(new \DateTime('2026-09-01 19:30:00'));
+        $estimate->setSource('test');
+        $this->em()->persist($estimate);
+        $this->em()->flush();
+
+        return $estimate;
     }
 
     protected function createCityCycle(City $city): CityCycle
