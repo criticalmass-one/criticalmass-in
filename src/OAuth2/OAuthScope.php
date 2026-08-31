@@ -28,6 +28,7 @@ enum OAuthScope: string
     case ActivityWrite = 'activity:write';
     case LocationWrite = 'location:write';
     case SubrideWrite = 'subride:write';
+    case PostWrite = 'post:write';
 
     public function label(): string
     {
@@ -48,6 +49,7 @@ enum OAuthScope: string
             self::ActivityWrite => 'Aktivitäts-Scores von Städten melden',
             self::LocationWrite => 'Treffpunkte (Locations) anlegen und bearbeiten',
             self::SubrideWrite => 'Subrides (Anfahrten) anlegen und bearbeiten',
+            self::PostWrite => 'Forenbeiträge anlegen, bearbeiten und löschen',
         };
     }
 
