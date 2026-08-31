@@ -365,6 +365,73 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertCount(1, $this->em()->getRepository(SocialNetworkProfile::class)->findBy(['city' => $city]));
     }
 
+    public function testCreateLocationPersists(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('location:write');
+
+        $result = $this->callTool($token, 'create_location', [
+            'citySlug' => $city->getMainSlugString(),
+            'location' => ['title' => 'Rathausmarkt', 'latitude' => 53.55, 'longitude' => 9.99],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\Location::class)->findBy(['city' => $city]));
+    }
+
+    public function testUpdateLocationChangesTitle(): void
+    {
+        $city = $this->createCity();
+        $location = $this->createLocation($city, 'treffpunkt');
+        $token = $this->obtainAccessToken('location:write');
+
+        $result = $this->callTool($token, 'update_location', [
+            'citySlug' => $city->getMainSlugString(),
+            'locationSlug' => 'treffpunkt',
+            'location' => ['title' => 'Neuer Treffpunkt'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $locationId = $location->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\Location::class)->find($locationId);
+        self::assertSame('Neuer Treffpunkt', $updated?->getTitle());
+    }
+
+    public function testDeleteLocationRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $location = $this->createLocation($city, 'treffpunkt');
+        $locationId = $location->getId();
+        $token = $this->obtainAccessToken('location:write');
+
+        $result = $this->callTool($token, 'delete_location', [
+            'citySlug' => $city->getMainSlugString(),
+            'locationSlug' => 'treffpunkt',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(\App\Entity\Location::class)->find($locationId));
+    }
+
+    public function testGetLocationReturnsIt(): void
+    {
+        $city = $this->createCity();
+        $this->createLocation($city, 'treffpunkt');
+        $token = $this->obtainAccessToken('city:read');
+
+        $result = $this->callTool($token, 'get_location', [
+            'citySlug' => $city->getMainSlugString(),
+            'locationSlug' => 'treffpunkt',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertSame('treffpunkt', $result['json']['slug']);
+    }
+
     public function testCreateCityActivityPersistsAndUpdatesScore(): void
     {
         $city = $this->createCity();

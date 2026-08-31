@@ -26,6 +26,7 @@ enum OAuthScope: string
     case CycleWrite = 'cycle:write';
     case SocialNetworkWrite = 'socialnetwork:write';
     case ActivityWrite = 'activity:write';
+    case LocationWrite = 'location:write';
 
     public function label(): string
     {
@@ -44,6 +45,7 @@ enum OAuthScope: string
             self::CycleWrite => 'Termin-Zyklen anlegen und bearbeiten',
             self::SocialNetworkWrite => 'Social-Network-Profile und -Feeds verwalten',
             self::ActivityWrite => 'Aktivitäts-Scores von Städten melden',
+            self::LocationWrite => 'Treffpunkte (Locations) anlegen und bearbeiten',
         };
     }
 
