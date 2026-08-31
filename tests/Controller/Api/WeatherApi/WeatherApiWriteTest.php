@@ -31,6 +31,9 @@ class WeatherApiWriteTest extends AbstractApiControllerTestCase
         parent::tearDown();
     }
 
+    /**
+     * @return array{City, Ride, Weather}
+     */
     private function createRideWithWeather(): array
     {
         $slug = 'weather-api-' . substr(md5(uniqid('', true)), 0, 12);

@@ -31,6 +31,9 @@ class CycleApiDeleteTest extends AbstractApiControllerTestCase
         parent::tearDown();
     }
 
+    /**
+     * @return array{City, CityCycle, Ride}
+     */
     private function createCityWithCycleAndRide(): array
     {
         $slug = 'cycle-del-' . substr(md5(uniqid('', true)), 0, 12);

@@ -31,6 +31,9 @@ class SubrideApiWriteTest extends AbstractApiControllerTestCase
         parent::tearDown();
     }
 
+    /**
+     * @return array{City, Ride}
+     */
     private function createRide(): array
     {
         $slug = 'subride-api-' . substr(md5(uniqid('', true)), 0, 12);
