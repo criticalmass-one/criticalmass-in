@@ -21,6 +21,11 @@ doctrine:
             date: App\DBAL\Type\UTCDateType
             time: App\DBAL\Type\UTCTimeType
 
+            # Typen für die WebAuthn-Credentials (siehe mapping `webauthn` unten).
+            base64: Webauthn\Bundle\Doctrine\Type\Base64BinaryDataType
+            trust_path: Webauthn\Bundle\Doctrine\Type\TrustPathDataType
+            aaguid: Webauthn\Bundle\Doctrine\Type\AAGUIDDataType
+
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.default
@@ -32,6 +37,15 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+
+            # Mapped Superclass `Webauthn\CredentialRecord`, von der
+            # App\Entity\WebauthnCredential erbt. Das Bundle liefert die
+            # XML-Zuordnung mit, deshalb hier ein eigener Mapping-Eintrag.
+            webauthn:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/vendor/web-auth/webauthn-symfony-bundle/src/Resources/config/doctrine-mapping'
+                prefix: 'Webauthn'
 
         dql:
             datetime_functions:

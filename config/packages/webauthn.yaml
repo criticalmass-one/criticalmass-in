@@ -1,0 +1,26 @@
+webauthn:
+    credential_repository: App\Repository\WebauthnCredentialRepository
+    user_repository: App\Security\Webauthn\UserEntityRepository
+
+    # Basiswerte gelten für dev und test, wo die App unter localhost läuft. Ohne
+    # `allowed_origins` prüft die Bibliothek den Origin gegen die RP ID, und das deckt
+    # localhost ohne weiteres Zutun ab.
+    #
+    # Die Produktionswerte stehen in config/packages/prod/webauthn.yaml. Das ist bewusst
+    # so herum: Config-Merge kann Listen nur ergänzen, nicht ersetzen — eine hier
+    # gesetzte Origin-Liste liesse sich in keiner Umgebung wieder loswerden.
+    creation_profiles:
+        default:
+            rp:
+                id: 'localhost'
+            authenticator_selection_criteria:
+                user_verification: preferred
+                # Discoverable Credential, sonst gibt es keine Conditional UI
+                # (Passkey-Vorschlag im Autofill) auf der Login-Seite.
+                resident_key: required
+                require_resident_key: true
+
+    request_profiles:
+        default:
+            rp_id: 'localhost'
+            user_verification: preferred
