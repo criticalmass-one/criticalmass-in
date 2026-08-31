@@ -22,6 +22,14 @@ security:
             login_link:
                 check_route: login_check
                 signature_properties: [ 'email' ]
+            remember_me:
+                secret: '%kernel.secret%'
+                # Konten haben kein Passwort (Login per Magic Link oder OAuth), daher
+                # signiert das Cookie wie der login_link über die E-Mail-Adresse.
+                signature_properties: [ 'email' ]
+                lifetime: 31536000 # ein Jahr
+                secure: auto
+                samesite: lax
             provider: users
             pattern: .*
             context: user

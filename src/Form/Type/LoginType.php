@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +16,12 @@ class LoginType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'E-Mail-Adresse',
                 'help' => 'Wenn du noch kein Benutzerkonto hast, wird automatisch ein neues mit deiner E-Mail-Adresse erstellt.'
+            ])
+            ->add('remember_me', CheckboxType::class, [
+                'label' => 'Eingeloggt bleiben',
+                'required' => false,
+                'data' => true,
+                'help' => 'Du bleibst dann auf diesem Gerät ein Jahr lang angemeldet.',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Link zusenden',
