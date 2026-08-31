@@ -31,6 +31,9 @@ class EstimateApiWriteTest extends AbstractApiControllerTestCase
         parent::tearDown();
     }
 
+    /**
+     * @return array{City, Ride, RideEstimate}
+     */
     private function createRideWithEstimate(int $participants = 100): array
     {
         $slug = 'estimate-api-' . substr(md5(uniqid('', true)), 0, 12);

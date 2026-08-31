@@ -29,6 +29,9 @@ class RideApiEnabledTest extends AbstractApiControllerTestCase
         parent::tearDown();
     }
 
+    /**
+     * @return array{City, Ride}
+     */
     private function createRide(): array
     {
         $slug = 'ride-enabled-' . substr(md5(uniqid('', true)), 0, 12);
