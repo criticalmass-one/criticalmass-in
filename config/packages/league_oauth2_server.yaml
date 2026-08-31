@@ -35,6 +35,7 @@ league_oauth2_server:
             - location:write
             - subride:write
             - post:write
+            - photo:write
         default:
             - ride:read
             - track:read

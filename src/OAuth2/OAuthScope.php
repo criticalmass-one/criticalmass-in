@@ -29,6 +29,7 @@ enum OAuthScope: string
     case LocationWrite = 'location:write';
     case SubrideWrite = 'subride:write';
     case PostWrite = 'post:write';
+    case PhotoWrite = 'photo:write';
 
     public function label(): string
     {
@@ -50,6 +51,7 @@ enum OAuthScope: string
             self::LocationWrite => 'Treffpunkte (Locations) anlegen und bearbeiten',
             self::SubrideWrite => 'Subrides (Anfahrten) anlegen und bearbeiten',
             self::PostWrite => 'Forenbeiträge anlegen, bearbeiten und löschen',
+            self::PhotoWrite => 'Fotos bearbeiten und löschen',
         };
     }
 

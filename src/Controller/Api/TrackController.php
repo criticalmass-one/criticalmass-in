@@ -49,7 +49,7 @@ class TrackController extends BaseController
             $groups[] = 'api-private';
         }
 
-        return $this->createStandardResponse($track);
+        return $this->createStandardResponse($track, ['groups' => $groups]);
     }
 
     /**
@@ -116,7 +116,7 @@ class TrackController extends BaseController
             $groups[] = 'api-private';
         }
 
-        return $this->createStandardResponse($trackList);
+        return $this->createStandardResponse($trackList, ['groups' => $groups]);
     }
 
     /**

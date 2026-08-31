@@ -620,6 +620,60 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertSame('Sichtbar', $result['json']['message']);
     }
 
+    public function testDeleteTrackSoftDeletes(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $track = $this->createTrack($ride);
+        $trackId = $track->getId();
+        $token = $this->obtainAccessToken('track:write');
+
+        $result = $this->callTool($token, 'delete_track', ['trackId' => $trackId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(\App\Entity\Track::class)->find($trackId);
+        self::assertTrue($reloaded?->getDeleted());
+    }
+
+    public function testUpdatePhotoChangesDescription(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $photo = $this->createPhoto($ride, $city);
+        $photoId = $photo->getId();
+        $token = $this->obtainAccessToken('photo:write');
+
+        $result = $this->callTool($token, 'update_photo', [
+            'photoId' => $photoId,
+            'photo' => ['description' => 'Schöner Ausblick'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\Photo::class)->find($photoId);
+        self::assertSame('Schöner Ausblick', $updated?->getDescription());
+    }
+
+    public function testDeletePhotoSoftDeletes(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $photo = $this->createPhoto($ride, $city);
+        $photoId = $photo->getId();
+        $token = $this->obtainAccessToken('photo:write');
+
+        $result = $this->callTool($token, 'delete_photo', ['photoId' => $photoId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(\App\Entity\Photo::class)->find($photoId);
+        self::assertTrue($reloaded?->isDeleted());
+    }
+
     public function testWriteToolRejectedWithoutScope(): void
     {
         $token = $this->obtainAccessToken('ride:read');
