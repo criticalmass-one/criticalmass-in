@@ -16,6 +16,17 @@
             </h1>
         </div>
 
+        <form method="get" action="{{ path('caldera_criticalmass_board_search') }}" class="mb-4">
+            <div class="input-group">
+                <input type="search" name="q" class="form-control"
+                       placeholder="Themen und Beitr&auml;ge durchsuchen" aria-label="Suchbegriff">
+                <button type="submit" class="btn btn-outline-secondary">
+                    <i class="far fa-search"></i>
+                    <span class="visually-hidden">Suchen</span>
+                </button>
+            </div>
+        </form>
+
         <h4 class="mb-3">
             <i class="far fa-globe text-muted me-2"></i>
             Allgemeines

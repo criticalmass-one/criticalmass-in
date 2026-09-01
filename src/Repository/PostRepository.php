@@ -80,6 +80,33 @@ class PostRepository extends ServiceEntityRepository
         return (int) $builder->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * Sucht in Forenbeitraegen: im Text des Beitrags und im Titel seines Themas.
+     *
+     * LIKE statt Volltextindex — dasselbe Verfahren wie die vorhandene Seitensuche.
+     * Fuer die Groessenordnung dieses Forums reicht das; ein FULLTEXT-Index waere der
+     * naechste Schritt, wenn die Beitragszahl das noetig macht.
+     */
+    public function querySearchInForum(string $term): Query
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->innerJoin('p.thread', 't')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->andWhere($builder->expr()->orX(
+                $builder->expr()->like('p.message', ':term'),
+                $builder->expr()->like('t.title', ':term')
+            ))
+            ->setParameter('term', '%' . $term . '%')
+            ->orderBy('p.dateTime', 'DESC');
+
+        return $builder->getQuery();
+    }
+
     public function findLatestPostForThread(Thread $thread): ?Post
     {
         $builder = $this->createQueryBuilder('p');

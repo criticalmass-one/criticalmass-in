@@ -30,6 +30,8 @@ class BoardController extends AbstractController
 {
     public const THREADS_PER_PAGE = 20;
     public const POSTS_PER_PAGE = 20;
+    public const RESULTS_PER_PAGE = 20;
+    public const MINIMUM_SEARCH_LENGTH = 3;
 
     #[Route('/boards/overview', name: 'caldera_criticalmass_board_overview', priority: 240)]
     public function overviewAction(
@@ -40,6 +42,31 @@ class BoardController extends AbstractController
         return $this->render('Board/overview.html.twig', [
             'boards' => $boardRepository->findEnabledBoards(),
             'cities' => $cityRepository->findCitiesWithBoard(),
+        ]);
+    }
+
+    #[Route('/boards/search', name: 'caldera_criticalmass_board_search', priority: 260)]
+    public function searchAction(
+        Request $request,
+        PaginatorInterface $paginator,
+        PostRepository $postRepository
+    ): Response {
+        $term = trim((string) $request->query->get('q', ''));
+        $results = null;
+
+        // Ein einzelner Buchstabe traefe halbe Foren — erst ab drei Zeichen suchen.
+        if (mb_strlen($term) >= self::MINIMUM_SEARCH_LENGTH) {
+            $results = $paginator->paginate(
+                $postRepository->querySearchInForum($term),
+                $request->query->getInt('page', 1),
+                self::RESULTS_PER_PAGE
+            );
+        }
+
+        return $this->render('Board/search_results.html.twig', [
+            'term' => $term,
+            'results' => $results,
+            'minimumLength' => self::MINIMUM_SEARCH_LENGTH,
         ]);
     }
 
