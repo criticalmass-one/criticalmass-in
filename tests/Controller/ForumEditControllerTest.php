@@ -73,11 +73,10 @@ class ForumEditControllerTest extends AbstractControllerTestCase
         $slug = $this->openThread($client, 'Fremder Beitrag Test');
         $post = $this->firstPostOf($slug);
 
-        $other = static::createClient();
-        $this->loginAs($other, 'cyclist@criticalmass.in');
-        $other->request('GET', '/post/edit/' . $post->getId());
+        $this->loginAs($client, 'cyclist@criticalmass.in');
+        $client->request('GET', '/post/edit/' . $post->getId());
 
-        self::assertEquals(403, $other->getResponse()->getStatusCode());
+        self::assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testEditPostRequiresLogin(): void
@@ -87,10 +86,10 @@ class ForumEditControllerTest extends AbstractControllerTestCase
         $slug = $this->openThread($client, 'Anonymer Zugriff Test');
         $post = $this->firstPostOf($slug);
 
-        $anonymous = static::createClient();
-        $anonymous->request('GET', '/post/edit/' . $post->getId());
+        $client->getCookieJar()->clear();
+        $client->request('GET', '/post/edit/' . $post->getId());
 
-        self::assertEquals(302, $anonymous->getResponse()->getStatusCode());
+        self::assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testThreadOpenerCanRenameTheThread(): void
@@ -147,10 +146,9 @@ class ForumEditControllerTest extends AbstractControllerTestCase
         $this->loginAs($client, self::AUTHOR);
         $slug = $this->openThread($client, 'Fremdes Thema Test');
 
-        $other = static::createClient();
-        $this->loginAs($other, 'cyclist@criticalmass.in');
-        $other->request('GET', '/thread/edit/' . $slug);
+        $this->loginAs($client, 'cyclist@criticalmass.in');
+        $client->request('GET', '/thread/edit/' . $slug);
 
-        self::assertEquals(403, $other->getResponse()->getStatusCode());
+        self::assertEquals(403, $client->getResponse()->getStatusCode());
     }
 }
