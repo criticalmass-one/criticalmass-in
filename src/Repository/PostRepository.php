@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 class PostRepository extends ServiceEntityRepository
@@ -97,6 +98,14 @@ class PostRepository extends ServiceEntityRepository
 
     public function findPostsForThread(Thread $thread): array
     {
+        return $this->queryPostsForThread($thread)->getResult();
+    }
+
+    /**
+     * Die Abfrage statt des Ergebnisses — der Paginator braucht sie, um selbst zu begrenzen.
+     */
+    public function queryPostsForThread(Thread $thread): Query
+    {
         $builder = $this->createQueryBuilder('p');
 
         $builder
@@ -107,9 +116,33 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('enabled', true)
             ->addOrderBy('p.dateTime', 'ASC');
 
-        $query = $builder->getQuery();
+        return $builder->getQuery();
+    }
 
-        return $query->getResult();
+    /**
+     * Der wievielte Beitrag eines Themas ist das? Aus der Position folgt die Seite,
+     * auf der ein Dauerlink wie #post-42 tatsaechlich zu finden ist.
+     */
+    public function findPositionInThread(Post $post): int
+    {
+        $thread = $post->getThread();
+
+        if (null === $thread) {
+            return 1;
+        }
+
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('COUNT(p.id)')
+            ->where($builder->expr()->eq('p.thread', ':thread'))
+            ->setParameter('thread', $thread)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->lte('p.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $post->getDateTime());
+
+        return max(1, (int) $builder->getQuery()->getSingleScalarResult());
     }
 
     public function findForTimelineThreadPostCollector(
