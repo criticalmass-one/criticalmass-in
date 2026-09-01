@@ -52,18 +52,17 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
 
     public function testAdminCanLockAndReopenAThread(): void
     {
-        $author = static::createClient();
-        $this->loginAs($author, self::AUTHOR);
-        $slug = $this->openThread($author, 'Zu schliessendes Thema');
+        $client = static::createClient();
+        $this->loginAs($client, self::AUTHOR);
+        $slug = $this->openThread($client, 'Zu schliessendes Thema');
 
-        $admin = static::createClient();
-        $this->loginAs($admin, self::ADMIN);
+        $this->loginAs($client, self::ADMIN);
 
-        $admin->request('POST', '/thread/lock/' . $slug);
-        self::assertEquals(302, $admin->getResponse()->getStatusCode());
+        $client->request('POST', '/thread/lock/' . $slug);
+        self::assertEquals(302, $client->getResponse()->getStatusCode());
         self::assertTrue($this->reloadThread($slug)->isLocked());
 
-        $admin->request('POST', '/thread/lock/' . $slug);
+        $client->request('POST', '/thread/lock/' . $slug);
         self::assertFalse($this->reloadThread($slug)->isLocked(), 'Derselbe Endpunkt öffnet wieder.');
     }
 
@@ -80,64 +79,61 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
 
     public function testAdminCanPinAndUnpinAThread(): void
     {
-        $author = static::createClient();
-        $this->loginAs($author, self::AUTHOR);
-        $slug = $this->openThread($author, 'Anzuheftendes Thema');
+        $client = static::createClient();
+        $this->loginAs($client, self::AUTHOR);
+        $slug = $this->openThread($client, 'Anzuheftendes Thema');
 
-        $admin = static::createClient();
-        $this->loginAs($admin, self::ADMIN);
+        $this->loginAs($client, self::ADMIN);
 
-        $admin->request('POST', '/thread/pin/' . $slug);
+        $client->request('POST', '/thread/pin/' . $slug);
         self::assertTrue($this->reloadThread($slug)->isSticky());
 
-        $admin->request('POST', '/thread/pin/' . $slug);
+        $client->request('POST', '/thread/pin/' . $slug);
         self::assertFalse($this->reloadThread($slug)->isSticky());
     }
 
     public function testLockedThreadRejectsReplies(): void
     {
-        $author = static::createClient();
-        $this->loginAs($author, self::AUTHOR);
-        $slug = $this->openThread($author, 'Geschlossen fuer Antworten');
+        $client = static::createClient();
+        $this->loginAs($client, self::AUTHOR);
+        $slug = $this->openThread($client, 'Geschlossen fuer Antworten');
 
-        $admin = static::createClient();
-        $this->loginAs($admin, self::ADMIN);
-        $admin->request('POST', '/thread/lock/' . $slug);
+        $this->loginAs($client, self::ADMIN);
+        $client->request('POST', '/thread/lock/' . $slug);
 
-        $author->request('POST', '/post/write/thread/' . $slug, ['post' => ['message' => 'Trotzdem!']]);
+        $this->loginAs($client, self::AUTHOR);
+        $client->request('POST', '/post/write/thread/' . $slug, ['post' => ['message' => 'Trotzdem!']]);
 
-        self::assertEquals(403, $author->getResponse()->getStatusCode());
+        self::assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testLockedThreadStaysReadable(): void
     {
-        $author = static::createClient();
-        $this->loginAs($author, self::AUTHOR);
-        $slug = $this->openThread($author, 'Lesbar trotz Schloss');
+        $client = static::createClient();
+        $this->loginAs($client, self::AUTHOR);
+        $slug = $this->openThread($client, 'Lesbar trotz Schloss');
 
-        $admin = static::createClient();
-        $this->loginAs($admin, self::ADMIN);
-        $admin->request('POST', '/thread/lock/' . $slug);
+        $this->loginAs($client, self::ADMIN);
+        $client->request('POST', '/thread/lock/' . $slug);
 
-        $crawler = $author->request('GET', '/boards/general/thread/' . $slug);
+        $crawler = $client->request('GET', '/boards/general/thread/' . $slug);
 
-        self::assertEquals(200, $author->getResponse()->getStatusCode());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
         self::assertStringContainsString('geschlossen', $crawler->filter('body')->text());
     }
 
     public function testStickyThreadsAreListedFirst(): void
     {
-        $author = static::createClient();
-        $this->loginAs($author, self::AUTHOR);
+        $client = static::createClient();
+        $this->loginAs($client, self::AUTHOR);
 
-        $olderSlug = $this->openThread($author, 'Aelteres Thema oben');
-        $this->openThread($author, 'Neueres Thema unten');
+        $olderSlug = $this->openThread($client, 'Aelteres Thema oben');
+        $this->openThread($client, 'Neueres Thema unten');
 
-        $admin = static::createClient();
-        $this->loginAs($admin, self::ADMIN);
-        $admin->request('POST', '/thread/pin/' . $olderSlug);
+        $this->loginAs($client, self::ADMIN);
+        $client->request('POST', '/thread/pin/' . $olderSlug);
 
-        $crawler = $author->request('GET', '/boards/general');
+        $crawler = $client->request('GET', '/boards/general');
         $titles = $crawler->filter('.card-body strong')->each(fn ($node) => trim($node->text()));
 
         $pinnedPosition = array_search('Aelteres Thema oben', $titles, true);
