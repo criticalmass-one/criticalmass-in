@@ -33,6 +33,19 @@
                 <div class="post-content">
                     {{ post.message|markdown }}
                 </div>
+                {% if post.isEdited %}
+                    <p class="text-muted small fst-italic mt-2 mb-0">
+                        bearbeitet am {{ post.updatedAt|date('d.m.Y, H:i', 'Europe/Berlin') }}
+                    </p>
+                {% endif %}
+                {% if is_granted('edit', post) %}
+                    <div class="mt-2">
+                        <a href="{{ path('caldera_criticalmass_post_edit', { 'postId': post.id }) }}"
+                           class="btn btn-outline-secondary btn-sm">
+                            <i class="far fa-edit me-1"></i>Bearbeiten
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

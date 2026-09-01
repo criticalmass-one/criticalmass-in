@@ -81,6 +81,15 @@ class Post
     #[Groups(['post-list'])]
     protected ?string $message = null;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['post-list'])]
+    protected ?\DateTime $updatedAt = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'updated_by_user_id', referencedColumnName: 'id', nullable: true)]
+    #[Ignore]
+    protected ?User $updatedBy = null;
+
     #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
@@ -130,6 +139,35 @@ class Post
     public function setDateTime(\DateTime $dateTime): Post
     {
         $this->dateTime = $dateTime;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTime $updatedAt): Post
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isEdited(): bool
+    {
+        return null !== $this->updatedAt;
+    }
+
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $updatedBy): Post
+    {
+        $this->updatedBy = $updatedBy;
 
         return $this;
     }
