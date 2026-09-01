@@ -5,7 +5,6 @@
 {% set next_photo = next_entity(photo) %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
     {{ breadcrumb.item(ride.title, object_path(ride)) }}
     {{ breadcrumb.item('Fotos', object_path(ride, 'caldera_criticalmass_photo_ride_list')) }}

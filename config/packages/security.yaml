@@ -10,10 +10,26 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        # MCP-Endpunkte: stateless, per OAuth2-Bearer-Token (Resource Server)
+        # geschützt. Muss VOR der `main`-Firewall (pattern .*) stehen.
+        mcp:
+            pattern:    ^/mcp
+            stateless:  true
+            provider:   users
+            oauth2:     true
+
         main:
             login_link:
                 check_route: login_check
                 signature_properties: [ 'email' ]
+            remember_me:
+                secret: '%kernel.secret%'
+                # Konten haben kein Passwort (Login per Magic Link oder OAuth), daher
+                # signiert das Cookie wie der login_link über die E-Mail-Adresse.
+                signature_properties: [ 'email' ]
+                lifetime: 31536000 # ein Jahr
+                secure: auto
+                samesite: lax
             provider: users
             pattern: .*
             context: user
@@ -38,6 +54,14 @@ security:
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/register, role: PUBLIC_ACCESS }
         - { path: ^/resetting, role: PUBLIC_ACCESS }
+
+        # OAuth2 / MCP
+        - { path: '^/\.well-known/oauth', role: PUBLIC_ACCESS }
+        - { path: ^/token, role: PUBLIC_ACCESS }
+        - { path: ^/oauth2/register, role: PUBLIC_ACCESS }
+        - { path: ^/authorize, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/oauth2/consent, role: ROLE_USER }
+        - { path: ^/mcp, role: ROLE_USER }
 
 
     role_hierarchy:

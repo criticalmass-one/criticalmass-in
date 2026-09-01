@@ -8,6 +8,7 @@ use App\EntityInterface\RouteableInterface;
 
 abstract class AbstractDelegatedRouter extends AbstractRouter implements DelegatedRouterInterface
 {
+    protected ?ObjectRouterInterface $objectRouter = null;
 
     public function setObjectRouter(ObjectRouterInterface $objectRouter): DelegatedRouterInterface
     {

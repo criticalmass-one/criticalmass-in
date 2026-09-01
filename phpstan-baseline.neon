@@ -331,20 +331,7 @@ parameters:
 			path: src/Controller/Api/RideController.php
 
 		-
-			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\SocialNetworkFeedItem\>\:\:findByCityAndProperties\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Controller/Api/SocialNetworkFeedItemController.php
-
-
-		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\SocialNetworkProfile\>\:\:findByCity\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Controller/Api/SocialNetworkProfileController.php
-
-		-
-			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\SocialNetworkProfile\>\:\:findByProperties\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Controller/Api/SocialNetworkProfileController.php
@@ -430,6 +417,12 @@ parameters:
 		-
 			message: '#^Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface\:\:getFlashBag\(\)\.$#'
 			identifier: method.notFound
+			count: 1
+			path: src/Controller/CityCycle/CityCycleExecuteController.php
+
+		-
+			message: '#^Method App\\Controller\\CityCycle\\CityCycleExecuteController\:\:fetchRidePreview\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: src/Controller/CityCycle/CityCycleExecuteController.php
 
@@ -710,12 +703,6 @@ parameters:
 			path: src/Controller/SocialNetwork/SocialNetworkController.php
 
 		-
-			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\SocialNetworkFeedItem\>\:\:findByCity\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Controller/SocialNetwork/SocialNetworkItemListController.php
-
-		-
 			message: '#^Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface\:\:getFlashBag\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -876,24 +863,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: src/Controller/Track/TrackUploadController.php
-
-		-
-			message: '#^Method App\\Criticalmass\\Api\\Errors\:\:__construct\(\) has parameter \$errorMessageList with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/Api/Errors.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Api\\Errors\:\:\$errorMessageList is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: src/Criticalmass/Api/Errors.php
-
-		-
-			message: '#^Property App\\Criticalmass\\Api\\Errors\:\:\$httpStatusCode is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: src/Criticalmass/Api/Errors.php
 
 		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\Ride\>\:\:findRides\(\)\.$#'
@@ -1218,24 +1187,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Criticalmass/MassTrackImport/MassTrackImporterInterface.php
-
-		-
-			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\Track\>\:\:findByUser\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ProposalPersister/ProposalPersister.php
-
-		-
-			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\TrackImportCandidate\>\:\:findByUser\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ProposalPersister/ProposalPersister.php
-
-		-
-			message: '#^Property App\\Criticalmass\\MassTrackImport\\ProposalPersister\\ProposalPersister\:\:\$existentStravaActivityIds type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/MassTrackImport/ProposalPersister/ProposalPersister.php
 
 		-
 			message: '#^Method App\\Criticalmass\\MassTrackImport\\TrackDecider\\RideResult\:\:getVoterResults\(\) return type has no value type specified in iterable type array\.$#'
@@ -1598,12 +1549,6 @@ parameters:
 			path: src/Criticalmass/Router/AbstractRouter.php
 
 		-
-			message: '#^Access to an undefined property App\\Criticalmass\\Router\\DelegatedRouter\\AbstractDelegatedRouter\:\:\$objectRouter\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Criticalmass/Router/DelegatedRouter/AbstractDelegatedRouter.php
-
-		-
 			message: '#^Method App\\Criticalmass\\Router\\DelegatedRouter\\BoardRouter\:\:generate\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1718,6 +1663,60 @@ parameters:
 			path: src/Criticalmass/SocialNetwork/EntityNetworkDetector/EntityNetworkDetector.php
 
 		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\FeedsApi\\Dto\\FeedItem\:\:fromApiResponse\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/Dto/FeedItem.php
+
+		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\FeedsApi\\Dto\\Network\:\:fromApiResponse\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/Dto/Network.php
+
+		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\FeedsApi\\Dto\\Profile\:\:fromApiResponse\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/Dto/Profile.php
+
+		-
+			message: '#^Call to an undefined method App\\Repository\\SocialNetworkProfileRepository\:\:findByCity\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/FeedItemProvider.php
+
+		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\FeedsApi\\FeedsApiClient\:\:request\(\) has parameter \$body with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/FeedsApiClient.php
+
+		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\FeedsApi\\FeedsApiClient\:\:request\(\) has parameter \$queryParams with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/FeedsApiClient.php
+
+		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\FeedsApi\\FeedsApiClient\:\:request\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/FeedsApiClient.php
+
+		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\FeedsApi\\FeedsNetworkManager\:\:getNetworkList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/FeedsNetworkManager.php
+
+		-
+			message: '#^Property App\\Criticalmass\\SocialNetwork\\FeedsApi\\FeedsNetworkManager\:\:\$networkList type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/SocialNetwork/FeedsApi/FeedsNetworkManager.php
+
+		-
 			message: '#^Method App\\Criticalmass\\SocialNetwork\\Helper\\SocialNetworkHelper\:\:getProfileList\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1736,118 +1735,10 @@ parameters:
 			path: src/Criticalmass/SocialNetwork/Helper/SocialNetworkHelperInterface.php
 
 		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: src/Criticalmass/SocialNetwork/Network/AbstractFacebookNetwork.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: non\-falsy\-string, 2\?\: ''\.gg/''\|''app\.com/'', 3\?\: non\-empty\-string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/DiscordChat.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: string, 2\?\: ''''\|''www\.'', 3\?\: ''flickr\.com'', 4\?\: ''photos''\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/Flickr.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: non\-falsy\-string, 2\?\: string, 3\?\: ''''\|''www\.'', 4\?\: ''plus\.google\.com'', 5\?\: non\-empty\-string, 6\?\: string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/Google.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: string, 2\?\: ''''\|''www\.'', 3\?\: ''instagram\.com''\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/InstagramPhoto.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: string, 2\?\: ''''\|''www\.'', 3\?\: non\-falsy\-string, 4\?\: non\-falsy\-string, 5\?\: non\-falsy\-string, 6\?\: string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/InstagramProfile.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: non\-falsy\-string, 2\?\: non\-empty\-string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/TelegramChat.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: non\-falsy\-string, 2\?\: string, 3\?\: ''''\|''www\.'', 4\?\: string, 5\?\: ''tumblr\.com'', 6\?\: string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/Tumblr.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: non\-empty\-string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/Twitter.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: non\-falsy\-string, 2\?\: non\-empty\-string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/WhatsappChat.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: string, 2\?\: ''''\|''www\.'', 3\?\: ''youtube\.com'', 4\?\: ''channel''\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/YoutubeChannel.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: string, 2\?\: ''''\|''www\.'', 3\?\: ''youtube\.com'', 4\?\: ''playlist''\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/YoutubePlaylist.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: string, 2\?\: ''''\|''www\.'', 3\?\: ''youtube\.com'', 4\?\: ''user''\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/YoutubeUser.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\{0\?\: string, 1\?\: string, 2\?\: ''''\|''m\.''\|''www\.'', 3\?\: non\-empty\-string, 4\?\: non\-falsy\-string, 5\?\: non\-empty\-string, 6\?\: non\-empty\-string\} will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Criticalmass/SocialNetwork/Network/YoutubeVideo.php
-
-		-
 			message: '#^Property App\\Criticalmass\\SocialNetwork\\NetworkDetector\\NetworkDetector\:\:\$networkList type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Criticalmass/SocialNetwork/NetworkDetector/NetworkDetector.php
-
-		-
-			message: '#^Interface App\\Criticalmass\\SocialNetwork\\Network\\NetworkInterface referenced with incorrect case\: App\\Criticalmass\\Socialnetwork\\Network\\NetworkInterface\.$#'
-			identifier: interface.nameCase
-			count: 3
-			path: src/Criticalmass/SocialNetwork/NetworkManager/NetworkManager.php
-
-		-
-			message: '#^Method App\\Criticalmass\\SocialNetwork\\NetworkManager\\NetworkManager\:\:getNetworkList\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/SocialNetwork/NetworkManager/NetworkManager.php
-
-		-
-			message: '#^Property App\\Criticalmass\\SocialNetwork\\NetworkManager\\NetworkManager\:\:\$networkList type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Criticalmass/SocialNetwork/NetworkManager/NetworkManager.php
-
-		-
-			message: '#^Interface App\\Criticalmass\\SocialNetwork\\Network\\NetworkInterface referenced with incorrect case\: App\\Criticalmass\\Socialnetwork\\Network\\NetworkInterface\.$#'
-			identifier: interface.nameCase
-			count: 3
-			path: src/Criticalmass/SocialNetwork/NetworkManager/NetworkManagerInterface.php
 
 		-
 			message: '#^Method App\\Criticalmass\\SocialNetwork\\NetworkManager\\NetworkManagerInterface\:\:getNetworkList\(\) return type has no value type specified in iterable type array\.$#'
@@ -2288,7 +2179,19 @@ parameters:
 			path: src/Criticalmass/Timeline/Collector/RideTrackCollector.php
 
 		-
-			message: '#^Method App\\Criticalmass\\Timeline\\Collector\\SocialNetworkFeedItemCollector\:\:convertGroupedEntities\(\) has parameter \$groupedEntities with no value type specified in iterable type array\.$#'
+			message: '#^Method App\\Criticalmass\\Timeline\\Collector\\SocialNetworkFeedItemCollector\:\:getItems\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/Timeline/Collector/SocialNetworkFeedItemCollector.php
+
+		-
+			message: '#^Method App\\Criticalmass\\Timeline\\Collector\\SocialNetworkFeedItemCollector\:\:getRequiredFeatures\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Criticalmass/Timeline/Collector/SocialNetworkFeedItemCollector.php
+
+		-
+			message: '#^Property App\\Criticalmass\\Timeline\\Collector\\SocialNetworkFeedItemCollector\:\:\$items type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Criticalmass/Timeline/Collector/SocialNetworkFeedItemCollector.php
@@ -2942,12 +2845,6 @@ parameters:
 			path: src/Entity/Ride.php
 
 		-
-			message: '#^Parameter \#1 \$ride of method App\\Entity\\TrackImportCandidate\:\:setRide\(\) expects App\\Entity\\Ride, null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Entity/Ride.php
-
-		-
 			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
 			identifier: argument.type
 			count: 4
@@ -3024,12 +2921,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: src/Entity/RideEstimate.php
-
-		-
-			message: '#^Parameter \$targetEntity of attribute class Doctrine\\ORM\\Mapping\\ManyToOne constructor expects class\-string\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Entity/SocialNetworkFeedItem.php
 
 		-
 			message: '#^Method App\\Entity\\SocialNetworkProfile\:\:getAdditionalData\(\) return type has no value type specified in iterable type array\.$#'
@@ -3152,22 +3043,16 @@ parameters:
 			path: src/Entity/Track.php
 
 		-
-			message: '#^Property App\\Entity\\TrackPolyline\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
-			identifier: property.unusedType
-			count: 1
-			path: src/Entity/TrackPolyline.php
-
-		-
-			message: '#^Binary operation "\-" between \$this\(App\\Entity\\TrackImportCandidate\) and float\|null results in an error\.$#'
-			identifier: binaryOp.invalid
-			count: 1
-			path: src/Entity/TrackImportCandidate.php
-
-		-
 			message: '#^Property App\\Entity\\TrackImportCandidate\:\:\$createdAt \(DateTime\|null\) does not accept DateTimeInterface\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: src/Entity/TrackImportCandidate.php
+
+		-
+			message: '#^Property App\\Entity\\TrackPolyline\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/TrackPolyline.php
 
 		-
 			message: '#^Method App\\Entity\\User\:\:getCycles\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
@@ -3288,12 +3173,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Enum/RideTypeEnum.php
-
-		-
-			message: '#^Call to an undefined method App\\Event\\Photo\\PhotoUpdatedEvent\:\:getTmpFilename\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/EventSubscriber/PhotoEventSubscriber.php
 
 		-
 			message: '#^Call to an undefined method Doctrine\\Persistence\\ObjectRepository\<App\\Entity\\Track\>\:\:findByUserAndRide\(\)\.$#'
@@ -3938,40 +3817,10 @@ parameters:
 			path: src/Repository/RideRepository.php
 
 		-
-			message: '#^Method App\\Repository\\RideRepository\:\:getPreviousRideWithSubrides\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Repository/RideRepository.php
-
-		-
 			message: '#^Method App\\Repository\\RideRepository\:\:searchByQuery\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Repository/RideRepository.php
-
-		-
-			message: '#^Class App\\Repository\\SocialNetworkFeedItemRepository extends generic class Doctrine\\Bundle\\DoctrineBundle\\Repository\\ServiceEntityRepository but does not specify its types\: T$#'
-			identifier: missingType.generics
-			count: 1
-			path: src/Repository/SocialNetworkFeedItemRepository.php
-
-		-
-			message: '#^Method App\\Repository\\SocialNetworkFeedItemRepository\:\:findByCity\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Repository/SocialNetworkFeedItemRepository.php
-
-		-
-			message: '#^Method App\\Repository\\SocialNetworkFeedItemRepository\:\:findByCityAndProperties\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Repository/SocialNetworkFeedItemRepository.php
-
-		-
-			message: '#^Method App\\Repository\\SocialNetworkFeedItemRepository\:\:findForTimelineSocialNetworkFeedItemCollector\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Repository/SocialNetworkFeedItemRepository.php
 
 		-
 			message: '#^Call to method getNetworkList\(\) on an unknown class App\\Criticalmass\\SocialNetwork\\FeedFetcher\\FetchInfo\.$#'
@@ -4197,30 +4046,6 @@ parameters:
 
 		-
 			message: '#^Method App\\Serializer\\CriticalSerializer\:\:buildContext\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Serializer/CriticalSerializer.php
-
-		-
-			message: '#^Method App\\Serializer\\UnixTimestampDateTimeNormalizer\:\:denormalize\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Serializer/CriticalSerializer.php
-
-		-
-			message: '#^Method App\\Serializer\\UnixTimestampDateTimeNormalizer\:\:normalize\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Serializer/CriticalSerializer.php
-
-		-
-			message: '#^Method App\\Serializer\\UnixTimestampDateTimeNormalizer\:\:supportsDenormalization\(\) has parameter \$context with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: src/Serializer/CriticalSerializer.php
-
-		-
-			message: '#^Method App\\Serializer\\UnixTimestampDateTimeNormalizer\:\:supportsNormalization\(\) has parameter \$context with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: src/Serializer/CriticalSerializer.php
@@ -4786,12 +4611,6 @@ parameters:
 		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
-			count: 5
-			path: tests/Controller/Api/SocialNetworkFeedItemApi/SocialNetworkFeedItemApiTest.php
-
-		-
-			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
-			identifier: method.alreadyNarrowedType
 			count: 4
 			path: tests/Controller/Api/SocialNetworkProfileApi/SocialNetworkProfileApiSchemaTest.php
 
@@ -4804,7 +4623,7 @@ parameters:
 		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertIsArray\(\) with array will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
-			count: 4
+			count: 2
 			path: tests/Controller/Api/SocialNetworkProfileApi/SocialNetworkProfileApiTest.php
 
 		-
@@ -4998,6 +4817,60 @@ parameters:
 			identifier: method.notFound
 			count: 2
 			path: tests/Repository/RideRepositoryTest.php
+
+		-
+			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\Dto\\FeedItemTest\:\:createSampleApiResponse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/FeedsApi/Dto/FeedItemTest.php
+
+		-
+			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\Dto\\ProfileTest\:\:createSampleApiResponse\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/FeedsApi/Dto/ProfileTest.php
+
+		-
+			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$limit, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
+			count: 2
+			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
+
+		-
+			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$since, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
+			count: 2
+			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
+
+		-
+			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$until, but it''s not allowed because of @no\-named\-arguments\.$#'
+			identifier: argument.named
+			count: 2
+			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
+
+		-
+			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\FeedsApiClientTest\:\:createMockResponse\(\) has parameter \$body with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/FeedsApi/FeedsApiClientTest.php
+
+		-
+			message: '#^Method Tests\\SocialNetwork\\FeedsApi\\FeedsNetworkManagerTest\:\:createNetworks\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/FeedsApi/FeedsNetworkManagerTest.php
+
+		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\NetworkManager\\NetworkManagerInterface@anonymous/tests/SocialNetwork/Helper/SocialNetworkDetector/AbstractNetworkDetectorTestCase\.php\:26\:\:__construct\(\) has parameter \$networks with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/Helper/SocialNetworkDetector/AbstractNetworkDetectorTestCase.php
+
+		-
+			message: '#^Method App\\Criticalmass\\SocialNetwork\\NetworkManager\\NetworkManagerInterface@anonymous/tests/SocialNetwork/Helper/SocialNetworkDetector/AbstractNetworkDetectorTestCase\.php\:26\:\:getNetworkList\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/SocialNetwork/Helper/SocialNetworkDetector/AbstractNetworkDetectorTestCase.php
 
 		-
 			message: '#^Call to an undefined method App\\Criticalmass\\Geo\\GpxService\\GpxServiceInterface\:\:expects\(\)\.$#'

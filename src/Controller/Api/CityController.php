@@ -2,13 +2,17 @@
 
 namespace App\Controller\Api;
 
+use App\Criticalmass\CitySlug\Handler\CitySlugHandler;
+use App\Entity\City;
+use App\Entity\CitySlug;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
-use App\Entity\City;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CityController extends BaseController
 {
@@ -104,5 +108,100 @@ class CityController extends BaseController
         $groups = ['ride-list'];
 
         return $this->createStandardResponse($city, $groups);
+    }
+
+    /**
+     * Creates a new city.
+     */
+    #[Route(path: '/api/{citySlug}', name: 'caldera_criticalmass_rest_city_create', methods: ['PUT'], priority: 170)]
+    #[OA\Tag(name: 'City')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city to be created', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of city', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 409, description: 'Returned when a city with this slug already exists')]
+    public function createCityAction(Request $request, string $citySlug): JsonResponse
+    {
+        $manager = $this->managerRegistry->getManager();
+
+        $existingSlug = $manager->getRepository(CitySlug::class)->findOneBy(['slug' => $citySlug]);
+
+        if ($existingSlug) {
+            return $this->createErrors(JsonResponse::HTTP_CONFLICT, ['slug' => sprintf('A city with slug "%s" already exists.', $citySlug)]);
+        }
+
+        /** @var City $city */
+        $city = $this->deserializeRequest($request, City::class);
+
+        if (!$city->getTitle()) {
+            $city->setTitle(sprintf('Critical Mass %s', $city->getCity()));
+        }
+
+        $city->setCreatedAt(new \DateTime());
+
+        $citySlugs = CitySlugHandler::createSlugsForCity($city);
+
+        foreach ($citySlugs as $slug) {
+            $slug->setCity($city);
+            $manager->persist($slug);
+        }
+
+        $manager->persist($city);
+        $manager->flush();
+
+        return $this->createStandardResponse($city, ['groups' => ['ride-list']]);
+    }
+
+    /**
+     * Updates an existing city.
+     */
+    #[Route(path: '/api/{citySlug}', name: 'caldera_criticalmass_rest_city_update', methods: ['POST'], priority: 170, requirements: ['citySlug' => '(?!doc$|doc\.json$)[^/]+'])]
+    #[OA\Tag(name: 'City')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city to be updated', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of city', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 400, description: 'Returned when the submitted city is invalid')]
+    public function updateCityAction(Request $request, City $city, ValidatorInterface $validator): JsonResponse
+    {
+        $this->deserializeRequestInto($request, $city);
+
+        $constraintViolationList = $validator->validate($city);
+
+        $errorList = [];
+
+        /** @var ConstraintViolation $constraintViolation */
+        foreach ($constraintViolationList as $constraintViolation) {
+            $errorList[$constraintViolation->getPropertyPath()] = $constraintViolation->getMessage();
+        }
+
+        if (0 < count($errorList)) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, $errorList);
+        }
+
+        $this->managerRegistry->getManager()->flush();
+
+        return $this->createStandardResponse($city, ['groups' => ['ride-list']]);
+    }
+
+    /**
+     * Enables or disables a city. A disabled city is kept but hidden.
+     */
+    #[Route(path: '/api/{citySlug}/enabled', name: 'caldera_criticalmass_rest_city_set_enabled', methods: ['POST'], priority: 190)]
+    #[OA\Tag(name: 'City')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON object with an "enabled" boolean', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 400, description: 'Returned when the "enabled" flag is missing or not a boolean')]
+    public function setCityEnabledAction(Request $request, City $city): JsonResponse
+    {
+        $payload = json_decode($request->getContent(), true);
+
+        if (!is_array($payload) || !array_key_exists('enabled', $payload) || !is_bool($payload['enabled'])) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['enabled' => 'A boolean "enabled" flag is required.']);
+        }
+
+        $city->setEnabled($payload['enabled']);
+        $this->managerRegistry->getManager()->flush();
+
+        return $this->createStandardResponse($city, ['groups' => ['ride-list']]);
     }
 }

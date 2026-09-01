@@ -5,7 +5,6 @@
     {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
     {% block breadcrumb %}
-        {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
         {{ breadcrumb.item(city.city, object_path(city)) }}
         {{ breadcrumb.active(ride.title) }}
     {% endblock %}

@@ -56,6 +56,12 @@ class PhotoUploadController extends AbstractController
         $uploadedFile = $request->files->get('file');
 
         if ($uploadedFile instanceof UploadedFile) {
+            $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+            if (!in_array($uploadedFile->getMimeType(), $allowedMimeTypes, true)) {
+                return new Response('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.', Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
             $photoUploader
                 ->setRide($ride)
                 ->setUser($user)

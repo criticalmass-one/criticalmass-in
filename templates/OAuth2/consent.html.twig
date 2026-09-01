@@ -1,0 +1,62 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Autorisierung{% endblock %}
+
+{% set scope_labels = {
+    'ride:read': 'Termine und Rides lesen',
+    'city:read': 'Städte, Orte und Cycles lesen',
+    'track:read': 'Tracks lesen',
+    'photo:read': 'Fotos lesen',
+    'post:read': 'Forenbeiträge lesen',
+    'track:write': 'Tracks erstellen und bearbeiten',
+    'participation:write': 'Teilnahme an Rides melden',
+    'estimate:write': 'Teilnehmerzahlen schätzen',
+    'weather:write': 'Wetterdaten zu Rides melden',
+    'ride:write': 'Rides anlegen und bearbeiten',
+    'city:write': 'Städte anlegen',
+    'cycle:write': 'Termin-Zyklen anlegen und bearbeiten',
+    'socialnetwork:write': 'Social-Network-Profile und -Feeds verwalten',
+    'activity:write': 'Aktivitäts-Scores von Städten melden',
+} %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Autorisierung</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <strong>{{ client.name }}</strong> möchte auf dein Konto zugreifen.
+                        </p>
+
+                        {% if scopes|length > 0 %}
+                            <p>Folgende Berechtigungen werden angefragt:</p>
+                            <ul>
+                                {% for scope in scopes %}
+                                    <li>{{ scope_labels[scope ~ '']|default(scope) }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <form method="post" action="{{ path('oauth2_consent') }}">
+                            <input type="hidden" name="client_id" value="{{ client.identifier }}">
+                            <input type="hidden" name="authorize_url" value="{{ authorize_url }}">
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" name="consent" value="approve" class="btn btn-success">
+                                    Erlauben
+                                </button>
+                                <button type="submit" name="consent" value="deny" class="btn btn-outline-secondary">
+                                    Ablehnen
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

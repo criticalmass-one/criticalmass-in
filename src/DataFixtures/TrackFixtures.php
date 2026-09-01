@@ -137,8 +137,7 @@ class TrackFixtures extends Fixture implements DependentFixtureInterface
             ->setCreationDateTime(new \DateTime())
             ->setEnabled(true)
             ->setDeleted(false)
-            ->setReviewed(true)
-            ->setMd5Hash(md5($ride->getId() . $user->getId() . time()));
+            ->setReviewed(true);
 
         $polylineString = $this->generateSamplePolyline($ride);
 

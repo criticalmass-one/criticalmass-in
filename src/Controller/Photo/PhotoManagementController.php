@@ -191,11 +191,9 @@ class PhotoManagementController extends AbstractController
     {
         $this->saveReferer($request);
 
-        $angle = 90;
-
-        if ($request->query->get('rotate') && $request->query->get('rotate') === 'right') {
-            $angle = -90;
-        }
+        // The template links pass ?direction=left|right; rotate right (clockwise)
+        // is the default, rotate left (counter-clockwise) uses a negative angle.
+        $angle = $request->query->get('direction') === 'left' ? -90 : 90;
 
         $photoManipulator
             ->open($photo)

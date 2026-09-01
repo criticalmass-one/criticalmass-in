@@ -4,7 +4,6 @@
 {% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
     {{ breadcrumb.active('Fehlende Statistiken') }}
 {% endblock %}

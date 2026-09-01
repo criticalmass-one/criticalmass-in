@@ -181,6 +181,40 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
         }
     }
 
+    public function testFitFileUploadCreatesTrackWithFitSource(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getPastRideForCity('hamburg');
+        $this->assertNotNull($ride, 'Past Hamburg ride fixture should exist');
+
+        $trackCountBefore = $this->countTracksForRide($ride->getId());
+
+        $fitFile = __DIR__ . '/../Criticalmass/Geo/FitService/fixtures/road-cycling.fit';
+        $this->assertFileExists($fitFile, 'FIT fixture should exist');
+
+        $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
+
+        $form = $crawler->selectButton('Track hochladen')->form();
+        $this->uploadFileToForm($form, $fitFile);
+
+        $client->submit($form);
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode(), 'A FIT upload should redirect just like a GPX upload');
+
+        $this->assertEquals($trackCountBefore + 1, $this->countTracksForRide($ride->getId()), 'One new track should exist after the FIT upload');
+
+        $uploadedTrack = $this->getNewestTrackForRide($ride->getId());
+
+        $this->assertNotNull($uploadedTrack, 'Uploaded FIT track should exist in database');
+        $this->assertEquals(Track::TRACK_SOURCE_FIT, $uploadedTrack->getSource(), 'A track imported from a FIT file should carry the FIT source');
+        $this->assertGreaterThan(0, $uploadedTrack->getDistance(), 'FIT track should have a calculated distance');
+        $this->assertGreaterThan(50, $uploadedTrack->getPoints(), 'FIT track should have its GPS points');
+        $this->assertNotNull($uploadedTrack->getStartDateTime(), 'FIT track should have a start time');
+        $this->assertNotNull($uploadedTrack->getEndDateTime(), 'FIT track should have an end time');
+    }
+
     public function testTrackDurationIsCalculated(): void
     {
         $client = static::createClient();

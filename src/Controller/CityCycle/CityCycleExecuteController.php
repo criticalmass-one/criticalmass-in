@@ -44,6 +44,7 @@ class CityCycleExecuteController extends AbstractController
         $executeable = new CycleExecutable();
         $executeable
             ->setCityCycle($cityCycle)
+            ->setCitySlug($cityCycle->getCity()->getMainSlug()->getSlug())
             ->setFromDate($dateTime->startOfMonth())
             ->setUntilDate((clone $dateTime)->add($sixMonthInterval)->endOfMonth());
 
@@ -52,16 +53,7 @@ class CityCycleExecuteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $json = $serializer->serialize($executeable, 'json');
-
-            $response = $this->httpClient->request('POST', $this->rideGeneratorBaseUrl . '/api/preview', [
-                'headers' => ['Content-Type' => 'application/json'],
-                'body' => $json,
-            ]);
-
-            $rideList = $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json', [
-                'groups' => ['api-write'],
-            ]);
+            $rideList = $this->fetchRidePreview($executeable, $serializer);
 
             return $this->render('CityCycle/execute_preview.html.twig', [
                 'cityCycle' => $cityCycle,
@@ -98,18 +90,10 @@ class CityCycleExecuteController extends AbstractController
             $executeable
                 ->setFromDate((new \DateTime())->setTimestamp($request->request->getInt('fromDate')))
                 ->setUntilDate((new \DateTime())->setTimestamp((int) $request->request->get('untilDate')))
-                ->setCityCycle($cityCycle);
+                ->setCityCycle($cityCycle)
+                ->setCitySlug($cityCycle->getCity()->getMainSlug()->getSlug());
 
-            $json = $serializer->serialize($executeable, 'json');
-
-            $response = $this->httpClient->request('POST', $this->rideGeneratorBaseUrl . '/api/preview', [
-                'headers' => ['Content-Type' => 'application/json'],
-                'body' => $json,
-            ]);
-
-            $rideList = $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json', [
-                'groups' => ['api-write'],
-            ]);
+            $rideList = $this->fetchRidePreview($executeable, $serializer);
 
             $em = $registry->getManager();
 
@@ -141,6 +125,20 @@ class CityCycleExecuteController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_citycycle_execute', [
             'citySlug' => $cityCycle->getCity()->getMainSlug()->getSlug(),
             'id' => $cityCycle->getId(),
+        ]);
+    }
+
+    private function fetchRidePreview(CycleExecutable $executeable, SerializerInterface $serializer): array
+    {
+        $json = $serializer->serialize($executeable, 'json');
+
+        $response = $this->httpClient->request('POST', $this->rideGeneratorBaseUrl . '/api/preview', [
+            'headers' => ['Content-Type' => 'application/json'],
+            'body' => $json,
+        ]);
+
+        return $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json', [
+            'groups' => ['api-write'],
         ]);
     }
 }

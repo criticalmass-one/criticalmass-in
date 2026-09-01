@@ -39,9 +39,16 @@ class RideQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuery
         $expr = $queryBuilder->expr();
         $alias = $queryBuilder->getRootAliases()[0];
 
-        $queryBuilder
-            ->andWhere($expr->eq(sprintf('%s.id', $alias), ':rideId'))
-            ->setParameter('rideId', $this->ride->getId());
+        if (Ride::class === $this->entityFqcn) {
+            $queryBuilder
+                ->andWhere($expr->eq(sprintf('%s.id', $alias), ':rideId'))
+                ->setParameter('rideId', $this->ride->getId());
+        } else {
+            // Photo, Track and Post carry a direct ride relation
+            $queryBuilder
+                ->andWhere($expr->eq(sprintf('%s.ride', $alias), ':ride'))
+                ->setParameter('ride', $this->ride);
+        }
 
         return $queryBuilder;
     }

@@ -11,6 +11,7 @@ use App\Form\Type\RideDisableType;
 use App\Form\Type\RideEstimateType;
 use App\Repository\LocationRepository;
 use App\Repository\PhotoRepository;
+use App\Repository\RideEstimateRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
@@ -70,6 +71,18 @@ class RideTabsController extends AbstractController
         return $this->render('RideTabs/StatisticTab.html.twig', [
             'ride' => $ride,
             'dateTime' => new \DateTime(),
+        ]);
+    }
+
+    public function renderEstimatesTabAction(
+        RideEstimateRepository $rideEstimateRepository,
+        Ride $ride
+    ): Response {
+        $estimates = $rideEstimateRepository->findEstimatesByRide($ride);
+
+        return $this->render('RideTabs/EstimatesTab.html.twig', [
+            'ride' => $ride,
+            'estimates' => $estimates,
         ]);
     }
 

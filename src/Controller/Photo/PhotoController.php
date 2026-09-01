@@ -69,27 +69,33 @@ class PhotoController extends AbstractController
     {
         $seoPage->setPreviewPhoto($photo);
 
+        $ride = $photo->getRide();
+
+        if (null === $ride) {
+            return;
+        }
+
         if ($photo->getLocation()) {
             $title = sprintf(
                 'Fotos von der Critical Mass in %s am %s, %s',
-                $photo->getRide()->getCity()->getCity(),
-                $photo->getRide()->getDateTime()->format('d.m.Y'),
+                $ride->getCity()->getCity(),
+                $ride->getDateTime()->format('d.m.Y'),
                 $photo->getLocation()
             );
             $description = sprintf(
                 'Schau dir Fotos von der %s an, aufgenommen am %s',
-                $photo->getRide()->getTitle(),
+                $ride->getTitle(),
                 $photo->getLocation()
             );
         } else {
             $title = sprintf(
                 'Fotos von der Critical Mass in %s am %s',
-                $photo->getRide()->getCity()->getCity(),
-                $photo->getRide()->getDateTime()->format('d.m.Y')
+                $ride->getCity()->getCity(),
+                $ride->getDateTime()->format('d.m.Y')
             );
             $description = sprintf(
                 'Schau dir Fotos von der %s an',
-                $photo->getRide()->getTitle()
+                $ride->getTitle()
             );
         }
 

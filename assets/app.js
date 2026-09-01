@@ -9,3 +9,4 @@ window.bootstrap = bootstrap;
 import '@fortawesome/fontawesome-pro/js/fontawesome';
 import '@fortawesome/fontawesome-pro/js/solid';
 import '@fortawesome/fontawesome-pro/js/regular';
+import '@fortawesome/fontawesome-pro/js/brands';

@@ -8,6 +8,8 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
+use MalteHuebner\OrderedEntitiesBundle\Attribute as OE;
 use App\Enum\PolylineResolution;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,16 +20,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
 #[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_track_view')]
 #[ORM\Table(name: 'track')]
 #[ORM\Entity(repositoryClass: 'App\Repository\TrackRepository')]
 #[ORM\Index(fields: ['creationDateTime'], name: 'track_creation_date_time_index')]
-class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable
+class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
+    const TRACK_SOURCE_FIT = 'TRACK_SOURCE_FIT';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
     const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
     const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
@@ -46,6 +49,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Groups(['timelapse', 'api-private'])]
     protected ?string $username = null;
 
+    #[OE\Identical]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'tracks')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     #[Ignore]
@@ -60,6 +64,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?RideEstimate $rideEstimate = null;
 
+    #[OE\Order(direction: 'DESC')]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['timelapse', 'api-public'])]
@@ -94,10 +99,8 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Groups(['timelapse', 'api-public'])]
     protected ?int $endPoint = null;
 
-    #[ORM\Column(type: 'string', length: 32, nullable: true)]
-    #[Ignore]
-    protected ?string $md5Hash = null;
 
+    #[OE\Boolean(value: true)]
     #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
@@ -115,17 +118,13 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     protected ?string $latLngList = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    #[Ignore]
-    protected ?string $geoJson = null;
-
     /** @var Collection<int, TrackPolyline> */
     #[ORM\OneToMany(targetEntity: TrackPolyline::class, mappedBy: 'track', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['timelapse', 'api-public'])]
     private Collection $trackPolylines;
 
     #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
-    #[Assert\File(maxSize: '20M', mimeTypes: ['application/gpx+xml', 'application/xml', 'text/xml', 'application/octet-stream'])]
+    #[Assert\File(maxSize: '20M', mimeTypes: ['application/gpx+xml', 'application/xml', 'text/xml', 'application/octet-stream', 'application/vnd.ant.fit'])]
     protected ?File $trackFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -210,17 +209,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->user;
     }
 
-    public function setMd5Hash(string $md5Hash): Track
-    {
-        $this->md5Hash = $md5Hash;
-
-        return $this;
-    }
-
-    public function getMd5Hash(): ?string
-    {
-        return $this->md5Hash;
-    }
 
     public function getEnabled(): bool
     {
@@ -452,17 +440,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return (int)$this->stravaActitityId;
     }
 
-    public function setGeoJson(string $geoJson): Track
-    {
-        $this->geoJson = $geoJson;
-
-        return $this;
-    }
-
-    public function getWaypointList(): ?string
-    {
-        return $this->geoJson;
-    }
 
     public function isReviewed(): bool
     {

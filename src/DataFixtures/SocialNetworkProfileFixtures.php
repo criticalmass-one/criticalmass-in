@@ -38,7 +38,6 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'twitter',
             'https://twitter.com/criticalmassHH',
-            true
         );
         $this->addReference(self::HAMBURG_TWITTER_REFERENCE, $hamburgTwitter);
         $manager->persist($hamburgTwitter);
@@ -48,7 +47,6 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'facebook_page',
             'https://www.facebook.com/CriticalMassHamburg',
-            false
         );
         $this->addReference(self::HAMBURG_FACEBOOK_REFERENCE, $hamburgFacebook);
         $manager->persist($hamburgFacebook);
@@ -58,7 +56,6 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'instagram_profile',
             'https://www.instagram.com/criticalmass_hamburg',
-            false
         );
         $this->addReference(self::HAMBURG_INSTAGRAM_REFERENCE, $hamburgInstagram);
         $manager->persist($hamburgInstagram);
@@ -68,7 +65,6 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'twitter',
             'https://twitter.com/CMBerlin',
-            true
         );
         $this->addReference(self::BERLIN_TWITTER_REFERENCE, $berlinTwitter);
         $manager->persist($berlinTwitter);
@@ -78,7 +74,6 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'mastodon',
             'https://mastodon.social/@criticalmass',
-            false
         );
         $this->addReference(self::BERLIN_MASTODON_REFERENCE, $berlinMastodon);
         $manager->persist($berlinMastodon);
@@ -88,7 +83,6 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'instagram_profile',
             'https://www.instagram.com/criticalmass_munich',
-            true
         );
         $this->addReference(self::MUNICH_INSTAGRAM_REFERENCE, $munichInstagram);
         $manager->persist($munichInstagram);
@@ -98,7 +92,6 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'facebook_page',
             'https://www.facebook.com/CriticalMassKiel',
-            true
         );
         $this->addReference(self::KIEL_FACEBOOK_REFERENCE, $kielFacebook);
         $manager->persist($kielFacebook);
@@ -111,14 +104,12 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
         User $createdBy,
         string $network,
         string $identifier,
-        bool $mainNetwork
     ): SocialNetworkProfile {
         return (new SocialNetworkProfile())
             ->setCity($city)
             ->setCreatedBy($createdBy)
             ->setNetwork($network)
             ->setIdentifier($identifier)
-            ->setMainNetwork($mainNetwork)
             ->setEnabled(true)
             ->setAutoPublish(true)
             ->setAutoFetch(true)

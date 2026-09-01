@@ -51,13 +51,11 @@ class CityQueryTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Expect an error when providing a non existent slug.')]
+    #[TestDox('Querying for a non existent slug returns 404 not found.')]
     public function testRideListWithCityQueryForNonExistentCity(): void
     {
-        $this->client->catchExceptions(false);
-
-        // Non-existent city slug causes an exception in CityQuery
-        $this->expectException(\Error::class);
         $this->client->request('GET', '/api/ride?citySlug=foobarcity');
+
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 }

@@ -8,6 +8,7 @@ use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WeatherController extends BaseController
 {
@@ -54,5 +55,67 @@ class WeatherController extends BaseController
         $manager->flush();
 
         return $this->createStandardResponse($ride, [], JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * Lists the weather entries of a ride, including their ids.
+     */
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/weather', name: 'caldera_criticalmass_rest_weather_list', methods: ['GET'], priority: 190)]
+    #[OA\Tag(name: 'Weather')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride (date or slug)', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function listWeatherAction(Ride $ride): JsonResponse
+    {
+        $weathers = $this->managerRegistry->getRepository(Weather::class)->findBy(['ride' => $ride]);
+
+        return $this->createStandardResponse($weathers, ['groups' => ['weather']]);
+    }
+
+    /**
+     * Updates an existing weather entry.
+     */
+    #[Route(path: '/api/weather/{weatherId}', name: 'caldera_criticalmass_rest_weather_update', requirements: ['weatherId' => '\d+'], methods: ['POST'], priority: 200)]
+    #[OA\Tag(name: 'Weather')]
+    #[OA\Parameter(name: 'weatherId', in: 'path', description: 'Id of the weather entry', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\RequestBody(description: 'JSON representation of the weather data', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 404, description: 'Returned when the weather entry does not exist')]
+    public function updateWeatherAction(Request $request, int $weatherId): JsonResponse
+    {
+        $weather = $this->managerRegistry->getRepository(Weather::class)->find($weatherId);
+
+        if (!$weather) {
+            throw new NotFoundHttpException('Weather entry not found');
+        }
+
+        $this->deserializeRequestInto($request, $weather, ['groups' => ['weather']]);
+
+        $this->managerRegistry->getManager()->flush();
+
+        return $this->createStandardResponse($weather, ['groups' => ['weather']]);
+    }
+
+    /**
+     * Deletes a weather entry.
+     */
+    #[Route(path: '/api/weather/{weatherId}', name: 'caldera_criticalmass_rest_weather_delete', requirements: ['weatherId' => '\d+'], methods: ['DELETE'], priority: 200)]
+    #[OA\Tag(name: 'Weather')]
+    #[OA\Parameter(name: 'weatherId', in: 'path', description: 'Id of the weather entry', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 404, description: 'Returned when the weather entry does not exist')]
+    public function deleteWeatherAction(int $weatherId): JsonResponse
+    {
+        $weather = $this->managerRegistry->getRepository(Weather::class)->find($weatherId);
+
+        if (!$weather) {
+            throw new NotFoundHttpException('Weather entry not found');
+        }
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->remove($weather);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedWeatherId' => $weatherId]);
     }
 }

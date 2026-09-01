@@ -25,7 +25,7 @@ class CalendarController extends AbstractController
 
         $response = new Response($content);
 
-        $filename = sprintf('%s.ics', $ride->getTitle());
+        $filename = sprintf('%s.ics', str_replace(["\r", "\n"], ' ', $ride->getTitle()));
 
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-type', 'text/calendar');

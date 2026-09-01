@@ -35,11 +35,11 @@ class PhotoDownloadController extends AbstractController
 
         $response = new BinaryFileResponse($filename);
 
-        $downloadFilename = sprintf(
+        $downloadFilename = str_replace(["\r", "\n"], ' ', sprintf(
             'criticalmass_%s_%s.jpg',
             $photo->getCity()->getMainSlugString(),
             $photo->getRide()->getDateTime()->format('Y-m-d')
-        );
+        ));
 
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,

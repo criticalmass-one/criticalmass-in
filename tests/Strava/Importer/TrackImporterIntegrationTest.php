@@ -73,8 +73,11 @@ class TrackImporterIntegrationTest extends TestCase
         $this->session = $this->createMock(SessionInterface::class);
         $this->entityManager = $this->createMock(EntityManager::class);
 
-        // Setup session with token
-        $token = new StravaTokenStorage('test-access-token', 'test-refresh-token', time() + 3600);
+        // Setup session with token. Die Gültigkeit muss deutlich über
+        // StravaApi::ACCESS_TOKEN_MINIMUM_VALIDITY (3600s) liegen: bei exakt
+        // time()+3600 wirft setAccessToken() "needs to be refreshed", sobald
+        // zwischen setUp und Konstruktion eine Sekundengrenze tickt (Flake).
+        $token = new StravaTokenStorage('test-access-token', 'test-refresh-token', time() + 86400);
         $this->session->method('get')
             ->with('strava_token')
             ->willReturn($token);

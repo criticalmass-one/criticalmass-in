@@ -17,7 +17,6 @@ class SocialNetworkProfileFactoryTest extends TestCase
         $socialNetworkProfile = $socialNetworkProfileFactory->build();
 
         $this->assertEquals(true, $socialNetworkProfile->isEnabled());
-        $this->assertEquals(false, $socialNetworkProfile->isMainNetwork());
 
         $this->assertEqualsWithDelta(new \DateTime(), $socialNetworkProfile->getCreatedAt(), 0.01);
         $this->assertNull($socialNetworkProfile->getCreatedBy());
@@ -96,16 +95,6 @@ class SocialNetworkProfileFactoryTest extends TestCase
             ->build();
 
         $this->assertFalse($socialNetworkProfile->isEnabled());
-    }
-
-    public function testSocialNetworkProfileFactoryWithMainNetwork(): void
-    {
-        $socialNetworkProfileFactory = new SocialNetworkProfileFactory();
-        $socialNetworkProfile = $socialNetworkProfileFactory
-            ->withMainNetwork(true)
-            ->build();
-
-        $this->assertTrue($socialNetworkProfile->isMainNetwork());
     }
 
     public function testSocialNetworkProfileFactoryWithUpdatedAt(): void

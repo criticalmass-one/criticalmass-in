@@ -2,7 +2,6 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {% if profileAbleType == 'city' %}
         {{ breadcrumb.item(profileAble.city, object_path(profileAble)) }}
         {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_city_list')) }}
@@ -40,16 +39,6 @@
                     <div class="col-md-12 form-group">
                         <label class="control-label" for="">Soziales Netzwerk:</label>
                         {{ form_widget(form.network, { 'attr' : { 'class': 'form-control'} }) }}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label class="control-label" for="">Hauptkonto:</label>
-                        {{ form_widget(form.mainNetwork, { 'attr' : { 'class': 'form-control'} }) }}
-                        <p class="help-block">
-                            Handelt es sich bei diesem Konto um das Hauptkonto in diesem Netzwerk?
-                        </p>
                     </div>
                 </div>
 

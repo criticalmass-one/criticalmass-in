@@ -5,11 +5,14 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
+use App\Entity\Ride;
 use App\Repository\CityCycleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CycleController extends BaseController
 {
@@ -76,7 +79,7 @@ class CycleController extends BaseController
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the cycle to create', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successfully created')]
-    public function createCycleAction(Request $request, City $city): JsonResponse
+    public function createCycleAction(Request $request, City $city, ValidatorInterface $validator): JsonResponse
     {
         $newCycle = $this->deserializeRequest($request, CityCycle::class);
 
@@ -84,10 +87,91 @@ class CycleController extends BaseController
             ->setCity($city)
             ->setCreatedAt(new \DateTime());
 
+        $errors = $validator->validate($newCycle);
+
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getPropertyPath() . ': ' . $error->getMessage();
+            }
+
+            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
+        }
+
         $manager = $this->managerRegistry->getManager();
         $manager->persist($newCycle);
         $manager->flush();
 
         return $this->createStandardResponse($newCycle);
+    }
+
+    /**
+     * Update an existing cycle.
+     */
+    #[Route(path: '/api/{citySlug}/cycles/{cycleId}', name: 'caldera_criticalmass_rest_cycles_update', methods: ['POST'], priority: 190)]
+    #[OA\Tag(name: 'Cycles')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'cycleId', in: 'path', description: 'Id of the cycle to update', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\RequestBody(description: 'JSON representation of the cycle properties to update', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully updated')]
+    public function updateCycleAction(Request $request, City $city, int $cycleId, CityCycleRepository $cityCycleRepository, ValidatorInterface $validator): JsonResponse
+    {
+        $cycle = $cityCycleRepository->find($cycleId);
+
+        if (!$cycle || $cycle->getCity()->getId() !== $city->getId()) {
+            return new JsonResponse(['error' => 'Cycle not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $this->deserializeRequestInto($request, $cycle);
+        $cycle->setUpdatedAt(new \DateTime());
+
+        $errors = $validator->validate($cycle);
+
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getPropertyPath() . ': ' . $error->getMessage();
+            }
+
+            return new JsonResponse(['errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
+        }
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->flush();
+
+        return $this->createStandardResponse($cycle);
+    }
+
+    /**
+     * Deletes a cycle. Rides created from the cycle are kept (detached).
+     */
+    #[Route(path: '/api/{citySlug}/cycles/{cycleId}', name: 'caldera_criticalmass_rest_cycles_delete', methods: ['DELETE'], priority: 190)]
+    #[OA\Tag(name: 'Cycles')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'cycleId', in: 'path', description: 'Id of the cycle to delete', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully deleted')]
+    #[OA\Response(response: 404, description: 'Returned when the cycle does not belong to the city')]
+    public function deleteCycleAction(City $city, int $cycleId, CityCycleRepository $cityCycleRepository): JsonResponse
+    {
+        $cycle = $cityCycleRepository->find($cycleId);
+
+        if (!$cycle || $cycle->getCity()->getId() !== $city->getId()) {
+            return new JsonResponse(['error' => 'Cycle not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $manager = $this->managerRegistry->getManager();
+
+        // Detach rides explicitly (null the cycle_id FK) so the association's
+        // cascade-remove does not delete them.
+        $rides = $manager->getRepository(Ride::class)->findBy(['cycle' => $cycle]);
+        foreach ($rides as $ride) {
+            $ride->setCycle(null);
+        }
+        $manager->flush();
+
+        $manager->remove($cycle);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedCycleId' => $cycleId]);
     }
 }

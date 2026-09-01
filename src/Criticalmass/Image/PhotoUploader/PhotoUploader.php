@@ -87,8 +87,19 @@ class PhotoUploader implements PhotoUploaderInterface
         return $this->addedPhotoList;
     }
 
+    protected function isAllowedMimeType(UploadedFile $uploadedFile): bool
+    {
+        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+        return in_array($uploadedFile->getMimeType(), $allowedMimeTypes, true);
+    }
+
     protected function createUploadedPhotoEntity(UploadedFile $uploadedFile): Photo
     {
+        if (!$this->isAllowedMimeType($uploadedFile)) {
+            throw new \InvalidArgumentException(sprintf('File type "%s" is not allowed. Only JPEG, PNG, GIF, and WebP images are accepted.', $uploadedFile->getMimeType()));
+        }
+
         $photo = new Photo();
 
         $photo
@@ -130,6 +141,6 @@ class PhotoUploader implements PhotoUploaderInterface
     {
         $filenameParts = explode('/', $sourceFilename);
 
-        return array_shift($filenameParts);
+        return array_pop($filenameParts);
     }
 }

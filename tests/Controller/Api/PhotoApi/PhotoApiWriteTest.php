@@ -2,77 +2,125 @@
 
 namespace Tests\Controller\Api\PhotoApi;
 
+use App\Entity\City;
+use App\Entity\CitySlug;
 use App\Entity\Photo;
+use App\Entity\Ride;
 use PHPUnit\Framework\Attributes\TestDox;
 use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 #[TestDox('Photo API Write Operations')]
 class PhotoApiWriteTest extends AbstractApiControllerTestCase
 {
-    #[TestDox('POST /api/photo/{id} accepts update request')]
-    public function testUpdatePhoto(): void
+    protected function setUp(): void
     {
-        $photos = $this->entityManager->getRepository(Photo::class)->findAll();
+        parent::setUp();
+        $this->entityManager->getConnection()->beginTransaction();
+    }
 
-        if (empty($photos)) {
-            $this->markTestSkipped('No photos found in database');
+    protected function tearDown(): void
+    {
+        $connection = $this->entityManager->getConnection();
+
+        if ($connection->isTransactionActive()) {
+            $connection->rollBack();
         }
 
-        $photo = $photos[0];
+        parent::tearDown();
+    }
 
-        $updateData = [
-            'description' => 'Updated description via API test',
-            'location' => 'Updated Location',
-        ];
+    private function createPhoto(): Photo
+    {
+        $slug = 'photo-api-' . substr(md5(uniqid('', true)), 0, 12);
+
+        $city = new City();
+        $city->setCity('Fotostadt');
+        $city->setTitle('Critical Mass Fotostadt');
+        $city->setCreatedAt(new \DateTime());
+        $this->entityManager->persist($city);
+
+        $citySlug = new CitySlug();
+        $citySlug->setSlug($slug);
+        $citySlug->setCity($city);
+        $this->entityManager->persist($citySlug);
+        $city->setMainSlug($citySlug);
+
+        $ride = new Ride();
+        $ride->setCity($city);
+        $ride->setDateTime(new \DateTime('2026-09-01 19:00:00'));
+        $ride->setTitle('Critical Mass');
+        $this->entityManager->persist($ride);
+
+        $photo = new Photo();
+        $photo->setRide($ride);
+        $photo->setCity($city);
+        $photo->setImageName('test.jpg');
+        $photo->setCreationDateTime(new \DateTime());
+        $photo->setEnabled(true);
+        $photo->setDeleted(false);
+        $this->entityManager->persist($photo);
+
+        $this->entityManager->flush();
+
+        return $photo;
+    }
+
+    #[TestDox('POST /api/photo/{id} persists a description change')]
+    public function testUpdatePhotoDescriptionPersists(): void
+    {
+        $photo = $this->createPhoto();
+        $photoId = $photo->getId();
 
         $this->client->request(
             'POST',
-            sprintf('/api/photo/%d', $photo->getId()),
+            sprintf('/api/photo/%d', $photoId),
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
-            json_encode($updateData)
+            json_encode(['description' => 'Geänderte Beschreibung'])
         );
 
-        // Note: The current PhotoController implementation doesn't actually
-        // update the photo - it deserializes and re-serializes the input
         $this->assertResponseIsSuccessful();
 
-        // Response is valid JSON (even if double-serialized)
-        $content = $this->client->getResponse()->getContent();
-        $decoded = json_decode($content, true);
-        $this->assertNotNull($decoded, 'Response should be valid JSON');
+        $this->entityManager->clear();
+        $updated = $this->entityManager->getRepository(Photo::class)->find($photoId);
+        $this->assertSame('Geänderte Beschreibung', $updated?->getDescription());
     }
 
-    #[TestDox('POST /api/photo/{nonExistentId} returns 200 (current behavior - id is not used)')]
-    public function testUpdateNonExistentPhotoReturnsOk(): void
+    #[TestDox('DELETE /api/photo/{id} soft-deletes the photo')]
+    public function testDeletePhotoSoftDeletes(): void
     {
-        // Note: The current PhotoController implementation ignores the {id}
-        // parameter and just deserializes the request body. This is a known
-        // limitation of the current API.
+        $photo = $this->createPhoto();
+        $photoId = $photo->getId();
+
+        $this->client->request('DELETE', sprintf('/api/photo/%d', $photoId));
+
+        $this->assertResponseIsSuccessful();
+
+        $this->entityManager->clear();
+        $reloaded = $this->entityManager->getRepository(Photo::class)->find($photoId);
+        $this->assertTrue($reloaded?->isDeleted());
+    }
+
+    #[TestDox('POST /api/photo/{nonExistentId} returns 404')]
+    public function testUpdateNonExistentPhotoReturns404(): void
+    {
         $this->client->request(
             'POST',
-            '/api/photo/999999',
+            '/api/photo/999999999',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
             json_encode(['description' => 'Test'])
         );
 
-        // Currently returns 200 because the controller doesn't verify the photo exists
-        $this->assertResponseIsSuccessful();
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
-    #[TestDox('POST /api/photo/{id} with empty body returns response')]
+    #[TestDox('POST /api/photo/{id} with empty body succeeds without changes')]
     public function testUpdatePhotoWithEmptyBody(): void
     {
-        $photos = $this->entityManager->getRepository(Photo::class)->findAll();
-
-        if (empty($photos)) {
-            $this->markTestSkipped('No photos found in database');
-        }
-
-        $photo = $photos[0];
+        $photo = $this->createPhoto();
 
         $this->client->request(
             'POST',
@@ -83,21 +131,13 @@ class PhotoApiWriteTest extends AbstractApiControllerTestCase
             '{}'
         );
 
-        // Either success or error response
-        $statusCode = $this->client->getResponse()->getStatusCode();
-        $this->assertContains($statusCode, [200, 400, 500], 'Should return a valid response');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
-    #[TestDox('POST /api/photo/{id} with invalid JSON returns error')]
+    #[TestDox('POST /api/photo/{id} with invalid JSON returns 400')]
     public function testUpdatePhotoWithInvalidJson(): void
     {
-        $photos = $this->entityManager->getRepository(Photo::class)->findAll();
-
-        if (empty($photos)) {
-            $this->markTestSkipped('No photos found in database');
-        }
-
-        $photo = $photos[0];
+        $photo = $this->createPhoto();
 
         $this->client->request(
             'POST',
@@ -108,8 +148,6 @@ class PhotoApiWriteTest extends AbstractApiControllerTestCase
             'invalid json {'
         );
 
-        // Should return error status
-        $statusCode = $this->client->getResponse()->getStatusCode();
-        $this->assertContains($statusCode, [400, 500], 'Invalid JSON should return error');
+        $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
     }
 }

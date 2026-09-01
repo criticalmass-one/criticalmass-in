@@ -75,7 +75,7 @@ class CityController extends AbstractController
         if (!$city) {
             $citySlug = $request->get('citySlug');
 
-            if (!$citySlug) {
+            if (!$citySlug || str_contains($citySlug, '.')) {
                 throw $this->createNotFoundException('City not found');
             }
 

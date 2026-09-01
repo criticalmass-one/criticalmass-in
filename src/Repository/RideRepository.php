@@ -181,7 +181,8 @@ class RideRepository extends ServiceEntityRepository
             ->where($builder->expr()->eq('r.city', ':city'))
             ->andWhere($builder->expr()->eq('r.slug', ':slug'))
             ->setParameter('city', $city)
-            ->setParameter('slug', $slug);
+            ->setParameter('slug', $slug)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -199,7 +200,8 @@ class RideRepository extends ServiceEntityRepository
             ->where($builder->expr()->eq('cs.slug', ':citySlug'))
             ->andWhere($builder->expr()->eq('r.slug', ':rideSlug'))
             ->setParameter('citySlug', $citySlug)
-            ->setParameter('rideSlug', $rideSlug);
+            ->setParameter('rideSlug', $rideSlug)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -280,6 +282,11 @@ class RideRepository extends ServiceEntityRepository
 
         $builder
             ->select('ride')
+            // Stadt (+ Haupt-Slug für object_path) eager laden: die Kalenderliste
+            // rendert je Zeile ride.city.city und object_path(ride.city) → sonst N+1.
+            ->addSelect('city', 'mainSlug')
+            ->leftJoin('ride.city', 'city')
+            ->leftJoin('city.mainSlug', 'mainSlug')
             ->where($builder->expr()->gt('ride.dateTime', ':startDateTime'))
             ->andWhere($builder->expr()->lt('ride.dateTime', ':endDateTime'))
             ->addOrderBy('ride.dateTime', 'ASC')
@@ -338,14 +345,15 @@ class RideRepository extends ServiceEntityRepository
             ->andWhere($builder->expr()->lt('r.dateTime', ':untilDateTime'))
             ->setParameter('citySlug', $citySlug)
             ->setParameter('fromDateTime', $fromDateTime)
-            ->setParameter('untilDateTime', $untilDateTime);
+            ->setParameter('untilDateTime', $untilDateTime)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
         return $query->getOneOrNullResult();
     }
 
-    public function getPreviousRideWithSubrides(Ride $ride): array
+    public function getPreviousRideWithSubrides(Ride $ride): ?Ride
     {
         $builder = $this->createQueryBuilder('r');
 
@@ -361,9 +369,47 @@ class RideRepository extends ServiceEntityRepository
 
         $query = $builder->getQuery();
 
-        $result = $query->getOneOrNullResult();
+        return $query->getOneOrNullResult();
+    }
 
-        return $result;
+    /**
+     * Vorheriger Ride DERSELBEN Stadt (#1353): das generische
+     * ordered-entities-Bundle scopt die City nicht zuverlässig und navigiert
+     * stadtübergreifend, daher hier eine explizit stadt-gescopte Abfrage.
+     */
+    public function getPreviousRide(Ride $ride): ?Ride
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->lt('r.dateTime', ':dateTime'))
+            ->andWhere($builder->expr()->eq('r.city', ':city'))
+            ->addOrderBy('r.dateTime', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('city', $ride->getCity())
+            ->setParameter('dateTime', $ride->getDateTime());
+
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Nächster Ride DERSELBEN Stadt (#1353).
+     */
+    public function getNextRide(Ride $ride): ?Ride
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->gt('r.dateTime', ':dateTime'))
+            ->andWhere($builder->expr()->eq('r.city', ':city'))
+            ->addOrderBy('r.dateTime', 'ASC')
+            ->setMaxResults(1)
+            ->setParameter('city', $ride->getCity())
+            ->setParameter('dateTime', $ride->getDateTime());
+
+        return $builder->getQuery()->getOneOrNullResult();
     }
 
     public function getLocationsForCity(City $city): array
@@ -514,7 +560,7 @@ class RideRepository extends ServiceEntityRepository
                 ->setParameter('fromDateTime', $fromDateTime);
         }
 
-        if ($fromDateTime) {
+        if ($untilDateTime) {
             $builder
                 ->andWhere($builder->expr()->lt('ride.dateTime', ':untilDateTime'))
                 ->setParameter('untilDateTime', $untilDateTime);

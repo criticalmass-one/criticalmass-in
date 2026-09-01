@@ -200,6 +200,11 @@ class TrackRepository extends ServiceEntityRepository
 
         $builder->select('t')
             ->join('t.ride', 'r')
+            // Ride + Stadt eager laden: Templates dereferenzieren track.ride.city
+            // → sonst N+1 je Track.
+            ->addSelect('r', 'c', 'mainSlug')
+            ->leftJoin('r.city', 'c')
+            ->leftJoin('c.mainSlug', 'mainSlug')
             ->where($builder->expr()->eq('r.city', ':city'))
             ->setParameter('city', $city)
             ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))

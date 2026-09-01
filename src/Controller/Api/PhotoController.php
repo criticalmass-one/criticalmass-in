@@ -143,15 +143,76 @@ class PhotoController extends BaseController
     /**
      * Update properties of a photo.
      */
-    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'], priority: 200)]
+    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', requirements: ['id' => '\d+'], methods: ['POST'], priority: 200)]
     #[OA\Tag(name: 'Photo')]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the photo to update', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\RequestBody(description: 'JSON representation of the photo data', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function updatePhotoAction(Request $request): JsonResponse
+    #[OA\Response(response: 404, description: 'Returned when the photo does not exist')]
+    public function updatePhotoAction(Request $request, int $id): JsonResponse
     {
-        $photo = $this->deserializeRequest($request, Photo::class);
+        $photo = $this->managerRegistry->getRepository(Photo::class)->find($id);
 
-        return $this->createStandardResponse($photo);
+        if (!$photo) {
+            throw new NotFoundHttpException('Photo not found');
+        }
+
+        $payload = json_decode($request->getContent(), true);
+
+        if (!is_array($payload)) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['body' => 'A JSON object is required.']);
+        }
+
+        if (array_key_exists('description', $payload)) {
+            $photo->setDescription(null === $payload['description'] ? null : (string) $payload['description']);
+        }
+
+        if (array_key_exists('enabled', $payload)) {
+            if (!is_bool($payload['enabled'])) {
+                return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['enabled' => 'enabled must be a boolean.']);
+            }
+            $photo->setEnabled($payload['enabled']);
+        }
+
+        if (array_key_exists('deleted', $payload)) {
+            if (!is_bool($payload['deleted'])) {
+                return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, ['deleted' => 'deleted must be a boolean.']);
+            }
+            $photo->setDeleted($payload['deleted']);
+        }
+
+        if (array_key_exists('latitude', $payload)) {
+            $photo->setLatitude(null === $payload['latitude'] ? null : (float) $payload['latitude']);
+        }
+
+        if (array_key_exists('longitude', $payload)) {
+            $photo->setLongitude(null === $payload['longitude'] ? null : (float) $payload['longitude']);
+        }
+
+        $this->managerRegistry->getManager()->flush();
+
+        return $this->createStandardResponse($photo, ['groups' => ['photo-details']]);
+    }
+
+    /**
+     * Deletes a photo (soft delete).
+     */
+    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_delete', requirements: ['id' => '\d+'], methods: ['DELETE'], priority: 200)]
+    #[OA\Tag(name: 'Photo')]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the photo to delete', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    #[OA\Response(response: 404, description: 'Returned when the photo does not exist')]
+    public function deletePhotoAction(int $id): JsonResponse
+    {
+        $photo = $this->managerRegistry->getRepository(Photo::class)->find($id);
+
+        if (!$photo) {
+            throw new NotFoundHttpException('Photo not found');
+        }
+
+        $photo->setDeleted(true);
+        $this->managerRegistry->getManager()->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedPhotoId' => $id]);
     }
 }

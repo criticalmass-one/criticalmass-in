@@ -1,139 +1,75 @@
-{% apply inky_to_html|inline_css %}
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            background-color: #f4f6f9;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="supported-color-schemes" content="light" />
+    <title>Dein Login auf criticalmass.in</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
 
-        .header {
-            background-color: #ffffff;
-        }
+    <!-- Outer wrapper for background color -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f4f6f9;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
 
-        .header td {
-            padding: 32px 0 24px;
-            text-align: center;
-        }
+                <!-- Inner container -->
+                <table role="presentation" width="580" cellpadding="0" cellspacing="0" border="0" style="max-width: 580px; width: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">
 
-        .header .logo {
-            color: #2a9d8f;
-            font-size: 24px;
-            font-weight: 700;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="background-color: #ffffff; padding: 32px 30px 20px;">
+                            <a href="https://criticalmass.in" style="color: #2a9d8f; font-size: 24px; font-weight: 700; text-decoration: none; letter-spacing: -0.5px;">criticalmass.in</a>
+                        </td>
+                    </tr>
 
-        .divider td {
-            padding: 0 30px;
-        }
+                    <!-- Divider -->
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 0 30px;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td style="border-top: 2px solid #2a9d8f; font-size: 0; line-height: 0;">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-        .divider hr {
-            border: none;
-            border-top: 2px solid #2a9d8f;
-            margin: 0;
-        }
+                    <!-- Content -->
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 32px 30px 16px;">
+                            <p style="font-size: 22px; color: #1a1a2e; font-weight: 700; margin: 0 0 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Hey, sch&ouml;n dass du da bist!</p>
+                            <p style="font-size: 16px; color: #4a4a68; line-height: 1.6; margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">{{ content }}</p>
+                        </td>
+                    </tr>
 
-        .content {
-            background-color: #ffffff;
-        }
+                    <!-- Button -->
+                    <tr>
+                        <td align="center" style="background-color: #ffffff; padding: 12px 30px 36px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center" style="background-color: #2a9d8f; border-radius: 6px;">
+                                        <a href="{{ loginUrl }}" style="display: inline-block; padding: 14px 36px; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Jetzt einloggen</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-        .content td {
-            padding: 32px 30px 16px;
-        }
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="background-color: #f8f9fa; padding: 24px 30px; border-top: 1px solid #e8eaed;">
+                            <p style="font-size: 13px; color: #9a9ab0; line-height: 1.5; margin: 0 0 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.</p>
+                            <p style="font-size: 13px; color: #9a9ab0; line-height: 1.5; margin: 0 0 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Der Link ist {{ expirationText }} g&uuml;ltig.</p>
+                            <p style="font-size: 13px; margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;"><a href="https://criticalmass.in/content/impress" style="color: #2a9d8f; text-decoration: none;">Impressum</a></p>
+                        </td>
+                    </tr>
 
-        .content .greeting {
-            font-size: 22px;
-            color: #1a1a2e;
-            font-weight: 700;
-            margin: 0 0 16px;
-        }
+                </table>
 
-        .content p {
-            color: #4a4a68;
-            font-size: 16px;
-            line-height: 1.6;
-            margin: 0 0 12px;
-        }
+            </td>
+        </tr>
+    </table>
 
-        .button-wrapper {
-            background-color: #ffffff;
-        }
-
-        .button-wrapper td {
-            padding: 12px 30px 36px;
-        }
-
-        .button a {
-            background-color: #2a9d8f;
-            color: #ffffff !important;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 6px;
-            padding: 14px 36px;
-            display: inline-block;
-        }
-
-        .footer {
-            background-color: #ffffff;
-            border-top: 1px solid #e8eaed;
-        }
-
-        .footer td {
-            padding: 24px 30px;
-            text-align: center;
-        }
-
-        .footer p {
-            color: #9a9ab0;
-            font-size: 13px;
-            line-height: 1.5;
-            margin: 0 0 4px;
-        }
-
-        .footer a {
-            color: #2a9d8f;
-            text-decoration: none;
-        }
-    </style>
-
-    <container>
-        <row class="header">
-            <columns>
-                <center>
-                    <a class="logo" href="https://criticalmass.in">criticalmass.in</a>
-                </center>
-            </columns>
-        </row>
-
-        <row class="divider">
-            <columns>
-                <hr>
-            </columns>
-        </row>
-
-        <row class="content">
-            <columns>
-                <p class="greeting">Hey, sch&ouml;n dass du da bist!</p>
-                <p>{{ content }}</p>
-            </columns>
-        </row>
-
-        <row class="button-wrapper">
-            <columns>
-                <center>
-                    <button class="button" href="{{ loginUrl }}">Jetzt einloggen</button>
-                </center>
-            </columns>
-        </row>
-
-        <row class="footer">
-            <columns>
-                <p>Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.</p>
-                <p>Der Link ist {{ expirationText }} g&uuml;ltig.</p>
-                <p style="margin-top: 12px;"><a href="https://criticalmass.in/content/impress">Impressum</a></p>
-            </columns>
-        </row>
-    </container>
-{% endapply %}
+</body>
+</html>

@@ -9,6 +9,11 @@ class TypeVoter implements VoterInterface
 {
     public function vote(Ride $ride, TrackImportCandidate $model): float
     {
+        // Uploaded files carry no Strava activity "type" — never disqualify them here.
+        if ($model->getSource() === TrackImportCandidate::CANDIDATE_SOURCE_UPLOAD) {
+            return 1;
+        }
+
         if ($model->getType() !== 'Ride') {
             return -1;
         }

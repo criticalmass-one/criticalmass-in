@@ -2,7 +2,6 @@
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
-    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ breadcrumb.item(city.city, object_path(city)) }}
     {{ breadcrumb.active('Soziale Netzwerke') }}
 {% endblock %}
@@ -11,56 +10,66 @@
     <div class="container">
         {{ include('City/Includes/_tabs.html.twig', { tab: 'socialnetwork_city_list_items' }) }}
 
-        <div class="row">
-            <div class="col-md-12">
-                {% if itemList|length == 0 %}
-                    <div class="alert alert-info">
-                        <p>
-                            <strong>Schade!</strong> Entweder veröffentlicht niemand von der {{ city.title }} neue
-                            Beiträge in sozialen Netzerken oder wir waren nicht in der Lage, die Beiträge abzurufen.
-                        </p>
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="card-title mb-0">
+                    <i class="far fa-share-alt text-primary me-2"></i>Beiträge aus sozialen Netzwerken
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if items|length > 0 %}
+                    {% for item in items %}
+                        <div class="d-flex align-items-start mb-4 pb-4 {{ not loop.last ? 'border-bottom' : '' }}">
+                            <div class="flex-grow-1" style="min-width: 0;">
+                                <div class="mb-1">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="mb-0 text-truncate">
+                                            <a href="{{ item.permalink }}" class="text-decoration-none">
+                                                {{ item.title ?? 'Beitrag' }}
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <small class="text-muted" title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
+                                        {{ item.dateTime|date('d.m.Y') }} &middot; {{ item.dateTime|time_ago_in_words }}
+                                    </small>
+                                </div>
 
-                        <p>
-                            Wenn du für {{ city.city }} <a
-                                    href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">gesellschaftliche
-                                Netzwerke</a> konfigurierst, werden Beiträge aus diesen Netzwerken hier angezeigt.
+                                <p class="text-muted mb-2">{{ item.text|trim_intro }}</p>
+
+                                {% if item.permalink %}
+                                    <a href="{{ item.permalink }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="far fa-external-link me-1"></i>Weiterlesen
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-center mt-4">
+                        {% if page > 1 %}
+                            <a href="{{ path('criticalmass_socialnetwork_city_list_items', { citySlug: city.slug, page: page - 1 }) }}" class="btn btn-outline-secondary me-2">
+                                <i class="far fa-chevron-left me-1"></i>Zurück
+                            </a>
+                        {% endif %}
+                        <a href="{{ path('criticalmass_socialnetwork_city_list_items', { citySlug: city.slug, page: page + 1 }) }}" class="btn btn-outline-secondary">
+                            Weiter<i class="far fa-chevron-right ms-1"></i>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="far fa-share-alt fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Keine Beiträge vorhanden</h5>
+                        <p class="text-muted mb-0">
+                            Entweder veröffentlicht niemand von der {{ city.title }} neue Beiträge in sozialen Netzwerken
+                            oder wir waren nicht in der Lage, die Beiträge abzurufen.
+                        </p>
+                        <p class="text-muted">
+                            Wenn du für {{ city.city }}
+                            <a href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">soziale Netzwerke</a>
+                            konfigurierst, werden Beiträge hier angezeigt.
                         </p>
                     </div>
                 {% endif %}
-
-                {% for item in itemList %}
-                    <div class="row margin-bottom-medium">
-                        <div class="col-md-3 text-center">
-                            <p>
-                                <i class="fab fa-3x {{ network_icon(item.socialNetworkProfile.network) }}"></i>
-                            </p>
-
-                            <a href="{{ item.permalink }}">
-                                <time title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
-                                    {{ item.dateTime|time_ago_in_words }}
-                                </time>
-                            </a>
-                        </div>
-                        <div class="col-md-9">
-                            <h3 class="no-margin-top">
-                                <a href="{{ item.permalink }}">
-                                    {{ item.title }}
-                                </a>
-                            </h3>
-
-                            <p>
-                                {{ item.text|trim_intro }}
-                            </p>
-
-                            <p class="text-right">
-                                <a href="{{ item.permalink }}" title="zum Beitrag" class="btn btn-primary">
-                                    <i class="far fa-hand-point-right"></i>
-                                    Weiterlesen
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                {% endfor %}
             </div>
         </div>
     </div>

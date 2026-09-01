@@ -3,9 +3,10 @@
 namespace App\Criticalmass\FriendlyCaptcha;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\HttpClient\Exception\ExceptionInterface as HttpClientExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FriendlyCaptcha implements FriendlyCaptchaInterface
 {
@@ -15,7 +16,8 @@ class FriendlyCaptcha implements FriendlyCaptchaInterface
 
     public function __construct(
         private readonly SerializerInterface $serializer,
-        ContainerBagInterface $containerBag
+        private readonly HttpClientInterface $httpClient,
+        ContainerBagInterface $containerBag,
     ) {
         $this->apiKey = $containerBag->get('friendlycaptcha_api_key');
         $this->siteKey = $containerBag->get('friendlycaptcha_site_key');
@@ -25,23 +27,28 @@ class FriendlyCaptcha implements FriendlyCaptchaInterface
     {
         $captchaSolution = $request->request->get('frc-captcha-solution');
 
-        $client = HttpClient::create();
+        try {
+            $response = $this->httpClient->request('POST', self::API_URL, [
+                'json' => [
+                    'solution' => $captchaSolution,
+                    'secret' => $this->apiKey,
+                    'sitekey' => $this->siteKey,
+                ],
+            ]);
 
-        $payload = [
-            'solution' => $captchaSolution,
-            'secret' => $this->apiKey,
-            'sitekey' => $this->siteKey,
-        ];
+            // Fail-closed: bei einem nicht erfolgreichen Verify-Aufruf gilt das
+            // Captcha als NICHT bestanden (vorher wurde hier `true` zurückgegeben).
+            if ($response->getStatusCode() !== 200) {
+                return false;
+            }
 
-        $response = $client->request('POST', self::API_URL, [
-            'json' => $payload,
-        ]);
-
-        if ($response->getStatusCode() !== 200) {
-            return true;
+            $content = $response->getContent();
+        } catch (HttpClientExceptionInterface) {
+            return false;
         }
 
-        $result = $this->serializer->deserialize($response->getContent(), Response::class, 'json');
+        /** @var Response $result */
+        $result = $this->serializer->deserialize($content, Response::class, 'json');
 
         return $result->isSuccess();
     }

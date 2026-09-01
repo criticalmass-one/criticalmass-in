@@ -4,6 +4,13 @@ framework:
     #csrf_protection: true
     #http_method_override: true
 
+    # Hinter einem Reverse-Proxy: damit Request::getClientIp() die echte IP
+    # liefert (statt der Proxy-IP) und X-Forwarded-* nicht spoofbar ist.
+    # Default leer = keinem Proxy vertrauen; echte Proxy-IPs/-Ranges per ENV
+    # TRUSTED_PROXIES je Deployment setzen (z. B. "127.0.0.1,10.0.0.0/8").
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+    trusted_headers: [ 'x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port' ]
+
     #esi: true
     #fragments: true
     php_errors:

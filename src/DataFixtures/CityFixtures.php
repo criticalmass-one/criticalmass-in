@@ -96,7 +96,7 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
             $bayernRegion,
             $adminUser,
             $manager,
-            0.05
+            0.005
         );
         $this->addReference(self::INACTIVE_CITY_REFERENCE, $inactiveCity);
 

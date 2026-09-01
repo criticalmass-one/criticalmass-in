@@ -16,6 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -50,12 +51,14 @@ class StravaMassImportController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/trackimport/stravatoken', name: 'caldera_criticalmass_trackmassimport_token', priority: 310)]
-    public function tokenAction(Request $request, SessionInterface $session, RouterInterface $router): Response
+    public function tokenAction(Request $request, SessionInterface $session, RouterInterface $router, LoggerInterface $logger): Response
     {
         $error = $request->get('error');
         $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
 
         if ($error) {
+            $logger->warning('Strava authorization returned an error', ['error' => $error]);
+
             return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_auth'));
         }
 
@@ -72,6 +75,8 @@ class StravaMassImportController extends AbstractController
                 'year' => $year,
             ]));
         } catch (\Exception $e) {
+            $logger->error('Strava token exchange failed', ['exception' => $e]);
+
             return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_auth'));
         }
     }

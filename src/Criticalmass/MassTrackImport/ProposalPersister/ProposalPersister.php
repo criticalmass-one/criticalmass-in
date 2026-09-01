@@ -5,34 +5,21 @@ namespace App\Criticalmass\MassTrackImport\ProposalPersister;
 use App\Criticalmass\MassTrackImport\TrackDecider\RideResult;
 use App\Entity\Track;
 use App\Entity\TrackImportCandidate;
-use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ProposalPersister implements ProposalPersisterInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var array $existentStravaActivityIds */
-    protected $existentStravaActivityIds = [];
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(private readonly ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function persist(RideResult $rideResult): RideResult
     {
-        $user = $rideResult->getActivity()->getUser();
-
-        $this->loadOldStravaActivityIds($user);
-
+        $candidate = $rideResult->getActivity();
         $manager = $this->registry->getManager();
 
-        if (!$rideResult->isMatch() ||
-            !in_array($rideResult->getActivity()->getActivityId(), $this->existentStravaActivityIds)
-        ) {
-            $manager->persist($rideResult->getActivity());
+        if (!$this->isDuplicate($candidate)) {
+            $manager->persist($candidate);
         }
 
         $manager->flush();
@@ -40,24 +27,36 @@ class ProposalPersister implements ProposalPersisterInterface
         return $rideResult;
     }
 
-    protected function loadOldStravaActivityIds(User $user): ProposalPersister
+    private function isDuplicate(TrackImportCandidate $candidate): bool
     {
-        $tracks = $this->registry->getRepository(Track::class)->findByUser($user);
+        $user = $candidate->getUser();
+        $candidateRepository = $this->registry->getRepository(TrackImportCandidate::class);
 
-        /** @var Track $track */
-        foreach ($tracks as $track) {
-            if ($track->getStravaActivityId()) {
-                $this->existentStravaActivityIds[] = $track->getStravaActivityId();
-            }
+        // Gezielte Existenz-Abfrage statt die gesamte Track-/Candidate-Collection
+        // des Users zu hydratisieren und per in_array zu prüfen.
+        if ($candidate->getSource() === TrackImportCandidate::CANDIDATE_SOURCE_UPLOAD) {
+            $fileHash = $candidate->getFileHash();
+
+            return $fileHash !== null && null !== $candidateRepository->findOneBy([
+                'user' => $user,
+                'source' => TrackImportCandidate::CANDIDATE_SOURCE_UPLOAD,
+                'fileHash' => $fileHash,
+            ]);
         }
 
-        $proposals = $this->registry->getRepository(TrackImportCandidate::class)->findByUser($user);
+        $activityId = $candidate->getActivityId();
 
-        /** @var TrackImportCandidate $proposal */
-        foreach ($proposals as $proposal) {
-            $this->existentStravaActivityIds[] = $proposal->getActivityId();
+        if ($activityId === null) {
+            return false;
         }
 
-        return $this;
+        // 'stravaActitityId' ist der (verschriebene) Property-/Feldname in Track.
+        return null !== $this->registry->getRepository(Track::class)->findOneBy([
+            'user' => $user,
+            'stravaActitityId' => $activityId,
+        ]) || null !== $candidateRepository->findOneBy([
+            'user' => $user,
+            'activityId' => $activityId,
+        ]);
     }
 }

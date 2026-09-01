@@ -39,7 +39,7 @@ class TrackDownloadController extends AbstractController
             $track->getRide()->getDateTime()->format('Y-m-d')
         );
 
-        return sprintf('%s.gpx', $filename);
+        return str_replace(["\r", "\n"], ' ', sprintf('%s.gpx', $filename));
     }
 
     protected function getTrackFilename(Track $track, UploaderHelper $uploaderHelper): string

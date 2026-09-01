@@ -43,13 +43,10 @@ class SocialNetworkProfile
     #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $identifier = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $network = null;
-
-    #[ORM\Column(type: 'boolean')]
-    #[Ignore]
-    protected bool $mainNetwork = false;
 
     #[ORM\Column(type: 'boolean')]
     #[Ignore]
@@ -86,6 +83,10 @@ class SocialNetworkProfile
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['ride-list'])]
     protected $additionalData;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['ride-list'])]
+    protected ?int $feedsProfileId = null;
 
     public function getId(): ?int
     {
@@ -174,26 +175,6 @@ class SocialNetworkProfile
     public function setNetwork($network): SocialNetworkProfile
     {
         $this->network = $network;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getMainNetwork(): bool
-    {
-        return $this->mainNetwork;
-    }
-
-    public function isMainNetwork(): bool
-    {
-        return $this->mainNetwork;
-    }
-
-    public function setMainNetwork(bool $mainNetwork): SocialNetworkProfile
-    {
-        $this->mainNetwork = $mainNetwork;
 
         return $this;
     }
@@ -302,6 +283,18 @@ class SocialNetworkProfile
     public function setAdditionalData(?array $additionalData): self
     {
         $this->additionalData = json_encode($additionalData);
+
+        return $this;
+    }
+
+    public function getFeedsProfileId(): ?int
+    {
+        return $this->feedsProfileId;
+    }
+
+    public function setFeedsProfileId(?int $feedsProfileId): self
+    {
+        $this->feedsProfileId = $feedsProfileId;
 
         return $this;
     }

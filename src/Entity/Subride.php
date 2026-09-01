@@ -104,7 +104,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->title;
     }
 
-    public function setDescription(string $description): Subride
+    public function setDescription(?string $description = null): Subride
     {
         $this->description = $description;
 

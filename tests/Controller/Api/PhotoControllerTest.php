@@ -26,7 +26,6 @@ class PhotoControllerTest extends AbstractApiControllerTestCase
         $this->assertEquals($photo->getDescription(), $response['description']);
         $this->assertEquals($photo->getLocation(), $response['location']);
         $this->assertEquals($photo->getImageName(), $response['image_name']);
-        $this->assertArrayHasKey('views', $response);
         $this->assertArrayHasKey('exif_creation_date', $response);
         $this->assertArrayHasKey('creation_date_time', $response);
     }

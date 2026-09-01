@@ -104,17 +104,20 @@ class RideApiQueryTest extends AbstractApiControllerTestCase
 
     public function testFilterByYear(): void
     {
-        // Use years that exist in fixtures: 2025 or 2026
-        $this->client->request('GET', '/api/ride?year=2025');
+        // Read actual ride date from DB to avoid hardcoding dates that drift with fixture generation
+        $ride = $this->entityManager->getRepository(\App\Entity\Ride::class)->findAll()[0];
+        $year = (int) $ride->getDateTime()->format('Y');
+
+        $this->client->request('GET', sprintf('/api/ride?year=%d', $year));
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($data);
 
-        foreach ($data as $ride) {
-            $date = new \DateTime('@' . $ride['date_time']);
-            $this->assertEquals(2025, (int) $date->format('Y'));
+        foreach ($data as $item) {
+            $date = new \DateTime('@' . $item['date_time']);
+            $this->assertEquals($year, (int) $date->format('Y'));
         }
     }
 

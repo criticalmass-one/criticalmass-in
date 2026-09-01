@@ -12,6 +12,7 @@ use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\SocialNetworkProfileAble;
+use MalteHuebner\OrderedEntitiesBundle\Attribute as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Enum\RideDisabledReasonEnum;
 use App\Enum\RideTypeEnum;
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
 #[CriticalAssert\SingleRideForDay]
 #[Vich\Uploadable]
@@ -53,6 +54,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Groups(['extended-ride-list', 'ride-details'])]
     protected ?CityCycle $cycle = null;
 
+    #[OE\Identical]
     #[DataQuery\Sortable]
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'rides', fetch: 'LAZY')]
@@ -93,6 +95,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Ignore]
     protected ?string $socialDescription = null;
 
+    #[OE\Order(direction: 'ASC')]
     #[DataQuery\Sortable]
     #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -101,7 +104,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 512, nullable: true)]
     #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?string $location = null;
 
@@ -204,6 +207,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     #[Ignore]
     protected ?string $imageMimeType = null;
 
+    #[OE\Boolean(value: true)]
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
     #[Groups(['ride-list', 'ride-details'])]
     protected bool $enabled = true;
@@ -374,7 +378,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
         return $this->title;
     }
 
-    public function setDescription(string $description): Ride
+    public function setDescription(?string $description = null): Ride
     {
         $this->description = $description;
 
@@ -386,7 +390,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
         return $this->description;
     }
 
-    public function setSocialDescription(string $socialDescription): Ride
+    public function setSocialDescription(?string $socialDescription = null): Ride
     {
         $this->socialDescription = $socialDescription;
 
@@ -882,7 +886,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
 
     public function getDisabledReason(): ?RideDisabledReasonEnum
     {
-        return $this->disabledReason !== null ? RideDisabledReasonEnum::from($this->disabledReason) : null;
+        return $this->disabledReason !== null ? RideDisabledReasonEnum::tryFrom($this->disabledReason) : null;
     }
 
     public function setDisabledReason(?RideDisabledReasonEnum $disabledReason = null): Ride

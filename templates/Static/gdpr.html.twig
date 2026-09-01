@@ -312,14 +312,19 @@
                     </h3>
 
                     <p>
-                        Zugriffe auf criticalmass.in werden von der Software <a href="https://matomo.org">Matomo</a>, ehemals Piwik, gemessen. Wir setzen Matomo ein, um ein ungefähres Bild des Interesses der Nutzer an unserer Webseite zu bekommen. Die Zugriffe werden anonymisiert erhoben, unser Server <code>piwik.caldera.cc</code> führt darüberhinaus keine zusätzlichen Logfiles.
+                        Zugriffe auf criticalmass.in werden von der Open-Source-Software <a href="https://matomo.org">Matomo</a>, ehemals Piwik, gemessen. Wir setzen Matomo ein, um ein ungefähres Bild des Interesses der Nutzer an unserer Webseite zu bekommen — etwa welche Städte oder Touren aufgerufen werden. Matomo betreiben wir selbst auf unserem eigenen Server <code>matomo.caldera.cc</code> in Deutschland, deine Daten werden nicht an Dritte weitergegeben.
                     </p>
 
                     <p>
-                        Du kannst dem Tracking entweder über die <a href="https://de.wikipedia.org/wiki/Do_Not_Track_(Software)">„Do not Track"-Einstellungen deines Browsers</a> oder über folgende Checkbox widersprechen:
+                        Die Messung kommt komplett ohne Cookies aus und deine IP-Adresse wird vor der Speicherung um die letzten beiden Oktette gekürzt, so dass sie sich nicht mehr auf dich zurückführen lässt. Erfasst werden neben den aufgerufenen Seiten lediglich deine Suchbegriffe in der Städte- und Toursuche, die verweisende Seite (Referrer), dein Browsertyp und deine ungefähre Herkunftsregion.
                     </p>
 
-                    <iframe style="border: 0; height: 200px; width: 100%;" src="https://piwik.caldera.cc/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=ffffff&fontColor=000000&fontSize=16px&fontFamily=%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans-serif"></iframe>
+                    <p>
+                        Du kannst dem Tracking entweder über die <a href="https://de.wikipedia.org/wiki/Do_Not_Track_(Software)">„Do not Track"-Einstellungen deines Browsers</a> widersprechen, die wir selbstverständlich respektieren, oder über folgende Checkbox:
+                    </p>
+
+                    <div id="matomo-opt-out"></div>
+                    <script src="https://matomo.caldera.cc/index.php?module=CoreAdminHome&amp;action=optOutJS&amp;divId=matomo-opt-out&amp;language=auto&amp;showIntro=1" async></script>
                 </div>
             </div>
         </div>

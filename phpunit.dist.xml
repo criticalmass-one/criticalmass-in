@@ -15,6 +15,13 @@
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
+
+        <!-- ###+ league/oauth2-server-bundle ### -->
+        <env name="OAUTH_PRIVATE_KEY" value="%kernel.project_dir%/config/jwt/private.pem"/>
+        <env name="OAUTH_PUBLIC_KEY" value="%kernel.project_dir%/config/jwt/public.pem"/>
+        <env name="OAUTH_PASSPHRASE" value="af40f267c4ed9938827d62959de258ad"/>
+        <env name="OAUTH_ENCRYPTION_KEY" value="33c84408e44083508381072686bbfe31"/>
+        <!-- ###- league/oauth2-server-bundle ### -->
     </php>
 
     <testsuites>

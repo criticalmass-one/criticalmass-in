@@ -1,0 +1,64 @@
+<div role="tabpanel" class="tab-pane fade" id="estimates" aria-labelledby="estimates-tab">
+    <h4 class="mb-4">
+        <i class="far fa-users text-muted me-2"></i>
+        Schätzungen
+    </h4>
+
+    {% if estimates|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Benutzer*in</th>
+                        <th class="text-end">Schätzung</th>
+                        <th class="text-end d-none d-md-table-cell">Datum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for estimate in estimates %}
+                        <tr>
+                            <td>
+                                {% if estimate.user %}
+                                    <i class="far fa-user text-muted me-1"></i>{{ estimate.user.username }}
+                                {% else %}
+                                    <i class="far fa-user-secret text-muted me-1"></i><span class="text-muted">Anonym</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <strong>{{ estimate.estimatedParticipants|number_format(0) }}</strong>
+                            </td>
+                            <td class="text-end d-none d-md-table-cell">
+                                <span class="text-muted">{{ estimate.createdAt|date('d.m.Y H:i') }}</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if estimates|length > 1 %}
+            {% set total = 0 %}
+            {% for estimate in estimates %}
+                {% set total = total + estimate.estimatedParticipants %}
+            {% endfor %}
+            <div class="card bg-light border-0 mt-3">
+                <div class="card-body py-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Durchschnitt aus {{ estimates|length }} Schätzungen</span>
+                        <strong>{{ (total / estimates|length)|round(0)|number_format(0) }}</strong>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="card bg-light border-0">
+            <div class="card-body text-center py-5">
+                <i class="far fa-users fa-3x text-muted mb-3"></i>
+                <h5>Keine Schätzungen vorhanden</h5>
+                <p class="text-muted mb-0">
+                    Bislang hat noch niemand die Teilnehmer*innenzahl dieser Tour geschätzt.
+                </p>
+            </div>
+        </div>
+    {% endif %}
+</div>
