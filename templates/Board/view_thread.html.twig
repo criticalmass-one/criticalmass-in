@@ -91,7 +91,11 @@
         </div>
 
         {% for post in posts %}
-            {% include('Post/post.html.twig') with { 'post': post } %}
+            {% include('Post/post.html.twig') with {
+                'post': post,
+                'postNumber': (posts.currentPageNumber - 1) * posts.itemNumberPerPage + loop.index,
+                'isThreadOpener': thread.firstPost is not null and thread.firstPost.id == post.id
+            } %}
         {% endfor %}
 
         {% if posts.pageCount > 1 %}

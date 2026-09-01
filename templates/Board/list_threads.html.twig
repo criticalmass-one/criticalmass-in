@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/forum.html.twig' as forum %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}{{ board.title }}{% endblock %}
@@ -41,21 +42,13 @@
 
         {% if threads|length %}
             {% for thread in threads %}
-                <div class="card border-0 shadow-sm mb-3">
+                <div class="card border-0 shadow-sm mb-3 forum-card">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-md-5">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-3">
-                                        {% if thread.firstPost.user.imageName %}
-                                            <img class="rounded-circle" width="40" height="40"
-                                                 src="{{ vich_uploader_asset(thread.firstPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
-                                                 alt="{{ thread.firstPost.user.username }}"/>
-                                        {% else %}
-                                            <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                                <i class="far fa-user text-secondary"></i>
-                                            </div>
-                                        {% endif %}
+                                        {{ forum.avatar(thread.firstPost.user, 40) }}
                                     </div>
                                     <div class="flex-grow-1">
                                         <a href="{{ object_path(thread) }}" class="text-decoration-none">
@@ -80,15 +73,7 @@
                                 {% if thread.lastPost %}
                                     <div class="d-flex align-items-center">
                                         <div class="flex-shrink-0 me-2">
-                                            {% if thread.lastPost.user.imageName %}
-                                                <img class="rounded-circle" width="36" height="36"
-                                                     src="{{ vich_uploader_asset(thread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
-                                                     alt="{{ thread.lastPost.user.username }}"/>
-                                            {% else %}
-                                                <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
-                                                    <i class="far fa-user text-secondary"></i>
-                                                </div>
-                                            {% endif %}
+                                            {{ forum.avatar(thread.lastPost.user, 36) }}
                                         </div>
                                         <div class="flex-grow-1">
                                             <small class="text-muted">
@@ -96,7 +81,7 @@
                                             </small>
                                             <br/>
                                             <small class="text-muted">
-                                                <i class="far fa-clock me-1"></i>{{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}
+                                                <i class="far fa-clock me-1"></i><span title="{{ thread.lastPost.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}">{{ thread.lastPost.dateTime|time_ago }}</span>
                                             </small>
                                         </div>
                                     </div>

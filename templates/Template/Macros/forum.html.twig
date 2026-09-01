@@ -1,0 +1,24 @@
+{# Wiederkehrende Bausteine des Forums. Das Avatar-Markup stand vorher fünfmal fast
+   gleich in drei Templates. #}
+
+{% macro avatar(user, size = 40) %}
+    {% if user and user.imageName %}
+        <img class="rounded-circle" width="{{ size }}" height="{{ size }}"
+             src="{{ vich_uploader_asset(user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+             alt="{{ user.username }}"/>
+    {% else %}
+        <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center"
+             style="width: {{ size }}px; height: {{ size }}px;">
+            <i class="far fa-user text-secondary"></i>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro authorLink(user) %}
+    {% if user %}
+        <a href="{{ path('caldera_criticalmass_forum_profile', { 'username': user.username }) }}"
+           class="text-decoration-none">{{ user.username }}</a>
+    {% else %}
+        <span class="text-muted">unbekannt</span>
+    {% endif %}
+{% endmacro %}
