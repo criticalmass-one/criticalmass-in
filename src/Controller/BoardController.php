@@ -269,6 +269,7 @@ class BoardController extends AbstractController
     public function disableThreadAction(
         ObjectRouterInterface $objectRouter,
         ForumStatistics $forumStatistics,
+        PostRepository $postRepository,
         #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
     ): Response {
         $this->denyAccessUnlessGranted('delete', $thread);
@@ -277,6 +278,10 @@ class BoardController extends AbstractController
 
         if ($board instanceof BoardInterface) {
             $forumStatistics->disableThread($thread, $board);
+        }
+
+        foreach ($postRepository->findPostsForThread($thread) as $post) {
+            $post->getUser()?->decForumPostCount();
         }
 
         $thread->setEnabled(false);
@@ -368,6 +373,7 @@ class BoardController extends AbstractController
             $board->incThreadNumber();
 
             $post->setUser($this->getUser());
+            $post->getUser()?->incForumPostCount();
             $post->setMessage($data['message']);
             $post->setThread($thread);
             $post->setDateTime(new \DateTime());

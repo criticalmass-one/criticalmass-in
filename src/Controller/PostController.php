@@ -148,6 +148,9 @@ class PostController extends AbstractController
             $em->flush();
 
             if ($postable instanceof Thread) {
+                $post->getUser()?->incForumPostCount();
+                $em->flush();
+
                 // Wer antwortet, verfolgt das Thema in aller Regel weiter.
                 $this->subscribeToThread($postable);
                 $this->forumNotifier->notifyAboutPost($post);
@@ -228,6 +231,10 @@ class PostController extends AbstractController
         $forumStatistics->disablePost($post, $board instanceof BoardInterface ? $board : null);
 
         $post->setEnabled(false);
+
+        if (null !== $post->getThread()) {
+            $post->getUser()?->decForumPostCount();
+        }
 
         $this->managerRegistry->getManager()->flush();
 

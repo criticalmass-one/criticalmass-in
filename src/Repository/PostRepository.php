@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -87,6 +88,26 @@ class PostRepository extends ServiceEntityRepository
      * Fuer die Groessenordnung dieses Forums reicht das; ein FULLTEXT-Index waere der
      * naechste Schritt, wenn die Beitragszahl das noetig macht.
      */
+    /**
+     * Die Forenbeitraege eines Nutzers, juengste zuerst.
+     */
+    public function queryForumPostsByUser(User $user): Query
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->innerJoin('p.thread', 't')
+            ->where($builder->expr()->eq('p.user', ':user'))
+            ->setParameter('user', $user)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->orderBy('p.dateTime', 'DESC');
+
+        return $builder->getQuery();
+    }
+
     public function querySearchInForum(string $term): Query
     {
         $builder = $this->createQueryBuilder('p');

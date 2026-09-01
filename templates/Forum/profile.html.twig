@@ -1,0 +1,68 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}{{ forumUser.username }} im Forum{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.active(forumUser.username) }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body d-flex align-items-center">
+                <div class="flex-shrink-0 me-3">
+                    {% if forumUser.imageName %}
+                        <img class="rounded-circle" width="64" height="64"
+                             src="{{ vich_uploader_asset(forumUser, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+                             alt="{{ forumUser.username }}"/>
+                    {% else %}
+                        <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+                            <i class="far fa-user fa-lg text-secondary"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    <h1 class="h4 mb-1">{{ forumUser.username }}</h1>
+                    <p class="text-muted mb-0">
+                        {{ forumUser.forumRank }}
+                        &middot; {{ forumUser.forumPostCount }} {{ forumUser.forumPostCount == 1 ? 'Beitrag' : 'Beitr&auml;ge'|raw }}
+                        {% if forumUser.createdAt %}
+                            &middot; dabei seit {{ forumUser.createdAt|date('m/Y', 'Europe/Berlin') }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="h5 mb-3">Letzte Beitr&auml;ge</h2>
+
+        {% if posts|length == 0 %}
+            <div class="text-center py-5">
+                <i class="far fa-comments fa-3x text-muted mb-3"></i>
+                <p class="text-muted mb-0">{{ forumUser.username }} hat noch nichts im Forum geschrieben.</p>
+            </div>
+        {% else %}
+            {% for post in posts %}
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body">
+                        <a href="{{ object_path(post.thread) }}#post-{{ post.id }}" class="text-decoration-none">
+                            <strong>{{ post.thread.title }}</strong>
+                        </a>
+                        <p class="mb-2 mt-2 text-muted">{{ post.message|search_snippet('') }}</p>
+                        <small class="text-muted">
+                            <i class="far fa-clock me-1"></i>{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}
+                        </small>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if posts.pageCount > 1 %}
+                <nav class="d-flex justify-content-center mt-4" aria-label="Seiten">
+                    {{ knp_pagination_render(posts) }}
+                </nav>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
