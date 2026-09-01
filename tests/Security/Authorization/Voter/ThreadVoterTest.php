@@ -95,4 +95,37 @@ class ThreadVoterTest extends TestCase
             (new ThreadVoter())->vote($this->token($this->user()), $this->threadOpenedBy($this->user()), ['move'])
         );
     }
+
+    public function testOnlyAdminsMayLockAThread(): void
+    {
+        $opener = $this->user();
+        $thread = $this->threadOpenedBy($opener);
+        $voter = new ThreadVoter();
+
+        self::assertSame(
+            VoterInterface::ACCESS_DENIED,
+            $voter->vote($this->token($opener), $thread, ['lock']),
+            'Auch wer das Thema eröffnet hat, schließt es nicht selbst.'
+        );
+        self::assertSame(
+            VoterInterface::ACCESS_GRANTED,
+            $voter->vote($this->token($this->user(['ROLE_ADMIN'])), $thread, ['lock'])
+        );
+    }
+
+    public function testOnlyAdminsMayPinAThread(): void
+    {
+        $opener = $this->user();
+        $thread = $this->threadOpenedBy($opener);
+        $voter = new ThreadVoter();
+
+        self::assertSame(
+            VoterInterface::ACCESS_DENIED,
+            $voter->vote($this->token($opener), $thread, ['pin'])
+        );
+        self::assertSame(
+            VoterInterface::ACCESS_GRANTED,
+            $voter->vote($this->token($this->user(['ROLE_ADMIN'])), $thread, ['pin'])
+        );
+    }
 }

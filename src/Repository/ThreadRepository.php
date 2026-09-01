@@ -26,7 +26,8 @@ class ThreadRepository extends ServiceEntityRepository
             ->setParameter('board', $board)
             ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->orderBy('lastPost.dateTime', 'DESC');
+            ->orderBy('t.sticky', 'DESC')
+            ->addOrderBy('lastPost.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 
@@ -44,7 +45,8 @@ class ThreadRepository extends ServiceEntityRepository
             ->setParameter('city', $city)
             ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->orderBy('lastPost.dateTime', 'DESC');
+            ->orderBy('t.sticky', 'DESC')
+            ->addOrderBy('lastPost.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 

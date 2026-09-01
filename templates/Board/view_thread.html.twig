@@ -13,10 +13,32 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-0">
-                <i class="far fa-comment-alt text-muted me-2"></i>
+                {% if thread.sticky %}
+                    <i class="fas fa-thumbtack text-muted me-2" title="angeheftet"></i>
+                {% elseif thread.locked %}
+                    <i class="fas fa-lock text-muted me-2" title="geschlossen"></i>
+                {% else %}
+                    <i class="far fa-comment-alt text-muted me-2"></i>
+                {% endif %}
                 {{ thread.title }}
             </h1>
             <div class="d-flex gap-2">
+                {% if is_granted('pin', thread) %}
+                    <form method="post" action="{{ path('caldera_criticalmass_board_pinthread', { 'threadSlug': thread.slug }) }}">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-thumbtack me-1"></i>
+                            <span class="d-none d-sm-inline">{{ thread.sticky ? 'L&ouml;sen' : 'Anheften' }}</span>
+                        </button>
+                    </form>
+                {% endif %}
+                {% if is_granted('lock', thread) %}
+                    <form method="post" action="{{ path('caldera_criticalmass_board_lockthread', { 'threadSlug': thread.slug }) }}">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-{{ thread.locked ? 'lock-open' : 'lock' }} me-1"></i>
+                            <span class="d-none d-sm-inline">{{ thread.locked ? '&Ouml;ffnen' : 'Schlie&szlig;en' }}</span>
+                        </button>
+                    </form>
+                {% endif %}
                 {% if is_granted('edit', thread) %}
                     <a href="{{ path('caldera_criticalmass_board_editthread', { 'threadSlug': thread.slug }) }}"
                        class="btn btn-outline-secondary btn-sm">
@@ -24,7 +46,7 @@
                         <span class="d-none d-sm-inline">Titel bearbeiten</span>
                     </a>
                 {% endif %}
-                {% if app.getUser() %}
+                {% if app.getUser() and not thread.locked %}
                     <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal-add-post">
                         <i class="far fa-comment me-1"></i>
                         <span class="d-none d-sm-inline">Antwort hinzuf&uuml;gen</span>
@@ -45,7 +67,15 @@
             </div>
         {% endif %}
 
-        {% if app.getUser() %}
+        {% if thread.locked %}
+            <div class="alert alert-secondary d-flex align-items-center" role="status">
+                <i class="fas fa-lock me-2"></i>
+                <div>
+                    <strong>Dieses Thema wurde geschlossen.</strong>
+                    Du kannst es weiterhin lesen, aber nicht mehr darauf antworten.
+                </div>
+            </div>
+        {% elseif app.getUser() %}
             {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadSlug': thread.slug, 'noButton': true })) }}
         {% endif %}
     </div>

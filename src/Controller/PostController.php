@@ -76,6 +76,12 @@ class PostController extends AbstractController
 
     protected function addPostAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
     {
+        // Das Template blendet das Formular bei geschlossenen Themen aus; hier wird
+        // der direkte POST abgewiesen, der daran vorbeigeht.
+        if ($postable instanceof Thread && $postable->isLocked()) {
+            throw $this->createAccessDeniedException('Dieses Thema ist geschlossen und nimmt keine Antworten mehr an.');
+        }
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
