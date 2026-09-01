@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Board;
 use App\Entity\City;
 use App\Entity\Thread;
+use App\EntityInterface\BoardInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -51,6 +52,27 @@ class ThreadRepository extends ServiceEntityRepository
         $query = $builder->getQuery();
 
         return $query->getResult();
+    }
+
+    /**
+     * Das zuletzt aktive Thema eines Forums — Grundlage für die Anzeige „letzter Beitrag“,
+     * wenn das bisherige lastThread verschoben oder deaktiviert wurde.
+     */
+    public function findLatestThread(BoardInterface $board): ?Thread
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder
+            ->select('t')
+            ->leftJoin('t.lastPost', 'lastPost')
+            ->where($builder->expr()->eq($board instanceof City ? 't.city' : 't.board', ':board'))
+            ->setParameter('board', $board)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->orderBy('lastPost.dateTime', 'DESC')
+            ->setMaxResults(1);
+
+        return $builder->getQuery()->getOneOrNullResult();
     }
 
     public function findThreadBySlug(string $slug): ?Thread

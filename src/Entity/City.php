@@ -608,9 +608,16 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
         return $this->postNumber;
     }
 
-    public function incPostNumber(): BoardInterface
+    public function incPostNumber(int $amount = 1): BoardInterface
     {
-        ++$this->postNumber;
+        $this->postNumber = ($this->postNumber ?? 0) + $amount;
+
+        return $this;
+    }
+
+    public function decPostNumber(int $amount = 1): BoardInterface
+    {
+        $this->postNumber = max(0, ($this->postNumber ?? 0) - $amount);
 
         return $this;
     }
@@ -630,6 +637,13 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     public function incThreadNumber(): BoardInterface
     {
         ++$this->threadNumber;
+
+        return $this;
+    }
+
+    public function decThreadNumber(): BoardInterface
+    {
+        $this->threadNumber = max(0, ($this->threadNumber ?? 0) - 1);
 
         return $this;
     }

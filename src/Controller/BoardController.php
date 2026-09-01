@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\Forum\ForumStatistics;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Repository\BoardRepository;
@@ -15,6 +16,7 @@ use App\EntityInterface\BoardInterface;
 use App\Form\Type\ThreadType;
 use Malenki\Slug;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
@@ -151,6 +153,100 @@ class BoardController extends AbstractController
             : 'Das Thema steht wieder in der normalen Reihenfolge.');
 
         return $this->redirect($objectRouter->generate($thread));
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/thread/move/{threadSlug}', name: 'caldera_criticalmass_board_movethread', priority: 240)]
+    public function moveThreadAction(
+        Request $request,
+        ObjectRouterInterface $objectRouter,
+        BoardRepository $boardRepository,
+        CityRepository $cityRepository,
+        ForumStatistics $forumStatistics,
+        #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
+    ): Response {
+        $this->denyAccessUnlessGranted('move', $thread);
+
+        $targets = [];
+
+        foreach ($boardRepository->findEnabledBoards() as $candidate) {
+            $targets['Foren'][(string) $candidate->getTitle()] = 'board:' . $candidate->getId();
+        }
+
+        foreach ($cityRepository->findCitiesWithBoard() as $candidate) {
+            $targets['Städte'][(string) $candidate->getTitle()] = 'city:' . $candidate->getId();
+        }
+
+        $form = $this->createFormBuilder()
+            ->add('target', ChoiceType::class, [
+                'label' => 'Neues Forum',
+                'choices' => $targets,
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            [$kind, $id] = explode(':', (string) $form->get('target')->getData(), 2);
+
+            $target = 'city' === $kind
+                ? $cityRepository->find((int) $id)
+                : $boardRepository->find((int) $id);
+
+            if (!$target instanceof BoardInterface) {
+                throw $this->createNotFoundException('Dieses Forum gibt es nicht.');
+            }
+
+            $source = $thread->getCity() ?? $thread->getBoard();
+
+            if ($source instanceof BoardInterface && $source !== $target) {
+                $forumStatistics->moveThread($thread, $source, $target);
+
+                if ($target instanceof City) {
+                    $thread->setCity($target)->setBoard(null);
+                } elseif ($target instanceof Board) {
+                    $thread->setBoard($target)->setCity(null);
+                }
+
+                $this->managerRegistry->getManager()->flush();
+
+                $this->addFlash('success', sprintf('Das Thema liegt jetzt in „%s“.', $target->getTitle()));
+            }
+
+            return $this->redirect($objectRouter->generate($thread));
+        }
+
+        return $this->render('Board/move_thread.html.twig', [
+            'board' => $thread->getCity() ?? $thread->getBoard(),
+            'thread' => $thread,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/thread/disable/{threadSlug}', name: 'caldera_criticalmass_board_disablethread', methods: ['POST'], priority: 240)]
+    public function disableThreadAction(
+        ObjectRouterInterface $objectRouter,
+        ForumStatistics $forumStatistics,
+        #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
+    ): Response {
+        $this->denyAccessUnlessGranted('delete', $thread);
+
+        $board = $thread->getCity() ?? $thread->getBoard();
+
+        if ($board instanceof BoardInterface) {
+            $forumStatistics->disableThread($thread, $board);
+        }
+
+        $thread->setEnabled(false);
+
+        $this->managerRegistry->getManager()->flush();
+
+        $this->addFlash('success', 'Das Thema wurde zurückgezogen.');
+
+        return $this->redirect($board instanceof BoardInterface
+            ? $objectRouter->generate($board)
+            : $this->generateUrl('caldera_criticalmass_board_overview'));
     }
 
     /**

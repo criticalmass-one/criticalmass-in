@@ -65,6 +65,36 @@ class PostRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function countPostsForThread(Thread $thread): int
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('COUNT(p.id)')
+            ->where($builder->expr()->eq('p.thread', ':thread'))
+            ->setParameter('thread', $thread)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true);
+
+        return (int) $builder->getQuery()->getSingleScalarResult();
+    }
+
+    public function findLatestPostForThread(Thread $thread): ?Post
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.thread', ':thread'))
+            ->setParameter('thread', $thread)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->orderBy('p.dateTime', 'DESC')
+            ->setMaxResults(1);
+
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
     public function findPostsForThread(Thread $thread): array
     {
         $builder = $this->createQueryBuilder('p');

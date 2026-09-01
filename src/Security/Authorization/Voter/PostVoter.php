@@ -15,4 +15,19 @@ class PostVoter extends AbstractVoter
 
         return $user === $post->getUser();
     }
+
+    /**
+     * Der erste Beitrag traegt das Thema — er laesst sich nicht einzeln zurueckziehen,
+     * sonst bliebe ein Thema ohne Anfang stehen. Dafuer gibt es das Loeschen des Themas.
+     */
+    protected function canDelete(Post $post, User $user): bool
+    {
+        $thread = $post->getThread();
+
+        if (null !== $thread && $thread->getFirstPost() === $post) {
+            return false;
+        }
+
+        return $this->canEdit($post, $user);
+    }
 }

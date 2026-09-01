@@ -92,7 +92,7 @@ class ThreadVoterTest extends TestCase
     {
         self::assertSame(
             VoterInterface::ACCESS_ABSTAIN,
-            (new ThreadVoter())->vote($this->token($this->user()), $this->threadOpenedBy($this->user()), ['move'])
+            (new ThreadVoter())->vote($this->token($this->user()), $this->threadOpenedBy($this->user()), ['archive'])
         );
     }
 
@@ -110,6 +110,36 @@ class ThreadVoterTest extends TestCase
         self::assertSame(
             VoterInterface::ACCESS_GRANTED,
             $voter->vote($this->token($this->user(['ROLE_ADMIN'])), $thread, ['lock'])
+        );
+    }
+
+    public function testOnlyAdminsMayMoveAThread(): void
+    {
+        $opener = $this->user();
+        $thread = $this->threadOpenedBy($opener);
+        $voter = new ThreadVoter();
+
+        self::assertSame(VoterInterface::ACCESS_DENIED, $voter->vote($this->token($opener), $thread, ['move']));
+        self::assertSame(
+            VoterInterface::ACCESS_GRANTED,
+            $voter->vote($this->token($this->user(['ROLE_ADMIN'])), $thread, ['move'])
+        );
+    }
+
+    public function testThreadOpenerAndAdminMayWithdrawTheThread(): void
+    {
+        $opener = $this->user();
+        $thread = $this->threadOpenedBy($opener);
+        $voter = new ThreadVoter();
+
+        self::assertSame(VoterInterface::ACCESS_GRANTED, $voter->vote($this->token($opener), $thread, ['delete']));
+        self::assertSame(
+            VoterInterface::ACCESS_GRANTED,
+            $voter->vote($this->token($this->user(['ROLE_ADMIN'])), $thread, ['delete'])
+        );
+        self::assertSame(
+            VoterInterface::ACCESS_DENIED,
+            $voter->vote($this->token($this->user()), $thread, ['delete'])
         );
     }
 

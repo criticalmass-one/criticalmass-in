@@ -47,7 +47,6 @@ class Board implements BoardInterface, RouteableInterface
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
     }
 
     public function getId(): ?int
@@ -91,7 +90,7 @@ class Board implements BoardInterface, RouteableInterface
         return $this->enabled;
     }
 
-    public function setLastThread(Thread $lastThread): BoardInterface
+    public function setLastThread(?Thread $lastThread = null): BoardInterface
     {
         $this->lastThread = $lastThread;
 
@@ -115,9 +114,16 @@ class Board implements BoardInterface, RouteableInterface
         return $this->postNumber ?? 0;
     }
 
-    public function incPostNumber(): BoardInterface
+    public function incPostNumber(int $amount = 1): BoardInterface
     {
-        ++$this->postNumber;
+        $this->postNumber = ($this->postNumber ?? 0) + $amount;
+
+        return $this;
+    }
+
+    public function decPostNumber(int $amount = 1): BoardInterface
+    {
+        $this->postNumber = max(0, ($this->postNumber ?? 0) - $amount);
 
         return $this;
     }
@@ -137,6 +143,13 @@ class Board implements BoardInterface, RouteableInterface
     public function incThreadNumber(): BoardInterface
     {
         ++$this->threadNumber;
+
+        return $this;
+    }
+
+    public function decThreadNumber(): BoardInterface
+    {
+        $this->threadNumber = max(0, ($this->threadNumber ?? 0) - 1);
 
         return $this;
     }
