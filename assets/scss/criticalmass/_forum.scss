@@ -1,0 +1,59 @@
+// Darstellung der Beitragstexte im Forum — gilt gleichermaßen für den fertigen
+// Beitrag und die Vorschau im Editor, damit beide gleich aussehen.
+.post-content {
+  overflow-wrap: break-word;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  blockquote {
+    margin: 0 0 1rem;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-left: 3px solid var(--bs-border-color);
+    color: var(--bs-secondary-color);
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  pre {
+    padding: 0.75rem 1rem;
+    border-radius: var(--bs-border-radius);
+    background-color: var(--bs-tertiary-bg);
+    overflow-x: auto;
+  }
+
+  :not(pre) > code {
+    padding: 0.1em 0.35em;
+    border-radius: var(--bs-border-radius-sm);
+    background-color: var(--bs-tertiary-bg);
+  }
+
+  table {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: block;
+    overflow-x: auto;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.markdown-editor {
+  textarea {
+    resize: vertical;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .nav-tabs .nav-link {
+    padding-block: 0.35rem;
+  }
+}

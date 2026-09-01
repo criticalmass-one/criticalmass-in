@@ -1,0 +1,62 @@
+{# Markdown-Feld mit Werkzeugleiste, Tastenkürzeln und serverseitiger Vorschau. #}
+{% set editorId = editorId|default('markdown-editor') %}
+
+<div class="markdown-editor"
+     id="{{ editorId }}"
+     data-controller="markdown-editor"
+     data-markdown-editor-preview-url-value="{{ path('caldera_criticalmass_post_preview') }}"
+     data-action="markdown-editor:quote->markdown-editor#quote">
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button type="button" class="nav-link active" role="tab" aria-selected="true"
+                    data-markdown-editor-target="writeTab"
+                    data-action="markdown-editor#showWrite">Schreiben</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button type="button" class="nav-link" role="tab" aria-selected="false"
+                    data-markdown-editor-target="previewTab"
+                    data-action="markdown-editor#showPreview">Vorschau</button>
+        </li>
+    </ul>
+
+    <div class="border border-top-0 rounded-bottom p-2">
+        <div data-markdown-editor-target="writePane">
+            <div class="btn-toolbar mb-2" role="toolbar" aria-label="Formatierung">
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-outline-secondary" title="Fett (Strg+B)"
+                            data-format="bold" data-action="markdown-editor#format"><i class="fas fa-bold"></i></button>
+                    <button type="button" class="btn btn-outline-secondary" title="Kursiv (Strg+I)"
+                            data-format="italic" data-action="markdown-editor#format"><i class="fas fa-italic"></i></button>
+                    <button type="button" class="btn btn-outline-secondary" title="Link (Strg+K)"
+                            data-format="link" data-action="markdown-editor#format"><i class="fas fa-link"></i></button>
+                </div>
+                <div class="btn-group btn-group-sm ms-2" role="group">
+                    <button type="button" class="btn btn-outline-secondary" title="Liste"
+                            data-format="list" data-action="markdown-editor#format"><i class="fas fa-list-ul"></i></button>
+                    <button type="button" class="btn btn-outline-secondary" title="Zitat"
+                            data-format="quote" data-action="markdown-editor#format"><i class="fas fa-quote-right"></i></button>
+                    <button type="button" class="btn btn-outline-secondary" title="Code"
+                            data-format="code" data-action="markdown-editor#format"><i class="fas fa-code"></i></button>
+                    <button type="button" class="btn btn-outline-secondary" title="Code-Block"
+                            data-format="codeblock" data-action="markdown-editor#format"><i class="fas fa-file-code"></i></button>
+                </div>
+            </div>
+
+            {{ form_widget(field, { 'attr': {
+                'class': 'form-control border-0',
+                'rows': rows|default(8),
+                'placeholder': placeholder|default('Schreibe hier deinen Beitrag. Markdown ist erlaubt.'),
+                'data-markdown-editor-target': 'input'
+            } }) }}
+        </div>
+
+        <div class="post-content p-2" data-markdown-editor-target="previewPane" hidden>
+            <div data-markdown-editor-target="preview"></div>
+        </div>
+    </div>
+
+    <p class="form-text">
+        Markdown: <code>**fett**</code>, <code>_kursiv_</code>, <code>&gt; Zitat</code>, <code>- Liste</code>
+    </p>
+</div>

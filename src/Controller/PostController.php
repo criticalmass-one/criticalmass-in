@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Criticalmass\Forum\ForumStatistics;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\TextParser\TextParserInterface;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
@@ -116,6 +117,23 @@ class PostController extends AbstractController
         return $this->render('Post/write_failed.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * Die Vorschau rendert serverseitig mit demselben Parser wie der fertige Beitrag.
+     * Ein zweiter Markdown-Renderer im Browser wuerde frueher oder spaeter abweichen.
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/post/preview', name: 'caldera_criticalmass_post_preview', methods: ['POST'], priority: 130)]
+    public function previewAction(Request $request, TextParserInterface $textParser): Response
+    {
+        $message = trim((string) $request->request->get('message', ''));
+
+        if ('' === $message) {
+            return new Response('<p class="text-muted fst-italic mb-0">Noch nichts geschrieben.</p>');
+        }
+
+        return new Response($textParser->parse($message));
     }
 
     #[IsGranted('ROLE_USER')]
