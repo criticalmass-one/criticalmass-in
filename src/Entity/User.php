@@ -121,6 +121,14 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Ignore]
     protected bool $ownProfilePhoto = false;
 
+    /**
+     * Der Hauptschalter für Forums-Benachrichtigungen. Steht er aus, bleiben die
+     * Abonnements bestehen, es geht nur keine Mail mehr raus.
+     */
+    #[ORM\Column(name: 'forum_notifications', type: 'boolean', options: ['default' => 1])]
+    #[Ignore]
+    protected bool $forumNotifications = true;
+
     #[ORM\OneToMany(targetEntity: 'App\Entity\SocialNetworkProfile', mappedBy: 'createdBy')]
     #[Ignore]
     private Collection $socialNetworkProfiles;
@@ -628,6 +636,18 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function setLastLogin(?\DateTime $lastLogin = null): self
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function wantsForumNotifications(): bool
+    {
+        return $this->forumNotifications;
+    }
+
+    public function setForumNotifications(bool $forumNotifications): User
+    {
+        $this->forumNotifications = $forumNotifications;
 
         return $this;
     }

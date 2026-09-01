@@ -10,6 +10,7 @@ use App\Repository\CityRepository;
 use App\Repository\PostRepository;
 use App\Repository\ThreadRepository;
 use App\Entity\City;
+use App\Entity\ForumSubscription;
 use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
@@ -87,9 +88,11 @@ class BoardController extends AbstractController
         if ($board) {
             $query = $threadRepository->queryThreadsForBoard($board);
             $newThreadUrl = $objectRouter->generate($board, 'caldera_criticalmass_board_addthread');
+            $subscribeUrl = $this->generateUrl('caldera_criticalmass_forum_subscribe_board', ['boardSlug' => $board->getSlug()]);
         } else {
             $query = $threadRepository->queryThreadsForCity($city);
             $newThreadUrl = $objectRouter->generate($city, 'caldera_criticalmass_board_addcitythread');
+            $subscribeUrl = $this->generateUrl('caldera_criticalmass_forum_subscribe_city', ['citySlug' => $city->getMainSlugString()]);
         }
 
         $threads = $paginator->paginate($query, $request->query->getInt('page', 1), self::THREADS_PER_PAGE);
@@ -98,6 +101,7 @@ class BoardController extends AbstractController
             'threads' => $threads,
             'board' => ($board ? $board : $city),
             'newThreadUrl' => $newThreadUrl,
+            'subscribeUrl' => $subscribeUrl,
         ]);
     }
 
@@ -374,6 +378,14 @@ class BoardController extends AbstractController
             $em->persist($thread);
             $em->persist($board);
 
+            $em->flush();
+
+            // Wer ein Thema eroeffnet, verfolgt es in aller Regel weiter.
+            $subscription = (new ForumSubscription())
+                ->setUser($post->getUser())
+                ->setThread($thread);
+
+            $em->persist($subscription);
             $em->flush();
 
             return $this->redirect($objectRouter->generate($thread));

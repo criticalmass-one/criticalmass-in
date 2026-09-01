@@ -49,6 +49,14 @@
                         </button>
                     </form>
                 {% endif %}
+                {% if app.user %}
+                    <form method="post" action="{{ path('caldera_criticalmass_forum_subscribe_thread', { 'threadSlug': thread.slug }) }}">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                            <i class="far fa-bell me-1"></i>
+                            <span class="d-none d-sm-inline">Abonnieren</span>
+                        </button>
+                    </form>
+                {% endif %}
                 {% if is_granted('move', thread) %}
                     <a href="{{ path('caldera_criticalmass_board_movethread', { 'threadSlug': thread.slug }) }}"
                        class="btn btn-outline-secondary btn-sm">
