@@ -185,6 +185,13 @@ class Thread implements RouteableInterface, PostableInterface
         return $this;
     }
 
+    public function decPostNumber(): Thread
+    {
+        $this->postNumber = max(0, ($this->postNumber ?? 0) - 1);
+
+        return $this;
+    }
+
     public function setSlug(string $slug): Thread
     {
         $this->slug = $slug;

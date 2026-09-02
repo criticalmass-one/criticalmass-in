@@ -33,4 +33,20 @@ class ThreadVoter extends AbstractVoter
     {
         return $user->hasRole('ROLE_ADMIN');
     }
+
+    /**
+     * Ein Thema in ein anderes Forum zu schieben ist eine Aufräumarbeit der Administration.
+     */
+    protected function canMove(Thread $thread, User $user): bool
+    {
+        return $user->hasRole('ROLE_ADMIN');
+    }
+
+    /**
+     * Ein ganzes Thema zurückzuziehen darf, wer es eröffnet hat — und jeder Admin.
+     */
+    protected function canDelete(Thread $thread, User $user): bool
+    {
+        return $this->canEdit($thread, $user);
+    }
 }

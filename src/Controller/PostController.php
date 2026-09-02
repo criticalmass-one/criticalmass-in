@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\Forum\ForumStatistics;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
@@ -148,6 +149,29 @@ class PostController extends AbstractController
             'post' => $post,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/post/disable/{postId}', name: 'caldera_criticalmass_post_disable', methods: ['POST'], priority: 120)]
+    public function disableAction(
+        ObjectRouterInterface $objectRouter,
+        ForumStatistics $forumStatistics,
+        #[MapEntity(mapping: ['postId' => 'id'])] Post $post
+    ): Response {
+        $this->denyAccessUnlessGranted('delete', $post);
+
+        $thread = $post->getThread();
+        $board = $thread?->getCity() ?? $thread?->getBoard();
+
+        $forumStatistics->disablePost($post, $board instanceof BoardInterface ? $board : null);
+
+        $post->setEnabled(false);
+
+        $this->managerRegistry->getManager()->flush();
+
+        $this->addFlash('success', 'Dein Beitrag wurde zurückgezogen.');
+
+        return $this->redirect($this->generatePostUrl($post, $objectRouter));
     }
 
     /**

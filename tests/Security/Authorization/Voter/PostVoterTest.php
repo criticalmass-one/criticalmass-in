@@ -68,6 +68,41 @@ class PostVoterTest extends TestCase
         );
     }
 
+    public function testAuthorMayWithdrawAReply(): void
+    {
+        $author = $this->user();
+        $thread = new \App\Entity\Thread();
+        $thread->setFirstPost((new Post())->setUser($author));
+
+        $reply = (new Post())->setUser($author);
+        $reply->setThread($thread);
+
+        self::assertSame(
+            VoterInterface::ACCESS_GRANTED,
+            (new PostVoter())->vote($this->token($author), $reply, ['delete'])
+        );
+    }
+
+    public function testNobodyMayWithdrawTheFirstPostOfAThread(): void
+    {
+        $author = $this->user();
+        $firstPost = (new Post())->setUser($author);
+
+        $thread = new \App\Entity\Thread();
+        $thread->setFirstPost($firstPost);
+        $firstPost->setThread($thread);
+
+        $voter = new PostVoter();
+
+        // Ohne ersten Beitrag stuende ein Thema ohne Anfang da — dafuer gibt es
+        // stattdessen das Zurueckziehen des ganzen Themas.
+        self::assertSame(VoterInterface::ACCESS_DENIED, $voter->vote($this->token($author), $firstPost, ['delete']));
+        self::assertSame(
+            VoterInterface::ACCESS_DENIED,
+            $voter->vote($this->token($this->user(['ROLE_ADMIN'])), $firstPost, ['delete'])
+        );
+    }
+
     public function testVoterAbstainsOnForeignAttributes(): void
     {
         $post = (new Post())->setUser($this->user());
@@ -76,7 +111,7 @@ class PostVoterTest extends TestCase
         // für fremde Attribute zuständig erklärt, würde andere Entscheidungen kippen.
         self::assertSame(
             VoterInterface::ACCESS_ABSTAIN,
-            (new PostVoter())->vote($this->token($this->user()), $post, ['delete'])
+            (new PostVoter())->vote($this->token($this->user()), $post, ['archive'])
         );
     }
 

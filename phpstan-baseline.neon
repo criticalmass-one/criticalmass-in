@@ -2443,12 +2443,6 @@ parameters:
 			path: src/Entity/BlockedCity.php
 
 		-
-			message: '#^Access to an undefined property App\\Entity\\Board\:\:\$dateTime\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Entity/Board.php
-
-		-
 			message: '#^Method App\\Entity\\City\:\:getColor\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1

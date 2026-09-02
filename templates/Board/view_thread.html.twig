@@ -39,12 +39,31 @@
                         </button>
                     </form>
                 {% endif %}
+                {% if is_granted('move', thread) %}
+                    <a href="{{ path('caldera_criticalmass_board_movethread', { 'threadSlug': thread.slug }) }}"
+                       class="btn btn-outline-secondary btn-sm">
+                        <i class="far fa-share-square me-1"></i>
+                        <span class="d-none d-sm-inline">Verschieben</span>
+                    </a>
+                {% endif %}
                 {% if is_granted('edit', thread) %}
                     <a href="{{ path('caldera_criticalmass_board_editthread', { 'threadSlug': thread.slug }) }}"
                        class="btn btn-outline-secondary btn-sm">
                         <i class="far fa-edit me-1"></i>
                         <span class="d-none d-sm-inline">Titel bearbeiten</span>
                     </a>
+                {% endif %}
+                {% if is_granted('delete', thread) %}
+                    <form method="post"
+                          action="{{ path('caldera_criticalmass_board_disablethread', { 'threadSlug': thread.slug }) }}"
+                          data-controller="confirm-submit"
+                          data-confirm-submit-message-value="Dieses Thema mitsamt allen Beiträgen zurückziehen?"
+                          data-action="submit->confirm-submit#confirm">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                            <i class="far fa-trash-alt me-1"></i>
+                            <span class="d-none d-sm-inline">Thema zur&uuml;ckziehen</span>
+                        </button>
+                    </form>
                 {% endif %}
                 {% if app.getUser() and not thread.locked %}
                     <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal-add-post">
