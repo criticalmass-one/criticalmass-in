@@ -27,7 +27,10 @@ class ForumSubscriptionRepositoryTest extends KernelTestCase
         self::bootKernel();
 
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
-        $this->repository = $this->entityManager->getRepository(ForumSubscription::class);
+
+        $repository = static::getContainer()->get(ForumSubscriptionRepository::class);
+        self::assertInstanceOf(ForumSubscriptionRepository::class, $repository);
+        $this->repository = $repository;
 
         // Die Tests teilen sich eine Datenbank ohne Rollback; ohne diesen Schnitt
         // findet ein Test die Abos des vorherigen.
