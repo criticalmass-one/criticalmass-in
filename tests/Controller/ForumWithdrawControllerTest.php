@@ -29,9 +29,20 @@ class ForumWithdrawControllerTest extends AbstractControllerTestCase
         return (string) $thread->getSlug();
     }
 
+    /**
+     * Antwortet ueber das echte Formular. Ein roher POST scheitert an der
+     * CSRF-Pruefung, und das Formular meldet den Fehler still zurueck.
+     */
     private function reply(KernelBrowser $client, string $threadSlug, string $message): void
     {
-        $client->request('POST', '/post/write/thread/' . $threadSlug, ['post' => ['message' => $message]]);
+        $crawler = $client->request('GET', '/post/write/thread/' . $threadSlug);
+
+        $form = $crawler->selectButton('Speichern')->form();
+        $form['post[message]'] = $message;
+
+        $client->submit($form);
+
+        self::assertEquals(302, $client->getResponse()->getStatusCode(), 'Die Antwort sollte gespeichert werden.');
     }
 
     private function thread(string $slug): Thread
