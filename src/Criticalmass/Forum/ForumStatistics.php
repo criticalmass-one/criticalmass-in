@@ -53,7 +53,7 @@ class ForumStatistics
             $thread->decPostNumber();
 
             if ($thread->getLastPost() === $post) {
-                $thread->setLastPost($this->postRepository->findLatestPostForThread($thread));
+                $thread->setLastPost($this->postRepository->findLatestPostForThread($thread, $post));
             }
         }
 
@@ -69,6 +69,6 @@ class ForumStatistics
             return;
         }
 
-        $board->setLastThread($this->threadRepository->findLatestThread($board));
+        $board->setLastThread($this->threadRepository->findLatestThread($board, $thread));
     }
 }

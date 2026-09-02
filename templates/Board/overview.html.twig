@@ -20,6 +20,7 @@
         {% if app.user %}
             <div class="d-flex gap-2 mb-4">
                 <form method="post" action="{{ path('caldera_criticalmass_forum_subscribe_global') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-subscribe') }}">
                     <button type="submit" class="btn btn-outline-secondary btn-sm">
                         <i class="far fa-bell me-1"></i>Gesamtes Forum abonnieren
                     </button>

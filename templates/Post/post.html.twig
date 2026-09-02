@@ -70,6 +70,7 @@
                                   data-controller="confirm-submit"
                                   data-confirm-submit-message-value="Diesen Beitrag zurückziehen?"
                                   data-action="submit->confirm-submit#confirm">
+                                <input type="hidden" name="_token" value="{{ csrf_token('forum-moderate') }}">
                                 <button type="submit" class="btn btn-outline-danger btn-sm">
                                     <i class="far fa-trash-alt me-1"></i>Zur&uuml;ckziehen
                                 </button>

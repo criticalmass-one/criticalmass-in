@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\Forum\ForumNotifier;
 use App\Criticalmass\Forum\ForumStatistics;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
@@ -60,7 +61,7 @@ class BoardController extends AbstractController
         if (mb_strlen($term) >= self::MINIMUM_SEARCH_LENGTH) {
             $results = $paginator->paginate(
                 $postRepository->querySearchInForum($term),
-                $request->query->getInt('page', 1),
+                max(1, $request->query->getInt('page', 1)),
                 self::RESULTS_PER_PAGE
             );
         }
@@ -96,7 +97,7 @@ class BoardController extends AbstractController
             $subscribeUrl = $this->generateUrl('caldera_criticalmass_forum_subscribe_city', ['citySlug' => $city->getMainSlugString()]);
         }
 
-        $threads = $paginator->paginate($query, $request->query->getInt('page', 1), self::THREADS_PER_PAGE);
+        $threads = $paginator->paginate($query, max(1, $request->query->getInt('page', 1)), self::THREADS_PER_PAGE);
 
         return $this->render('Board/list_threads.html.twig', [
             'threads' => $threads,
@@ -114,9 +115,13 @@ class BoardController extends AbstractController
         PostRepository $postRepository,
         Thread $thread
     ): Response {
+        // Der ThreadValueResolver filtert nicht auf enabled; ohne diese Pruefung bliebe
+        // ein zurueckgezogenes Thema unter seiner Adresse weiter lesbar.
+        $this->denyWithdrawnThread($thread);
+
         $posts = $paginator->paginate(
             $postRepository->queryPostsForThread($thread),
-            $request->query->getInt('page', 1),
+            max(1, $request->query->getInt('page', 1)),
             self::POSTS_PER_PAGE
         );
 
@@ -137,6 +142,7 @@ class BoardController extends AbstractController
         ThreadRepository $threadRepository,
         #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
     ): Response {
+        $this->denyWithdrawnThread($thread);
         $this->denyAccessUnlessGranted('edit', $thread);
 
         $form = $this->createForm(ThreadType::class, $thread);
@@ -162,10 +168,13 @@ class BoardController extends AbstractController
     #[IsGranted('ROLE_USER')]
     #[Route('/thread/lock/{threadSlug}', name: 'caldera_criticalmass_board_lockthread', methods: ['POST'], priority: 240)]
     public function lockThreadAction(
+        Request $request,
         ObjectRouterInterface $objectRouter,
         #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
     ): Response {
+        $this->denyWithdrawnThread($thread);
         $this->denyAccessUnlessGranted('lock', $thread);
+        $this->denyInvalidToken($request, 'forum-moderate');
 
         $thread->setLocked(!$thread->isLocked());
 
@@ -181,10 +190,13 @@ class BoardController extends AbstractController
     #[IsGranted('ROLE_USER')]
     #[Route('/thread/pin/{threadSlug}', name: 'caldera_criticalmass_board_pinthread', methods: ['POST'], priority: 240)]
     public function pinThreadAction(
+        Request $request,
         ObjectRouterInterface $objectRouter,
         #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
     ): Response {
+        $this->denyWithdrawnThread($thread);
         $this->denyAccessUnlessGranted('pin', $thread);
+        $this->denyInvalidToken($request, 'forum-moderate');
 
         $thread->setSticky(!$thread->isSticky());
 
@@ -207,6 +219,7 @@ class BoardController extends AbstractController
         ForumStatistics $forumStatistics,
         #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
     ): Response {
+        $this->denyWithdrawnThread($thread);
         $this->denyAccessUnlessGranted('move', $thread);
 
         $targets = [];
@@ -268,14 +281,23 @@ class BoardController extends AbstractController
     #[IsGranted('ROLE_USER')]
     #[Route('/thread/disable/{threadSlug}', name: 'caldera_criticalmass_board_disablethread', methods: ['POST'], priority: 240)]
     public function disableThreadAction(
+        Request $request,
         ObjectRouterInterface $objectRouter,
         ForumStatistics $forumStatistics,
         PostRepository $postRepository,
         #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
     ): Response {
         $this->denyAccessUnlessGranted('delete', $thread);
+        $this->denyInvalidToken($request, 'forum-moderate');
 
         $board = $thread->getCity() ?? $thread->getBoard();
+
+        // Ein zweiter POST wuerde Themen- und Beitragszahl erneut senken.
+        if (!$thread->getEnabled()) {
+            return $this->redirect($board instanceof BoardInterface
+                ? $objectRouter->generate($board)
+                : $this->generateUrl('caldera_criticalmass_board_overview'));
+        }
 
         if ($board instanceof BoardInterface) {
             $forumStatistics->disableThread($thread, $board);
@@ -294,6 +316,25 @@ class BoardController extends AbstractController
         return $this->redirect($board instanceof BoardInterface
             ? $objectRouter->generate($board)
             : $this->generateUrl('caldera_criticalmass_board_overview'));
+    }
+
+    /**
+     * Diese Formulare sind von Hand geschrieben, nicht ueber die Form-Komponente --
+     * die Token-Pruefung muss darum ausdruecklich passieren. SameSite=lax allein ist
+     * fuer Aktionen, die Inhalte entfernen, zu wenig.
+     */
+    protected function denyInvalidToken(Request $request, string $intent): void
+    {
+        if (!$this->isCsrfTokenValid($intent, (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Ungültiges Formular-Token.');
+        }
+    }
+
+    protected function denyWithdrawnThread(Thread $thread): void
+    {
+        if (!$thread->getEnabled()) {
+            throw $this->createNotFoundException('Dieses Thema wurde zurückgezogen.');
+        }
     }
 
     /**
@@ -319,6 +360,7 @@ class BoardController extends AbstractController
     public function addThreadAction(
         Request $request,
         ObjectRouterInterface $objectRouter,
+        ForumNotifier $forumNotifier,
         #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
         ?City $city = null
     ): Response {
@@ -331,7 +373,7 @@ class BoardController extends AbstractController
             ->getForm();
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addThreadPostAction($request, $objectRouter, $board, $form);
+            return $this->addThreadPostAction($request, $objectRouter, $forumNotifier, $board, $form);
         } else {
             return $this->addThreadGetAction($request, $objectRouter, $board, $form);
         }
@@ -345,7 +387,7 @@ class BoardController extends AbstractController
         ]);
     }
 
-    protected function addThreadPostAction(Request $request, ObjectRouterInterface $objectRouter, BoardInterface $board, FormInterface $form): Response
+    protected function addThreadPostAction(Request $request, ObjectRouterInterface $objectRouter, ForumNotifier $forumNotifier, BoardInterface $board, FormInterface $form): Response
     {
         $form->handleRequest($request);
 
@@ -397,6 +439,10 @@ class BoardController extends AbstractController
 
             $em->persist($subscription);
             $em->flush();
+
+            // Wer ein ganzes Forum abonniert hat, will gerade von neuen Themen erfahren --
+            // nicht nur von Antworten auf bestehende.
+            $forumNotifier->notifyAboutPost($post);
 
             return $this->redirect($objectRouter->generate($thread));
         }

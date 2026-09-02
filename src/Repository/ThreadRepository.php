@@ -61,7 +61,7 @@ class ThreadRepository extends ServiceEntityRepository
      * Das zuletzt aktive Thema eines Forums — Grundlage für die Anzeige „letzter Beitrag“,
      * wenn das bisherige lastThread verschoben oder deaktiviert wurde.
      */
-    public function findLatestThread(BoardInterface $board): ?Thread
+    public function findLatestThread(BoardInterface $board, ?Thread $exclude = null): ?Thread
     {
         $builder = $this->createQueryBuilder('t');
 
@@ -74,6 +74,15 @@ class ThreadRepository extends ServiceEntityRepository
             ->setParameter('enabled', true)
             ->orderBy('lastPost.dateTime', 'DESC')
             ->setMaxResults(1);
+
+        if (null !== $exclude && null !== $exclude->getId()) {
+            // Der Aufrufer entfernt dieses Thema gerade. Bis zum flush() steht es noch
+            // unveraendert in der Datenbank und waere sonst sein eigener Nachfolger.
+            // Die Bedingung muss nach where() kommen -- where() ersetzt die Klausel.
+            $builder
+                ->andWhere($builder->expr()->neq('t.id', ':exclude'))
+                ->setParameter('exclude', $exclude->getId());
+        }
 
         return $builder->getQuery()->getOneOrNullResult();
     }

@@ -56,6 +56,16 @@ class ForumWithdrawControllerTest extends AbstractControllerTestCase
         return $thread;
     }
 
+    private function tokenFrom(KernelBrowser $client, string $pageUrl, string $actionFragment): string
+    {
+        $crawler = $client->request('GET', $pageUrl);
+        $field = $crawler->filter(sprintf('form[action*="%s"] input[name="_token"]', $actionFragment));
+
+        self::assertGreaterThan(0, $field->count(), 'Das Formular sollte ein Token mitliefern.');
+
+        return (string) $field->first()->attr('value');
+    }
+
     public function testAuthorCanWithdrawTheirReply(): void
     {
         $client = static::createClient();
@@ -68,7 +78,8 @@ class ForumWithdrawControllerTest extends AbstractControllerTestCase
         self::assertInstanceOf(Post::class, $reply);
         $replyId = $reply->getId();
 
-        $client->request('POST', '/post/disable/' . $replyId);
+        $token = $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/post/disable/' . $replyId);
+        $client->request('POST', '/post/disable/' . $replyId, ['_token' => $token]);
         self::assertEquals(302, $client->getResponse()->getStatusCode());
 
         $doctrine = static::getContainer()->get('doctrine');
@@ -86,7 +97,9 @@ class ForumWithdrawControllerTest extends AbstractControllerTestCase
         $firstPost = $this->thread($slug)->getFirstPost();
         self::assertInstanceOf(Post::class, $firstPost);
 
-        $client->request('POST', '/post/disable/' . $firstPost->getId());
+        // Der erste Beitrag hat gar keinen Zurueckziehen-Knopf; die Rechtepruefung
+        // greift vor der Token-Pruefung.
+        $client->request('POST', '/post/disable/' . $firstPost->getId(), ['_token' => 'egal']);
 
         self::assertEquals(403, $client->getResponse()->getStatusCode());
     }
@@ -98,7 +111,8 @@ class ForumWithdrawControllerTest extends AbstractControllerTestCase
 
         $slug = $this->openThread($client, 'Ganzes Thema zurueckziehen');
 
-        $client->request('POST', '/thread/disable/' . $slug);
+        $token = $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/thread/disable/');
+        $client->request('POST', '/thread/disable/' . $slug, ['_token' => $token]);
         self::assertEquals(302, $client->getResponse()->getStatusCode());
 
         $doctrine = static::getContainer()->get('doctrine');
@@ -115,7 +129,7 @@ class ForumWithdrawControllerTest extends AbstractControllerTestCase
         $slug = $this->openThread($client, 'Fremdes Thema bleibt');
 
         $this->loginAs($client, 'cyclist@criticalmass.in');
-        $client->request('POST', '/thread/disable/' . $slug);
+        $client->request('POST', '/thread/disable/' . $slug, ['_token' => 'egal']);
 
         self::assertEquals(403, $client->getResponse()->getStatusCode());
     }

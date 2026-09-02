@@ -172,7 +172,9 @@ class PostController extends AbstractController
             return new Response('<p class="text-muted fst-italic mb-0">Noch nichts geschrieben.</p>');
         }
 
-        return new Response($textParser->parse($message));
+        // Ohne Cache: Jede Zwischenfassung eines Entwurfs wuerde sonst eine Datei
+        // mit sieben Tagen Lebensdauer hinterlassen, die nie wieder gelesen wird.
+        return new Response($textParser->parseWithoutCache($message));
     }
 
     #[IsGranted('ROLE_USER')]
@@ -212,12 +214,22 @@ class PostController extends AbstractController
     #[IsGranted('ROLE_USER')]
     #[Route('/post/disable/{postId}', name: 'caldera_criticalmass_post_disable', methods: ['POST'], priority: 120)]
     public function disableAction(
+        Request $request,
         ObjectRouterInterface $objectRouter,
         ForumStatistics $forumStatistics,
         PostRepository $postRepository,
         #[MapEntity(mapping: ['postId' => 'id'])] Post $post
     ): Response {
         $this->denyAccessUnlessGranted('delete', $post);
+
+        if (!$this->isCsrfTokenValid('forum-moderate', (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Ungültiges Formular-Token.');
+        }
+
+        // Zurueck-Knopf und Doppelklick wuerden die Zaehler ein zweites Mal senken.
+        if (!$post->getEnabled()) {
+            return $this->redirect($this->generatePostUrl($post, $objectRouter, $postRepository));
+        }
 
         $thread = $post->getThread();
         $board = $thread?->getCity() ?? $thread?->getBoard();

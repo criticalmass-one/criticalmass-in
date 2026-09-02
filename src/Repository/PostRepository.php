@@ -122,13 +122,14 @@ class PostRepository extends ServiceEntityRepository
                 $builder->expr()->like('p.message', ':term'),
                 $builder->expr()->like('t.title', ':term')
             ))
-            ->setParameter('term', '%' . $term . '%')
+            // % und _ sind LIKE-Platzhalter: "100%" wuerde sonst jeden Beitrag treffen.
+            ->setParameter('term', '%' . addcslashes($term, '%_\\') . '%')
             ->orderBy('p.dateTime', 'DESC');
 
         return $builder->getQuery();
     }
 
-    public function findLatestPostForThread(Thread $thread): ?Post
+    public function findLatestPostForThread(Thread $thread, ?Post $exclude = null): ?Post
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -139,7 +140,16 @@ class PostRepository extends ServiceEntityRepository
             ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->orderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
             ->setMaxResults(1);
+
+        if (null !== $exclude && null !== $exclude->getId()) {
+            // Wie beim Thema: Der Beitrag wird gerade zurueckgezogen, steht aber noch
+            // als aktiviert in der Datenbank. Nach where(), das die Klausel ersetzt.
+            $builder
+                ->andWhere($builder->expr()->neq('p.id', ':exclude'))
+                ->setParameter('exclude', $exclude->getId());
+        }
 
         return $builder->getQuery()->getOneOrNullResult();
     }
@@ -162,7 +172,10 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('thread', $thread)
             ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->addOrderBy('p.dateTime', 'ASC');
+            ->addOrderBy('p.dateTime', 'ASC')
+            // Gleiche Sekunde: ohne zweites Kriterium ist die Reihenfolge zufaellig,
+            // und die Seitenzahl eines Dauerlinks stimmt dann nicht mehr.
+            ->addOrderBy('p.id', 'ASC');
 
         return $builder->getQuery();
     }
@@ -187,8 +200,15 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('thread', $thread)
             ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->lte('p.dateTime', ':dateTime'))
-            ->setParameter('dateTime', $post->getDateTime());
+            ->andWhere($builder->expr()->orX(
+                $builder->expr()->lt('p.dateTime', ':dateTime'),
+                $builder->expr()->andX(
+                    $builder->expr()->eq('p.dateTime', ':dateTime'),
+                    $builder->expr()->lte('p.id', ':id')
+                )
+            ))
+            ->setParameter('dateTime', $post->getDateTime())
+            ->setParameter('id', $post->getId());
 
         return max(1, (int) $builder->getQuery()->getSingleScalarResult());
     }

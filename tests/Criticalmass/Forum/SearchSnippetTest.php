@@ -44,6 +44,31 @@ class SearchSnippetTest extends TestCase
         self::assertStringNotContainsString('<b>', $result);
     }
 
+    public function testASearchTermDoesNotBreakEscapedEntities(): void
+    {
+        // Wird erst maskiert und dann markiert, zerlegt „quot“ das &quot; aus dem
+        // Maskieren und der Leser sieht Zeichensalat.
+        $result = $this->snippet->build('Er sagte "hallo" und ging.', 'quot');
+
+        self::assertStringContainsString('&quot;', $result);
+        self::assertStringNotContainsString('<mark>quot</mark>', $result);
+    }
+
+    public function testMarkingStillWorksInsideEscapedText(): void
+    {
+        $result = $this->snippet->build('Er sagte "Rathaus" laut.', 'Rathaus');
+
+        self::assertStringContainsString('&quot;<mark>Rathaus</mark>&quot;', $result);
+    }
+
+    public function testControlCharactersInTheTextAreDropped(): void
+    {
+        $result = $this->snippet->build("Nadel\x02 im Heu", 'Nadel');
+
+        self::assertStringContainsString('<mark>Nadel</mark>', $result);
+        self::assertStringNotContainsString("\x02", $result);
+    }
+
     public function testCutsLongTextAroundTheHit(): void
     {
         $text = str_repeat('Fülltext ', 200) . 'Nadel' . str_repeat(' Fülltext', 200);
