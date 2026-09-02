@@ -39,6 +39,20 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
         return $thread;
     }
 
+    /**
+     * Holt das Formular-Token aus der Seite. Die Moderationsformulare sind von Hand
+     * geschrieben, ihre Token stehen als verstecktes Feld im Markup.
+     */
+    private function tokenFrom(KernelBrowser $client, string $pageUrl, string $actionFragment): string
+    {
+        $crawler = $client->request('GET', $pageUrl);
+        $field = $crawler->filter(sprintf('form[action*="%s"] input[name="_token"]', $actionFragment));
+
+        self::assertGreaterThan(0, $field->count(), 'Das Formular sollte ein Token mitliefern.');
+
+        return (string) $field->first()->attr('value');
+    }
+
     public function testNewThreadsAreNeitherLockedNorSticky(): void
     {
         $client = static::createClient();
@@ -58,11 +72,11 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
 
         $this->loginAs($client, self::ADMIN);
 
-        $client->request('POST', '/thread/lock/' . $slug);
+        $client->request('POST', '/thread/lock/' . $slug, ['_token' => $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/thread/lock/')]);
         self::assertEquals(302, $client->getResponse()->getStatusCode());
         self::assertTrue($this->reloadThread($slug)->isLocked());
 
-        $client->request('POST', '/thread/lock/' . $slug);
+        $client->request('POST', '/thread/lock/' . $slug, ['_token' => $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/thread/lock/')]);
         self::assertFalse($this->reloadThread($slug)->isLocked(), 'Derselbe Endpunkt öffnet wieder.');
     }
 
@@ -72,7 +86,9 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
         $this->loginAs($client, self::AUTHOR);
         $slug = $this->openThread($client, 'Selbst schliessen verboten');
 
-        $client->request('POST', '/thread/lock/' . $slug);
+        // Ohne Berechtigung wird das Formular gar nicht erst angezeigt; die Rechtepruefung
+        // steht vor der Token-Pruefung, ein beliebiges Token genuegt also fuer den Test.
+        $client->request('POST', '/thread/lock/' . $slug, ['_token' => 'egal']);
 
         self::assertEquals(403, $client->getResponse()->getStatusCode());
     }
@@ -85,10 +101,10 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
 
         $this->loginAs($client, self::ADMIN);
 
-        $client->request('POST', '/thread/pin/' . $slug);
+        $client->request('POST', '/thread/pin/' . $slug, ['_token' => $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/thread/pin/')]);
         self::assertTrue($this->reloadThread($slug)->isSticky());
 
-        $client->request('POST', '/thread/pin/' . $slug);
+        $client->request('POST', '/thread/pin/' . $slug, ['_token' => $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/thread/pin/')]);
         self::assertFalse($this->reloadThread($slug)->isSticky());
     }
 
@@ -99,7 +115,7 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
         $slug = $this->openThread($client, 'Geschlossen fuer Antworten');
 
         $this->loginAs($client, self::ADMIN);
-        $client->request('POST', '/thread/lock/' . $slug);
+        $client->request('POST', '/thread/lock/' . $slug, ['_token' => $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/thread/lock/')]);
 
         $this->loginAs($client, self::AUTHOR);
         $client->request('POST', '/post/write/thread/' . $slug, ['post' => ['message' => 'Trotzdem!']]);
@@ -114,7 +130,7 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
         $slug = $this->openThread($client, 'Lesbar trotz Schloss');
 
         $this->loginAs($client, self::ADMIN);
-        $client->request('POST', '/thread/lock/' . $slug);
+        $client->request('POST', '/thread/lock/' . $slug, ['_token' => $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/thread/lock/')]);
 
         $crawler = $client->request('GET', '/boards/general/thread/' . $slug);
 
@@ -131,7 +147,7 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
         $this->openThread($client, 'Neueres Thema unten');
 
         $this->loginAs($client, self::ADMIN);
-        $client->request('POST', '/thread/pin/' . $olderSlug);
+        $client->request('POST', '/thread/pin/' . $olderSlug, ['_token' => $this->tokenFrom($client, '/boards/general/thread/' . $olderSlug, '/thread/pin/')]);
 
         $crawler = $client->request('GET', '/boards/general');
         $titles = $crawler->filter('.card-body strong')->each(fn ($node) => trim($node->text()));

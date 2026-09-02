@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/forum.html.twig' as forum %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Diskussionen{% endblock %}
@@ -19,6 +20,7 @@
         {% if app.user %}
             <div class="d-flex gap-2 mb-4">
                 <form method="post" action="{{ path('caldera_criticalmass_forum_subscribe_global') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-subscribe') }}">
                     <button type="submit" class="btn btn-outline-secondary btn-sm">
                         <i class="far fa-bell me-1"></i>Gesamtes Forum abonnieren
                     </button>
@@ -46,7 +48,7 @@
         </h4>
 
         {% for board in boards %}
-            <div class="card border-0 shadow-sm mb-3">
+            <div class="card border-0 shadow-sm mb-3 forum-card">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md-5">
@@ -67,15 +69,7 @@
                             {% if board.lastThread %}
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2">
-                                        {% if board.lastThread.lastPost.user.imageName %}
-                                            <img class="rounded-circle" width="40" height="40"
-                                                 src="{{ vich_uploader_asset(board.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
-                                                 alt="{{ board.lastThread.lastPost.user.username }}"/>
-                                        {% else %}
-                                            <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                                <i class="far fa-user text-secondary"></i>
-                                            </div>
-                                        {% endif %}
+                                        {{ forum.avatar(board.lastThread.lastPost.user, 40) }}
                                     </div>
                                     <div class="flex-grow-1">
                                         <a href="{{ object_path(board.lastThread) }}" class="text-decoration-none">
@@ -84,7 +78,7 @@
                                         <br/>
                                         <small class="text-muted">
                                             von {{ board.lastThread.lastPost.user.username }}
-                                            <i class="far fa-clock ms-1 me-1"></i>{{ board.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}
+                                            <i class="far fa-clock ms-1 me-1"></i><span title="{{ board.lastThread.lastPost.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}">{{ board.lastThread.lastPost.dateTime|time_ago }}</span>
                                         </small>
                                     </div>
                                 </div>
@@ -101,7 +95,7 @@
         </h4>
 
         {% for city in cities %}
-            <div class="card border-0 shadow-sm mb-3">
+            <div class="card border-0 shadow-sm mb-3 forum-card">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md-5">
@@ -122,15 +116,7 @@
                             {% if city.lastThread %}
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2">
-                                        {% if city.lastThread.lastPost.user.imageName %}
-                                            <img class="rounded-circle" width="40" height="40"
-                                                 src="{{ vich_uploader_asset(city.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
-                                                 alt="{{ city.lastThread.lastPost.user.username }}"/>
-                                        {% else %}
-                                            <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                                <i class="far fa-user text-secondary"></i>
-                                            </div>
-                                        {% endif %}
+                                        {{ forum.avatar(city.lastThread.lastPost.user, 40) }}
                                     </div>
                                     <div class="flex-grow-1">
                                         <a href="{{ object_path(city.lastThread) }}" class="text-decoration-none">

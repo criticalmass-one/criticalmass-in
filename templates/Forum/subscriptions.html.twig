@@ -19,6 +19,7 @@
             <div class="card-body">
                 <form method="post" action="{{ path('caldera_criticalmass_forum_subscriptions') }}"
                       data-controller="auto-submit">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-settings') }}">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch"
                                id="forum-notifications" name="notifications" value="1"
@@ -62,6 +63,7 @@
                             </small>
                         </div>
                         <form method="post" action="{{ path('caldera_criticalmass_forum_unsubscribe', { 'id': subscription.id }) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('forum-subscribe') }}">
                             <button type="submit" class="btn btn-outline-secondary btn-sm">Beenden</button>
                         </form>
                     </div>

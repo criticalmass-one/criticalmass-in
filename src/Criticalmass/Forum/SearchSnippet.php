@@ -13,9 +13,14 @@ class SearchSnippet
 {
     private const RADIUS = 120;
 
+    /** Steuerzeichen als Platzhalter für die Markierung; im Text werden sie entfernt. */
+    private const MARK_OPEN = "\x02";
+    private const MARK_CLOSE = "\x03";
+
     public function build(?string $text, string $term): string
     {
-        $text = trim(preg_replace('/\s+/', ' ', (string) $text) ?? '');
+        $text = str_replace([self::MARK_OPEN, self::MARK_CLOSE], '', (string) $text);
+        $text = trim(preg_replace('/\s+/', ' ', $text) ?? '');
         $term = trim($term);
 
         if ('' === $text) {
@@ -29,7 +34,7 @@ class SearchSnippet
         $position = mb_stripos($text, $term);
         $excerpt = $this->shorten($text, false === $position ? 0 : (int) $position);
 
-        return $this->highlight(htmlspecialchars($excerpt, ENT_QUOTES, 'UTF-8'), $term);
+        return $this->highlight($excerpt, $term);
     }
 
     private function shorten(string $text, int $position): string
@@ -45,14 +50,27 @@ class SearchSnippet
     }
 
     /**
-     * Markiert die Fundstellen im bereits maskierten Text. Der Suchbegriff wird ebenso
-     * maskiert, damit er auf die maskierte Fassung passt.
+     * Markiert die Fundstellen und maskiert danach.
+     *
+     * Andersherum -- erst maskieren, dann markieren -- zerlegt ein Suchbegriff wie
+     * „quot“ die Entities, die beim Maskieren entstanden sind: aus &quot; wuerde
+     * &<mark>quot</mark>; und damit sichtbarer Zeichensalat. Die Fundstellen werden
+     * deshalb zuerst mit zwei Steuerzeichen eingefasst, die im Text nicht vorkommen
+     * duerfen, und erst nach dem Maskieren zu echten Markierungen.
      */
-    private function highlight(string $escapedText, string $term): string
+    private function highlight(string $excerpt, string $term): string
     {
-        $escapedTerm = htmlspecialchars($term, ENT_QUOTES, 'UTF-8');
-        $pattern = '/' . preg_quote($escapedTerm, '/') . '/iu';
+        $pattern = '/' . preg_quote($term, '/') . '/iu';
+        $marked = preg_replace($pattern, self::MARK_OPEN . '$0' . self::MARK_CLOSE, $excerpt);
 
-        return preg_replace($pattern, '<mark>$0</mark>', $escapedText) ?? $escapedText;
+        if (null === $marked) {
+            return htmlspecialchars($excerpt, ENT_QUOTES, 'UTF-8');
+        }
+
+        return str_replace(
+            [self::MARK_OPEN, self::MARK_CLOSE],
+            ['<mark>', '</mark>'],
+            htmlspecialchars($marked, ENT_QUOTES, 'UTF-8')
+        );
     }
 }

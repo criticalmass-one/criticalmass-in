@@ -99,7 +99,9 @@ class ForumSearchControllerTest extends AbstractControllerTestCase
         $doctrine->getManager()->clear();
         $reply = $doctrine->getRepository(Thread::class)->findOneBy(['slug' => $slug])->getLastPost();
 
-        $client->request('POST', '/post/disable/' . $reply->getId());
+        $crawler = $client->request('GET', '/boards/general/thread/' . $slug);
+        $token = (string) $crawler->filter('form[action*="/post/disable/' . $reply->getId() . '"] input[name="_token"]')->first()->attr('value');
+        $client->request('POST', '/post/disable/' . $reply->getId(), ['_token' => $token]);
 
         $crawler = $client->request('GET', '/boards/search', ['q' => 'Rueckzugswort']);
 

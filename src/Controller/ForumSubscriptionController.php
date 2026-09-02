@@ -20,10 +20,12 @@ class ForumSubscriptionController extends AbstractController
 {
     #[Route('/forum/subscribe/thread/{threadSlug}', name: 'caldera_criticalmass_forum_subscribe_thread', methods: ['POST'], priority: 240)]
     public function threadAction(
+        Request $request,
         ObjectRouterInterface $objectRouter,
         ForumSubscriptionRepository $repository,
         #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
     ): Response {
+        $this->denyInvalidToken($request, 'forum-subscribe');
         $this->toggle($repository, $thread, null, null, false, 'dieses Thema');
 
         return $this->redirect($objectRouter->generate($thread));
@@ -31,10 +33,12 @@ class ForumSubscriptionController extends AbstractController
 
     #[Route('/forum/subscribe/board/{boardSlug}', name: 'caldera_criticalmass_forum_subscribe_board', methods: ['POST'], priority: 240)]
     public function boardAction(
+        Request $request,
         ObjectRouterInterface $objectRouter,
         ForumSubscriptionRepository $repository,
         #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board
     ): Response {
+        $this->denyInvalidToken($request, 'forum-subscribe');
         $this->toggle($repository, null, $board, null, false, sprintf('das Forum „%s“', $board->getTitle()));
 
         return $this->redirect($objectRouter->generate($board));
@@ -42,18 +46,21 @@ class ForumSubscriptionController extends AbstractController
 
     #[Route('/forum/subscribe/city/{citySlug}', name: 'caldera_criticalmass_forum_subscribe_city', methods: ['POST'], priority: 240)]
     public function cityAction(
+        Request $request,
         ObjectRouterInterface $objectRouter,
         ForumSubscriptionRepository $repository,
         City $city
     ): Response {
+        $this->denyInvalidToken($request, 'forum-subscribe');
         $this->toggle($repository, null, null, $city, false, sprintf('das Forum von %s', $city->getTitle()));
 
         return $this->redirect($objectRouter->generate($city, 'caldera_criticalmass_board_listcitythreads'));
     }
 
     #[Route('/forum/subscribe/global', name: 'caldera_criticalmass_forum_subscribe_global', methods: ['POST'], priority: 240)]
-    public function globalAction(ForumSubscriptionRepository $repository): Response
+    public function globalAction(Request $request, ForumSubscriptionRepository $repository): Response
     {
+        $this->denyInvalidToken($request, 'forum-subscribe');
         $this->toggle($repository, null, null, null, true, 'das gesamte Forum');
 
         return $this->redirectToRoute('caldera_criticalmass_board_overview');
@@ -69,6 +76,8 @@ class ForumSubscriptionController extends AbstractController
         $user = $this->getUser();
 
         if ($request->isMethod(Request::METHOD_POST)) {
+            $this->denyInvalidToken($request, 'forum-settings');
+
             $user->setForumNotifications($request->request->getBoolean('notifications'));
 
             $this->managerRegistry->getManager()->flush();
@@ -87,8 +96,10 @@ class ForumSubscriptionController extends AbstractController
     }
 
     #[Route('/forum/subscriptions/{id}/remove', name: 'caldera_criticalmass_forum_unsubscribe', methods: ['POST'], priority: 240)]
-    public function removeAction(ForumSubscription $subscription): Response
+    public function removeAction(Request $request, ForumSubscription $subscription): Response
     {
+        $this->denyInvalidToken($request, 'forum-subscribe');
+
         /** @var User $user */
         $user = $this->getUser();
 
@@ -103,6 +114,17 @@ class ForumSubscriptionController extends AbstractController
         $this->addFlash('success', 'Das Abonnement wurde beendet.');
 
         return $this->redirectToRoute('caldera_criticalmass_forum_subscriptions');
+    }
+
+    /**
+     * Diese Formulare sind von Hand geschrieben, nicht über die Form-Komponente —
+     * die Token-Prüfung muss darum ausdrücklich passieren.
+     */
+    private function denyInvalidToken(Request $request, string $intent): void
+    {
+        if (!$this->isCsrfTokenValid($intent, (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Ungültiges Formular-Token.');
+        }
     }
 
     /**

@@ -1,16 +1,10 @@
-<div class="card border-0 bg-light mb-3" id="post-{{ post.id }}">
+{% import 'Template/Macros/forum.html.twig' as forum %}
+<div class="card border-0 mb-3 forum-post{{ isThreadOpener|default(false) ? ' forum-post--opener' : '' }}"
+     id="post-{{ post.id }}">
     <div class="card-body">
         <div class="d-flex">
             <div class="flex-shrink-0 me-3">
-                {% if post.user.imageName %}
-                    <img class="rounded-circle" width="48" height="48"
-                         src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
-                         alt="{{ post.user.username }}"/>
-                {% else %}
-                    <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
-                        <i class="far fa-user text-secondary"></i>
-                    </div>
-                {% endif %}
+                {{ forum.avatar(post.user, 48) }}
             </div>
             <div class="flex-grow-1">
                 <div class="d-flex justify-content-between align-items-start mb-2">
@@ -39,7 +33,8 @@
                         {% endif %}
                     </div>
                     <a href="#post-{{ post.id }}" class="text-muted small text-decoration-none">
-                        <i class="far fa-clock me-1"></i>{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}
+                        {% if postNumber is defined %}<span class="me-2">#{{ postNumber }}</span>{% endif %}
+                        <i class="far fa-clock me-1"></i><span title="{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}">{{ post.dateTime|time_ago }}</span>
                     </a>
                 </div>
                 <div class="post-content">
@@ -75,6 +70,7 @@
                                   data-controller="confirm-submit"
                                   data-confirm-submit-message-value="Diesen Beitrag zurückziehen?"
                                   data-action="submit->confirm-submit#confirm">
+                                <input type="hidden" name="_token" value="{{ csrf_token('forum-moderate') }}">
                                 <button type="submit" class="btn btn-outline-danger btn-sm">
                                     <i class="far fa-trash-alt me-1"></i>Zur&uuml;ckziehen
                                 </button>

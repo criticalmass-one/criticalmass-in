@@ -57,3 +57,38 @@
     padding-block: 0.35rem;
   }
 }
+
+// Beiträge: der eröffnende Beitrag hebt sich ab, die übrigen bleiben ruhig.
+.forum-post {
+  background-color: var(--bs-tertiary-bg);
+
+  &--opener {
+    background-color: var(--bs-body-bg);
+    border-left: 3px solid var(--bs-primary) !important;
+  }
+
+  &:target {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Karten in Forenübersicht und Themenliste reagieren auf den Mauszeiger.
+.forum-card {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--bs-box-shadow) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forum-card {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
