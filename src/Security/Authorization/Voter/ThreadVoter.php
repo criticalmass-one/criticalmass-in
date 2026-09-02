@@ -20,4 +20,17 @@ class ThreadVoter extends AbstractVoter
 
         return null !== $firstPost && $user === $firstPost->getUser();
     }
+
+    /**
+     * Schließen und Anheften sind Moderation und bleiben der Administration vorbehalten.
+     */
+    protected function canLock(Thread $thread, User $user): bool
+    {
+        return $user->hasRole('ROLE_ADMIN');
+    }
+
+    protected function canPin(Thread $thread, User $user): bool
+    {
+        return $user->hasRole('ROLE_ADMIN');
+    }
 }

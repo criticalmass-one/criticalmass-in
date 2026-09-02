@@ -43,6 +43,12 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <a href="{{ object_path(thread) }}" class="text-decoration-none">
+                                            {% if thread.sticky %}
+                                                <i class="fas fa-thumbtack text-muted me-1" title="angeheftet"></i>
+                                            {% endif %}
+                                            {% if thread.locked %}
+                                                <i class="fas fa-lock text-muted me-1" title="geschlossen"></i>
+                                            {% endif %}
                                             <strong>{{ thread.title }}</strong>
                                         </a>
                                         <br/>

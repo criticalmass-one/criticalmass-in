@@ -49,6 +49,18 @@ class Thread implements RouteableInterface, PostableInterface
     #[ORM\Column(type: 'boolean', nullable: true)]
     protected ?bool $enabled = true;
 
+    /**
+     * Geschlossene Themen bleiben lesbar, nehmen aber keine Antworten mehr an.
+     */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    protected bool $locked = false;
+
+    /**
+     * Angeheftete Themen stehen unabhängig vom letzten Beitrag oben in der Liste.
+     */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    protected bool $sticky = false;
+
     public function __construct()
     {
     }
@@ -73,6 +85,30 @@ class Thread implements RouteableInterface, PostableInterface
     public function setEnabled(bool $enabled): Thread
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function isLocked(): bool
+    {
+        return $this->locked;
+    }
+
+    public function setLocked(bool $locked): Thread
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    public function isSticky(): bool
+    {
+        return $this->sticky;
+    }
+
+    public function setSticky(bool $sticky): Thread
+    {
+        $this->sticky = $sticky;
 
         return $this;
     }

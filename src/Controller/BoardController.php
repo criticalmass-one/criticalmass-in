@@ -115,6 +115,44 @@ class BoardController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
+    #[Route('/thread/lock/{threadSlug}', name: 'caldera_criticalmass_board_lockthread', methods: ['POST'], priority: 240)]
+    public function lockThreadAction(
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
+    ): Response {
+        $this->denyAccessUnlessGranted('lock', $thread);
+
+        $thread->setLocked(!$thread->isLocked());
+
+        $this->managerRegistry->getManager()->flush();
+
+        $this->addFlash('success', $thread->isLocked()
+            ? 'Das Thema ist geschlossen und nimmt keine Antworten mehr an.'
+            : 'Das Thema ist wieder offen für Antworten.');
+
+        return $this->redirect($objectRouter->generate($thread));
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/thread/pin/{threadSlug}', name: 'caldera_criticalmass_board_pinthread', methods: ['POST'], priority: 240)]
+    public function pinThreadAction(
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
+    ): Response {
+        $this->denyAccessUnlessGranted('pin', $thread);
+
+        $thread->setSticky(!$thread->isSticky());
+
+        $this->managerRegistry->getManager()->flush();
+
+        $this->addFlash('success', $thread->isSticky()
+            ? 'Das Thema steht jetzt oben in der Liste.'
+            : 'Das Thema steht wieder in der normalen Reihenfolge.');
+
+        return $this->redirect($objectRouter->generate($thread));
+    }
+
     /**
      * Der Slug wandert mit dem Titel mit. Weil er die Adresse des Themas ist, darf er
      * kein zweites Mal vorkommen — sonst liefert findThreadBySlug() mehr als ein Ergebnis.
