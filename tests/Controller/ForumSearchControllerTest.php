@@ -87,7 +87,13 @@ class ForumSearchControllerTest extends AbstractControllerTestCase
         $this->loginAs($client, self::AUTHOR);
 
         $slug = $this->openThread($client, 'Thema mit Rueckzug', 'Der erste Beitrag.');
-        $client->request('POST', '/post/write/thread/' . $slug, ['post' => ['message' => 'Stichwort Rueckzugswort hier.']]);
+
+        // Ueber das echte Formular, sonst scheitert der Beitrag an der CSRF-Pruefung
+        // und der Test bestuende, ohne je etwas zurueckgezogen zu haben.
+        $crawler = $client->request('GET', '/post/write/thread/' . $slug);
+        $form = $crawler->selectButton('Speichern')->form();
+        $form['post[message]'] = 'Stichwort Rueckzugswort hier.';
+        $client->submit($form);
 
         $doctrine = static::getContainer()->get('doctrine');
         $doctrine->getManager()->clear();
