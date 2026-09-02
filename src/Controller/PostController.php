@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\Forum\ForumNotifier;
 use App\Criticalmass\Forum\ForumStatistics;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\TextParser\TextParserInterface;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
+use App\Repository\ForumSubscriptionRepository;
 use App\Repository\PostRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\City;
+use App\Entity\ForumSubscription;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
@@ -25,6 +29,38 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 class PostController extends AbstractController
 {
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        private readonly ForumNotifier $forumNotifier,
+        private readonly ForumSubscriptionRepository $subscriptionRepository
+    ) {
+        parent::__construct($managerRegistry);
+    }
+
+    /**
+     * Legt ein Thema-Abo an, falls noch keines besteht.
+     */
+    protected function subscribeToThread(Thread $thread): void
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            return;
+        }
+
+        if (null !== $this->subscriptionRepository->findExisting($user, $thread, null, null, false)) {
+            return;
+        }
+
+        $subscription = (new ForumSubscription())
+            ->setUser($user)
+            ->setThread($thread);
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->persist($subscription);
+        $manager->flush();
+    }
+
     #[IsGranted('ROLE_USER')]
     #[Route('/post/write/city/{id}', name: 'caldera_criticalmass_timeline_post_write_city', priority: 120)]
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
@@ -110,6 +146,12 @@ class PostController extends AbstractController
             }
 
             $em->flush();
+
+            if ($postable instanceof Thread) {
+                // Wer antwortet, verfolgt das Thema in aller Regel weiter.
+                $this->subscribeToThread($postable);
+                $this->forumNotifier->notifyAboutPost($post);
+            }
 
             return $this->redirect($objectRouter->generate($postable));
         }
