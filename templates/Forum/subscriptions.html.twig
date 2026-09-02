@@ -17,12 +17,13 @@
 
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-body">
-                <form method="post" action="{{ path('caldera_criticalmass_forum_subscriptions') }}">
+                <form method="post" action="{{ path('caldera_criticalmass_forum_subscriptions') }}"
+                      data-controller="auto-submit">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch"
                                id="forum-notifications" name="notifications" value="1"
                                {{ notificationsEnabled ? 'checked' : '' }}
-                               onchange="this.form.submit()">
+                               data-action="change->auto-submit#submit">
                         <label class="form-check-label" for="forum-notifications">
                             Benachrichtigungen per E-Mail
                         </label>
