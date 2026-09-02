@@ -11,6 +11,7 @@ use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
+use App\Entity\User;
 use App\EntityInterface\BoardInterface;
 use App\Form\Type\PostType;
 use Symfony\Component\Form\FormInterface;
@@ -108,6 +109,54 @@ class PostController extends AbstractController
         return $this->render('Post/write_failed.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/post/edit/{postId}', name: 'caldera_criticalmass_post_edit', priority: 120)]
+    public function editAction(
+        Request $request,
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['postId' => 'id'])] Post $post
+    ): Response {
+        $this->denyAccessUnlessGranted('edit', $post);
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $editor */
+            $editor = $this->getUser();
+
+            $post
+                ->setUpdatedAt(new \DateTime())
+                ->setUpdatedBy($editor);
+
+            $this->managerRegistry->getManager()->flush();
+
+            $this->addFlash('success', 'Dein Beitrag wurde geändert.');
+
+            return $this->redirect($this->generatePostUrl($post, $objectRouter));
+        }
+
+        return $this->render('Post/edit.html.twig', [
+            'post' => $post,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Ein Beitrag hängt immer an genau einem Gegenstand — Thema, Tour, Stadt oder Foto.
+     * Nach dem Bearbeiten landet man wieder dort, beim Beitrag selbst.
+     */
+    protected function generatePostUrl(Post $post, ObjectRouterInterface $objectRouter): string
+    {
+        $postable = $post->getThread() ?? $post->getRide() ?? $post->getCity() ?? $post->getPhoto();
+
+        if (null === $postable) {
+            return $this->generateUrl('caldera_criticalmass_board_overview');
+        }
+
+        return sprintf('%s#post-%d', $objectRouter->generate($postable), $post->getId());
     }
 
     public function listAction(

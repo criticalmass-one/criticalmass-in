@@ -12,6 +12,7 @@ use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
+use App\Form\Type\ThreadType;
 use Malenki\Slug;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -82,6 +83,53 @@ class BoardController extends AbstractController
             'thread' => $thread,
             'posts' => $posts,
         ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/thread/edit/{threadSlug}', name: 'caldera_criticalmass_board_editthread', priority: 240)]
+    public function editThreadAction(
+        Request $request,
+        ObjectRouterInterface $objectRouter,
+        ThreadRepository $threadRepository,
+        #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
+    ): Response {
+        $this->denyAccessUnlessGranted('edit', $thread);
+
+        $form = $this->createForm(ThreadType::class, $thread);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $thread->setSlug($this->uniqueThreadSlug((string) $thread->getTitle(), $thread, $threadRepository));
+
+            $this->managerRegistry->getManager()->flush();
+
+            $this->addFlash('success', 'Der Titel wurde geändert.');
+
+            return $this->redirect($objectRouter->generate($thread));
+        }
+
+        return $this->render('Board/edit_thread.html.twig', [
+            'board' => $thread->getCity() ?? $thread->getBoard(),
+            'thread' => $thread,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Der Slug wandert mit dem Titel mit. Weil er die Adresse des Themas ist, darf er
+     * kein zweites Mal vorkommen — sonst liefert findThreadBySlug() mehr als ein Ergebnis.
+     */
+    protected function uniqueThreadSlug(string $title, Thread $thread, ThreadRepository $threadRepository): string
+    {
+        $base = (new Slug($title))->render();
+        $slug = $base;
+        $suffix = 1;
+
+        while (null !== ($existing = $threadRepository->findOneBy(['slug' => $slug])) && $existing !== $thread) {
+            $slug = sprintf('%s-%d', $base, ++$suffix);
+        }
+
+        return $slug;
     }
 
     #[IsGranted('ROLE_USER')]

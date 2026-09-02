@@ -16,12 +16,21 @@
                 <i class="far fa-comment-alt text-muted me-2"></i>
                 {{ thread.title }}
             </h1>
-            {% if app.getUser() %}
-                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal-add-post">
-                    <i class="far fa-comment me-1"></i>
-                    <span class="d-none d-sm-inline">Antwort hinzuf&uuml;gen</span>
-                </button>
-            {% endif %}
+            <div class="d-flex gap-2">
+                {% if is_granted('edit', thread) %}
+                    <a href="{{ path('caldera_criticalmass_board_editthread', { 'threadSlug': thread.slug }) }}"
+                       class="btn btn-outline-secondary btn-sm">
+                        <i class="far fa-edit me-1"></i>
+                        <span class="d-none d-sm-inline">Titel bearbeiten</span>
+                    </a>
+                {% endif %}
+                {% if app.getUser() %}
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal-add-post">
+                        <i class="far fa-comment me-1"></i>
+                        <span class="d-none d-sm-inline">Antwort hinzuf&uuml;gen</span>
+                    </button>
+                {% endif %}
+            </div>
         </div>
 
         {% for post in posts %}
