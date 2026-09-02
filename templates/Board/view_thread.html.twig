@@ -55,8 +55,8 @@
                     <form method="post" action="{{ path('caldera_criticalmass_forum_subscribe_thread', { 'threadSlug': thread.slug }) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('forum-subscribe') }}">
                         <button type="submit" class="btn btn-outline-secondary btn-sm">
-                            <i class="far fa-bell me-1"></i>
-                            <span class="d-none d-sm-inline">Abonnieren</span>
+                            <i class="far fa-bell{{ isSubscribed|default(false) ? '-slash' : '' }} me-1"></i>
+                            <span class="d-none d-sm-inline">{{ isSubscribed|default(false) ? 'Abbestellen' : 'Abonnieren' }}</span>
                         </button>
                     </form>
                 {% endif %}

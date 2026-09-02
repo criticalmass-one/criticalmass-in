@@ -8,6 +8,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Repository\BoardRepository;
 use App\Repository\CityRepository;
+use App\Repository\ForumSubscriptionRepository;
 use App\Repository\PostRepository;
 use App\Repository\ThreadRepository;
 use App\Entity\City;
@@ -113,6 +114,7 @@ class BoardController extends AbstractController
         Request $request,
         PaginatorInterface $paginator,
         PostRepository $postRepository,
+        ForumSubscriptionRepository $subscriptionRepository,
         Thread $thread
     ): Response {
         // Der ThreadValueResolver filtert nicht auf enabled; ohne diese Pruefung bliebe
@@ -126,11 +128,16 @@ class BoardController extends AbstractController
         );
 
         $board = $thread->getCity() ?? $thread->getBoard();
+        $user = $this->getUser();
 
         return $this->render('Board/view_thread.html.twig', [
             'board' => $board,
             'thread' => $thread,
             'posts' => $posts,
+            // Ohne den Zustand hiesse der Knopf immer „Abonnieren“ und wuerde beim
+            // Klick stillschweigend abbestellen.
+            'isSubscribed' => $user instanceof User
+                && null !== $subscriptionRepository->findExisting($user, $thread, null, null, false),
         ]);
     }
 
