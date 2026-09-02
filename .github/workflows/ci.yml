@@ -1,8 +1,10 @@
 name: CI
 
+# Auch gestapelte Pull Requests pruefen: Wenn nur PRs gegen main laufen, bleibt
+# jeder Zwischenschritt einer Kette ungeprueft, und die Fehler tauchen erst auf,
+# wenn alles zusammen in main liegt.
 on:
   pull_request:
-    branches: [main]
 
 jobs:
   phpstan:
