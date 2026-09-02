@@ -8,6 +8,7 @@ use App\Entity\ForumSubscription;
 use App\Entity\Thread;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -72,7 +73,15 @@ class ForumSubscriptionRepository extends ServiceEntityRepository
      */
     public function findSubscribersForThread(Thread $thread): array
     {
-        $builder = $this->createQueryBuilder('s');
+        // Abgefragt wird von User aus, nicht vom Abonnement: Doctrine laesst kein
+        // "SELECT DISTINCT u" zu, wenn u nur ein Join-Alias ist -- die Auswahl muss
+        // mindestens einen Wurzel-Alias enthalten.
+        $builder = $this->getEntityManager()->createQueryBuilder();
+
+        $builder
+            ->select('DISTINCT u')
+            ->from(User::class, 'u')
+            ->innerJoin(ForumSubscription::class, 's', Join::WITH, 's.user = u');
 
         $conditions = [
             $builder->expr()->eq('s.globalScope', ':globalScope'),
@@ -80,8 +89,6 @@ class ForumSubscriptionRepository extends ServiceEntityRepository
         ];
 
         $builder
-            ->select('DISTINCT u')
-            ->innerJoin('s.user', 'u')
             ->setParameter('globalScope', true)
             ->setParameter('thread', $thread);
 
