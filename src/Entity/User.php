@@ -129,6 +129,14 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Ignore]
     protected bool $forumNotifications = true;
 
+    /**
+     * Mitgefuehrter Zaehler der Forenbeitraege. Ihn bei jeder Beitragsanzeige neu zu
+     * zaehlen hiesse eine Abfrage pro Beitrag auf einer Seite mit zwanzig davon.
+     */
+    #[ORM\Column(name: 'forum_post_count', type: 'integer', options: ['default' => 0])]
+    #[Ignore]
+    protected int $forumPostCount = 0;
+
     #[ORM\OneToMany(targetEntity: 'App\Entity\SocialNetworkProfile', mappedBy: 'createdBy')]
     #[Ignore]
     private Collection $socialNetworkProfiles;
@@ -650,5 +658,44 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         $this->forumNotifications = $forumNotifications;
 
         return $this;
+    }
+
+    public function getForumPostCount(): int
+    {
+        return $this->forumPostCount;
+    }
+
+    public function setForumPostCount(int $forumPostCount): User
+    {
+        $this->forumPostCount = max(0, $forumPostCount);
+
+        return $this;
+    }
+
+    public function incForumPostCount(): User
+    {
+        ++$this->forumPostCount;
+
+        return $this;
+    }
+
+    public function decForumPostCount(): User
+    {
+        $this->forumPostCount = max(0, $this->forumPostCount - 1);
+
+        return $this;
+    }
+
+    /**
+     * Ein schlichter Rang aus der Beitragszahl — wie in klassischen Foren.
+     */
+    public function getForumRank(): string
+    {
+        return match (true) {
+            $this->forumPostCount >= 500 => 'Urgestein',
+            $this->forumPostCount >= 100 => 'Stammgast',
+            $this->forumPostCount >= 10 => 'Mitglied',
+            default => 'Neuling',
+        };
     }
 }

@@ -40,14 +40,8 @@ class PostController extends AbstractController
     /**
      * Legt ein Thema-Abo an, falls noch keines besteht.
      */
-    protected function subscribeToThread(Thread $thread): void
+    protected function subscribeToThread(Thread $thread, User $user): void
     {
-        $user = $this->getUser();
-
-        if (!$user instanceof User) {
-            return;
-        }
-
         if (null !== $this->subscriptionRepository->findExisting($user, $thread, null, null, false)) {
             return;
         }
@@ -56,9 +50,8 @@ class PostController extends AbstractController
             ->setUser($user)
             ->setThread($thread);
 
-        $manager = $this->managerRegistry->getManager();
-        $manager->persist($subscription);
-        $manager->flush();
+        // Der Aufrufer speichert; ein eigenes flush() hier waere das dritte im Ablauf.
+        $this->managerRegistry->getManager()->persist($subscription);
     }
 
     #[IsGranted('ROLE_USER')]
@@ -125,7 +118,10 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->managerRegistry->getManager();
 
-            $post->setUser($this->getUser());
+            /** @var User $author */
+            $author = $this->getUser();
+
+            $post->setUser($author);
             $em->persist($post);
 
             // Threads: zusätzliche Logik
@@ -134,22 +130,23 @@ class PostController extends AbstractController
                     ->setLastPost($post)
                     ->incPostNumber();
 
-                /** @var BoardInterface $board */
-                if ($postable->getBoard()) {
-                    $board = $postable->getBoard();
-                } else {
-                    $board = $postable->getCity();
+                $board = $postable->getBoard() ?? $postable->getCity();
+
+                if ($board instanceof BoardInterface) {
+                    $board->incPostNumber();
+                    $board->setLastThread($postable);
                 }
 
-                $board->incPostNumber();
-                $board->setLastThread($postable);
+                $author->incForumPostCount();
+
+                // Wer antwortet, verfolgt das Thema in aller Regel weiter.
+                $this->subscribeToThread($postable, $author);
             }
 
             $em->flush();
 
             if ($postable instanceof Thread) {
-                // Wer antwortet, verfolgt das Thema in aller Regel weiter.
-                $this->subscribeToThread($postable);
+                // Erst nach dem Speichern: die Mail verweist auf die Id des Beitrags.
                 $this->forumNotifier->notifyAboutPost($post);
             }
 
@@ -228,6 +225,10 @@ class PostController extends AbstractController
         $forumStatistics->disablePost($post, $board instanceof BoardInterface ? $board : null);
 
         $post->setEnabled(false);
+
+        if (null !== $post->getThread()) {
+            $post->getUser()?->decForumPostCount();
+        }
 
         $this->managerRegistry->getManager()->flush();
 
