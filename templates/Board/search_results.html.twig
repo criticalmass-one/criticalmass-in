@@ -1,0 +1,67 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}{{ term ? 'Suche nach ' ~ term : 'Forum durchsuchen' }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.active('Suche') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="h3 mb-4">
+            <i class="far fa-search text-muted me-2"></i>
+            Forum durchsuchen
+        </h1>
+
+        <form method="get" action="{{ path('caldera_criticalmass_board_search') }}" class="mb-4">
+            <div class="input-group">
+                <input type="search" name="q" class="form-control" value="{{ term }}"
+                       placeholder="Wonach suchst du?" aria-label="Suchbegriff" autofocus>
+                <button type="submit" class="btn btn-primary">
+                    <i class="far fa-search me-1"></i>Suchen
+                </button>
+            </div>
+        </form>
+
+        {% if term is empty %}
+            <p class="text-muted">Gib einen Begriff ein, um Themen und Beitr&auml;ge zu durchsuchen.</p>
+        {% elseif results is null %}
+            <div class="alert alert-secondary" role="status">
+                Bitte gib mindestens {{ minimumLength }} Zeichen ein.
+            </div>
+        {% elseif results|length == 0 %}
+            <div class="text-center py-5">
+                <i class="far fa-search fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">Nichts gefunden</h5>
+                <p class="text-muted mb-0">Zu &bdquo;{{ term }}&ldquo; gibt es keine Beitr&auml;ge.</p>
+            </div>
+        {% else %}
+            <p class="text-muted">
+                {{ results.getTotalItemCount }} Treffer f&uuml;r &bdquo;{{ term }}&ldquo;
+            </p>
+
+            {% for post in results %}
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body">
+                        <a href="{{ object_path(post.thread) }}#post-{{ post.id }}" class="text-decoration-none">
+                            <strong>{{ post.thread.title }}</strong>
+                        </a>
+                        <p class="mb-2 mt-2">{{ post.message|search_snippet(term) }}</p>
+                        <small class="text-muted">
+                            von {{ post.user ? post.user.username : 'unbekannt' }}
+                            <i class="far fa-clock ms-2 me-1"></i>{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}
+                        </small>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if results.pageCount > 1 %}
+                <nav class="d-flex justify-content-center mt-4" aria-label="Seiten">
+                    {{ knp_pagination_render(results) }}
+                </nav>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
