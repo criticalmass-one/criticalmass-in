@@ -18,6 +18,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Benachrichtigt die Abonnenten eines Themas über einen neuen Beitrag.
  *
+ * Der Versand laeuft im Request. Symfony verschickt Mails hier synchron, weil in der
+ * Produktion kein Messenger-Worker laeuft — SendEmailMessage auf den async-Transport zu
+ * legen wuerde den Mailversand stilllegen statt beschleunigen. Bei sehr grossen
+ * Abonnentenzahlen waere ein Worker der naechste Schritt.
+ *
  * Drei Regeln bestimmen, wer eine Mail bekommt:
  * - Wer über mehrere Ebenen zugleich abonniert hat, bekommt trotzdem nur eine.
  * - Wer den Beitrag selbst geschrieben hat, bekommt keine.

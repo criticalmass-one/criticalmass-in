@@ -13,6 +13,7 @@ use App\Entity\City;
 use App\Entity\ForumSubscription;
 use App\Entity\Post;
 use App\Entity\Thread;
+use App\Entity\User;
 use App\EntityInterface\BoardInterface;
 use App\Form\Type\ThreadType;
 use Malenki\Slug;
@@ -372,8 +373,11 @@ class BoardController extends AbstractController
             $board->incPostNumber();
             $board->incThreadNumber();
 
-            $post->setUser($this->getUser());
-            $post->getUser()?->incForumPostCount();
+            /** @var User $author */
+            $author = $this->getUser();
+
+            $post->setUser($author);
+            $author->incForumPostCount();
             $post->setMessage($data['message']);
             $post->setThread($thread);
             $post->setDateTime(new \DateTime());
@@ -388,7 +392,7 @@ class BoardController extends AbstractController
 
             // Wer ein Thema eroeffnet, verfolgt es in aller Regel weiter.
             $subscription = (new ForumSubscription())
-                ->setUser($post->getUser())
+                ->setUser($author)
                 ->setThread($thread);
 
             $em->persist($subscription);
