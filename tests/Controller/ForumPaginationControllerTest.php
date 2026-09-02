@@ -28,6 +28,19 @@ class ForumPaginationControllerTest extends AbstractControllerTestCase
         return (string) $thread->getSlug();
     }
 
+    /**
+     * Antwortet ueber das echte Formular; ein roher POST scheitert an der CSRF-Pruefung.
+     */
+    private function reply(KernelBrowser $client, string $threadSlug, string $message): void
+    {
+        $crawler = $client->request('GET', '/post/write/thread/' . $threadSlug);
+
+        $form = $crawler->selectButton('Speichern')->form();
+        $form['post[message]'] = $message;
+
+        $client->submit($form);
+    }
+
     public function testThreadListStaysReachableWithAPageParameter(): void
     {
         $client = static::createClient();
@@ -73,7 +86,7 @@ class ForumPaginationControllerTest extends AbstractControllerTestCase
 
         // Ein Beitrag mehr als auf eine Seite passt.
         for ($i = 0; $i < BoardController::POSTS_PER_PAGE; ++$i) {
-            $client->request('POST', '/post/write/thread/' . $slug, ['post' => ['message' => 'Antwort Nummer ' . $i]]);
+            $this->reply($client, $slug, 'Antwort Nummer ' . $i);
         }
 
         $crawler = $client->request('GET', '/boards/general/thread/' . $slug);
@@ -96,7 +109,7 @@ class ForumPaginationControllerTest extends AbstractControllerTestCase
         $slug = $this->openThread($client, 'Bearbeiten auf Seite zwei');
 
         for ($i = 0; $i < BoardController::POSTS_PER_PAGE; ++$i) {
-            $client->request('POST', '/post/write/thread/' . $slug, ['post' => ['message' => 'Antwort Nummer ' . $i]]);
+            $this->reply($client, $slug, 'Antwort Nummer ' . $i);
         }
 
         $doctrine = static::getContainer()->get('doctrine');
