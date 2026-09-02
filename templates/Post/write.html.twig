@@ -12,7 +12,12 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label text-muted">Dein Kommentar</label>
-                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'Schreibe hier deinen Kommentar...'}}) }}
+                        {% include 'Post/_editor.html.twig' with {
+                            'field': form.message,
+                            'rows': 6,
+                            'editorId': 'markdown-editor-reply',
+                            'placeholder': 'Schreibe hier deinen Kommentar. Markdown ist erlaubt.'
+                        } %}
                     </div>
                     {{ form_widget(form._token) }}
                 </div>

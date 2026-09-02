@@ -38,8 +38,19 @@
                         bearbeitet am {{ post.updatedAt|date('d.m.Y, H:i', 'Europe/Berlin') }}
                     </p>
                 {% endif %}
-                {% if is_granted('edit', post) or is_granted('delete', post) %}
+                {% if app.user %}
                     <div class="mt-2 d-flex gap-2">
+                        {% if post.thread %}
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    data-controller="quote-post"
+                                    data-quote-post-author-value="{{ post.user.username }}"
+                                    data-quote-post-target-value="#markdown-editor-reply"
+                                    data-quote-post-modal-value="#modal-add-post"
+                                    data-quote-text="{{ post.message }}"
+                                    data-action="quote-post#quote">
+                                <i class="fas fa-quote-right me-1"></i>Zitieren
+                            </button>
+                        {% endif %}
                         {% if is_granted('edit', post) %}
                             <a href="{{ path('caldera_criticalmass_post_edit', { 'postId': post.id }) }}"
                                class="btn btn-outline-secondary btn-sm">
