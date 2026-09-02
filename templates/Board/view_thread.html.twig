@@ -9,6 +9,16 @@
     {{ breadcrumb.active(thread.title) }}
 {% endblock %}
 
+{% block additionalHeaderElements %}
+    {{ parent() }}
+    {% if posts.currentPageNumber > 1 %}
+        <link rel="prev" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ 'page': posts.currentPageNumber - 1 })) }}"/>
+    {% endif %}
+    {% if posts.currentPageNumber < posts.pageCount %}
+        <link rel="next" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ 'page': posts.currentPageNumber + 1 })) }}"/>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -77,6 +87,12 @@
         {% for post in posts %}
             {% include('Post/post.html.twig') with { 'post': post } %}
         {% endfor %}
+
+        {% if posts.pageCount > 1 %}
+            <nav class="d-flex justify-content-center mb-4" aria-label="Seiten">
+                {{ knp_pagination_render(posts) }}
+            </nav>
+        {% endif %}
 
         {% if posts is empty %}
             <div class="text-center py-5">

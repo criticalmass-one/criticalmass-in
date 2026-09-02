@@ -123,6 +123,7 @@ class PostController extends AbstractController
     public function editAction(
         Request $request,
         ObjectRouterInterface $objectRouter,
+        PostRepository $postRepository,
         #[MapEntity(mapping: ['postId' => 'id'])] Post $post
     ): Response {
         $this->denyAccessUnlessGranted('edit', $post);
@@ -142,7 +143,7 @@ class PostController extends AbstractController
 
             $this->addFlash('success', 'Dein Beitrag wurde geändert.');
 
-            return $this->redirect($this->generatePostUrl($post, $objectRouter));
+            return $this->redirect($this->generatePostUrl($post, $objectRouter, $postRepository));
         }
 
         return $this->render('Post/edit.html.twig', [
@@ -156,6 +157,7 @@ class PostController extends AbstractController
     public function disableAction(
         ObjectRouterInterface $objectRouter,
         ForumStatistics $forumStatistics,
+        PostRepository $postRepository,
         #[MapEntity(mapping: ['postId' => 'id'])] Post $post
     ): Response {
         $this->denyAccessUnlessGranted('delete', $post);
@@ -171,14 +173,15 @@ class PostController extends AbstractController
 
         $this->addFlash('success', 'Dein Beitrag wurde zurückgezogen.');
 
-        return $this->redirect($this->generatePostUrl($post, $objectRouter));
+        return $this->redirect($this->generatePostUrl($post, $objectRouter, $postRepository));
     }
 
     /**
      * Ein Beitrag hängt immer an genau einem Gegenstand — Thema, Tour, Stadt oder Foto.
-     * Nach dem Bearbeiten landet man wieder dort, beim Beitrag selbst.
+     * Nach dem Bearbeiten landet man wieder dort, beim Beitrag selbst. In langen Themen
+     * liegt er womöglich nicht auf der ersten Seite, deshalb reist die Seitenzahl mit.
      */
-    protected function generatePostUrl(Post $post, ObjectRouterInterface $objectRouter): string
+    protected function generatePostUrl(Post $post, ObjectRouterInterface $objectRouter, ?PostRepository $postRepository = null): string
     {
         $postable = $post->getThread() ?? $post->getRide() ?? $post->getCity() ?? $post->getPhoto();
 
@@ -186,7 +189,17 @@ class PostController extends AbstractController
             return $this->generateUrl('caldera_criticalmass_board_overview');
         }
 
-        return sprintf('%s#post-%d', $objectRouter->generate($postable), $post->getId());
+        $url = $objectRouter->generate($postable);
+
+        if ($postable instanceof Thread && null !== $postRepository) {
+            $page = (int) ceil($postRepository->findPositionInThread($post) / BoardController::POSTS_PER_PAGE);
+
+            if ($page > 1) {
+                $url .= (str_contains($url, '?') ? '&' : '?') . 'page=' . $page;
+            }
+        }
+
+        return sprintf('%s#post-%d', $url, $post->getId());
     }
 
     public function listAction(

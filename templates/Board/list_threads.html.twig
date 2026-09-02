@@ -8,6 +8,16 @@
     {{ breadcrumb.active(board.title) }}
 {% endblock %}
 
+{% block additionalHeaderElements %}
+    {{ parent() }}
+    {% if threads.currentPageNumber > 1 %}
+        <link rel="prev" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ 'page': threads.currentPageNumber - 1 })) }}"/>
+    {% endif %}
+    {% if threads.currentPageNumber < threads.pageCount %}
+        <link rel="next" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ 'page': threads.currentPageNumber + 1 })) }}"/>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -90,6 +100,12 @@
                     </div>
                 </div>
             {% endfor %}
+
+            {% if threads.pageCount > 1 %}
+                <nav class="d-flex justify-content-center mt-4" aria-label="Seiten">
+                    {{ knp_pagination_render(threads) }}
+                </nav>
+            {% endif %}
         {% else %}
             <div class="text-center py-5">
                 <i class="far fa-comments fa-3x text-muted mb-3"></i>

@@ -7,6 +7,7 @@ use App\Entity\City;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ThreadRepository extends ServiceEntityRepository
@@ -18,40 +19,42 @@ class ThreadRepository extends ServiceEntityRepository
 
     public function findThreadsForBoard(Board $board): array
     {
-        $builder = $this->createQueryBuilder('t');
+        return $this->queryThreadsForBoard($board)->getResult();
+    }
 
-        $builder
-            ->select('t')
-            ->leftJoin('t.lastPost', 'lastPost')
-            ->where($builder->expr()->eq('t.board', ':board'))
-            ->setParameter('board', $board)
-            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
-            ->setParameter('enabled', true)
-            ->orderBy('t.sticky', 'DESC')
-            ->addOrderBy('lastPost.dateTime', 'DESC');
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
+    /**
+     * Die Abfrage statt des Ergebnisses — der Paginator braucht sie, um selbst zu begrenzen.
+     */
+    public function queryThreadsForBoard(Board $board): Query
+    {
+        return $this->buildThreadQuery('t.board', $board);
     }
 
     public function findThreadsForCity(City $city): array
+    {
+        return $this->queryThreadsForCity($city)->getResult();
+    }
+
+    public function queryThreadsForCity(City $city): Query
+    {
+        return $this->buildThreadQuery('t.city', $city);
+    }
+
+    private function buildThreadQuery(string $field, Board|City $board): Query
     {
         $builder = $this->createQueryBuilder('t');
 
         $builder
             ->select('t')
             ->leftJoin('t.lastPost', 'lastPost')
-            ->where($builder->expr()->eq('t.city', ':city'))
-            ->setParameter('city', $city)
+            ->where($builder->expr()->eq($field, ':board'))
+            ->setParameter('board', $board)
             ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->orderBy('t.sticky', 'DESC')
             ->addOrderBy('lastPost.dateTime', 'DESC');
 
-        $query = $builder->getQuery();
-
-        return $query->getResult();
+        return $builder->getQuery();
     }
 
     /**

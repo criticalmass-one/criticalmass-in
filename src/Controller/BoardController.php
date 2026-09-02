@@ -15,6 +15,7 @@ use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use App\Form\Type\ThreadType;
 use Malenki\Slug;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -27,6 +28,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class BoardController extends AbstractController
 {
+    public const THREADS_PER_PAGE = 20;
+    public const POSTS_PER_PAGE = 20;
+
     #[Route('/boards/overview', name: 'caldera_criticalmass_board_overview', priority: 240)]
     public function overviewAction(
         CityRepository $cityRepository,
@@ -42,6 +46,8 @@ class BoardController extends AbstractController
     #[Route('/boards/{boardSlug}', name: 'caldera_criticalmass_board_listthreads', priority: 240)]
     #[Route('/{citySlug}/listthreads', name: 'caldera_criticalmass_board_listcitythreads', priority: 240)]
     public function listThreadsAction(
+        Request $request,
+        PaginatorInterface $paginator,
         ThreadRepository $threadRepository,
         ObjectRouterInterface $objectRouter,
         #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
@@ -51,18 +57,15 @@ class BoardController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $threads = [];
-        $newThreadUrl = '';
-
         if ($board) {
-            $threads = $threadRepository->findThreadsForBoard($board);
+            $query = $threadRepository->queryThreadsForBoard($board);
             $newThreadUrl = $objectRouter->generate($board, 'caldera_criticalmass_board_addthread');
-        }
-
-        if ($city) {
-            $threads = $threadRepository->findThreadsForCity($city);
+        } else {
+            $query = $threadRepository->queryThreadsForCity($city);
             $newThreadUrl = $objectRouter->generate($city, 'caldera_criticalmass_board_addcitythread');
         }
+
+        $threads = $paginator->paginate($query, $request->query->getInt('page', 1), self::THREADS_PER_PAGE);
 
         return $this->render('Board/list_threads.html.twig', [
             'threads' => $threads,
@@ -74,10 +77,17 @@ class BoardController extends AbstractController
     #[Route('/boards/{boardSlug}/thread/{threadSlug}', name: 'caldera_criticalmass_board_viewthread', priority: 240)]
     #[Route('/{citySlug}/thread/{threadSlug}', name: 'caldera_criticalmass_board_viewcitythread', priority: 240)]
     public function viewThreadAction(
+        Request $request,
+        PaginatorInterface $paginator,
         PostRepository $postRepository,
         Thread $thread
     ): Response {
-        $posts = $postRepository->findPostsForThread($thread);
+        $posts = $paginator->paginate(
+            $postRepository->queryPostsForThread($thread),
+            $request->query->getInt('page', 1),
+            self::POSTS_PER_PAGE
+        );
+
         $board = $thread->getCity() ?? $thread->getBoard();
 
         return $this->render('Board/view_thread.html.twig', [
