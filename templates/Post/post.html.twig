@@ -67,7 +67,9 @@
                         {% if is_granted('delete', post) %}
                             <form method="post"
                                   action="{{ path('caldera_criticalmass_post_disable', { 'postId': post.id }) }}"
-                                  onsubmit="return confirm('Diesen Beitrag zurückziehen?');">
+                                  data-controller="confirm-submit"
+                                  data-confirm-submit-message-value="Diesen Beitrag zurückziehen?"
+                                  data-action="submit->confirm-submit#confirm">
                                 <button type="submit" class="btn btn-outline-danger btn-sm">
                                     <i class="far fa-trash-alt me-1"></i>Zur&uuml;ckziehen
                                 </button>

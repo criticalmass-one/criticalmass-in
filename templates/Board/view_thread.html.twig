@@ -74,7 +74,9 @@
                 {% if is_granted('delete', thread) %}
                     <form method="post"
                           action="{{ path('caldera_criticalmass_board_disablethread', { 'threadSlug': thread.slug }) }}"
-                          onsubmit="return confirm('Dieses Thema mitsamt allen Beiträgen zurückziehen?');">
+                          data-controller="confirm-submit"
+                          data-confirm-submit-message-value="Dieses Thema mitsamt allen Beiträgen zurückziehen?"
+                          data-action="submit->confirm-submit#confirm">
                         <button type="submit" class="btn btn-outline-danger btn-sm">
                             <i class="far fa-trash-alt me-1"></i>
                             <span class="d-none d-sm-inline">Thema zur&uuml;ckziehen</span>
