@@ -156,6 +156,38 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
     }
 
     /**
+     * Maps feeds profile ids to the network identifier they were registered
+     * under, so feed items coming back from the Feeds API (which only carries
+     * the profile id) can be attributed to a network again.
+     *
+     * @param list<int> $feedsProfileIds
+     * @return array<int, string>
+     */
+    public function findNetworkIdentifiersByFeedsProfileIds(array $feedsProfileIds): array
+    {
+        if (!$feedsProfileIds) {
+            return [];
+        }
+
+        $builder = $this->createQueryBuilder('snp');
+
+        $rows = $builder
+            ->select('snp.feedsProfileId', 'snp.network')
+            ->where($builder->expr()->in('snp.feedsProfileId', ':feedsProfileIds'))
+            ->setParameter('feedsProfileIds', $feedsProfileIds)
+            ->getQuery()
+            ->getArrayResult();
+
+        $networkIdentifiers = [];
+
+        foreach ($rows as $row) {
+            $networkIdentifiers[(int) $row['feedsProfileId']] = $row['network'];
+        }
+
+        return $networkIdentifiers;
+    }
+
+    /**
      * @param string $method
      * @param array $arguments
      */
