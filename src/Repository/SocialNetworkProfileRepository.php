@@ -156,6 +156,28 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
     }
 
     /**
+     * Every city that has at least one profile registered with the Feeds API —
+     * the set worth warming a cache for.
+     *
+     * @return list<City>
+     */
+    public function findCitiesWithFeedsProfiles(): array
+    {
+        $builder = $this->createQueryBuilder('snp');
+
+        return $builder
+            ->select('c')
+            ->join('snp.city', 'c')
+            ->where($builder->expr()->isNotNull('snp.feedsProfileId'))
+            ->andWhere($builder->expr()->eq('snp.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->groupBy('c.id')
+            ->orderBy('c.city', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Maps feeds profile ids to the network identifier they were registered
      * under, so feed items coming back from the Feeds API (which only carries
      * the profile id) can be attributed to a network again.
