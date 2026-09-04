@@ -416,11 +416,17 @@ class RideRepository extends ServiceEntityRepository
     {
         $builder = $this->createQueryBuilder('r');
 
+        // Ein Ortsname kommt ueber die Jahre mit leicht abweichenden Koordinaten
+        // vor — auf der Produktion bis zu 18 Paare fuer denselben Ort. MySQL
+        // greift sich davon stillschweigend eines heraus, PostgreSQL lehnt die
+        // Abfrage ab, weil die Koordinaten weder gruppiert noch aggregiert sind.
+        // Der Mittelwert liefert statt einer beliebigen Zeile den Schwerpunkt
+        // aller erfassten Punkte und bleibt bei einer Zeile je Ortsname.
         $builder
             ->select([
                 'r.location',
-                'r.latitude',
-                'r.longitude'
+                'AVG(r.latitude) AS latitude',
+                'AVG(r.longitude) AS longitude'
             ])
             ->where($builder->expr()->eq('r.city', ':city'))
             ->andWhere($builder->expr()->isNotNull('r.location'))
