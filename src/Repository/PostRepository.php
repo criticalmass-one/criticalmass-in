@@ -118,12 +118,15 @@ class PostRepository extends ServiceEntityRepository
             ->where($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            // Beide Seiten kleingeschrieben: PostgreSQL vergleicht LIKE anders als
+            // MySQL schreibungsempfindlich, eine Suche nach "fahrrad" faende dort
+            // kein "Fahrrad".
             ->andWhere($builder->expr()->orX(
-                $builder->expr()->like('p.message', ':term'),
-                $builder->expr()->like('t.title', ':term')
+                $builder->expr()->like('LOWER(p.message)', ':term'),
+                $builder->expr()->like('LOWER(t.title)', ':term')
             ))
             // % und _ sind LIKE-Platzhalter: "100%" wuerde sonst jeden Beitrag treffen.
-            ->setParameter('term', '%' . addcslashes($term, '%_\\') . '%')
+            ->setParameter('term', '%' . addcslashes(mb_strtolower($term), '%_\\') . '%')
             ->orderBy('p.dateTime', 'DESC');
 
         return $builder->getQuery();
