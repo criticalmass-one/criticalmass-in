@@ -163,15 +163,23 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
      */
     public function findCitiesWithFeedsProfiles(): array
     {
-        $builder = $this->createQueryBuilder('snp');
+        $builder = $this->getEntityManager()->createQueryBuilder();
+
+        // City is the root here rather than the profile: selecting a joined
+        // alias without its root is a semantical error in DQL, and an EXISTS
+        // gives us each city once without a GROUP BY over all of its columns.
+        $subQuery = $this->createQueryBuilder('snp')
+            ->select('1')
+            ->where('snp.city = c')
+            ->andWhere($builder->expr()->isNotNull('snp.feedsProfileId'))
+            ->andWhere($builder->expr()->eq('snp.enabled', ':enabled'))
+            ->getDQL();
 
         return $builder
             ->select('c')
-            ->join('snp.city', 'c')
-            ->where($builder->expr()->isNotNull('snp.feedsProfileId'))
-            ->andWhere($builder->expr()->eq('snp.enabled', ':enabled'))
+            ->from(City::class, 'c')
+            ->where($builder->expr()->exists($subQuery))
             ->setParameter('enabled', true)
-            ->groupBy('c.id')
             ->orderBy('c.city', 'ASC')
             ->getQuery()
             ->getResult();
