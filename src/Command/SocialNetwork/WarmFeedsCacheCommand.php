@@ -84,7 +84,9 @@ class WarmFeedsCacheCommand extends Command
         $failures = 0;
         $itemCount = 0;
 
-        $progressBar = $io->createProgressBar(count($cities));
+        // Under cron the output goes to a log file, where a progress bar is not
+        // a bar but one line per city, 48 times a day. Only a terminal gets one.
+        $progressBar = $io->isDecorated() ? $io->createProgressBar(count($cities)) : null;
 
         foreach ($cities as $city) {
             try {
@@ -94,11 +96,14 @@ class WarmFeedsCacheCommand extends Command
                 ++$failures;
             }
 
-            $progressBar->advance();
+            $progressBar?->advance();
         }
 
-        $progressBar->finish();
-        $io->newLine(2);
+        if ($progressBar !== null) {
+            $progressBar->finish();
+            $io->newLine(2);
+        }
+
         $io->writeln(sprintf('%d cities warmed, %d items cached', count($cities) - $failures, $itemCount));
 
         return $failures;
