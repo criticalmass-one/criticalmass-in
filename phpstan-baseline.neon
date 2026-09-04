@@ -2335,42 +2335,6 @@ parameters:
 			path: src/Criticalmass/Util/ClassUtil.php
 
 		-
-			message: '#^Call to an undefined method App\\DBAL\\Type\\UTCDateTimeType\:\:getName\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/DBAL/Type/UTCDateTimeType.php
-
-		-
-			message: '#^Call to an undefined static method Doctrine\\DBAL\\Types\\ConversionException\:\:conversionFailedFormat\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/DBAL/Type/UTCDateTimeType.php
-
-		-
-			message: '#^Call to an undefined method App\\DBAL\\Type\\UTCDateType\:\:getName\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/DBAL/Type/UTCDateType.php
-
-		-
-			message: '#^Call to an undefined static method Doctrine\\DBAL\\Types\\ConversionException\:\:conversionFailedFormat\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/DBAL/Type/UTCDateType.php
-
-		-
-			message: '#^Call to an undefined method App\\DBAL\\Type\\UTCTimeType\:\:getName\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/DBAL/Type/UTCTimeType.php
-
-		-
-			message: '#^Call to an undefined static method Doctrine\\DBAL\\Types\\ConversionException\:\:conversionFailedFormat\(\)\.$#'
-			identifier: staticMethod.notFound
-			count: 1
-			path: src/DBAL/Type/UTCTimeType.php
-
-		-
 			message: '#^Call to an undefined method App\\EntityInterface\\BoardInterface\:\:setLatitude\(\)\.$#'
 			identifier: method.notFound
 			count: 1

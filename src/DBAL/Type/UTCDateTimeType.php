@@ -3,9 +3,17 @@
 namespace App\DBAL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
 
+/**
+ * Speichert Zeitstempel grundsaetzlich in UTC und liest sie auch so zurueck.
+ *
+ * Bis auf die Zeitzone verhaelt sich der Typ wie {@see DateTimeType} — inklusive
+ * der Rueckfallebene fuer Werte, die nicht auf das Format der Plattform passen.
+ * PostgreSQL etwa liefert Zeitstempel mit Sekundenbruchteilen, an denen ein
+ * strenges createFromFormat('Y-m-d H:i:s') scheitert.
+ */
 class UTCDateTimeType extends DateTimeType
 {
     private static ?\DateTimeZone $utc = null;
@@ -33,20 +41,18 @@ class UTCDateTimeType extends DateTimeType
             return $value;
         }
 
-        $converted = \DateTime::createFromFormat(
-            $platform->getDateTimeFormatString(),
-            $value,
-            self::getUtc()
-        );
+        $format = $platform->getDateTimeFormatString();
 
-        if (!$converted) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateTimeFormatString()
-            );
+        $converted = \DateTime::createFromFormat($format, $value, self::getUtc());
+
+        if (false !== $converted) {
+            return $converted;
         }
 
-        return $converted;
+        try {
+            return new \DateTime($value, self::getUtc());
+        } catch (\Exception $exception) {
+            throw InvalidFormat::new($value, static::class, $format, $exception);
+        }
     }
 }
