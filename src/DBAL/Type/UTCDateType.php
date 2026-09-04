@@ -3,9 +3,17 @@
 namespace App\DBAL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateType;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
 
+/**
+ * Speichert Datumswerte grundsaetzlich in UTC und liest sie auch so zurueck.
+ *
+ * Das Ausrufezeichen vor dem Format ist wesentlich: ohne es uebernimmt
+ * createFromFormat fuer die nicht im Format genannten Felder die aktuelle
+ * Uhrzeit, ein gelesenes Datum traegt dann die Tageszeit des Lesezeitpunkts
+ * statt Mitternacht. {@see DateType} macht es genauso.
+ */
 class UTCDateType extends DateType
 {
     private static ?\DateTimeZone $utc = null;
@@ -33,20 +41,14 @@ class UTCDateType extends DateType
             return $value;
         }
 
-        $converted = \DateTime::createFromFormat(
-            $platform->getDateFormatString(),
-            $value,
-            self::getUtc()
-        );
+        $format = $platform->getDateFormatString();
 
-        if (!$converted) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateFormatString()
-            );
+        $converted = \DateTime::createFromFormat('!' . $format, $value, self::getUtc());
+
+        if (false !== $converted) {
+            return $converted;
         }
 
-        return $converted;
+        throw InvalidFormat::new($value, static::class, $format);
     }
 }
