@@ -18,27 +18,83 @@ class PhotoRepository extends ServiceEntityRepository
         parent::__construct($registry, Photo::class);
     }
 
+    /**
+     * Je Tour, zu der die Person Fotos beigesteuert hat, die Tour und die Anzahl.
+     *
+     * Frueher stand in der Auswahl ein beliebiges Foto der Gruppe: MySQL sucht
+     * sich dann stillschweigend eine Zeile aus, PostgreSQL lehnt die Abfrage ab,
+     * weil die Spalten weder gruppiert noch aggregiert sind. Gebraucht wurde
+     * ohnehin nur die Tour dahinter.
+     *
+     * Die Abfrage geht deshalb von Ride aus statt von Photo — eine verbundene
+     * Kennung auszuwaehlen, ohne ihre Wurzel mitzunehmen, ist in DQL selbst
+     * schon ein Fehler.
+     *
+     * @return list<array{0: Ride, 1: int}>
+     */
     public function findRidesWithPhotoCounterByUser(User $user): array
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->getEntityManager()->createQueryBuilder();
 
-        $builder
-            ->select('photo')
-            ->addSelect('ride')
-            ->addSelect('city')
-            ->addSelect('COUNT(photo)')
+        $rows = $builder
+            ->select('ride.id AS rideId')
+            ->addSelect('COUNT(photo.id) AS photoCount')
+            ->from(Ride::class, 'ride')
+            ->innerJoin('ride.photos', 'photo')
             ->where($builder->expr()->eq('photo.deleted', ':deleted'))
             ->setParameter('deleted', false)
             ->andWhere($builder->expr()->eq('photo.user', ':user'))
             ->setParameter('user', $user)
-            ->groupBy('photo.ride')
-            ->join('photo.ride', 'ride')
-            ->join('ride.city', 'city')
-            ->orderBy('ride.dateTime', 'desc');
+            ->groupBy('ride.id')
+            ->addGroupBy('ride.dateTime')
+            ->orderBy('ride.dateTime', 'DESC')
+            ->getQuery()
+            ->getResult();
 
-        $query = $builder->getQuery();
+        return $this->ridesForCountedRows($rows);
+    }
 
-        return $query->getResult();
+    /**
+     * Laedt die Touren zu einer gruppierten Zaehlung nach und behaelt deren
+     * Reihenfolge bei. Die Stadt kommt mit, damit die Anzeige nicht je Zeile
+     * nachfragen muss.
+     *
+     * @param list<array{rideId: int, photoCount: int|string}> $rows
+     * @return list<array{0: Ride, 1: int}>
+     */
+    private function ridesForCountedRows(array $rows): array
+    {
+        if ($rows === []) {
+            return [];
+        }
+
+        $rides = $this->getEntityManager()->createQueryBuilder()
+            ->select('ride')
+            ->addSelect('city')
+            ->from(Ride::class, 'ride')
+            ->innerJoin('ride.city', 'city')
+            ->where('ride.id IN (:ids)')
+            ->setParameter('ids', array_column($rows, 'rideId'))
+            ->getQuery()
+            ->getResult();
+
+        $byId = [];
+
+        foreach ($rides as $ride) {
+            $byId[$ride->getId()] = $ride;
+        }
+
+        $result = [];
+
+        foreach ($rows as $row) {
+            $ride = $byId[$row['rideId']] ?? null;
+
+            if ($ride instanceof Ride) {
+                $result[] = [$ride, (int) $row['photoCount']];
+            }
+        }
+
+        return $result;
     }
 
     public function findPhotosWithoutExifData(?int $limit = null, ?int $offset = null, bool $fetchExistingData = false): array
@@ -97,61 +153,25 @@ class PhotoRepository extends ServiceEntityRepository
     }
 
     /**
+     * Touren einer Stadt mit der Anzahl ihrer Fotos.
+     *
+     * Wie bei findRidesWithPhotoCounterByUser geht die Abfrage von Ride aus:
+     * Vorher wurde ein beliebiges Foto der Gruppe ausgewaehlt, was PostgreSQL
+     * ablehnt. Die Rueckgabeform bleibt unveraendert.
+     *
      * @deprecated
+     *
+     * @return array{rides: array<string, Ride>, counter: array<string, int>}
      */
-    public function findRidesForGallery(?City $city = null): array
+    public function findRidesWithPhotoCounter(?City $city = null): array
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->getEntityManager()->createQueryBuilder();
 
         $builder
-            ->select('photo')
-            ->addSelect('ride')
-            ->addSelect('city')
-            ->addSelect('COUNT(photo)')
-            ->addSelect('featuredPhoto')
-            ->where($builder->expr()->eq('photo.deleted', 0));
-
-        if ($city) {
-            $builder
-                ->andWhere($builder->expr()->eq('photo.city', ':city'))
-                ->setParameter('city', $city);
-        }
-
-        $builder
-            ->join('photo.ride', 'ride')
-            ->join('ride.city', 'city')
-            ->leftJoin('ride.featuredPhoto', 'featuredPhoto')
-            ->orderBy('ride.dateTime', 'desc')
-            ->groupBy('ride');
-
-        $query = $builder->getQuery();
-        $result = $query->getResult();
-
-        $galleryResult = [];
-
-        foreach ($result as $row) {
-            $ride = $row[0]->getRide();
-            $counter = $row[1];
-
-            $key = $ride->getDateTime()->format('Y-m-d') . '_' . $ride->getId();
-
-            $galleryResult[$key]['ride'] = $ride;
-            $galleryResult[$key]['counter'] = $counter;
-        }
-
-        return $galleryResult;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function findRidesWithPhotoCounter(?City $city = null)
-    {
-        $builder = $this->createQueryBuilder('photo');
-
-        $builder
-            ->select('photo')
-            ->addSelect('COUNT(photo)')
+            ->select('ride.id AS rideId')
+            ->addSelect('COUNT(photo.id) AS photoCount')
+            ->from(Ride::class, 'ride')
+            ->innerJoin('ride.photos', 'photo')
             ->where($builder->expr()->eq('photo.deleted', ':deleted'))
             ->setParameter('deleted', false);
 
@@ -162,33 +182,23 @@ class PhotoRepository extends ServiceEntityRepository
         }
 
         $builder
-            ->groupBy('photo.ride')
-            ->join('photo.ride', 'ride')
-            ->orderBy('ride.dateTime', 'desc');
+            ->groupBy('ride.id')
+            ->addGroupBy('ride.dateTime')
+            ->orderBy('ride.dateTime', 'DESC');
 
-        $query = $builder->getQuery();
-        $result = $query->getResult();
+        $rides = [];
+        $counter = [];
 
-        $rides = array();
-        $counter = array();
-
-        /**
-         * @var Photo $photo
-         */
-        foreach ($result as $row) {
-            /**
-             * @var Ride $ride
-             */
-            $ride = $row[0]->getRide();
+        foreach ($this->ridesForCountedRows($builder->getQuery()->getResult()) as [$ride, $anzahl]) {
             $key = $ride->getDateTime()->format('Y-m-d') . '_' . $ride->getId();
 
             $rides[$key] = $ride;
-            $counter[$key] = $row[1];
+            $counter[$key] = $anzahl;
         }
 
         return [
             'rides' => $rides,
-            'counter' => $counter
+            'counter' => $counter,
         ];
     }
 
