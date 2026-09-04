@@ -22,6 +22,39 @@ vendor/bin/phpunit --filter testMethodName                  # Single test method
 # Use `php bin/console ...` (the bare `bin/console` may report "permission denied").
 ```
 
+### Database Migrations
+
+```bash
+php bin/console doctrine:migrations:migrate       # apply
+php bin/console doctrine:migrations:status
+```
+
+**Die CI führt Migrationen nie aus.** `composer test:db:reset` baut das Schema mit
+`doctrine:schema:drop --full-database` → `schema:create` → `fixtures:load`. Ein grüner
+CI-Lauf sagt daher **nichts** über eine Migration aus — genau dadurch blieb jahrelang
+unbemerkt, dass 97 der bis dahin 119 Migrationen `getDatabasePlatform()->getName()` riefen,
+eine Methode, die DBAL 4 entfernt hat, und die Kette nicht mehr von null abspielbar war.
+
+**Jede neue Migration deshalb lokal gegen eine Wegwerf-Datenbank prüfen:** leere DB →
+`migrations:migrate` → `schema:update --dump-sql` muss „Nothing to update" melden, und
+`migrations:migrate prev` einmal zurück. Die echte Dev-DB dabei nie anfassen.
+
+Die Geschichte beginnt bei der Baseline `Version20260904120000` (31 Tabellen, 91
+Anweisungen). Die 119 Migrationen davor stehen in der Git-Historie. **Bestehende
+Datenbanken führen die Baseline nicht aus, sondern tragen sie als erledigt ein:**
+
+```bash
+php bin/console doctrine:migrations:version 'DoctrineMigrations\Version20260904120000' --add
+# danach die Altmeldungen entfernen:
+# DELETE FROM doctrine_migration_versions WHERE version <> 'DoctrineMigrations\\Version20260904120000';
+```
+
+**Vorsicht bei `schema:update`:** Das Produktivschema weicht in 18 Punkten vom Entity-Modell
+ab. 13 davon sind folgenlose `(DC2Type:…)`-Spaltenkommentare, aber vier Spalten kennt kein
+Entity mehr und sie enthalten Daten (`track.estimate_id`, `track.md5Hash`, `track.geoJson`,
+`social_network_profile.mainNetwork`). Ein `--force` gegen die Produktion würde sie
+unumkehrbar löschen — immer erst `--dump-sql` lesen.
+
 ### Static Analysis
 ```bash
 vendor/bin/phpstan analyse                  # PHPStan level 6
