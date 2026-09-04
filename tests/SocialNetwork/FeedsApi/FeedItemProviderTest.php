@@ -88,8 +88,8 @@ class FeedItemProviderTest extends TestCase
         $this->assertEmpty($items);
     }
 
-    #[TestDox('fetches feed items for each profile and sorts by date descending')]
-    public function testFetchesAndSortsByDate(): void
+    #[TestDox('asks for all of the city profiles in a single request')]
+    public function testFetchesAllProfilesAtOnce(): void
     {
         $this->setupCachePassthrough();
         $this->profileRepository->method('findByCity')->willReturn([
@@ -97,14 +97,13 @@ class FeedItemProviderTest extends TestCase
             $this->createProfile(20),
         ]);
 
-        $this->feedsApiClient->method('getItems')
-            ->willReturnCallback(function (int $profileId) {
-                if ($profileId === 10) {
-                    return [$this->createFeedItem(1, '2026-03-15T10:00:00+01:00')];
-                }
-
-                return [$this->createFeedItem(2, '2026-03-15T18:00:00+01:00')];
-            });
+        $this->feedsApiClient->expects($this->once())
+            ->method('getItems')
+            ->with([10, 20], 1, 'desc')
+            ->willReturn([
+                $this->createFeedItem(2, '2026-03-15T18:00:00+01:00'),
+                $this->createFeedItem(1, '2026-03-15T10:00:00+01:00'),
+            ]);
 
         $items = $this->provider->getFeedItemsForCity($this->createCity(1));
 
@@ -124,6 +123,7 @@ class FeedItemProviderTest extends TestCase
 
         $this->feedsApiClient->expects($this->once())
             ->method('getItems')
+            ->with([10], 1, 'desc')
             ->willReturn([$this->createFeedItem(1, '2026-03-15T10:00:00+01:00')]);
 
         $items = $this->provider->getFeedItemsForCity($this->createCity(1));
