@@ -1,0 +1,55 @@
+{#
+    Renders the timeline as one tab per key of `timelineContentList`.
+
+    "standard" is the general news tab; every other key is the identifier of a
+    social network, so its label and icon come from the network list of the
+    Feeds API. Networks are therefore never hard-coded here — a network that
+    starts delivering items shows up on its own.
+#}
+{% set networkTabs = timelineContentList|keys|filter(tabName => tabName != 'standard') %}
+{% set hasStandardTab = timelineContentList.standard is defined %}
+
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        {% if hasStandardTab %}
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="timeline-tab-standard" data-bs-toggle="tab" data-bs-target="#timeline-pane-standard" type="button" role="tab" aria-controls="timeline-pane-standard" aria-selected="true">
+                    <i class="far fa-clock"></i>
+                    Neuigkeiten
+                </button>
+            </li>
+        {% endif %}
+
+        {% for tabName in networkTabs %}
+            {% set network = getNetwork(tabName) %}
+            {% set isActive = not hasStandardTab and loop.first %}
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link{{ isActive ? ' active' : '' }}" id="timeline-tab-{{ tabName }}" data-bs-toggle="tab" data-bs-target="#timeline-pane-{{ tabName }}" type="button" role="tab" aria-controls="timeline-pane-{{ tabName }}" aria-selected="{{ isActive ? 'true' : 'false' }}">
+                    <i class="{{ network ? network.icon : 'far fa-globe' }}"></i>
+                    {{ network ? network.name : tabName }}
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content mt-3">
+        {% if hasStandardTab %}
+            <div role="tabpanel" class="tab-pane fade show active" id="timeline-pane-standard" aria-labelledby="timeline-tab-standard">
+                {% for content in timelineContentList.standard %}
+                    {{ content|raw }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% for tabName in networkTabs %}
+            {% set isActive = not hasStandardTab and loop.first %}
+
+            <div role="tabpanel" class="tab-pane fade{{ isActive ? ' show active' : '' }}" id="timeline-pane-{{ tabName }}" aria-labelledby="timeline-tab-{{ tabName }}">
+                {% for content in attribute(timelineContentList, tabName) %}
+                    {{ content|raw }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
