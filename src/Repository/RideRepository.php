@@ -790,13 +790,15 @@ SQL;
         $expr = $qb->expr();
 
         if ($query !== '') {
+            // LOWER() auf beiden Seiten, weil PostgreSQL LIKE im Gegensatz zu MySQL
+            // schreibungsempfindlich vergleicht.
             $qb->where(
                 $expr->orX(
-                    $expr->like('r.title', ':q'),
-                    $expr->like('r.description', ':q'),
-                    $expr->like('r.location', ':q')
+                    $expr->like('LOWER(r.title)', ':q'),
+                    $expr->like('LOWER(r.description)', ':q'),
+                    $expr->like('LOWER(r.location)', ':q')
                 )
-            )->setParameter('q', sprintf('%%%s%%', $query));
+            )->setParameter('q', sprintf('%%%s%%', mb_strtolower($query)));
         }
 
         return $qb

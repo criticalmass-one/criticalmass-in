@@ -38,10 +38,15 @@ class LocationRepository extends ServiceEntityRepository
 
         $builder = $this->createQueryBuilder('l');
 
+        // LOWER() auf beiden Seiten, weil PostgreSQL LIKE schreibungsempfindlich
+        // vergleicht. Hier stehen keine Platzhalter im Muster, der Vergleich ist
+        // also faktisch eine Gleichheit — enthaelt der Ortsname eines Rides ein
+        // % oder _, wirkt es allerdings als Platzhalter. Das ist ein eigener,
+        // aelterer Fehler und bleibt hier unangetastet.
         $builder
-            ->where($builder->expr()->like('l.title', ':locationTitle'))
+            ->where($builder->expr()->like('LOWER(l.title)', ':locationTitle'))
             ->andWhere($builder->expr()->eq('l.city', ':city'))
-            ->setParameter('locationTitle', $ride->getLocation())
+            ->setParameter('locationTitle', mb_strtolower((string) $ride->getLocation()))
             ->setParameter('city', $ride->getCity())
             ->setMaxResults(1);
 

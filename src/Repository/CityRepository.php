@@ -360,12 +360,15 @@ SQL;
         $qb->setParameter('enabled', true);
 
         if ($query !== '') {
+            // Beide Seiten kleingeschrieben vergleichen: MySQL vergleicht mit der
+            // vorgegebenen Kollation ohnehin schreibungsblind, PostgreSQL dagegen
+            // nicht. Ohne LOWER() faende eine Suche nach "hamburg" dort nichts.
             $likeExpr = $expr->orX(
-                $expr->like('c.title', ':q'),
-                $expr->like('c.description', ':q'),
+                $expr->like('LOWER(c.title)', ':q'),
+                $expr->like('LOWER(c.description)', ':q'),
             );
             $conditions[] = $likeExpr;
-            $qb->setParameter('q', '%' . $query . '%');
+            $qb->setParameter('q', '%' . mb_strtolower($query) . '%');
         }
 
         $qb->where(call_user_func_array([$expr, 'andX'], $conditions))
