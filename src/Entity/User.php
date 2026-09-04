@@ -17,7 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
 #[Vich\Uploadable]
-#[ORM\Table(name: 'user')]
+// 'user' ist in PostgreSQL ein reserviertes Wort und wird von Doctrine nicht
+// automatisch gequotet; jedes rohe SQL auf dieser Tabelle waere dort eine Falle.
+#[ORM\Table(name: 'app_user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\HasLifecycleCallbacks]
 class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface, LegacyPasswordAuthenticatedUserInterface
