@@ -3,8 +3,15 @@ name: CI
 # Auch gestapelte Pull Requests pruefen: Wenn nur PRs gegen main laufen, bleibt
 # jeder Zwischenschritt einer Kette ungeprueft, und die Fehler tauchen erst auf,
 # wenn alles zusammen in main liegt.
+#
+# Und main selbst pruefen: Ein PR wird gegen den Stand getestet, den main beim
+# Oeffnen hatte. Liegen zwei gruene PRs zusammen in main, ist das keine Aussage
+# ueber main — genau so kam main nach dem MCP-Stack rot heraus. Ohne diesen
+# Trigger bleibt nur, es von Hand zu pruefen.
 on:
   pull_request:
+  push:
+    branches: [ main ]
 
 jobs:
   phpstan:
