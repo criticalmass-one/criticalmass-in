@@ -31,27 +31,21 @@ class FeedItemProvider implements FeedItemProviderInterface
         return $this->cache->get($cacheKey, function (ItemInterface $item) use ($profileIds, $page): array {
             $item->expiresAfter(300);
 
-            $allItems = [];
-
             try {
-                foreach ($profileIds as $profileId) {
-                    $items = $this->feedsApiClient->getItems(
-                        profileId: $profileId,
-                        page: $page,
-                        orderDirection: 'desc',
-                    );
-
-                    $allItems = array_merge($allItems, $items);
-                }
+                // One request for all of the city's profiles: the API merges,
+                // orders and paginates them, so a city with ten profiles costs
+                // one round trip and yields one page of items — not ten pages
+                // stacked on top of each other.
+                return $this->feedsApiClient->getItems(
+                    profileIds: $profileIds,
+                    page: $page,
+                    orderDirection: 'desc',
+                );
             } catch (\Throwable) {
                 // The Feeds API being unavailable must not take the page down:
                 // show no social items rather than a 500.
                 return [];
             }
-
-            usort($allItems, fn(FeedItem $a, FeedItem $b) => $b->getDateTime() <=> $a->getDateTime());
-
-            return $allItems;
         });
     }
 
