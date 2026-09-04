@@ -4773,19 +4773,19 @@ parameters:
 		-
 			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$limit, but it''s not allowed because of @no\-named\-arguments\.$#'
 			identifier: argument.named
-			count: 2
+			count: 3
 			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
 
 		-
 			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$since, but it''s not allowed because of @no\-named\-arguments\.$#'
 			identifier: argument.named
-			count: 2
+			count: 3
 			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
 
 		-
 			message: '#^Method PHPUnit\\Framework\\MockObject\\Builder\\InvocationMocker\:\:with\(\) invoked with named argument \$until, but it''s not allowed because of @no\-named\-arguments\.$#'
 			identifier: argument.named
-			count: 2
+			count: 3
 			path: tests/SocialNetwork/FeedsApi/FeedItemProviderTest.php
 
 		-
