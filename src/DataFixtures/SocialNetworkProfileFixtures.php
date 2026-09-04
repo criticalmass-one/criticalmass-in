@@ -38,6 +38,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'twitter',
             'https://twitter.com/criticalmassHH',
+            9001,
         );
         $this->addReference(self::HAMBURG_TWITTER_REFERENCE, $hamburgTwitter);
         $manager->persist($hamburgTwitter);
@@ -47,6 +48,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'facebook_page',
             'https://www.facebook.com/CriticalMassHamburg',
+            9002,
         );
         $this->addReference(self::HAMBURG_FACEBOOK_REFERENCE, $hamburgFacebook);
         $manager->persist($hamburgFacebook);
@@ -56,6 +58,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'instagram_profile',
             'https://www.instagram.com/criticalmass_hamburg',
+            9003,
         );
         $this->addReference(self::HAMBURG_INSTAGRAM_REFERENCE, $hamburgInstagram);
         $manager->persist($hamburgInstagram);
@@ -65,6 +68,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             $adminUser,
             'twitter',
             'https://twitter.com/CMBerlin',
+            9004,
         );
         $this->addReference(self::BERLIN_TWITTER_REFERENCE, $berlinTwitter);
         $manager->persist($berlinTwitter);
@@ -104,6 +108,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
         User $createdBy,
         string $network,
         string $identifier,
+        ?int $feedsProfileId = null,
     ): SocialNetworkProfile {
         return (new SocialNetworkProfile())
             ->setCity($city)
@@ -113,6 +118,7 @@ class SocialNetworkProfileFixtures extends Fixture implements DependentFixtureIn
             ->setEnabled(true)
             ->setAutoPublish(true)
             ->setAutoFetch(true)
+            ->setFeedsProfileId($feedsProfileId)
             ->setCreatedAt(new \DateTime());
     }
 
