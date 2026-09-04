@@ -118,6 +118,8 @@ class SocialNetworkProfileController extends BaseController
         $manager->persist($newSocialNetworkProfile);
         $manager->flush();
 
+        $feedsSynced = false;
+
         if ($newSocialNetworkProfile->getIdentifier() && $newSocialNetworkProfile->getNetwork()) {
             try {
                 $feedsProfile = $feedsApiClient->createProfile(
@@ -127,12 +129,33 @@ class SocialNetworkProfileController extends BaseController
 
                 $newSocialNetworkProfile->setFeedsProfileId($feedsProfile->getId());
                 $manager->flush();
+                $feedsSynced = true;
+
+                $logger->info('Created Feeds API profile {feedsId} for {network} "{identifier}" (city {city})', [
+                    'feedsId' => $feedsProfile->getId(),
+                    'network' => $newSocialNetworkProfile->getNetwork(),
+                    'identifier' => $newSocialNetworkProfile->getIdentifier(),
+                    'city' => $city->getSlug(),
+                ]);
             } catch (\Throwable $e) {
-                $logger->error('Failed to create profile in Feeds API: ' . $e->getMessage());
+                // Best-effort enrichment, but it must not fail silently: the profile is
+                // created locally while the feed is NOT registered at feeds.maltehuebner.dev.
+                $logger->error('Failed to create profile in Feeds API for {network} "{identifier}" (city {city}): {error}', [
+                    'network' => $newSocialNetworkProfile->getNetwork(),
+                    'identifier' => $newSocialNetworkProfile->getIdentifier(),
+                    'city' => $city->getSlug(),
+                    'error' => $e->getMessage(),
+                    'exception' => $e,
+                ]);
             }
         }
 
-        return $this->createStandardResponse($newSocialNetworkProfile);
+        // Surface the feeds-sync outcome so a failed enrichment is not mistaken for a
+        // fully successful create (feeds_profile_id is null when sync failed).
+        return $this->createStandardResponse(
+            $newSocialNetworkProfile,
+            headerList: ['X-Feeds-Sync' => $feedsSynced ? 'ok' : 'failed'],
+        );
     }
 
     /**
