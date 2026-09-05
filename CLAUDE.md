@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **criticalmass.in** — web platform for coordinating and documenting Critical Mass bicycle rides worldwide. Manages cities, rides/events, participants, GPS tracks, photos, forums, and statistics.
 
-**Stack:** Symfony 7.4 (LTS), Doctrine ORM 3 / DBAL 4, PHP 8.2+, MariaDB 10.9+, Bootstrap 5, Webpack Encore with Stimulus
+**Stack:** Symfony 7.4 (LTS), Doctrine ORM 3 / DBAL 4, PHP 8.2+, **PostgreSQL 17** (seit 05.09.2026; vorher MariaDB, siehe unten), Bootstrap 5, Webpack Encore with Stimulus
 
 ## Common Commands
 
@@ -17,8 +17,9 @@ composer test:run          # Just run PHPUnit (no DB reset)
 composer test:api          # Only API test suite
 vendor/bin/phpunit tests/Path/To/TestFile.php              # Single test file
 vendor/bin/phpunit --filter testMethodName                  # Single test method
-# Controller/DB tests need MariaDB up (docker-compose up); otherwise they fail with
-# "getaddrinfo for mysql failed". Pure unit tests (no DB) run standalone.
+# Controller/DB tests brauchen eine laufende Datenbank; reine Unit-Tests laufen ohne.
+# Die CI faehrt PostgreSQL 17, wie die Produktion. Der Code ist portabel geblieben
+# und besteht die Suite auch gegen MariaDB — das ist aber nicht mehr die Zielplattform.
 # Use `php bin/console ...` (the bare `bin/console` may report "permission denied").
 ```
 
@@ -49,6 +50,16 @@ php bin/console doctrine:migrations:version 'DoctrineMigrations\Version202609041
 # DELETE FROM doctrine_migration_versions WHERE version <> 'DoctrineMigrations\\Version20260904120000';
 ```
 
+**Die Baseline taugt nur fuer MySQL.** Sie enthaelt `ENGINE`, `AUTO_INCREMENT` und
+`LONGTEXT`; auf der Produktion ist sie als erledigt eingetragen, aber eine frische
+Installation gegen PostgreSQL scheitert daran. Entweder bekommt sie eine
+Plattformweiche, oder frische Installationen laufen ausdruecklich ueber
+`doctrine:schema:create`. Offener Punkt.
+
+**Spaltennamen sind in PostgreSQL kleingeschrieben.** Doctrine legt sie unquotiert an,
+PostgreSQL faltet sie: `dateTime` heisst dort `datetime`. In rohem SQL camelCase
+deshalb **nicht** quoten — `"dateTime"` greift ins Leere.
+
 **Vorsicht bei `schema:update`:** Das Produktivschema weicht in 18 Punkten vom Entity-Modell
 ab. 13 davon sind folgenlose `(DC2Type:…)`-Spaltenkommentare, aber vier Spalten kennt kein
 Entity mehr und sie enthalten Daten (`track.estimate_id`, `track.md5Hash`, `track.geoJson`,
@@ -73,6 +84,11 @@ yarn build        # Production build
 ### Docker Services
 ```bash
 docker-compose up -d      # MariaDB (port 8002), Redis, Memcached, Mailcatcher (port 1080)
+# Achtung: docker-compose.yaml faehrt noch MariaDB. Fuer einen Lauf gegen die
+# Zielplattform stattdessen einen Wegwerf-Container nehmen:
+#   docker run -d --name pg -p 55432:5432 -e POSTGRES_PASSWORD=postgres \
+#     -e POSTGRES_DB=cm postgres:17
+# und in .env.test.local eine passende DATABASE_URL setzen.
 ```
 
 ## Architecture
