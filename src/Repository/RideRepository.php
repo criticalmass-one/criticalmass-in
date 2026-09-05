@@ -758,11 +758,11 @@ class RideRepository extends ServiceEntityRepository
         $rsm->addFieldResult('cs', 'cs_id', 'id');
         $rsm->addFieldResult('cs', 'cs_slug', 'slug');
 
-        // Der Spaltenname traegt Grossbuchstaben und muss deshalb gequotet
-        // werden — auf jeder Plattform anders.
-        $dateTimeSpalte = $this->getEntityManager()->getConnection()
-            ->getDatabasePlatform()->quoteSingleIdentifier('dateTime');
-
+        // Der Spaltenname bleibt unquotiert. Doctrine legt die Spalte selbst
+        // unquotiert an, PostgreSQL faltet sie also auf "datetime" — und
+        // dieselbe Faltung trifft die Abfrage. Ein "dateTime" in
+        // Anfuehrungszeichen wuerde dort dagegen ins Leere greifen.
+        //
         // Die Entfernung steht in einer Unterabfrage, damit sich danach im WHERE
         // darauf filtern laesst. Vorher stand hier ein HAVING ohne GROUP BY, das
         // sich auf einen Alias der Auswahl bezog: MySQL laesst beides durchgehen,
@@ -771,7 +771,7 @@ class RideRepository extends ServiceEntityRepository
 SELECT * FROM (
     SELECT
         r.id,
-        r.$dateTimeSpalte AS ride_date_time,
+        r.dateTime AS ride_date_time,
         r.latitude,
         r.longitude,
         r.title,
