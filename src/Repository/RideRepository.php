@@ -743,7 +743,10 @@ class RideRepository extends ServiceEntityRepository
 
         $rsm->addEntityResult(Ride::class, 'r');
         $rsm->addFieldResult('r', 'id', 'id');
-        $rsm->addFieldResult('r', 'dateTime', 'dateTime');
+        // Durchgehend kleingeschriebene Aliase: PostgreSQL faltet unquotierte
+        // Bezeichner auf Kleinschreibung, ein "r.dateTime" waere dort also
+        // "r.datetime" und existierte nicht.
+        $rsm->addFieldResult('r', 'ride_date_time', 'dateTime');
         $rsm->addFieldResult('r', 'latitude', 'latitude');
         $rsm->addFieldResult('r', 'longitude', 'longitude');
         $rsm->addFieldResult('r', 'title', 'title');
@@ -755,29 +758,39 @@ class RideRepository extends ServiceEntityRepository
         $rsm->addFieldResult('cs', 'cs_id', 'id');
         $rsm->addFieldResult('cs', 'cs_slug', 'slug');
 
+        // Der Spaltenname traegt Grossbuchstaben und muss deshalb gequotet
+        // werden — auf jeder Plattform anders.
+        $dateTimeSpalte = $this->getEntityManager()->getConnection()
+            ->getDatabasePlatform()->quoteSingleIdentifier('dateTime');
+
+        // Die Entfernung steht in einer Unterabfrage, damit sich danach im WHERE
+        // darauf filtern laesst. Vorher stand hier ein HAVING ohne GROUP BY, das
+        // sich auf einen Alias der Auswahl bezog: MySQL laesst beides durchgehen,
+        // PostgreSQL keines von beidem.
         $sql = <<<SQL
-SELECT 
-    r.id,
-    r.dateTime,
-    r.latitude,
-    r.longitude,
-    r.title,
-    r.city_id,
-    c.id AS c_id,
-    cs.id AS cs_id,
-    cs.slug AS cs_slug,
-    (
-        $earthRadius * acos(
-            cos(radians(:latitude)) * cos(radians(r.latitude)) *
-            cos(radians(r.longitude) - radians(:longitude)) +
-            sin(radians(:latitude)) * sin(radians(r.latitude))
-        )
-    ) AS distance
-FROM ride r
-INNER JOIN city c ON r.city_id = c.id
-INNER JOIN cityslug cs ON cs.id = c.main_slug_id
-HAVING distance <= :radius
-ORDER BY r.dateTime DESC
+SELECT * FROM (
+    SELECT
+        r.id,
+        r.$dateTimeSpalte AS ride_date_time,
+        r.latitude,
+        r.longitude,
+        r.title,
+        c.id AS c_id,
+        cs.id AS cs_id,
+        cs.slug AS cs_slug,
+        (
+            $earthRadius * acos(
+                cos(radians(:latitude)) * cos(radians(r.latitude)) *
+                cos(radians(r.longitude) - radians(:longitude)) +
+                sin(radians(:latitude)) * sin(radians(r.latitude))
+            )
+        ) AS distance
+    FROM ride r
+    INNER JOIN city c ON r.city_id = c.id
+    INNER JOIN cityslug cs ON cs.id = c.main_slug_id
+) naehe
+WHERE naehe.distance <= :radius
+ORDER BY naehe.ride_date_time DESC
 LIMIT :limit
 SQL;
 

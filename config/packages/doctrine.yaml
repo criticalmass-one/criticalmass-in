@@ -7,13 +7,11 @@ parameters:
 
 doctrine:
     dbal:
-        # configure these for your database server
-        driver: 'pdo_mysql'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
-        server_version: 'mariadb-10.9.3'
+        # Treiber, Zeichensatz und Serverversion stehen im DSN, nicht hier.
+        # Standen sie hier, wuerde diese Datei die Plattform festlegen und ein
+        # PostgreSQL-DSN liefe trotzdem gegen die MySQL-Plattform. Zeichensatz
+        # und Kollation waren ohnehin MySQL-eigen; DBAL setzt fuer MySQL von
+        # sich aus utf8mb4.
         url: '%env(resolve:DATABASE_URL)%'
 
         types:

@@ -10,7 +10,7 @@ class PhotoApiQueryTest extends AbstractApiControllerTestCase
     public function testDefaultListExcludesDeletedPhotos(): void
     {
         $conn = $this->entityManager->getConnection();
-        $deletedRows = $conn->fetchAllAssociative('SELECT id FROM photo WHERE deleted = 1');
+        $deletedRows = $conn->fetchAllAssociative('SELECT id FROM photo WHERE deleted = true');
         $this->assertNotEmpty($deletedRows, 'Fixtures must include at least one deleted photo');
         $deletedIds = array_map(fn(array $row) => (int) $row['id'], $deletedRows);
 
@@ -31,7 +31,7 @@ class PhotoApiQueryTest extends AbstractApiControllerTestCase
     public function testDefaultListExcludesDisabledPhotos(): void
     {
         $conn = $this->entityManager->getConnection();
-        $disabledRows = $conn->fetchAllAssociative('SELECT id FROM photo WHERE enabled = 0');
+        $disabledRows = $conn->fetchAllAssociative('SELECT id FROM photo WHERE enabled = false');
         $this->assertNotEmpty($disabledRows, 'Fixtures must include at least one disabled photo');
         $disabledIds = array_map(fn(array $row) => (int) $row['id'], $disabledRows);
 
@@ -73,7 +73,7 @@ class PhotoApiQueryTest extends AbstractApiControllerTestCase
 
         $conn = $this->entityManager->getConnection();
         $hamburgPhotoIds = $conn->fetchFirstColumn(
-            'SELECT p.id FROM photo p JOIN city c ON p.city_id = c.id JOIN cityslug cs ON c.main_slug_id = cs.id WHERE cs.slug = :slug AND p.enabled = 1 AND p.deleted = 0',
+            'SELECT p.id FROM photo p JOIN city c ON p.city_id = c.id JOIN cityslug cs ON c.main_slug_id = cs.id WHERE cs.slug = :slug AND p.enabled = true AND p.deleted = false',
             ['slug' => 'hamburg']
         );
         $hamburgPhotoIds = array_map('intval', $hamburgPhotoIds);

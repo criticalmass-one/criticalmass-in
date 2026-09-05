@@ -327,7 +327,7 @@ class CityRepository extends ServiceEntityRepository
         $sql = <<<SQL
 SELECT c.*
 FROM city c
-WHERE c.enabled = 1
+WHERE c.enabled = true
   AND c.id != :id
   AND (6371 * acos(
            cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +

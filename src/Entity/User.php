@@ -30,7 +30,13 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Groups(['timelapse', 'post-list'])]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'json', nullable: true)]
+    /**
+     * jsonb statt json: PostgreSQL kennt fuer den Typ json keinen
+     * Gleichheitsoperator, weshalb dort schon ein schlichtes SELECT DISTINCT
+     * ueber diese Tabelle scheitert — etwa beim Ermitteln der Abonnenten eines
+     * Themas. jsonb hat einen. Unter MySQL bleibt die Angabe folgenlos.
+     */
+    #[ORM\Column(type: 'json', nullable: true, options: ['jsonb' => true])]
     #[Ignore]
     private ?array $roles = [];
 

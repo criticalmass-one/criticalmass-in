@@ -3,6 +3,7 @@
 namespace Tests\DQL;
 
 use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -24,20 +25,33 @@ class PortableFunctionsTest extends KernelTestCase
     {
         self::bootKernel();
 
-        $this->mysql = static::getContainer()->get('doctrine')->getManager();
+        // Beide Manager werden ausdruecklich aufgebaut, statt den vorhandenen
+        // fuer MySQL zu halten: Laeuft die Testsuite selbst schon gegen
+        // PostgreSQL, waere diese Annahme falsch und der Test pruefte zweimal
+        // dieselbe Plattform.
+        $konfiguration = static::getContainer()->get('doctrine')->getManager()->getConfiguration();
 
-        // Zweiter Manager auf derselben Zuordnung, aber mit PostgreSQL-Plattform.
-        // Es wird nie eine Verbindung aufgebaut.
-        $this->postgres = new EntityManager(
+        $this->mysql = $this->managerFor('pdo_mysql', 'mariadb-10.9.3', $konfiguration);
+        $this->postgres = $this->managerFor('pdo_pgsql', '17', $konfiguration);
+    }
+
+    /**
+     * Der Manager baut nie eine Verbindung auf: DBAL bestimmt die Plattform aus
+     * der serverVersion, und getSQL() erzeugt die Anweisung, ohne sie
+     * auszufuehren.
+     */
+    private function managerFor(string $treiber, string $version, Configuration $konfiguration): EntityManagerInterface
+    {
+        return new EntityManager(
             DriverManager::getConnection([
-                'driver' => 'pdo_pgsql',
-                'serverVersion' => '17',
+                'driver' => $treiber,
+                'serverVersion' => $version,
                 'host' => 'localhost',
                 'dbname' => 'unbenutzt',
                 'user' => 'unbenutzt',
                 'password' => 'unbenutzt',
             ]),
-            $this->mysql->getConfiguration()
+            $konfiguration
         );
     }
 
