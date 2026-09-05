@@ -7,12 +7,10 @@ parameters:
     locale: de
     secret: '%env(APP_SECRET)%'
     kernel.secret: '%env(APP_SECRET)%'
-    database_driver: pdo_mysql
-    database_host: 127.0.0.1
-    database_port: null
-    database_name: '%env(DATABASE_NAME)%'
-    database_user: '%env(DATABASE_USER)%'
-    database_password: '%env(DATABASE_PASSWORD)%'
+    # Die frueheren database_*-Parameter sind entfallen: Sie wurden nirgends
+    # gelesen, verlangten aber Umgebungsvariablen, die es nicht gibt, und
+    # nannten mit pdo_mysql eine Plattform, die so nicht mehr feststeht.
+    # Die Verbindung kommt allein aus DATABASE_URL.
     track.gap_width: 10
     strava.client_id: '%env(STRAVA_CLIENT_ID)%'
     strava.token: '%env(STRAVA_TOKEN)%'
