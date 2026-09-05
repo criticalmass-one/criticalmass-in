@@ -39,18 +39,20 @@ jobs:
     name: PHPUnit
     runs-on: ubuntu-latest
 
+    # Seit dem 5. September 2026 laeuft die Produktion auf PostgreSQL 17. Die CI
+    # prueft deshalb dagegen — eine Suite gegen MariaDB waere seither keine
+    # Aussage mehr ueber das, was tatsaechlich laeuft.
     services:
-      mysql:
-        image: mariadb:10.9
+      postgres:
+        image: postgres:17
         env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: criticalmass
-          MYSQL_USER: criticalmass
-          MYSQL_PASSWORD: criticalmass
+          POSTGRES_DB: criticalmass
+          POSTGRES_USER: criticalmass
+          POSTGRES_PASSWORD: criticalmass
         ports:
-          - 3306:3306
+          - 5432:5432
         options: >-
-          --health-cmd="mariadb-admin ping -proot"
+          --health-cmd="pg_isready -U criticalmass"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -61,7 +63,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.5'
-          extensions: intl, pdo_mysql
+          extensions: intl, pdo_pgsql
 
       - uses: actions/cache@v4
         with:
@@ -73,10 +75,14 @@ jobs:
 
       - run: cp .env.dist .env
 
+      # Achtung fuer den Tag, an dem PostGIS dazukommt: test:db:reset raeumt mit
+      # "schema:drop --full-database" die ganze Datenbank ab — unter PostGIS
+      # gehoerte spatial_ref_sys mit dazu, und die Extension waere danach kaputt.
+      # Solange die CI auf reinem PostgreSQL laeuft, ist es unbedenklich.
       - run: composer test:db:reset
         env:
-          DATABASE_URL: "mysql://criticalmass:criticalmass@127.0.0.1:3306/criticalmass?charset=utf8mb4"
+          DATABASE_URL: "postgresql://criticalmass:criticalmass@127.0.0.1:5432/criticalmass?serverVersion=17&charset=utf8"
 
       - run: composer test:run
         env:
-          DATABASE_URL: "mysql://criticalmass:criticalmass@127.0.0.1:3306/criticalmass?charset=utf8mb4"
+          DATABASE_URL: "postgresql://criticalmass:criticalmass@127.0.0.1:5432/criticalmass?serverVersion=17&charset=utf8"
