@@ -3,6 +3,7 @@
 namespace App\Security\UserProvider;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
@@ -38,15 +39,50 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         $this->properties = array_merge($this->properties, $properties);
     }
 
+    /**
+     * Erst genau suchen, dann schreibungsblind.
+     *
+     * MySQL vergleicht Text ueber die Kollation ohnehin schreibungsblind,
+     * PostgreSQL nicht. Ohne den zweiten Versuch kaeme sich nach dem
+     * Plattformwechsel niemand mehr anmelden, der seinen Namen anders schreibt
+     * als er gespeichert ist — auf der Produktion tragen 3981 von 21140
+     * Benutzernamen Grossbuchstaben.
+     *
+     * Der genaue Treffer behaelt Vorrang. Gaebe es je zwei Konten, die sich nur
+     * in der Schreibung unterscheiden — heute gibt es keins —, bliebe die
+     * Anmeldung damit eindeutig statt zufaellig.
+     */
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $user = $this->findUser(['username' => $identifier]);
+        $user = $this->findUser(['username' => $identifier])
+            ?? $this->findUserIgnoringCase($identifier);
 
         if (!$user) {
             throw $this->createUserNotFoundException($identifier, sprintf("User '%s' not found.", $identifier));
         }
 
         return $user;
+    }
+
+    private function findUserIgnoringCase(string $identifier): ?UserInterface
+    {
+        $repository = $this->repository();
+
+        if (!$repository instanceof EntityRepository) {
+            return null;
+        }
+
+        $treffer = $repository->createQueryBuilder('u')
+            ->where('LOWER(u.username) = :username')
+            ->setParameter('username', mb_strtolower($identifier))
+            // Zwei holen, um Mehrdeutigkeit zu erkennen, statt sie zu uebersehen.
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult();
+
+        // Bei mehr als einem Treffer ist nicht entschieden, wer gemeint ist.
+        // Dann niemanden einlassen, statt den Falschen.
+        return 1 === count($treffer) ? $treffer[0] : null;
     }
 
     /**
@@ -104,11 +140,19 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
 
     private function findUser(array $criteria): ?UserInterface
     {
+        return $this->repository()->findOneBy($criteria);
+    }
+
+    /**
+     * @return ObjectRepository<User>
+     */
+    private function repository(): ObjectRepository
+    {
         if (null === $this->repository) {
             $this->repository = $this->em->getRepository($this->class);
         }
 
-        return $this->repository->findOneBy($criteria);
+        return $this->repository;
     }
 
     private function createUserNotFoundException(string $username, string $message): UserNotFoundException
