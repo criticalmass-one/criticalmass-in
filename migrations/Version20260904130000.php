@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
@@ -12,12 +13,12 @@ use Doctrine\Migrations\AbstractMigration;
  *
  * In PostgreSQL ist user ein reserviertes Wort — es steht dort fuer den
  * angemeldeten Datenbanknutzer. Doctrine quotet Tabellennamen nicht von sich
- * aus, und jedes handgeschriebene SQL auf dieser Tabelle waere nach einem
- * Plattformwechsel eine stille Falle. Der Schritt geschieht deshalb jetzt,
- * unter MySQL, wo er folgenlos ist, und nicht mitten im Umzug.
+ * aus, und jedes handgeschriebene SQL auf dieser Tabelle waere eine stille
+ * Falle. Der Schritt geschah deshalb noch unter MySQL, vor dem Umzug.
  *
- * Die Fremdschluessel der 14 verweisenden Tabellen behalten ihre Namen; nur das
- * Ziel des Verweises aendert sich.
+ * Auf einer frisch angelegten Datenbank gibt es nichts zu tun: Die Baseline
+ * legt die Tabelle inzwischen gleich als app_user an. Die Migration bleibt
+ * trotzdem stehen, weil sie auf der Produktion als ausgefuehrt vermerkt ist.
  */
 final class Version20260904130000 extends AbstractMigration
 {
@@ -28,11 +29,37 @@ final class Version20260904130000 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('RENAME TABLE user TO app_user');
+        $this->skipIf(
+            !$schema->hasTable('user'),
+            'Die Tabelle heisst bereits app_user — die Baseline legt sie so an.'
+        );
+
+        $this->addSql($this->umbenennen('user', 'app_user'));
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('RENAME TABLE app_user TO user');
+        $this->skipIf(!$schema->hasTable('app_user'), 'Es gibt keine Tabelle app_user.');
+
+        $this->addSql($this->umbenennen('app_user', 'user'));
+    }
+
+    /**
+     * MySQL kennt RENAME TABLE, PostgreSQL nur ALTER TABLE ... RENAME TO — und
+     * dort muss "user" gequotet werden, weil es ein reserviertes Wort ist.
+     */
+    private function umbenennen(string $von, string $nach): string
+    {
+        $platform = $this->connection->getDatabasePlatform();
+
+        if ($platform instanceof PostgreSQLPlatform) {
+            return sprintf(
+                'ALTER TABLE %s RENAME TO %s',
+                $platform->quoteSingleIdentifier($von),
+                $platform->quoteSingleIdentifier($nach)
+            );
+        }
+
+        return sprintf('RENAME TABLE %s TO %s', $von, $nach);
     }
 }
