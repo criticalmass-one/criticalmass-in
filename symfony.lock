@@ -93,6 +93,9 @@
             "config/routes/hwi_oauth_routing.yaml"
         ]
     },
+    "jsor/doctrine-postgis": {
+        "version": "v2.4.0"
+    },
     "knplabs/knp-menu-bundle": {
         "version": "v3.2.0"
     },

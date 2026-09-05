@@ -18,6 +18,18 @@ doctrine:
             datetime: App\DBAL\Type\UTCDateTimeType
             date: App\DBAL\Type\UTCDateType
             time: App\DBAL\Type\UTCTimeType
+            geometry: Jsor\Doctrine\PostGIS\Types\GeometryType
+            geography: Jsor\Doctrine\PostGIS\Types\GeographyType
+
+        # PostGIS legt eigene Schemas und eine Tabelle spatial_ref_sys an. Ohne
+        # diesen Filter haelt Doctrine sie fuer verwaiste Objekte und will sie
+        # loeschen — spatial_ref_sys liegt naemlich in public, mitten zwischen
+        # unseren eigenen Tabellen.
+        schema_filter: ~^(?!tiger)(?!topology)(?!spatial_ref_sys)~
+
+        # PostGIS bringt Spalten vom Typ _text mit, den Doctrine sonst nicht kennt.
+        mapping_types:
+            _text: string
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

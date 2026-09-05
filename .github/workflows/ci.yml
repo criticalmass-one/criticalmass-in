@@ -44,7 +44,7 @@ jobs:
     # Aussage mehr ueber das, was tatsaechlich laeuft.
     services:
       postgres:
-        image: postgres:17
+        image: postgis/postgis:17-3.5
         env:
           POSTGRES_DB: criticalmass
           POSTGRES_USER: criticalmass
@@ -75,10 +75,10 @@ jobs:
 
       - run: cp .env.dist .env
 
-      # Achtung fuer den Tag, an dem PostGIS dazukommt: test:db:reset raeumt mit
-      # "schema:drop --full-database" die ganze Datenbank ab — unter PostGIS
-      # gehoerte spatial_ref_sys mit dazu, und die Extension waere danach kaputt.
-      # Solange die CI auf reinem PostgreSQL laeuft, ist es unbedenklich.
+      # test:db:reset raeumt mit "schema:drop --full-database" die ganze Datenbank
+      # ab. Dass PostGIS das ueberlebt, liegt am schema_filter in doctrine.yaml:
+      # er haelt spatial_ref_sys aus Doctrines Blickfeld heraus. Ohne ihn waere die
+      # Extension nach dem ersten Zuruecksetzen kaputt — nachgeprueft.
       - run: composer test:db:reset
         env:
           DATABASE_URL: "postgresql://criticalmass:criticalmass@127.0.0.1:5432/criticalmass?serverVersion=17&charset=utf8"
