@@ -3,6 +3,7 @@
 namespace Tests\Repository;
 
 use App\Entity\City;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use App\Entity\Location;
 use App\Entity\Ride;
 use App\Repository\CityRepository;
@@ -131,6 +132,80 @@ class NativeGeoQueryTest extends KernelTestCase
         }
 
         self::assertLessThanOrEqual(5, count($treffer));
+    }
+
+    /**
+     * Der Nachweis, dass die Umstellung von der Haversine-Formel auf PostGIS
+     * nichts verschoben hat (Issue #1141).
+     *
+     * Beide rechnen dieselbe Entfernung, nur auf unterschiedlichen Koerpern: die
+     * Formel auf einer Kugel mit 6371 km Radius, ST_Distance ueber geography auf
+     * dem WGS84-Ellipsoid. Der Unterschied liegt im Promillebereich — waere er
+     * groesser, haette ich beim Umstellen etwas verwechselt, etwa Laenge und
+     * Breite oder Meter und Kilometer.
+     */
+    public function testTheSpatialDistanceMatchesTheOldFormula(): void
+    {
+        if (!$this->entityManager->getConnection()->getDatabasePlatform() instanceof PostgreSQLPlatform) {
+            self::markTestSkipped('PostGIS-Funktionen gibt es nur unter PostgreSQL.');
+        }
+
+        $hamburg = $this->hamburg();
+
+        $zeilen = $this->entityManager->getConnection()->fetchAllAssociative(
+            'SELECT
+                 c.city,
+                 6371 * acos(LEAST(1, GREATEST(-1,
+                     cos(radians(:lat)) * cos(radians(c.latitude))
+                     * cos(radians(c.longitude) - radians(:lon))
+                     + sin(radians(:lat)) * sin(radians(c.latitude))
+                 ))) AS formel,
+                 ST_Distance(c.coordinates::geography,
+                             ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography) / 1000 AS postgis
+             FROM city c
+             WHERE c.coordinates IS NOT NULL AND c.id <> :id',
+            ['lat' => $hamburg->getLatitude(), 'lon' => $hamburg->getLongitude(), 'id' => $hamburg->getId()]
+        );
+
+        self::assertNotEmpty($zeilen, 'Ohne Vergleichsstaedte sagt der Test nichts.');
+
+        foreach ($zeilen as $zeile) {
+            $formel = (float) $zeile['formel'];
+            $postgis = (float) $zeile['postgis'];
+
+            if ($formel < 1.0) {
+                continue;
+            }
+
+            $abweichung = abs($formel - $postgis) / $formel;
+
+            self::assertLessThan(0.01, $abweichung, sprintf(
+                'Fuer %s: Formel %.1f km, PostGIS %.1f km — das ist mehr als ein Prozent auseinander.',
+                $zeile['city'], $formel, $postgis
+            ));
+        }
+    }
+
+    /**
+     * Und der Gegentest zum Radius: Was innerhalb liegt, muss gefunden werden,
+     * was ausserhalb liegt, nicht.
+     */
+    public function testTheRadiusBoundaryHolds(): void
+    {
+        if (!$this->entityManager->getConnection()->getDatabasePlatform() instanceof PostgreSQLPlatform) {
+            self::markTestSkipped('PostGIS-Funktionen gibt es nur unter PostgreSQL.');
+        }
+
+        $hamburg = $this->hamburg();
+
+        $eng = $this->cityRepository()->findNearCities($hamburg, 50, 1.0);
+        $weit = $this->cityRepository()->findNearCities($hamburg, 50, 5000.0);
+
+        self::assertLessThanOrEqual(count($weit), count($eng), 'Ein groesserer Radius findet nicht weniger.');
+
+        foreach ($eng as $nah) {
+            self::assertContains($nah, $weit, 'Was im engen Radius liegt, liegt auch im weiten.');
+        }
     }
 
     public function testNearCitiesOnlyReturnsEnabledCities(): void
