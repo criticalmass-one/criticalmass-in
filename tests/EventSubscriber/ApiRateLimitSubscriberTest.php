@@ -37,6 +37,18 @@ final class ApiRateLimitSubscriberTest extends TestCase
         );
     }
 
+    private function eventMitToken(string $method, string $path, string $token): RequestEvent
+    {
+        $request = Request::create($path, $method);
+        $request->headers->set(ApiRateLimitSubscriber::TOKEN_HEADER, $token);
+
+        return new RequestEvent(
+            $this->createMock(HttpKernelInterface::class),
+            $request,
+            HttpKernelInterface::MAIN_REQUEST,
+        );
+    }
+
     public function testThrottlesApiWriteWhenLimitExceeded(): void
     {
         $factory = $this->factory();
@@ -44,12 +56,12 @@ final class ApiRateLimitSubscriberTest extends TestCase
         $factory->create(self::CLIENT_IP)->consume();
 
         $this->expectException(TooManyRequestsHttpException::class);
-        (new ApiRateLimitSubscriber($factory))->onKernelRequest($this->event('POST', '/api/estimate'));
+        (new ApiRateLimitSubscriber($factory, $this->factory()))->onKernelRequest($this->event('POST', '/api/estimate'));
     }
 
     public function testAllowsApiWriteWithinLimit(): void
     {
-        (new ApiRateLimitSubscriber($this->factory()))->onKernelRequest($this->event('POST', '/api/estimate'));
+        (new ApiRateLimitSubscriber($this->factory(), $this->factory()))->onKernelRequest($this->event('POST', '/api/estimate'));
         $this->addToAssertionCount(1);
     }
 
@@ -59,7 +71,7 @@ final class ApiRateLimitSubscriberTest extends TestCase
         $factory->create(self::CLIENT_IP)->consume();
 
         // Bucket ist erschöpft — würde der Subscriber Reads verarbeiten, gäbe es 429.
-        (new ApiRateLimitSubscriber($factory))->onKernelRequest($this->event('GET', '/api/ride'));
+        (new ApiRateLimitSubscriber($factory, $this->factory()))->onKernelRequest($this->event('GET', '/api/ride'));
         $this->addToAssertionCount(1);
     }
 
@@ -68,7 +80,76 @@ final class ApiRateLimitSubscriberTest extends TestCase
         $factory = $this->factory();
         $factory->create(self::CLIENT_IP)->consume();
 
-        (new ApiRateLimitSubscriber($factory))->onKernelRequest($this->event('POST', '/login'));
+        (new ApiRateLimitSubscriber($factory, $this->factory()))->onKernelRequest($this->event('POST', '/login'));
         $this->addToAssertionCount(1);
+    }
+
+    /**
+     * Der Kern der Sache: Wer sich ausweist, faellt nicht unter die Bremse
+     * fuer alle anderen — auch dann nicht, wenn deren Eimer laengst leer ist.
+     */
+    public function testOurOwnServiceGetsItsOwnAllowance(): void
+    {
+        $fuerAlle = $this->factory();
+        $fuerUns = $this->factory();
+        $fuerAlle->create(self::CLIENT_IP)->consume();
+
+        $subscriber = new ApiRateLimitSubscriber($fuerAlle, $fuerUns, 'geheim');
+        $subscriber->onKernelRequest($this->eventMitToken('POST', '/api/estimate', 'geheim'));
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAWrongTokenFallsBackToTheOrdinaryLimit(): void
+    {
+        $fuerAlle = $this->factory();
+        $fuerAlle->create(self::CLIENT_IP)->consume();
+
+        $subscriber = new ApiRateLimitSubscriber($fuerAlle, $this->factory(), 'geheim');
+
+        $this->expectException(TooManyRequestsHttpException::class);
+        $subscriber->onKernelRequest($this->eventMitToken('POST', '/api/estimate', 'falsch'));
+    }
+
+    /**
+     * Ohne konfiguriertes Token ist niemand vertrauenswuerdig. Sonst wuerde
+     * eine vergessene Konfiguration jeden Absender durchwinken, der die
+     * Kopfzeile weglaesst.
+     */
+    public function testWithoutAConfiguredTokenNobodyIsTrusted(): void
+    {
+        $fuerAlle = $this->factory();
+        $fuerAlle->create(self::CLIENT_IP)->consume();
+
+        $subscriber = new ApiRateLimitSubscriber($fuerAlle, $this->factory(), '');
+
+        $this->expectException(TooManyRequestsHttpException::class);
+        $subscriber->onKernelRequest($this->event('POST', '/api/estimate'));
+    }
+
+    public function testAnEmptyHeaderIsNoMatchEither(): void
+    {
+        $fuerAlle = $this->factory();
+        $fuerAlle->create(self::CLIENT_IP)->consume();
+
+        $subscriber = new ApiRateLimitSubscriber($fuerAlle, $this->factory(), 'geheim');
+
+        $this->expectException(TooManyRequestsHttpException::class);
+        $subscriber->onKernelRequest($this->eventMitToken('POST', '/api/estimate', ''));
+    }
+
+    /**
+     * Und das weite Kontingent ist keine Freikarte: Ist auch dieser Eimer
+     * leer, greift die Bremse ebenfalls.
+     */
+    public function testEvenOurOwnServiceIsStoppedWhenItRunsAway(): void
+    {
+        $fuerUns = $this->factory();
+        $fuerUns->create('eigener-dienst')->consume();
+
+        $subscriber = new ApiRateLimitSubscriber($this->factory(), $fuerUns, 'geheim');
+
+        $this->expectException(TooManyRequestsHttpException::class);
+        $subscriber->onKernelRequest($this->eventMitToken('POST', '/api/estimate', 'geheim'));
     }
 }

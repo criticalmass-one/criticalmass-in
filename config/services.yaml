@@ -26,6 +26,10 @@ parameters:
     # to outlive a couple of missed cron runs, otherwise a visitor pays for the
     # API call the cron was supposed to have made.
     feeds.cache_ttl: 5400
+    # Womit sich die eigenen Hintergrundlaeufe (Aktivitaet, Wetter, Feeds) an
+    # der /api-Firewall als solche zu erkennen geben. Leer gelassen heisst:
+    # niemand ist vertrauenswuerdig, alle teilen sich das enge Kontingent.
+    api.own_service_token: '%env(string:default::CRITICALMASS_API_TOKEN)%'
     notification.mail.sender_address: '%env(MAILER_SENDER)%'
     request_listener.http_port: 80
     request_listener.https_port: 443
@@ -51,6 +55,7 @@ services:
             $rootDirectory: '%kernel.project_dir%'
             $webRootDir: '%kernel.project_dir%/../public'
             $gapWidth: '%track.gap_width%'
+            $eigenerDienstToken: '%api.own_service_token%'
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'

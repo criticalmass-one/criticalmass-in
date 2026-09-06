@@ -17,6 +17,21 @@ composer test:run          # Just run PHPUnit (no DB reset)
 composer test:api          # Only API test suite
 vendor/bin/phpunit tests/Path/To/TestFile.php              # Single test file
 vendor/bin/phpunit --filter testMethodName                  # Single test method
+# **Ein Suite-Lauf ist nur reproduzierbar, wenn vorher DREI Dinge weg sind.**
+# Sonst misst man die Vorgeschichte statt den Code — zwei Vergleiche zwischen
+# main und einem Branch lieferten so 341 Fehler gegen 35, obwohl beide Staende
+# vollstaendig gruen sind:
+#   1. die Testdatenbank (composer test:db:reset) — die Suite ueberschreibt
+#      ihren eigenen Bestand,
+#   2. var/cache/test — dort liegt der Zustand des API-Ratenbegrenzers. Die
+#      Suite schreibt mehr als 120 API-Anfragen je 15 Minuten und wirft sich
+#      beim zweiten Lauf selbst mit 429ern zurueck,
+#   3. der FilesystemAdapter von CachedTimeline in sys_get_temp_dir():
+#        find "$(php -r 'echo sys_get_temp_dir();')/symfony-cache" -maxdepth 1 \
+#          -name '*criticalmass-timeline*' -exec rm -rf {} +
+#      Er wird an der Cache-Konfiguration vorbei gebaut, ueberdauert Laeufe und
+#      laesst Startseiten-Tests gruen aussehen, ohne etwas zu pruefen.
+#      (In zsh scheitert das Glob-Muster ohne Treffer — deshalb `find`.)
 # Controller/DB tests brauchen eine laufende Datenbank; reine Unit-Tests laufen ohne.
 # Die CI faehrt PostgreSQL 17, wie die Produktion. Der Code ist portabel geblieben
 # und besteht die Suite auch gegen MariaDB — das ist aber nicht mehr die Zielplattform.
