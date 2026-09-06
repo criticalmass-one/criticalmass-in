@@ -15,6 +15,7 @@ use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Jsor\Doctrine\PostGIS\Types\PostGISType;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -28,6 +29,9 @@ use Vich\UploaderBundle\Mapping\Attribute as Vich;
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 #[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
+// Das Flag 'spatial' laesst Doctrine einen GiST-Index erzeugen statt eines
+// B-Baums. Ohne ihn muesste eine Umkreissuche jede Zeile anfassen.
+#[ORM\Index(fields: ['coordinates'], name: 'city_coordinates_gist', flags: ['spatial'])]
 class City implements BoardInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
 {
     #[ORM\Id]
@@ -84,6 +88,23 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'ride-details', 'api-write'])]
     protected ?float $longitude = 0.0;
+
+    /**
+     * Dieselbe Stelle noch einmal, diesmal als Geometrie.
+     *
+     * Sie wird aus latitude und longitude gefuehrt, nicht umgekehrt: Die beiden
+     * Spalten haengen an den DataQuery-Attributen, dem Formular, der
+     * API-Ausgabe und zwei Abfragen im Repository. Erst wenn diese auf PostGIS
+     * umgestellt sind (#1141), koennen sie fallen und dieses Feld die Fuehrung
+     * uebernehmen.
+     *
+     * Der Gewinn liegt schon jetzt beim raeumlichen Index: Eine Umkreissuche
+     * ueber ST_DWithin kann ihn nutzen, die Haversine-Formel ueber zwei
+     * Fliesskommaspalten kann das nicht.
+     */
+    #[ORM\Column(type: PostGISType::GEOMETRY, nullable: true, options: ['geometry_type' => 'POINT', 'srid' => 4326])]
+    #[Ignore]
+    protected ?string $coordinates = null;
 
     #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
@@ -305,6 +326,7 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     public function setLatitude(?float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
+        $this->punktNachfuehren();
 
         return $this;
     }
@@ -317,8 +339,36 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
     public function setLongitude(?float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
+        $this->punktNachfuehren();
 
         return $this;
+    }
+
+    public function getCoordinates(): ?string
+    {
+        return $this->coordinates;
+    }
+
+    /**
+     * Haelt die Geometrie an den beiden Fliesskommaspalten nach.
+     *
+     * In WKT steht die Laenge vor der Breite — anders herum als in jeder
+     * Beschriftung dieser Anwendung, und eine beliebte Fehlerquelle.
+     *
+     * Null und exakt 0 gelten hier als "keine Angabe": Der Punkt 0,0 liegt im
+     * Golf von Guinea, und der Bestand nutzt ihn seit jeher als Platzhalter fuer
+     * Staedte ohne Koordinaten.
+     */
+    private function punktNachfuehren(): void
+    {
+        if (null === $this->latitude || null === $this->longitude
+            || 0.0 === $this->latitude || 0.0 === $this->longitude) {
+            $this->coordinates = null;
+
+            return;
+        }
+
+        $this->coordinates = sprintf('SRID=4326;POINT(%.8F %.8F)', $this->longitude, $this->latitude);
     }
 
     public function getLongitude(): ?float
@@ -545,7 +595,7 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
 
     public function getCoord(): Coord
     {
-        return new Coord($this->latitude, $this->longitude);
+        return new Coord($this->longitude, $this->latitude);
     }
 
     public function setEnableBoard(bool $enableBoard): City
@@ -823,7 +873,7 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
 
     public function toCoord(): CoordInterface
     {
-        return new Coord($this->latitude, $this->longitude);
+        return new Coord($this->longitude, $this->latitude);
     }
 
     public function getActivityScore(): ?float
