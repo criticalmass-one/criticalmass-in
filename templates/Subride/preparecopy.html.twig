@@ -12,6 +12,24 @@
             </div>
         </div>
 
+        {# Es muss keine fruehere Tour mit Mini-Masses geben — in einer Stadt,
+           in der noch nie welche eingetragen wurden, gibt es schlicht nichts
+           zu kopieren. Das Repository liefert dann null. #}
+        {% if not oldRide %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-info">
+                        In dieser Stadt gibt es noch keine frühere Tour mit Mini-Masses,
+                        von der sich welche kopieren ließen. Lege sie einmal von Hand an —
+                        beim nächsten Mal steht diese Tour dann hier zur Auswahl.
+                    </div>
+
+                    <a href="{{ object_path(newRide) }}" class="btn btn-secondary">
+                        Zurück zur Tour
+                    </a>
+                </div>
+            </div>
+        {% else %}
         <div class="row">
             <div class="col-md-12">
                 <p>Von der Tour <a href="{{ object_path(oldRide) }}">{{ oldRide.title }}</a>
@@ -46,5 +64,6 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
