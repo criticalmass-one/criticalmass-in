@@ -258,12 +258,16 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
         return $this;
     }
 
-    public function getUser(): User
+    /**
+     * Der Hochladende darf fehlen — die Spalte war seit jeher nullbar, nur
+     * Getter und Setter waren strenger als sie.
+     */
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): Photo
+    public function setUser(?User $user): Photo
     {
         $this->user = $user;
 

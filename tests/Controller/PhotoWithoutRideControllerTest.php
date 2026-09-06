@@ -87,11 +87,10 @@ class PhotoWithoutRideControllerTest extends AbstractControllerTestCase
         self::assertNotNull($stadt, 'Die Fixtures liefern mindestens eine Stadt.');
 
         $foto = new Photo();
-        $foto
-            ->setCity($stadt)
-            ->setImageName('foto-ohne-tour.jpg')
-            ->setEnabled(true)
-            ->setDeleted(false);
+        $foto->setCity($stadt);
+        $foto->setImageName('foto-ohne-tour.jpg');
+        $foto->setEnabled(true);
+        $foto->setDeleted(false);
 
         if ($mitNutzer) {
             $foto->setUser($entityManager->getRepository(User::class)->findOneBy([]));
