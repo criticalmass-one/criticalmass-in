@@ -5,8 +5,12 @@
 
             <div class="col-9 col-md-10">
                 <p class="mb-2">
-                    <strong>{{ item.user.username }}</strong>
-                    hat eine Stadt editiert:
+                    {% if item.user %}
+                        <strong>{{ item.user.username }}</strong>
+                        hat eine Stadt editiert:
+                    {% else %}
+                        Eine Stadt wurde editiert:
+                    {% endif %}
                 </p>
 
                 <h5 class="mb-3">
