@@ -6,12 +6,8 @@
 
 {% block breadcrumb %}
     {{ breadcrumb.item(city.city, object_path(city)) }}
-    {# 139 Fotos haengen an keiner Tour; der Controller weiss das laengst und
-       reicht dann null herein. Ohne Tour entfaellt der Zweig einfach. #}
-    {% if ride %}
-        {{ breadcrumb.item(ride.title, object_path(ride)) }}
-        {{ breadcrumb.item('Fotos', object_path(ride, 'caldera_criticalmass_photo_ride_list')) }}
-    {% endif %}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.item('Fotos', object_path(ride, 'caldera_criticalmass_photo_ride_list')) }}
     {{ breadcrumb.active('Foto ' ~ photo.id ~ ' aus ' ~ city.city) }}
 {% endblock %}
 
@@ -43,9 +39,7 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            {# Auch der Hochladende kann fehlen. Ohne ihn gibt es niemanden,
-               der das Verschleiern eingestellt haben koennte. #}
-            {% if not app.user and photo.user and photo.user.blurGalleries %}
+            {% if not app.user and photo.user.blurGalleries %}
                 <div class="position-relative">
                     <div class="position-absolute w-100 h-100 d-flex align-items-center justify-content-center" style="z-index: 100; top: 0; left: 0;">
                         <div class="col-md-6 offset-md-3">
