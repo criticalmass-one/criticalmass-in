@@ -14,6 +14,7 @@ class TrackController extends AbstractController
     #[IsGranted('view', 'track')]
     #[Route(
         '/track/view/{id}',
+        requirements: ['id' => '\d+'],
         name: 'caldera_criticalmass_track_view',
         priority: 150
     )]
@@ -27,6 +28,7 @@ class TrackController extends AbstractController
     #[IsGranted('approve', 'track')]
     #[Route(
         '/track/{id}/approve',
+        requirements: ['id' => '\d+'],
         name: 'caldera_criticalmass_track_approve',
         priority: 150
     )]

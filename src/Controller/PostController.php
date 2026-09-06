@@ -55,21 +55,21 @@ class PostController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/post/write/city/{id}', name: 'caldera_criticalmass_timeline_post_write_city', priority: 120)]
+    #[Route('/post/write/city/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_timeline_post_write_city', priority: 120)]
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $city, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/post/write/ride/{id}', name: 'caldera_criticalmass_timeline_post_write_ride', priority: 120)]
+    #[Route('/post/write/ride/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_timeline_post_write_ride', priority: 120)]
     public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $ride, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/post/write/photo/{id}', name: 'caldera_criticalmass_timeline_post_write_photo', priority: 120)]
+    #[Route('/post/write/photo/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_timeline_post_write_photo', priority: 120)]
     public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $photo, $objectRouter);
@@ -178,7 +178,7 @@ class PostController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/post/edit/{postId}', name: 'caldera_criticalmass_post_edit', priority: 120)]
+    #[Route('/post/edit/{postId}', requirements: ['postId' => '\d+'], name: 'caldera_criticalmass_post_edit', priority: 120)]
     public function editAction(
         Request $request,
         ObjectRouterInterface $objectRouter,
@@ -212,7 +212,7 @@ class PostController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/post/disable/{postId}', name: 'caldera_criticalmass_post_disable', methods: ['POST'], priority: 120)]
+    #[Route('/post/disable/{postId}', requirements: ['postId' => '\d+'], name: 'caldera_criticalmass_post_disable', methods: ['POST'], priority: 120)]
     public function disableAction(
         Request $request,
         ObjectRouterInterface $objectRouter,

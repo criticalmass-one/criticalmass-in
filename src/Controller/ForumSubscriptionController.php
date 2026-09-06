@@ -95,7 +95,7 @@ class ForumSubscriptionController extends AbstractController
         ]);
     }
 
-    #[Route('/forum/subscriptions/{id}/remove', name: 'caldera_criticalmass_forum_unsubscribe', methods: ['POST'], priority: 240)]
+    #[Route('/forum/subscriptions/{id}/remove', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_forum_unsubscribe', methods: ['POST'], priority: 240)]
     public function removeAction(Request $request, ForumSubscription $subscription): Response
     {
         $this->denyInvalidToken($request, 'forum-subscribe');
