@@ -737,8 +737,6 @@ class RideRepository extends ServiceEntityRepository
 
         $latitude = $location->getLatitude();
         $longitude = $location->getLongitude();
-        $earthRadius = 6371000;
-
         $rsm = new ResultSetMapping();
 
         $rsm->addEntityResult(Ride::class, 'r');
@@ -767,30 +765,33 @@ class RideRepository extends ServiceEntityRepository
         // darauf filtern laesst. Vorher stand hier ein HAVING ohne GROUP BY, das
         // sich auf einen Alias der Auswahl bezog: MySQL laesst beides durchgehen,
         // PostgreSQL keines von beidem.
+        // ST_DWithin statt Haversine: Die Bedingung kann den GiST-Index auf
+        // coordinates nutzen. Damit entfaellt auch die Unterabfrage, die nur
+        // noetig war, um auf die selbst gerechnete Entfernung filtern zu koennen —
+        // ein HAVING ohne GROUP BY laesst PostgreSQL nicht durchgehen.
+        //
+        // Der Radius kommt bereits in Metern herein, und ueber geography rechnet
+        // ST_DWithin ebenfalls in Metern.
         $sql = <<<SQL
-SELECT * FROM (
-    SELECT
-        r.id,
-        r.dateTime AS ride_date_time,
-        r.latitude,
-        r.longitude,
-        r.title,
-        c.id AS c_id,
-        cs.id AS cs_id,
-        cs.slug AS cs_slug,
-        (
-            $earthRadius * acos(
-                cos(radians(:latitude)) * cos(radians(r.latitude)) *
-                cos(radians(r.longitude) - radians(:longitude)) +
-                sin(radians(:latitude)) * sin(radians(r.latitude))
-            )
-        ) AS distance
-    FROM ride r
-    INNER JOIN city c ON r.city_id = c.id
-    INNER JOIN cityslug cs ON cs.id = c.main_slug_id
-) naehe
-WHERE naehe.distance <= :radius
-ORDER BY naehe.ride_date_time DESC
+SELECT
+    r.id,
+    r.dateTime AS ride_date_time,
+    r.latitude,
+    r.longitude,
+    r.title,
+    c.id AS c_id,
+    cs.id AS cs_id,
+    cs.slug AS cs_slug
+FROM ride r
+INNER JOIN city c ON r.city_id = c.id
+INNER JOIN cityslug cs ON cs.id = c.main_slug_id
+WHERE r.coordinates IS NOT NULL
+  AND ST_DWithin(
+        r.coordinates::geography,
+        ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326)::geography,
+        :radius
+      )
+ORDER BY r.dateTime DESC
 LIMIT :limit
 SQL;
 

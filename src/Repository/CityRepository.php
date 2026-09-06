@@ -324,19 +324,28 @@ class CityRepository extends ServiceEntityRepository
         $rsm = new ResultSetMappingBuilder($em);
         $rsm->addRootEntityFromClassMetadata(City::class, 'c');
 
+        // ST_DWithin statt einer von Hand geschriebenen Haversine-Formel: Die
+        // Bedingung kann den GiST-Index auf coordinates nutzen, die Formel
+        // konnte das nicht — sie musste jede Zeile anfassen und durchrechnen.
+        //
+        // Ueber geography gerechnet, also auf dem WGS84-Ellipsoid und in Metern;
+        // die alte Formel nahm eine Kugel mit 6371 km Radius an. Die Ergebnisse
+        // weichen dadurch um Bruchteile eines Prozents ab — zugunsten der neuen.
         $sql = <<<SQL
 SELECT c.*
 FROM city c
 WHERE c.enabled = true
   AND c.id != :id
-  AND (6371 * acos(
-           cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +
-           sin(radians(:lat)) * sin(radians(c.latitude))
-       )) <= :distance
-ORDER BY (6371 * acos(
-             cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +
-             sin(radians(:lat)) * sin(radians(c.latitude))
-         )) ASC
+  AND c.coordinates IS NOT NULL
+  AND ST_DWithin(
+        c.coordinates::geography,
+        ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography,
+        :meter
+      )
+ORDER BY ST_Distance(
+        c.coordinates::geography,
+        ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography
+      ) ASC
 LIMIT :size
 SQL;
 
@@ -344,7 +353,8 @@ SQL;
         $query->setParameter('lat', $city->getLatitude());
         $query->setParameter('lon', $city->getLongitude());
         $query->setParameter('id', $city->getId());
-        $query->setParameter('distance', $distance);
+        // Die Methode nimmt Kilometer entgegen, ST_DWithin ueber geography Meter.
+        $query->setParameter('meter', $distance * 1000);
         $query->setParameter('size', $size, \Doctrine\DBAL\ParameterType::INTEGER);
 
         return $query->getResult();
