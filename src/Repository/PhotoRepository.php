@@ -202,6 +202,27 @@ class PhotoRepository extends ServiceEntityRepository
         ];
     }
 
+    /**
+     * Beschraenkt eine Abfrage auf das, was sich auch anzeigen laesst.
+     *
+     * In der Fototabelle stecken 17 Zeilen, die kein Bild sind: Videos aus
+     * einem frueheren Upload und vier leere Dateien. Liip kann daraus keine
+     * Miniaturansicht bauen und wirft stattdessen, was jeden Abruf einer
+     * solchen Vorschau in einem 500er enden laesst.
+     *
+     * Version20260906100000 nimmt den Bestand aus dem Verkehr; dieser Riegel
+     * sorgt dafuer, dass so etwas gar nicht erst wieder in einer Galerie
+     * landet. Ein fehlender Typ zaehlt als Bild — er ist bei alten Zeilen
+     * schlicht nie gesetzt worden.
+     */
+    private function nurAnzeigbareBilder(QueryBuilder $builder): QueryBuilder
+    {
+        return $builder->andWhere($builder->expr()->orX(
+            $builder->expr()->isNull('p.imageMimeType'),
+            $builder->expr()->like('p.imageMimeType', $builder->expr()->literal('image/%'))
+        ));
+    }
+
     public function buildQueryPhotosByRide(Ride $ride): QueryBuilder
     {
         $builder = $this->createQueryBuilder('p');
@@ -213,7 +234,7 @@ class PhotoRepository extends ServiceEntityRepository
             ->setParameter('deleted', false)
             ->addOrderBy('p.exifCreationDate', 'ASC');
 
-        return $builder;
+        return $this->nurAnzeigbareBilder($builder);
     }
 
     public function findPhotosByRide(Ride $ride): array
@@ -254,7 +275,7 @@ class PhotoRepository extends ServiceEntityRepository
         ->setParameter('deleted', false)
         ->addOrderBy('p.exifCreationDate', 'ASC');
 
-        return $builder->getQuery();
+        return $this->nurAnzeigbareBilder($builder)->getQuery();
     }
 
     public function findPhotosByUserAndRide(User $user, Ride $ride): array
@@ -275,6 +296,8 @@ class PhotoRepository extends ServiceEntityRepository
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false);
+
+        $this->nurAnzeigbareBilder($builder);
 
         if ($city) {
             $builder
