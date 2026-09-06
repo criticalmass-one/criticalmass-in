@@ -24,3 +24,13 @@ framework:
             policy: sliding_window
             limit: 120
             interval: '15 minutes'
+
+        # Fuer die eigenen Hintergrundlaeufe, die sich mit dem vereinbarten
+        # Token ausweisen. Der Aktivitaetslauf schreibt einmal je Stadt, also
+        # ueber 700 Anfragen am Stueck; der Eimer fasst das und fuellt sich mit
+        # 200 je Minute nach. Eine ausser Kontrolle geratene Schleife bremst er
+        # weiterhin.
+        api_write_trusted:
+            policy: token_bucket
+            limit: 1000
+            rate: { interval: '1 minute', amount: 200 }
