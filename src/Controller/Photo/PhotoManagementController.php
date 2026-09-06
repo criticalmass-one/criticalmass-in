@@ -54,7 +54,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
-    #[Route('/managephotos/{id}/delete', name: 'caldera_criticalmass_photo_delete', priority: 170)]
+    #[Route('/managephotos/{id}/delete', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_delete', priority: 170)]
     public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -89,7 +89,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
-    #[Route('/photo/{id}/toggle', name: 'caldera_criticalmass_photo_toggle', priority: 170)]
+    #[Route('/photo/{id}/toggle', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_toggle', priority: 170)]
     public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -102,7 +102,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
-    #[Route('/photo/{id}/featured', name: 'caldera_criticalmass_photo_featured', priority: 170)]
+    #[Route('/photo/{id}/featured', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_featured', priority: 170)]
     public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -115,7 +115,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
-    #[Route('/photo/{id}/place', name: 'caldera_criticalmass_photo_place_single', priority: 170)]
+    #[Route('/photo/{id}/place', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_place_single', priority: 170)]
     public function placeSingleAction(
         Request $request,
         Photo $photo,
@@ -186,7 +186,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
-    #[Route('/photo/{id}/rotate', name: 'caldera_criticalmass_photo_rotate', priority: 170)]
+    #[Route('/photo/{id}/rotate', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_rotate', priority: 170)]
     public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $this->saveReferer($request);
@@ -204,8 +204,8 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
-    #[Route('/photo/{id}/censor', name: 'caldera_criticalmass_photo_censor', priority: 170)]
-    #[Route('/photo/{id}/censor', name: 'caldera_criticalmass_photo_censor_short', options: ['expose' => true], priority: 170)]
+    #[Route('/photo/{id}/censor', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_censor', priority: 170)]
+    #[Route('/photo/{id}/censor', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_censor_short', options: ['expose' => true], priority: 170)]
     public function censorAction(
         Request $request,
         Photo $photo,

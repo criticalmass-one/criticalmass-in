@@ -121,7 +121,7 @@ class PhotoController extends BaseController
     /**
      * Retrieve details of a single photo by its id.
      */
-    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_show', methods: ['GET'], priority: 200)]
+    #[Route(path: '/api/photo/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_rest_photo_show', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Photo')]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the photo', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: 200, description: 'Returns photo details or 404 if not found')]

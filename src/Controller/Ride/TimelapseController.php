@@ -31,6 +31,7 @@ class TimelapseController extends AbstractController
 
     #[Route(
         '/{citySlug}/{rideIdentifier}/timelapse/load/{id}',
+        requirements: ['id' => '\d+'],
         name: 'caldera_criticalmass_timelapse_load',
         options: ['expose' => true],
         priority: 135

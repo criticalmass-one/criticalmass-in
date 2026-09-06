@@ -84,6 +84,7 @@ class SubrideController extends AbstractController
     #[IsGranted('ROLE_USER')]
     #[Route(
         '/{citySlug}/{rideIdentifier}/editsubride/{id}',
+        requirements: ['id' => '\d+'],
         name: 'caldera_criticalmass_subride_edit',
         priority: 20
     )]

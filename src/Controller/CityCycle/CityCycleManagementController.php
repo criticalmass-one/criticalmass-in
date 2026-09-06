@@ -70,7 +70,7 @@ class CityCycleManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/{citySlug}/cycles/{id}/edit', name: 'caldera_criticalmass_citycycle_edit', priority: 80)]
+    #[Route('/{citySlug}/cycles/{id}/edit', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_citycycle_edit', priority: 80)]
     public function editAction(
         Request $request,
         CityCycle $cityCycle,
@@ -125,7 +125,7 @@ class CityCycleManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/{citySlug}/cycles/{id}/disable', name: 'caldera_criticalmass_citycycle_disable', methods: ['POST'], priority: 80)]
+    #[Route('/{citySlug}/cycles/{id}/disable', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_citycycle_disable', methods: ['POST'], priority: 80)]
     public function disableAction(
         Request $request,
         CityCycle $cityCycle,

@@ -37,7 +37,7 @@ class TrackController extends BaseController
     /**
      * Show details of a specified track.
      */
-    #[Route(path: '/api/track/{id}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'], priority: 200)]
+    #[Route(path: '/api/track/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_rest_track_view', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Track')]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the track', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
@@ -124,7 +124,7 @@ class TrackController extends BaseController
      *
      * Marks the track as deleted. Requires edit permissions on the track.
      */
-    #[Route('/api/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'], priority: 200)]
+    #[Route('/api/track/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'], priority: 200)]
     #[IsGranted('edit', 'track')]
     #[OA\Tag(name: 'Track')]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the track to delete', required: true, schema: new OA\Schema(type: 'integer'))]
