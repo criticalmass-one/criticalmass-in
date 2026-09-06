@@ -5,8 +5,12 @@
 
             <div class="col-9 col-md-10">
                 <p class="mb-2">
-                    <strong>{{ item.user.username }}</strong>
-                    hat ein neues Diskussionsthema begonnen:
+                    {% if item.user %}
+                        <strong>{{ item.user.username }}</strong>
+                        hat ein neues Diskussionsthema begonnen:
+                    {% else %}
+                        Ein neues Diskussionsthema wurde begonnen:
+                    {% endif %}
                 </p>
 
                 <h5 class="mb-2">

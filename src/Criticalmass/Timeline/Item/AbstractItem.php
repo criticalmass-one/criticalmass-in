@@ -36,7 +36,17 @@ abstract class AbstractItem implements ItemInterface
         return $this->uniqId;
     }
 
-    public function setUser(User $user): AbstractItem
+    /**
+     * Der Autor darf fehlen — und tut es meistens.
+     *
+     * 24.464 der 26.820 Touren stammen aus dem Tourengenerator und haben nie
+     * jemanden gehabt, der sie angelegt hat; dazu kommen alte Staedte aus der
+     * Fruehzeit und Inhalte geloeschter Konten. Die Eigenschaft und der Getter
+     * waren immer nullbar, nur dieser Setter nicht: Er hat den Aufruf mit null
+     * in einen TypeError verwandelt und damit die Timeline zerlegt, sobald man
+     * weit genug zurueckblaetterte.
+     */
+    public function setUser(?User $user): AbstractItem
     {
         $this->user = $user;
 

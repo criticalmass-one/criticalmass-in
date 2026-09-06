@@ -5,8 +5,12 @@
 
             <div class="col-9 col-md-10">
                 <p class="mb-2">
-                    <strong>{{ item.user.username }}</strong>
-                    hat einen Track hochgeladen:
+                    {% if item.user %}
+                        <strong>{{ item.user.username }}</strong>
+                        hat einen Track hochgeladen:
+                    {% else %}
+                        Ein Track wurde hochgeladen:
+                    {% endif %}
                 </p>
 
                 <h5 class="mb-3">

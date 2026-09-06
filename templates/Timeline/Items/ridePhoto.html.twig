@@ -5,17 +5,29 @@
 
             <div class="col-9 col-md-10">
                 <p class="mb-2">
-                    <strong>{{ item.user.username }}</strong>
-                    hat
-                    <a href="{{ object_path(item.ride, 'caldera_criticalmass_photo_ride_list') }}">
-                        {{ item.counter }} Fotos
-                    </a> zur Tour
-                    <strong>
-                        <a href="{{ object_path(item.ride) }}">
-                            {{ item.ride.title }}
-                        </a>
-                    </strong>
-                    hochgeladen
+                    {% if item.user %}
+                        <strong>{{ item.user.username }}</strong>
+                        hat
+                        <a href="{{ object_path(item.ride, 'caldera_criticalmass_photo_ride_list') }}">
+                            {{ item.counter }} Fotos
+                        </a> zur Tour
+                        <strong>
+                            <a href="{{ object_path(item.ride) }}">
+                                {{ item.ride.title }}
+                            </a>
+                        </strong>
+                        hochgeladen
+                    {% else %}
+                        <a href="{{ object_path(item.ride, 'caldera_criticalmass_photo_ride_list') }}">
+                            {{ item.counter }} Fotos
+                        </a> wurden zur Tour
+                        <strong>
+                            <a href="{{ object_path(item.ride) }}">
+                                {{ item.ride.title }}
+                            </a>
+                        </strong>
+                        hochgeladen
+                    {% endif %}
                 </p>
 
                 <div class="row g-3">
