@@ -16,6 +16,7 @@ use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Jsor\Doctrine\PostGIS\Types\PostGISType;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -28,6 +29,7 @@ use Vich\UploaderBundle\Mapping\Attribute as Vich;
 #[ORM\Table(name: 'photo')]
 #[ORM\Entity(repositoryClass: 'App\Repository\PhotoRepository')]
 #[ORM\Index(fields: ['exifCreationDate'], name: 'photo_exif_creation_date_index')]
+#[ORM\Index(fields: ['coordinates'], name: 'photo_coordinates_gist', flags: ['spatial'])]
 class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, OrderedEntityInterface, CoordinateInterface
 {
     #[Routing\RouteParameter(name: 'id')]
@@ -69,6 +71,18 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-details', 'photo-details'])]
     protected ?float $longitude = null;
+    /**
+     * Dieselbe Stelle noch einmal, diesmal als Geometrie.
+     *
+     * Gefuehrt wird sie aus latitude und longitude, nicht umgekehrt: Die beiden
+     * Spalten haengen an der API-Ausgabe und an den Formularen. Der Gewinn
+     * liegt beim raeumlichen Index — eine Umkreissuche ueber ST_DWithin kann
+     * ihn nutzen, die Haversine-Formel ueber zwei Fliesskommaspalten nicht.
+     */
+    #[ORM\Column(type: PostGISType::GEOMETRY, nullable: true, options: ['geometry_type' => 'POINT', 'srid' => 4326])]
+    #[Ignore]
+    protected ?string $coordinates = null;
+
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'text', nullable: true)]
@@ -230,6 +244,7 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
     public function setLatitude(?float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
+        $this->punktNachfuehren();
 
         return $this;
     }
@@ -239,9 +254,37 @@ class Photo implements FakeUploadable, ManipulateablePhotoInterface, RouteableIn
         return $this->longitude;
     }
 
+    public function getCoordinates(): ?string
+    {
+        return $this->coordinates;
+    }
+
+    /**
+     * Haelt die Geometrie an den beiden Fliesskommaspalten nach.
+     *
+     * In WKT steht die Laenge vor der Breite — anders herum als in jeder
+     * Beschriftung dieser Anwendung, und eine beliebte Fehlerquelle.
+     *
+     * Null und exakt 0 gelten als "keine Angabe": Der Punkt 0,0 liegt im Golf
+     * von Guinea, und der Bestand nutzt ihn seit jeher als Platzhalter — bei
+     * den Fotos betrifft das 18 Zeilen.
+     */
+    private function punktNachfuehren(): void
+    {
+        if (null === $this->latitude || null === $this->longitude
+            || 0.0 === $this->latitude || 0.0 === $this->longitude) {
+            $this->coordinates = null;
+
+            return;
+        }
+
+        $this->coordinates = sprintf('SRID=4326;POINT(%.8F %.8F)', $this->longitude, $this->latitude);
+    }
+
     public function setLongitude(?float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
+        $this->punktNachfuehren();
 
         return $this;
     }
