@@ -1,0 +1,27 @@
+{#
+ # Stadt, Datum und Uhrzeit einer Fahrt.
+ #
+ # Ohne diese drei Angaben ordnet ein Eintrag sich nicht ein: Ein Titel wie
+ # "KidicalMass" sagt weder, wo die Fahrt stattfindet, noch wann. Bei Titeln
+ # wie "Critical Mass Offenbach 28.08.2026" steht beides zwar drin, aber nur,
+ # weil jemand es von Hand hineingeschrieben hat.
+ #
+ # Die Zeitzone kommt von der Stadt, nicht aus der Twig-Vorgabe. Fuer den
+ # heutigen Bestand macht das keinen Unterschied — dort steht bei fast jeder
+ # Stadt Europe/Berlin, auch bei Los Angeles —, aber es wird richtig, sobald
+ # jemand diese Angabe pflegt, statt dann still falsch zu bleiben.
+ #}
+{% if ride %}
+    <p class="text-muted small mb-2 timeline-item-ride-meta">
+        {% if ride.city %}
+            <i class="fas fa-map-marker-alt me-1" aria-hidden="true"></i>{{ ride.city.city }}
+        {% endif %}
+
+        {% if ride.dateTime %}
+            {% if ride.city %}<span class="mx-1">·</span>{% endif %}
+            <i class="far fa-calendar-alt me-1" aria-hidden="true"></i>{{ ride.dateTime|date('d.m.Y', ride.city ? ride.city.timezone : null) }}
+            <span class="mx-1">·</span>
+            <i class="far fa-clock me-1" aria-hidden="true"></i>{{ ride.dateTime|date('H:i', ride.city ? ride.city.timezone : null) }} Uhr
+        {% endif %}
+    </p>
+{% endif %}

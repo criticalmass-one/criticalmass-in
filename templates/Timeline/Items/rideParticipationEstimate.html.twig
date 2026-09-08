@@ -25,6 +25,8 @@
                     {% endif %}
                 </p>
 
+                {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
+
                 <div class="text-center">
                     <div class="flipcounter">
                         {% set counter = item.estimatedParticipants %}

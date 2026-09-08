@@ -30,6 +30,8 @@
                     {% endif %}
                 </p>
 
+                {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
+
                 <div class="row g-3">
                     {% for previewPhoto in item.previewPhotoList %}
                         <div class="col-4">
