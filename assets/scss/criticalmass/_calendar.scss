@@ -1,39 +1,175 @@
-.calendar {
-  width: 100%;
+/*
+ * Der Kalender: ein Monat auf einen Blick, ein Tag im Einzelnen.
+ *
+ * Die Touren verteilen sich extrem ungleich — im September 2026 im Mittel
+ * zwei je Tag, aber 145 allein am letzten Freitag. Das Raster zeigt deshalb
+ * nur noch, ob und wie viel an einem Tag los ist; die Touren selbst stehen
+ * daneben. So muss nichts abgeschnitten werden, und die frueheren festen
+ * 175 Pixel je Zelle samt Rollbalken entfallen.
+ */
 
-  th {
-    padding: 5px;
+.calendar-page__body {
+    row-gap: 2rem;
+}
+
+/* ---------- Monatsnavigation ---------- */
+
+.calendar-month__nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .75rem;
+    margin-bottom: .85rem;
+
+    strong {
+        font-size: 1.1rem;
+        white-space: nowrap;
+    }
+}
+
+.calendar-month__step {
+    text-decoration: none;
+    font-size: .9rem;
+    white-space: nowrap;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* ---------- Das Raster ---------- */
+
+.calendar-month {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .3rem;
+}
+
+.calendar-month__weekday {
     text-align: center;
-  }
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--bs-secondary-color, #6c757d);
+    padding-bottom: .15rem;
+}
 
-  .day,
-  .none-day {
-    border: 1px grey solid;
-    vertical-align: top;
-    height: 175px;
+.calendar-month__empty {
+    aspect-ratio: 1;
+}
 
-    .day-number {
-      background-color: red;
-      text-align: right;
-      padding: 3px;
-      color: white;
-      font-weight: bold;
-      height: 25px;
+.calendar-month__day {
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--bs-border-color, #dee2e6);
+    border-radius: .45rem;
+    background: var(--bs-body-bg, #fff);
+    color: inherit;
+    text-decoration: none;
+    font-size: .9rem;
+    font-variant-numeric: tabular-nums;
+
+    &:hover {
+        border-color: var(--bs-primary, #0d6efd);
+        color: inherit;
     }
 
-    ul {
-      overflow: scroll;
-      height: 150px;
-      margin: 0;
-      padding: 5px;
+    /* Tastaturbedienung sichtbar lassen. */
+    &:focus-visible {
+        outline: 2px solid var(--bs-primary, #0d6efd);
+        outline-offset: 1px;
+    }
+}
+
+/* Ein Tag ohne Tour bleibt da, tritt aber zurueck. */
+.calendar-month__day--quiet {
+    border-color: transparent;
+    color: var(--bs-secondary-color, #adb5bd);
+}
+
+/* Der Critical-Mass-Tag: der eine, auf den es ankommt. */
+.calendar-month__day--busy {
+    background: #fdf0ec;
+    border-color: #f2c9bd;
+    font-weight: 700;
+
+    .calendar-month__dots i {
+        background: #d94f2b;
+    }
+}
+
+.calendar-month__day--current {
+    border-color: currentColor;
+    box-shadow: 0 0 0 1px currentColor;
+    font-weight: 700;
+}
+
+.calendar-month__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: .3rem;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+
+    i {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--bs-primary, #0d6efd);
+    }
+}
+
+/* ---------- Der gewaehlte Tag ---------- */
+
+.calendar-day__heading {
+    font-size: 1.25rem;
+    margin: 0 0 .1rem;
+}
+
+.calendar-day__count {
+    font-size: .92rem;
+    margin: 0 0 .9rem;
+}
+
+.calendar-day__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    /* Bei 145 Touren wird aus einer langen Spalte eine lesbare Flaeche. */
+    columns: 2;
+    column-gap: 2.5rem;
+
+    @media (min-width: 1400px) {
+        columns: 3;
     }
 
-    &.shadow {
-      box-shadow: inset 0 -10px 10px -10px #000000;
+    @media (max-width: 575.98px) {
+        columns: 1;
     }
-  }
+}
 
-  .none-day .day-number {
-    background-color: maroon;
-  }
+.calendar-day__entry {
+    break-inside: avoid;
+    padding: .22rem 0;
+    border-bottom: 1px solid var(--bs-border-color-translucent, rgba(0, 0, 0, .06));
+    font-size: .95rem;
+
+    &--off {
+        text-decoration: line-through;
+        color: var(--bs-secondary-color, #6c757d);
+    }
+}
+
+.calendar-day__time {
+    display: inline-block;
+    min-width: 3.1rem;
+    color: var(--bs-secondary-color, #6c757d);
+    font-variant-numeric: tabular-nums;
+    font-size: .9em;
 }

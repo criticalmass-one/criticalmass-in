@@ -31,6 +31,14 @@ class RideRepository extends ServiceEntityRepository
             ->where($builder->expr()->gte('r.dateTime', ':dateTime'))
             ->andWhere($builder->expr()->eq('r.city', ':city'))
             ->addOrderBy('r.dateTime', 'ASC')
+            // Zweites Ordnungsmerkmal, damit bei Gleichstand nicht der Zufall
+            // entscheidet: In Hamburg liegen drei Fahrten auf dem 4. Oktober,
+            // und je nachdem, welche die Datenbank zuerst liefert, zeigt die
+            // Stadtseite eine andere "naechste Tour" — mit einer anderen
+            // Adresse, weil zwei davon einen Slug tragen. Das hat einen Test
+            // unzuverlaessig gemacht (rot, gruen, rot bei identischem Stand),
+            // aber es betrifft genauso die Seite selbst.
+            ->addOrderBy('r.id', 'ASC')
             ->setParameter('dateTime', $dateTime)
             ->setParameter('city', $city);
 
