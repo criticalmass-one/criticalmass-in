@@ -23,6 +23,7 @@ class CalendarControllerTest extends AbstractControllerTestCase
 {
     private const JAHR = 2031;
     private const MONAT = 5;
+    private const STADT = 'Kalenderprobe';
 
     /** @var array<int, Ride> */
     private array $angelegt = [];
@@ -38,13 +39,49 @@ class CalendarControllerTest extends AbstractControllerTestCase
         $this->angelegt = [];
 
         if (static::$booted) {
-            static::getContainer()->get('doctrine')->getManager()
-                ->createQuery('DELETE FROM App\\Entity\\Ride r WHERE r.title LIKE :muster')
+            $entityManager = static::getContainer()->get('doctrine')->getManager();
+
+            $entityManager->createQuery('DELETE FROM App\\Entity\\Ride r WHERE r.title LIKE :muster')
                 ->setParameter('muster', 'Probefahrt %')
+                ->execute();
+
+            $entityManager->createQuery('DELETE FROM App\\Entity\\City c WHERE c.city = :stadt')
+                ->setParameter('stadt', self::STADT)
                 ->execute();
         }
 
         parent::tearDown();
+    }
+
+    /**
+     * Eine eigene Stadt fuer diese Tests.
+     *
+     * **Nicht** die erste aus den Fixtures: Das waere Hamburg, und dort
+     * pruefen andere Tests, was auf der Stadtseite steht. Sechzig zusaetzliche
+     * Touren dort haben NavigationTest umgeworfen — ein Fehlschlag, der
+     * aussah, als haette der Kalender etwas kaputtgemacht, und der in
+     * Wahrheit von diesem Test kam.
+     */
+    private function probestadt(EntityManagerInterface $entityManager): City
+    {
+        $vorhanden = $entityManager->getRepository(City::class)->findOneBy(['city' => self::STADT]);
+
+        if (null !== $vorhanden) {
+            return $vorhanden;
+        }
+
+        $stadt = new City();
+        $stadt->setCity(self::STADT);
+        $stadt->setTitle('Critical Mass ' . self::STADT);
+        $stadt->setEnabled(true);
+        $stadt->setLatitude(53.55);
+        $stadt->setLongitude(9.99);
+        $stadt->setTimezone('Europe/Berlin');
+
+        $entityManager->persist($stadt);
+        $entityManager->flush();
+
+        return $stadt;
     }
 
     /**
@@ -57,8 +94,7 @@ class CalendarControllerTest extends AbstractControllerTestCase
      */
     private function tourenAnlegen(EntityManagerInterface $entityManager, int $tag, int $anzahl): array
     {
-        $stadt = $entityManager->getRepository(City::class)->findOneBy(['enabled' => true]);
-        self::assertNotNull($stadt, 'Die Fixtures liefern mindestens eine aktive Stadt.');
+        $stadt = $this->probestadt($entityManager);
 
         $angelegt = [];
 
