@@ -18,6 +18,13 @@ const ACCEPTED_FILE_TYPES = ['.gpx', '.fit', '.jpg', '.jpeg', '.png', '.webp', '
  * No Compressor plugin is used on purpose — image bytes (and their EXIF date/GPS,
  * which the photo matching relies on) are uploaded untouched.
  */
+// Erst holen, wenn die Seite das braucht: Dieser Controller zieht
+// Uppy samt Oberflaeche und Sprachdateien herein, und das gehoert nicht in jede Seite, die es nie
+// benutzt.
+//
+// Die Schreibweise ist vorgegeben — der lazy-controller-loader
+// erkennt genau diesen einzeiligen Kommentar.
+/* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ['dashboard', 'results', 'reviewLink'];
 

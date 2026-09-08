@@ -3,6 +3,16 @@ import BaseMapController from './base_map_controller';
 import L from 'leaflet';
 import Handlebars from 'handlebars';
 
+// Erst holen, wenn wirklich eine Karte im Dokument steht. Ohne diese Zeile
+// landet die gesamte Kartenmaschine im Startbuendel und wird auf JEDER Seite
+// geladen — auch im Impressum und in der Datenschutzerklaerung, wo keine
+// Karte steht. Es geht dabei nicht um ein paar Kilobyte: base_map_controller
+// zieht MapLibre GL samt Leaflet herein, zusammen ueber fuenf Megabyte, die
+// der Browser entpacken und auswerten muss, bevor irgendetwas bedienbar ist.
+//
+// Die Schreibweise ist vorgegeben: Der lazy-controller-loader erkennt genau
+// diesen einzeiligen Kommentar und lehnt jede andere Form ab.
+/* stimulusFetch: 'lazy' */
 export default class extends BaseMapController {
     static values = {
         ...BaseMapController.values,
