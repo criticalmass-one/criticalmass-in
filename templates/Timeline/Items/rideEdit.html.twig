@@ -13,11 +13,13 @@
                     {% endif %}
                 </p>
 
-                <h5 class="mb-3">
+                <h5 class="mb-1">
                     <a href="{{ object_path(item.ride) }}" class="text-decoration-none">
                         {{ item.rideTitle }}
                     </a>
                 </h5>
+
+                {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
 
                 {% if item.ride.latitude and item.ride.longitude %}
                     <div id="map-{{ item.uniqId }}"
