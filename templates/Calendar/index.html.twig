@@ -7,81 +7,130 @@
     {{ breadcrumb.active('Critical-Mass-Kalender') }}
 {% endblock %}
 
+{% macro tagAdresse(dateTime, tag) %}
+    {{- path('caldera_criticalmass_calendar', {
+        year: dateTime|date('Y'),
+        month: dateTime|date('n'),
+        day: tag
+    }) -}}
+{% endmacro %}
+
 {% block content %}
-    {% set month = calendr_month(dateTime|date('Y'), dateTime|date('m')) %}
+    {% import _self as kalender %}
 
-    <div class="container">
+    <div class="container calendar-page">
         <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    Dein weltweiter Critical-Mass-Kalender
-                </h1>
-
-                <p class="lead">
-                    Hier siehst du eine Übersicht über alle in unserer Datenbank vorhandenen Critical-Mass-Touren.
+            <div class="col-12">
+                <h1 class="mb-1">Dein weltweiter Critical-Mass-Kalender</h1>
+                <p class="text-muted">
+                    {% if tourenGesamt > 0 %}
+                        {{ tourenGesamt }} {{ tourenGesamt == 1 ? 'Tour' : 'Touren' }}
+                        an {{ nachTag|length }} {{ nachTag|length == 1 ? 'Tag' : 'Tagen' }}
+                        im {{ dateTime|format_datetime(pattern='MMMM yyyy') }}.
+                    {% else %}
+                        Im {{ dateTime|format_datetime(pattern='MMMM yyyy') }} ist noch nichts eingetragen.
+                    {% endif %}
                 </p>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3>
-                    {{ dateTime|format_datetime(pattern='MMMM yyyy') }}
-                </h3>
-            </div>
-        </div>
+        <div class="row calendar-page__body">
+            {# ---------- Der Monat: nur ob und wie viel ---------- #}
+            <div class="col-lg-5 col-xl-4">
+                <nav class="calendar-month__nav" aria-label="Monat wechseln">
+                    <a class="calendar-month__step"
+                       href="{{ path('caldera_criticalmass_calendar', {year: previousMonth|date('Y'), month: previousMonth|date('n')}) }}"
+                       rel="prev">
+                        <i class="far fa-chevron-left" aria-hidden="true"></i>
+                        <span class="visually-hidden">Voriger Monat:</span>
+                        {{ previousMonth|format_datetime(pattern='MMMM') }}
+                    </a>
 
-        {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
+                    <strong>{{ dateTime|format_datetime(pattern='MMMM yyyy') }}</strong>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table id="calendar"
-                       class="calendar"
-                       data-controller="calendar">
+                    <a class="calendar-month__step"
+                       href="{{ path('caldera_criticalmass_calendar', {year: nextMonth|date('Y'), month: nextMonth|date('n')}) }}"
+                       rel="next">
+                        <span class="visually-hidden">Nächster Monat:</span>
+                        {{ nextMonth|format_datetime(pattern='MMMM') }}
+                        <i class="far fa-chevron-right" aria-hidden="true"></i>
+                    </a>
+                </nav>
 
-                    <thead>
-                    <tr>
-                        <th width="14%">Montag</th>
-                        <th width="14%">Dienstag</th>
-                        <th width="14%">Mittwoch</th>
-                        <th width="14%">Donnerstag</th>
-                        <th width="14%">Freitag</th>
-                        <th width="14%">Sonnabend</th>
-                        <th width="14%">Sonntag</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {% for week in month %}
-                        <tr>
-                            {% for day in week %}
-                                {% if month.includes(day) %}
-                                    <td class="day">
-                                        <div class="day-number">
-                                            {{ day.format('d') }}
-                                        </div>
-
-                                        <ul class="ride-list list-unstyled"
-                                            data-calendar-target="rideList">
-                                            {% for event in calendr_events(day) %}
-                                                {% set ride = event.ride %}
-                                                {% include 'Common/Ride/simple_city_time_list_item.html.twig'
-                                                    with { ride: ride } %}
-                                            {% endfor %}
-                                        </ul>
-                                    </td>
-                                {% else %}
-                                    <td></td>
-                                {% endif %}
-                            {% endfor %}
-                        </tr>
+                <div class="calendar-month" role="grid" aria-label="{{ dateTime|format_datetime(pattern='MMMM yyyy') }}">
+                    {% for kurz in ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'] %}
+                        <div class="calendar-month__weekday" role="columnheader">{{ kurz }}</div>
                     {% endfor %}
-                    </tbody>
 
-                </table>
+                    {# Leere Zellen, bis der Erste auf seinen Wochentag faellt. #}
+                    {% if ersterWochentag > 0 %}
+                        {% for i in 1..ersterWochentag %}
+                            <div class="calendar-month__empty" role="gridcell"></div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for tag in 1..tageImMonat %}
+                        {% set anzahl = nachTag[tag] is defined ? nachTag[tag]|length : 0 %}
+                        {% set stark = anzahl > 20 %}
+
+                        <a class="calendar-month__day{{ stark ? ' calendar-month__day--busy' }}{{ tag == gewaehlterTag ? ' calendar-month__day--current' }}{{ anzahl == 0 ? ' calendar-month__day--quiet' }}"
+                           href="{{ kalender.tagAdresse(dateTime, tag) }}"
+                           role="gridcell"
+                           {% if tag == gewaehlterTag %}aria-current="date"{% endif %}
+                           aria-label="{{ tag }}. {{ dateTime|format_datetime(pattern='MMMM') }}: {{ anzahl }} {{ anzahl == 1 ? 'Tour' : 'Touren' }}">
+                            <span class="calendar-month__number">{{ tag }}</span>
+
+                            {% if anzahl > 0 %}
+                                {# Hoechstens drei Punkte: Es geht um "wenig, mehr, viel",
+                                   nicht ums Zaehlen. Die Zahl steht daneben in der Liste. #}
+                                {% set punkte = anzahl <= 2 ? 1 : (anzahl <= 9 ? 2 : 3) %}
+                                <span class="calendar-month__dots" aria-hidden="true">
+                                    {% for p in 1..punkte %}<i></i>{% endfor %}
+                                </span>
+                            {% endif %}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {# ---------- Der gewählte Tag: vollständig ---------- #}
+            <div class="col-lg-7 col-xl-8">
+                {% set touren = nachTag[gewaehlterTag] is defined ? nachTag[gewaehlterTag] : [] %}
+                {% set tagDatum = dateTime|date_modify('+' ~ (gewaehlterTag - 1) ~ ' days') %}
+
+                <div class="calendar-day">
+                    <h2 class="calendar-day__heading">
+                        {{ tagDatum|format_datetime(pattern='EEEE, d. MMMM yyyy') }}
+                    </h2>
+
+                    {% if touren is empty %}
+                        <p class="text-muted calendar-day__count">
+                            An diesem Tag ist keine Tour eingetragen.
+                        </p>
+                    {% else %}
+                        <p class="text-muted calendar-day__count">
+                            {{ touren|length }} {{ touren|length == 1 ? 'Tour' : 'Touren' }}
+                        </p>
+
+                        <ol class="calendar-day__list">
+                            {% for ride in touren %}
+                                <li class="calendar-day__entry{{ not ride.enabled ? ' calendar-day__entry--off' }}">
+                                    <span class="calendar-day__time">
+                                        {{ ride.dateTime ? ride.dateTime|date('H:i', ride.city ? ride.city.timezone : null) : '—' }}
+                                    </span>
+
+                                    {% set ridePath = object_path(ride) %}
+                                    {% if ridePath %}
+                                        <a href="{{ ridePath }}">{{ ride.city ? ride.city.city : ride.title }}</a>
+                                    {% else %}
+                                        {{ ride.city ? ride.city.city : ride.title }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+                </div>
             </div>
         </div>
-
-        {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
     </div>
 {% endblock %}
