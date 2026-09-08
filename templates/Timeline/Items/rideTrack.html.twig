@@ -13,13 +13,11 @@
                     {% endif %}
                 </p>
 
-                <h5 class="mb-1">
+                <h5 class="mb-3">
                     <a href="{{ object_path(item.ride) }}" class="text-decoration-none">
                         {{ item.rideTitle }}
                     </a>
                 </h5>
-
-                {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
 
                 {% if item.polyline %}
                     <div class="rounded overflow-hidden mb-3"
@@ -37,20 +35,9 @@
                 {% endif %}
 
                 <div class="row g-3">
-                    <div class="col-4">
-                        <div class="d-flex align-items-center">
-                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
-                                 style="width: 36px; height: 36px; min-width: 36px;">
-                                <i class="far fa-calendar-alt text-primary"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block">Datum</small>
-                                <strong>{{ item.ride.dateTime|date('d.m.Y') }}</strong>
-                            </div>
-                        </div>
-                    </div>
+                    {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
 
-                    <div class="col-4">
+                    <div class="col-6 col-md-4">
                         <div class="d-flex align-items-center">
                             <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
                                  style="width: 36px; height: 36px; min-width: 36px;">
@@ -63,7 +50,7 @@
                         </div>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-6 col-md-4">
                         <div class="d-flex align-items-center">
                             <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
                                  style="width: 36px; height: 36px; min-width: 36px;">

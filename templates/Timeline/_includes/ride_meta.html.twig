@@ -1,27 +1,68 @@
 {#
- # Stadt, Datum und Uhrzeit einer Fahrt.
+ # Stadt, Datum und Uhrzeit einer Fahrt — als Zellen in der Bildsprache, die
+ # der Track-Eintrag schon nutzt: farbiger Kreis, Beschriftung, Wert.
  #
- # Ohne diese drei Angaben ordnet ein Eintrag sich nicht ein: Ein Titel wie
- # "KidicalMass" sagt weder, wo die Fahrt stattfindet, noch wann. Bei Titeln
- # wie "Critical Mass Offenbach 28.08.2026" steht beides zwar drin, aber nur,
- # weil jemand es von Hand hineingeschrieben hat.
+ # Ohne diese Angaben ordnet ein Eintrag sich nicht ein: Ein Titel wie
+ # "KidicalMass" sagt weder, wo die Fahrt stattfindet, noch wann. Bei
+ # "Critical Mass Offenbach 28.08.2026" steht beides zwar drin, aber nur, weil
+ # jemand es von Hand hineingeschrieben hat.
+ #
+ # Bewusst **nur die Zellen**, ohne umschliessende Zeile: Der Track-Eintrag
+ # hat bereits eine mit Distanz und Dauer, und die Angaben gehoeren dort
+ # hinein statt in eine zweite darunter. Wer den Baustein einbindet, setzt
+ # also selbst ein `<div class="row g-3">` darum.
+ #
+ # `mitDatum` laesst sich abschalten, wo das Datum schon steht.
  #
  # Die Zeitzone kommt von der Stadt, nicht aus der Twig-Vorgabe. Fuer den
  # heutigen Bestand macht das keinen Unterschied — dort steht bei fast jeder
  # Stadt Europe/Berlin, auch bei Los Angeles —, aber es wird richtig, sobald
  # jemand diese Angabe pflegt, statt dann still falsch zu bleiben.
  #}
-{% if ride %}
-    <p class="text-muted small mb-2 timeline-item-ride-meta">
-        {% if ride.city %}
-            <i class="fas fa-map-marker-alt me-1" aria-hidden="true"></i>{{ ride.city.city }}
-        {% endif %}
+{% set mitDatum = mitDatum ?? true %}
+{% set zone = ride and ride.city ? ride.city.timezone : null %}
 
-        {% if ride.dateTime %}
-            {% if ride.city %}<span class="mx-1">·</span>{% endif %}
-            <i class="far fa-calendar-alt me-1" aria-hidden="true"></i>{{ ride.dateTime|date('d.m.Y', ride.city ? ride.city.timezone : null) }}
-            <span class="mx-1">·</span>
-            <i class="far fa-clock me-1" aria-hidden="true"></i>{{ ride.dateTime|date('H:i', ride.city ? ride.city.timezone : null) }} Uhr
-        {% endif %}
-    </p>
+{% if ride and ride.city %}
+    <div class="col-6 col-md-4 timeline-item-ride-meta">
+        <div class="d-flex align-items-center">
+            <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                 style="width: 36px; height: 36px; min-width: 36px;">
+                <i class="fas fa-map-marker-alt text-danger"></i>
+            </div>
+            <div>
+                <small class="text-muted d-block">Stadt</small>
+                <strong>{{ ride.city.city }}</strong>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if ride and ride.dateTime %}
+    {% if mitDatum %}
+        <div class="col-6 col-md-4 timeline-item-ride-meta">
+            <div class="d-flex align-items-center">
+                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                     style="width: 36px; height: 36px; min-width: 36px;">
+                    <i class="far fa-calendar-alt text-primary"></i>
+                </div>
+                <div>
+                    <small class="text-muted d-block">Datum</small>
+                    <strong>{{ ride.dateTime|date('d.m.Y', zone) }}</strong>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="col-6 col-md-4 timeline-item-ride-meta">
+        <div class="d-flex align-items-center">
+            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
+                 style="width: 36px; height: 36px; min-width: 36px;">
+                <i class="far fa-clock text-warning"></i>
+            </div>
+            <div>
+                <small class="text-muted d-block">Uhrzeit</small>
+                <strong>{{ ride.dateTime|date('H:i', zone) }} Uhr</strong>
+            </div>
+        </div>
+    </div>
 {% endif %}
