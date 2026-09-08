@@ -142,6 +142,30 @@ class TracksLineStringCommand extends Command
     }
 
     /**
+     * Die Punkte einer Fahrt — mit Zuschnitt, wo einer gesetzt ist.
+     *
+     * 36 der 2.186 Tracks haben `endPoint = 0`, was "kein Zuschnitt" heisst
+     * und nicht "bis zum ersten Punkt". `getPointsInRange()` rechnet daraus
+     * aber `array_slice($punkte, 0, 0 - 0 + 1)` — **genau einen Punkt**, und
+     * damit keine Strecke. Diese Tracks blieben beim ersten Lauf allesamt
+     * liegen, und der Befehl meldete sie als "ohne genug Punkte", was formal
+     * stimmte und in die Irre fuehrte.
+     *
+     * @return array<int, \phpGPX\Models\Point>
+     */
+    private function punkte(Track $track): array
+    {
+        $von = (int) $track->getStartPoint();
+        $bis = (int) $track->getEndPoint();
+
+        if ($bis > $von) {
+            return $this->gpxService->getPointsInRange($track);
+        }
+
+        return $this->gpxService->getPoints($track);
+    }
+
+    /**
      * Baut das WKT aus den Punkten der GPX-Datei.
      *
      * In WKT steht die Laenge vor der Breite — anders herum als in jeder
@@ -150,7 +174,7 @@ class TracksLineStringCommand extends Command
      */
     private function wktAusGpx(Track $track): ?string
     {
-        $punkte = $this->gpxService->getPointsInRange($track);
+        $punkte = $this->punkte($track);
 
         $paare = [];
 
