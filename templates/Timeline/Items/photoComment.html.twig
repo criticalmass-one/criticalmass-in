@@ -13,13 +13,11 @@
                     {% endif %}
                 </p>
 
-                <h5 class="mb-1">
+                <h5 class="mb-3">
                     <a href="{{ object_path(item.ride) }}" class="text-decoration-none">
                         {{ item.ride.title }}
                     </a>
                 </h5>
-
-                {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
 
                 {% for post in item.postList %}
                     <div class="row g-3 mb-3">
@@ -36,6 +34,10 @@
                         </div>
                     </div>
                 {% endfor %}
+
+                <div class="row g-3 mt-1">
+                    {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
+                </div>
             </div>
         </div>
     </div>
