@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Region;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class CityRepository extends ServiceEntityRepository
@@ -172,6 +173,39 @@ class CityRepository extends ServiceEntityRepository
      */
     public const ACTIVITY_SCORE_THRESHOLD = 0.01;
 
+    /**
+     * So lange gilt eine neu angelegte Stadt nie als inaktiv — genau das
+     * Messfenster des Scores, siehe City::isInactive().
+     */
+    public const ACTIVITY_GRACE_PERIOD = '-6 months';
+
+    public static function activityGraceStart(\DateTimeInterface $now): \DateTimeImmutable
+    {
+        return \DateTimeImmutable::createFromInterface($now)->modify(self::ACTIVITY_GRACE_PERIOD);
+    }
+
+    /**
+     * Schraenkt eine Abfrage auf Staedte ein, die nicht als inaktiv gelten:
+     * Score ab dem Schwellwert, noch kein Score, oder juenger als die
+     * Karenzzeit. Gleiche Regel wie City::isInactive() — beide zusammen aendern.
+     */
+    public static function addActiveCityCondition(QueryBuilder $builder, string $alias): QueryBuilder
+    {
+        // time() statt new DateTime(), damit ClockMock in Tests greift.
+        $now = (new \DateTimeImmutable())->setTimestamp(time());
+
+        return $builder
+            ->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->gte($alias . '.activityScore', ':activityThreshold'),
+                    $builder->expr()->isNull($alias . '.activityScore'),
+                    $builder->expr()->gt($alias . '.createdAt', ':activityGraceStart')
+                )
+            )
+            ->setParameter('activityThreshold', self::ACTIVITY_SCORE_THRESHOLD)
+            ->setParameter('activityGraceStart', \DateTime::createFromImmutable(self::activityGraceStart($now)));
+    }
+
     /** @return list<City> */
     public function findActiveCities(): array
     {
@@ -180,15 +214,10 @@ class CityRepository extends ServiceEntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->eq('c.enabled', ':enabled'))
-            ->andWhere(
-                $builder->expr()->orX(
-                    $builder->expr()->gte('c.activityScore', ':threshold'),
-                    $builder->expr()->isNull('c.activityScore')
-                )
-            )
             ->orderBy('c.city', 'ASC')
-            ->setParameter('enabled', true)
-            ->setParameter('threshold', self::ACTIVITY_SCORE_THRESHOLD);
+            ->setParameter('enabled', true);
+
+        self::addActiveCityCondition($builder, 'c');
 
         $query = $builder->getQuery();
 
@@ -297,6 +326,10 @@ class CityRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Die Staedteliste im Footer, auf jeder Seite. Nach Einwohnerzahl allein
+     * standen dort New York, Brooklyn und Houston — alle drei mit Score 0.
+     */
     public function findPopularCities(int $limit = 10): array
     {
         $builder = $this->createQueryBuilder('c');
@@ -307,6 +340,8 @@ class CityRepository extends ServiceEntityRepository
             ->orderBy('c.cityPopulation', 'DESC')
             ->setParameter('enabled', true)
             ->setMaxResults($limit);
+
+        self::addActiveCityCondition($builder, 'c');
 
         $query = $builder->getQuery();
 
