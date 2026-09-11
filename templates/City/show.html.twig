@@ -145,6 +145,15 @@
             </div>
         {% endif %}
 
+        {% if city.isInactive %}
+            <div class="alert alert-warning border-0 d-flex align-items-center mb-4" role="alert" id="inactive-city-hint">
+                <i class="far fa-exclamation-triangle fa-lg me-3"></i>
+                <div>
+                    Aus {{ city.city }} ist seit einem halben Jahr keine Teilnahme, kein Foto, kein Track und kein Beitrag in sozialen Netzwerken mehr bei uns angekommen. Vielleicht fährt hier derzeit keine Critical Mass. Wenn du es besser weißt, freuen wir uns über aktuelle Fotos, Tracks oder eingetragene Termine.
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row">
             {# Hauptinhalt #}
             <div class="col-lg-8">

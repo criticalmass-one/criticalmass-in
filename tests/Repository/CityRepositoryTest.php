@@ -59,6 +59,42 @@ class CityRepositoryTest extends KernelTestCase
         $this->assertContains('Berlin', $cityNames);
     }
 
+    /**
+     * Eine neu angelegte Stadt hat noch keine Signale und damit Score 0 —
+     * sie darf deshalb nicht sofort verschwinden.
+     */
+    public function testFindActiveCitiesKeepsNewCitiesWithoutSignals(): void
+    {
+        $city = new City();
+        $city->setCity('Neugruendung');
+        $city->setTitle('Critical Mass Neugruendung');
+        $city->setEnabled(true);
+        $city->setTimezone('Europe/Berlin');
+        $city->setActivityScore(0.0);
+
+        $this->entityManager->persist($city);
+        $this->entityManager->flush();
+
+        try {
+            $cityNames = array_map(fn(City $city) => $city->getCity(), $this->repository->findActiveCities());
+
+            $this->assertContains('Neugruendung', $cityNames, 'A city younger than the grace period counts as active');
+            $this->assertNotContains('Ghosttown', $cityNames);
+        } finally {
+            $this->entityManager->remove($city);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function testFindPopularCitiesSkipsInactiveCities(): void
+    {
+        $cityNames = array_map(fn(City $city) => $city->getCity(), $this->repository->findPopularCities());
+
+        $this->assertNotContains('Ghosttown', $cityNames, 'The footer must not promote inactive cities');
+        $this->assertContains('Hamburg', $cityNames);
+        $this->assertContains('Kiel', $cityNames, 'An unscored city stays in the footer');
+    }
+
     public function testActivityScoreThreshold(): void
     {
         $this->assertEquals(0.01, CityRepository::ACTIVITY_SCORE_THRESHOLD);

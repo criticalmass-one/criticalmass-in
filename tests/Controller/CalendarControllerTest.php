@@ -259,4 +259,50 @@ class CalendarControllerTest extends AbstractControllerTestCase
         self::assertStringContainsString('5 Touren', $text);
         self::assertStringContainsString('2 Tagen', $text);
     }
+
+    /**
+     * Touren eingeschlafener Staedte bleiben im Kalender, stehen aber
+     * abgesetzt unter einer eigenen Zwischenzeile.
+     */
+    public function testRidesOfInactiveCitiesAreSetApart(): void
+    {
+        $client = static::createClient();
+        $entityManager = static::getContainer()->get('doctrine')->getManager();
+
+        $this->tourenAnlegen($entityManager, 20, 2);
+
+        $stadt = $this->probestadt($entityManager);
+        $stadt->setActivityScore(0.0);
+        $stadt->setCreatedAt(new \DateTime('-2 years'));
+        $entityManager->flush();
+
+        $crawler = $client->request('GET', $this->adresse(20));
+
+        self::assertResponseIsSuccessful();
+        self::assertSame(2, $crawler->filter('.calendar-day__entry')->count(), 'Keine Tour verschwindet.');
+        self::assertSame(2, $crawler->filter('.calendar-day__list--inactive .calendar-day__entry--inactive')->count());
+        self::assertSame(1, $crawler->filter('.calendar-day__subheading')->count());
+    }
+
+    /**
+     * Eine neue Stadt ohne Signale gilt nicht als eingeschlafen.
+     */
+    public function testRidesOfNewCitiesWithoutSignalsStayUpFront(): void
+    {
+        $client = static::createClient();
+        $entityManager = static::getContainer()->get('doctrine')->getManager();
+
+        $this->tourenAnlegen($entityManager, 21, 2);
+
+        $stadt = $this->probestadt($entityManager);
+        $stadt->setActivityScore(0.0);
+        $entityManager->flush();
+
+        $crawler = $client->request('GET', $this->adresse(21));
+
+        self::assertResponseIsSuccessful();
+        self::assertSame(2, $crawler->filter('.calendar-day__entry')->count());
+        self::assertSame(0, $crawler->filter('.calendar-day__entry--inactive')->count());
+        self::assertSame(0, $crawler->filter('.calendar-day__subheading')->count());
+    }
 }

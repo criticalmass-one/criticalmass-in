@@ -164,6 +164,19 @@
         text-decoration: line-through;
         color: var(--bs-secondary-color, #6c757d);
     }
+
+    /* Stadt ohne Lebenszeichen: da, aber nicht beworben. */
+    &--inactive,
+    &--inactive a {
+        color: var(--bs-secondary-color, #6c757d);
+    }
+}
+
+.calendar-day__subheading {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--bs-secondary-color, #6c757d);
+    margin: 1.5rem 0 .5rem;
 }
 
 .calendar-day__time {

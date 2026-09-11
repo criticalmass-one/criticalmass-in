@@ -12,6 +12,7 @@ use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\SocialNetworkProfileAble;
+use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -886,5 +887,35 @@ class City implements BoardInterface, PhotoInterface, RouteableInterface, Audita
         $this->activityScore = $activityScore;
 
         return $this;
+    }
+
+    /**
+     * Ob die Stadt als eingeschlafen gilt und deshalb nicht mehr beworben wird.
+     *
+     * Der Score misst nur, was auf criticalmass.in ankommt — Teilnahmen, Fotos,
+     * Tracks, Feed-Eintraege der letzten sechs Monate. Eine frisch angelegte
+     * Stadt hat davon zwangslaeufig nichts: Die zehn indonesischen Staedte vom
+     * September 2026 standen zwei Tage nach dem Anlegen alle auf 0, obwohl sie
+     * nachweislich fahren. Deshalb gilt eine Stadt erst als inaktiv, wenn sie
+     * aelter ist als das Messfenster.
+     *
+     * Gleiche Regel wie CityRepository::addActiveCityCondition() — beide
+     * zusammen aendern.
+     */
+    #[Ignore]
+    public function isInactive(?\DateTimeInterface $now = null): bool
+    {
+        if (null === $this->activityScore || $this->activityScore >= CityRepository::ACTIVITY_SCORE_THRESHOLD) {
+            return false;
+        }
+
+        if (null === $this->createdAt) {
+            return true;
+        }
+
+        // time() statt new DateTime(), damit ClockMock in Tests greift.
+        $now ??= (new \DateTimeImmutable())->setTimestamp(time());
+
+        return $this->createdAt <= CityRepository::activityGraceStart($now);
     }
 }
