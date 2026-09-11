@@ -15,6 +15,21 @@
     }) -}}
 {% endmacro %}
 
+{% macro eintrag(ride, ruhend) %}
+    <li class="calendar-day__entry{{ not ride.enabled ? ' calendar-day__entry--off' }}{{ ruhend ? ' calendar-day__entry--inactive' }}">
+        <span class="calendar-day__time">
+            {{ ride.dateTime ? ride.dateTime|date('H:i', ride.city ? ride.city.timezone : null) : '—' }}
+        </span>
+
+        {% set ridePath = object_path(ride) %}
+        {% if ridePath %}
+            <a href="{{ ridePath }}">{{ ride.city ? ride.city.city : ride.title }}</a>
+        {% else %}
+            {{ ride.city ? ride.city.city : ride.title }}
+        {% endif %}
+    </li>
+{% endmacro %}
+
 {% block content %}
     {% import _self as kalender %}
 
@@ -112,22 +127,31 @@
                             {{ touren|length }} {{ touren|length == 1 ? 'Tour' : 'Touren' }}
                         </p>
 
-                        <ol class="calendar-day__list">
-                            {% for ride in touren %}
-                                <li class="calendar-day__entry{{ not ride.enabled ? ' calendar-day__entry--off' }}">
-                                    <span class="calendar-day__time">
-                                        {{ ride.dateTime ? ride.dateTime|date('H:i', ride.city ? ride.city.timezone : null) : '—' }}
-                                    </span>
+                        {# Touren eingeschlafener Staedte bleiben im Kalender — sie sind
+                           eingetragen und fahren vielleicht doch —, stehen aber
+                           abgesetzt unter denen, in denen zuletzt etwas los war. #}
+                        {% set aktiveTouren = touren|filter(ride => not (ride.city and ride.city.isInactive)) %}
+                        {% set ruhendeTouren = touren|filter(ride => ride.city and ride.city.isInactive) %}
 
-                                    {% set ridePath = object_path(ride) %}
-                                    {% if ridePath %}
-                                        <a href="{{ ridePath }}">{{ ride.city ? ride.city.city : ride.title }}</a>
-                                    {% else %}
-                                        {{ ride.city ? ride.city.city : ride.title }}
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ol>
+                        {% if aktiveTouren is not empty %}
+                            <ol class="calendar-day__list">
+                                {% for ride in aktiveTouren %}
+                                    {{ kalender.eintrag(ride, false) }}
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+
+                        {% if ruhendeTouren is not empty %}
+                            <h3 class="calendar-day__subheading">
+                                Außerdem eingetragen, in Städten ohne Lebenszeichen seit sechs Monaten
+                            </h3>
+
+                            <ol class="calendar-day__list calendar-day__list--inactive">
+                                {% for ride in ruhendeTouren %}
+                                    {{ kalender.eintrag(ride, true) }}
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
