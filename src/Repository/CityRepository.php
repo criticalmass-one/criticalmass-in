@@ -327,8 +327,11 @@ class CityRepository extends ServiceEntityRepository
     }
 
     /**
-     * Die Staedteliste im Footer, auf jeder Seite. Nach Einwohnerzahl allein
-     * standen dort New York, Brooklyn und Houston — alle drei mit Score 0.
+     * Die Staedteliste im Footer, auf jeder Seite.
+     *
+     * Ohne Einwohnerzahl gehoert eine Stadt nicht hierher: PostgreSQL sortiert
+     * NULL bei DESC nach vorn (MySQL nach hinten). Seit dem Umzug standen im
+     * Footer deshalb Nice, Goiânia, Bratislava — 455 Staedte haben keine Zahl.
      */
     public function findPopularCities(int $limit = 10): array
     {
@@ -337,6 +340,7 @@ class CityRepository extends ServiceEntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->andWhere($builder->expr()->gt('c.cityPopulation', 0))
             ->orderBy('c.cityPopulation', 'DESC')
             ->setParameter('enabled', true)
             ->setMaxResults($limit);

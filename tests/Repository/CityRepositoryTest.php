@@ -95,6 +95,33 @@ class CityRepositoryTest extends KernelTestCase
         $this->assertContains('Kiel', $cityNames, 'An unscored city stays in the footer');
     }
 
+    /**
+     * PostgreSQL sortiert NULL bei DESC nach vorn — eine Stadt ohne
+     * Einwohnerzahl wuerde sonst die Liste anfuehren.
+     */
+    public function testFindPopularCitiesSkipsCitiesWithoutPopulation(): void
+    {
+        $city = new City();
+        $city->setCity('Ohnezahl');
+        $city->setTitle('Critical Mass Ohnezahl');
+        $city->setEnabled(true);
+        $city->setTimezone('Europe/Berlin');
+
+        $this->entityManager->persist($city);
+        $this->entityManager->flush();
+
+        try {
+            $popular = $this->repository->findPopularCities();
+            $cityNames = array_map(fn(City $city) => $city->getCity(), $popular);
+
+            $this->assertNotContains('Ohnezahl', $cityNames);
+            $this->assertSame('Berlin', $cityNames[0] ?? null, 'The largest fixture city leads the list');
+        } finally {
+            $this->entityManager->remove($city);
+            $this->entityManager->flush();
+        }
+    }
+
     public function testActivityScoreThreshold(): void
     {
         $this->assertEquals(0.01, CityRepository::ACTIVITY_SCORE_THRESHOLD);
