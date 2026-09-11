@@ -167,6 +167,52 @@ class SocialNetworkProfile
         return $this;
     }
 
+    /**
+     * Die Kennung als Adresse, auf die ein Verweis zeigen darf -- oder null.
+     *
+     * Die Kennung ist ein freies Textfeld, das jedes angemeldete Konto fuellen
+     * kann, und sie landete bisher unveraendert im href. Das ging auf zwei
+     * Arten schief:
+     *
+     *   "facebook.com/Critical Mass Kaiserslautern" (ohne Schema) las der
+     *   Browser als relativen Pfad und landete auf
+     *   criticalmass.in/kaiserslautern/facebook.com/... -- ein 404 auf der
+     *   Stadt- und der Tourseite. Sechs solcher Verweise standen live.
+     *
+     *   Schwerer wiegt, was nicht drinstand: "javascript:..." haette Twig
+     *   anstandslos in den href geschrieben. Autoescaping hilft dort nicht,
+     *   weil an so einer Zeichenkette nichts zu escapen ist -- ein Klick
+     *   fuehrt Code im Namen der lesenden Person aus.
+     *
+     * Deshalb entscheidet nicht mehr das Template, sondern diese Methode: nur
+     * http und https, und nur mit einem Rechnernamen dahinter. Alles andere
+     * ergibt null, und die Vorlagen zeigen dann Text statt eines Verweises.
+     */
+    public function getSafeUrl(): ?string
+    {
+        if (null === $this->identifier) {
+            return null;
+        }
+
+        $adresse = trim($this->identifier);
+
+        if ('' === $adresse) {
+            return null;
+        }
+
+        $teile = parse_url($adresse);
+
+        if (false === $teile || !isset($teile['scheme'], $teile['host'])) {
+            return null;
+        }
+
+        if (!in_array(strtolower($teile['scheme']), ['http', 'https'], true)) {
+            return null;
+        }
+
+        return '' === $teile['host'] ? null : $adresse;
+    }
+
     public function getNetwork(): ?string
     {
         return $this->network;
