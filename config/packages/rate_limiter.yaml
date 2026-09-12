@@ -34,3 +34,21 @@ framework:
             policy: token_bucket
             limit: 1000
             rate: { interval: '1 minute', amount: 200 }
+
+        # Ausgehende Anfragen an Nominatim -- nicht zum Schutz vor unseren
+        # Besuchern, sondern zum Schutz von OpenStreetMap vor uns.
+        #
+        # Die Route /{citySlug} faengt jeden unbekannten Pfad ab und fragt
+        # Nominatim, ob es dazu eine Stadt gibt. Ein Crawler, der /work-here,
+        # /positions und /work-for-us abklappert, laesst criticalmass.in also
+        # ungebremst gegen einen fremden Dienst laufen -- am 12.09.2026 kam von
+        # dort dreimal ein 429 zurueck.
+        #
+        # Nominatims Nutzungsbedingungen nennen hoechstens eine Anfrage je
+        # Sekunde. Genau das steht hier: ein Eimer fuer 60 Anfragen, der sich
+        # mit einer je Sekunde fuellt. Ist er leer, unterbleibt die Anfrage und
+        # die Seite kommt ohne Stadtvorschlag -- was sie ohnehin kann.
+        nominatim:
+            policy: token_bucket
+            limit: 60
+            rate: { interval: '1 second', amount: 1 }
