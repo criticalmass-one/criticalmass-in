@@ -58,7 +58,6 @@ export default class extends BaseMapController {
         const startInput = document.getElementById('track_range_startPoint');
         const endInput = document.getElementById('track_range_endPoint');
         const pointsInput = document.getElementById('track_range_points');
-        const reducedInput = document.getElementById('track_range_reducedPolyline');
 
         if (!pointsInput) {
             console.warn('[track-range] #track_range_points nicht gefunden');
@@ -107,13 +106,7 @@ export default class extends BaseMapController {
 
             this.trackLayer.setLatLngs(newLatLngs);
 
-            const encoded = this.encodeLatLngs(newLatLngs);
-
-            if (reducedInput) {
-                reducedInput.value = encoded;
-            }
-
-            this.dispatchPolylineUpdate(encoded);
+            this.dispatchPolylineUpdate(this.encodeLatLngs(newLatLngs));
         });
     }
 

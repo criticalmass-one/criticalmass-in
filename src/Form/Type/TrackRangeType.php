@@ -14,8 +14,6 @@ class TrackRangeType extends AbstractType
             ->add('startPoint', HiddenType::class)
             ->add('endPoint', HiddenType::class)
             ->add('points', HiddenType::class)
-            ->add('polyline', HiddenType::class)
-            ->add('reducedPolyline', HiddenType::class)
         ;
     }
 
