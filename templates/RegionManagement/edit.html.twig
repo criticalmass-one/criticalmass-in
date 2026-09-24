@@ -1,0 +1,106 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% if region != null %}
+    {% set title = 'Region bearbeiten' %}
+{% else %}
+    {% set title = 'Region hinzufügen' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
+    {% if region %}
+        {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
+            {{ breadcrumb.item(region.parent.parent.parent.name, object_path(region.parent.parent.parent)) }}
+        {% endif %}
+        {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
+            {{ breadcrumb.item(region.parent.parent.name, object_path(region.parent.parent)) }}
+        {% endif %}
+        {% if (region.parent and not region.parent.isWorld()) %}
+            {{ breadcrumb.item(region.parent.name, object_path(region.parent)) }}
+        {% endif %}
+        {{ breadcrumb.item(region.name, object_path(region)) }}
+        {{ breadcrumb.active('Bearbeiten') }}
+    {% else %}
+        {% if (parentRegion.parent and parentRegion.parent.parent and not parentRegion.parent.parent.isWorld()) %}
+            {{ breadcrumb.item(parentRegion.parent.parent.name, object_path(parentRegion.parent.parent)) }}
+        {% endif %}
+        {% if (parentRegion.parent and not parentRegion.parent.isWorld()) %}
+            {{ breadcrumb.item(parentRegion.parent.name, object_path(parentRegion.parent)) }}
+        {% endif %}
+        {% if not parentRegion.isWorld() %}
+            {{ breadcrumb.item(parentRegion.name, object_path(parentRegion)) }}
+        {% endif %}
+        {{ breadcrumb.active('Region hinzufügen') }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ form_errors(form) }}
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Name:</label>
+                    {{ form_widget(form.name, { 'attr': { 'class': 'form-control' } }) }}
+                    <div class="form-text">Name der Region, z.B. "Portugal" oder "Lisboa".</div>
+                    {% if form_errors(form.name) %}
+                        <div class="invalid-feedback d-block">{{ form_errors(form.name) }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Slug:</label>
+                    {{ form_widget(form.slug, { 'attr': { 'class': 'form-control' } }) }}
+                    <div class="form-text">URL-Bezeichner, z.B. "portugal" oder "lisboa". Nur Kleinbuchstaben und Bindestriche verwenden.</div>
+                    {% if form_errors(form.slug) %}
+                        <div class="invalid-feedback d-block">{{ form_errors(form.slug) }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Beschreibung:</label>
+                    {{ form_widget(form.description, { 'attr': { 'class': 'form-control', 'rows': '5' } }) }}
+                    <div class="form-text">Optionale Beschreibung der Region.</div>
+                    {% if form_errors(form.description) %}
+                        <div class="invalid-feedback d-block">{{ form_errors(form.description) }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group float-end">
+                    {% if region %}
+                        <a href="{{ object_path(region) }}" class="btn btn-secondary">
+                            Abbrechen
+                        </a>
+                    {% else %}
+                        <a href="{{ object_path(parentRegion) }}" class="btn btn-secondary">
+                            Abbrechen
+                        </a>
+                    {% endif %}
+                    <button type="submit" class="btn btn-success">
+                        <i class="far fa-save me-1"></i>
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
