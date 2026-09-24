@@ -4,7 +4,7 @@
             {{ ride.city.city }}
         </a>
     </td>
-    <td>
+    <td data-order="{{ ride.dateTime ? ride.dateTime|date('U') : 0 }}">
         {% set ridePath = object_path(ride) %}
         {% if ridePath %}
         <a href="{{ ridePath }}">
@@ -14,22 +14,22 @@
             {{ ride.dateTime ? ride.dateTime|date('d.m.Y') : '—' }}
         {% endif %}
     </td>
-    <td>
+    <td data-order="{{ ride.estimatedParticipants|default(0) }}">
         {% if ride.estimatedParticipants %}
             {{ ride.estimatedParticipants }}
         {% endif %}
     </td>
-    <td>
+    <td data-order="{{ ride.estimatedDistance|default(0) }}">
         {% if ride.estimatedDistance %}
             {{ ride.estimatedDistance|number_format(2) }}&nbsp;km
         {% endif %}
     </td>
-    <td>
+    <td data-order="{{ ride.getEstimatedDurationInSeconds()|default(0) }}">
         {% if ride.durationInterval.format('%h:%i') > 0 %}
             {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
         {% endif %}
     </td>
-    <td>
+    <td data-order="{{ ride.averageVelocity|default(0) }}">
         {% if ride.durationInterval and ride.estimatedDistance %}
             {{ ride.averageVelocity|number_format(2) }}&nbsp;km/h
         {% endif %}
