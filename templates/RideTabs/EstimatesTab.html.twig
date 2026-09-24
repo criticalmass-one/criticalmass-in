@@ -12,6 +12,7 @@
                         <th>Benutzer*in</th>
                         <th class="text-end">Schätzung</th>
                         <th class="text-end d-none d-md-table-cell">Datum</th>
+                        <th class="text-end">Aktionen</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,21 @@
                             </td>
                             <td class="text-end d-none d-md-table-cell">
                                 <span class="text-muted">{{ estimate.createdAt|date('d.m.Y H:i') }}</span>
+                            </td>
+                            <td class="text-end">
+                                {% if is_granted('edit', estimate) %}
+                                    <a href="{{ path('caldera_criticalmass_ride_editestimate', { citySlug: ride.city.slug, rideIdentifier: ride.dateTime|date('Y-m-d'), id: estimate.id }) }}" class="btn btn-sm btn-outline-primary" title="Bearbeiten">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                {% endif %}
+                                {% if is_granted('delete', estimate) %}
+                                    <form method="post" action="{{ path('caldera_criticalmass_ride_deleteestimate', { citySlug: ride.city.slug, rideIdentifier: ride.dateTime|date('Y-m-d'), id: estimate.id }) }}" class="d-inline" onsubmit="return confirm('Schätzung wirklich löschen?')">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('rideestimate_delete_' ~ estimate.id) }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Löschen">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
