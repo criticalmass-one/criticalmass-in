@@ -88,6 +88,10 @@ class Builder extends AbstractBuilder
             $menu['Benutzerkonto']->addChild('Tracks & Fotos hochladen', ['route' => 'caldera_criticalmass_unified_upload']);
             $menu['Benutzerkonto']->addChild('Deine Fotos', ['route' => 'caldera_criticalmass_photo_user_list']);
 
+            if ($this->getUser()?->hasRole('ROLE_ADMIN')) {
+                $menu['Benutzerkonto']->addChild('Gemeldete Beiträge', ['route' => 'caldera_criticalmass_moderation_reports']);
+            }
+
             $menu['Benutzerkonto']->addChild('divider2', ['attributes' => ['class' => 'dropdown-divider-wrapper']]);
 
             $menu['Benutzerkonto']

@@ -45,9 +45,11 @@
                         bearbeitet am {{ post.updatedAt|date('d.m.Y, H:i', 'Europe/Berlin') }}
                     </p>
                 {% endif %}
-                {% if app.user %}
+                {# Melden kann jeder, auch ohne Konto — nur nicht den eigenen Beitrag. #}
+                {% set canReport = post.enabled and (app.user is null or app.user != post.user) %}
+                {% if app.user or canReport %}
                     <div class="mt-2 d-flex gap-2">
-                        {% if post.thread %}
+                        {% if app.user and post.thread %}
                             <button type="button" class="btn btn-outline-secondary btn-sm"
                                     data-controller="quote-post"
                                     data-quote-post-author-value="{{ post.user.username }}"
@@ -58,13 +60,13 @@
                                 <i class="fas fa-quote-right me-1"></i>Zitieren
                             </button>
                         {% endif %}
-                        {% if is_granted('edit', post) %}
+                        {% if app.user and is_granted('edit', post) %}
                             <a href="{{ path('caldera_criticalmass_post_edit', { 'postId': post.id }) }}"
                                class="btn btn-outline-secondary btn-sm">
                                 <i class="far fa-edit me-1"></i>Bearbeiten
                             </a>
                         {% endif %}
-                        {% if is_granted('delete', post) %}
+                        {% if app.user and is_granted('delete', post) %}
                             <form method="post"
                                   action="{{ path('caldera_criticalmass_post_disable', { 'postId': post.id }) }}"
                                   data-controller="confirm-submit"
@@ -75,6 +77,12 @@
                                     <i class="far fa-trash-alt me-1"></i>Zur&uuml;ckziehen
                                 </button>
                             </form>
+                        {% endif %}
+                        {% if canReport %}
+                            <a href="{{ path('caldera_criticalmass_post_report', { 'postId': post.id }) }}"
+                               class="btn btn-link btn-sm text-muted ms-auto" rel="nofollow">
+                                <i class="far fa-flag me-1"></i>Melden
+                            </a>
                         {% endif %}
                     </div>
                 {% endif %}
