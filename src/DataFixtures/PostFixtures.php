@@ -121,7 +121,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
             ->setRide($ride)
             ->setCity($ride->getCity())
             ->setUser($user)
-            ->setMessage($message)
+            ->setText($message)
             ->setLatitude($latitude)
             ->setLongitude($longitude)
             ->setDateTime($dateTime)
@@ -137,7 +137,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
         return (new Post())
             ->setPhoto($photo)
             ->setUser($user)
-            ->setMessage($message)
+            ->setText($message)
             ->setDateTime($dateTime)
             ->setEnabled(true);
     }

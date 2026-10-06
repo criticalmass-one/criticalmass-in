@@ -20,7 +20,7 @@ class ThreadPostCollector extends AbstractTimelineCollector
                 ->setUser($postEntity->getUser())
                 ->setThreadTitle($postEntity->getThread()->getTitle())
                 ->setThread($postEntity->getThread())
-                ->setText($postEntity->getMessage())
+                ->setText($postEntity->getText())
                 ->setDateTime($postEntity->getDateTime());
 
             $this->addItem($item);

@@ -48,7 +48,7 @@
                         <a href="{{ object_path(post.thread) }}#post-{{ post.id }}" class="text-decoration-none">
                             <strong>{{ post.thread.title }}</strong>
                         </a>
-                        <p class="mb-2 mt-2">{{ post.message|search_snippet(term) }}</p>
+                        <p class="mb-2 mt-2">{{ post.text|search_snippet(term) }}</p>
                         <small class="text-muted">
                             von {{ post.user ? post.user.username : 'unbekannt' }}
                             <i class="far fa-clock ms-2 me-1"></i>{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}

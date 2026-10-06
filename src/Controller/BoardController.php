@@ -427,7 +427,7 @@ class BoardController extends AbstractController
 
             $post->setUser($author);
             $author->incForumPostCount();
-            $post->setMessage($data['message']);
+            $post->setText($data['message']);
             $post->setThread($thread);
             $post->setDateTime(new \DateTime());
 

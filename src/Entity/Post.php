@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'post')]
@@ -77,10 +78,15 @@ class Post
     #[Groups(['post-list'])]
     protected ?\DateTime $dateTime = null;
 
+    /**
+     * Die Spalte heisst aus historischen Gruenden `message`, und unter diesem
+     * Namen kennen auch API und MCP das Feld. Nur im Code heisst es `text`.
+     */
     #[Assert\NotBlank]
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(name: 'message', type: 'text', nullable: true)]
     #[Groups(['post-list'])]
-    protected ?string $message = null;
+    #[SerializedName('message')]
+    protected ?string $text = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['post-list'])]
@@ -177,14 +183,14 @@ class Post
         return $this;
     }
 
-    public function getMessage(): ?string
+    public function getText(): ?string
     {
-        return $this->message;
+        return $this->text;
     }
 
-    public function setMessage(string $message): Post
+    public function setText(string $text): Post
     {
-        $this->message = $message;
+        $this->text = $text;
 
         return $this;
     }
@@ -332,11 +338,5 @@ class Post
     public function getThreadId(): ?int
     {
         return $this->thread?->getId();
-    }
-
-    /** TODO remove this and rename $message to $text */
-    public function getText(): string
-    {
-        return $this->message;
     }
 }

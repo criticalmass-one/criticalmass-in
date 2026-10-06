@@ -92,7 +92,7 @@ class ForumSearchControllerTest extends AbstractControllerTestCase
         // und der Test bestuende, ohne je etwas zurueckgezogen zu haben.
         $crawler = $client->request('GET', '/post/write/thread/' . $slug);
         $form = $crawler->selectButton('Speichern')->form();
-        $form['post[message]'] = 'Stichwort Rueckzugswort hier.';
+        $form['post[text]'] = 'Stichwort Rueckzugswort hier.';
         $client->submit($form);
 
         $doctrine = static::getContainer()->get('doctrine');

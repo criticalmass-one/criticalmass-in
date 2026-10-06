@@ -36,7 +36,7 @@ class ForumPaginationControllerTest extends AbstractControllerTestCase
         $crawler = $client->request('GET', '/post/write/thread/' . $threadSlug);
 
         $form = $crawler->selectButton('Speichern')->form();
-        $form['post[message]'] = $message;
+        $form['post[text]'] = $message;
 
         $client->submit($form);
     }
@@ -118,7 +118,7 @@ class ForumPaginationControllerTest extends AbstractControllerTestCase
 
         $crawler = $client->request('GET', '/post/edit/' . $lastPost->getId());
         $form = $crawler->selectButton('Speichern')->form();
-        $form['post[message]'] = 'Nachträglich geändert.';
+        $form['post[text]'] = 'Nachträglich geändert.';
         $client->submit($form);
 
         self::assertStringContainsString(

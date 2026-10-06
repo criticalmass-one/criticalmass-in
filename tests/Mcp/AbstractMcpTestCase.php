@@ -281,7 +281,7 @@ abstract class AbstractMcpTestCase extends WebTestCase
     {
         $post = new Post();
         $post->setCity($city);
-        $post->setMessage($message);
+        $post->setText($message);
         $post->setDateTime(new \DateTime('2026-09-01 12:00:00'));
         $post->setEnabled(true);
         $this->em()->persist($post);

@@ -69,7 +69,7 @@ final class CreatePostTool extends AbstractWriteTool
         $post = new Post();
         $post
             ->setCity($city)
-            ->setMessage((string) ($data['message'] ?? ''))
+            ->setText((string) ($data['message'] ?? ''))
             ->setDateTime($dateTime)
             ->setEnabled(true);
 

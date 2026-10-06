@@ -590,7 +590,7 @@ final class WriteToolsTest extends AbstractMcpTestCase
         $postId = $post->getId();
         $this->em()->clear();
         $updated = $this->em()->getRepository(\App\Entity\Post::class)->find($postId);
-        self::assertSame('Neu', $updated?->getMessage());
+        self::assertSame('Neu', $updated?->getText());
     }
 
     public function testDeletePostRemovesIt(): void

@@ -54,7 +54,7 @@ class ForumEditControllerTest extends AbstractControllerTestCase
         self::assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Speichern')->form();
-        $form['post[message]'] = 'Dieser Text wurde nachträglich geändert.';
+        $form['post[text]'] = 'Dieser Text wurde nachträglich geändert.';
         $client->submit($form);
 
         self::assertEquals(302, $client->getResponse()->getStatusCode());
@@ -62,7 +62,7 @@ class ForumEditControllerTest extends AbstractControllerTestCase
         static::getContainer()->get('doctrine')->getManager()->clear();
         $updated = static::getContainer()->get('doctrine')->getRepository(Post::class)->find($post->getId());
 
-        self::assertSame('Dieser Text wurde nachträglich geändert.', $updated->getMessage());
+        self::assertSame('Dieser Text wurde nachträglich geändert.', $updated->getText());
         self::assertNotNull($updated->getUpdatedAt(), 'Eine Bearbeitung muss einen Zeitstempel hinterlassen.');
     }
 

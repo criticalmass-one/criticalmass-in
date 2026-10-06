@@ -38,7 +38,7 @@ class ForumWithdrawControllerTest extends AbstractControllerTestCase
         $crawler = $client->request('GET', '/post/write/thread/' . $threadSlug);
 
         $form = $crawler->selectButton('Speichern')->form();
-        $form['post[message]'] = $message;
+        $form['post[text]'] = $message;
 
         $client->submit($form);
 

@@ -62,7 +62,7 @@ final class UpdatePostTool extends AbstractWriteTool
         $data = \is_array($arguments['post'] ?? null) ? $arguments['post'] : [];
 
         if (array_key_exists('message', $data)) {
-            $post->setMessage((string) $data['message']);
+            $post->setText((string) $data['message']);
         }
 
         if (array_key_exists('enabled', $data)) {
