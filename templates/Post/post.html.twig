@@ -26,7 +26,7 @@
                             <span class="text-muted">zu
                                 <a href="{{ object_path(post.ride) }}" class="text-decoration-none">{{ post.ride.title }}</a>
                             </span>
-                        {% elseif post.getCity() %}
+                        {% elseif post.getCity() and post.city != city|default(null) %}
                             <span class="text-muted">über
                                 <a href="{{ object_path(post.city) }}" class="text-decoration-none">{{ post.city.title }}</a>
                             </span>

@@ -4,6 +4,7 @@ namespace Tests\Controller;
 
 use App\Entity\Post;
 use App\Entity\Ride;
+use App\Enum\PostKindEnum;
 
 class PostControllerTest extends AbstractControllerTestCase
 {
@@ -87,5 +88,6 @@ class PostControllerTest extends AbstractControllerTestCase
 
         $this->assertNotNull($post, 'Post should exist in database after submission');
         $this->assertNotNull($post->getRide(), 'Post should be associated with a ride');
+        $this->assertSame(PostKindEnum::COMMENT, $post->getKind(), 'Comments on a ride stay comments');
     }
 }
