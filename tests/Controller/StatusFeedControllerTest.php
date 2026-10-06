@@ -120,12 +120,12 @@ class StatusFeedControllerTest extends AbstractControllerTestCase
         $slug = (new CitySlug())->setSlug('abgeschaltet-' . uniqid());
         $city = (new City())
             ->setCity('Abgeschaltet')
-            ->setTitle('Critical Mass Abgeschaltet')
             ->setLatitude(53.5)
             ->setLongitude(10.0)
             ->setRegion($hamburg->getRegion())
             ->setTimezone('Europe/Berlin')
             ->setEnabled(false);
+        $city->setTitle('Critical Mass Abgeschaltet');
         $city->addSlug($slug);
         $slug->setCity($city);
         $em->persist($slug);
