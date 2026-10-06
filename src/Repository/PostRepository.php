@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
 use App\Entity\User;
+use App\Enum\PostKindEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -50,6 +51,26 @@ class PostRepository extends ServiceEntityRepository
         $query = $builder->getQuery();
 
         return (int) $query->getSingleScalarResult();
+    }
+
+    /**
+     * Die neuesten Statusbeitraege einer Stadt, juengster zuerst.
+     *
+     * @return Post[]
+     */
+    public function findStatusPostsForCity(City $city, int $limit = 10): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.city = :city')
+            ->andWhere('p.kind = :kind')
+            ->andWhere('p.enabled = true')
+            ->setParameter('city', $city)
+            ->setParameter('kind', PostKindEnum::STATUS)
+            ->orderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 
     public function getPostsForCityRides(City $city): array

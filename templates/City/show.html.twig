@@ -187,6 +187,10 @@
                     </div>
                 {% endif %}
 
+                {% if statusPosts is not null %}
+                    {% include 'City/Includes/_statusPosts.html.twig' with { 'city': city, 'statusPosts': statusPosts } %}
+                {% endif %}
+
                 {# Fotos #}
                 {% if feature('photos') and photos|length > 0 %}
                     <div class="card border-0 shadow-sm mb-4">

@@ -19,10 +19,13 @@ use App\Entity\Ride;
 use App\Entity\Thread;
 use App\Entity\User;
 use App\EntityInterface\BoardInterface;
+use App\Enum\PostKindEnum;
 use App\Form\Type\PostType;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -32,7 +35,9 @@ class PostController extends AbstractController
     public function __construct(
         ManagerRegistry $managerRegistry,
         private readonly ForumNotifier $forumNotifier,
-        private readonly ForumSubscriptionRepository $subscriptionRepository
+        private readonly ForumSubscriptionRepository $subscriptionRepository,
+        private readonly FeatureManagerInterface $featureManager,
+        private readonly RateLimiterFactory $statusPostLimiter
     ) {
         parent::__construct($managerRegistry);
     }
@@ -58,6 +63,10 @@ class PostController extends AbstractController
     #[Route('/post/write/city/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_timeline_post_write_city', priority: 120)]
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
     {
+        if (!$this->featureManager->isActive('status_posts')) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->writeAction($request, $city, $objectRouter);
     }
 
@@ -101,7 +110,8 @@ class PostController extends AbstractController
     protected function addGetAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
     {
         return $this->render('Post/write.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'post' => $post,
         ]);
     }
 
@@ -117,9 +127,17 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->managerRegistry->getManager();
+            $postableUrl = $objectRouter->generate($postable);
 
             /** @var User $author */
             $author = $this->getUser();
+
+            if (PostKindEnum::STATUS === $post->getKind()
+                && !$this->statusPostLimiter->create((string) $author->getId())->consume()->isAccepted()) {
+                $this->addFlash('danger', 'Du hast in der letzten Stunde schon einige Beiträge geschrieben. Bitte versuche es später noch einmal.');
+
+                return $this->redirect($postableUrl);
+            }
 
             $post->setUser($author);
             $em->persist($post);
@@ -150,7 +168,11 @@ class PostController extends AbstractController
                 $this->forumNotifier->notifyAboutPost($post);
             }
 
-            return $this->redirect($objectRouter->generate($postable));
+            if ($postable instanceof City) {
+                return $this->redirect(sprintf('%s#post-%d', $postableUrl, $post->getId()));
+            }
+
+            return $this->redirect($postableUrl);
         }
 
         return $this->render('Post/write_failed.html.twig', [
@@ -333,6 +355,12 @@ class PostController extends AbstractController
         $setMethodName = sprintf('set%s', $shortname);
 
         $post->$setMethodName($postable);
+
+        // Was an einer Stadt haengt, ist ein Statusbeitrag: Kommentare zur Stadt
+        // selbst gab es nur einmal, 2014, und keine Oberflaeche dafuer.
+        if ($postable instanceof City) {
+            $post->setKind(PostKindEnum::STATUS);
+        }
 
         return $post;
     }

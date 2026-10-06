@@ -19,6 +19,13 @@ framework:
             limit: 150
             rate: { interval: '1 minute', amount: 10 }
 
+        # Statusbeitraege pro Nutzer. Kommentare und Forenantworten sind davon
+        # ausgenommen: Wer mitdiskutiert, schreibt schnell mehrere hintereinander.
+        status_post:
+            policy: sliding_window
+            limit: 5
+            interval: '1 hour'
+
         # Schreibende API-Endpunkte pro Client-IP (die /api-Firewall ist anonym).
         api_write:
             policy: sliding_window
