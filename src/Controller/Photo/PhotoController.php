@@ -17,8 +17,8 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Feature('photos')]
 class PhotoController extends AbstractController
 {
-    #[Route('/{citySlug}/{rideIdentifier}/photo/{id}', name: 'caldera_criticalmass_photo_show_ride', priority: 170)]
-    #[Route('/photo/{id}', name: 'caldera_criticalmass_photo_show', options: ['expose' => true], priority: 170)]
+    #[Route('/{citySlug}/{rideIdentifier}/photo/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_show_ride', priority: 170)]
+    #[Route('/photo/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_show', options: ['expose' => true], priority: 170)]
     public function showAction(
         SeoPageInterface $seoPage,
         TrackRepository $trackRepository,

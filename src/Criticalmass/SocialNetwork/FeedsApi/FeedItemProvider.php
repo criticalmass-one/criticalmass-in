@@ -14,11 +14,12 @@ class FeedItemProvider implements FeedItemProviderInterface
         private readonly FeedsApiClientInterface $feedsApiClient,
         private readonly SocialNetworkProfileRepository $profileRepository,
         private readonly CacheInterface $cache,
+        private readonly int $feedsCacheTtl,
     ) {
     }
 
     /** @return FeedItem[] */
-    public function getFeedItemsForCity(City $city, int $page = 1): array
+    public function getFeedItemsForCity(City $city, int $page = 1, bool $refresh = false): array
     {
         $profileIds = $this->getFeedsProfileIdsForCity($city);
 
@@ -29,30 +30,24 @@ class FeedItemProvider implements FeedItemProviderInterface
         $cacheKey = sprintf('feeds_city_%d_page_%d', $city->getId(), $page);
 
         return $this->cache->get($cacheKey, function (ItemInterface $item) use ($profileIds, $page): array {
-            $item->expiresAfter(300);
-
-            $allItems = [];
+            $item->expiresAfter($this->feedsCacheTtl);
 
             try {
-                foreach ($profileIds as $profileId) {
-                    $items = $this->feedsApiClient->getItems(
-                        profileId: $profileId,
-                        page: $page,
-                        orderDirection: 'desc',
-                    );
-
-                    $allItems = array_merge($allItems, $items);
-                }
+                // One request for all of the city's profiles: the API merges,
+                // orders and paginates them, so a city with ten profiles costs
+                // one round trip and yields one page of items — not ten pages
+                // stacked on top of each other.
+                return $this->feedsApiClient->getItems(
+                    profileIds: $profileIds,
+                    page: $page,
+                    orderDirection: 'desc',
+                );
             } catch (\Throwable) {
                 // The Feeds API being unavailable must not take the page down:
                 // show no social items rather than a 500.
                 return [];
             }
-
-            usort($allItems, fn(FeedItem $a, FeedItem $b) => $b->getDateTime() <=> $a->getDateTime());
-
-            return $allItems;
-        });
+        }, $refresh ? INF : null);
     }
 
     /** @return FeedItem[] */
@@ -60,13 +55,22 @@ class FeedItemProvider implements FeedItemProviderInterface
         ?\DateTimeInterface $since = null,
         ?\DateTimeInterface $until = null,
         ?int $limit = null,
+        bool $refresh = false,
     ): array {
-        $sinceKey = $since ? $since->format('Y-m-d-H') : 'none';
-        $untilKey = $until ? $until->format('Y-m-d-H') : 'none';
+        // The callers hand in "now" and "a month ago", which would give every
+        // request of a new hour its own cache key and thus its own trip to the
+        // API. Whole days are the granularity a timeline is read at anyway, so
+        // both the query and the key use them — that is what makes the entry
+        // survive long enough for the warming cron to keep it hot.
+        $since = self::startOfDay($since);
+        $until = self::startOfNextDay($until);
+
+        $sinceKey = $since?->format('Y-m-d') ?? 'none';
+        $untilKey = $until?->format('Y-m-d') ?? 'none';
         $cacheKey = sprintf('feeds_timeline_%s_%s_%d', $sinceKey, $untilKey, $limit ?? 0);
 
         return $this->cache->get($cacheKey, function (ItemInterface $item) use ($since, $until, $limit): array {
-            $item->expiresAfter(300);
+            $item->expiresAfter($this->feedsCacheTtl);
 
             try {
                 return $this->feedsApiClient->getTimelineItems(
@@ -79,10 +83,28 @@ class FeedItemProvider implements FeedItemProviderInterface
                 // A Feeds API outage must not break the timeline/home page.
                 return [];
             }
-        });
+        }, $refresh ? INF : null);
     }
 
-    /** @return int[] */
+    public static function startOfDay(?\DateTimeInterface $dateTime): ?\DateTimeImmutable
+    {
+        return $dateTime === null
+            ? null
+            : \DateTimeImmutable::createFromInterface($dateTime)->setTime(0, 0);
+    }
+
+    /**
+     * The upper bound is exclusive in spirit — a timeline for "March" must
+     * contain what was posted on the 31st, not stop at its midnight.
+     */
+    public static function startOfNextDay(?\DateTimeInterface $dateTime): ?\DateTimeImmutable
+    {
+        return $dateTime === null
+            ? null
+            : \DateTimeImmutable::createFromInterface($dateTime)->setTime(0, 0)->modify('+1 day');
+    }
+
+    /** @return list<int> */
     private function getFeedsProfileIdsForCity(City $city): array
     {
         $profiles = $this->profileRepository->findByCity($city);

@@ -79,7 +79,11 @@ class ParticipationRepository extends ServiceEntityRepository
             ->select('COUNT(p)')
             ->where($builder->expr()->eq('p.user', ':user'))
             ->setParameter('user', $user)
-            ->andWhere($builder->expr()->eq('p.goingYes', true));
+            // Als Parameter binden, nicht als Literal: Doctrine schreibt ein
+            // literales true in DQL als 1, und PostgreSQL kennt keinen
+            // Vergleich zwischen boolean und integer.
+            ->andWhere($builder->expr()->eq('p.goingYes', ':goingYes'))
+            ->setParameter('goingYes', true);
 
         $query = $builder->getQuery();
 

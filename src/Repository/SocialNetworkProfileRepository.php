@@ -156,6 +156,68 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
     }
 
     /**
+     * Every city that has at least one profile registered with the Feeds API —
+     * the set worth warming a cache for.
+     *
+     * @return list<City>
+     */
+    public function findCitiesWithFeedsProfiles(): array
+    {
+        $builder = $this->getEntityManager()->createQueryBuilder();
+
+        // City is the root here rather than the profile: selecting a joined
+        // alias without its root is a semantical error in DQL, and an EXISTS
+        // gives us each city once without a GROUP BY over all of its columns.
+        $subQuery = $this->createQueryBuilder('snp')
+            ->select('1')
+            ->where('snp.city = c')
+            ->andWhere($builder->expr()->isNotNull('snp.feedsProfileId'))
+            ->andWhere($builder->expr()->eq('snp.enabled', ':enabled'))
+            ->getDQL();
+
+        return $builder
+            ->select('c')
+            ->from(City::class, 'c')
+            ->where($builder->expr()->exists($subQuery))
+            ->setParameter('enabled', true)
+            ->orderBy('c.city', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Maps feeds profile ids to the network identifier they were registered
+     * under, so feed items coming back from the Feeds API (which only carries
+     * the profile id) can be attributed to a network again.
+     *
+     * @param list<int> $feedsProfileIds
+     * @return array<int, string>
+     */
+    public function findNetworkIdentifiersByFeedsProfileIds(array $feedsProfileIds): array
+    {
+        if (!$feedsProfileIds) {
+            return [];
+        }
+
+        $builder = $this->createQueryBuilder('snp');
+
+        $rows = $builder
+            ->select('snp.feedsProfileId', 'snp.network')
+            ->where($builder->expr()->in('snp.feedsProfileId', ':feedsProfileIds'))
+            ->setParameter('feedsProfileIds', $feedsProfileIds)
+            ->getQuery()
+            ->getArrayResult();
+
+        $networkIdentifiers = [];
+
+        foreach ($rows as $row) {
+            $networkIdentifiers[(int) $row['feedsProfileId']] = $row['network'];
+        }
+
+        return $networkIdentifiers;
+    }
+
+    /**
      * @param string $method
      * @param array $arguments
      */

@@ -11,6 +11,7 @@ class MonthlyStatsController extends AbstractController
 {
     #[Route(
         '/statistic/{year}/{month}',
+        requirements: ['month' => '\d{1,2}', 'year' => '\d{4}'],
         name: 'caldera_criticalmass_statistic_ride_month',
         priority: 140
     )]

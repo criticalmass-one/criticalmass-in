@@ -4,6 +4,7 @@ namespace Tests\Repository;
 
 use App\Entity\City;
 use App\Entity\Ride;
+use App\Repository\CityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -25,7 +26,7 @@ class RideRepositoryTest extends KernelTestCase
             $this->markTestSkipped('Inactive city fixture not found');
         }
 
-        $this->assertLessThan(0.15, $inactiveCity->getActivityScore(), 'Test requires inactive city with low score');
+        $this->assertLessThan(CityRepository::ACTIVITY_SCORE_THRESHOLD, $inactiveCity->getActivityScore(), 'Test requires inactive city with low score');
 
         $rides = $this->entityManager->getRepository(Ride::class)->findFrontpageRides();
 
@@ -49,8 +50,8 @@ class RideRepositoryTest extends KernelTestCase
         foreach ($rides as $ride) {
             $city = $ride->getCity();
             $this->assertTrue(
-                $city->getActivityScore() === null || $city->getActivityScore() >= 0.15,
-                sprintf('Ride from city %s should have activity score >= 0.15 or NULL', $city->getCity())
+                $city->getActivityScore() === null || $city->getActivityScore() >= CityRepository::ACTIVITY_SCORE_THRESHOLD,
+                sprintf('Ride from city %s should have activity score >= %s or NULL', $city->getCity(), CityRepository::ACTIVITY_SCORE_THRESHOLD)
             );
         }
     }

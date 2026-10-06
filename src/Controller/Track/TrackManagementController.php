@@ -41,7 +41,7 @@ class TrackManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'track')]
-    #[Route('/{id}/toggle', name: 'toggle', methods: ['POST'], priority: 150)]
+    #[Route('/{id}/toggle', requirements: ['id' => '\d+'], name: 'toggle', methods: ['POST'], priority: 150)]
     public function toggleAction(Request $request, EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
         if (!$this->isCsrfTokenValid('track_toggle_' . $track->getId(), $request->request->get('_token'))) {
@@ -62,7 +62,7 @@ class TrackManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'track')]
-    #[Route('/{id}/delete', name: 'delete', methods: ['POST'], priority: 150)]
+    #[Route('/{id}/delete', requirements: ['id' => '\d+'], name: 'delete', methods: ['POST'], priority: 150)]
     public function deleteAction(Request $request, Track $track, EventDispatcherInterface $eventDispatcher): Response
     {
         if (!$this->isCsrfTokenValid('track_delete_' . $track->getId(), $request->request->get('_token'))) {

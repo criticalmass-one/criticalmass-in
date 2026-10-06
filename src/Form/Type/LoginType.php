@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,12 @@ class LoginType extends AbstractType
                     // an. Ohne Passkey verhält sich das Feld wie bisher.
                     'autocomplete' => 'username webauthn',
                 ],
+            ])
+            ->add('remember_me', CheckboxType::class, [
+                'label' => 'Eingeloggt bleiben',
+                'required' => false,
+                'data' => true,
+                'help' => 'Du bleibst dann auf diesem Gerät ein Jahr lang angemeldet.',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Link zusenden',

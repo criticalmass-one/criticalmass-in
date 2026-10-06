@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **criticalmass.in** — web platform for coordinating and documenting Critical Mass bicycle rides worldwide. Manages cities, rides/events, participants, GPS tracks, photos, forums, and statistics.
 
-**Stack:** Symfony 7.4 (LTS), Doctrine ORM 3 / DBAL 4, PHP 8.2+, MariaDB 10.9+, Bootstrap 5, Webpack Encore with Stimulus
+**Stack:** Symfony 7.4 (LTS), Doctrine ORM 3 / DBAL 4, PHP 8.2+, **PostgreSQL 17** (seit 05.09.2026; vorher MariaDB, siehe unten), Bootstrap 5, Webpack Encore with Stimulus
 
 ## Common Commands
 
@@ -17,25 +17,70 @@ composer test:run          # Just run PHPUnit (no DB reset)
 composer test:api          # Only API test suite
 vendor/bin/phpunit tests/Path/To/TestFile.php              # Single test file
 vendor/bin/phpunit --filter testMethodName                  # Single test method
-# Controller/DB tests need MariaDB up (docker-compose up); otherwise they fail with
-# "getaddrinfo for mysql failed". Pure unit tests (no DB) run standalone.
+# **Ein Suite-Lauf ist nur reproduzierbar, wenn vorher DREI Dinge weg sind.**
+# Sonst misst man die Vorgeschichte statt den Code — zwei Vergleiche zwischen
+# main und einem Branch lieferten so 341 Fehler gegen 35, obwohl beide Staende
+# vollstaendig gruen sind:
+#   1. die Testdatenbank (composer test:db:reset) — die Suite ueberschreibt
+#      ihren eigenen Bestand,
+#   2. var/cache/test — dort liegt der Zustand des API-Ratenbegrenzers. Die
+#      Suite schreibt mehr als 120 API-Anfragen je 15 Minuten und wirft sich
+#      beim zweiten Lauf selbst mit 429ern zurueck,
+#   3. der FilesystemAdapter von CachedTimeline in sys_get_temp_dir():
+#        find "$(php -r 'echo sys_get_temp_dir();')/symfony-cache" -maxdepth 1 \
+#          -name '*criticalmass-timeline*' -exec rm -rf {} +
+#      Er wird an der Cache-Konfiguration vorbei gebaut, ueberdauert Laeufe und
+#      laesst Startseiten-Tests gruen aussehen, ohne etwas zu pruefen.
+#      (In zsh scheitert das Glob-Muster ohne Treffer — deshalb `find`.)
+# Controller/DB tests brauchen eine laufende Datenbank; reine Unit-Tests laufen ohne.
+# Die CI faehrt PostgreSQL 17, wie die Produktion. Der Code ist portabel geblieben
+# und besteht die Suite auch gegen MariaDB — das ist aber nicht mehr die Zielplattform.
 # Use `php bin/console ...` (the bare `bin/console` may report "permission denied").
 # Console commands often need more memory: `php -d memory_limit=-1 bin/console ...`
 ```
 
-### Migrationen
+### Database Migrations
 
 ```bash
-php -d memory_limit=-1 bin/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:migrate       # apply
+php bin/console doctrine:migrations:status
 ```
 
-**Die Migrationskette ist nicht von null abspielbar:** `Version20170527205445` ruft
-`$platform->getName()`, das es in DBAL 4 nicht mehr gibt. Ein frisches Schema entsteht
-deshalb über `doctrine:schema:create` aus dem Mapping, nicht aus den Migrationen — und
-für eine neue Migration nimmt man die DDL aus `doctrine:schema:create --dump-sql` gegen
-eine Wegwerf-Datenbank, statt `migrations:diff` gegen eine unvollständige Dev-DB laufen
-zu lassen. Anschließend mit `doctrine:schema:update --dump-sql` gegenprüfen (muss leer
-sein) und `up`/`down` einmal durchspielen.
+**Die CI führt Migrationen nie aus.** `composer test:db:reset` baut das Schema mit
+`doctrine:schema:drop --full-database` → `schema:create` → `fixtures:load`. Ein grüner
+CI-Lauf sagt daher **nichts** über eine Migration aus — genau dadurch blieb jahrelang
+unbemerkt, dass 97 der bis dahin 119 Migrationen `getDatabasePlatform()->getName()` riefen,
+eine Methode, die DBAL 4 entfernt hat, und die Kette nicht mehr von null abspielbar war.
+
+**Jede neue Migration deshalb lokal gegen eine Wegwerf-Datenbank prüfen:** leere DB →
+`migrations:migrate` → `schema:update --dump-sql` muss „Nothing to update" melden, und
+`migrations:migrate prev` einmal zurück. Die echte Dev-DB dabei nie anfassen.
+
+Die Geschichte beginnt bei der Baseline `Version20260904120000` (31 Tabellen, 91
+Anweisungen). Die 119 Migrationen davor stehen in der Git-Historie. **Bestehende
+Datenbanken führen die Baseline nicht aus, sondern tragen sie als erledigt ein:**
+
+```bash
+php bin/console doctrine:migrations:version 'DoctrineMigrations\Version20260904120000' --add
+# danach die Altmeldungen entfernen:
+# DELETE FROM doctrine_migration_versions WHERE version <> 'DoctrineMigrations\\Version20260904120000';
+```
+
+**Die Baseline taugt nur fuer MySQL.** Sie enthaelt `ENGINE`, `AUTO_INCREMENT` und
+`LONGTEXT`; auf der Produktion ist sie als erledigt eingetragen, aber eine frische
+Installation gegen PostgreSQL scheitert daran. Entweder bekommt sie eine
+Plattformweiche, oder frische Installationen laufen ausdruecklich ueber
+`doctrine:schema:create`. Offener Punkt.
+
+**Spaltennamen sind in PostgreSQL kleingeschrieben.** Doctrine legt sie unquotiert an,
+PostgreSQL faltet sie: `dateTime` heisst dort `datetime`. In rohem SQL camelCase
+deshalb **nicht** quoten — `"dateTime"` greift ins Leere.
+
+**Vorsicht bei `schema:update`:** Das Produktivschema weicht in 18 Punkten vom Entity-Modell
+ab. 13 davon sind folgenlose `(DC2Type:…)`-Spaltenkommentare, aber vier Spalten kennt kein
+Entity mehr und sie enthalten Daten (`track.estimate_id`, `track.md5Hash`, `track.geoJson`,
+`social_network_profile.mainNetwork`). Ein `--force` gegen die Produktion würde sie
+unumkehrbar löschen — immer erst `--dump-sql` lesen.
 
 ### Static Analysis
 ```bash
@@ -58,6 +103,11 @@ yarn build        # Production build
 ### Docker Services
 ```bash
 docker-compose up -d      # MariaDB (port 8002), Redis, Memcached, Mailcatcher (port 1080)
+# Achtung: docker-compose.yaml faehrt noch MariaDB. Fuer einen Lauf gegen die
+# Zielplattform stattdessen einen Wegwerf-Container nehmen:
+#   docker run -d --name pg -p 55432:5432 -e POSTGRES_PASSWORD=postgres \
+#     -e POSTGRES_DB=cm postgres:17
+# und in .env.test.local eine passende DATABASE_URL setzen.
 ```
 
 ## Architecture

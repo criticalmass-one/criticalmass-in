@@ -7,12 +7,10 @@ parameters:
     locale: de
     secret: '%env(APP_SECRET)%'
     kernel.secret: '%env(APP_SECRET)%'
-    database_driver: pdo_mysql
-    database_host: 127.0.0.1
-    database_port: null
-    database_name: '%env(DATABASE_NAME)%'
-    database_user: '%env(DATABASE_USER)%'
-    database_password: '%env(DATABASE_PASSWORD)%'
+    # Die frueheren database_*-Parameter sind entfallen: Sie wurden nirgends
+    # gelesen, verlangten aber Umgebungsvariablen, die es nicht gibt, und
+    # nannten mit pdo_mysql eine Plattform, die so nicht mehr feststeht.
+    # Die Verbindung kommt allein aus DATABASE_URL.
     track.gap_width: 10
     strava.client_id: '%env(STRAVA_CLIENT_ID)%'
     strava.token: '%env(STRAVA_TOKEN)%'
@@ -22,6 +20,16 @@ parameters:
     facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
+
+    # Feed items are pulled from feeds.maltehuebner.dev and refreshed by
+    # criticalmass:social-network:warm-feeds-cache every 30 minutes. The TTL has
+    # to outlive a couple of missed cron runs, otherwise a visitor pays for the
+    # API call the cron was supposed to have made.
+    feeds.cache_ttl: 5400
+    # Womit sich die eigenen Hintergrundlaeufe (Aktivitaet, Wetter, Feeds) an
+    # der /api-Firewall als solche zu erkennen geben. Leer gelassen heisst:
+    # niemand ist vertrauenswuerdig, alle teilen sich das enge Kontingent.
+    api.own_service_token: '%env(string:default::CRITICALMASS_API_TOKEN)%'
     notification.mail.sender_address: '%env(MAILER_SENDER)%'
     request_listener.http_port: 80
     request_listener.https_port: 443
@@ -47,6 +55,7 @@ services:
             $rootDirectory: '%kernel.project_dir%'
             $webRootDir: '%kernel.project_dir%/../public'
             $gapWidth: '%track.gap_width%'
+            $eigenerDienstToken: '%api.own_service_token%'
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
@@ -65,6 +74,7 @@ services:
             cachePrefix: 'media/cache'
             $feedsApiUrl: '%env(FEEDS_API_URL)%'
             $feedsApiToken: '%env(FEEDS_API_TOKEN)%'
+            $feedsCacheTtl: '%feeds.cache_ttl%'
 
     App\:
         resource: '../src/*'

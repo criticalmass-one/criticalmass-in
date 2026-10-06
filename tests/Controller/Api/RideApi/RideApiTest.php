@@ -11,6 +11,26 @@ use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class RideApiTest extends AbstractApiControllerTestCase
 {
+    /**
+     * Die gefaelschte Uhr wieder freigeben.
+     *
+     * `ClockMock::withClockMock()` gilt fuer den ganzen Prozess. Ohne dieses
+     * Zuruecksetzen laeuft **jeder folgende Test** in diesem Lauf mit einer
+     * Uhr, die hier gestellt wurde — und `RideRepository::findCurrentRideForCity()`
+     * fragt genau danach, welche Fahrt als naechste ansteht.
+     *
+     * Das hat NavigationTest::testCityPageContainsRideLink unzuverlaessig
+     * gemacht: derselbe Stand, dieselbe frische Datenbank, drei Laeufe — rot,
+     * gruen, rot. Ein Fehlschlag, der aussah, als haette die zuletzt geaenderte
+     * Stelle etwas kaputtgemacht, und der in Wahrheit von hier kam.
+     */
+    protected function tearDown(): void
+    {
+        ClockMock::withClockMock(false);
+
+        parent::tearDown();
+    }
+
     #[TestDox('Retrieve the current ride for Hamburg.')]
     #[Group('time-sensitive')]
     public function testCurrentRide(): void

@@ -17,7 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
 #[Vich\Uploadable]
-#[ORM\Table(name: 'user')]
+// 'user' ist in PostgreSQL ein reserviertes Wort und wird von Doctrine nicht
+// automatisch gequotet; jedes rohe SQL auf dieser Tabelle waere dort eine Falle.
+#[ORM\Table(name: 'app_user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\HasLifecycleCallbacks]
 class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface, LegacyPasswordAuthenticatedUserInterface
@@ -28,7 +30,13 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Groups(['timelapse', 'post-list'])]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'json', nullable: true)]
+    /**
+     * jsonb statt json: PostgreSQL kennt fuer den Typ json keinen
+     * Gleichheitsoperator, weshalb dort schon ein schlichtes SELECT DISTINCT
+     * ueber diese Tabelle scheitert — etwa beim Ermitteln der Abonnenten eines
+     * Themas. jsonb hat einen. Unter MySQL bleibt die Angabe folgenlos.
+     */
+    #[ORM\Column(type: 'json', nullable: true, options: ['jsonb' => true])]
     #[Ignore]
     private ?array $roles = [];
 
@@ -120,6 +128,22 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\Column(type: 'boolean', options: ['default' => 0])]
     #[Ignore]
     protected bool $ownProfilePhoto = false;
+
+    /**
+     * Der Hauptschalter für Forums-Benachrichtigungen. Steht er aus, bleiben die
+     * Abonnements bestehen, es geht nur keine Mail mehr raus.
+     */
+    #[ORM\Column(name: 'forum_notifications', type: 'boolean', options: ['default' => 1])]
+    #[Ignore]
+    protected bool $forumNotifications = true;
+
+    /**
+     * Mitgefuehrter Zaehler der Forenbeitraege. Ihn bei jeder Beitragsanzeige neu zu
+     * zaehlen hiesse eine Abfrage pro Beitrag auf einer Seite mit zwanzig davon.
+     */
+    #[ORM\Column(name: 'forum_post_count', type: 'integer', options: ['default' => 0])]
+    #[Ignore]
+    protected int $forumPostCount = 0;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\SocialNetworkProfile', mappedBy: 'createdBy')]
     #[Ignore]
@@ -652,5 +676,56 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         $this->lastLogin = $lastLogin;
 
         return $this;
+    }
+
+    public function wantsForumNotifications(): bool
+    {
+        return $this->forumNotifications;
+    }
+
+    public function setForumNotifications(bool $forumNotifications): User
+    {
+        $this->forumNotifications = $forumNotifications;
+
+        return $this;
+    }
+
+    public function getForumPostCount(): int
+    {
+        return $this->forumPostCount;
+    }
+
+    public function setForumPostCount(int $forumPostCount): User
+    {
+        $this->forumPostCount = max(0, $forumPostCount);
+
+        return $this;
+    }
+
+    public function incForumPostCount(): User
+    {
+        ++$this->forumPostCount;
+
+        return $this;
+    }
+
+    public function decForumPostCount(): User
+    {
+        $this->forumPostCount = max(0, $this->forumPostCount - 1);
+
+        return $this;
+    }
+
+    /**
+     * Ein schlichter Rang aus der Beitragszahl — wie in klassischen Foren.
+     */
+    public function getForumRank(): string
+    {
+        return match (true) {
+            $this->forumPostCount >= 500 => 'Urgestein',
+            $this->forumPostCount >= 100 => 'Stammgast',
+            $this->forumPostCount >= 10 => 'Mitglied',
+            default => 'Neuling',
+        };
     }
 }

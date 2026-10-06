@@ -32,7 +32,7 @@ class CityCycleExecuteController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/{citySlug}/cycles/{id}/execute', name: 'caldera_criticalmass_citycycle_execute', priority: 80)]
+    #[Route('/{citySlug}/cycles/{id}/execute', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_citycycle_execute', priority: 80)]
     public function executeAction(
         Request $request,
         CityCycle $cityCycle,
@@ -71,7 +71,7 @@ class CityCycleExecuteController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/{citySlug}/cycles/{id}/execute-persist', name: 'caldera_criticalmass_citycycle_execute_persist', priority: 80)]
+    #[Route('/{citySlug}/cycles/{id}/execute-persist', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_citycycle_execute_persist', priority: 80)]
     public function executePersistAction(
         Request $request,
         CityCycle $cityCycle,

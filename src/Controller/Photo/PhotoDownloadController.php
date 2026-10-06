@@ -14,7 +14,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 #[Feature('photos')]
 class PhotoDownloadController extends AbstractController
 {
-    #[Route('/photo/{id}/download', name: 'caldera_criticalmass_photo_download', priority: 180)]
+    #[Route('/photo/{id}/download', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_download', priority: 180)]
     #[IsGranted('ROLE_PHOTO_DOWNLOAD')]
     public function downloadAction(
         UploaderHelper $uploaderHelper,

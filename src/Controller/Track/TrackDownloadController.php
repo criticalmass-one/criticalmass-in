@@ -13,7 +13,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 class TrackDownloadController extends AbstractController
 {
     #[IsGranted('edit', 'track')]
-    #[Route('/track/download/{id}', name: 'caldera_criticalmass_track_download', priority: 270)]
+    #[Route('/track/download/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_track_download', priority: 270)]
     public function downloadAction(Track $track, UploaderHelper $uploaderHelper): Response
     {
         /** @var Filesystem $filesystem */

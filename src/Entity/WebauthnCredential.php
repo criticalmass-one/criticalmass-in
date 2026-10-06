@@ -14,10 +14,10 @@ use Webauthn\CredentialRecord;
  * config/packages/doctrine.yaml als eigenes Mapping eingebunden ist.
  */
 #[ORM\Table(name: 'webauthn_credential')]
-// Der DBAL-Typ `base64` legt publicKeyCredentialId als LONGTEXT an; MariaDB verlangt für
-// einen Index darauf eine Präfixlänge. 255 Zeichen entsprechen 191 Rohbytes und liegen
-// weit über allem, was Authenticator in der Praxis als Credential-ID ausgeben.
-#[ORM\UniqueConstraint(name: 'uniq_webauthn_credential_id', columns: ['publicKeyCredentialId'], options: ['lengths' => [255]])]
+// Der DBAL-Typ `base64` legt publicKeyCredentialId als TEXT an. PostgreSQL indiziert TEXT
+// ohne Präfixlänge; die frühere MariaDB-Option `lengths` liesse Doctrine unter PostgreSQL
+// bei jedem Schemavergleich eine Abweichung melden.
+#[ORM\UniqueConstraint(name: 'uniq_webauthn_credential_id', columns: ['publicKeyCredentialId'])]
 #[ORM\Index(name: 'idx_webauthn_user_handle', columns: ['userHandle'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\WebauthnCredentialRepository')]
 #[ORM\HasLifecycleCallbacks]

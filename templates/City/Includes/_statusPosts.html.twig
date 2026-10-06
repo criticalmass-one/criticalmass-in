@@ -1,0 +1,41 @@
+<div class="card border-0 shadow-sm mb-4" id="status-posts">
+    <div class="card-header bg-white border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">
+                <i class="far fa-comments text-primary me-2"></i>Was gibt’s Neues in {{ city.city }}?
+            </h5>
+            {% if app.user %}
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-add-post">
+                    <i class="far fa-plus me-1"></i>Beitrag schreiben
+                </button>
+            {% else %}
+                <button type="button" class="btn btn-outline-primary btn-sm"
+                    data-controller="hint-modal"
+                    data-modal-hint-title="{{ 'hint_modal.city.status_post_button.title'|trans }}"
+                    data-modal-hint-text="{{ 'hint_modal.city.status_post_button.text'|trans({'%city%': city.city}) }}"
+                    data-modal-hint-size="md">
+                    <i class="far fa-plus me-1"></i>Beitrag schreiben
+                </button>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body">
+        {% if statusPosts|length > 0 %}
+            <div class="post-list" data-controller="scroll-to-post">
+                {% for post in statusPosts %}
+                    {% include 'Post/post.html.twig' with { 'post': post, 'city': city } %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted mb-0">
+                    Hier ist es noch still. Fährst du in {{ city.city }} mit? Schreib den ersten Beitrag!
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if app.user %}
+    {{ render(controller('App\\Controller\\PostController::writeCityAction', { 'id': city.id })) }}
+{% endif %}

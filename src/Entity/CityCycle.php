@@ -7,11 +7,13 @@ use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Jsor\Doctrine\PostGIS\Types\PostGISType;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'city_cycle')]
+#[ORM\Index(fields: ['coordinates'], name: 'city_cycle_coordinates_gist', flags: ['spatial'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityCycleRepository')]
 class CityCycle implements RouteableInterface
 {
@@ -79,6 +81,18 @@ class CityCycle implements RouteableInterface
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list', 'api-write'])]
     protected ?float $longitude = null;
+    /**
+     * Dieselbe Stelle noch einmal, diesmal als Geometrie.
+     *
+     * Gefuehrt wird sie aus latitude und longitude, nicht umgekehrt: Die beiden
+     * Spalten haengen an der API-Ausgabe und an Abfragen, die erst mit #1141 auf
+     * PostGIS umgestellt werden. Der Gewinn liegt schon jetzt beim raeumlichen
+     * Index.
+     */
+    #[ORM\Column(type: PostGISType::GEOMETRY, nullable: true, options: ['geometry_type' => 'POINT', 'srid' => 4326])]
+    #[Ignore]
+    protected ?string $coordinates = null;
+
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Groups(['ride-list'])]
@@ -149,6 +163,7 @@ class CityCycle implements RouteableInterface
     public function setLatitude(?float $latitude = null): CityCycle
     {
         $this->latitude = $latitude;
+        $this->punktNachfuehren();
 
         return $this;
     }
@@ -161,6 +176,7 @@ class CityCycle implements RouteableInterface
     public function setLongitude(?float $longitude = null): CityCycle
     {
         $this->longitude = $longitude;
+        $this->punktNachfuehren();
 
         return $this;
     }
@@ -168,6 +184,32 @@ class CityCycle implements RouteableInterface
     public function getLongitude(): ?float
     {
         return $this->longitude;
+    }
+
+    public function getCoordinates(): ?string
+    {
+        return $this->coordinates;
+    }
+
+    /**
+     * Haelt die Geometrie an den beiden Fliesskommaspalten nach.
+     *
+     * In WKT steht die Laenge vor der Breite — anders herum als in jeder
+     * Beschriftung dieser Anwendung, und eine beliebte Fehlerquelle.
+     *
+     * Null und exakt 0 gelten als "keine Angabe": Der Punkt 0,0 liegt im Golf
+     * von Guinea, und der Bestand nutzt ihn seit jeher als Platzhalter.
+     */
+    private function punktNachfuehren(): void
+    {
+        if (null === $this->latitude || null === $this->longitude
+            || 0.0 === $this->latitude || 0.0 === $this->longitude) {
+            $this->coordinates = null;
+
+            return;
+        }
+
+        $this->coordinates = sprintf('SRID=4326;POINT(%.8F %.8F)', $this->longitude, $this->latitude);
     }
 
     public function setDayOfWeek(int $dayOfWeek): CityCycle

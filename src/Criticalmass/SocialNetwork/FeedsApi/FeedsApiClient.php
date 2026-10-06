@@ -130,8 +130,9 @@ class FeedsApiClient implements FeedsApiClientInterface
     }
 
     /** @return FeedItem[] */
+    /** @param list<int>|null $profileIds */
     public function getItems(
-        ?int $profileId = null,
+        ?array $profileIds = null,
         int $page = 1,
         string $orderDirection = 'desc',
     ): array {
@@ -140,8 +141,8 @@ class FeedsApiClient implements FeedsApiClientInterface
             'order[dateTime]' => $orderDirection,
         ];
 
-        if ($profileId) {
-            $query['profile'] = $profileId;
+        if ($profileIds) {
+            $query['profile'] = $profileIds;
         }
 
         $data = $this->request('GET', '/api/items', queryParams: $query);

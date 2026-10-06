@@ -12,9 +12,13 @@ class YearFunction extends FunctionNode
 {
     private Node|string|null $arg = null;
 
+    /**
+     * EXTRACT gehoert zum SQL-Standard und wird von MySQL wie von
+     * PostgreSQL verstanden; YEAR() kennt nur MySQL.
+     */
     public function getSql(SqlWalker $sqlWalker): string
     {
-        return sprintf('YEAR(%s)', $this->arg->dispatch($sqlWalker));
+        return sprintf('EXTRACT(YEAR FROM %s)', $this->arg->dispatch($sqlWalker));
     }
 
     public function parse(Parser $parser): void

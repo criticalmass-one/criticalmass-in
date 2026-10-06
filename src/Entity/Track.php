@@ -14,6 +14,7 @@ use App\Enum\PolylineResolution;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Jsor\Doctrine\PostGIS\Types\PostGISType;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -25,6 +26,7 @@ use Vich\UploaderBundle\Mapping\Attribute as Vich;
 #[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_track_view')]
 #[ORM\Table(name: 'track')]
+#[ORM\Index(fields: ['lineString'], name: 'track_linestring_gist', flags: ['spatial'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\TrackRepository')]
 #[ORM\Index(fields: ['creationDateTime'], name: 'track_creation_date_time_index')]
 class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
@@ -117,6 +119,25 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[ORM\Column(type: 'text', nullable: true)]
     #[Ignore]
     protected ?string $latLngList = null;
+
+    /**
+     * Der gefahrene Weg als Geometrie.
+     *
+     * Bisher lag die Strecke nur in drei vorberechneten Aufloesungen als
+     * kodierte Polylinie vor (TrackPolyline) — gut zum Zeichnen, aber fuer die
+     * Datenbank eine Zeichenkette ohne Bedeutung. Als LineString laesst sich
+     * damit rechnen: ST_Length fuer die Laenge, ST_DWithin fuer "welche Touren
+     * fuehren hier vorbei", ST_Simplify fuer eine Aufloesung, die es noch
+     * nicht gibt.
+     *
+     * Gefuellt wird sie aus der GPX-Datei, nicht aus den Polylinien: Die Datei
+     * ist die verlustfreie Quelle, das Polylinienformat rundet auf fuenf
+     * Nachkommastellen. Die Polylinien bleiben vorerst unangetastet — Frontend
+     * und API haengen an ihnen.
+     */
+    #[ORM\Column(type: PostGISType::GEOMETRY, nullable: true, options: ['geometry_type' => 'LINESTRING', 'srid' => 4326])]
+    #[Ignore]
+    protected ?string $lineString = null;
 
     /** @var Collection<int, TrackPolyline> */
     #[ORM\OneToMany(targetEntity: TrackPolyline::class, mappedBy: 'track', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -461,6 +482,23 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     public function setApp(?string $app): static
     {
         $this->app = $app;
+
+        return $this;
+    }
+
+    public function getLineString(): ?string
+    {
+        return $this->lineString;
+    }
+
+    /**
+     * Erwartet WKT mit SRID, also `SRID=4326;LINESTRING(laenge breite, …)`.
+     * In WKT steht die Laenge vor der Breite — anders herum als in jeder
+     * Beschriftung dieser Anwendung.
+     */
+    public function setLineString(?string $lineString = null): Track
+    {
+        $this->lineString = $lineString;
 
         return $this;
     }

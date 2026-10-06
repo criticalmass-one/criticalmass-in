@@ -5,8 +5,12 @@
 
             <div class="col-9 col-md-10">
                 <p class="mb-2">
-                    <strong>{{ item.user.username }}</strong>
-                    hat auf ein Diskussionsthema geantwortet:
+                    {% if item.user %}
+                        <strong>{{ item.user.username }}</strong>
+                        hat auf ein Diskussionsthema geantwortet:
+                    {% else %}
+                        Auf ein Diskussionsthema wurde geantwortet:
+                    {% endif %}
                 </p>
 
                 <h5 class="mb-2">

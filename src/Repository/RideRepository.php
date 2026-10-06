@@ -31,6 +31,14 @@ class RideRepository extends ServiceEntityRepository
             ->where($builder->expr()->gte('r.dateTime', ':dateTime'))
             ->andWhere($builder->expr()->eq('r.city', ':city'))
             ->addOrderBy('r.dateTime', 'ASC')
+            // Zweites Ordnungsmerkmal, damit bei Gleichstand nicht der Zufall
+            // entscheidet: In Hamburg liegen drei Fahrten auf dem 4. Oktober,
+            // und je nachdem, welche die Datenbank zuerst liefert, zeigt die
+            // Stadtseite eine andere "naechste Tour" — mit einer anderen
+            // Adresse, weil zwei davon einen Slug tragen. Das hat einen Test
+            // unzuverlaessig gemacht (rot, gruen, rot bei identischem Stand),
+            // aber es betrifft genauso die Seite selbst.
+            ->addOrderBy('r.id', 'ASC')
             ->setParameter('dateTime', $dateTime)
             ->setParameter('city', $city);
 
@@ -225,18 +233,13 @@ class RideRepository extends ServiceEntityRepository
             ->where($builder->expr()->lte('r.dateTime', ':startDateTime'))
             ->andWhere($builder->expr()->gte('r.dateTime', ':endDateTime'))
             ->andWhere($builder->expr()->eq('city.enabled', ':enabled'))
-            ->andWhere(
-                $builder->expr()->orX(
-                    $builder->expr()->gte('city.activityScore', ':threshold'),
-                    $builder->expr()->isNull('city.activityScore')
-                )
-            )
             ->addOrderBy('r.dateTime', 'ASC')
             ->addOrderBy('r.city', 'ASC')
             ->setParameter('startDateTime', $startDateTime)
             ->setParameter('endDateTime', $endDateTime)
-            ->setParameter('enabled', true)
-            ->setParameter('threshold', CityRepository::ACTIVITY_SCORE_THRESHOLD);
+            ->setParameter('enabled', true);
+
+        CityRepository::addActiveCityCondition($builder, 'city');
 
         $query = $builder->getQuery();
 
@@ -416,11 +419,17 @@ class RideRepository extends ServiceEntityRepository
     {
         $builder = $this->createQueryBuilder('r');
 
+        // Ein Ortsname kommt ueber die Jahre mit leicht abweichenden Koordinaten
+        // vor — auf der Produktion bis zu 18 Paare fuer denselben Ort. MySQL
+        // greift sich davon stillschweigend eines heraus, PostgreSQL lehnt die
+        // Abfrage ab, weil die Koordinaten weder gruppiert noch aggregiert sind.
+        // Der Mittelwert liefert statt einer beliebigen Zeile den Schwerpunkt
+        // aller erfassten Punkte und bleibt bei einer Zeile je Ortsname.
         $builder
             ->select([
                 'r.location',
-                'r.latitude',
-                'r.longitude'
+                'AVG(r.latitude) AS latitude',
+                'AVG(r.longitude) AS longitude'
             ])
             ->where($builder->expr()->eq('r.city', ':city'))
             ->andWhere($builder->expr()->isNotNull('r.location'))
@@ -731,13 +740,14 @@ class RideRepository extends ServiceEntityRepository
 
         $latitude = $location->getLatitude();
         $longitude = $location->getLongitude();
-        $earthRadius = 6371000;
-
         $rsm = new ResultSetMapping();
 
         $rsm->addEntityResult(Ride::class, 'r');
         $rsm->addFieldResult('r', 'id', 'id');
-        $rsm->addFieldResult('r', 'dateTime', 'dateTime');
+        // Durchgehend kleingeschriebene Aliase: PostgreSQL faltet unquotierte
+        // Bezeichner auf Kleinschreibung, ein "r.dateTime" waere dort also
+        // "r.datetime" und existierte nicht.
+        $rsm->addFieldResult('r', 'ride_date_time', 'dateTime');
         $rsm->addFieldResult('r', 'latitude', 'latitude');
         $rsm->addFieldResult('r', 'longitude', 'longitude');
         $rsm->addFieldResult('r', 'title', 'title');
@@ -749,28 +759,41 @@ class RideRepository extends ServiceEntityRepository
         $rsm->addFieldResult('cs', 'cs_id', 'id');
         $rsm->addFieldResult('cs', 'cs_slug', 'slug');
 
+        // Der Spaltenname bleibt unquotiert. Doctrine legt die Spalte selbst
+        // unquotiert an, PostgreSQL faltet sie also auf "datetime" — und
+        // dieselbe Faltung trifft die Abfrage. Ein "dateTime" in
+        // Anfuehrungszeichen wuerde dort dagegen ins Leere greifen.
+        //
+        // Die Entfernung steht in einer Unterabfrage, damit sich danach im WHERE
+        // darauf filtern laesst. Vorher stand hier ein HAVING ohne GROUP BY, das
+        // sich auf einen Alias der Auswahl bezog: MySQL laesst beides durchgehen,
+        // PostgreSQL keines von beidem.
+        // ST_DWithin statt Haversine: Die Bedingung kann den GiST-Index auf
+        // coordinates nutzen. Damit entfaellt auch die Unterabfrage, die nur
+        // noetig war, um auf die selbst gerechnete Entfernung filtern zu koennen —
+        // ein HAVING ohne GROUP BY laesst PostgreSQL nicht durchgehen.
+        //
+        // Der Radius kommt bereits in Metern herein, und ueber geography rechnet
+        // ST_DWithin ebenfalls in Metern.
         $sql = <<<SQL
-SELECT 
+SELECT
     r.id,
-    r.dateTime,
+    r.dateTime AS ride_date_time,
     r.latitude,
     r.longitude,
     r.title,
-    r.city_id,
     c.id AS c_id,
     cs.id AS cs_id,
-    cs.slug AS cs_slug,
-    (
-        $earthRadius * acos(
-            cos(radians(:latitude)) * cos(radians(r.latitude)) *
-            cos(radians(r.longitude) - radians(:longitude)) +
-            sin(radians(:latitude)) * sin(radians(r.latitude))
-        )
-    ) AS distance
+    cs.slug AS cs_slug
 FROM ride r
 INNER JOIN city c ON r.city_id = c.id
 INNER JOIN cityslug cs ON cs.id = c.main_slug_id
-HAVING distance <= :radius
+WHERE r.coordinates IS NOT NULL
+  AND ST_DWithin(
+        r.coordinates::geography,
+        ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326)::geography,
+        :radius
+      )
 ORDER BY r.dateTime DESC
 LIMIT :limit
 SQL;
@@ -790,13 +813,15 @@ SQL;
         $expr = $qb->expr();
 
         if ($query !== '') {
+            // LOWER() auf beiden Seiten, weil PostgreSQL LIKE im Gegensatz zu MySQL
+            // schreibungsempfindlich vergleicht.
             $qb->where(
                 $expr->orX(
-                    $expr->like('r.title', ':q'),
-                    $expr->like('r.description', ':q'),
-                    $expr->like('r.location', ':q')
+                    $expr->like('LOWER(r.title)', ':q'),
+                    $expr->like('LOWER(r.description)', ':q'),
+                    $expr->like('LOWER(r.location)', ':q')
                 )
-            )->setParameter('q', sprintf('%%%s%%', $query));
+            )->setParameter('q', sprintf('%%%s%%', mb_strtolower($query)));
         }
 
         return $qb

@@ -140,6 +140,12 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             ->where('t.ride = :rideId')
             ->setParameter('rideId', $rideId)
             ->orderBy('t.creationDateTime', 'DESC')
+            // Zwei Uploads im selben Test fallen in dieselbe Sekunde, der
+            // Zeitstempel allein entscheidet dann nichts. Ohne einen zweiten,
+            // eindeutigen Schluessel liefert die Datenbank irgendeine der
+            // gleichrangigen Zeilen — MySQL zufaellig die erwartete,
+            // PostgreSQL die andere.
+            ->addOrderBy('t.id', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

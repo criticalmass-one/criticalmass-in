@@ -68,6 +68,11 @@ class Builder extends AbstractBuilder
         $menu['Community']
             ->addChild('Diskussion', ['route' => 'caldera_criticalmass_board_overview']);
 
+        if ($this->featureManager->isActive('status_posts')) {
+            $menu['Community']
+                ->addChild('Neues aus den Städten', ['route' => 'caldera_criticalmass_status_feed']);
+        }
+
         if ($this->featureManager->isActive('photos')) {
             $menu['Community']
                 ->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
@@ -87,6 +92,10 @@ class Builder extends AbstractBuilder
             $menu['Benutzerkonto']->addChild('Deine Tracks', ['route' => 'caldera_criticalmass_track_list']);
             $menu['Benutzerkonto']->addChild('Tracks & Fotos hochladen', ['route' => 'caldera_criticalmass_unified_upload']);
             $menu['Benutzerkonto']->addChild('Deine Fotos', ['route' => 'caldera_criticalmass_photo_user_list']);
+
+            if ($this->getUser()?->hasRole('ROLE_ADMIN')) {
+                $menu['Benutzerkonto']->addChild('Gemeldete Beiträge', ['route' => 'caldera_criticalmass_moderation_reports']);
+            }
 
             $menu['Benutzerkonto']->addChild('divider2', ['attributes' => ['class' => 'dropdown-divider-wrapper']]);
 

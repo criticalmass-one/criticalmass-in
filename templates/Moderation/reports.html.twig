@@ -1,0 +1,89 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Gemeldete Beiträge{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.active('Gemeldete Beiträge') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+        <h1 class="h3 mb-4">
+            <i class="far fa-flag text-muted me-2"></i>
+            Gemeldete Beiträge
+            <span class="badge bg-secondary align-middle ms-2">{{ groups|length }}</span>
+        </h1>
+
+        {% for group in groups %}
+            {% set post = group.post %}
+            <div class="card border-0 shadow-sm mb-4" id="report-post-{{ post.id }}">
+                <div class="card-header bg-white">
+                    <strong>{{ post.user.username|default('unbekannt') }}</strong>
+                    <span class="text-muted">
+                        &middot; {{ post.kind.label }}
+                        &middot; {{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}
+                        {% if not post.enabled %}&middot; bereits zurückgezogen{% endif %}
+                    </span>
+                    <a href="{{ post_url(post) }}" class="float-end small">zum Beitrag</a>
+                </div>
+                <div class="card-body">
+                    <div class="post-content border-start ps-3 mb-3">
+                        {{ post.text|markdown }}
+                    </div>
+
+                    <h6 class="text-muted">{{ group.reports|length }} {{ group.reports|length == 1 ? 'Meldung' : 'Meldungen' }}</h6>
+                    <ul class="list-unstyled mb-3">
+                        {% for report in group.reports %}
+                            <li class="mb-2">
+                                <span class="badge bg-warning text-dark">{{ report.reason.label }}</span>
+                                <span class="text-muted small">
+                                    {{ report.createdAt|date('d.m.Y, H:i', 'Europe/Berlin') }},
+                                    {{ report.reporter ? report.reporter.username : 'Gast (' ~ report.reporterEmail ~ ')' }}
+                                </span>
+                                {% if report.explanation %}
+                                    <div class="small mt-1">{{ report.explanation }}</div>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="row g-3">
+                        <div class="col-md-7">
+                            <form method="post" action="{{ path('caldera_criticalmass_moderation_remove', { 'postId': post.id }) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('post-moderation') }}">
+                                <label class="form-label small text-muted" for="remove-reason-{{ post.id }}">
+                                    Begründung an den Autor (Pflicht)
+                                </label>
+                                <textarea class="form-control mb-2" rows="2" name="reason" id="remove-reason-{{ post.id }}" required></textarea>
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="far fa-eye-slash me-1"></i>Beitrag entfernen
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-5">
+                            <form method="post" action="{{ path('caldera_criticalmass_moderation_dismiss', { 'postId': post.id }) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('post-moderation') }}">
+                                <label class="form-label small text-muted" for="dismiss-reason-{{ post.id }}">
+                                    Notiz (optional, nur intern)
+                                </label>
+                                <textarea class="form-control mb-2" rows="2" name="reason" id="dismiss-reason-{{ post.id }}"></textarea>
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                    <i class="far fa-check me-1"></i>Beitrag bleibt stehen
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="card bg-light border-0">
+                <div class="card-body text-center py-5 text-muted">
+                    Keine offenen Meldungen.
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

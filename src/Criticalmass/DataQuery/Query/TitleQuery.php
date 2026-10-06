@@ -38,9 +38,11 @@ class TitleQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuer
         $expr = $queryBuilder->expr();
         $alias = $queryBuilder->getRootAliases()[0];
 
+        // LOWER() auf beiden Seiten: PostgreSQL vergleicht LIKE schreibungs-
+        // empfindlich, der API-Parameter soll sich aber wie unter MySQL verhalten.
         $queryBuilder
-            ->andWhere($expr->like(sprintf('%s.title', $alias), ':title'))
-            ->setParameter('title', sprintf('%%%s%%', $this->title))
+            ->andWhere($expr->like(sprintf('LOWER(%s.title)', $alias), ':title'))
+            ->setParameter('title', sprintf('%%%s%%', mb_strtolower($this->title)))
         ;
 
         return $queryBuilder;

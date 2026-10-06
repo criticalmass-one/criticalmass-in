@@ -7,10 +7,14 @@ use App\Entity\CityCycle;
 use App\Entity\CitySlug;
 use App\Entity\Location;
 use App\Entity\Photo;
+use App\Entity\Post;
 use App\Entity\Ride;
+use App\Entity\RideEstimate;
+use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\Track;
 use App\Entity\User;
+use App\Entity\Weather;
 use App\OAuth2\OAuthScope;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Bundle\OAuth2ServerBundle\Manager\ClientManagerInterface;
@@ -251,11 +255,65 @@ abstract class AbstractMcpTestCase extends WebTestCase
         $subride = new Subride();
         $subride->setRide($ride);
         $subride->setTitle('Anfahrt Nord');
+        $subride->setLocation('Hauptbahnhof');
         $subride->setDateTime(new \DateTime('2026-09-01 18:00:00'));
+        $subride->setCreatedAt(new \DateTime());
         $this->em()->persist($subride);
         $this->em()->flush();
 
         return $subride;
+    }
+
+    protected function createRideEstimate(Ride $ride, int $participants = 100): RideEstimate
+    {
+        $estimate = new RideEstimate();
+        $estimate->setRide($ride);
+        $estimate->setEstimatedParticipants($participants);
+        $estimate->setDateTime(new \DateTime('2026-09-01 19:30:00'));
+        $estimate->setSource('test');
+        $this->em()->persist($estimate);
+        $this->em()->flush();
+
+        return $estimate;
+    }
+
+    protected function createPost(City $city, string $message = 'Testbeitrag'): Post
+    {
+        $post = new Post();
+        $post->setCity($city);
+        $post->setText($message);
+        $post->setDateTime(new \DateTime('2026-09-01 12:00:00'));
+        $post->setEnabled(true);
+        $this->em()->persist($post);
+        $this->em()->flush();
+
+        return $post;
+    }
+
+    protected function createWeather(Ride $ride): Weather
+    {
+        $weather = new Weather();
+        $weather->setRide($ride);
+        $weather->setCreationDateTime(new \DateTime());
+        $weather->setTemperatureMin(10.0);
+        $weather->setTemperatureMax(20.0);
+        $this->em()->persist($weather);
+        $this->em()->flush();
+
+        return $weather;
+    }
+
+    protected function createSocialProfile(City $city, string $identifier = 'cm_test'): SocialNetworkProfile
+    {
+        $profile = new SocialNetworkProfile();
+        $profile->setCity($city);
+        $profile->setNetwork('twitter');
+        $profile->setIdentifier($identifier);
+        $profile->setCreatedAt(new \DateTime());
+        $this->em()->persist($profile);
+        $this->em()->flush();
+
+        return $profile;
     }
 
     protected function createCityCycle(City $city): CityCycle

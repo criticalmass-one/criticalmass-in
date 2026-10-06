@@ -329,6 +329,7 @@ final class ApiSchemaDefinitions
     public const POST_SCHEMA = [
         'id' => 'int',
         'message' => 'string|null',
+        'kind' => 'string', // COMMENT, STATUS oder ARTICLE
         'date_time' => 'int', // Unix timestamp
         'latitude?' => 'float|null',
         'longitude?' => 'float|null',

@@ -51,11 +51,15 @@ class CriticalParser implements TextParserInterface
             return is_string($cached) ? $cached : $cached->getContent();
         }
 
-        $parsed = $this->converter->convert($text);
-        $content = $parsed->getContent();
+        $content = $this->parseWithoutCache($text);
 
         $this->textCache->set($text, $content);
 
         return $content;
+    }
+
+    public function parseWithoutCache(string $text): string
+    {
+        return $this->converter->convert($text)->getContent();
     }
 }

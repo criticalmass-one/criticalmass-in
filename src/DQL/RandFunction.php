@@ -9,9 +9,15 @@ use Doctrine\ORM\Query\TokenType;
 
 class RandFunction extends FunctionNode
 {
+    use PlatformAware;
+
+    /**
+     * Eine der beiden Funktionen ohne Entsprechung im SQL-Standard: MySQL
+     * schreibt RAND(), PostgreSQL RANDOM().
+     */
     public function getSql(SqlWalker $sqlWalker): string
     {
-        return 'RAND()';
+        return $this->isPostgreSql($sqlWalker) ? 'RANDOM()' : 'RAND()';
     }
 
     public function parse(Parser $parser): void

@@ -20,6 +20,20 @@
 
     {{ render(controller('App\\Controller\\Template\\AlertController::showCurrentAlertsAction')) }}
 
+    {# Rueckmeldungen nach einer Aktion. Ohne diese Ausgabe bleibt jedes addFlash()
+       im Controller wirkungslos -- der Nutzer sieht nach dem Speichern, Verschieben
+       oder Abonnieren gar nichts. #}
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="container pt-3">
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Schlie&szlig;en"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     {% block content %}{% endblock %}
 
     {% include('Template/Includes/_footer.html.twig') %}

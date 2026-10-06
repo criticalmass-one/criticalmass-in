@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
+use App\Entity\Ride;
 use App\Repository\CityCycleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -139,5 +140,38 @@ class CycleController extends BaseController
         $manager->flush();
 
         return $this->createStandardResponse($cycle);
+    }
+
+    /**
+     * Deletes a cycle. Rides created from the cycle are kept (detached).
+     */
+    #[Route(path: '/api/{citySlug}/cycles/{cycleId}', name: 'caldera_criticalmass_rest_cycles_delete', methods: ['DELETE'], priority: 190)]
+    #[OA\Tag(name: 'Cycles')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'cycleId', in: 'path', description: 'Id of the cycle to delete', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully deleted')]
+    #[OA\Response(response: 404, description: 'Returned when the cycle does not belong to the city')]
+    public function deleteCycleAction(City $city, int $cycleId, CityCycleRepository $cityCycleRepository): JsonResponse
+    {
+        $cycle = $cityCycleRepository->find($cycleId);
+
+        if (!$cycle || $cycle->getCity()->getId() !== $city->getId()) {
+            return new JsonResponse(['error' => 'Cycle not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $manager = $this->managerRegistry->getManager();
+
+        // Detach rides explicitly (null the cycle_id FK) so the association's
+        // cascade-remove does not delete them.
+        $rides = $manager->getRepository(Ride::class)->findBy(['cycle' => $cycle]);
+        foreach ($rides as $ride) {
+            $ride->setCycle(null);
+        }
+        $manager->flush();
+
+        $manager->remove($cycle);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedCycleId' => $cycleId]);
     }
 }

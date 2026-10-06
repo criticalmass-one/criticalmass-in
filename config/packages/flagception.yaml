@@ -10,3 +10,8 @@ flagception:
             default: true
         oembed:
             default: true
+        # Statusbeitraege auf der Stadtseite. Bleibt aus, bis Beitraege gemeldet
+        # werden koennen; einschalten mit FEATURE_STATUS_POSTS=true in der .env.local.
+        status_posts:
+            default: false
+            env: FEATURE_STATUS_POSTS

@@ -1,18 +1,26 @@
 {% if app.user %}
+    {% set isStatus = post is defined and post.kind.value == 'STATUS' %}
     <div class="modal fade" id="modal-add-post" tabindex="-1" aria-labelledby="label-add-post" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0">
                     <h5 class="modal-title" id="label-add-post">
-                        <i class="far fa-comment-alt text-primary me-2"></i>Kommentar schreiben
+                        <i class="far fa-comment-alt text-primary me-2"></i>{{ isStatus ? 'Beitrag schreiben' : 'Kommentar schreiben' }}
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                 </div>
                 {{ form_start(form, {'attr': {'id': 'form-post'}}) }}
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label text-muted">Dein Kommentar</label>
-                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'Schreibe hier deinen Kommentar...'}}) }}
+                        <label class="form-label text-muted">{{ isStatus ? 'Dein Beitrag' : 'Dein Kommentar' }}</label>
+                        {% include 'Post/_editor.html.twig' with {
+                            'field': form.text,
+                            'rows': 6,
+                            'editorId': 'markdown-editor-reply',
+                            'placeholder': isStatus
+                                ? 'Was gibt’s Neues bei der Critical Mass in ' ~ post.city.city ~ '? Markdown ist erlaubt.'
+                                : 'Schreibe hier deinen Kommentar. Markdown ist erlaubt.'
+                        } %}
                     </div>
                     {{ form_widget(form._token) }}
                 </div>

@@ -43,7 +43,7 @@
                     </li>
 
                     <li>
-                        <a href="{{ path('app.swagger_ui') }}" id="footer-apidoc-link">
+                        <a href="{{ app.environment in ['dev', 'test'] ? path('app.swagger_ui') : '#' }}" id="footer-apidoc-link">
                             {% trans %}criticalmass.navigation.criticalmass.apidoc{% endtrans %}
                         </a>
                     </li>

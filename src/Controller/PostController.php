@@ -2,42 +2,84 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\Forum\ContentWithdrawal;
+use App\Criticalmass\Forum\ForumNotifier;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Router\PostUrlGenerator;
+use App\Criticalmass\TextParser\TextParserInterface;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
+use App\Repository\ForumSubscriptionRepository;
 use App\Repository\PostRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\City;
+use App\Entity\ForumSubscription;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
+use App\Entity\User;
 use App\EntityInterface\BoardInterface;
+use App\Enum\PostKindEnum;
 use App\Form\Type\PostType;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 class PostController extends AbstractController
 {
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        private readonly ForumNotifier $forumNotifier,
+        private readonly ForumSubscriptionRepository $subscriptionRepository,
+        private readonly FeatureManagerInterface $featureManager,
+        private readonly RateLimiterFactory $statusPostLimiter
+    ) {
+        parent::__construct($managerRegistry);
+    }
+
+    /**
+     * Legt ein Thema-Abo an, falls noch keines besteht.
+     */
+    protected function subscribeToThread(Thread $thread, User $user): void
+    {
+        if (null !== $this->subscriptionRepository->findExisting($user, $thread, null, null, false)) {
+            return;
+        }
+
+        $subscription = (new ForumSubscription())
+            ->setUser($user)
+            ->setThread($thread);
+
+        // Der Aufrufer speichert; ein eigenes flush() hier waere das dritte im Ablauf.
+        $this->managerRegistry->getManager()->persist($subscription);
+    }
+
     #[IsGranted('ROLE_USER')]
-    #[Route('/post/write/city/{id}', name: 'caldera_criticalmass_timeline_post_write_city', priority: 120)]
+    #[Route('/post/write/city/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_timeline_post_write_city', priority: 120)]
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
     {
+        if (!$this->featureManager->isActive('status_posts')) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->writeAction($request, $city, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/post/write/ride/{id}', name: 'caldera_criticalmass_timeline_post_write_ride', priority: 120)]
+    #[Route('/post/write/ride/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_timeline_post_write_ride', priority: 120)]
     public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $ride, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/post/write/photo/{id}', name: 'caldera_criticalmass_timeline_post_write_photo', priority: 120)]
+    #[Route('/post/write/photo/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_timeline_post_write_photo', priority: 120)]
     public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $photo, $objectRouter);
@@ -69,18 +111,36 @@ class PostController extends AbstractController
     protected function addGetAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
     {
         return $this->render('Post/write.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'post' => $post,
         ]);
     }
 
     protected function addPostAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
     {
+        // Das Template blendet das Formular bei geschlossenen Themen aus; hier wird
+        // der direkte POST abgewiesen, der daran vorbeigeht.
+        if ($postable instanceof Thread && $postable->isLocked()) {
+            throw $this->createAccessDeniedException('Dieses Thema ist geschlossen und nimmt keine Antworten mehr an.');
+        }
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->managerRegistry->getManager();
+            $postableUrl = $objectRouter->generate($postable);
 
-            $post->setUser($this->getUser());
+            /** @var User $author */
+            $author = $this->getUser();
+
+            if (PostKindEnum::STATUS === $post->getKind()
+                && !$this->statusPostLimiter->create((string) $author->getId())->consume()->isAccepted()) {
+                $this->addFlash('danger', 'Du hast in der letzten Stunde schon einige Beiträge geschrieben. Bitte versuche es später noch einmal.');
+
+                return $this->redirect($postableUrl);
+            }
+
+            $post->setUser($author);
             $em->persist($post);
 
             // Threads: zusätzliche Logik
@@ -89,25 +149,113 @@ class PostController extends AbstractController
                     ->setLastPost($post)
                     ->incPostNumber();
 
-                /** @var BoardInterface $board */
-                if ($postable->getBoard()) {
-                    $board = $postable->getBoard();
-                } else {
-                    $board = $postable->getCity();
+                $board = $postable->getBoard() ?? $postable->getCity();
+
+                if ($board instanceof BoardInterface) {
+                    $board->incPostNumber();
+                    $board->setLastThread($postable);
                 }
 
-                $board->incPostNumber();
-                $board->setLastThread($postable);
+                $author->incForumPostCount();
+
+                // Wer antwortet, verfolgt das Thema in aller Regel weiter.
+                $this->subscribeToThread($postable, $author);
             }
 
             $em->flush();
 
-            return $this->redirect($objectRouter->generate($postable));
+            if ($postable instanceof Thread) {
+                // Erst nach dem Speichern: die Mail verweist auf die Id des Beitrags.
+                $this->forumNotifier->notifyAboutPost($post);
+            }
+
+            if ($postable instanceof City) {
+                return $this->redirect(sprintf('%s#post-%d', $postableUrl, $post->getId()));
+            }
+
+            return $this->redirect($postableUrl);
         }
 
         return $this->render('Post/write_failed.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * Die Vorschau rendert serverseitig mit demselben Parser wie der fertige Beitrag.
+     * Ein zweiter Markdown-Renderer im Browser wuerde frueher oder spaeter abweichen.
+     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/post/preview', name: 'caldera_criticalmass_post_preview', methods: ['POST'], priority: 130)]
+    public function previewAction(Request $request, TextParserInterface $textParser): Response
+    {
+        $message = trim((string) $request->request->get('message', ''));
+
+        if ('' === $message) {
+            return new Response('<p class="text-muted fst-italic mb-0">Noch nichts geschrieben.</p>');
+        }
+
+        // Ohne Cache: Jede Zwischenfassung eines Entwurfs wuerde sonst eine Datei
+        // mit sieben Tagen Lebensdauer hinterlassen, die nie wieder gelesen wird.
+        return new Response($textParser->parseWithoutCache($message));
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/post/edit/{postId}', requirements: ['postId' => '\d+'], name: 'caldera_criticalmass_post_edit', priority: 120)]
+    public function editAction(
+        Request $request,
+        PostUrlGenerator $postUrlGenerator,
+        #[MapEntity(mapping: ['postId' => 'id'])] Post $post
+    ): Response {
+        $this->denyAccessUnlessGranted('edit', $post);
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $editor */
+            $editor = $this->getUser();
+
+            $post
+                ->setUpdatedAt(new \DateTime())
+                ->setUpdatedBy($editor);
+
+            $this->managerRegistry->getManager()->flush();
+
+            $this->addFlash('success', 'Dein Beitrag wurde geändert.');
+
+            return $this->redirect($postUrlGenerator->generate($post));
+        }
+
+        return $this->render('Post/edit.html.twig', [
+            'post' => $post,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/post/disable/{postId}', requirements: ['postId' => '\d+'], name: 'caldera_criticalmass_post_disable', methods: ['POST'], priority: 120)]
+    public function disableAction(
+        Request $request,
+        ContentWithdrawal $contentWithdrawal,
+        PostUrlGenerator $postUrlGenerator,
+        #[MapEntity(mapping: ['postId' => 'id'])] Post $post
+    ): Response {
+        $this->denyAccessUnlessGranted('delete', $post);
+
+        if (!$this->isCsrfTokenValid('forum-moderate', (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Ungültiges Formular-Token.');
+        }
+
+        if (!$contentWithdrawal->withdrawPost($post)) {
+            return $this->redirect($postUrlGenerator->generate($post));
+        }
+
+        $this->managerRegistry->getManager()->flush();
+
+        $this->addFlash('success', 'Dein Beitrag wurde zurückgezogen.');
+
+        return $this->redirect($postUrlGenerator->generate($post));
     }
 
     public function listAction(
@@ -168,6 +316,12 @@ class PostController extends AbstractController
         $setMethodName = sprintf('set%s', $shortname);
 
         $post->$setMethodName($postable);
+
+        // Was an einer Stadt haengt, ist ein Statusbeitrag: Kommentare zur Stadt
+        // selbst gab es nur einmal, 2014, und keine Oberflaeche dafuer.
+        if ($postable instanceof City) {
+            $post->setKind(PostKindEnum::STATUS);
+        }
 
         return $post;
     }

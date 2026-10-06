@@ -7,24 +7,34 @@ parameters:
 
 doctrine:
     dbal:
-        # configure these for your database server
-        driver: 'pdo_mysql'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
-        server_version: 'mariadb-10.9.3'
+        # Treiber, Zeichensatz und Serverversion stehen im DSN, nicht hier.
+        # Standen sie hier, wuerde diese Datei die Plattform festlegen und ein
+        # PostgreSQL-DSN liefe trotzdem gegen die MySQL-Plattform. Zeichensatz
+        # und Kollation waren ohnehin MySQL-eigen; DBAL setzt fuer MySQL von
+        # sich aus utf8mb4.
         url: '%env(resolve:DATABASE_URL)%'
 
         types:
             datetime: App\DBAL\Type\UTCDateTimeType
             date: App\DBAL\Type\UTCDateType
             time: App\DBAL\Type\UTCTimeType
+            geometry: Jsor\Doctrine\PostGIS\Types\GeometryType
+            geography: Jsor\Doctrine\PostGIS\Types\GeographyType
 
             # Typen für die WebAuthn-Credentials (siehe mapping `webauthn` unten).
             base64: Webauthn\Bundle\Doctrine\Type\Base64BinaryDataType
             trust_path: Webauthn\Bundle\Doctrine\Type\TrustPathDataType
             aaguid: Webauthn\Bundle\Doctrine\Type\AAGUIDDataType
+
+        # PostGIS legt eigene Schemas und eine Tabelle spatial_ref_sys an. Ohne
+        # diesen Filter haelt Doctrine sie fuer verwaiste Objekte und will sie
+        # loeschen — spatial_ref_sys liegt naemlich in public, mitten zwischen
+        # unseren eigenen Tabellen.
+        schema_filter: ~^(?!tiger)(?!topology)(?!spatial_ref_sys)~
+
+        # PostGIS bringt Spalten vom Typ _text mit, den Doctrine sonst nicht kennt.
+        mapping_types:
+            _text: string
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

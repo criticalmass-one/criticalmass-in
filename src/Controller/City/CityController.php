@@ -9,8 +9,10 @@ use App\Repository\BlockedCityRepository;
 use App\Repository\CityRepository;
 use App\Repository\LocationRepository;
 use App\Repository\PhotoRepository;
+use App\Repository\PostRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -69,6 +71,8 @@ class CityController extends AbstractController
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         BlockedCityRepository $blockedCityRepository,
         PhotoRepository $photoRepository,
+        PostRepository $postRepository,
+        FeatureManagerInterface $featureManager,
         SeoPageInterface $seoPage,
         ?City $city = null
     ): Response {
@@ -110,6 +114,7 @@ class CityController extends AbstractController
             'photos' => $photoRepository->findSomePhotos(8, $city),
             'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
             'socialNetworkProfiles' => $socialNetworkProfileRepository->findByCity($city),
+            'statusPosts' => $featureManager->isActive('status_posts') ? $postRepository->findStatusPostsForCity($city) : null,
         ]);
     }
 

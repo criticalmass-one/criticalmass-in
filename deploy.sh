@@ -3,7 +3,7 @@ set -e
 
 PHP=/opt/plesk/php/8.5/bin/php
 COMPOSER="$PHP /usr/lib/plesk-9.0/composer.phar"
-NPM="PATH=/opt/plesk/node/20/bin:$PATH npm"
+NPM="PATH=/opt/plesk/node/24/bin:$PATH npm"
 
 usage() {
     echo "Usage: $0 [steps...]"

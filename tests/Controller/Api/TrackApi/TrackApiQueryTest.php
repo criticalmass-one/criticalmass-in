@@ -12,7 +12,7 @@ class TrackApiQueryTest extends AbstractApiControllerTestCase
     {
         // Query directly via DBAL to bypass any Doctrine filters
         $conn = $this->entityManager->getConnection();
-        $deletedRows = $conn->fetchAllAssociative('SELECT id FROM track WHERE deleted = 1');
+        $deletedRows = $conn->fetchAllAssociative('SELECT id FROM track WHERE deleted = true');
         $this->assertNotEmpty($deletedRows, 'Fixtures must include at least one deleted track');
         $deletedIds = array_map(fn(array $row) => (int) $row['id'], $deletedRows);
 
@@ -34,7 +34,7 @@ class TrackApiQueryTest extends AbstractApiControllerTestCase
     {
         // Query directly via DBAL to bypass any Doctrine filters
         $conn = $this->entityManager->getConnection();
-        $disabledRows = $conn->fetchAllAssociative('SELECT id FROM track WHERE enabled = 0');
+        $disabledRows = $conn->fetchAllAssociative('SELECT id FROM track WHERE enabled = false');
         $this->assertNotEmpty($disabledRows, 'Fixtures must include at least one disabled track');
         $disabledIds = array_map(fn(array $row) => (int) $row['id'], $disabledRows);
 

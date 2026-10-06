@@ -54,6 +54,13 @@ class UnifiedUploadController extends AbstractController
             return $this->statusResponse('error', 'Es wurde keine Datei übertragen.', Response::HTTP_BAD_REQUEST);
         }
 
+        // Ein Upload jenseits von upload_max_filesize kommt ohne temporäre Datei an:
+        // getPathname() ist dann leer, und der Normalizer würde daran mit einem 500er
+        // scheitern. Symfony kennt den Grund und formuliert ihn aus.
+        if (!$uploadedFile->isValid()) {
+            return $this->statusResponse('error', $uploadedFile->getErrorMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         try {
             $result = $uploadDispatcher->dispatch(
                 $uploadedFile->getPathname(),

@@ -12,9 +12,13 @@ class DateFunction extends FunctionNode
 {
     private Node|string|null $arg = null;
 
+    /**
+     * CAST gehoert zum SQL-Standard; die Funktion DATE() gibt es in
+     * PostgreSQL nicht.
+     */
     public function getSql(SqlWalker $sqlWalker): string
     {
-        return sprintf('DATE(%s)', $this->arg->dispatch($sqlWalker));
+        return sprintf('CAST(%s AS DATE)', $this->arg->dispatch($sqlWalker));
     }
 
     public function parse(Parser $parser): void

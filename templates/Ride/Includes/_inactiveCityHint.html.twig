@@ -1,0 +1,9 @@
+{# Warnt bei kommenden Touren einer Stadt, aus der seit Monaten nichts mehr ankommt. #}
+{% if ride.dateTime and ride.dateTime > date() and city.isInactive %}
+    <div class="alert alert-warning border-0 d-flex align-items-center mb-4" role="alert" id="inactive-city-hint">
+        <i class="far fa-exclamation-triangle fa-lg me-3"></i>
+        <div>
+            Diese Tour ist eingetragen, aber aus {{ city.city }} ist seit einem halben Jahr nichts mehr bei uns angekommen. Ob sie tatsächlich stattfindet, ist ungewiss – frag im Zweifel lokal nach, bevor du dich auf den Weg machst.
+        </div>
+    </div>
+{% endif %}

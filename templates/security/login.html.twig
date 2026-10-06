@@ -59,6 +59,7 @@
 
                         {{ form_start(login_form) }}
                         {{ form_row(login_form.email) }}
+                        {{ form_row(login_form.remember_me) }}
                         <div class="frc-captcha mb-3 mx-auto" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
                         {{ form_end(login_form) }}
                     </div>
