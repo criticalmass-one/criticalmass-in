@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Criticalmass\Forum\ForumNotifier;
+use App\Criticalmass\Forum\ContentWithdrawal;
 use App\Criticalmass\Forum\ForumStatistics;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
@@ -290,8 +291,7 @@ class BoardController extends AbstractController
     public function disableThreadAction(
         Request $request,
         ObjectRouterInterface $objectRouter,
-        ForumStatistics $forumStatistics,
-        PostRepository $postRepository,
+        ContentWithdrawal $contentWithdrawal,
         #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread
     ): Response {
         $this->denyAccessUnlessGranted('delete', $thread);
@@ -300,21 +300,11 @@ class BoardController extends AbstractController
         $board = $thread->getCity() ?? $thread->getBoard();
 
         // Ein zweiter POST wuerde Themen- und Beitragszahl erneut senken.
-        if (!$thread->getEnabled()) {
+        if (!$contentWithdrawal->withdrawThread($thread)) {
             return $this->redirect($board instanceof BoardInterface
                 ? $objectRouter->generate($board)
                 : $this->generateUrl('caldera_criticalmass_board_overview'));
         }
-
-        if ($board instanceof BoardInterface) {
-            $forumStatistics->disableThread($thread, $board);
-        }
-
-        foreach ($postRepository->findPostsForThread($thread) as $post) {
-            $post->getUser()?->decForumPostCount();
-        }
-
-        $thread->setEnabled(false);
 
         $this->managerRegistry->getManager()->flush();
 

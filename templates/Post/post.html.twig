@@ -32,10 +32,21 @@
                             </span>
                         {% endif %}
                     </div>
-                    <a href="#post-{{ post.id }}" class="text-muted small text-decoration-none">
-                        {% if postNumber is defined %}<span class="me-2">#{{ postNumber }}</span>{% endif %}
-                        <i class="far fa-clock me-1"></i><span title="{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}">{{ post.dateTime|time_ago }}</span>
-                    </a>
+                    {# Melden kann jeder, auch ohne Konto — nur nicht den eigenen Beitrag. #}
+                    {% set canReport = post.enabled and (app.user is null or app.user != post.user) %}
+                    <div class="text-muted small text-nowrap">
+                        <a href="#post-{{ post.id }}" class="text-muted text-decoration-none">
+                            {% if postNumber is defined %}<span class="me-2">#{{ postNumber }}</span>{% endif %}
+                            <i class="far fa-clock me-1"></i><span title="{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}">{{ post.dateTime|time_ago }}</span>
+                        </a>
+                        {% if canReport %}
+                            <a href="{{ path('caldera_criticalmass_post_report', { 'postId': post.id }) }}"
+                               class="text-muted ms-2" rel="nofollow"
+                               title="Beitrag melden" aria-label="Beitrag melden">
+                                <i class="far fa-flag"></i>
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="post-content">
                     {{ post.text|markdown }}

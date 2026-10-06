@@ -26,6 +26,13 @@ framework:
             limit: 5
             interval: '1 hour'
 
+        # Meldungen pro Nutzer, bei Gaesten pro IP. Wer einen ganzen Thread
+        # durchmeldet, soll das koennen; wer die Moderation zuschuetten will, nicht.
+        post_report:
+            policy: sliding_window
+            limit: 10
+            interval: '1 hour'
+
         # Schreibende API-Endpunkte pro Client-IP (die /api-Firewall ist anonym).
         api_write:
             policy: sliding_window
