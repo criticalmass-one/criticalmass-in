@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\Forum\ContentWithdrawal;
 use App\Criticalmass\Forum\ForumNotifier;
-use App\Criticalmass\Forum\ForumStatistics;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Router\PostUrlGenerator;
 use App\Criticalmass\TextParser\TextParserInterface;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
@@ -203,8 +204,7 @@ class PostController extends AbstractController
     #[Route('/post/edit/{postId}', requirements: ['postId' => '\d+'], name: 'caldera_criticalmass_post_edit', priority: 120)]
     public function editAction(
         Request $request,
-        ObjectRouterInterface $objectRouter,
-        PostRepository $postRepository,
+        PostUrlGenerator $postUrlGenerator,
         #[MapEntity(mapping: ['postId' => 'id'])] Post $post
     ): Response {
         $this->denyAccessUnlessGranted('edit', $post);
@@ -224,7 +224,7 @@ class PostController extends AbstractController
 
             $this->addFlash('success', 'Dein Beitrag wurde geändert.');
 
-            return $this->redirect($this->generatePostUrl($post, $objectRouter, $postRepository));
+            return $this->redirect($postUrlGenerator->generate($post));
         }
 
         return $this->render('Post/edit.html.twig', [
@@ -237,9 +237,8 @@ class PostController extends AbstractController
     #[Route('/post/disable/{postId}', requirements: ['postId' => '\d+'], name: 'caldera_criticalmass_post_disable', methods: ['POST'], priority: 120)]
     public function disableAction(
         Request $request,
-        ObjectRouterInterface $objectRouter,
-        ForumStatistics $forumStatistics,
-        PostRepository $postRepository,
+        ContentWithdrawal $contentWithdrawal,
+        PostUrlGenerator $postUrlGenerator,
         #[MapEntity(mapping: ['postId' => 'id'])] Post $post
     ): Response {
         $this->denyAccessUnlessGranted('delete', $post);
@@ -248,53 +247,15 @@ class PostController extends AbstractController
             throw $this->createAccessDeniedException('Ungültiges Formular-Token.');
         }
 
-        // Zurueck-Knopf und Doppelklick wuerden die Zaehler ein zweites Mal senken.
-        if (!$post->getEnabled()) {
-            return $this->redirect($this->generatePostUrl($post, $objectRouter, $postRepository));
-        }
-
-        $thread = $post->getThread();
-        $board = $thread?->getCity() ?? $thread?->getBoard();
-
-        $forumStatistics->disablePost($post, $board instanceof BoardInterface ? $board : null);
-
-        $post->setEnabled(false);
-
-        if (null !== $post->getThread()) {
-            $post->getUser()?->decForumPostCount();
+        if (!$contentWithdrawal->withdrawPost($post)) {
+            return $this->redirect($postUrlGenerator->generate($post));
         }
 
         $this->managerRegistry->getManager()->flush();
 
         $this->addFlash('success', 'Dein Beitrag wurde zurückgezogen.');
 
-        return $this->redirect($this->generatePostUrl($post, $objectRouter, $postRepository));
-    }
-
-    /**
-     * Ein Beitrag hängt immer an genau einem Gegenstand — Thema, Tour, Stadt oder Foto.
-     * Nach dem Bearbeiten landet man wieder dort, beim Beitrag selbst. In langen Themen
-     * liegt er womöglich nicht auf der ersten Seite, deshalb reist die Seitenzahl mit.
-     */
-    protected function generatePostUrl(Post $post, ObjectRouterInterface $objectRouter, ?PostRepository $postRepository = null): string
-    {
-        $postable = $post->getThread() ?? $post->getRide() ?? $post->getCity() ?? $post->getPhoto();
-
-        if (null === $postable) {
-            return $this->generateUrl('caldera_criticalmass_board_overview');
-        }
-
-        $url = $objectRouter->generate($postable);
-
-        if ($postable instanceof Thread && null !== $postRepository) {
-            $page = (int) ceil($postRepository->findPositionInThread($post) / BoardController::POSTS_PER_PAGE);
-
-            if ($page > 1) {
-                $url .= (str_contains($url, '?') ? '&' : '?') . 'page=' . $page;
-            }
-        }
-
-        return sprintf('%s#post-%d', $url, $post->getId());
+        return $this->redirect($postUrlGenerator->generate($post));
     }
 
     public function listAction(
