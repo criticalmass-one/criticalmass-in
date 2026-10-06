@@ -11,11 +11,11 @@ use Webauthn\PublicKeyCredentialUserEntity;
 class WebauthnCredentialRepositoryTest extends TestCase
 {
     /**
-     * Die Credential-ID kommt roh aus der WebAuthn-Bibliothek, liegt in der Datenbank
-     * aber base64-kodiert. Ohne die Umrechnung läuft jede Anmeldung ins Leere, ohne dass
-     * irgendwo ein Fehler auftaucht.
+     * Die Credential-ID kommt roh aus der WebAuthn-Bibliothek und geht roh an
+     * findOneBy(); das Base64-Kodieren macht der DBAL-Typ des Feldes. Dass das gegen
+     * die echte Datenbank stimmt, prueft WebauthnCredentialLookupTest.
      */
-    public function testCredentialLookupEncodesTheIdAsBase64(): void
+    public function testCredentialLookupPassesTheRawId(): void
     {
         $credential = $this->createMock(WebauthnCredential::class);
 
@@ -23,7 +23,7 @@ class WebauthnCredentialRepositoryTest extends TestCase
         $repository
             ->expects(self::once())
             ->method('findOneBy')
-            ->with(['publicKeyCredentialId' => base64_encode('rohe-credential-id')])
+            ->with(['publicKeyCredentialId' => 'rohe-credential-id'])
             ->willReturn($credential);
 
         self::assertSame($credential, $repository->findOneByCredentialId('rohe-credential-id'));

@@ -45,9 +45,12 @@ class WebauthnCredentialRepository extends ServiceEntityRepository implements Cr
 
     public function findOneByCredentialId(string $publicKeyCredentialId): ?CredentialRecord
     {
-        // Die Credential-ID kommt roh herein, liegt in der Datenbank aber base64-kodiert
-        // (DBAL-Typ `base64`). Ohne die Kodierung findet die Abfrage nie etwas.
-        return $this->findOneBy(['publicKeyCredentialId' => base64_encode($publicKeyCredentialId)]);
+        // Die Credential-ID kommt roh herein und liegt base64-kodiert in der Datenbank.
+        // Das Kodieren uebernimmt der DBAL-Typ `base64` des Feldes, auch fuer die
+        // Suchwerte von findOneBy(). Wer hier zusaetzlich base64_encode() ruft, sucht
+        // nach einem doppelt kodierten Wert und findet nie etwas — so war es bis zum
+        // ersten Browsertest, und keine Passkey-Anmeldung haette funktioniert.
+        return $this->findOneBy(['publicKeyCredentialId' => $publicKeyCredentialId]);
     }
 
     /**
@@ -60,7 +63,11 @@ class WebauthnCredentialRepository extends ServiceEntityRepository implements Cr
     {
         $entityManager = $this->getEntityManager();
 
+        // Nach einer Anmeldung reicht die Bibliothek das geladene Entity mit dem neuen
+        // Signaturzaehler zurueck. Ohne markUsed() bliebe „Zuletzt benutzt“ fuer immer leer.
         if ($credentialRecord instanceof WebauthnCredential) {
+            $credentialRecord->markUsed($credentialRecord->counter);
+
             $entityManager->persist($credentialRecord);
             $entityManager->flush();
 
