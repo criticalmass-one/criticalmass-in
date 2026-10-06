@@ -65,6 +65,7 @@ class WebauthnCredentialLookupTest extends KernelTestCase
         $em->clear();
 
         $used = $repository->findOneByCredentialId($rawId);
+        self::assertInstanceOf(WebauthnCredential::class, $used);
         self::assertNotNull($used->getLastUsedAt(), 'Nach der Anmeldung muss „Zuletzt benutzt“ gesetzt sein.');
         self::assertSame(1, $used->counter);
     }
