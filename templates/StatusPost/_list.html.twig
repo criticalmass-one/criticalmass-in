@@ -1,0 +1,18 @@
+{% if posts|length == 0 %}
+    <div class="text-center py-5">
+        <i class="far fa-comments fa-3x text-muted mb-3"></i>
+        <p class="text-muted mb-0">{{ emptyText }}</p>
+    </div>
+{% else %}
+    <div class="post-list" data-controller="scroll-to-post">
+        {% for post in posts %}
+            {% include 'Post/post.html.twig' with { 'post': post } %}
+        {% endfor %}
+    </div>
+
+    {% if posts.pageCount > 1 %}
+        <nav class="d-flex justify-content-center mt-4" aria-label="Seiten">
+            {{ knp_pagination_render(posts) }}
+        </nav>
+    {% endif %}
+{% endif %}

@@ -23,7 +23,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <div>
+                <div class="flex-grow-1">
                     <h1 class="h4 mb-1">{{ forumUser.username }}</h1>
                     <p class="text-muted mb-0">
                         {{ forumUser.forumRank }}
@@ -33,6 +33,11 @@
                         {% endif %}
                     </p>
                 </div>
+                {% if feature('status_posts') %}
+                    <a href="{{ path('caldera_criticalmass_status_user', { 'username': forumUser.username }) }}" class="btn btn-outline-secondary btn-sm">
+                        Beiträge in den Städten
+                    </a>
+                {% endif %}
             </div>
         </div>
 
