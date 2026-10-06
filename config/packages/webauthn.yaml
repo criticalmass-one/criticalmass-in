@@ -39,6 +39,18 @@ webauthn:
     # verwaltet, damit sie direkt dorthin verlinken können. Der Routenname wird zur
     # Laufzeit über den Router zu einer absoluten URL aufgelöst — je nach angefragter
     # Domain also criticalmass.in oder criticalmass.one.
+    # Einen Passkey an das eigene, eingeloggte Konto hängen. Der Guesser nimmt den
+    # Kontobezug aus der Sitzung, nie aus dem Request-Body; die Pfade sichert
+    # zusätzlich access_control (ROLE_USER) in security.yaml.
+    controllers:
+        enabled: true
+        creation:
+            passkey:
+                options_path: /passkey/register/options
+                result_path: /passkey/register
+                user_entity_guesser: Webauthn\Bundle\Security\Guesser\CurrentUserEntityGuesser
+                profile: default
+
     passkey_endpoints:
         enabled: true
         enroll: 'criticalmass_user_profile_passkey_list'
