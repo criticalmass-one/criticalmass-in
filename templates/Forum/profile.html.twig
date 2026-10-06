@@ -50,7 +50,7 @@
                         <a href="{{ object_path(post.thread) }}#post-{{ post.id }}" class="text-decoration-none">
                             <strong>{{ post.thread.title }}</strong>
                         </a>
-                        <p class="mb-2 mt-2 text-muted">{{ post.message|search_snippet('') }}</p>
+                        <p class="mb-2 mt-2 text-muted">{{ post.text|search_snippet('') }}</p>
                         <small class="text-muted">
                             <i class="far fa-clock me-1"></i>{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}
                         </small>

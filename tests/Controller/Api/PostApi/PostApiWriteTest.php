@@ -54,7 +54,7 @@ class PostApiWriteTest extends AbstractApiControllerTestCase
     {
         $post = new Post();
         $post->setCity($city);
-        $post->setMessage($message);
+        $post->setText($message);
         $post->setDateTime(new \DateTime('2026-09-01 12:00:00'));
         $post->setEnabled(true);
         $this->entityManager->persist($post);
@@ -84,6 +84,11 @@ class PostApiWriteTest extends AbstractApiControllerTestCase
         ], json_encode(['message' => '']));
 
         $this->assertEquals(400, $this->client->getResponse()->getStatusCode());
+
+        // Im Code heisst das Feld `text`; die API meldet es weiter als `message`.
+        $errors = json_decode((string) $this->client->getResponse()->getContent(), true)['errors'];
+        $this->assertArrayHasKey('message', $errors);
+        $this->assertArrayNotHasKey('text', $errors);
     }
 
     public function testShowPost(): void
@@ -112,7 +117,7 @@ class PostApiWriteTest extends AbstractApiControllerTestCase
 
         $this->entityManager->clear();
         $updated = $this->entityManager->getRepository(Post::class)->find($postId);
-        $this->assertSame('Neu', $updated?->getMessage());
+        $this->assertSame('Neu', $updated?->getText());
     }
 
     public function testDeletePost(): void

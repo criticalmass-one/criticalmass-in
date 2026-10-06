@@ -118,7 +118,7 @@ class ForumModerationControllerTest extends AbstractControllerTestCase
         $client->request('POST', '/thread/lock/' . $slug, ['_token' => $this->tokenFrom($client, '/boards/general/thread/' . $slug, '/thread/lock/')]);
 
         $this->loginAs($client, self::AUTHOR);
-        $client->request('POST', '/post/write/thread/' . $slug, ['post' => ['message' => 'Trotzdem!']]);
+        $client->request('POST', '/post/write/thread/' . $slug, ['post' => ['text' => 'Trotzdem!']]);
 
         self::assertEquals(403, $client->getResponse()->getStatusCode());
     }

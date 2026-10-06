@@ -42,7 +42,7 @@ class ForumPostNotification extends Notification implements EmailNotificationInt
 
     private function excerpt(): string
     {
-        $text = trim(preg_replace('/\s+/', ' ', (string) $this->post->getMessage()) ?? '');
+        $text = trim(preg_replace('/\s+/', ' ', (string) $this->post->getText()) ?? '');
 
         return mb_strlen($text) > 300 ? mb_substr($text, 0, 300) . ' …' : $text;
     }

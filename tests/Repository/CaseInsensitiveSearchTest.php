@@ -63,7 +63,7 @@ class CaseInsensitiveSearchTest extends KernelTestCase
         $query = $this->postRepository()->querySearchInForum('Fahrrad');
         $dql = $query->getDQL();
 
-        self::assertStringContainsString('LOWER(p.message)', $dql);
+        self::assertStringContainsString('LOWER(p.text)', $dql);
         self::assertStringContainsString('LOWER(t.title)', $dql);
 
         $parameter = $query->getParameter('term');

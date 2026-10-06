@@ -128,7 +128,7 @@ class PostController extends BaseController
         $post = new Post();
         $post
             ->setCity($city)
-            ->setMessage((string) ($payload['message'] ?? ''))
+            ->setText((string) ($payload['message'] ?? ''))
             ->setDateTime($dateTime)
             ->setEnabled(true);
 
@@ -187,7 +187,7 @@ class PostController extends BaseController
         }
 
         if (array_key_exists('message', $payload)) {
-            $post->setMessage((string) $payload['message']);
+            $post->setText((string) $payload['message']);
         }
 
         if (array_key_exists('enabled', $payload)) {
@@ -254,7 +254,10 @@ class PostController extends BaseController
 
         /** @var ConstraintViolation $violation */
         foreach ($violations as $violation) {
-            $errors[$violation->getPropertyPath()] = $violation->getMessage();
+            // Im Code heisst das Feld `text`, in der API weiterhin `message`.
+            $field = 'text' === $violation->getPropertyPath() ? 'message' : $violation->getPropertyPath();
+
+            $errors[$field] = $violation->getMessage();
         }
 
         if (0 < count($errors)) {

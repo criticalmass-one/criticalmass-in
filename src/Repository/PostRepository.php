@@ -122,7 +122,7 @@ class PostRepository extends ServiceEntityRepository
             // MySQL schreibungsempfindlich, eine Suche nach "fahrrad" faende dort
             // kein "Fahrrad".
             ->andWhere($builder->expr()->orX(
-                $builder->expr()->like('LOWER(p.message)', ':term'),
+                $builder->expr()->like('LOWER(p.text)', ':term'),
                 $builder->expr()->like('LOWER(t.title)', ':term')
             ))
             // % und _ sind LIKE-Platzhalter: "100%" wuerde sonst jeden Beitrag treffen.
