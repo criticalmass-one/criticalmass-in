@@ -43,3 +43,11 @@ webauthn:
         enabled: true
         enroll: 'criticalmass_user_profile_passkey_list'
         manage: 'criticalmass_user_profile_passkey_list'
+
+# Lokal laeuft die Seite ueber http://localhost. Ohne diesen Eintrag lehnt die
+# Bibliothek jede Zeremonie mit „Invalid scheme. HTTPS required.“ ab — Browser
+# behandeln localhost als sicheren Kontext, die Serverpruefung tut das nicht von
+# selbst. In der Produktion laeuft alles ueber HTTPS, dort gehoert er nicht hin.
+when@dev:
+    webauthn:
+        secured_rp_ids: ['localhost']
