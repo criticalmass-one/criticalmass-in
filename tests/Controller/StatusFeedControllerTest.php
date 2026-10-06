@@ -118,14 +118,15 @@ class StatusFeedControllerTest extends AbstractControllerTestCase
         $hamburg = $this->hamburg();
 
         $slug = (new CitySlug())->setSlug('abgeschaltet-' . uniqid());
-        $city = (new City())
-            ->setCity('Abgeschaltet')
-            ->setLatitude(53.5)
-            ->setLongitude(10.0)
-            ->setRegion($hamburg->getRegion())
-            ->setTimezone('Europe/Berlin')
-            ->setEnabled(false);
+        // Einige Setter von City sind auf Interfaces getypt; deshalb keine Kette.
+        $city = new City();
+        $city->setCity('Abgeschaltet');
         $city->setTitle('Critical Mass Abgeschaltet');
+        $city->setLatitude(53.5);
+        $city->setLongitude(10.0);
+        $city->setRegion($hamburg->getRegion());
+        $city->setTimezone('Europe/Berlin');
+        $city->setEnabled(false);
         $city->addSlug($slug);
         $slug->setCity($city);
         $em->persist($slug);
