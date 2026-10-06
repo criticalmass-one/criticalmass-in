@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Enum\PostKindEnum;
 use Doctrine\ORM\Mapping as ORM;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -94,6 +95,10 @@ class Post
     #[ORM\Column(type: 'boolean', nullable: true)]
     #[Ignore]
     protected ?bool $enabled = true;
+
+    #[ORM\Column(type: 'string', length: 16, enumType: PostKindEnum::class, options: ['default' => 'COMMENT'])]
+    #[Groups(['post-list'])]
+    protected PostKindEnum $kind = PostKindEnum::COMMENT;
 
     public function __construct()
     {
@@ -192,6 +197,18 @@ class Post
     public function setEnabled(bool $enabled): Post
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getKind(): PostKindEnum
+    {
+        return $this->kind;
+    }
+
+    public function setKind(PostKindEnum $kind): Post
+    {
+        $this->kind = $kind;
 
         return $this;
     }
