@@ -9,7 +9,10 @@
             <div class="flex-grow-1">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
-                        <a href="{{ path('caldera_criticalmass_forum_profile', { 'username': post.user.username }) }}"
+                        {# Statusbeitraege fuehren zu den Beitraegen der Person, alles andere ins Forum. #}
+                        <a href="{{ post.kind.value == 'STATUS' and feature('status_posts')
+                            ? path('caldera_criticalmass_status_user', { 'username': post.user.username })
+                            : path('caldera_criticalmass_forum_profile', { 'username': post.user.username }) }}"
                            class="text-decoration-none">
                             <strong>{{ post.user.username }}</strong>
                         </a>

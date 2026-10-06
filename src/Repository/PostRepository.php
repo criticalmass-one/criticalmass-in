@@ -54,6 +54,62 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * Statusbeitraege aus allen aktiven Staedten, juengster zuerst — oder nur
+     * die eines Nutzers.
+     */
+    public function queryStatusPosts(?User $user = null): Query
+    {
+        $builder = $this->createQueryBuilder('p')
+            ->join('p.city', 'c')
+            ->addSelect('c')
+            ->where('p.kind = :kind')
+            ->andWhere('p.enabled = true')
+            ->andWhere('c.enabled = true')
+            ->setParameter('kind', PostKindEnum::STATUS)
+            ->orderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.id', 'DESC');
+
+        if (null !== $user) {
+            $builder
+                ->andWhere('p.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        return $builder->getQuery();
+    }
+
+    /**
+     * @return Post[]
+     */
+    public function findForTimelineStatusPostCollector(
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null
+    ): array {
+        $builder = $this->createQueryBuilder('p')
+            ->join('p.city', 'c')
+            ->addSelect('c')
+            ->where('p.kind = :kind')
+            ->andWhere('p.enabled = true')
+            ->andWhere('c.enabled = true')
+            ->setParameter('kind', PostKindEnum::STATUS)
+            ->orderBy('p.dateTime', 'DESC');
+
+        if ($startDateTime) {
+            $builder
+                ->andWhere('p.dateTime >= :startDateTime')
+                ->setParameter('startDateTime', $startDateTime);
+        }
+
+        if ($endDateTime) {
+            $builder
+                ->andWhere('p.dateTime <= :endDateTime')
+                ->setParameter('endDateTime', $endDateTime);
+        }
+
+        return $builder->getQuery()->getResult();
+    }
+
+    /**
      * Die neuesten Statusbeitraege einer Stadt, juengster zuerst.
      *
      * @return Post[]

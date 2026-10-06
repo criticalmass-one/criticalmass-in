@@ -68,6 +68,11 @@ class Builder extends AbstractBuilder
         $menu['Community']
             ->addChild('Diskussion', ['route' => 'caldera_criticalmass_board_overview']);
 
+        if ($this->featureManager->isActive('status_posts')) {
+            $menu['Community']
+                ->addChild('Neues aus den Städten', ['route' => 'caldera_criticalmass_status_feed']);
+        }
+
         if ($this->featureManager->isActive('photos')) {
             $menu['Community']
                 ->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
