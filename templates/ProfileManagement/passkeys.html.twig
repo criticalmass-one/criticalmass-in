@@ -1,0 +1,131 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Passkeys verwalten{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Passkeys') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2>
+                    Passkeys
+                </h2>
+
+                <p class="lead">
+                    Mit einem Passkey meldest du dich per Fingerabdruck, Gesichtserkennung oder
+                    Geräte-PIN an &mdash; ohne auf die Mail mit dem Anmeldelink zu warten.
+                </p>
+
+                <p>
+                    Der Anmeldelink per E-Mail funktioniert weiterhin. Wenn du dein Gerät verlierst,
+                    kommst du also trotzdem in dein Konto.
+                </p>
+            </div>
+        </div>
+
+        {{ include('Flash/_flash.html.twig') }}
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card border-0 shadow-sm mb-4"
+                     data-controller="passkey"
+                     data-passkey-confirm-text-value="Diesen Passkey wirklich löschen?">
+                    <div class="card-header bg-white">
+                        <i class="far fa-key text-primary me-2"></i>Neuen Passkey anlegen
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            Dein Gerät fragt gleich nach Fingerabdruck, Gesicht oder PIN. Anschließend
+                            kannst du den Passkey unten benennen.
+                        </p>
+
+                        <p class="text-muted small">
+                            Passkeys von criticalmass.in funktionieren auf criticalmass.in und auf
+                            criticalmass.one gleichermaßen.
+                        </p>
+
+                        <div class="alert alert-danger" data-passkey-target="status" hidden></div>
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-action="passkey#register"
+                                data-passkey-target="submit">
+                            <i class="far fa-plus me-1"></i>Passkey anlegen
+                        </button>
+                    </div>
+                </div>
+
+                {% if credentials is empty %}
+                    <div class="alert alert-info">
+                        Du hast noch keinen Passkey angelegt.
+                    </div>
+                {% else %}
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white">
+                            <i class="far fa-list text-secondary me-2"></i>Deine Passkeys
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {% for credential in credentials %}
+                                <li class="list-group-item"
+                                    data-controller="passkey"
+                                    data-passkey-confirm-text-value="Den Passkey „{{ credential.name }}“ wirklich löschen?">
+                                    <div class="row g-2 align-items-center">
+                                        <div class="col-md-7">
+                                            <form method="post"
+                                                  action="{{ path('criticalmass_user_profile_passkey_rename', {'id': credential.id}) }}"
+                                                  class="d-flex gap-2">
+                                                <input type="hidden" name="_token"
+                                                       value="{{ csrf_token('passkey-rename-' ~ credential.id) }}">
+                                                <label class="visually-hidden" for="passkey-name-{{ credential.id }}">
+                                                    Name des Passkeys
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control form-control-sm"
+                                                       id="passkey-name-{{ credential.id }}"
+                                                       name="name"
+                                                       maxlength="255"
+                                                       required
+                                                       value="{{ credential.name }}">
+                                                <button type="submit" class="btn btn-outline-secondary btn-sm text-nowrap">
+                                                    Umbenennen
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <div class="col-md-3 small text-muted">
+                                            <div>Angelegt: {{ credential.createdAt|date('d.m.Y') }}</div>
+                                            <div>
+                                                {% if credential.lastUsedAt %}
+                                                    Zuletzt benutzt: {{ credential.lastUsedAt|date('d.m.Y') }}
+                                                {% else %}
+                                                    Noch nicht benutzt
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2 text-md-end">
+                                            <form method="post"
+                                                  action="{{ path('criticalmass_user_profile_passkey_delete', {'id': credential.id}) }}"
+                                                  data-action="submit->passkey#confirmDelete">
+                                                <input type="hidden" name="_token"
+                                                       value="{{ csrf_token('passkey-delete-' ~ credential.id) }}">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <i class="far fa-trash me-1"></i>Löschen
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

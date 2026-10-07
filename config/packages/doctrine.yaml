@@ -21,6 +21,11 @@ doctrine:
             geometry: Jsor\Doctrine\PostGIS\Types\GeometryType
             geography: Jsor\Doctrine\PostGIS\Types\GeographyType
 
+            # Typen für die WebAuthn-Credentials (siehe mapping `webauthn` unten).
+            base64: Webauthn\Bundle\Doctrine\Type\Base64BinaryDataType
+            trust_path: Webauthn\Bundle\Doctrine\Type\TrustPathDataType
+            aaguid: Webauthn\Bundle\Doctrine\Type\AAGUIDDataType
+
         # PostGIS legt eigene Schemas und eine Tabelle spatial_ref_sys an. Ohne
         # diesen Filter haelt Doctrine sie fuer verwaiste Objekte und will sie
         # loeschen — spatial_ref_sys liegt naemlich in public, mitten zwischen
@@ -42,6 +47,15 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+
+            # Mapped Superclass `Webauthn\CredentialRecord`, von der
+            # App\Entity\WebauthnCredential erbt. Das Bundle liefert die
+            # XML-Zuordnung mit, deshalb hier ein eigener Mapping-Eintrag.
+            webauthn:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/vendor/web-auth/webauthn-symfony-bundle/src/Resources/config/doctrine-mapping'
+                prefix: 'Webauthn'
 
         dql:
             datetime_functions:

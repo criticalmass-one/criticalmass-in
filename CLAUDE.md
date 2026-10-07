@@ -36,6 +36,7 @@ vendor/bin/phpunit --filter testMethodName                  # Single test method
 # Die CI faehrt PostgreSQL 17, wie die Produktion. Der Code ist portabel geblieben
 # und besteht die Suite auch gegen MariaDB — das ist aber nicht mehr die Zielplattform.
 # Use `php bin/console ...` (the bare `bin/console` may report "permission denied").
+# Console commands often need more memory: `php -d memory_limit=-1 bin/console ...`
 ```
 
 ### Database Migrations
@@ -91,6 +92,9 @@ vendor/bin/phpstan analyse                  # PHPStan level 6
 
 ### Frontend Assets
 ```bash
+# Braucht Node 20+. Liegt eine ältere Version im PATH, bricht encore mit
+# "SyntaxError: Unexpected token '?'" ab — dann z. B.
+# export PATH="$HOME/.nvm/versions/node/v20.18.1/bin:$PATH"
 yarn dev          # Build once for development
 yarn watch        # Dev build with file watching
 yarn build        # Production build
@@ -136,9 +140,66 @@ Everything is confirmed on **one review page** at `/upload/review` (`UnifiedRevi
 
 **Frontend note:** the uploader is **Uppy** (`assets/controllers/unified_upload_controller.js`), no Compressor plugin so image EXIF survives. The `@uppy/*` packages are declared in `package.json`, but `package-lock.json` is **frozen** — `webpack`/`@babel/core` are not declared deps and survive only via the committed lock, so any re-resolution (`npm install`/`yarn install`) breaks the tree; use `npm ci`, and regenerate the lock deliberately when adding frontend deps. Frontend assets are **not** built in CI.
 
+### Anmeldung: passwortlos, drei Wege
+
+Die App kennt **kein Passwort** — `User::getPassword()` gibt fest `''` zurück, es gibt kein
+Passwortfeld in der Datenbank. Angemeldet wird über **Magic Link** (`login_link`, Konten
+entstehen dabei implizit in `LoginController::createNewUser()`, einen `/register`-Endpunkt
+gibt es nicht), über **OAuth** (Facebook/Strava, HWIOAuthBundle) oder über einen
+**Passkey**.
+
+**Der Anmeldelink per Mail bleibt für jedes Konto verfügbar.** Passkeys kommen additiv
+dazu, sie ersetzen den Rückfallweg nicht — ein Opt-out („Konten mit genug Passkeys dürfen
+den Mail-Login abschalten") ist ausdrücklich **nicht** gewollt und soll auch nicht
+vorgeschlagen werden. Die bewusst akzeptierte Folge: Die Sicherheitsuntergrenze eines
+Kontos ist dauerhaft die Mailbox. Der Gegenwert ist, dass niemand sich aussperren kann.
+
+**Passkeys (WebAuthn)** laufen über `web-auth/webauthn-symfony-bundle`. Was daran nicht
+selbsterklärend ist:
+
+- **RP ID ist `criticalmass.one`.** `criticalmass.in`, `www.criticalmass.in` und
+  `criticalmass.one` liefern dieselbe App ohne Redirect aus, sind aber teils
+  verschiedene registrierbare Domains. Die `.in`-Domains sind über **Related Origin
+  Requests** abgedeckt: `webauthn.allowed_origins` wird unter `/.well-known/webauthn`
+  ausgeliefert. **Eine Änderung der RP ID entwertet jeden registrierten Passkey.**
+- `allowed_origins` **muss literal** in der Config stehen (deshalb Produktionswerte in
+  `config/packages/prod/webauthn.yaml`, dev/test in `config/packages/webauthn.yaml`).
+  Der Compiler-Pass liest die Liste zur Container-Bauzeit und legt die
+  `/.well-known/webauthn`-Route nur an, wenn er ein echtes Array sieht — ein `%env()%`
+  wäre dort noch ein String. Aus demselben Grund lässt sich die Liste nicht per
+  `when@dev` leeren: Config-Merge ergänzt Listen, er ersetzt sie nicht.
+- Der Loader-Eintrag `type: webauthn` in `config/routes.yaml` ist Pflicht, sonst
+  existieren weder `/.well-known/webauthn` noch die vier `/passkey/`-Endpunkte.
+- **Alle vier Endpunkte sind auf `/passkey/…` umgebogen.** Die Vorgaben des Bundles wären
+  `/login/options`, `POST /login`, `/register/options`, `POST /register` — und `POST /login`
+  gehört bereits `login_perform`.
+- **Sicherheitsrelevant:** Der Firewall-Authenticator verdrahtet für die Registrierung fest
+  den `RequestBodyUserEntityGuesser`, der den Benutzernamen aus dem Request-Body nimmt.
+  Der Service ist in `config/services.yaml` per Alias auf den sitzungsbasierten
+  `CurrentUserEntityGuesser` umgebogen — **diesen Alias nicht entfernen**, sonst kann sich
+  jeder einen Passkey auf ein fremdes Konto legen.
+- Der **User-Handle** ist `User::$webauthnUserHandle` (UUID, lazy erzeugt), bewusst **nicht**
+  die E-Mail: die lässt sich im Profil ohne Re-Verifikation ändern, und mit ihr als Handle
+  wären danach alle Passkeys des Kontos tot.
+- `App\Entity\WebauthnCredential` erbt von der Mapped Superclass `Webauthn\CredentialRecord`,
+  deren XML-Zuordnung aus dem Bundle als eigenes Doctrine-Mapping eingebunden ist. Die
+  Credential-ID liegt **base64-kodiert** in der Datenbank (`findOneByCredentialId()` muss
+  selbst kodieren) und ist ein `LONGTEXT`, ihr UNIQUE-Index braucht deshalb eine
+  Präfixlänge.
+- `WebauthnCredentialVoter` hat bewusst **keine `ROLE_ADMIN`-Ausnahme**, anders als
+  `TrackVoter`/`PhotoVoter`: Wer fremde Passkeys löschen könnte, sperrt Nutzer aus ihren
+  Konten aus.
+
 ### Frontend (`assets/`)
 
 Single Webpack Encore entry point (`assets/app.js`). Stimulus controllers in `assets/controllers/` — maps (Leaflet + MapLibre GL), charts (Chart.js), datatables, search, geocoding, ride date checking.
+
+`passkey_controller.js` ist bewusst **ohne** `@simplewebauthn/browser` geschrieben: Die
+base64url-Umrechnung können die Browser über `parseCreationOptionsFromJSON()` / `toJSON()`
+inzwischen selbst, und eine neue Frontend-Dependency würde die eingefrorene
+`package-lock.json` neu auflösen (siehe Frontend note oben). Die Conditional UI hängt an
+`autocomplete="username webauthn"` in `LoginType` und ist über
+`data-passkey-conditional-value` nur auf der Login-Seite aktiv.
 
 ### Tests (`tests/`)
 

@@ -30,6 +30,20 @@ security:
                 lifetime: 31536000 # ein Jahr
                 secure: auto
                 samesite: lax
+            # Passkeys als dritte Anmeldeart neben Magic Link und OAuth. Die Pfade sind
+            # überschrieben: die Vorgaben des Bundles wären `/login/options` und
+            # `POST /login` — und `POST /login` gehört bereits `login_perform`.
+            #
+            # Nur die Anmeldung läuft über die Firewall. Deren Registrierung ist der
+            # Ablauf für *neue* Konten und lehnt jeden bestehenden Benutzernamen ab
+            # („The username already exists“). Einen Passkey an ein vorhandenes Konto
+            # hängen die Controller aus config/packages/webauthn.yaml.
+            webauthn:
+                authentication:
+                    enabled: true
+                    routes:
+                        options_path: /passkey/login/options
+                        result_path: /passkey/login
             provider: users
             pattern: .*
             context: user
@@ -54,6 +68,21 @@ security:
         - { path: ^/login$, role: PUBLIC_ACCESS }
         - { path: ^/register, role: PUBLIC_ACCESS }
         - { path: ^/resetting, role: PUBLIC_ACCESS }
+
+        # Related Origin Requests: der Browser holt diese Liste, bevor er einen Passkey
+        # mit RP ID criticalmass.one auf criticalmass.in zulässt.
+        - { path: '^/\.well-known/webauthn$', role: PUBLIC_ACCESS }
+
+        # Verweist Passwortmanager auf die Passkey-Verwaltung im Konto.
+        - { path: '^/\.well-known/passkey-endpoints$', role: PUBLIC_ACCESS }
+
+        # Anmelden per Passkey muss anonym möglich sein.
+        - { path: ^/passkey/login, role: PUBLIC_ACCESS }
+        # Einen Passkey anlegen dagegen nie: wer hier durchkäme, könnte sich einen
+        # Authenticator auf ein fremdes Konto legen. Zweite Absicherung ist der
+        # CurrentUserEntityGuesser in webauthn.yaml, der den Kontobezug aus der Sitzung
+        # nimmt statt aus dem Request-Body.
+        - { path: ^/passkey/register, role: ROLE_USER }
 
         # OAuth2 / MCP
         - { path: '^/\.well-known/oauth', role: PUBLIC_ACCESS }
