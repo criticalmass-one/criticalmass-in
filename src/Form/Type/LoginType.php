@@ -15,7 +15,7 @@ class LoginType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'E-Mail-Adresse',
-                'help' => 'Wenn du noch kein Benutzerkonto hast, wird automatisch ein neues mit deiner E-Mail-Adresse erstellt.',
+                'help' => 'Noch kein Konto? Es wird automatisch angelegt.',
                 'attr' => [
                     // Der `webauthn`-Zusatz schaltet die Conditional UI frei: Der Browser
                     // bietet einen vorhandenen Passkey direkt im Autofill dieses Feldes
