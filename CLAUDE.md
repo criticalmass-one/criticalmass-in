@@ -173,11 +173,18 @@ selbsterklärend ist:
 - **Alle vier Endpunkte sind auf `/passkey/…` umgebogen.** Die Vorgaben des Bundles wären
   `/login/options`, `POST /login`, `/register/options`, `POST /register` — und `POST /login`
   gehört bereits `login_perform`.
-- **Sicherheitsrelevant:** Der Firewall-Authenticator verdrahtet für die Registrierung fest
-  den `RequestBodyUserEntityGuesser`, der den Benutzernamen aus dem Request-Body nimmt.
-  Der Service ist in `config/services.yaml` per Alias auf den sitzungsbasierten
-  `CurrentUserEntityGuesser` umgebogen — **diesen Alias nicht entfernen**, sonst kann sich
-  jeder einen Passkey auf ein fremdes Konto legen.
+- **Sicherheitsrelevant:** Über die Firewall läuft nur die *Anmeldung*. Deren
+  Registrierung ist der Sign-up-Ablauf für neue Konten (lehnt jeden bestehenden Namen ab)
+  und nimmt den Benutzernamen aus dem Request-Body. Passkeys an ein bestehendes Konto
+  hängen stattdessen die Controller aus `webauthn.controllers.creation` mit dem
+  sitzungsbasierten `CurrentUserEntityGuesser`, zusätzlich verlangt `access_control`
+  `ROLE_USER` auf `/passkey/register`. **Keins von beidem lockern**, sonst kann sich jeder
+  einen Passkey auf ein fremdes Konto legen.
+- Die Anmeldung läuft per `fetch()`, eine Server-Umleitung käme nie im Fenster an.
+  `PasskeyLoginSuccessHandler` antwortet deshalb mit `redirectUrl` (dem Target Path der
+  Firewall), und „Eingeloggt bleiben“ reist als `?_remember_me=1` in der URL mit —
+  Symfonys Remember-me liest keinen JSON-Body. Der Stimulus-Controller liest dafür die
+  Checkbox des Mail-Formulars (`data-passkey-remember-me-field-value`).
 - Der **User-Handle** ist `User::$webauthnUserHandle` (UUID, lazy erzeugt), bewusst **nicht**
   die E-Mail: die lässt sich im Profil ohne Re-Verifikation ändern, und mit ihr als Handle
   wären danach alle Passkeys des Kontos tot.
