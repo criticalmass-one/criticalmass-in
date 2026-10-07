@@ -1,0 +1,40 @@
+// Login-Seite: eine schmale Karte, die Anmeldearten durch beschriftete Linien getrennt.
+
+.login-card {
+    max-width: 30rem;
+    margin: 0 auto;
+}
+
+.login-divider {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin: 1.5rem 0;
+    color: var(--bs-secondary-color);
+    font-size: .875rem;
+
+    &::before,
+    &::after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid var(--bs-border-color);
+    }
+}
+
+.btn-facebook {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #3c5a96;
+    --bs-btn-border-color: #3c5a96;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #324b7d;
+    --bs-btn-hover-border-color: #324b7d;
+}
+
+.btn-strava {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #f94d1f;
+    --bs-btn-border-color: #f94d1f;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #d9411a;
+    --bs-btn-hover-border-color: #d9411a;
+}
