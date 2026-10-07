@@ -39,6 +39,8 @@ security:
             # („The username already exists“). Einen Passkey an ein vorhandenes Konto
             # hängen die Controller aus config/packages/webauthn.yaml.
             webauthn:
+                # Antwortet mit dem Sprungziel (Target Path), siehe Klassenkommentar.
+                success_handler: App\Security\Webauthn\PasskeyLoginSuccessHandler
                 authentication:
                     enabled: true
                     routes:

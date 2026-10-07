@@ -22,6 +22,10 @@ export default class extends Controller {
         // anbieten. In der Kontoverwaltung ist der Nutzer längst angemeldet.
         conditional: { type: Boolean, default: false },
         confirmText: { type: String, default: 'Wirklich löschen?' },
+        // ID der Checkbox „Eingeloggt bleiben“ aus dem Mail-Formular. Sie steht in einer
+        // anderen Karte als der Passkey-Knopf, daher kein Target. Die Conditional UI
+        // hängt am E-Mail-Feld genau dieses Formulars, die Checkbox gilt also für beide.
+        rememberMeField: { type: String, default: '' },
     };
 
     connect() {
@@ -128,9 +132,34 @@ export default class extends Controller {
             ...extraOptions,
         });
 
-        await this.postJson(this.loginUrlValue, this.serialize(credential));
+        const result = await this.postJson(this.loginResultUrl(), this.serialize(credential));
 
-        window.location.href = this.redirectUrlValue;
+        // Wollte jemand eine geschützte Seite öffnen, nennt der Server sie hier
+        // (PasskeyLoginSuccessHandler). Sonst geht es zum Standardziel.
+        window.location.href = result.redirectUrl || this.redirectUrlValue;
+    }
+
+    /**
+     * Der Wunsch, angemeldet zu bleiben, reist in der Query: Symfonys Remember-me liest
+     * `_remember_me` aus Query oder Formularfeldern, nicht aus einem JSON-Body. Der
+     * Magic Link macht es genauso (LoginController::rememberLogin()).
+     *
+     * Erst nach der Passkey-Auswahl gelesen, damit bei der Conditional UI zählt, was
+     * zum Zeitpunkt der Anmeldung angehakt ist, nicht beim Laden der Seite.
+     */
+    loginResultUrl() {
+        const field = this.rememberMeFieldValue
+            ? document.getElementById(this.rememberMeFieldValue)
+            : null;
+
+        if (!field?.checked) {
+            return this.loginUrlValue;
+        }
+
+        const url = new URL(this.loginUrlValue, window.location.href);
+        url.searchParams.set('_remember_me', '1');
+
+        return url.toString();
     }
 
     /**

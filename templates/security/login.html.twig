@@ -23,7 +23,8 @@
                 <div class="card border-0 shadow-sm h-100"
                      data-controller="passkey"
                      data-passkey-conditional-value="true"
-                     data-passkey-redirect-url-value="{{ path('criticalmass_user_usermanagement') }}">
+                     data-passkey-redirect-url-value="{{ path('criticalmass_user_usermanagement') }}"
+                     data-passkey-remember-me-field-value="{{ login_form.remember_me.vars.id }}">
                     <div class="card-header bg-white">
                         <i class="far fa-key text-primary me-2"></i>Passkey
                     </div>
