@@ -1,0 +1,148 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Kalender{% endblock %}
+
+{% macro tagAdresse(dateTime, tag) %}
+    {{- path('caldera_criticalmass_calendar', { year: dateTime|date('Y'), month: dateTime|date('n'), day: tag }) -}}
+{% endmacro %}
+
+{% macro zeile(ride, kurz) %}
+    {% set ridePath = object_path(ride) %}
+    {% set name = ride.city ? ride.city.city : ride.title %}
+    <{{ ridePath ? 'a' : 'div' }} class="cm-cal-r{{ kurz ? ' cm-cal-r-one' }}{{ not ride.enabled ? ' cm-cal-off' }}"{% if ridePath %} href="{{ ridePath }}"{% endif %}{% if kurz and ride.location %} title="{{ ride.location }}"{% endif %}>
+        <span class="cm-cal-t">{{ ride.dateTime ? ride.dateTime|date('H:i', ride.city ? ride.city.timezone : null) }}</span>
+        <span class="cm-cal-m">
+            <span class="cm-cal-c">{{ name }}</span>
+            {% if ride.location and not kurz %}<span class="cm-cal-p">{{ ride.location }}</span>{% endif %}
+        </span>
+    </{{ ridePath ? 'a' : 'div' }}>
+{% endmacro %}
+
+{% macro ruhende(touren) %}
+    {% if touren is not empty %}
+        <div class="cm-cal-sleep">
+            <h3>Außerdem eingetragen, in Städten ohne Lebenszeichen seit sechs Monaten</h3>
+            {% for ride in touren %}
+                {%- set ridePath = object_path(ride) -%}
+                {%- if ridePath %}<a href="{{ ridePath }}"{{ not ride.enabled ? ' class="cm-cal-off"' }}>{% else %}<span>{% endif -%}
+                <b>{{ ride.city ? ride.city.city : ride.title }}</b> {{ ride.dateTime ? ride.dateTime|date('H:i', ride.city ? ride.city.timezone : null) }}
+                {%- if ridePath %}</a>{% else %}</span>{% endif %}{{ not loop.last ? ', ' }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+    {% import _self as kalender %}
+    {% set monatName = dateTime|format_datetime(pattern='MMMM yyyy') %}
+    {% set heute = 'now'|date('Y-m') == dateTime|date('Y-m') ? 'now'|date('j') : 0 %}
+
+    <div class="cm-cal-head">
+        <div>
+            <h1>{{ monatName }}</h1>
+            <p>
+                {% if tourenGesamt > 0 %}
+                    {{ tourenGesamt }} {{ tourenGesamt == 1 ? 'Tour' : 'Touren' }}
+                    an {{ nachTag|length }} {{ nachTag|length == 1 ? 'Tag' : 'Tagen' }}
+                {% else %}
+                    Im {{ monatName }} ist noch nichts eingetragen.
+                {% endif %}
+            </p>
+        </div>
+        <nav class="cm-cal-step" aria-label="Monat wechseln">
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_calendar', { year: previousMonth|date('Y'), month: previousMonth|date('n') }) }}" rel="prev">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                <span class="visually-hidden">Voriger Monat:</span><span class="cm-cal-mn">{{ previousMonth|format_datetime(pattern='MMMM') }}</span>
+            </a>
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_calendar', { year: nextMonth|date('Y'), month: nextMonth|date('n') }) }}" rel="next">
+                <span class="visually-hidden">Nächster Monat:</span><span class="cm-cal-mn">{{ nextMonth|format_datetime(pattern='MMMM') }}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+        </nav>
+    </div>
+
+    <div class="cm-cal-split">
+        <div class="cm-cal-month">
+            <div class="cm-cal-grid" role="grid" aria-label="{{ monatName }}">
+                {% for kurz in ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'] %}
+                    <span class="cm-cal-wd" role="columnheader">{{ kurz }}</span>
+                {% endfor %}
+
+                {% if ersterWochentag > 0 %}
+                    {% for i in 1..ersterWochentag %}<span role="gridcell"></span>{% endfor %}
+                {% endif %}
+
+                {% for tag in 1..tageImMonat %}
+                    {% set anzahl = nachTag[tag] is defined ? nachTag[tag]|length : 0 %}
+                    <a class="{{ anzahl == 0 ? 'is-zero' }}{{ anzahl > 20 ? ' is-big' }}{{ tag == heute ? ' is-today' }}{{ tag == gewaehlterTag ? ' is-sel' }}{{ heute and tag < heute ? ' is-past' }}"
+                       href="{{ kalender.tagAdresse(dateTime, tag) }}"
+                       role="gridcell"
+                       {% if tag == gewaehlterTag %}aria-current="date"{% endif %}
+                       aria-label="{{ tag }}. {{ dateTime|format_datetime(pattern='MMMM') }}: {{ anzahl }} {{ anzahl == 1 ? 'Tour' : 'Touren' }}">
+                        <b>{{ tag }}</b>
+                        <small>{{ anzahl ?: '' }}</small>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% set touren = nachTag[gewaehlterTag] is defined ? nachTag[gewaehlterTag] : [] %}
+        {% set tagDatum = dateTime|date_modify('+' ~ (gewaehlterTag - 1) ~ ' days') %}
+        {% set aktiveTouren = touren|filter(ride => not (ride.city and ride.city.isInactive)) %}
+        {% set ruhendeTouren = touren|filter(ride => ride.city and ride.city.isInactive) %}
+
+        <section class="cm-card cm-cal-day">
+            <div class="cm-cal-day-top">
+                <h2>{{ tagDatum|format_datetime(pattern='EEEE, d. MMMM') }}{{ gewaehlterTag == heute ? ', heute' }}</h2>
+                <span>
+                    {% if touren is not empty %}
+                        {{ touren|length }} {{ touren|length == 1 ? 'Tour' : 'Touren' }}
+                    {% endif %}
+                </span>
+            </div>
+
+            {% if touren is empty %}
+                <p class="cm-dim mt-2 mb-0">An diesem Tag ist keine Tour eingetragen.</p>
+            {% elseif touren|length > 20 %}
+                {% set laender = {} %}
+                {% for ride in aktiveTouren %}
+                    {% set land = ride.city and ride.city.country ? ride.city.country.name : 'Ohne Land' %}
+                    {% set laender = laender|merge({ (land): (laender[land] ?? [])|merge([ride]) }) %}
+                {% endfor %}
+
+                {% for land, landTouren in laender|sort((a, b) => b|length <=> a|length) %}
+                    <div class="cm-cal-grp">
+                        <h3>{{ land }} <span>{{ landTouren|length }}</span></h3>
+                        {% if landTouren|length > 10 %}
+                            {% set teile = {} %}
+                            {% for ride in landTouren %}
+                                {% set teil = ride.city.region ? ride.city.region.name : land %}
+                                {% set teile = teile|merge({ (teil): (teile[teil] ?? [])|merge([ride]) }) %}
+                            {% endfor %}
+                            <div class="cm-cal-states">
+                                {% for teil in teile|keys|sort %}
+                                    <div class="cm-cal-st">
+                                        <h4>{{ teil }}</h4>
+                                        {% for ride in teile[teil] %}{{ kalender.zeile(ride, true) }}{% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="cm-cal-cols">
+                                {% for ride in landTouren %}{{ kalender.zeile(ride, true) }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                {{ kalender.ruhende(ruhendeTouren) }}
+            {% else %}
+                <div class="cm-cal-list">
+                    {% for ride in aktiveTouren %}{{ kalender.zeile(ride, false) }}{% endfor %}
+                </div>
+
+                {{ kalender.ruhende(ruhendeTouren) }}
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}
