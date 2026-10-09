@@ -1,0 +1,41 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Zeit anpassen{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a> / <a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a> / <a href="{{ object_path(track) }}">{{ track.ride.title }}</a>
+        </div>
+        <h1>Zeit anpassen</h1>
+    </div>
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form' } }) }}
+        <fieldset>
+            <legend>Bisher</legend>
+            <div class="cm-figures cm-tt-was">
+                <div><b>{{ track.startDate.format('d.m.Y') }}</b><small>Datum</small></div>
+                <div><b>{{ track.startDate.format('H:i') }}</b><small>Uhrzeit</small></div>
+                <div><b>{{ track.ride.city.timezone }}</b><small>Zeitzone</small></div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Neuer Start</legend>
+            <div class="cm-form-row">
+                {{ form_row(form.startDate, { label: 'Datum' }) }}
+                {{ form_row(form.startTime, { label: 'Uhrzeit' }) }}
+            </div>
+            <div class="form-text">Zeitzone {{ track.ride.city.timezone }}</div>
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_track_list') }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}
