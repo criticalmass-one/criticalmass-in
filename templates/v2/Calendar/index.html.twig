@@ -51,12 +51,12 @@
         </div>
         <nav class="cm-cal-step" aria-label="Monat wechseln">
             <a class="cm-btn" href="{{ path('caldera_criticalmass_calendar', { year: previousMonth|date('Y'), month: previousMonth|date('n') }) }}" rel="prev">
-                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-left"/></svg>
                 <span class="visually-hidden">Voriger Monat:</span><span class="cm-cal-mn">{{ previousMonth|format_datetime(pattern='MMMM') }}</span>
             </a>
             <a class="cm-btn" href="{{ path('caldera_criticalmass_calendar', { year: nextMonth|date('Y'), month: nextMonth|date('n') }) }}" rel="next">
                 <span class="visually-hidden">Nächster Monat:</span><span class="cm-cal-mn">{{ nextMonth|format_datetime(pattern='MMMM') }}</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-right"/></svg>
             </a>
         </nav>
     </div>
