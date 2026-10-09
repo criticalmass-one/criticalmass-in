@@ -99,7 +99,7 @@ class FrontpageDesignV2Test extends AbstractControllerTestCase
         $client = static::createClient();
         $client->getCookieJar()->set(new Cookie(DesignChoice::COOKIE, DesignChoice::V2));
 
-        $client->request('GET', '/login');
+        $client->request('GET', '/boards/search');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorNotExists('body.cm-v2');

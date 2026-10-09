@@ -1,0 +1,42 @@
+{% extends 'v2/Layout/plain.html.twig' %}
+
+{% block title %}Anmelden{% endblock %}
+
+{% block content %}
+    {% include 'security/_icons.html.twig' %}
+
+    <section class="cm-card cm-login">
+        <h1>Anmelden</h1>
+
+        {# Blendet sich samt Trennlinie selbst aus, wenn der Browser kein WebAuthn kann. #}
+        <div data-controller="passkey"
+             data-passkey-conditional-value="true"
+             data-passkey-redirect-url-value="{{ path('criticalmass_user_usermanagement') }}">
+            <button type="button" class="cm-big cm-big-go" data-action="passkey#login" data-passkey-target="submit">
+                <svg width="20" height="20" aria-hidden="true"><use href="#i-key"/></svg>Mit Passkey anmelden
+            </button>
+            <p class="cm-login-hint">Per Fingerabdruck, Gesicht oder Geräte-PIN, ohne auf eine Mail zu warten.</p>
+
+            <div class="cm-flash cm-flash-error mt-3 mb-0" data-passkey-target="status" hidden></div>
+
+            <div class="cm-or">oder per E-Mail</div>
+        </div>
+
+        {{ form_start(login_form) }}
+            {{ form_row(login_form.email) }}
+            {{ form_row(login_form.remember_me, { help: null }) }}
+            <div class="frc-captcha" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
+            <button type="submit" class="cm-big cm-big-line" id="{{ login_form.submit.vars.id }}" name="{{ login_form.submit.vars.full_name }}">
+                <svg width="19" height="19" aria-hidden="true"><use href="#i-mail"/></svg>Anmeldelink zusenden
+            </button>
+            {% do login_form.submit.setRendered() %}
+        {{ form_end(login_form) }}
+
+        <div class="cm-or">oder über</div>
+
+        <div class="cm-oauth">
+            <a href="{{ path('hwi_oauth_service_redirect', { service: 'facebook' }) }}"><svg width="18" height="18" aria-hidden="true"><use href="#l-facebook"/></svg>Facebook</a>
+            <a href="{{ path('hwi_oauth_service_redirect', { service: 'strava' }) }}"><svg width="18" height="18" aria-hidden="true"><use href="#l-strava"/></svg>Strava</a>
+        </div>
+    </section>
+{% endblock %}
