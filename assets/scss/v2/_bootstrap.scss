@@ -1,0 +1,70 @@
+@import "../../../node_modules/bootstrap/scss/functions";
+
+$primary: $cm-accent;
+$secondary: $cm-dim;
+$light: $cm-bg;
+$dark: $cm-ink;
+// Sonst waehlt Bootstrap schwarze Schrift auf dem Akzent-Orange.
+$min-contrast-ratio: 3;
+
+$body-bg: $cm-bg;
+$body-color: $cm-ink;
+$border-color: $cm-line;
+$font-family-sans-serif: $cm-font;
+$font-size-base: .9375rem;
+$headings-font-weight: 700;
+$link-color: $cm-ink;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+$border-radius: $cm-r-s;
+$border-radius-sm: $cm-r-s;
+$border-radius-lg: $cm-r;
+$border-radius-xl: $cm-r;
+$border-radius-pill: $cm-r-s;
+$enable-shadows: false;
+$box-shadow: none;
+$box-shadow-sm: none;
+
+$btn-font-weight: 600;
+$input-border-color: $cm-line;
+$card-border-color: $cm-line;
+$card-border-radius: $cm-r;
+$card-cap-bg: $cm-card;
+$dropdown-border-color: $cm-line;
+$dropdown-border-radius: $cm-r-s;
+$alert-border-radius: $cm-r-s;
+$breadcrumb-divider: quote("/");
+
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/variables-dark";
+@import "../../../node_modules/bootstrap/scss/maps";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/root";
+
+@import "../../../node_modules/bootstrap/scss/utilities";
+@import "../../../node_modules/bootstrap/scss/reboot";
+@import "../../../node_modules/bootstrap/scss/type";
+@import "../../../node_modules/bootstrap/scss/images";
+@import "../../../node_modules/bootstrap/scss/containers";
+@import "../../../node_modules/bootstrap/scss/grid";
+@import "../../../node_modules/bootstrap/scss/tables";
+@import "../../../node_modules/bootstrap/scss/forms";
+@import "../../../node_modules/bootstrap/scss/buttons";
+@import "../../../node_modules/bootstrap/scss/transitions";
+@import "../../../node_modules/bootstrap/scss/dropdown";
+@import "../../../node_modules/bootstrap/scss/button-group";
+@import "../../../node_modules/bootstrap/scss/nav";
+@import "../../../node_modules/bootstrap/scss/card";
+@import "../../../node_modules/bootstrap/scss/breadcrumb";
+@import "../../../node_modules/bootstrap/scss/pagination";
+@import "../../../node_modules/bootstrap/scss/badge";
+@import "../../../node_modules/bootstrap/scss/alert";
+@import "../../../node_modules/bootstrap/scss/list-group";
+@import "../../../node_modules/bootstrap/scss/close";
+@import "../../../node_modules/bootstrap/scss/modal";
+@import "../../../node_modules/bootstrap/scss/tooltip";
+@import "../../../node_modules/bootstrap/scss/popover";
+@import "../../../node_modules/bootstrap/scss/spinners";
+@import "../../../node_modules/bootstrap/scss/helpers";
+@import "../../../node_modules/bootstrap/scss/utilities/api";

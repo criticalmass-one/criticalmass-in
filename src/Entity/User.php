@@ -145,6 +145,13 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Ignore]
     protected int $forumPostCount = 0;
 
+    /**
+     * null: nie gewählt, dann gilt das Cookie (App\Design\DesignChoice).
+     */
+    #[ORM\Column(name: 'design_v2', type: 'boolean', nullable: true)]
+    #[Ignore]
+    protected ?bool $designV2 = null;
+
     #[ORM\OneToMany(targetEntity: 'App\Entity\SocialNetworkProfile', mappedBy: 'createdBy')]
     #[Ignore]
     private Collection $socialNetworkProfiles;
@@ -686,6 +693,18 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function setForumNotifications(bool $forumNotifications): User
     {
         $this->forumNotifications = $forumNotifications;
+
+        return $this;
+    }
+
+    public function getDesignV2(): ?bool
+    {
+        return $this->designV2;
+    }
+
+    public function setDesignV2(?bool $designV2): User
+    {
+        $this->designV2 = $designV2;
 
         return $this;
     }
