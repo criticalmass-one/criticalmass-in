@@ -1,0 +1,45 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Über die Critical Mass{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <h1>Über die Critical Mass</h1>
+    </header>
+
+    <article class="cm-card cm-prose">
+        <section>
+            <h2>Was ist die Critical Mass?</h2>
+            <p>Die Critical Mass ist eine weltweite Bewegung, bei der sich Radfahrerinnen und Radfahrer zu gemeinsamen Fahrradtouren durch ihre Städte verabreden.</p>
+            <p>Die Touren finden in den meisten Städten einmal im Monat statt und folgen keiner festen Route. Es gibt keine Veranstalter, keine Anmeldung und keine Teilnahmegebühren.</p>
+            <p>Jede und jeder kann einfach zum vereinbarten Zeitpunkt am Treffpunkt erscheinen und mitfahren.</p>
+        </section>
+
+        <section>
+            <h2>Was ist criticalmass.in?</h2>
+            <p>criticalmass.in ist eine Plattform, die Critical-Mass-Touren weltweit dokumentiert und sichtbar macht.</p>
+            <p>Die Seite sammelt Informationen zu Städten, Terminen, Treffpunkten und Uhrzeiten und stellt Statistiken zu Teilnehmerzahlen und gefahrenen Strecken bereit.</p>
+            <p>Das Projekt ist Open Source und wird von der Community gepflegt. Der Quellcode ist auf <a href="https://github.com/criticalmass-one/criticalmass-in">GitHub</a> verfügbar.</p>
+        </section>
+
+        <section>
+            <h2>Features</h2>
+            <ul>
+                <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a> mit allen bekannten Critical-Mass-Touren</li>
+                <li>Termine und Treffpunkte für jede Stadt</li>
+                <li><a href="{{ path('caldera_criticalmass_statistic_overview') }}">Statistiken</a> zu Teilnehmerzahlen, Streckenlängen und Fahrtdauern</li>
+                <li>Upload und Anzeige von GPS-Tracks</li>
+                <li>Fotogalerien von vergangenen Touren</li>
+                <li><a href="{{ path('caldera_criticalmass_board_overview') }}">Diskussionsforum</a> für die Community</li>
+                <li><a href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a> mit allen anstehenden Touren</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mitmachen</h2>
+            <p>criticalmass.in funktioniert ähnlich wie Wikipedia: Alle Daten zu Städten und Touren können von registrierten Nutzerinnen und Nutzern selbst gepflegt und ergänzt werden.</p>
+            <p>Du kannst dich mit einem kostenlosen Benutzerkonto anmelden und direkt Informationen zu deiner Stadt eintragen oder korrigieren.</p>
+            <p>Fehler gefunden oder Verbesserungsvorschläge? Schreibe eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> oder eröffne ein <a href="https://github.com/criticalmass-one/criticalmass-in/issues">Ticket auf GitHub</a>.</p>
+        </section>
+    </article>
+{% endblock %}
