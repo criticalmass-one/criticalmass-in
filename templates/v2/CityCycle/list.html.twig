@@ -1,0 +1,56 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Turnusse von {{ city.city }}{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head cm-adm-head">
+        <div>
+            <div class="cm-crumb"><a href="{{ object_path(city) }}">{{ city.city }}</a></div>
+            <h1>Regelmäßige Touren in {{ city.city }}</h1>
+        </div>
+        <a class="cm-btn cm-btn-go" href="{{ object_path(city, 'caldera_criticalmass_citycycle_add') }}">Turnus ergänzen</a>
+    </header>
+
+    <section class="cm-card">
+        {% if cycles|length > 0 %}
+            <ul class="cm-adm-rows">
+                {% for cycle in cycles %}
+                    <li class="{{ cycle.disabledAt ? 'is-off' }}">
+                        <div class="cm-adm-main">
+                            <b>{% include 'v2/CityCycle/_rule.html.twig' with { cycle: cycle } %}{% if cycle.time %}, {{ cycle.time|date('H:i', 'UTC') }} Uhr{% endif %}</b>
+                            <span>
+                                {% if cycle.location %}
+                                    {{ cycle.location }} ({{ cycle.latitude|round(3) }}, {{ cycle.longitude|round(3) }})
+                                {% else %}
+                                    Treffpunkt nicht festgelegt
+                                {% endif %}
+                            </span>
+                            <span>
+                                {% if cycle.disabledAt %}
+                                    Deaktiviert am {{ cycle.disabledAt|date('d.m.Y', city.timezone) }}
+                                {% elseif cycle.validFrom or cycle.validUntil %}
+                                    Gültig{% if cycle.validFrom %} ab {{ cycle.validFrom|date('d.m.Y', 'UTC') }}{% endif %}{% if cycle.validUntil %} bis {{ cycle.validUntil|date('d.m.Y', 'UTC') }}{% endif %}
+                                {% else %}
+                                    Nicht begrenzt
+                                {% endif %}
+                            </span>
+                        </div>
+                        {% if not cycle.disabledAt %}
+                            <div class="cm-adm-acts">
+                                <a class="cm-btn" href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_edit') }}">Bearbeiten</a>
+                                <a class="cm-btn" href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_ride_list') }}">Touren</a>
+                                <a class="cm-btn" href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_execute') }}">Auslösen</a>
+                                <form method="post" action="{{ object_path(cycle, 'caldera_criticalmass_citycycle_disable') }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('citycycle_disable_' ~ cycle.id) }}">
+                                    <button type="submit" class="cm-btn">Deaktivieren</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="cm-pad cm-dim mb-0">Für {{ city.city }} gibt es noch keinen Turnus.</p>
+        {% endif %}
+    </section>
+{% endblock %}

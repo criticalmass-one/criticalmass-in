@@ -1,0 +1,15 @@
+{# Parameter: cityCycle #}
+<section class="cm-card cm-pad cm-adm-summary">
+    <dl class="cm-dl">
+        <dt>Turnus</dt>
+        <dd>{% include 'v2/CityCycle/_rule.html.twig' with { cycle: cityCycle } %}</dd>
+        <dt>Uhrzeit</dt>
+        <dd>{{ cityCycle.time ? cityCycle.time|date('H:i', 'UTC') ~ ' Uhr' : '–' }}</dd>
+        <dt>Treffpunkt</dt>
+        <dd>{{ cityCycle.location ?: '–' }}</dd>
+        <dt>Gültig ab</dt>
+        <dd>{{ cityCycle.validFrom ? cityCycle.validFrom|date('d.m.Y', 'UTC') : '–' }}</dd>
+        <dt>Gültig bis</dt>
+        <dd>{{ cityCycle.validUntil ? cityCycle.validUntil|date('d.m.Y', 'UTC') : '–' }}</dd>
+    </dl>
+</section>

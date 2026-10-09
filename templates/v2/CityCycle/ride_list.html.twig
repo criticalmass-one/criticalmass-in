@@ -1,0 +1,41 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Touren aus dem Turnus von {{ city.city }}{% endblock %}
+
+{% block content %}
+    {% include 'v2/CityCycle/_head.html.twig' with { city: city, heading: 'Touren aus diesem Turnus' } %}
+
+    {% include 'v2/CityCycle/_summary.html.twig' with { cityCycle: cityCycle } %}
+
+    <section class="cm-card cm-pad">
+        {% if rideList|length > 0 %}
+            <div class="cm-tbl-wrap">
+                <table class="cm-tbl">
+                    <thead>
+                        <tr><th>Datum</th><th>Tour</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        {% for ride in rideList %}
+                            {% set zone = ride.city.timezone %}
+                            <tr>
+                                <td class="cm-d">
+                                    {{ ride.dateTime|date('d.m.Y', zone) }}
+                                    <span class="cm-sub">{{ ride.dateTime|date('H:i', zone) }} Uhr</span>
+                                </td>
+                                <td>
+                                    <a href="{{ object_path(ride) }}">{{ ride.title }}</a>
+                                    {% if ride.location %}<span class="cm-sub">{{ ride.location }}</span>{% endif %}
+                                </td>
+                                <td class="cm-r">
+                                    <a class="cm-btn" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">Bearbeiten</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="cm-dim mb-0">Dieser Turnus hat noch keine Touren erzeugt.</p>
+        {% endif %}
+    </section>
+{% endblock %}
