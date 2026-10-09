@@ -5,7 +5,7 @@
         {% include 'v2/Layout/_avatar.html.twig' with { user: lastPost.user, small: true } %}
     {% endif %}
     <div>
-        <a href="{{ object_path(thread) }}#post-{{ lastPost.id }}">{{ thread.title }}</a>
+        <a href="{{ object_path(thread) }}">{{ thread.title }}</a>
         <small>{{ lastPost.user ? lastPost.user.username : 'unbekannt' }}, <time datetime="{{ lastPost.dateTime|date('c') }}" title="{{ lastPost.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }} Uhr">{{ lastPost.dateTime|time_ago }}</time></small>
     </div>
 </div>

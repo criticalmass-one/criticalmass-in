@@ -16,7 +16,10 @@
     {% elseif results is null %}
         <p class="cm-hits-count">Bitte gib mindestens {{ minimumLength }} Zeichen ein.</p>
     {% elseif results|length == 0 %}
-        <p class="cm-card cm-forum-empty">Zu „{{ term }}“ gibt es keine Beiträge.</p>
+        <div class="cm-card cm-forum-empty">
+            <h2>Nichts gefunden</h2>
+            <p>Zu „{{ term }}“ gibt es keine Beiträge.</p>
+        </div>
     {% else %}
         <p class="cm-hits-count">{{ results.getTotalItemCount }} Treffer für „{{ term }}“</p>
         <section class="cm-card">

@@ -232,6 +232,16 @@
   text-align: center;
   color: var(--cm-dim);
   margin: 0;
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+
+  p {
+    margin: 0;
+  }
 }
 
 // Beitraege eines Themas

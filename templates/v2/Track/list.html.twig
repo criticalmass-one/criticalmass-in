@@ -17,7 +17,7 @@
                          id="map-{{ track.id }}"
                          data-controller="map--map"
                          data-map--map-lock-map-value="true"
-                         data-map--map-polyline-color-value="#f4581c"
+                         data-map--map-polyline-color-value="{{ track.user.color }}"
                          data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::COARSE')) }}"></div>
 
                     <h2><a href="{{ object_path(track.ride) }}">{{ track.ride.title }}</a></h2>

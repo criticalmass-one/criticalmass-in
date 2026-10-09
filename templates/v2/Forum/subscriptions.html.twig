@@ -31,7 +31,7 @@
                         <div>
                             {% if subscription.globalScope %}
                                 <a href="{{ path('caldera_criticalmass_board_overview') }}">{{ subscription.label }}</a>
-                            {% elseif subscription.thread %}
+                            {% elseif subscription.thread and subscription.thread.enabled %}
                                 <a href="{{ object_path(subscription.thread) }}">{{ subscription.label }}</a>
                             {% elseif subscription.board %}
                                 <a href="{{ object_path(subscription.board) }}">{{ subscription.label }}</a>
