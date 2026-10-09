@@ -19,7 +19,7 @@
             <ul class="cm-list">
                 {% for cycle in city.cycles %}
                     <li>
-                        am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}{% if cycle.time %} um {{ cycle.time|date('H:i', city.timezone) }} Uhr{% endif %}{% if cycle.location %}, {{ cycle.location }}{% endif %}
+                        am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}{% if cycle.time %} um {{ cycle.time|date('H:i', 'UTC') }} Uhr{% endif %}{% if cycle.location %}, {{ cycle.location }}{% endif %}
                     </li>
                 {% endfor %}
             </ul>
@@ -61,6 +61,7 @@
                             <option value="{{ choice.value }}"{% if choice is selectedchoice(form.rideType.vars.value) %} selected{% endif %}>{{ choice.data.label }}</option>
                         {% endfor %}
                     </select>
+                    {{ form_errors(form.rideType) }}
                     {% do form.rideType.setRendered() %}
                 </div>
                 {{ form_row(form.title, { label: 'Titel' }) }}
