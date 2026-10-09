@@ -1,0 +1,47 @@
+{% extends 'v2/Layout/map.html.twig' %}
+
+{% block title %}Karte{% endblock %}
+
+{% block content %}
+    <div class="cm-explore"
+         data-controller="map--explore-map"
+         data-map--explore-map-api-type-value="city"
+         data-map--explore-map-api-query-value="{{ path('caldera_criticalmass_rest_city_list', { size: 5000 }) }}"
+         data-map--explore-map-popup-template-id-value="city-popup"
+         data-map--explore-map-sidebar-item-template-id-value="sidebar-item-template">
+
+        <div class="explore-map"></div>
+
+        <aside class="cm-explore-panel" data-map--explore-map-target="sidebar">
+            <div class="cm-explore-head">
+                <div>
+                    <h1>Städte</h1>
+                    <p><span data-counter>0</span> im Kartenausschnitt</p>
+                </div>
+                <button type="button"
+                        class="cm-btn cm-explore-toggle"
+                        data-action="click->map--explore-map#toggleSidebar"
+                        data-map--explore-map-target="toggleBtn"
+                        aria-label="Liste ausblenden">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+            <ul class="cm-explore-list" data-map--explore-map-target="sidebarList"></ul>
+        </aside>
+    </div>
+
+    {% verbatim %}
+    <template id="city-popup">
+        <div class="cm-explore-popup">
+            <b>{{name}}</b>
+            <a href="/{{main_slug.slug}}">Zur Stadtseite</a>
+        </div>
+    </template>
+
+    <template id="sidebar-item-template">
+        <li data-action="click->map--explore-map#focusCity" data-lat="{{latitude}}" data-lng="{{longitude}}">
+            <button type="button">{{name}}</button>
+        </li>
+    </template>
+    {% endverbatim %}
+{% endblock %}
