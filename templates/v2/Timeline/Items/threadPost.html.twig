@@ -1,0 +1,7 @@
+{% set action %}hat im Forum auf <a href="{{ object_path(item.thread) }}#post-{{ item.postId }}">{{ item.threadTitle }}</a> geantwortet{% endset %}
+<article class="cm-card cm-post">
+    {% include 'Timeline/_includes/head.html.twig' with { action: action } %}
+
+    {% set preview = item.text|markdown|striptags|trim %}
+    <p class="cm-post-text">{{ preview|slice(0, 280) }}{% if preview|length > 280 %}…{% endif %}</p>
+</article>

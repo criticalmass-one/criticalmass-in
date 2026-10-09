@@ -1,0 +1,6 @@
+{% set action %}hat die <a href="{{ object_path(item.ride) }}#post-{{ item.post.id }}">{{ item.rideTitle }}</a> kommentiert{% endset %}
+<article class="cm-card cm-post{% if not item.rideEnabled %} cm-post-disabled{% endif %}">
+    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: include('Timeline/_includes/ride_when.html.twig', { ride: item.ride }) } %}
+
+    <p class="cm-post-text">{{ item.post.text|slice(0, 400) }}{% if item.post.text|length > 400 %}…{% endif %}</p>
+</article>
