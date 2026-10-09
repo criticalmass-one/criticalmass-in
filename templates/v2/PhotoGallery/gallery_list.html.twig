@@ -1,0 +1,62 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set city = ride.city %}
+{% set zone = city.timezone %}
+
+{% block title %}Fotos von {{ ride.title }}{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb-link">
+        <a href="{{ path('caldera_criticalmass_photo_examplegallery') }}">Fotos</a> / <a href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}">{{ city.city }}</a>
+    </div>
+
+    <div class="cm-ghead">
+        <div>
+            <h1>{{ city.city }}, {{ ride.dateTime|format_datetime(pattern="d. MMMM yyyy", timezone=zone) }}</h1>
+            <p>{{ ride.title }}, {{ pagination.totalItemCount }} {{ pagination.totalItemCount == 1 ? 'Foto' : 'Fotos' }}. <a href="{{ object_path(ride) }}">Zur Tour</a></p>
+        </div>
+        <div class="cm-btn-row">
+            {% if app.user %}
+                <a class="cm-btn cm-btn-go" href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}">Fotos hochladen</a>
+            {% else %}
+                <button type="button" class="cm-btn cm-btn-go"
+                        data-controller="hint-modal"
+                        data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}"
+                        data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                        data-modal-hint-size="md">Fotos hochladen</button>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if pagination|length == 0 %}
+        <p class="cm-card cm-pad cm-empty">Noch keine Fotos von dieser Tour.</p>
+    {% else %}
+        <div class="cm-masonry">
+            {% for photo in pagination %}
+                <figure>
+                    <a href="{{ object_path(photo) }}"><img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="" loading="lazy"></a>
+                    <figcaption>
+                        <b>{{ photo.user ? photo.user.username }}</b>
+                        {% if photo.posts|length > 0 %}<span>{{ photo.posts|length }} {{ photo.posts|length == 1 ? 'Kommentar' : 'Kommentare' }}</span>{% endif %}
+                    </figcaption>
+                </figure>
+            {% endfor %}
+        </div>
+
+        {% include 'v2/City/Includes/_pagenav.html.twig' with { pagination: pagination } %}
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    <div class="cm-box">
+        <h3>{{ ride.title }}</h3>
+        <div class="cm-sub">{{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=zone) }}</div>
+        {% if ride.location %}<p class="mb-0">{{ ride.location }}</p>{% endif %}
+        <a class="cm-more" href="{{ object_path(ride) }}">Tracks und Kommentare zur Tour</a>
+    </div>
+    <div class="cm-box">
+        <h3>Fotos aus {{ city.city }}</h3>
+        <a class="cm-kv" href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}"><b>Alle Galerien</b></a>
+        <a class="cm-kv" href="{{ object_path(city) }}"><b>Zur Stadtseite</b></a>
+    </div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Statistiken aus {{ city.city }}{% endblock %}
+
+{% block content %}
+    {% include 'v2/City/Includes/_head.html.twig' with { city: city, tab: 'statistic', heading: city.title } %}
+
+    {% set estimated = rides|filter(ride => ride.dateTime and ride.estimatedParticipants > 0)|sort((a, b) => a.dateTime <=> b.dateTime)|slice(-24) %}
+
+    <section class="cm-card cm-sect">
+        <h2>Teilnehmer je Tour <a href="{{ object_path(city, 'caldera_criticalmass_city_missingstats') }}">Fehlende Statistiken</a></h2>
+
+        {% if estimated|length > 0 %}
+            {% set max = max(estimated|map(ride => ride.estimatedParticipants)) %}
+            {% set step = 1 %}
+            {% for i in 1..6 %}{% if step * 10 <= max %}{% set step = step * 10 %}{% endif %}{% endfor %}
+            {% set top = (max / step)|round(0, 'ceil') * step %}
+            {% set last = estimated|last %}
+            {% set zone = city.timezone %}
+
+            <div class="cm-bars-wrap" role="img" aria-label="Geschätzte Teilnehmer der letzten {{ estimated|length }} Touren">
+                <div class="cm-bars-grid" style="bottom: 100%"><span>{{ top|number_format(0, ',', '.') }}</span></div>
+                <div class="cm-bars-grid" style="bottom: 50%"><span>{{ (top / 2)|number_format(0, ',', '.') }}</span></div>
+                <div class="cm-bars-grid cm-zero" style="bottom: 0"><span>0</span></div>
+                <div class="cm-bars" style="max-width: {{ estimated|length * 36 }}px">
+                    {% for ride in estimated %}
+                        <a href="{{ object_path(ride) }}"
+                           style="height: {{ (ride.estimatedParticipants / top * 100)|round(1) }}%"
+                           title="{{ ride.dateTime|date('d.m.Y', zone) }}: {{ ride.estimatedParticipants|number_format(0, ',', '.') }} Teilnehmer">
+                            {% if ride.estimatedParticipants == max or loop.last %}<b>{{ ride.estimatedParticipants|number_format(0, ',', '.') }}</b>{% endif %}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="cm-bars-x" style="max-width: {{ estimated|length * 36 }}px">
+                <span>{{ (estimated|first).dateTime|format_datetime(pattern="MMM yyyy", timezone=zone) }}</span>
+                <span>{{ last.dateTime|format_datetime(pattern="MMM yyyy", timezone=zone) }}</span>
+            </div>
+        {% else %}
+            <p class="cm-empty">Für {{ city.city }} liegen noch keine Schätzungen vor.</p>
+        {% endif %}
+    </section>
+
+    <section class="cm-card cm-sect">
+        <h2>Touren im Vergleich</h2>
+        <div class="cm-tbl-wrap">
+            <table class="cm-tbl">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th class="cm-r">Teilnehmer</th>
+                        <th class="cm-r">Strecke</th>
+                        <th class="cm-r cm-hide-s">Dauer</th>
+                        <th class="cm-r cm-hide-s">Temperatur</th>
+                        <th class="cm-r cm-hide-s">Niederschlag</th>
+                        <th class="cm-r cm-hide-s">Wind</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ride in rides %}
+                        {% set weather = ride.weathers.first %}
+                        {% set ridePath = object_path(ride) %}
+                        <tr>
+                            <td class="cm-d">
+                                {% if ridePath %}<a href="{{ ridePath }}">{{ ride.dateTime ? ride.dateTime|date('d.m.Y', city.timezone) : '–' }}</a>{% else %}{{ ride.dateTime ? ride.dateTime|date('d.m.Y', city.timezone) : '–' }}{% endif %}
+                            </td>
+                            <td class="cm-r{{ not ride.estimatedParticipants ? ' cm-na' }}">{{ ride.estimatedParticipants ? ride.estimatedParticipants|number_format(0, ',', '.') : '–' }}</td>
+                            <td class="cm-r{{ not ride.estimatedDistance ? ' cm-na' }}">{{ ride.estimatedDistance ? ride.estimatedDistance|number_format(1, ',', '.') ~ ' km' : '–' }}</td>
+                            <td class="cm-r cm-hide-s{{ not ride.estimatedDuration ? ' cm-na' }}">{{ ride.estimatedDuration ? human_duration(ride.estimatedDurationInSeconds) : '–' }}</td>
+                            {% if weather %}
+                                <td class="cm-r cm-hide-s">{{ weather.temperatureEvening|number_format(1, ',', '.') }} °C</td>
+                                <td class="cm-r cm-hide-s">{{ weather.precipitation|number_format(1, ',', '.') }} mm</td>
+                                <td class="cm-r cm-hide-s">{{ weather.windSpeed|number_format(1, ',', '.') }} m/s</td>
+                            {% else %}
+                                <td class="cm-r cm-hide-s cm-na">–</td>
+                                <td class="cm-r cm-hide-s cm-na">–</td>
+                                <td class="cm-r cm-hide-s cm-na">–</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
