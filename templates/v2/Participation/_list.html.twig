@@ -1,0 +1,26 @@
+<section class="cm-card cm-pad">
+    {% if participationList|length > 0 %}
+        <table class="cm-acc-log">
+            {% for participation in participationList %}
+                <tr>
+                    <td class="d">{{ participation.ride.dateTime|date('d.m.Y') }}</td>
+                    <td class="t">
+                        <a href="{{ object_path(participation.ride) }}">{{ participation.ride.title }}</a>
+                        <span><a href="{{ object_path(participation.ride.city) }}">{{ participation.ride.city.city }}</a>, {{ participation.ride.dateTime|date('H:i') }}&nbsp;Uhr</span>
+                    </td>
+                    <td class="a">
+                        {% if not participation.goingYes %}
+                            <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'yes' }) }}" title="Deine Teilnahme speichern">Dabei</a>
+                        {% endif %}
+                        {% if not participation.goingNo %}
+                            <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'no' }) }}" title="Deine Teilnahme zurückziehen">Nicht dabei</a>
+                        {% endif %}
+                        <a href="{{ path('criticalmass_user_participation_delete', { id: participation.id }) }}" title="Diesen Eintrag komplett löschen">Löschen</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="cm-dim mb-0">Für diese Liste wurden keine Datensätze gefunden.</p>
+    {% endif %}
+</section>

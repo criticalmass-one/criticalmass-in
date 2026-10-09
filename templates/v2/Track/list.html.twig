@@ -1,0 +1,77 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Deine Tracks{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb"><a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a></div>
+        <h1>Deine Tracks</h1>
+    </div>
+
+    {% if pagination|length > 0 %}
+        <div class="cm-acc-tracks">
+            {% for track in pagination %}
+                {% set timezone = track.ride.city.timezone %}
+                <article class="cm-card cm-pad cm-acc-track{% if not track.enabled %} is-off{% endif %}">
+                    <div class="cm-map"
+                         id="map-{{ track.id }}"
+                         data-controller="map--map"
+                         data-map--map-lock-map-value="true"
+                         data-map--map-polyline-color-value="#f4581c"
+                         data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::COARSE')) }}"></div>
+
+                    <h2><a href="{{ object_path(track.ride) }}">{{ track.ride.title }}</a></h2>
+                    <p class="cm-acc-meta">
+                        <a href="{{ object_path(track.ride.city) }}">{{ track.ride.city.city }}</a>,
+                        <a href="{{ object_path(track) }}">{{ track.ride.dateTime|date('d.m.Y') }}</a>
+                        {% if not track.enabled %}<br>Deaktiviert{% elseif not track.reviewed %}<br>Unbestätigt{% endif %}
+                    </p>
+
+                    <div class="cm-figures">
+                        <div><b>{{ track.distance|number_format(1, ',', '.') }} km</b><small>Strecke</small></div>
+                        <div><b>{{ track.startDateTime|date('H:i', timezone) }}–{{ track.endDateTime|date('H:i', timezone) }}</b><small>Start und Ende</small></div>
+                    </div>
+
+                    {% if is_granted('edit', track) %}
+                        <div class="dropdown cm-acc-menu">
+                            <button type="button" class="cm-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Bearbeiten</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_download') }}">Herunterladen</a></li>
+                                <li>
+                                    <form method="post" action="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('track_toggle_' ~ track.id) }}">
+                                        <button type="submit" class="dropdown-item">{{ track.enabled ? 'Deaktivieren' : 'Aktivieren' }}</button>
+                                    </form>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                {% if not track.isReviewed %}
+                                    <li><a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">Bestätigen</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">Beschneiden</a></li>
+                                <li><a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_time') }}">Zeit anpassen</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('caldera_criticalmass_rest_track_delete', { id: track.id }) }}"
+                                       data-controller="delete-modal"
+                                       data-action="click->delete-modal#open"
+                                       data-delete-modal-title-value="Track löschen"
+                                       data-delete-modal-text-value="Möchtest du diesen Track von der {{ track.ride.city.title }} vom {{ track.ride.dateTime|date('d.m.Y') }} wirklich löschen?">Löschen</a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </div>
+
+        {{ knp_pagination_render(pagination) }}
+    {% else %}
+        <section class="cm-card cm-pad">
+            <p class="cm-dim mb-0">Du hast noch keine Tracks hochgeladen.</p>
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

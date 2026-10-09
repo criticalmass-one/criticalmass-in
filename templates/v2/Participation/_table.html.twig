@@ -1,0 +1,56 @@
+{% if participationYesList|length > 0 %}
+    <section class="cm-card cm-pad">
+        <h2 class="cm-acc-h">Jahre und Monate</h2>
+
+        <div class="cm-acc-years-wrap">
+            <table class="cm-acc-years">
+                <tr>
+                    <th class="y"></th>
+                    {% for monthName in ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'] %}
+                        <th>{{ monthName }}</th>
+                    {% endfor %}
+                    <th class="s" title="Summe">&sum;</th>
+                </tr>
+
+                {% for year in participationTable %}
+                    <tr>
+                        <td class="y">{{ year.year }}</td>
+                        {% for month in year %}
+                            {% set counter = month|length %}
+                            <td class="{{ counter >= 4 ? 'c4' : (counter > 0 ? 'c' ~ counter : '') }}">{{ counter > 0 ? counter }}</td>
+                        {% endfor %}
+                        <td class="s">{{ year|length }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+
+    <section class="cm-card cm-pad">
+        <div class="cm-figures cm-acc-streaks">
+            <div>
+                <b>{{ participationYesList|length }} {{ participationYesList|length == 1 ? 'Tour' : 'Touren' }}</b>
+                <small>seit {{ participationYesList|last.ride.dateTime|date('d.m.Y') }}</small>
+            </div>
+            <div>
+                {% if currentStreak.rideList|length > 0 %}
+                    <b>{{ currentStreak.rideList|length }} {{ currentStreak.rideList|length == 1 ? 'Tour' : 'Touren' }}</b>
+                    <small>Aktuelle Serie, seit {{ currentStreak.startDateTime|date('d.m.Y') }}</small>
+                {% else %}
+                    <b>0 Touren</b>
+                    <small>Aktuelle Serie</small>
+                {% endif %}
+            </div>
+            {% if longestStreak %}
+                <div>
+                    <b>{{ longestStreak.rideList|length }} {{ longestStreak.rideList|length == 1 ? 'Tour' : 'Touren' }}</b>
+                    <small>Längste Serie, {{ longestStreak.startDateTime|date('d.m.Y') }} bis {{ longestStreak.endDateTime|date('d.m.Y') }}</small>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% else %}
+    <section class="cm-card cm-pad">
+        <p class="cm-dim mb-0">Du hast bislang an keinen Touren teilgenommen.</p>
+    </section>
+{% endif %}
