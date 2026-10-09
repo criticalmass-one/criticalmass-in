@@ -1,0 +1,25 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}E-Mail-Adresse ändern{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb"><a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a></div>
+        <h1>E-Mail-Adresse ändern</h1>
+    </div>
+
+    <section class="cm-card cm-pad cm-acc-form">
+        {{ form_start(userEmailForm) }}
+            {{ form_row(userEmailForm.email, { label: 'E-Mail-Adresse', help: 'Wird nicht öffentlich angezeigt. An diese Adresse geht künftig dein Anmeldelink.' }) }}
+
+            <div class="cm-btn-row">
+                <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+                <a href="{{ path('criticalmass_user_usermanagement') }}" class="cm-btn">Abbrechen</a>
+            </div>
+        {{ form_end(userEmailForm) }}
+    </section>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}
