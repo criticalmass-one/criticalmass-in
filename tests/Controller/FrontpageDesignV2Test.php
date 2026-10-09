@@ -69,6 +69,38 @@ class FrontpageDesignV2Test extends AbstractControllerTestCase
         self::assertStringNotContainsString('class="card border-0 shadow-sm mb-3', $newHtml);
     }
 
+    public function testAccountChoiceWinsOverCookie(): void
+    {
+        $client = static::createClient();
+        $em = static::getContainer()->get('doctrine')->getManager();
+
+        $user = $this->getUser('cyclist@criticalmass.in');
+        $user->setDesignV2(true);
+        $em->flush();
+
+        $this->loginAs($client, 'cyclist@criticalmass.in');
+        $client->getCookieJar()->set(new Cookie(DesignChoice::COOKIE, DesignChoice::V1));
+
+        $client->request('GET', '/');
+
+        self::assertSelectorExists('body.cm-v2');
+        self::assertSelectorTextContains('.cm-me', $user->getUsername());
+        self::assertSelectorExists('.cm-sidenav a.cm-upload[href="/upload"]');
+
+        $user = $this->getUser('cyclist@criticalmass.in');
+        $user->setDesignV2(false);
+        static::getContainer()->get('doctrine')->getManager()->flush();
+        $client->getCookieJar()->set(new Cookie(DesignChoice::COOKIE, DesignChoice::V2));
+
+        $client->request('GET', '/');
+
+        self::assertSelectorNotExists('body.cm-v2');
+
+        $user = $this->getUser('cyclist@criticalmass.in');
+        $user->setDesignV2(null);
+        static::getContainer()->get('doctrine')->getManager()->flush();
+    }
+
     public function testOldPageInNewDesignShowsHint(): void
     {
         $client = static::createClient();
