@@ -1,0 +1,6 @@
+{# Parameter: cycle #}
+{%- if cycle.rideCalculatorFqcn and cycle.description -%}
+    {{ cycle.description }}
+{%- else -%}
+    am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} im Monat
+{%- endif -%}

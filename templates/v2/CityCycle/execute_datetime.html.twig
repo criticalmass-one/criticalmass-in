@@ -1,0 +1,27 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Turnus auslösen{% endblock %}
+
+{% block content %}
+    {% include 'v2/CityCycle/_head.html.twig' with { city: cityCycle.city, heading: 'Touren generieren' } %}
+
+    {% include 'v2/CityCycle/_summary.html.twig' with { cityCycle: cityCycle } %}
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form' } }) }}
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>Zeitraum</legend>
+
+            <div class="cm-form-row">
+                {{ form_row(form.fromDate, { label: 'Startdatum' }) }}
+                {{ form_row(form.untilDate, { label: 'Enddatum' }) }}
+            </div>
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">Abbrechen</a>
+            {{ form_widget(form.submit, { label: 'Weiter zur Vorschau', attr: { class: 'cm-btn cm-btn-go' } }) }}
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
