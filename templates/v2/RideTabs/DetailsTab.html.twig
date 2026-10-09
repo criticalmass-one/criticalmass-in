@@ -66,7 +66,7 @@
         <p class="cm-source">
             {% for profile in socialNetworkProfiles %}
                 {% set network = getNetwork(profile.network) %}
-                <a href="{{ profile.identifier }}" target="_blank" rel="noopener">{{ network ? network.name : profile.network }}</a>{{ not loop.last ? ', ' }}
+                {% if network %}<a href="{{ profile.identifier }}" target="_blank" rel="noopener">{{ network.name }}</a>{{ not loop.last ? ', ' }}{% endif %}
             {% endfor %}
         </p>
     {% endif %}

@@ -10,7 +10,15 @@
         {% else %}
             <span></span>
         {% endif %}
-        <span>Seite {{ page }} von {{ pages }}</span>
+        <span class="cm-pagenums">
+            {% for p in 1..pages %}
+                {% if p == 1 or p == pages or (p >= page - 2 and p <= page + 2) %}
+                    {% if p == page %}<b aria-current="page">{{ p }}</b>{% else %}<a href="{{ path(route, params|merge({ page: p })) }}">{{ p }}</a>{% endif %}
+                {% elseif p == page - 3 or p == page + 3 %}
+                    <span aria-hidden="true">…</span>
+                {% endif %}
+            {% endfor %}
+        </span>
         {% if page < pages %}
             <a class="cm-btn" href="{{ path(route, params|merge({ page: page + 1 })) }}">Nächste Seite</a>
         {% else %}

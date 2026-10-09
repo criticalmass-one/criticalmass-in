@@ -156,7 +156,7 @@
                         <span>
                             {% set photographers = [] %}
                             {% for photo in photos %}{% if photo.user and photo.user.username not in photographers %}{% set photographers = photographers|merge([photo.user.username]) %}{% endif %}{% endfor %}
-                            {% if photographers is not empty %}
+                            {% if photographers is not empty and (app.user or not ride.restrictedPhotoAccess) %}
                                 Von {{ photographers|slice(0, 3)|join(', ', ' und ') }}{% if photographers|length > 3 %} und {{ photographers|length - 3 }} weiteren{% endif %}
                             {% endif %}
                         </span>

@@ -96,7 +96,7 @@
         {% endif %}
     </section>
 
-    {% set posts = photo.posts|filter(post => post.enabled)|sort((a, b) => a.dateTime <=> b.dateTime) %}
+    {% set posts = photo.posts|filter(post => post.enabled)|sort((a, b) => b.dateTime <=> a.dateTime) %}
     <section class="cm-card cm-sect" id="comments">
         <h2>
             Kommentare{% if posts|length > 0 %} <span class="cm-cnt">{{ posts|length }}</span>{% endif %}

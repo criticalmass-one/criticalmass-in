@@ -16,7 +16,7 @@
             <ul class="cm-list">
                 {% for subride in subrides %}
                     <li>
-                        <span class="cm-dim">{{ subride.dateTime|date('H:i', ride.city.timezone) }}</span>
+                        <span class="cm-dim">{{ subride.dateTime.format('H:i') }}</span>
                         <div class="flex-grow-1">
                             <b>{{ subride.title }}</b>{% if subride.location %}, {{ subride.location }}{% endif %}
                             {% if subride.description %}<div class="cm-dim">{{ subride.description|nl2br }}</div>{% endif %}
