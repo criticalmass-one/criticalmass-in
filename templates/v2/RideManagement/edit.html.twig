@@ -1,0 +1,126 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set isNew = ride.id is null %}
+
+{% block title %}{{ isNew ? 'Tour in ' ~ city.city ~ ' eintragen' : 'Tour bearbeiten' }}{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ object_path(city) }}">{{ city.city }}</a>
+            {% if not isNew %} / <a href="{{ object_path(ride) }}">{{ ride.title }}</a>{% endif %}
+        </div>
+        <h1>{{ isNew ? 'Tour in ' ~ city.city ~ ' eintragen' : 'Tour bearbeiten' }}</h1>
+    </header>
+
+    {% if isNew and city.cycles|length > 0 %}
+        <section class="cm-card cm-pad cm-form-cycles">
+            <p>Diese Touren werden jeden Monat automatisch angelegt. Schau bitte nach, ob deine Tour schon existiert.</p>
+            <ul class="cm-list">
+                {% for cycle in city.cycles %}
+                    <li>
+                        am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}{% if cycle.time %} um {{ cycle.time|date('H:i', city.timezone) }} Uhr{% endif %}{% if cycle.location %}, {{ cycle.location }}{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form', 'data-controller': 'ride-date-checker' } }) }}
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>Wann und was</legend>
+
+            <div class="cm-form-row">
+                <div class="mb-3">
+                    {{ form_label(form.dateTime.date, 'Datum') }}
+                    {{ form_widget(form.dateTime.date, { attr: { 'data-ride-date-checker-target': 'date', 'data-action': 'change->ride-date-checker#checkDate' } }) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.dateTime.time, 'Uhrzeit') }}
+                    {{ form_widget(form.dateTime.time) }}
+                </div>
+            </div>
+            {% if form_errors(form.dateTime) %}
+                <div class="invalid-feedback d-block mb-3">{{ form_errors(form.dateTime) }}</div>
+            {% endif %}
+
+            <div class="cm-flash d-none mb-3" role="alert" data-ride-date-checker-target="doubleMonthMessage">
+                <span>Für diesen Monat gibt es schon eine Tour. Bist du sicher, dass zwei Touren stattfinden?</span>
+            </div>
+            <div class="cm-flash cm-flash-error d-none mb-3" role="alert" data-ride-date-checker-target="doubleDayMessage">
+                <span>An diesem Tag findet bereits eine Tour statt. Zwei Touren an einem Tag können noch nicht verwaltet werden.</span>
+            </div>
+
+            <div class="cm-form-row">
+                <div class="mb-3">
+                    {{ form_label(form.rideType, 'Art der Tour') }}
+                    <select id="{{ form.rideType.vars.id }}" name="{{ form.rideType.vars.full_name }}" class="form-select" required>
+                        {% for choice in form.rideType.vars.choices %}
+                            <option value="{{ choice.value }}"{% if choice is selectedchoice(form.rideType.vars.value) %} selected{% endif %}>{{ choice.data.label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% do form.rideType.setRendered() %}
+                </div>
+                {{ form_row(form.title, { label: 'Titel' }) }}
+            </div>
+
+            {% if form.slug is defined %}
+                {{ form_row(form.slug, { label: 'Slug' }) }}
+            {% endif %}
+
+            {% if form.enabled is defined %}
+                {{ form_row(form.enabled, { label: 'Tour aktivieren' }) }}
+            {% endif %}
+        </fieldset>
+
+        <fieldset>
+            <legend>Treffpunkt</legend>
+
+            <div class="mb-3">
+                {{ form_label(form.location, 'Bezeichnung') }}
+                <div class="cm-with-btn">
+                    {{ form_widget(form.location) }}
+                    <button class="cm-btn" type="button"
+                            data-controller="geocoding"
+                            data-action="click->geocoding#search"
+                            data-geocoding-query-suffix-value="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
+                            data-geocoding-query-selector-value="#{{ form.location.vars.id }}"
+                            aria-label="Auf der Karte suchen">
+                        <svg width="16" height="16" aria-hidden="true"><use href="#i-search"/></svg>
+                    </button>
+                </div>
+                <div class="form-text">Ein Name, den auch Ortsfremde verstehen, ohne Wegbeschreibung. Leer lassen, wenn der Treffpunkt noch nicht feststeht.</div>
+            </div>
+
+            <div class="cm-form-map"
+                 data-controller="map--form-map"
+                 data-map--form-map-center-latitude-value="{{ ride.latitude }}"
+                 data-map--form-map-center-longitude-value="{{ ride.longitude }}"
+                 data-map--form-map-zoom-value="13"
+                 data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                 data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                 data-map--form-map-marker-icon-value="fa-bicycle"
+                 data-map--form-map-marker-color-value="red"
+                 data-map--form-map-marker-shape-value="circle"
+                 data-map--form-map-marker-prefix-value="fas">
+            </div>
+            {{ form_widget(form.latitude) }}
+            {{ form_widget(form.longitude) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>Beschreibung</legend>
+            {{ form_widget(form.description, { attr: { rows: 5, 'aria-label': 'Beschreibung' } }) }}
+            <div class="form-text">Nur was diese eine Tour betrifft. Alles Allgemeine gehört in die Beschreibung der Stadt.</div>
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ isNew ? object_path(city) : object_path(ride) }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go" data-ride-date-checker-target="submitButton">Speichern</button>
+        </div>
+
+        {% do form.save.setRendered() %}
+    {{ form_end(form) }}
+{% endblock %}
