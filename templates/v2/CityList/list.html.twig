@@ -1,0 +1,121 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Städte-Übersicht{% endblock %}
+
+{% macro zeilen(models) %}
+    {% for model in models %}
+        {% set city = model.city %}
+        <tr data-city-slug="{{ city.getMainSlugString() }}">
+            <td><a href="{{ object_path(city) }}">{{ city.city }}</a></td>
+            <td class="cm-cl-next">
+                {% if model.currentRide %}
+                    <a href="{{ object_path(model.currentRide) }}">{{ model.currentRide.dateTime|format_datetime(pattern=(model.currentRide.dateTime|date('Y') == 'now'|date('Y') ? 'EEE d.M., HH:mm' : 'd.M.yyyy, HH:mm'), timezone=city.timezone) }}</a>
+                {% endif %}
+            </td>
+            <td class="cm-cl-cycle">
+                {% for cycle in model.cycles %}
+                    <span>am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', 'UTC') }} Uhr</span>
+                {% endfor %}
+            </td>
+            <td class="cm-cl-n"><a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}">{{ model.countRides }}</a></td>
+        </tr>
+    {% endfor %}
+{% endmacro %}
+
+{% macro tabelle(cityList, id) %}
+    {% import _self as liste %}
+    {% set laender = {} %}
+    {% for model in cityList %}
+        {% set land = model.city.country ? model.city.country.name : 'Ohne Land' %}
+        {% set laender = laender|merge({ (land): (laender[land] ?? [])|merge([model]) }) %}
+    {% endfor %}
+
+    <div id="{{ id }}">
+        {% for land, models in laender|sort((a, b) => b|length <=> a|length) %}
+            <section class="cm-card cm-cl-land" id="{{ id }}-{{ land|lower|replace({' ': '-'}) }}">
+                <div class="cm-cl-head">
+                    <h2>{{ land }}</h2>
+                    <span>{{ models|length }} {{ models|length == 1 ? 'Stadt' : 'Städte' }}</span>
+                </div>
+
+                {% set teile = {} %}
+                {% for model in models %}
+                    {% set teil = model.city.region and model.city.country ? model.city.region.name : '' %}
+                    {% set teile = teile|merge({ (teil): (teile[teil] ?? [])|merge([model]) }) %}
+                {% endfor %}
+
+                <table class="cm-cl-tbl">
+                    <thead>
+                        <tr>
+                            <th>Stadt</th>
+                            <th>aktuelle Tour</th>
+                            <th class="cm-cl-cycle">Turnus</th>
+                            <th class="cm-cl-n">Touren</th>
+                        </tr>
+                    </thead>
+                    {% for teil in teile|keys|sort %}
+                        <tbody>
+                            {% if teile|length > 1 and teil %}
+                                <tr class="cm-cl-sub"><th colspan="4">{{ teil }}</th></tr>
+                            {% endif %}
+                            {{ liste.zeilen(teile[teil]) }}
+                        </tbody>
+                    {% endfor %}
+                </table>
+            </section>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as liste %}
+
+    <div class="cm-cl-top">
+        <div class="cm-page-head">
+            <h1>Städte</h1>
+            <p>{{ cityList|length }} Städte, in denen zuletzt etwas los war</p>
+        </div>
+        <div class="cm-cl-links">
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_region_world') }}">Verzeichnis</a>
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_explore') }}">
+                <svg width="18" height="18" aria-hidden="true"><use href="#i-map"/></svg>Karte
+            </a>
+        </div>
+    </div>
+
+    {% set index = {} %}
+    {% for model in cityList %}
+        {% set land = model.city.country ? model.city.country.name : 'Ohne Land' %}
+        {% set index = index|merge({ (land): (index[land] ?? 0) + 1 }) %}
+    {% endfor %}
+
+    {% if index|length > 1 %}
+        <nav class="cm-cl-index" aria-label="Länder">
+            {% for land, anzahl in index|sort((a, b) => b <=> a) %}
+                <a href="#city-list-table-{{ land|lower|replace({' ': '-'}) }}"><b>{{ anzahl }}</b><small>{{ land }}</small></a>
+            {% endfor %}
+        </nav>
+    {% endif %}
+
+    {{ liste.tabelle(cityList, 'city-list-table') }}
+
+    <p class="cm-cl-fine">
+        Die Angaben stammen aus verschiedenen Quellen im Internet und können veraltet oder falsch sein.
+        Überprüfe bitte weitere Quellen, bevor du dich auf den Weg machst.
+    </p>
+
+    {% if inactiveCityList is not empty %}
+        <details class="cm-cl-inactive" id="inactive-city-list">
+            <summary>{{ inactiveCityList|length }} weitere Städte ohne Lebenszeichen in den letzten sechs Monaten</summary>
+
+            <p class="cm-dim">
+                Aus diesen Städten sind seit einem halben Jahr keine Teilnahmen, Fotos, Tracks oder Beiträge
+                in sozialen Netzwerken mehr bei uns angekommen. Womöglich fährt dort keine Critical Mass mehr,
+                oder es hat nur noch niemand davon erzählt. Wenn du es besser weißt, freuen wir uns über
+                aktuelle Fotos, Tracks oder eingetragene Termine.
+            </p>
+
+            {{ liste.tabelle(inactiveCityList, 'inactive-city-list-table') }}
+        </details>
+    {% endif %}
+{% endblock %}

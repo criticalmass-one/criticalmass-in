@@ -1,0 +1,73 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Critical Mass in {{ region.name }}{% endblock %}
+
+{% block content %}
+    <div class="cm-cl-top">
+        <div class="cm-page-head">
+            <div class="cm-crumb">
+                {% if region.isWorld() %}
+                    Verzeichnis
+                {% else %}
+                    <a href="{{ path('caldera_criticalmass_region_world') }}">Verzeichnis</a>
+                    {% if region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld() %}
+                        / <a href="{{ object_path(region.parent.parent.parent) }}">{{ region.parent.parent.parent.name }}</a>
+                    {% endif %}
+                    {% if region.parent and region.parent.parent and not region.parent.parent.isWorld() %}
+                        / <a href="{{ object_path(region.parent.parent) }}">{{ region.parent.parent.name }}</a>
+                    {% endif %}
+                    {% if region.parent and not region.parent.isWorld() %}
+                        / <a href="{{ object_path(region.parent) }}">{{ region.parent.name }}</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <h1>{{ region.isWorld() ? 'Critical Mass weltweit' : 'Critical Mass in ' ~ region.name }}</h1>
+            {% if allCities|length > 0 %}
+                <p>{{ allCities|length }} {{ allCities|length == 1 ? 'Stadt' : 'Städte' }}</p>
+            {% endif %}
+        </div>
+
+        {% if app.getUser() and region.isLevel(3) %}
+            <div class="cm-cl-links">
+                <a class="cm-btn cm-btn-go" href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}">
+                    <svg width="18" height="18" aria-hidden="true"><use href="#i-plus"/></svg>Stadt hinzufügen
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if allCities|length > 0 %}
+        <div class="cm-card cm-rg-map">
+            <div id="region-map"
+                 data-controller="map--query-map"
+                 data-map--query-map-api-type-value="city"
+                 data-map--query-map-api-query-value="{{ path('caldera_criticalmass_rest_city_list', { regionSlug: region.slug, size: 500 }) }}">
+            </div>
+        </div>
+    {% endif %}
+
+    {% if regions|length > 0 %}
+        <section class="cm-card cm-pad">
+            <h2 class="cm-rg-h">{{ region.isWorld() ? 'Kontinente' : 'Unterregionen in ' ~ region.name }}</h2>
+            <ul class="cm-rg-list">
+                {% for region2 in regions %}
+                    <li>
+                        <a href="{{ object_path(region2) }}">{{ region2.name }}</a>
+                        <span>{{ cityCounter[region2.id] }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+
+    {% if cities|length > 0 %}
+        <section class="cm-card cm-pad">
+            <h2 class="cm-rg-h">Städte in {{ region.name }}</h2>
+            <ul class="cm-rg-list cm-rg-cities">
+                {% for city in cities %}
+                    <li><a href="{{ object_path(city) }}">{{ city.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+{% endblock %}
