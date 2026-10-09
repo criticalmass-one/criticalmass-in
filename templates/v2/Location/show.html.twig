@@ -1,0 +1,63 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Treffpunkt {{ location.title }} der {{ location.city.title }}{% endblock %}
+
+{% block content %}
+    {% set city = location.city %}
+    <header class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ object_path(city) }}">{{ city.city }}</a>
+            {% if ride %} / <a href="{{ object_path(ride) }}">{{ ride.title }}</a>{% else %} / Treffpunkte{% endif %}
+        </div>
+        <h1>{{ location.title }}</h1>
+    </header>
+
+    <section class="cm-card cm-pad">
+        {% if location.description %}
+            <div class="cm-md">{{ location.description|markdown }}</div>
+        {% endif %}
+
+        {% if location.hasCoordinates() %}
+            <div id="map"
+                 class="cm-map"
+                 data-controller="map--map"
+                 data-map--map-center-latitude-value="{{ location.latitude }}"
+                 data-map--map-center-longitude-value="{{ location.longitude }}"
+                 data-map--map-zoom-value="15"
+                 data-map--map-lock-map-value="true"
+                 data-map--map-marker-latitude-value="{{ location.latitude }}"
+                 data-map--map-marker-longitude-value="{{ location.longitude }}"
+                 data-map--map-marker-type-value="location"></div>
+        {% endif %}
+    </section>
+
+    <div class="cm-adm-cols">
+        {% if rides|length > 0 %}
+            <section class="cm-card cm-sect">
+                <h2>Touren von diesem Treffpunkt</h2>
+                <ul class="cm-list">
+                    {% for r in rides %}
+                        {% set ridePath = object_path(r) %}
+                        {% set date = r.dateTime ? r.dateTime|date('d.m.Y', r.city.timezone) : '–' %}
+                        <li>{% if ridePath %}<a href="{{ ridePath }}">{{ date }}</a>{% else %}{{ date }}{% endif %}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+
+        <section class="cm-card cm-sect">
+            <h2>Andere Treffpunkte in {{ city.city }}</h2>
+            <ul class="cm-list">
+                {% for other in locations %}
+                    <li>
+                        {% if other.id == location.id %}
+                            <b>{{ other.title }}</b>
+                        {% else %}
+                            <a href="{{ object_path(other) }}">{{ other.title }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+{% endblock %}
