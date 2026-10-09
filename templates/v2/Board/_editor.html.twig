@@ -1,4 +1,4 @@
-{# Parameter: field, rows, editorId, placeholder, inputName (optional, fuer von Hand gebaute Formulare) #}
+{# Parameter: field, rows, editorId, placeholder #}
 <div class="cm-editor"
      id="{{ editorId|default('markdown-editor') }}"
      data-controller="markdown-editor"
@@ -20,19 +20,12 @@
     </div>
 
     <div data-markdown-editor-target="writePane">
-        {% if field is defined and field %}
-            {{ form_widget(field, { 'attr': {
-                'class': 'form-control',
-                'rows': rows|default(8),
-                'placeholder': placeholder|default('Schreibe hier deinen Beitrag. Markdown ist erlaubt.'),
-                'data-markdown-editor-target': 'input'
-            } }) }}
-        {% else %}
-            <textarea class="form-control" name="{{ inputName }}" id="{{ editorId|default('markdown-editor') }}-input"
-                      rows="{{ rows|default(8) }}" required
-                      placeholder="{{ placeholder|default('Schreibe hier deinen Beitrag. Markdown ist erlaubt.') }}"
-                      data-markdown-editor-target="input"></textarea>
-        {% endif %}
+        {{ form_widget(field, { 'attr': {
+            'class': 'form-control',
+            'rows': rows|default(8),
+            'placeholder': placeholder|default('Schreibe hier deinen Beitrag. Markdown ist erlaubt.'),
+            'data-markdown-editor-target': 'input'
+        } }) }}
     </div>
 
     <div class="cm-editor-preview cm-entry-text" data-markdown-editor-target="previewPane" hidden>

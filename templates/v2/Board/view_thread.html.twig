@@ -98,27 +98,7 @@
     {% if thread.locked %}
         <p class="cm-card cm-thread-closed">Dieses Thema wurde geschlossen.</p>
     {% elseif canReply %}
-        <section class="cm-card cm-forum-form cm-reply" id="antworten">
-            <form method="post" id="form-post" action="{{ path('caldera_criticalmass_timeline_post_write_thread', { 'threadSlug': thread.slug }) }}">
-                <div class="cm-reply-row">
-                    {% include 'v2/Layout/_avatar.html.twig' with { user: app.user } %}
-                    <div>
-                        <label class="form-label" for="markdown-editor-reply-input">Antworten</label>
-                        {% include 'v2/Board/_editor.html.twig' with {
-                            editorId: 'markdown-editor-reply',
-                            inputName: 'post[text]',
-                            rows: 6,
-                            placeholder: 'Deine Antwort'
-                        } %}
-                        {# PostType hat nur das Feld text; der Token-Name ist der Formularname. #}
-                        <input type="hidden" name="post[_token]" value="{{ csrf_token('post') }}">
-                        <div class="cm-form-foot">
-                            <button type="submit" id="button-submit-post" class="cm-btn cm-btn-go">Antwort senden</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </section>
+        {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadSlug': thread.slug })) }}
     {% endif %}
 {% endblock %}
 
