@@ -1,6 +1,7 @@
 {% set action %}hat einen Track von der <a href="{{ object_path(item.ride) }}">{{ item.rideTitle }}</a> hochgeladen{% endset %}
 <article class="cm-card cm-post{% if not item.rideEnabled %} cm-post-disabled{% endif %}">
-    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: include('Timeline/_includes/ride_when.html.twig', { ride: item.ride }) } %}
+    {% set where %}{% include 'Timeline/_includes/ride_when.html.twig' with { ride: item.ride } %}{% endset %}
+    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: where } %}
 
     {% if item.polyline %}
         <div class="cm-map"

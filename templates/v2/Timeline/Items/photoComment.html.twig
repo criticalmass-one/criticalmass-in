@@ -1,7 +1,8 @@
 {% set count = item.postList|length %}
 {% set action %}hat {{ count == 1 ? 'ein Foto' : count ~ ' Fotos' }} von der <a href="{{ object_path(item.ride) }}">{{ item.ride.title }}</a> kommentiert{% endset %}
 <article class="cm-card cm-post">
-    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: include('Timeline/_includes/ride_when.html.twig', { ride: item.ride }) } %}
+    {% set where %}{% include 'Timeline/_includes/ride_when.html.twig' with { ride: item.ride } %}{% endset %}
+    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: where } %}
 
     <ul class="cm-photo-comments">
         {% for post in item.postList %}
