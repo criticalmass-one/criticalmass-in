@@ -1,0 +1,31 @@
+{% set posts = ride.posts|filter(post => post.enabled)|sort((a, b) => a.dateTime <=> b.dateTime) %}
+<section class="cm-card cm-sect" id="comments">
+    <h2>
+        Kommentare{% if posts|length > 0 %} <span class="cm-cnt">{{ posts|length }}</span>{% endif %}
+        <span class="cm-sect-act">
+            {% if app.user %}
+                <button type="button" class="cm-btn" data-bs-toggle="modal" data-bs-target="#modal-add-post">Kommentar schreiben</button>
+            {% else %}
+                <button type="button" class="cm-btn"
+                        data-controller="hint-modal"
+                        data-modal-hint-title="{{ 'hint_modal.ride.post_write_button.title'|trans }}"
+                        data-modal-hint-text="{{ 'hint_modal.ride.post_write_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                        data-modal-hint-size="md">Kommentar schreiben</button>
+            {% endif %}
+        </span>
+    </h2>
+
+    {% if posts|length > 0 %}
+        <div data-controller="scroll-to-post">
+            {% for post in posts %}
+                {% include 'v2/Ride/Includes/_post.html.twig' with { post: post, ride: ride } %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="cm-empty">Noch keine Kommentare.</p>
+    {% endif %}
+</section>
+
+{% if app.user %}
+    {{ render(controller('App\\Controller\\PostController::writeRideAction', { 'id': ride.id, 'noButton': true })) }}
+{% endif %}

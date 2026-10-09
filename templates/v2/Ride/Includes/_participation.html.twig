@@ -1,0 +1,49 @@
+{% macro option(ride, status, label) %}
+    <li>
+        <form method="post" action="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: status }) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('participation_' ~ ride.id) }}">
+            <button type="submit" class="dropdown-item">{{ label }}</button>
+        </form>
+    </li>
+{% endmacro %}
+{% import _self as p %}
+
+{% if app.user %}
+    <div class="dropdown">
+        {% if participation == null or (participation.goingMaybe and pastRide) %}
+            <button type="button" class="cm-btn cm-btn-go dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ pastRide ? 'Teilgenommen?' : 'Dabei?' }}</button>
+            <ul class="dropdown-menu cm-menu">
+                {{ p.option(ride, 'yes', 'Ja') }}
+                {% if pastRide %}
+                    {{ p.option(ride, 'no', 'Nein') }}
+                {% else %}
+                    {{ p.option(ride, 'maybe', 'Vielleicht') }}
+                {% endif %}
+            </ul>
+        {% elseif participation.goingYes %}
+            <button type="button" class="cm-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ pastRide ? 'Teilgenommen' : 'Dabei' }}</button>
+            <ul class="dropdown-menu cm-menu">
+                {% if not pastRide %}{{ p.option(ride, 'maybe', 'Vielleicht') }}{% endif %}
+                {{ p.option(ride, 'no', pastRide ? 'Nicht teilgenommen' : 'Absagen') }}
+            </ul>
+        {% elseif participation.goingMaybe %}
+            <button type="button" class="cm-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Vielleicht</button>
+            <ul class="dropdown-menu cm-menu">
+                {{ p.option(ride, 'yes', 'Zusagen') }}
+                {{ p.option(ride, 'no', 'Absagen') }}
+            </ul>
+        {% elseif participation.goingNo %}
+            <button type="button" class="cm-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ pastRide ? 'Nicht teilgenommen' : 'Nicht dabei' }}</button>
+            <ul class="dropdown-menu cm-menu">
+                {{ p.option(ride, 'yes', pastRide ? 'Doch teilgenommen' : 'Teilnehmen') }}
+                {% if not pastRide %}{{ p.option(ride, 'maybe', 'Vielleicht') }}{% endif %}
+            </ul>
+        {% endif %}
+    </div>
+{% else %}
+    <button type="button" class="cm-btn cm-btn-go"
+            data-controller="hint-modal"
+            data-modal-hint-title="{{ 'hint_modal.ride.participation_button.title'|trans }}"
+            data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+            data-modal-hint-size="md">{{ pastRide ? 'Teilgenommen?' : 'Dabei?' }}</button>
+{% endif %}

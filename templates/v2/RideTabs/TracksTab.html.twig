@@ -1,0 +1,48 @@
+<section class="cm-card cm-sect" id="tracks">
+    <h2>
+        Tracks{% if tracks|length > 0 %} <span class="cm-cnt">{{ tracks|length }}</span>{% endif %}
+        <span class="cm-sect-act">
+            {% if app.user %}
+                <span class="dropdown">
+                    <button type="button" class="cm-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Track hinzufügen</button>
+                    <ul class="dropdown-menu dropdown-menu-end cm-menu">
+                        {% if feature('strava_track_upload') %}
+                            <li><a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">Von Strava importieren</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}">GPX-Datei hochladen</a></li>
+                        <li><a class="dropdown-item" href="{{ path('caldera_criticalmass_unified_upload') }}">Tracks und Fotos hochladen</a></li>
+                    </ul>
+                </span>
+            {% else %}
+                <button type="button" class="cm-btn"
+                        data-controller="hint-modal"
+                        data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}"
+                        data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                        data-modal-hint-size="md">Track hinzufügen</button>
+            {% endif %}
+        </span>
+    </h2>
+
+    {% if tracks|length > 0 %}
+        {% set zone = ride.city.timezone %}
+        <table class="cm-tbl">
+            <thead>
+                <tr><th>Von</th><th class="cm-r cm-hide-s">Start</th><th class="cm-r">Dauer</th><th class="cm-r">Länge</th><th class="cm-r cm-hide-s">Tempo</th></tr>
+            </thead>
+            <tbody>
+                {% for track in tracks %}
+                    {% set velocity = average_velocity(track) %}
+                    <tr>
+                        <td><span class="cm-who">{% include 'v2/Layout/_avatar.html.twig' with { user: track.user, small: true } %}{{ track.user.username }}</span></td>
+                        <td class="cm-r cm-hide-s">{{ track.startDateTime ? track.startDateTime|date('H:i', zone) : '–' }}</td>
+                        <td class="cm-r">{{ track.durationInSeconds ? human_duration(track.durationInSeconds) : '–' }}</td>
+                        <td class="cm-r">{{ track.distance ? track.distance|number_format(1, ',', '.') ~ ' km' : '–' }}</td>
+                        <td class="cm-r cm-hide-s">{{ velocity ? velocity|number_format(1, ',', '.') ~ ' km/h' : '–' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="cm-empty">Noch keine Tracks.</p>
+    {% endif %}
+</section>
