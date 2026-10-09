@@ -1,0 +1,36 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set forumUrl = board.enableBoard is defined ? object_path(board, 'caldera_criticalmass_board_listcitythreads') : object_path(board) %}
+
+{% block title %}Neues Thema{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb">
+        <a href="{{ path('caldera_criticalmass_board_overview') }}">Forum</a> /
+        <a href="{{ forumUrl }}">{{ board.title }}</a>
+    </div>
+    <div class="cm-forum-head"><h1>Neues Thema</h1></div>
+
+    <section class="cm-card cm-forum-form">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <div class="mb-3">
+            <label class="form-label" for="{{ form.title.vars.id }}">Titel</label>
+            {{ form_widget(form.title, { 'attr': { 'class': 'form-control' } }) }}
+            {{ form_errors(form.title) }}
+        </div>
+
+        <div>
+            <label class="form-label" for="{{ form.message.vars.id }}">Beitrag</label>
+            {% include 'v2/Board/_editor.html.twig' with { field: form.message, rows: 10 } %}
+            {{ form_errors(form.message) }}
+        </div>
+
+        <div class="cm-form-foot">
+            <a class="cm-btn" href="{{ forumUrl }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go">Thema anlegen</button>
+        </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

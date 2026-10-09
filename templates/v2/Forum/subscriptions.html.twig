@@ -1,0 +1,56 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Meine Forum-Abonnements{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb"><a href="{{ path('caldera_criticalmass_board_overview') }}">Forum</a></div>
+    <div class="cm-forum-head"><h1>Meine Abonnements</h1></div>
+
+    <section class="cm-card cm-forum-switch">
+        <form method="post" action="{{ path('caldera_criticalmass_forum_subscriptions') }}" data-controller="auto-submit">
+            <input type="hidden" name="_token" value="{{ csrf_token('forum-settings') }}">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch"
+                       id="forum-notifications" name="notifications" value="1"
+                       {{ notificationsEnabled ? 'checked' : '' }}
+                       data-action="change->auto-submit#submit">
+                <label class="form-check-label" for="forum-notifications">Benachrichtigungen per E-Mail</label>
+            </div>
+            <p>Steht der Schalter aus, bleiben deine Abonnements bestehen, es geht nur keine Mail mehr raus.</p>
+            <noscript><button type="submit" class="cm-btn mt-2">Speichern</button></noscript>
+        </form>
+    </section>
+
+    {% if subscriptions is empty %}
+        <p class="cm-card cm-forum-empty">Noch nichts abonniert.</p>
+    {% else %}
+        <section class="cm-card">
+            <ul class="cm-forum-rows list-unstyled mb-0">
+                {% for subscription in subscriptions %}
+                    <li>
+                        <div>
+                            {% if subscription.globalScope %}
+                                <a href="{{ path('caldera_criticalmass_board_overview') }}">{{ subscription.label }}</a>
+                            {% elseif subscription.thread %}
+                                <a href="{{ object_path(subscription.thread) }}">{{ subscription.label }}</a>
+                            {% elseif subscription.board %}
+                                <a href="{{ object_path(subscription.board) }}">{{ subscription.label }}</a>
+                            {% elseif subscription.city %}
+                                <a href="{{ object_path(subscription.city, 'caldera_criticalmass_board_listcitythreads') }}">{{ subscription.label }}</a>
+                            {% else %}
+                                <b>{{ subscription.label }}</b>
+                            {% endif %}
+                            <small>
+                                {% if subscription.globalScope %}Gesamtes Forum{% elseif subscription.thread %}Thema{% elseif subscription.board %}Forum{% else %}Stadtforum{% endif %}, seit {{ subscription.createdAt|date('d.m.Y', 'Europe/Berlin') }}
+                            </small>
+                        </div>
+                        <form method="post" action="{{ path('caldera_criticalmass_forum_unsubscribe', { 'id': subscription.id }) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('forum-subscribe') }}">
+                            <button type="submit" class="cm-btn">Beenden</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+{% endblock %}
