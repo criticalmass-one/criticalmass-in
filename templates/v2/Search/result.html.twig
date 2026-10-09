@@ -1,0 +1,89 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Suchergebnisse{% endblock %}
+
+{% set now = date() %}
+{% set sortedRides = rideResults|filter(r => r.dateTime)|sort((a, b) => a.dateTime <=> b.dateTime) %}
+{% set upcomingRides = sortedRides|filter(r => r.dateTime >= now) %}
+{% set pastRides = sortedRides|filter(r => r.dateTime < now)|reverse %}
+{% set undatedRides = rideResults|filter(r => not r.dateTime) %}
+
+{% macro rideRow(ride, withYear) %}
+    {% set ridePath = object_path(ride) %}
+    <tr>
+        <td class="cm-d">
+            {% if ride.dateTime %}
+                <b>{{ ride.dateTime|format_datetime(pattern: withYear ? 'dd.MM.yyyy' : 'EE dd.MM.', timezone: ride.city.timezone) }}</b>{{ ride.dateTime|date('H:i', ride.city.timezone) }}
+            {% endif %}
+        </td>
+        <td>
+            {% if ridePath %}<a href="{{ ridePath }}">{{ ride.title }}</a>{% else %}<b>{{ ride.title }}</b>{% endif %}
+            <div class="cm-dim">{{ ride.city.city }}{% if ride.location %}, {{ ride.location }}{% endif %}</div>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block content %}
+    <form class="cm-q" action="{{ path('caldera_criticalmass_search_query') }}" method="get" role="search">
+        <svg width="20" height="20" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" name="query" value="{{ query }}" aria-label="Suchbegriff" placeholder="Stadt oder Tour suchen" autocomplete="off">
+        <button class="cm-btn" type="submit">Finden</button>
+    </form>
+
+    {% if query is not empty %}
+        <p class="cm-q-count">{{ cityResults|length }} {{ cityResults|length == 1 ? 'Stadt' : 'Städte' }} und {{ rideResults|length }} {{ rideResults|length == 1 ? 'Tour' : 'Touren' }} zu „{{ query }}“</p>
+    {% endif %}
+
+    <div class="cm-grp"><h2>Städte</h2><span>{{ cityResults|length }}</span></div>
+
+    {% if cityResults is empty %}
+        <p class="cm-dim">Keine Städte gefunden.</p>
+    {% else %}
+        <section class="cm-card cm-hits">
+            {% for city in cityResults %}
+                <a class="cm-hit" href="{{ object_path(city) }}">
+                    <span>
+                        <b>{{ city.title }}</b>
+                        {% if city.region %}
+                            <span class="cm-dim">{{ city.region.name }}{% if city.region.parent %}, {{ city.region.parent.name }}{% endif %}</span>
+                        {% endif %}
+                    </span>
+                    {% for cycle in city.cycles %}
+                        <span class="cm-hit-cycle">
+                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}{% if cycle.time %} um {{ cycle.time|date('H:i', city.timezone) }} Uhr{% endif %}{% if cycle.location %}, {{ cycle.location }}{% endif %}
+                        </span>
+                    {% endfor %}
+                </a>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    <div class="cm-grp"><h2>Touren</h2><span>{{ rideResults|length }}</span></div>
+
+    {% if rideResults is empty %}
+        <p class="cm-dim">Keine Touren gefunden.</p>
+    {% else %}
+        <section class="cm-card cm-pad cm-ride-hits">
+            {% if upcomingRides is not empty %}
+                <h3>Demnächst <span>{{ upcomingRides|length }}</span></h3>
+                <table>
+                    {% for ride in upcomingRides %}{{ _self.rideRow(ride, false) }}{% endfor %}
+                </table>
+            {% endif %}
+
+            {% if pastRides is not empty %}
+                <h3>Vergangen <span>{{ pastRides|length }}</span></h3>
+                <table>
+                    {% for ride in pastRides %}{{ _self.rideRow(ride, true) }}{% endfor %}
+                </table>
+            {% endif %}
+
+            {% if undatedRides is not empty %}
+                <h3>Ohne Datum <span>{{ undatedRides|length }}</span></h3>
+                <table>
+                    {% for ride in undatedRides %}{{ _self.rideRow(ride, true) }}{% endfor %}
+                </table>
+            {% endif %}
+        </section>
+    {% endif %}
+{% endblock %}
