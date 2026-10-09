@@ -4,6 +4,13 @@
         <svg width="26" height="26" aria-hidden="true"><use href="#i-bike"/></svg>criticalmass.in
     </a>
 
+    <form class="cm-search" role="search" action="{{ path('caldera_criticalmass_search_query') }}" data-controller="search">
+        <svg width="16" height="16" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" name="query" placeholder="Stadt oder Tour suchen" aria-label="Suche"
+               data-search-target="input" autocomplete="off">
+        <div class="dropdown-menu d-none" data-search-target="results"></div>
+    </form>
+
     <nav aria-label="Hauptnavigation">
         {% include 'v2/Layout/_nav_items.html.twig' with { route: route } %}
     </nav>

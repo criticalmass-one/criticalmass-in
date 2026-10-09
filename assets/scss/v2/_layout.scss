@@ -238,3 +238,48 @@ body.cm-v2 {
     }
   }
 }
+
+// Suche in der linken Spalte. Der search-Controller blendet die Vorschlaege nur
+// ueber d-none ein und aus; .dropdown-menu ist ohne .show aber unsichtbar.
+.cm-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 0 10px;
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-r-s);
+  background: var(--cm-card);
+
+  svg {
+    flex: none;
+    stroke: var(--cm-dim);
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    padding: 8px 0;
+    background: transparent;
+    font-size: .9rem;
+    color: var(--cm-ink);
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &:focus-within {
+    border-color: #b9bdc4;
+  }
+
+  .dropdown-menu {
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+  }
+}
