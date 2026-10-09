@@ -1,0 +1,36 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Social-Media-Vorschau{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a> / <a href="{{ object_path(ride) }}">{{ ride.title }}</a>
+        </div>
+        <h1>Social-Media-Vorschau</h1>
+    </div>
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form' } }) }}
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>Vorschaubild</legend>
+            {% if ride.imageName %}
+                <img class="cm-tt-preview" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}" alt="">
+            {% endif %}
+            {{ form_row(form.imageFile, { label: 'Datei', help: 'Mindestens 1.200 × 630 Pixel. Lade nur Bilder hoch, an denen du die Rechte hast.' }) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>Beschreibung</legend>
+            {{ form_widget(form.socialDescription, { attr: { rows: 4, 'aria-label': 'Beschreibung' } }) }}
+            {{ form_errors(form.socialDescription) }}
+            <div class="form-text">Soziale Netzwerke zeigen meist nur die ersten 140 bis 160 Zeichen.</div>
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ object_path(ride) }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go" id="rideSubmitButton">Speichern</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

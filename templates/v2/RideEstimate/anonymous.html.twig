@@ -1,0 +1,17 @@
+{% extends 'v2/Layout/plain.html.twig' %}
+
+{% block title %}Teilnehmerzahl ergänzen{% endblock %}
+
+{% block content %}
+    <section class="cm-card cm-login">
+        <h1>Teilnehmerzahl ergänzen</h1>
+
+        {{ form_start(estimateForm) }}
+            {{ form_row(estimateForm.estimatedParticipants, {
+                label: 'Wie viele sind bei der Critical Mass in ' ~ ride.city.city ~ ' am ' ~ ride.dateTime|format_datetime(pattern="d. MMMM yyyy", timezone=ride.city.timezone) ~ ' mitgefahren?',
+                attr: { inputmode: 'numeric', autocomplete: 'off' }
+            }) }}
+            <button class="cm-btn cm-btn-go cm-big" type="submit">Absenden</button>
+        {{ form_end(estimateForm) }}
+    </section>
+{% endblock %}
