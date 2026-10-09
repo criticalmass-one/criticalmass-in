@@ -1,0 +1,55 @@
+{# Parameter: post, postNumber, canReply #}
+{% set author = post.user %}
+{% set canReport = post.enabled and (app.user is null or app.user != author) %}
+<article class="cm-entry" id="post-{{ post.id }}">
+    {% if author %}
+        {% include 'v2/Layout/_avatar.html.twig' with { user: author } %}
+    {% else %}
+        <span class="cm-ava cm-ava-ini cm-ava-anon" aria-hidden="true"></span>
+    {% endif %}
+    <div>
+        <div class="cm-entry-meta">
+            <div>
+                {% if author %}
+                    <b><a href="{{ path('caldera_criticalmass_forum_profile', { 'username': author.username }) }}">{{ author.username }}</a></b>
+                    <span class="cm-rank">{{ author.forumRank }}, {{ author.forumPostCount }} {{ author.forumPostCount == 1 ? 'Beitrag' : 'Beiträge' }}{% if author.createdAt %}, dabei seit {{ author.createdAt|date('m/Y', 'Europe/Berlin') }}{% endif %}</span>
+                {% else %}
+                    <b>unbekannt</b>
+                {% endif %}
+            </div>
+            <a class="cm-no" href="#post-{{ post.id }}" title="{{ post.dateTime|time_ago }}">#{{ postNumber }}, {{ post.dateTime|date('j.n.Y, H:i', 'Europe/Berlin') }}</a>
+        </div>
+        <div class="cm-entry-text">{{ post.text|markdown }}</div>
+        {% if post.isEdited %}
+            <p class="cm-entry-edited">bearbeitet am {{ post.updatedAt|date('d.m.Y, H:i', 'Europe/Berlin') }}</p>
+        {% endif %}
+        {% if canReport or app.user %}
+            <div class="cm-entry-actions">
+                {% if app.user and canReply and author %}
+                    <button type="button"
+                            data-controller="quote-post"
+                            data-quote-post-author-value="{{ author.username }}"
+                            data-quote-post-target-value="#markdown-editor-reply"
+                            data-quote-text="{{ post.text }}"
+                            data-action="quote-post#quote">Zitieren</button>
+                {% endif %}
+                {% if app.user and is_granted('edit', post) %}
+                    <a href="{{ path('caldera_criticalmass_post_edit', { 'postId': post.id }) }}">Bearbeiten</a>
+                {% endif %}
+                {% if app.user and is_granted('delete', post) %}
+                    <form method="post"
+                          action="{{ path('caldera_criticalmass_post_disable', { 'postId': post.id }) }}"
+                          data-controller="confirm-submit"
+                          data-confirm-submit-message-value="Diesen Beitrag zurückziehen?"
+                          data-action="submit->confirm-submit#confirm">
+                        <input type="hidden" name="_token" value="{{ csrf_token('forum-moderate') }}">
+                        <button type="submit">Zurückziehen</button>
+                    </form>
+                {% endif %}
+                {% if canReport %}
+                    <a href="{{ path('caldera_criticalmass_post_report', { 'postId': post.id }) }}" rel="nofollow">Melden</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</article>

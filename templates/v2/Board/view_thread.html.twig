@@ -1,0 +1,154 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set forumUrl = thread.city ? object_path(thread.city, 'caldera_criticalmass_board_listcitythreads') : object_path(board) %}
+{% set postCount = posts.getTotalItemCount %}
+{% set canReply = app.user and not thread.locked %}
+
+{% block title %}{{ thread.title }}{% endblock %}
+
+{% block additionalHeaderElements %}
+    {{ parent() }}
+    {% include 'v2/Board/_head_links.html.twig' with { items: posts } %}
+{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb">
+        <a href="{{ path('caldera_criticalmass_board_overview') }}">Forum</a> /
+        <a href="{{ forumUrl }}">{{ board.title }}</a>
+    </div>
+    <div class="cm-forum-head">
+        <div>
+            <h1>{{ thread.title }}</h1>
+            <p>
+                {{ postCount }} {{ postCount == 1 ? 'Beitrag' : 'Beiträge' }}
+                {%- if thread.firstPost and thread.lastPost and thread.firstPost.id != thread.lastPost.id -%}
+                    , {{ thread.firstPost.dateTime|format_datetime(pattern: 'd. MMMM yyyy', locale: 'de', timezone: 'Europe/Berlin') }} bis {{ thread.lastPost.dateTime|format_datetime(pattern: 'd. MMMM yyyy', locale: 'de', timezone: 'Europe/Berlin') }}
+                {%- elseif thread.firstPost -%}
+                    , {{ thread.firstPost.dateTime|format_datetime(pattern: 'd. MMMM yyyy', locale: 'de', timezone: 'Europe/Berlin') }}
+                {%- endif %}
+                {%- if thread.sticky %}, angeheftet{% endif %}
+                {%- if thread.locked %}, geschlossen{% endif %}
+            </p>
+        </div>
+        {% if app.user %}
+            <div class="cm-forum-btns">
+                <form method="post" action="{{ path('caldera_criticalmass_forum_subscribe_thread', { 'threadSlug': thread.slug }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-subscribe') }}">
+                    <button type="submit" class="cm-btn">{{ isSubscribed|default(false) ? 'Abbestellen' : 'Abonnieren' }}</button>
+                </form>
+                {% if canReply %}
+                    <a class="cm-btn cm-btn-go" href="#antworten">Antworten</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% set canPin = is_granted('pin', thread) %}
+    {% set canLock = is_granted('lock', thread) %}
+    {% set canMove = is_granted('move', thread) %}
+    {% set canEdit = is_granted('edit', thread) %}
+    {% set canDelete = is_granted('delete', thread) %}
+    {% if canPin or canLock or canMove or canEdit or canDelete %}
+        <div class="cm-forum-btns cm-forum-mod">
+            {% if canEdit %}
+                <a class="cm-btn cm-btn-quiet" href="{{ path('caldera_criticalmass_board_editthread', { 'threadSlug': thread.slug }) }}">Titel bearbeiten</a>
+            {% endif %}
+            {% if canPin %}
+                <form method="post" action="{{ path('caldera_criticalmass_board_pinthread', { 'threadSlug': thread.slug }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-moderate') }}">
+                    <button type="submit" class="cm-btn cm-btn-quiet">{{ thread.sticky ? 'Lösen' : 'Anheften' }}</button>
+                </form>
+            {% endif %}
+            {% if canLock %}
+                <form method="post" action="{{ path('caldera_criticalmass_board_lockthread', { 'threadSlug': thread.slug }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-moderate') }}">
+                    <button type="submit" class="cm-btn cm-btn-quiet">{{ thread.locked ? 'Öffnen' : 'Schließen' }}</button>
+                </form>
+            {% endif %}
+            {% if canMove %}
+                <a class="cm-btn cm-btn-quiet" href="{{ path('caldera_criticalmass_board_movethread', { 'threadSlug': thread.slug }) }}">Verschieben</a>
+            {% endif %}
+            {% if canDelete %}
+                <form method="post"
+                      action="{{ path('caldera_criticalmass_board_disablethread', { 'threadSlug': thread.slug }) }}"
+                      data-controller="confirm-submit"
+                      data-confirm-submit-message-value="Dieses Thema mitsamt allen Beiträgen zurückziehen?"
+                      data-action="submit->confirm-submit#confirm">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-moderate') }}">
+                    <button type="submit" class="cm-btn cm-btn-quiet">Thema zurückziehen</button>
+                </form>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <section class="cm-card cm-entries">
+        {% for post in posts %}
+            {% include 'v2/Board/_post.html.twig' with {
+                post: post,
+                postNumber: (posts.currentPageNumber - 1) * posts.itemNumberPerPage + loop.index,
+                canReply: canReply
+            } %}
+        {% else %}
+            <p class="cm-forum-empty">Noch keine Beiträge.</p>
+        {% endfor %}
+    </section>
+
+    {% include 'v2/Board/_pager.html.twig' with { items: posts } %}
+
+    {% if thread.locked %}
+        <p class="cm-card cm-thread-closed">Dieses Thema wurde geschlossen.</p>
+    {% elseif canReply %}
+        <section class="cm-card cm-forum-form cm-reply" id="antworten">
+            <form method="post" id="form-post" action="{{ path('caldera_criticalmass_timeline_post_write_thread', { 'threadSlug': thread.slug }) }}">
+                <div class="cm-reply-row">
+                    {% include 'v2/Layout/_avatar.html.twig' with { user: app.user } %}
+                    <div>
+                        <label class="form-label" for="markdown-editor-reply-input">Antworten</label>
+                        {% include 'v2/Board/_editor.html.twig' with {
+                            editorId: 'markdown-editor-reply',
+                            inputName: 'post[text]',
+                            rows: 6,
+                            placeholder: 'Deine Antwort'
+                        } %}
+                        {# PostType hat nur das Feld text; der Token-Name ist der Formularname. #}
+                        <input type="hidden" name="post[_token]" value="{{ csrf_token('post') }}">
+                        <div class="cm-form-foot">
+                            <button type="submit" id="button-submit-post" class="cm-btn cm-btn-go">Antwort senden</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    <div class="cm-box">
+        <h3><a class="cm-plain" href="{{ forumUrl }}">{{ board.title }}</a></h3>
+        <div class="cm-figures">
+            <div><b>{{ board.threadNumber ?? 0 }}</b><small>Themen</small></div>
+            <div><b>{{ board.postNumber ?? 0 }}</b><small>Beiträge</small></div>
+        </div>
+        <a class="cm-more" href="{{ path('caldera_criticalmass_board_overview') }}">Zur Forenübersicht</a>
+    </div>
+
+    {% if posts.pageCount == 1 and posts|length > 1 %}
+        {% set people = {} %}
+        {% for post in posts|filter(p => p.user) %}
+            {% set key = 'u' ~ post.user.id %}
+            {% set people = people|merge({ (key): { user: post.user, count: (people[key].count ?? 0) + 1 } }) %}
+        {% endfor %}
+        <div class="cm-box">
+            <h3>In diesem Thema</h3>
+            <ul class="cm-rail-people">
+                {% for person in people %}
+                    <li>
+                        {% include 'v2/Layout/_avatar.html.twig' with { user: person.user, small: true } %}
+                        <a href="{{ path('caldera_criticalmass_forum_profile', { 'username': person.user.username }) }}">{{ person.user.username }}</a>
+                        <span class="cm-count">{{ person.count }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}

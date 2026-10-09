@@ -1,0 +1,42 @@
+{# Parameter: field, rows, editorId, placeholder, inputName (optional, fuer von Hand gebaute Formulare) #}
+<div class="cm-editor"
+     id="{{ editorId|default('markdown-editor') }}"
+     data-controller="markdown-editor"
+     data-markdown-editor-preview-url-value="{{ path('caldera_criticalmass_post_preview') }}"
+     data-action="markdown-editor:quote->markdown-editor#quote">
+    <div class="cm-editor-bar" role="toolbar" aria-label="Formatierung">
+        <button type="button" class="active" aria-selected="true"
+                data-markdown-editor-target="writeTab" data-action="markdown-editor#showWrite">Schreiben</button>
+        <button type="button" aria-selected="false"
+                data-markdown-editor-target="previewTab" data-action="markdown-editor#showPreview">Vorschau</button>
+        <span class="cm-sep" aria-hidden="true"></span>
+        <button type="button" title="Fett (Strg+B)" data-format="bold" data-action="markdown-editor#format"><b>F</b></button>
+        <button type="button" title="Kursiv (Strg+I)" data-format="italic" data-action="markdown-editor#format"><i>K</i></button>
+        <button type="button" title="Link (Strg+K)" data-format="link" data-action="markdown-editor#format">Link</button>
+        <button type="button" title="Liste" data-format="list" data-action="markdown-editor#format">Liste</button>
+        <button type="button" title="Zitat" data-format="quote" data-action="markdown-editor#format">Zitat</button>
+        <button type="button" title="Code" data-format="code" data-action="markdown-editor#format">Code</button>
+        <button type="button" title="Code-Block" data-format="codeblock" data-action="markdown-editor#format">Block</button>
+    </div>
+
+    <div data-markdown-editor-target="writePane">
+        {% if field is defined and field %}
+            {{ form_widget(field, { 'attr': {
+                'class': 'form-control',
+                'rows': rows|default(8),
+                'placeholder': placeholder|default('Schreibe hier deinen Beitrag. Markdown ist erlaubt.'),
+                'data-markdown-editor-target': 'input'
+            } }) }}
+        {% else %}
+            <textarea class="form-control" name="{{ inputName }}" id="{{ editorId|default('markdown-editor') }}-input"
+                      rows="{{ rows|default(8) }}" required
+                      placeholder="{{ placeholder|default('Schreibe hier deinen Beitrag. Markdown ist erlaubt.') }}"
+                      data-markdown-editor-target="input"></textarea>
+        {% endif %}
+    </div>
+
+    <div class="cm-editor-preview cm-entry-text" data-markdown-editor-target="previewPane" hidden>
+        <div data-markdown-editor-target="preview"></div>
+    </div>
+</div>
+<p class="cm-editor-hint">Markdown: <code>**fett**</code>, <code>_kursiv_</code>, <code>&gt; Zitat</code>, <code>- Liste</code></p>

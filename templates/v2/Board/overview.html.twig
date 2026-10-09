@@ -1,0 +1,78 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block content %}
+    <div class="cm-forum-head">
+        <h1>Forum</h1>
+        {% if app.user %}
+            <div class="cm-forum-btns">
+                <form method="post" action="{{ path('caldera_criticalmass_forum_subscribe_global') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-subscribe') }}">
+                    <button type="submit" class="cm-btn">Gesamtes Forum abonnieren</button>
+                </form>
+                <a class="cm-btn" href="{{ path('caldera_criticalmass_forum_subscriptions') }}">Meine Abonnements</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <form class="cm-find" method="get" action="{{ path('caldera_criticalmass_board_search') }}" role="search">
+        <svg width="18" height="18" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" name="q" placeholder="Themen und Beiträge durchsuchen" aria-label="Suchbegriff">
+        <button type="submit">Suchen</button>
+    </form>
+
+    {% if boards is not empty %}
+        <section class="cm-card cm-boards">
+            <h2>Allgemein</h2>
+            <table>
+                <thead><tr><th>Forum</th><th class="cm-n">Themen</th><th class="cm-n">Beiträge</th><th class="cm-last">Letzter Beitrag</th></tr></thead>
+                <tbody>
+                    {% for board in boards %}
+                        {% include 'v2/Board/_board_row.html.twig' with { forum: board, name: board.title, description: board.description } %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    {% endif %}
+
+    {% if cities is not empty %}
+        {% set activeCities = cities|filter(c => c.threadNumber > 0) %}
+        {% set emptyCities = cities|filter(c => c.threadNumber == 0) %}
+        <section class="cm-card cm-boards">
+            <h2>Stadtforen</h2>
+            {% if activeCities is not empty %}
+                <table>
+                    <thead><tr><th>Stadt</th><th class="cm-n">Themen</th><th class="cm-n">Beiträge</th><th class="cm-last">Letzter Beitrag</th></tr></thead>
+                    <tbody>
+                        {% for city in activeCities %}
+                            {% include 'v2/Board/_board_row.html.twig' with { forum: city, name: city.city, description: city.punchline } %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            {% if emptyCities is not empty %}
+                <details class="cm-empty-boards"{% if activeCities is empty %} open{% endif %}>
+                    <summary>{{ emptyCities|length }} {{ activeCities is empty ? '' : 'weitere ' }}{{ emptyCities|length == 1 ? 'Stadtforum' : 'Stadtforen' }} <span>noch ohne Beiträge</span></summary>
+                    <p>
+                        {% for city in emptyCities %}<a href="{{ object_path(city, 'caldera_criticalmass_board_listcitythreads') }}">{{ city.city }}</a>{{ not loop.last ? ', ' }}{% endfor %}
+                    </p>
+                </details>
+            {% endif %}
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    {% set allForums = boards|merge(cities) %}
+    {% set threadSum = allForums|reduce((sum, f) => sum + (f.threadNumber ?? 0), 0) %}
+    {% set postSum = allForums|reduce((sum, f) => sum + (f.postNumber ?? 0), 0) %}
+    <div class="cm-box">
+        <h3>Forum</h3>
+        <div class="cm-figures">
+            <div><b>{{ threadSum|number_format(0, ',', '.') }}</b><small>Themen</small></div>
+            <div><b>{{ postSum|number_format(0, ',', '.') }}</b><small>Beiträge</small></div>
+            <div><b>{{ allForums|length }}</b><small>Foren</small></div>
+        </div>
+    </div>
+{% endblock %}
