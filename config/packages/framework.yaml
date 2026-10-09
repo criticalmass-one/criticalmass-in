@@ -27,6 +27,9 @@ framework:
     form: ~
     csrf_protection:
         enabled: true
+        # Zustandslos geprüft (Sec-Fetch-Site/Origin), damit Formulare für Gäste keine
+        # Sitzung anlegen. Das Umschalten der Ansicht steht in jeder Fußzeile.
+        stateless_token_ids: ['design-switch']
     validation:
         enable_attributes: true
     default_locale:  '%locale%'

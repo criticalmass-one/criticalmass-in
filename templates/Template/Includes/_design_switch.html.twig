@@ -1,0 +1,15 @@
+{#
+    Einladung zur neuen Ansicht, in der Fusszeile des bisherigen Designs.
+    Nur sichtbar, solange der Schalter design_v2 an ist. Gegenstueck in der neuen
+    Ansicht: v2/Layout/_design_switch.html.twig
+#}
+{% if design_switch_available() %}
+    <form method="post" action="{{ path('criticalmass_design_switch') }}" class="mt-2">
+        <input type="hidden" name="_token" value="{{ csrf_token('design-switch') }}">
+        <input type="hidden" name="_target" value="{{ app.request.requestUri }}">
+        <input type="hidden" name="design" value="{{ design_v2() ? 'v1' : 'v2' }}">
+        <button type="submit" class="btn btn-link p-0 text-start">
+            {{ design_v2() ? 'Zur bisherigen Ansicht' : 'Neue Ansicht ausprobieren' }}
+        </button>
+    </form>
+{% endif %}
