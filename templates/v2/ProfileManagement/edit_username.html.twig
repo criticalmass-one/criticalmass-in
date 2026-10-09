@@ -1,0 +1,25 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Benutzername ändern{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb"><a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a></div>
+        <h1>Benutzername ändern</h1>
+    </div>
+
+    <section class="cm-card cm-pad cm-acc-form">
+        {{ form_start(usernameForm) }}
+            {{ form_row(usernameForm.username, { label: 'Benutzername', help: 'Wird öffentlich angezeigt, etwa bei Fotos, Kommentaren und Teilnahmen.' }) }}
+
+            <div class="cm-btn-row">
+                <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+                <a href="{{ path('criticalmass_user_usermanagement') }}" class="cm-btn">Abbrechen</a>
+            </div>
+        {{ form_end(usernameForm) }}
+    </section>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

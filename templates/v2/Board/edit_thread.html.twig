@@ -1,0 +1,29 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Titel bearbeiten{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb">
+        <a href="{{ path('caldera_criticalmass_board_overview') }}">Forum</a> /
+        <a href="{{ object_path(thread) }}">{{ thread.title }}</a>
+    </div>
+    <div class="cm-forum-head"><h1>Titel bearbeiten</h1></div>
+
+    <section class="cm-card cm-forum-form">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <label class="form-label" for="{{ form.title.vars.id }}">Titel</label>
+        {{ form_widget(form.title, { 'attr': { 'class': 'form-control' } }) }}
+        {{ form_errors(form.title) }}
+        <div class="form-text">Mit dem Titel ändert sich auch die Adresse des Themas.</div>
+
+        {{ form_rest(form) }}
+
+        <div class="cm-form-foot">
+            <a class="cm-btn" href="{{ object_path(thread) }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+        </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

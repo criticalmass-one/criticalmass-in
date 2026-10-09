@@ -1,0 +1,23 @@
+{% set route = app.request.attributes.get('_route') ?? '' %}
+{% set links = [
+    { route: 'criticalmass_user_usermanagement', label: 'Übersicht' },
+    { route: 'criticalmass_user_participation_list', label: 'Deine Touren' },
+    { route: 'caldera_criticalmass_track_list', label: 'Deine Tracks' },
+] %}
+{% if feature('photos') %}
+    {% set links = links|merge([{ route: 'caldera_criticalmass_photo_user_list', label: 'Deine Fotos' }]) %}
+{% endif %}
+{% set links = links|merge([{ route: 'criticalmass_user_profile_passkey_list', label: 'Passkeys' }]) %}
+
+<div class="cm-box cm-acc-nav">
+    <h3>Dein Konto</h3>
+    {% for link in links %}
+        <a href="{{ path(link.route) }}"{% if route == link.route %} class="is-active" aria-current="page"{% endif %}>{{ link.label }}</a>
+    {% endfor %}
+</div>
+
+<div class="cm-box cm-acc-nav">
+    <h3>Hochladen</h3>
+    <a href="{{ path('caldera_criticalmass_unified_upload') }}"{% if route == 'caldera_criticalmass_unified_upload' %} class="is-active" aria-current="page"{% endif %}>Tracks und Fotos hochladen</a>
+    <a href="{{ path('caldera_criticalmass_unified_review') }}"{% if route == 'caldera_criticalmass_unified_review' %} class="is-active" aria-current="page"{% endif %}>Hochgeladenes prüfen</a>
+</div>

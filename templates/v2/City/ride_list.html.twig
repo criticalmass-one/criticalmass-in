@@ -1,0 +1,21 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Touren in {{ city.city }}{% endblock %}
+
+{% block content %}
+    {% include 'v2/City/Includes/_head.html.twig' with { city: city, tab: 'ride_list', heading: city.title } %}
+
+    <section class="cm-card cm-sect">
+        <h2>
+            Touren{% if rides|length > 0 %} <span class="cm-cnt">{{ rides|length }}</span>{% endif %}
+            {% if app.user %}
+                <span class="cm-sect-act"><a class="cm-btn" href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">Tour eintragen</a></span>
+            {% endif %}
+        </h2>
+        {% if rides|length > 0 %}
+            {% include 'v2/City/Includes/_ride_table.html.twig' with { rides: rides } %}
+        {% else %}
+            <p class="cm-empty">Für {{ city.city }} sind noch keine Touren eingetragen.</p>
+        {% endif %}
+    </section>
+{% endblock %}

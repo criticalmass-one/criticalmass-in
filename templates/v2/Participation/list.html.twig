@@ -1,0 +1,44 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Deine Touren{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb"><a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a></div>
+        <h1>Deine Touren</h1>
+    </div>
+
+    <nav class="cm-tabs" role="tablist">
+        <button class="active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table" type="button" role="tab" aria-controls="table" aria-selected="true">Übersicht</button>
+        <button id="goingYes-tab" data-bs-toggle="tab" data-bs-target="#goingYes" type="button" role="tab" aria-controls="goingYes" aria-selected="false">Teilgenommen <span class="cm-dim">{{ participationYesList|length }}</span></button>
+        <button id="goingMaybe-tab" data-bs-toggle="tab" data-bs-target="#goingMaybe" type="button" role="tab" aria-controls="goingMaybe" aria-selected="false">Unentschieden <span class="cm-dim">{{ participationMaybeList|length }}</span></button>
+        <button id="goingNo-tab" data-bs-toggle="tab" data-bs-target="#goingNo" type="button" role="tab" aria-controls="goingNo" aria-selected="false">Abgesagt <span class="cm-dim">{{ participationNoList|length }}</span></button>
+        <button id="city-list-tab" data-bs-toggle="tab" data-bs-target="#city-list" type="button" role="tab" aria-controls="city-list" aria-selected="false">Städte <span class="cm-dim">{{ participationCityList|length }}</span></button>
+    </nav>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade show active" id="table" aria-labelledby="table-tab">
+            {{ include('Participation/_table.html.twig') }}
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="goingYes" aria-labelledby="goingYes-tab">
+            {% include 'Participation/_list.html.twig' with { participationList: participationYesList } only %}
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="goingMaybe" aria-labelledby="goingMaybe-tab">
+            {% include 'Participation/_list.html.twig' with { participationList: participationMaybeList } only %}
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="goingNo" aria-labelledby="goingNo-tab">
+            {% include 'Participation/_list.html.twig' with { participationList: participationNoList } only %}
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="city-list" aria-labelledby="city-list-tab">
+            {% include 'Participation/_city_list.html.twig' with { participationCityList: participationCityList } only %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

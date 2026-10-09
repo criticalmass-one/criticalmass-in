@@ -1,0 +1,37 @@
+<section class="cm-card cm-sect" id="estimates">
+    <h2>Schätzungen{% if estimates|length > 0 %} <span class="cm-cnt">{{ estimates|length }}</span>{% endif %}</h2>
+
+    {% if estimates|length > 0 %}
+        <table class="cm-tbl">
+            <thead>
+                <tr><th>Von</th><th class="cm-r cm-hide-s">Datum</th><th class="cm-r">Schätzung</th></tr>
+            </thead>
+            <tbody>
+                {% set total = 0 %}
+                {% for estimate in estimates %}
+                    {% set total = total + estimate.estimatedParticipants %}
+                    <tr>
+                        <td>
+                            {% if estimate.user %}
+                                <span class="cm-who">{% include 'v2/Layout/_avatar.html.twig' with { user: estimate.user, small: true } %}{{ estimate.user.username }}</span>
+                            {% else %}
+                                <span class="cm-dim">Anonym</span>
+                            {% endif %}
+                        </td>
+                        <td class="cm-r cm-hide-s cm-d">{{ estimate.createdAt|date('d.m.Y H:i') }}</td>
+                        <td class="cm-r">{{ estimate.estimatedParticipants|number_format(0, ',', '.') }}</td>
+                    </tr>
+                {% endfor %}
+                {% if estimates|length > 1 %}
+                    <tr>
+                        <td class="cm-dim">Durchschnitt</td>
+                        <td class="cm-hide-s"></td>
+                        <td class="cm-r"><b>{{ (total / estimates|length)|round(0)|number_format(0, ',', '.') }}</b></td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="cm-empty">Noch keine Schätzungen.</p>
+    {% endif %}
+</section>

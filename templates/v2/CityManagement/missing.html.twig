@@ -1,0 +1,29 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}{{ city ? 'Critical Mass ' ~ city.city : 'Keine Stadt gefunden' }}{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <h1>{{ city ? 'Critical Mass ' ~ city.city : 'Keine Stadt gefunden' }}</h1>
+    </header>
+
+    <section class="cm-card cm-pad cm-missing">
+        {% if city %}
+            <div class="cm-map"
+                 data-controller="map--map"
+                 data-map--map-center-latitude-value="{{ city.latitude }}"
+                 data-map--map-center-longitude-value="{{ city.longitude }}"
+                 data-map--map-zoom-value="12"
+                 data-map--map-lock-map-value="true"
+                 data-map--map-marker-latitude-value="{{ city.latitude }}"
+                 data-map--map-marker-longitude-value="{{ city.longitude }}"
+                 data-map--map-marker-type-value="city">
+            </div>
+            <p>Zu {{ city.city }} gibt es noch keine Critical Mass in unserer Datenbank.</p>
+            <a class="cm-btn cm-btn-go" href="{{ path('caldera_criticalmass_city_add_slug', { citySlug: citySlug }) }}">{{ city.city }} hinzufügen</a>
+        {% else %}
+            <p>Zu <code>{{ citySlug }}</code> haben wir keine Stadt gefunden.</p>
+            <a class="cm-btn cm-btn-go" href="{{ path('caldera_criticalmass_region_world') }}">Zum Verzeichnis</a>
+        {% endif %}
+    </section>
+{% endblock %}

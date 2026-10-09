@@ -1,0 +1,28 @@
+{# Parameter: pagination #}
+{% set page = pagination.currentPageNumber %}
+{% set pages = (pagination.totalItemCount / pagination.itemNumberPerPage)|round(0, 'ceil') %}
+{% if pages > 1 %}
+    {% set route = pagination.route %}
+    {% set params = pagination.params %}
+    <nav class="cm-pagenav" aria-label="Seiten">
+        {% if page > 1 %}
+            <a class="cm-btn" href="{{ path(route, params|merge({ page: page - 1 })) }}">Vorige Seite</a>
+        {% else %}
+            <span></span>
+        {% endif %}
+        <span class="cm-pagenums">
+            {% for p in 1..pages %}
+                {% if p == 1 or p == pages or (p >= page - 2 and p <= page + 2) %}
+                    {% if p == page %}<b aria-current="page">{{ p }}</b>{% else %}<a href="{{ path(route, params|merge({ page: p })) }}">{{ p }}</a>{% endif %}
+                {% elseif p == page - 3 or p == page + 3 %}
+                    <span aria-hidden="true">…</span>
+                {% endif %}
+            {% endfor %}
+        </span>
+        {% if page < pages %}
+            <a class="cm-btn" href="{{ path(route, params|merge({ page: page + 1 })) }}">Nächste Seite</a>
+        {% else %}
+            <span></span>
+        {% endif %}
+    </nav>
+{% endif %}

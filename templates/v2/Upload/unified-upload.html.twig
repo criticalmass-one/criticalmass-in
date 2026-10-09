@@ -1,0 +1,26 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Tracks &amp; Fotos hochladen{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <h1>Hochladen</h1>
+    </div>
+
+    <section class="cm-card cm-pad cm-acc-uploader"
+             data-controller="unified-upload"
+             data-unified-upload-upload-url-value="{{ path('caldera_criticalmass_unified_upload_file') }}"
+             data-unified-upload-csrf-token-value="{{ csrf_token('unified_upload') }}">
+        <div data-unified-upload-target="dashboard"></div>
+
+        <ul class="list-group cm-acc-results d-none" data-unified-upload-target="results"></ul>
+
+        <a href="{{ path('caldera_criticalmass_unified_review') }}"
+           class="cm-btn cm-btn-go cm-acc-review d-none"
+           data-unified-upload-target="reviewLink">Hochgeladenes prüfen</a>
+    </section>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% set route = app.request.attributes.get('_route') %}
+{% set now = 'now'|date('U') %}
+<nav class="cm-tabs" aria-label="Statistik">
+    <a href="{{ path('caldera_criticalmass_statistic_overview') }}"{% if route == 'caldera_criticalmass_statistic_overview' %} class="is-active" aria-current="page"{% endif %}>Überblick</a>
+    <a href="{{ path('caldera_criticalmass_statistic_topten') }}"{% if route == 'caldera_criticalmass_statistic_topten' %} class="is-active" aria-current="page"{% endif %}>Top Ten</a>
+    <a href="{{ path('caldera_criticalmass_statistic_ride_month', { year: now|date('Y'), month: now|date('n') }) }}"{% if route == 'caldera_criticalmass_statistic_ride_month' %} class="is-active" aria-current="page"{% endif %}>Monate</a>
+</nav>

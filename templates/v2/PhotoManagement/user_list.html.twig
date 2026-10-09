@@ -1,0 +1,35 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Fotos sortieren{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb"><a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a></div>
+        <h1>Deine Fotos</h1>
+    </div>
+
+    <section class="cm-card cm-pad">
+        {% if result|length > 0 %}
+            <table class="cm-acc-log">
+                {% for row in result %}
+                    {% set ride = row[0] %}
+                    {% set counter = row[1] %}
+                    <tr>
+                        <td class="d">{{ ride.dateTime.format('d.m.Y') }}</td>
+                        <td class="t">
+                            <a href="{{ object_path(ride) }}">{{ ride.title }}</a>
+                            <span><a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a></span>
+                        </td>
+                        <td class="n"><a href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}">{{ counter }} {{ counter == 1 ? 'Foto' : 'Fotos' }}</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="cm-dim mb-0">Du hast bislang keine Fotos hochgeladen.</p>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

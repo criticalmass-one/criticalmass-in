@@ -6,18 +6,20 @@
         {% if shownDays < 3 and day.dateTime|date('Y-m-d') >= today %}
             {% set shownDays = shownDays + 1 %}
             {% set rides = [] %}
-            {% for ride in day %}{% if ride.enabled %}{% set rides = rides|merge([ride]) %}{% endif %}{% endfor %}
+            {% for ride in day %}{% set rides = rides|merge([ride]) %}{% endfor %}
             <div class="cm-box">
                 <h3>{{ day.dateTime|date('Y-m-d') == today ? 'Heute, ' }}{{ day.dateTime|format_datetime(pattern="EEEE, d. MMMM") }}</h3>
                 <div class="cm-sub">{{ rides|length }} {{ rides|length == 1 ? 'Tour' : 'Touren' }}</div>
 
                 {% for ride in rides|slice(0, 10) %}
                     {% set zone = ride.city.timezone %}
-                    <a class="cm-ride" href="{{ object_path(ride) }}">
+                    {% set ridePath = object_path(ride) %}
+                    {% set tag = ridePath ? 'a' : 'div' %}
+                    <{{ tag }} class="cm-ride{% if not ride.enabled %} cm-ride-off{% endif %}"{% if ridePath %} href="{{ ridePath }}"{% endif %}>
                         <span class="cm-t">{{ ride.dateTime ? ride.dateTime|date('H:i', zone) }}</span>
-                        <span class="cm-c">{{ ride.city.city }}</span>
+                        <span class="cm-c">{{ ride.city.city }}{% if not ride.enabled %} <span class="cm-dim">(abgesagt)</span>{% endif %}</span>
                         {% if ride.location %}<span class="cm-p">{{ ride.location }}</span>{% endif %}
-                    </a>
+                    </{{ tag }}>
                 {% endfor %}
 
                 {% if rides|length > 10 %}
