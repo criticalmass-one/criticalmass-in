@@ -1,0 +1,57 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Soziale Netzwerke{% endblock %}
+
+{% block content %}
+    {% include 'v2/SocialNetwork/_head.html.twig' with { heading: 'Soziale Netzwerke' } %}
+
+    <section class="cm-card">
+        {% if list|length > 0 %}
+            <ul class="cm-adm-rows is-inline">
+                {% for profile in list %}
+                    {% set network = getNetwork(profile.network) %}
+                    <li>
+                        <div class="cm-adm-main">
+                            <b>{{ network ? network.name : profile.network }}</b>
+                            <a href="{{ profile.identifier }}" rel="noopener">{{ profile.identifier }}</a>
+                        </div>
+                        <div class="cm-adm-acts">
+                            <a class="cm-btn" href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}">Bearbeiten</a>
+                            <form method="post" action="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('socialnetwork_disable_' ~ profile.id) }}">
+                                <button type="submit" class="cm-btn">Entfernen</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="cm-pad cm-dim mb-0">
+                {% if profileAbleType == 'ride' %}
+                    Zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
+                {% else %}
+                    Zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
+                {% endif %}
+            </p>
+        {% endif %}
+    </section>
+
+    {{ form_start(addProfileForm, { attr: { class: 'cm-card cm-form', id: 'profile-add' } }) }}
+        <fieldset>
+            <legend>Profil ergänzen</legend>
+
+            {{ form_row(addProfileForm.identifier, { label: 'Link zum Profil', attr: { placeholder: 'https://' } }) }}
+            {{ form_row(addProfileForm.network, { label: 'Netzwerk' }) }}
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+        </div>
+    {{ form_end(addProfileForm) }}
+
+    {% if profileAbleType == 'ride' %}
+        <p>
+            <a class="cm-btn" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile von {{ profileAble.city.city }} verwalten</a>
+        </p>
+    {% endif %}
+{% endblock %}
