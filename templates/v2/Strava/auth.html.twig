@@ -14,7 +14,7 @@
         <p>Strava fragt dich, ob criticalmass.in dein Profil und deine Aktivitäten lesen darf, auch die privaten. Danach siehst du hier deine Radtouren vom {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }} und wählst eine zum Importieren aus. Auf andere Aktivitäten oder dein Profil greifen wir nicht weiter zu.</p>
 
         <div class="cm-btn-row">
-            <a class="cm-btn cm-btn-go" href="{{ authorizationUrl }}">Mit Strava verbinden</a>
+            <a class="cm-strava-connect" href="{{ authorizationUrl }}"><span class="visually-hidden">Connect with Strava</span></a>
             <a class="cm-btn" href="{{ object_path(ride) }}">Abbrechen</a>
         </div>
     </section>

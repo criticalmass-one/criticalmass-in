@@ -113,3 +113,15 @@
 .cm-tt-strava p {
   margin: 0 0 12px;
 }
+
+// Offizieller Button, von Stravas Markenrichtlinien vorgeschrieben.
+.cm-strava-connect {
+  display: inline-block;
+  width: 193px;
+  height: 48px;
+  background: url("../../images/strava/connect.png") no-repeat center / contain;
+
+  @media (min-resolution: 2dppx) {
+    background-image: url("../../images/strava/connect@2x.png");
+  }
+}

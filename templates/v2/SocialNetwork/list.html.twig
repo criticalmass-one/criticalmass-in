@@ -37,6 +37,7 @@
     </section>
 
     {{ form_start(addProfileForm, { attr: { class: 'cm-card cm-form', id: 'profile-add' } }) }}
+        {{ form_errors(addProfileForm) }}
         <fieldset>
             <legend>Profil ergänzen</legend>
 

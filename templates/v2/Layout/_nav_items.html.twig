@@ -1,15 +1,15 @@
 {% set items = [
-    { route: 'caldera_criticalmass_frontpage', label: 'Timeline', icon: 'i-home', active: route == 'caldera_criticalmass_frontpage' or route starts with 'caldera_criticalmass_timeline' },
+    { route: 'caldera_criticalmass_frontpage', label: 'Timeline', icon: 'i-home', active: route == 'caldera_criticalmass_frontpage' or (route starts with 'caldera_criticalmass_timeline' and not (route starts with 'caldera_criticalmass_timeline_post')) },
     { route: 'caldera_criticalmass_explore', label: 'Karte', icon: 'i-map', active: route starts with 'caldera_criticalmass_explore' },
     { route: 'caldera_criticalmass_calendar', label: 'Kalender', icon: 'i-cal', active: route starts with 'caldera_criticalmass_calendar' },
     { route: 'caldera_criticalmass_city_list', label: 'Städte', icon: 'i-pin', active: route starts with 'caldera_criticalmass_city' or route starts with 'caldera_criticalmass_region' or route starts with 'caldera_criticalmass_ride' },
 ] %}
 {% if feature('photos') %}
-    {% set items = items|merge([{ route: 'caldera_criticalmass_photo_examplegallery', label: 'Fotos', icon: 'i-photo', active: route starts with 'caldera_criticalmass_photo' }]) %}
+    {% set items = items|merge([{ route: 'caldera_criticalmass_photo_examplegallery', label: 'Fotos', icon: 'i-photo', active: route starts with 'caldera_criticalmass_photo' or route starts with 'caldera_criticalmass_gallery' }]) %}
 {% endif %}
 {% set items = items|merge([{ route: 'caldera_criticalmass_board_overview', label: 'Forum', icon: 'i-forum', active: route starts with 'caldera_criticalmass_board' or route starts with 'caldera_criticalmass_forum' or route == 'caldera_criticalmass_post_edit' }]) %}
 {% if feature('status_posts') %}
-    {% set items = items|merge([{ route: 'caldera_criticalmass_status_feed', label: 'Beiträge', icon: 'i-note', active: route starts with 'caldera_criticalmass_status_feed' }]) %}
+    {% set items = items|merge([{ route: 'caldera_criticalmass_status_feed', label: 'Beiträge', icon: 'i-note', active: route starts with 'caldera_criticalmass_status' }]) %}
 {% endif %}
 
 {% for item in items %}

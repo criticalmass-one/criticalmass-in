@@ -52,9 +52,7 @@
             {% for item in [{ track: previousTrack, label: 'Voriger Track' }, { track: nextTrack, label: 'Nächster Track' }] %}
                 {% if item.track %}
                     <a href="{{ object_path(item.track) }}">
-                        <small>{{ item.label }}</small>
-                        <b>{{ item.track.ride.dateTime|date('d.m.Y', item.track.ride.city.timezone) }}</b>
-                        <span>{{ item.track.ride.city.city }}</span>
+                        <b>{{ item.label }}</b>
                     </a>
                 {% else %}
                     <span></span>
