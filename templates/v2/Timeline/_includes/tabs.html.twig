@@ -1,0 +1,35 @@
+{#
+    Reiter der Timeline: „Neuigkeiten“ und je einer pro sozialem Netzwerk.
+    Gleiche Logik wie Timeline/_includes/tabs.html.twig.
+#}
+{% set networkTabs = timelineContentList|keys|filter(tabName => tabName != 'standard') %}
+{% set hasStandardTab = timelineContentList.standard is defined %}
+
+{% if hasStandardTab or networkTabs is not empty %}
+    <div class="cm-tabs" role="tablist">
+        {% if hasStandardTab %}
+            <button class="active" id="timeline-tab-standard" data-bs-toggle="tab" data-bs-target="#timeline-pane-standard" type="button" role="tab" aria-controls="timeline-pane-standard" aria-selected="true">Neuigkeiten</button>
+        {% endif %}
+        {% for tabName in networkTabs %}
+            {% set network = getNetwork(tabName) %}
+            {% set isActive = not hasStandardTab and loop.first %}
+            <button class="{{ isActive ? 'active' }}" id="timeline-tab-{{ tabName }}" data-bs-toggle="tab" data-bs-target="#timeline-pane-{{ tabName }}" type="button" role="tab" aria-controls="timeline-pane-{{ tabName }}" aria-selected="{{ isActive ? 'true' : 'false' }}">{{ network ? network.name : tabName }}</button>
+        {% endfor %}
+    </div>
+
+    <div class="tab-content">
+        {% if hasStandardTab %}
+            <div role="tabpanel" class="tab-pane fade show active" id="timeline-pane-standard" aria-labelledby="timeline-tab-standard">
+                {% for content in timelineContentList.standard %}{{ content|raw }}{% endfor %}
+            </div>
+        {% endif %}
+        {% for tabName in networkTabs %}
+            {% set isActive = not hasStandardTab and loop.first %}
+            <div role="tabpanel" class="tab-pane fade{{ isActive ? ' show active' }}" id="timeline-pane-{{ tabName }}" aria-labelledby="timeline-tab-{{ tabName }}">
+                {% for content in attribute(timelineContentList, tabName) %}{{ content|raw }}{% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="cm-dim">In diesem Zeitraum ist nichts passiert.</p>
+{% endif %}

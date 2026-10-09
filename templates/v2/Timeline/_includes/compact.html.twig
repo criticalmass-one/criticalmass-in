@@ -1,0 +1,12 @@
+{# Schmale Zeile fuer kleine Ereignisse. Parameter: item, action #}
+<article class="cm-card cm-post-compact">
+    {% if item.user %}
+        {% include 'v2/Layout/_avatar.html.twig' with { user: item.user, small: true } %}
+    {% else %}
+        <span class="cm-ava cm-ava-s cm-ava-ini cm-ava-anon" aria-hidden="true"></span>
+    {% endif %}
+    <p>
+        {% if item.user %}<b>{{ item.user.username }}</b> {% endif %}{{ action }}
+        <span class="cm-when"><time datetime="{{ item.dateTime|date('c') }}">{{ item.dateTime|time_ago_in_words }}</time></span>
+    </p>
+</article>

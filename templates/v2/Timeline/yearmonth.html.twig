@@ -1,0 +1,27 @@
+{# Monatsarchiv der Timeline (/timeline/{year}/{month}). #}
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% set monthName = startDateTime|format_datetime(pattern='MMMM yyyy') %}
+
+{% block title %}Critical Mass im {{ monthName }}{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb"><a href="{{ path('caldera_criticalmass_frontpage') }}">Timeline</a> / {{ monthName }}</div>
+        <h1>{{ monthName }}</h1>
+        <p>Was im {{ monthName }} bei der Critical Mass passiert ist.</p>
+    </div>
+
+    <div class="cm-narrow">
+        {{ include('Timeline/_includes/tabs.html.twig') }}
+
+        <nav class="cm-pager" aria-label="Monate">
+            {% if previousDateTime %}
+                <a class="cm-btn" href="{{ path('caldera_criticalmass_timeline_yearmonth', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}">{{ previousDateTime|format_datetime(pattern='MMMM yyyy') }}</a>
+            {% else %}<span></span>{% endif %}
+            {% if nextDateTime %}
+                <a class="cm-btn" href="{{ path('caldera_criticalmass_timeline_yearmonth', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}">{{ nextDateTime|format_datetime(pattern='MMMM yyyy') }}</a>
+            {% endif %}
+        </nav>
+    </div>
+{% endblock %}
