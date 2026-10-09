@@ -5,12 +5,6 @@ namespace Tests\Controller;
 use App\Design\DesignChoice;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
-/**
- * Umschalten zwischen bisheriger und neuer Ansicht.
- *
- * Der Schalter `design_v2` liest FEATURE_DESIGN_V2 bei jeder Abfrage aus $_ENV; die
- * Tests legen ihn deshalb pro Fall um.
- */
 class DesignControllerTest extends AbstractControllerTestCase
 {
     private const string USER = 'cyclist@criticalmass.in';
@@ -29,10 +23,6 @@ class DesignControllerTest extends AbstractControllerTestCase
         parent::tearDown();
     }
 
-    /**
-     * Das Token ist zustandslos: Es gilt, wenn der Browser die Anfrage als
-     * gleich-originär ausweist (Sec-Fetch-Site), wie es echte Formulare tun.
-     */
     private function switchTo(KernelBrowser $client, string $design, string $target = '/', bool $sameOrigin = true): void
     {
         $token = static::getContainer()->get('security.csrf.token_manager')->getToken('design-switch')->getValue();
@@ -72,7 +62,7 @@ class DesignControllerTest extends AbstractControllerTestCase
     {
         $client = static::createClient();
 
-        foreach (['https://example.org/', '//example.org/', '/\\example.org/', 'javascript:alert(1)'] as $target) {
+        foreach (['https://example.org/', '//example.org/', '/\\example.org/', "/\t/example.org/", "/\n/example.org/", "/hamburg\n", '/ /example.org/', 'javascript:alert(1)'] as $target) {
             $this->switchTo($client, 'v1', $target);
 
             self::assertResponseRedirects('/', null, sprintf('Ziel %s', $target));

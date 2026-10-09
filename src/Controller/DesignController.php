@@ -11,16 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * Schaltet zwischen der bisherigen und der neuen Ansicht um.
- *
- * Gäste bekommen die Wahl als Cookie, angemeldete Nutzer zusätzlich am Konto, damit
- * sie auf allen Geräten gilt. Das Cookie wird auch für Angemeldete gesetzt: Nach dem
- * Abmelden bleibt das Gerät so bei der gewählten Ansicht.
- *
- * Das Token ist zustandslos (framework.csrf_protection.stateless_token_ids), damit das
- * Formular in der Fußzeile Gästen keine Sitzung anlegt.
- */
 class DesignController extends AbstractController
 {
     public const string CSRF_INTENT = 'design-switch';
@@ -35,7 +25,6 @@ class DesignController extends AbstractController
         }
 
         if (!$this->isCsrfTokenValid(self::CSRF_INTENT, (string) $request->request->get('_token'))) {
-            // Kein AccessDenied: das schickte Gäste auf die Anmeldeseite.
             throw new BadRequestHttpException('Ungültiges Formular-Token.');
         }
 
@@ -52,11 +41,6 @@ class DesignController extends AbstractController
             $this->managerRegistry->getManager()->flush();
         }
 
-        $this->addFlash('success', DesignChoice::V2 === $design
-            ? 'Du siehst jetzt die neue Ansicht. Seiten, die es darin noch nicht gibt, erscheinen weiter wie bisher.'
-            : 'Du siehst jetzt wieder die bisherige Ansicht.'
-        );
-
         $response = new RedirectResponse($this->safeTarget($request));
         $response->headers->setCookie(Cookie::create(DesignChoice::COOKIE)
             ->withValue($design)
@@ -71,14 +55,14 @@ class DesignController extends AbstractController
     }
 
     /**
-     * Zurück auf die Seite, von der umgeschaltet wurde – aber nur innerhalb dieser
-     * Website. Alles andere (fremde Hosts, `//host`, `/\host`) führt zur Startseite.
+     * Nur lokale Pfade, sonst Startseite. Browser entfernen Tabs und Zeilenumbrueche
+     * aus URLs, `/\t/host` wuerde also zu `//host` – deshalb keine Steuerzeichen.
      */
     private function safeTarget(Request $request): string
     {
         $target = $request->request->getString('_target');
 
-        if (1 === preg_match('#^/(?![/\\\\])#', $target)) {
+        if (1 === preg_match('#^/(?![/\\\\])[^\x00-\x20\x7f]*\z#', $target)) {
             return $target;
         }
 
