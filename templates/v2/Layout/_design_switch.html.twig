@@ -1,7 +1,3 @@
-{#
-    Zurueck zur bisherigen Ansicht. Gegenstueck im alten Design:
-    Template/Includes/_design_switch.html.twig
-#}
 {% if design_switch_available() %}
     <form method="post" action="{{ path('criticalmass_design_switch') }}" class="d-inline">
         <input type="hidden" name="_token" value="{{ csrf_token('design-switch') }}">

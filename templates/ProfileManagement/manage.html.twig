@@ -256,12 +256,6 @@
                                     <i class="far fa-browser text-primary me-2"></i>Neue Ansicht
                                 </div>
                                 <div class="card-body d-flex flex-column">
-                                    <p>
-                                        Wir bauen criticalmass.in neu. Eingeschaltet siehst du alle Seiten, die es
-                                        schon neu gibt, im neuen Design, alle anderen wie bisher. Du kannst jederzeit
-                                        zurück.
-                                    </p>
-
                                     <form method="post" action="{{ path('criticalmass_design_switch') }}"
                                           class="mt-auto" data-controller="auto-submit">
                                         <input type="hidden" name="_token" value="{{ csrf_token('design-switch') }}">

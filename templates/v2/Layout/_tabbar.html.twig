@@ -1,4 +1,3 @@
-{# Tab-Leiste, nur mobil sichtbar. #}
 {% set route = app.request.attributes.get('_route') ?? '' %}
 <nav class="cm-tabbar" aria-label="Hauptnavigation">
     <a href="{{ path('caldera_criticalmass_frontpage') }}"{% if route == 'caldera_criticalmass_frontpage' or route starts with 'caldera_criticalmass_timeline' %} class="is-active"{% endif %}>

@@ -1,7 +1,4 @@
-{#
-    Avatar eines Nutzers: Profilfoto, sonst die Initiale in der Profilfarbe.
-    Parameter: user, small (bool, optional)
-#}
+{# Parameter: user, small (optional) #}
 {% set avaClass = 'cm-ava' ~ (small|default(false) ? ' cm-ava-s' : '') %}
 {% if user.imageName %}
     <img class="{{ avaClass }}"
