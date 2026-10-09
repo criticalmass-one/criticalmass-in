@@ -2,5 +2,6 @@
 <article class="cm-card cm-post">
     {% include 'Timeline/_includes/head.html.twig' with { action: action } %}
 
-    <p class="cm-post-text">{{ item.text|striptags|slice(0, 280) }}{% if item.text|striptags|length > 280 %}…{% endif %}</p>
+    {% set preview = item.text|markdown|striptags|trim %}
+    <p class="cm-post-text">{{ preview|slice(0, 280) }}{% if preview|length > 280 %}…{% endif %}</p>
 </article>
