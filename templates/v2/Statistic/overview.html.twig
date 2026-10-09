@@ -1,0 +1,60 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Statistik{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <h1>Statistik</h1>
+    </header>
+
+    {% include 'Statistic/_tabs.html.twig' %}
+
+    <section class="cm-card cm-pad cm-chart-card" data-controller="statistic-chart">
+        <div class="cm-seg" role="tablist">
+            <button class="active" id="participants-tab" data-bs-toggle="tab" data-bs-target="#tab-participants" type="button" role="tab" aria-controls="tab-participants" aria-selected="true">Teilnehmerzahl</button>
+            <button id="duration-tab" data-bs-toggle="tab" data-bs-target="#tab-duration" type="button" role="tab" aria-controls="tab-duration" aria-selected="false">Fahrtdauer</button>
+            <button id="distance-tab" data-bs-toggle="tab" data-bs-target="#tab-distance" type="button" role="tab" aria-controls="tab-distance" aria-selected="false">Fahrtlänge</button>
+        </div>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade show active" id="tab-participants" aria-labelledby="participants-tab">
+                <p class="cm-chart-unit">Durchschnitt der geschätzten Teilnehmerzahlen</p>
+                <canvas id="participants" data-statistic-chart-target="participantsCanvas"></canvas>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="tab-duration" aria-labelledby="duration-tab">
+                <p class="cm-chart-unit">Stunden, aus hochgeladenen GPX-Tracks</p>
+                <canvas id="duration" data-statistic-chart-target="durationCanvas"></canvas>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="tab-distance" aria-labelledby="distance-tab">
+                <p class="cm-chart-unit">Kilometer, aus hochgeladenen GPX-Tracks</p>
+                <canvas id="distance" data-statistic-chart-target="distanceCanvas"></canvas>
+            </div>
+        </div>
+
+        {% for rideMonth in rideMonths %}
+            <span hidden data-statistic-chart-target="rideMonth" data-ride-month="{{ rideMonth }}"></span>
+        {% endfor %}
+
+        {% for city in cities %}
+            <span hidden data-statistic-chart-target="city"
+                  data-city-name="{{ city.city }}"
+                  data-city-slug="{{ city.slug }}"
+                  data-color-red="{{ city.colorRed }}"
+                  data-color-green="{{ city.colorGreen }}"
+                  data-color-blue="{{ city.colorBlue }}"></span>
+        {% endfor %}
+
+        {% for ride in rides %}
+            <span hidden data-statistic-chart-target="rideData"
+                  data-city-slug="{{ ride.city.slug }}"
+                  data-ride-month="{{ ride.dateTime|date('Y-m') }}"
+                  data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}"
+                  data-estimated-duration="{{ ride.estimatedDuration|default(0) }}"
+                  data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></span>
+        {% endfor %}
+
+        <p class="cm-note">Städte aus Deutschland mit mindestens 18 Schätzungen in den letzten zwei Jahren.</p>
+    </section>
+{% endblock %}
