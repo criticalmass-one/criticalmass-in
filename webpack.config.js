@@ -21,6 +21,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    // Neue Ansicht, nur fuer Seiten unter templates/v2/ (siehe App\Design\DesignChoice)
+    .addEntry('app-v2', './assets/app-v2.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

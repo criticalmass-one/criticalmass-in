@@ -1,0 +1,31 @@
+// Grundwerte der neuen Ansicht. Quelle: Prototyp-Serie 05b (base.css).
+// Regeln: ein Akzent, zwei Radien, keine Grossbuchstaben-Zeilen, keine Pillen.
+
+$cm-bg: #f2f3f5;
+$cm-card: #fff;
+$cm-line: #dfe1e5;
+$cm-line-soft: #eef0f2;
+$cm-ink: #16181c;
+$cm-text: #34373d;
+$cm-dim: #5f646c;
+$cm-accent: #f4581c;
+$cm-accent-deep: #d8450e;
+$cm-hover: #e6e8eb;
+$cm-r: 12px;
+$cm-r-s: 6px;
+$cm-font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+
+:root {
+  --cm-bg: #{$cm-bg};
+  --cm-card: #{$cm-card};
+  --cm-line: #{$cm-line};
+  --cm-line-soft: #{$cm-line-soft};
+  --cm-ink: #{$cm-ink};
+  --cm-text: #{$cm-text};
+  --cm-dim: #{$cm-dim};
+  --cm-accent: #{$cm-accent};
+  --cm-accent-deep: #{$cm-accent-deep};
+  --cm-hover: #{$cm-hover};
+  --cm-r: #{$cm-r};
+  --cm-r-s: #{$cm-r-s};
+}
