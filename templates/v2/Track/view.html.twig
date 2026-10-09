@@ -1,0 +1,69 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set ride = track.ride %}
+{% set zone = ride.city.timezone %}
+
+{% block title %}{{ ride.title ?: ride.city.title }}{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head cm-tt-head">
+        <div class="cm-crumb">
+            <a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a> / <a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a>
+        </div>
+        <h1>{{ ride.title ?: ride.city.title }}</h1>
+        <p>
+            <a href="{{ object_path(ride) }}">{{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=zone) }}, {{ ride.dateTime|date('H:i', zone) }} Uhr</a><br>
+            Treffpunkt {{ ride.location and ride.latitude and ride.longitude ? ride.location : 'nicht bekannt' }}
+        </p>
+    </div>
+
+    {% if not track.reviewed %}
+        <section class="cm-card cm-pad cm-tt-review">
+            <p><b>Dein Track ist noch nicht bestätigt.</b> Er soll nur die Strecke der Critical Mass zeigen, ohne An- und Abfahrt.</p>
+            <div class="cm-btn-row">
+                <a class="cm-btn cm-btn-go" href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">Beschneiden</a>
+                <a class="cm-btn" href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">Bestätigen</a>
+            </div>
+        </section>
+    {% endif %}
+
+    <section class="cm-card cm-route">
+        <div class="cm-route-map">
+            <div data-controller="map--map"
+                 data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::MEDIUM')) }}"
+                 data-map--map-polyline-color-value="{{ track.user.color }}"></div>
+        </div>
+
+        <div class="cm-pad">
+            <div class="cm-figures">
+                <div><b>{{ track.distance|number_format(1, ',', '.') }} km</b><small>Strecke</small></div>
+                <div><b>{{ human_duration(track.durationInSeconds) }}</b><small>Dauer</small></div>
+                {% if track.startDateTime and track.endDateTime %}
+                    <div><b>{{ track.startDateTime|date('H:i', zone) }}–{{ track.endDateTime|date('H:i', zone) }}</b><small>Start und Ende</small></div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {% set previousTrack = previous_entity(track) %}
+    {% set nextTrack = next_entity(track) %}
+    {% if previousTrack or nextTrack %}
+        <nav class="cm-card cm-pager-card" aria-label="Weitere Tracks">
+            {% for item in [{ track: previousTrack, label: 'Voriger Track' }, { track: nextTrack, label: 'Nächster Track' }] %}
+                {% if item.track %}
+                    <a href="{{ object_path(item.track) }}">
+                        <small>{{ item.label }}</small>
+                        <b>{{ item.track.ride.dateTime|date('d.m.Y', item.track.ride.city.timezone) }}</b>
+                        <span>{{ item.track.ride.city.city }}</span>
+                    </a>
+                {% else %}
+                    <span></span>
+                {% endif %}
+            {% endfor %}
+        </nav>
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

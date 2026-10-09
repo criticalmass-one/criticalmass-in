@@ -1,0 +1,35 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Track beschneiden{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a> / <a href="{{ path('caldera_criticalmass_track_list') }}">Deine Tracks</a> / <a href="{{ object_path(track) }}">{{ track.ride.title }}</a>
+        </div>
+        <h1>Track beschneiden</h1>
+    </div>
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form', id: 'track-range-page' } }) }}
+        <div class="cm-tt-range-map" id="map-range" data-controller="map--track-range-map"></div>
+
+        <fieldset>
+            <legend>Anfang und Ende</legend>
+            {# Feste IDs: track_range_map_controller sucht #slider und #track_range_latLngList #}
+            <div class="cm-tt-slider">
+                <input id="slider" type="text" value="" aria-label="Anfang und Ende">
+            </div>
+            <input type="hidden" id="track_range_latLngList" value="{{ latLngList }}">
+            <div class="form-text">Der vollständige Track bleibt gespeichert, du kannst den Ausschnitt jederzeit ändern.</div>
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_track_list') }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}
