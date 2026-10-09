@@ -1,0 +1,36 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set city = ride.city %}
+
+{% block title %}Fotos hochladen{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb-link">
+        <a href="{{ object_path(city) }}">{{ city.city }}</a> / <a href="{{ object_path(ride) }}">{{ ride.dateTime|format_datetime(pattern="d. MMMM yyyy", timezone=city.timezone) }}</a>
+    </div>
+
+    <div class="cm-page-head">
+        <h1>Fotos hochladen</h1>
+    </div>
+
+    {# Die Dropzone dieser Seite hat seit 01/2026 kein Skript mehr, daher der gemeinsame Uploader. #}
+    <section class="cm-card cm-pad cm-acc-uploader"
+             data-controller="unified-upload"
+             data-unified-upload-upload-url-value="{{ path('caldera_criticalmass_unified_upload_file') }}"
+             data-unified-upload-csrf-token-value="{{ csrf_token('unified_upload') }}">
+        <div data-unified-upload-target="dashboard"></div>
+
+        <ul class="list-group cm-acc-results d-none" data-unified-upload-target="results"></ul>
+
+        <a href="{{ path('caldera_criticalmass_unified_review') }}"
+           class="cm-btn cm-btn-go cm-acc-review d-none"
+           data-unified-upload-target="reviewLink">Hochgeladenes prüfen</a>
+
+        <p class="cm-pp-legal">Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte lade keine Fotos hoch, an denen du keine Urheberrechte besitzt.</p>
+        <a class="cm-more" href="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}">Einzelnes Foto mit dem alten Uploader hochladen</a>
+    </section>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/PhotoUpload/_rail.html.twig' with { ride: ride } %}
+{% endblock %}

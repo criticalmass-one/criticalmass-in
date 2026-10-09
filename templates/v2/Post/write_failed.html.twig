@@ -1,0 +1,33 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set post = form.vars.value %}
+{% set target = post.thread ?? post.ride ?? post.city ?? post.photo %}
+{% set isStatus = post.kind.value == 'STATUS' %}
+
+{% block title %}{{ isStatus ? 'Beitrag schreiben' : 'Kommentar schreiben' }}{% endblock %}
+
+{% block content %}
+    {% if target %}
+        <div class="cm-crumb-link"><a href="{{ object_path(target) }}">{{ post.thread ? post.thread.title : (post.ride ? post.ride.title : (post.city ? post.city.city : 'Zum Foto')) }}</a></div>
+    {% endif %}
+    <div class="cm-forum-head"><h1>{{ isStatus ? 'Beitrag schreiben' : 'Kommentar schreiben' }}</h1></div>
+
+    {% if app.user %}
+        <section class="cm-card cm-forum-form">
+            {{ form_start(form, { attr: { id: 'form-post' } }) }}
+            {{ form_errors(form) }}
+
+            <label class="form-label" for="{{ form.text.vars.id }}">{{ isStatus ? 'Dein Beitrag' : 'Dein Kommentar' }}</label>
+            {% include 'v2/Board/_editor.html.twig' with { field: form.text, rows: 10, placeholder: isStatus ? 'Dein Beitrag' : 'Dein Kommentar' } %}
+            {% if form.text.vars.errors|length > 0 %}
+                <p class="cm-pp-error">Du hast leider gar keinen {{ isStatus ? 'Beitrag' : 'Kommentar' }} eingegeben.</p>
+            {% endif %}
+
+            <div class="cm-form-foot">
+                {% if target %}<a class="cm-btn" href="{{ object_path(target) }}">Abbrechen</a>{% endif %}
+                <button type="submit" id="button-submit-post" class="cm-btn cm-btn-go">Speichern</button>
+            </div>
+            {{ form_end(form) }}
+        </section>
+    {% endif %}
+{% endblock %}

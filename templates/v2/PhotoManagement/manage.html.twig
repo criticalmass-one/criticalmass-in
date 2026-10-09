@@ -1,0 +1,68 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set city = ride.city %}
+{% set zone = city.timezone %}
+
+{% block title %}Fotos bearbeiten{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb-link">
+        <a href="{{ object_path(city) }}">{{ city.city }}</a> / <a href="{{ object_path(ride) }}">{{ ride.dateTime|format_datetime(pattern="d. MMMM yyyy", timezone=zone) }}</a>
+    </div>
+
+    <div class="cm-ghead">
+        <div>
+            <h1>Fotos bearbeiten</h1>
+            <p>{{ ride.title }}, {{ pagination.totalItemCount }} {{ pagination.totalItemCount == 1 ? 'Foto' : 'Fotos' }}</p>
+        </div>
+        <div class="cm-btn-row">
+            <a class="cm-btn cm-btn-go" href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}">Weitere Fotos hochladen</a>
+        </div>
+    </div>
+
+    {% if pagination|length == 0 %}
+        <p class="cm-card cm-pad cm-empty">Du hast zu dieser Tour noch keine Fotos hochgeladen.</p>
+    {% else %}
+        <div class="cm-pp-manage">
+            {% for photo in pagination %}
+                {% set featured = photo.ride.featuredPhoto == photo %}
+                <figure class="cm-card{{ photo.enabled ? '' : ' is-off' }}">
+                    <a href="{{ object_path(photo) }}"><img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="" loading="lazy"></a>
+                    <figcaption>
+                        <span>
+                            {% if photo.exifCreationDate %}{{ photo.exifCreationDate|date('d.m.Y, H:i:s', zone) }}{% endif %}
+                            {% if not photo.enabled %}<b>deaktiviert</b>{% elseif featured %}<b>Hauptbild</b>{% endif %}
+                        </span>
+                        <div class="dropdown">
+                            <button type="button" class="cm-btn" data-bs-toggle="dropdown" aria-expanded="false">Bearbeiten</button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ object_path(photo, 'caldera_criticalmass_photo_toggle') }}">{{ photo.enabled ? 'Deaktivieren' : 'Aktivieren' }}</a></li>
+                                <li><a class="dropdown-item" href="{{ object_path(photo, 'caldera_criticalmass_photo_featured') }}">{{ featured ? 'Hauptbild lösen' : 'Hauptbild festlegen' }}</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=left">Nach links drehen</a></li>
+                                <li><a class="dropdown-item" href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=right">Nach rechts drehen</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ object_path(photo, 'caldera_criticalmass_photo_delete') }}">Löschen</a></li>
+                            </ul>
+                        </div>
+                    </figcaption>
+                </figure>
+            {% endfor %}
+        </div>
+
+        {% include 'v2/City/Includes/_pagenav.html.twig' with { pagination: pagination } %}
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    <div class="cm-box">
+        <h3>{{ ride.title }}</h3>
+        <div class="cm-sub">{{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=zone) }}</div>
+        <a class="cm-kv" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}"><b>Alle Fotos der Tour</b></a>
+        <a class="cm-kv" href="{{ object_path(ride) }}"><b>Zur Tour</b></a>
+    </div>
+    <div class="cm-box">
+        <h3>Deine Fotos</h3>
+        <a class="cm-kv" href="{{ path('caldera_criticalmass_photo_user_list') }}"><b>Alle Touren mit deinen Fotos</b></a>
+    </div>
+{% endblock %}
