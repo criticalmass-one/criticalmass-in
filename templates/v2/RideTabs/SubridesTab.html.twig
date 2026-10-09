@@ -1,0 +1,34 @@
+{% if subrides|length > 0 or app.user %}
+    <section class="cm-card cm-sect" id="minimass">
+        <h2>
+            Mini-Masses{% if subrides|length > 0 %} <span class="cm-cnt">{{ subrides|length }}</span>{% endif %}
+            {% if app.user %}
+                <span class="cm-sect-act">
+                    {% if subrides|length == 0 %}
+                        <a class="cm-btn" href="{{ object_path(ride, 'caldera_criticalmass_subride_preparecopy') }}">Von letzter Tour kopieren</a>
+                    {% endif %}
+                    <a class="cm-btn" href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}">Mini-Mass eintragen</a>
+                </span>
+            {% endif %}
+        </h2>
+
+        {% if subrides|length > 0 %}
+            <ul class="cm-list">
+                {% for subride in subrides %}
+                    <li>
+                        <span class="cm-dim">{{ subride.dateTime|date('H:i', ride.city.timezone) }}</span>
+                        <div class="flex-grow-1">
+                            <b>{{ subride.title }}</b>{% if subride.location %}, {{ subride.location }}{% endif %}
+                            {% if subride.description %}<div class="cm-dim">{{ subride.description|nl2br }}</div>{% endif %}
+                        </div>
+                        {% if app.user %}
+                            <a href="{{ object_path(subride, 'caldera_criticalmass_subride_edit') }}">Bearbeiten</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="cm-empty">Noch keine Mini-Masses.</p>
+        {% endif %}
+    </section>
+{% endif %}

@@ -1,0 +1,11 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}{{ ride.title }}{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb-link">
+        <a href="{{ path('caldera_criticalmass_city_list') }}">Städte</a> / <a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a>
+    </div>
+    <div class="cm-page-head"><h1>{{ ride.title }}</h1></div>
+    <p class="cm-card cm-pad">{{ blocked.description }}</p>
+{% endblock %}

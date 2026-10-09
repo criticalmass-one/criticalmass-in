@@ -1,0 +1,152 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set previousPhoto = previous_entity(photo) %}
+{% set nextPhoto = next_entity(photo) %}
+{% set zone = photo.city ? photo.city.timezone : 'UTC' %}
+
+{% block title %}Foto {{ photo.id }} aus {{ city.city }}{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb-link">
+        <a href="{{ object_path(city) }}">{{ city.city }}</a>
+        {% if ride %}
+            / <a href="{{ object_path(ride) }}">{{ ride.dateTime|format_datetime(pattern="d. MMMM yyyy", timezone=ride.city.timezone) }}</a>
+            / <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">Fotos</a>
+        {% endif %}
+    </div>
+
+    {% set photoNav %}
+        <nav class="cm-photo-nav" aria-label="Fotos">
+            {% if previousPhoto %}<a href="{{ object_path(previousPhoto) }}" rel="prev">Voriges Foto</a>{% else %}<span>Voriges Foto</span>{% endif %}
+            {% if nextPhoto %}<a href="{{ object_path(nextPhoto) }}" rel="next">Nächstes Foto</a>{% else %}<span>Nächstes Foto</span>{% endif %}
+        </nav>
+    {% endset %}
+
+    {{ photoNav }}
+
+    {% if not app.user and photo.user and photo.user.blurGalleries %}
+        <div class="cm-card cm-photo-view cm-photo-locked">
+            <img id="photo" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}" alt="">
+            <div class="cm-photo-gate">
+                <div class="cm-box">
+                    <h3>Bitte melde dich an</h3>
+                    <p>Diese Fotos sind nur für angemeldete Nutzer sichtbar.</p>
+                    <a class="cm-btn cm-btn-go" href="{{ path('login') }}">Anmelden</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="cm-card cm-photo-view">
+            <img id="photo" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" alt="">
+        </div>
+    {% endif %}
+
+    <section class="cm-card cm-sect">
+        <h2>
+            Details
+            {% if is_granted('ROLE_PHOTO_DOWNLOAD') %}
+                <span class="cm-sect-act"><a class="cm-btn" href="{{ path('caldera_criticalmass_photo_download', { id: photo.id }) }}">Foto herunterladen</a></span>
+            {% endif %}
+        </h2>
+        <dl class="cm-dl">
+            {% if photo.user %}
+                <dt>Fotografiert von</dt><dd>{{ photo.user.username }}</dd>
+            {% endif %}
+            {% if photo.exifCreationDate %}
+                <dt>Aufgenommen</dt><dd>{{ photo.exifCreationDate|date('d.m.Y, H:i:s', zone) }} Uhr</dd>
+            {% endif %}
+            {% if photo.location %}
+                <dt>Ort</dt><dd>{{ photo.location }}</dd>
+            {% endif %}
+            {% if photo.hasCoordinates() %}
+                <dt>Koordinaten</dt><dd><a href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}" target="_blank" rel="noopener">{{ photo.latitude }}, {{ photo.longitude }}</a></dd>
+            {% endif %}
+            {% if photo.exifCamera %}
+                <dt>Kamera</dt><dd>{{ photo.exifCamera }}</dd>
+            {% endif %}
+            {% if photo.exifExposure %}
+                <dt>Verschlusszeit</dt><dd>{{ photo.exifExposure }} s</dd>
+            {% endif %}
+            {% if photo.exifAperture %}
+                <dt>Blende</dt><dd>{{ photo.exifAperture }}</dd>
+            {% endif %}
+            {% if photo.exifIso %}
+                <dt>ISO</dt><dd>{{ photo.exifIso }}</dd>
+            {% endif %}
+            {% if photo.exifFocalLength %}
+                <dt>Brennweite</dt><dd>{{ photo.exifFocalLength }} mm</dd>
+            {% endif %}
+        </dl>
+
+        {% if photo.hasCoordinates() %}
+            <div id="map-{{ photo.id }}"
+                 class="cm-mini-map"
+                 data-controller="map--map"
+                 data-map--map-center-latitude-value="{{ photo.latitude }}"
+                 data-map--map-center-longitude-value="{{ photo.longitude }}"
+                 data-map--map-zoom-value="13"
+                 data-map--map-lock-map-value="true"
+                 data-map--map-marker-latitude-value="{{ photo.latitude }}"
+                 data-map--map-marker-longitude-value="{{ photo.longitude }}"
+                 data-map--map-marker-type-value="photo"
+                 {% if track %}
+                     data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::COARSE')) }}"
+                     data-map--map-polyline-color-value="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
+                 {% endif %}></div>
+        {% endif %}
+    </section>
+
+    {% set posts = photo.posts|filter(post => post.enabled)|sort((a, b) => a.dateTime <=> b.dateTime) %}
+    <section class="cm-card cm-sect" id="comments">
+        <h2>
+            Kommentare{% if posts|length > 0 %} <span class="cm-cnt">{{ posts|length }}</span>{% endif %}
+            <span class="cm-sect-act">
+                {% if app.user %}
+                    <button type="button" class="cm-btn" data-bs-toggle="modal" data-bs-target="#modal-add-post">Kommentar schreiben</button>
+                {% else %}
+                    <button type="button" class="cm-btn"
+                            data-controller="hint-modal"
+                            data-modal-hint-title="{{ 'hint_modal.photo.post_add_button.title'|trans }}"
+                            {# Ohne Tour kommen Stadt und Datum vom Foto selbst. #}
+                            data-modal-hint-text="{{ 'hint_modal.photo.post_add_button.text'|trans({
+                                '%city%': photo.city ? photo.city.city : '',
+                                '%dateTime%': (photo.ride ? photo.ride.dateTime : photo.exifCreationDate)|date('d.m.Y')
+                            }) }}"
+                            data-modal-hint-size="md">Kommentar schreiben</button>
+                {% endif %}
+            </span>
+        </h2>
+
+        {% if posts|length > 0 %}
+            <div data-controller="scroll-to-post">
+                {% for post in posts %}
+                    {% include 'v2/Ride/Includes/_post.html.twig' with { post: post, ride: ride, city: city } %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="cm-empty">Noch keine Kommentare.</p>
+        {% endif %}
+    </section>
+
+    {% if app.user %}
+        {{ render(controller('App\\Controller\\PostController::writePhotoAction', { 'id': photo.id, 'noButton': true })) }}
+    {% endif %}
+
+    {{ photoNav }}
+{% endblock %}
+
+{% block rail %}
+    {% if ride %}
+        <div class="cm-box">
+            <h3>{{ ride.title }}</h3>
+            <div class="cm-sub">{{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=ride.city.timezone) }}</div>
+            <a class="cm-kv" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}"><b>Alle Fotos der Tour</b></a>
+            <a class="cm-kv" href="{{ object_path(ride) }}"><b>Zur Tour</b></a>
+        </div>
+    {% endif %}
+    <div class="cm-box">
+        <h3>{{ city.title }}</h3>
+        <a class="cm-kv" href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}"><b>Alle Galerien</b></a>
+        <a class="cm-kv" href="{{ object_path(city) }}"><b>Zur Stadtseite</b></a>
+    </div>
+{% endblock %}

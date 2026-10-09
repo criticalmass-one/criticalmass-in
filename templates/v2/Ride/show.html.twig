@@ -1,0 +1,253 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}{{ ride.title }}{% endblock %}
+
+{% block content %}
+    {% set pastRide = dateTime > ride.dateTime %}
+    {% set zone = city.timezone %}
+
+    <div class="{{ not ride.enabled ? 'cm-ride-disabled' }}" itemscope itemtype="http://schema.org/Event">
+        <div class="cm-crumb-link">
+            <a href="{{ path('caldera_criticalmass_city_list') }}">Städte</a> / <a href="{{ object_path(city) }}">{{ city.city }}</a>
+        </div>
+
+        {% if ride.dateTime and ride.dateTime > date() and city.isInactive %}
+            <p class="cm-card cm-pad" id="inactive-city-hint">Aus {{ city.city }} ist seit einem halben Jahr nichts mehr bei uns angekommen. Ob diese Tour stattfindet, ist ungewiss.</p>
+        {% endif %}
+
+        <section class="cm-card cm-ride-head">
+            {% if ride.dateTime %}
+                <div class="cm-day" aria-hidden="true">
+                    <small>{{ ride.dateTime|format_datetime(pattern="EEEEEE", timezone=zone)|replace({".": ""}) }}</small>
+                    <b>{{ ride.dateTime|date('j', zone) }}</b>
+                    <small>{{ ride.dateTime|format_datetime(pattern="LLL", timezone=zone) }}</small>
+                </div>
+            {% endif %}
+            <div class="cm-ride-what">
+                <h1 itemprop="name">{{ ride.title }}</h1>
+                <p class="cm-ride-when">
+                    {% if ride.dateTime %}
+                        <span itemprop="startDate" content="{{ ride.dateTime|date('Y-m-d\\TH:i') }}">{{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=zone) }}, {{ ride.dateTime|date('H:i', zone) }} Uhr</span>
+                        <meta itemprop="endDate" content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-d\\TH:i') }}">
+                    {% else %}
+                        Uhrzeit unbekannt
+                    {% endif %}
+                    <br>
+                    <span itemprop="location" itemscope itemtype="http://schema.org/Place">
+                        {% if ride.location and ride.latitude and ride.longitude %}
+                            Treffpunkt
+                            {% if location %}
+                                <a itemprop="name" href="{{ object_path(ride, 'caldera_criticalmass_location_ride') }}">{{ ride.location }}</a>
+                            {% else %}
+                                <span itemprop="name">{{ ride.location }}</span>
+                            {% endif %}
+                            <span itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                                <meta itemprop="latitude" content="{{ ride.latitude }}">
+                                <meta itemprop="longitude" content="{{ ride.longitude }}">
+                            </span>
+                        {% elseif app.user %}
+                            Treffpunkt <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">unbekannt</a>
+                        {% else %}
+                            Treffpunkt unbekannt
+                        {% endif %}
+                    </span>
+                </p>
+
+                {% if not ride.enabled %}
+                    <p class="cm-ride-note">Abgesagt</p>
+                {% elseif ride.participationsNumberYes > 0 or ride.participationsNumberMaybe > 0 %}
+                    <p class="cm-ride-note">
+                        {{ ride.participationsNumberYes }} {{ ride.participationsNumberYes == 1 ? 'Zusage' : 'Zusagen' }}{% if ride.participationsNumberMaybe > 0 %}, {{ ride.participationsNumberMaybe }} vielleicht{% endif %}
+                    </p>
+                {% endif %}
+
+                <div class="cm-btn-row">
+                    {% include 'Ride/Includes/_participation.html.twig' with { pastRide: pastRide, participation: participation } %}
+                    {% if pastRide %}
+                        {% if app.user %}
+                            <button type="button" class="cm-btn" data-bs-toggle="modal" data-bs-target="#estimate-modal">Teilnehmer schätzen</button>
+                        {% else %}
+                            <button type="button" class="cm-btn"
+                                    data-controller="hint-modal"
+                                    data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}"
+                                    data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                                    data-modal-hint-size="md">Teilnehmer schätzen</button>
+                        {% endif %}
+                    {% endif %}
+                    {% if ride.dateTime %}
+                        <a class="cm-btn" href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}">In den Kalender</a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        {% set weatherParts = weatherForecast ? weatherForecast|split(', ', 2) : [] %}
+        {% set showParticipants = pastRide and ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
+        {% set showDistance = pastRide and ride.estimatedDistance and ride.estimatedDistance > 0 %}
+        {% set showDuration = pastRide and ride.estimatedDurationInSeconds %}
+        {% set showVelocity = pastRide and ride.averageVelocity > 0 %}
+
+        <section class="cm-card cm-route">
+            <div class="cm-route-map" data-controller="map-expand" data-map-expand-target="container">
+                <div data-controller="map--ride-map"
+                     data-map--ride-map-city-slug-value="{{ city.mainSlugString }}"
+                     data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
+                     {% if ride.latitude and ride.longitude %}
+                         data-map--ride-map-latitude-value="{{ ride.latitude }}"
+                         data-map--ride-map-longitude-value="{{ ride.longitude }}"
+                         data-map--ride-map-has-location-value="true"
+                     {% else %}
+                         data-map--ride-map-latitude-value="{{ city.latitude }}"
+                         data-map--ride-map-longitude-value="{{ city.longitude }}"
+                         data-map--ride-map-has-location-value="false"
+                     {% endif %}></div>
+                <button type="button" class="cm-btn cm-map-expand" data-action="map-expand#toggle" title="Karte vergrößern" aria-label="Karte vergrößern">
+                    <i class="far fa-expand" data-map-expand-target="icon"></i>
+                </button>
+            </div>
+
+            {% if showParticipants or showDistance or showDuration or showVelocity or weatherParts is not empty %}
+                <div class="cm-pad">
+                    <div class="cm-figures">
+                        {% if showParticipants %}
+                            <div><b>{{ ride.estimatedParticipants|number_format(0, ',', '.') }}</b><small>Teilnehmer</small></div>
+                        {% endif %}
+                        {% if showDistance %}
+                            <div><b>{{ ride.estimatedDistance|number_format(1, ',', '.') }} km</b><small>Strecke</small></div>
+                        {% endif %}
+                        {% if showDuration %}
+                            <div><b>{{ human_duration(ride.estimatedDurationInSeconds) }}</b><small>unterwegs</small></div>
+                        {% endif %}
+                        {% if showVelocity %}
+                            <div><b>{{ ride.averageVelocity|number_format(1, ',', '.') }} km/h</b><small>im Schnitt</small></div>
+                        {% endif %}
+                        {% if weatherParts is not empty %}
+                            <div><b>{{ weatherParts|first }}</b><small>{{ weatherParts|length > 1 ? weatherParts|last : 'Wetter' }}</small></div>
+                        {% endif %}
+                    </div>
+                    {% if weatherParts is not empty %}
+                        <p class="cm-source">Wetter von <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a></p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </section>
+
+        {% if pastRide and ride.enabled %}
+            {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride })) }}
+
+            {% if feature('photos') %}
+                {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
+                <section class="cm-card cm-sect">
+                    <h2>Fotos{% if photos|length > 0 %} <span class="cm-cnt">{{ photos|length }}</span><a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">Galerie öffnen</a>{% endif %}</h2>
+
+                    {% if photos|length > 0 and (app.user or not ride.restrictedPhotoAccess) %}
+                        <div class="cm-pics">
+                            {% for photo in photos|slice(0, 6) %}
+                                <a href="{{ object_path(photo) }}"{% if loop.first %} class="cm-lead"{% endif %}>
+                                    <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter(loop.first ? 'gallery_photo_standard' : 'gallery_photo_thumb') }}" alt="" loading="lazy">
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% elseif photos|length == 0 %}
+                        <p class="cm-empty">Noch keine Fotos.</p>
+                    {% endif %}
+
+                    <div class="cm-pics-foot">
+                        <span>
+                            {% set photographers = [] %}
+                            {% for photo in photos %}{% if photo.user and photo.user.username not in photographers %}{% set photographers = photographers|merge([photo.user.username]) %}{% endif %}{% endfor %}
+                            {% if photographers is not empty %}
+                                Von {{ photographers|slice(0, 3)|join(', ', ' und ') }}{% if photographers|length > 3 %} und {{ photographers|length - 3 }} weiteren{% endif %}
+                            {% endif %}
+                        </span>
+                        {% if app.user %}
+                            <a class="cm-more" href="{{ uploadPath }}">Fotos hochladen</a>
+                        {% else %}
+                            <button type="button" class="cm-link-btn cm-more"
+                                    data-controller="hint-modal"
+                                    data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}"
+                                    data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                                    data-modal-hint-size="md">Fotos hochladen</button>
+                        {% endif %}
+                    </div>
+                </section>
+            {% endif %}
+        {% endif %}
+
+        {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride })) }}
+
+        {% if pastRide and ride.enabled %}
+            {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderEstimatesTabAction', { 'ride': ride })) }}
+        {% endif %}
+
+        {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride })) }}
+
+        {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride })) }}
+
+        {% set previousRide = previous_ride(ride) %}
+        {% set nextRide = next_ride(ride) %}
+        {% if previousRide or nextRide %}
+            <nav class="cm-card cm-pager-card" aria-label="Weitere Touren">
+                {% for item in [{ ride: previousRide, label: 'Vorige Tour' }, { ride: nextRide, label: 'Nächste Tour' }] %}
+                    {% if item.ride %}
+                        <a href="{{ object_path(item.ride) }}">
+                            <small>{{ item.label }}</small>
+                            <b>{{ item.ride.dateTime|format_datetime(pattern="d. MMMM yyyy", timezone=zone) }}</b>
+                            {% if item.ride.location %}<span>{{ item.ride.location }}</span>{% endif %}
+                        </a>
+                    {% else %}
+                        <span></span>
+                    {% endif %}
+                {% endfor %}
+            </nav>
+        {% endif %}
+    </div>
+
+    {% if pastRide and app.user %}
+        <div class="modal fade cm-modal" id="estimate-modal" tabindex="-1" aria-labelledby="estimate-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                    {{ form_start(estimateForm) }}
+                    <div class="modal-header border-0">
+                        <h2 class="modal-title" id="estimate-modal-label">Teilnehmer schätzen</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_widget(estimateForm.estimatedParticipants, { 'attr': { 'class': 'form-control form-control-lg text-center', 'placeholder': 'Anzahl' } }) }}
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="cm-btn" data-bs-dismiss="modal">Abbrechen</button>
+                        <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+                    </div>
+                    {{ form_end(estimateForm) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    {% set zone = city.timezone %}
+    {% set nextRide = next_ride(ride) %}
+
+    {% if nextRide and dateTime > ride.dateTime %}
+        <div class="cm-box">
+            <h3>Nächste Tour in {{ city.city }}</h3>
+            <div class="cm-sub">{{ nextRide.dateTime|format_datetime(pattern="EEEE, d. MMMM", timezone=zone) }}, {{ nextRide.dateTime|date('H:i', zone) }} Uhr</div>
+            {% if nextRide.location %}<p class="mb-0">{{ nextRide.location }}</p>{% endif %}
+            <a class="cm-more" href="{{ object_path(nextRide) }}">Zur Tour</a>
+        </div>
+    {% endif %}
+
+    <div class="cm-box">
+        <h3>{{ city.title }}</h3>
+        <div class="cm-sub">{{ city.city }}</div>
+        <a class="cm-kv" href="{{ object_path(city) }}"><b>Stadtseite</b></a>
+        <a class="cm-kv" href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}"><b>Alle Touren</b></a>
+        <a class="cm-kv" href="{{ object_path(city, 'caldera_criticalmass_statistic_city') }}"><b>Statistik</b></a>
+        {% if feature('photos') %}
+            <a class="cm-kv" href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}"><b>Fotos</b></a>
+        {% endif %}
+        <a class="cm-kv" href="{{ object_path(city, 'caldera_criticalmass_city_listtracks') }}"><b>Tracks</b></a>
+    </div>
+{% endblock %}

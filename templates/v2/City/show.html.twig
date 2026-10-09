@@ -1,0 +1,139 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}{{ city.title }}{% endblock %}
+
+{% block content %}
+    <div itemscope itemtype="http://schema.org/Organization">
+        <div class="cm-crumb-link">
+            <a href="{{ path('caldera_criticalmass_city_list') }}">Städte</a>{% if city.region %} / {{ city.region.name }}{% endif %}
+        </div>
+
+        <section class="cm-card cm-city-head">
+            {% if city.imageName %}
+                <img src="{{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }}" alt="">
+            {% endif %}
+            <div class="cm-pad">
+                <h1 itemprop="name">{{ city.title }}</h1>
+                {% if city.punchline %}
+                    <p class="cm-city-punch">{{ city.punchline }}</p>
+                {% endif %}
+
+                <div class="cm-btn-row">
+                    {% if currentRide %}
+                        <a class="cm-btn cm-btn-go" href="{{ object_path(currentRide) }}">Tour anzeigen</a>
+                    {% endif %}
+                    {% if app.user %}
+                        <a class="cm-btn" href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">Tour eintragen</a>
+                        <a class="cm-btn" href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">Bearbeiten</a>
+                        <div class="dropdown">
+                            <button type="button" class="cm-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Weitere</button>
+                            <ul class="dropdown-menu cm-menu">
+                                <li><a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">Turnus verwalten</a></li>
+                                <li><a class="dropdown-item" href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">Soziale Netzwerke verwalten</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <button type="button" class="cm-btn"
+                                data-controller="hint-modal"
+                                data-modal-hint-title="{{ 'hint_modal.city.options_button.title'|trans }}"
+                                data-modal-hint-text="{{ 'hint_modal.city.options_button.text'|trans({'%city%': city.city}) }}"
+                                data-modal-hint-size="md">Optionen</button>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        {% include 'City/Includes/_tabs.html.twig' with { city: city, tab: 'city' } %}
+
+        {% if city.isInactive %}
+            <p class="cm-card cm-pad" id="inactive-city-hint">Aus {{ city.city }} ist seit einem halben Jahr keine Teilnahme, kein Foto, kein Track und kein Beitrag in sozialen Netzwerken mehr bei uns angekommen.</p>
+        {% endif %}
+
+        <section class="cm-card cm-sect">
+            <h2>Nächste Tour</h2>
+            {% if currentRide %}
+                {% set zone = city.timezone %}
+                <a class="cm-up" href="{{ object_path(currentRide) }}">
+                    <span class="cm-day">
+                        <small>{{ currentRide.dateTime|format_datetime(pattern="EEEEEE", timezone=zone)|replace({".": ""}) }}</small>
+                        <b>{{ currentRide.dateTime|date('j', zone) }}</b>
+                        <small>{{ currentRide.dateTime|format_datetime(pattern="LLL", timezone=zone) }}</small>
+                    </span>
+                    <span class="cm-up-t">
+                        <b>{{ currentRide.title }}</b>
+                        <span>{{ currentRide.dateTime|date('H:i', zone) }} Uhr, {{ currentRide.location and currentRide.latitude and currentRide.longitude ? currentRide.location : 'Treffpunkt noch nicht bekannt' }}</span>
+                    </span>
+                </a>
+            {% else %}
+                <p class="cm-empty">Über eine Radtour ist momentan nichts bekannt.</p>
+            {% endif %}
+        </section>
+
+        {% if rides|length > 0 %}
+            <section class="cm-card cm-sect">
+                <h2>Touren <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}">Alle Touren</a></h2>
+                {% include 'v2/City/Includes/_ride_table.html.twig' with { rides: rides, compact: true } %}
+            </section>
+        {% endif %}
+
+        {% if feature('photos') and photos|length > 0 %}
+            <section class="cm-card cm-sect">
+                <h2>Fotos aus {{ city.city }} <a href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}">Alle Galerien</a></h2>
+                <div class="cm-thumbgrid">
+                    {% for photo in photos %}
+                        <a href="{{ object_path(photo) }}"><img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="" loading="lazy"></a>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        {% if statusPosts is not null %}
+            <section class="cm-card cm-sect" id="status-posts">
+                <h2>
+                    Beiträge{% if statusPosts|length > 0 %} <span class="cm-cnt">{{ statusPosts|length }}</span>{% endif %}
+                    <span class="cm-sect-act">
+                        {% if app.user %}
+                            <button type="button" class="cm-btn" data-bs-toggle="modal" data-bs-target="#modal-add-post">Beitrag schreiben</button>
+                        {% else %}
+                            <button type="button" class="cm-btn"
+                                    data-controller="hint-modal"
+                                    data-modal-hint-title="{{ 'hint_modal.city.status_post_button.title'|trans }}"
+                                    data-modal-hint-text="{{ 'hint_modal.city.status_post_button.text'|trans({'%city%': city.city}) }}"
+                                    data-modal-hint-size="md">Beitrag schreiben</button>
+                        {% endif %}
+                    </span>
+                </h2>
+                {% if statusPosts|length > 0 %}
+                    <div data-controller="scroll-to-post">
+                        {% for post in statusPosts %}
+                            {% include 'v2/Ride/Includes/_post.html.twig' with { post: post, city: city } %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="cm-empty">Noch keine Beiträge.</p>
+                {% endif %}
+            </section>
+
+            {% if app.user %}
+                {{ render(controller('App\\Controller\\PostController::writeCityAction', { 'id': city.id })) }}
+            {% endif %}
+        {% endif %}
+
+        <section class="cm-card cm-sect">
+            <h2>Über die {{ city.title }}</h2>
+            {% if city.longDescription %}
+                <div class="cm-md">{{ city.longDescription|markdown }}</div>
+            {% else %}
+                <p class="cm-empty">Noch keine Beschreibung. <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">{{ city.city }} beschreiben</a></p>
+            {% endif %}
+        </section>
+
+        <div class="cm-only-narrow">
+            {% include 'v2/City/Includes/_aside.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/City/Includes/_aside.html.twig' %}
+{% endblock %}

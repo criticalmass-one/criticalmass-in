@@ -1,0 +1,75 @@
+<section class="cm-card cm-sect" id="details">
+    <h2>
+        Über diese Tour
+        <span class="cm-sect-act">
+            {% if app.user %}
+                {% if not ride.enabled %}
+                    <form method="post" action="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('ride_enable_' ~ ride.id) }}">
+                        <button type="submit" class="cm-btn">Aktivieren</button>
+                    </form>
+                {% else %}
+                    <a class="cm-btn" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">Bearbeiten</a>
+                {% endif %}
+                <span class="dropdown">
+                    <button type="button" class="cm-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Weitere Optionen"></button>
+                    <ul class="dropdown-menu dropdown-menu-end cm-menu">
+                        <li><a class="dropdown-item" href="{{ object_path(ride, 'criticalmass_socialnetwork_ride_list') }}">Soziale Netzwerke</a></li>
+                        <li><a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_ride_socialpreview') }}">Social-Media-Vorschau</a></li>
+                        {% if ride.enabled %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#disable-modal">Tour deaktivieren</button></li>
+                        {% endif %}
+                    </ul>
+                </span>
+            {% else %}
+                <button type="button" class="cm-btn"
+                        data-controller="hint-modal"
+                        data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}"
+                        data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                        data-modal-hint-size="md">Bearbeiten</button>
+            {% endif %}
+        </span>
+    </h2>
+
+    {% if ride.description and ride.enabled %}
+        <div class="cm-md" itemprop="description">{{ ride.description|markdown }}</div>
+    {% elseif ride.enabled %}
+        <p class="cm-empty">Noch keine Beschreibung. <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">Tour ergänzen</a></p>
+    {% else %}
+        <div id="ride-disabled-reason">
+            <p><b>Tour abgesagt.</b>
+                {% set reason = ride.disabledReason ? ride.disabledReason.value : null %}
+                {% if reason == 'DUPLICATE' %}
+                    Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
+                {% elseif reason == 'WRONG_WEBSITE_HANDLING' %}
+                    Diese Tour wurde mit falschen Daten angelegt.
+                {% elseif reason == 'WRONG_AUTO_GENERATION' %}
+                    Diese Tour wurde fehlerhafterweise automatisch generiert.
+                {% elseif reason == 'CANCELLED_WEATHER' %}
+                    Diese Tour wurde witterungsbedingt abgesagt.
+                {% elseif reason == 'CANCELLED_PARTICIPANTS' %}
+                    Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
+                {% elseif reason == 'CANCELLED_AUTHORITIES' %}
+                    Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
+                {% elseif reason == 'CANCELLED' %}
+                    Diese Tour wurde abgesagt.
+                {% endif %}
+            </p>
+            {% if ride.disabledReasonMessage %}
+                <div class="cm-md">{{ ride.disabledReasonMessage|markdown }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if socialNetworkProfiles|length > 0 %}
+        <p class="cm-source">
+            {% for profile in socialNetworkProfiles %}
+                {% set network = getNetwork(profile.network) %}
+                <a href="{{ profile.identifier }}" target="_blank" rel="noopener">{{ network ? network.name : profile.network }}</a>{{ not loop.last ? ', ' }}
+            {% endfor %}
+        </p>
+    {% endif %}
+</section>
+
+{% include 'Ride/Includes/_disable.html.twig' with { 'ride': ride, 'disableForm': disableForm } %}

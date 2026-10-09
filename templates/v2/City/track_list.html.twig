@@ -1,0 +1,42 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Tracks aus {{ city.city }}{% endblock %}
+
+{% block content %}
+    {% include 'v2/City/Includes/_head.html.twig' with { city: city, tab: 'tracks', heading: city.title } %}
+
+    {% if pagination|length > 0 %}
+        <div class="cm-track-grid">
+            {% for track in pagination %}
+                {% set zone = track.ride.city.timezone %}
+                <article class="cm-card cm-track">
+                    <div class="cm-track-head">
+                        <a href="{{ object_path(track.ride) }}">{{ track.ride.title }}</a>
+                        {% if not track.enabled %}<span class="cm-dim">deaktiviert</span>{% elseif not track.reviewed %}<span class="cm-dim">unbestätigt</span>{% endif %}
+                    </div>
+                    <div class="cm-when">
+                        <a class="cm-plain" href="{{ object_path(track) }}">{{ track.ride.dateTime|date('d.m.Y', zone) }}</a>, {{ track.user.username }}
+                    </div>
+                    <div class="cm-map"
+                         id="map-{{ track.id }}"
+                         data-controller="map--map"
+                         data-map--map-lock-map-value="true"
+                         data-map--map-polyline-color-value="#f4581c"
+                         data-map--map-polyline-value="{{ track.getPolylineString(constant('App\\Enum\\PolylineResolution::COARSE')) }}"></div>
+                    <div class="cm-figures">
+                        <div><b>{{ track.distance|number_format(1, ',', '.') }} km</b><small>Länge</small></div>
+                        <div><b>{{ track.startDateTime|date('H:i', zone) }}</b><small>Beginn</small></div>
+                        <div><b>{{ track.endDateTime|date('H:i', zone) }}</b><small>Ende</small></div>
+                    </div>
+                    {% if is_granted('edit', track) %}
+                        <div class="mt-2">{% include 'Track/_track_options_menu.html.twig' with { 'track': track } %}</div>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </div>
+
+        {% include 'v2/City/Includes/_pagenav.html.twig' with { pagination: pagination } %}
+    {% else %}
+        <p class="cm-card cm-pad cm-empty">Aus {{ city.city }} gibt es noch keine Tracks.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Neuigkeiten aus {{ city.city }}{% endblock %}
+
+{% block content %}
+    {% include 'v2/City/Includes/_head.html.twig' with { city: city, tab: 'socialnetwork_city_list_items', heading: city.title } %}
+
+    <section class="cm-card cm-sect cm-narrow">
+        {% if items|length > 0 %}
+            {% for item in items %}
+                <article class="cm-news">
+                    <div class="cm-when" title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">{{ item.dateTime|format_datetime(pattern="d. MMMM yyyy") }}</div>
+                    <h3>{% if item.permalink %}<a href="{{ item.permalink }}">{{ item.title ?? 'Beitrag' }}</a>{% else %}{{ item.title ?? 'Beitrag' }}{% endif %}</h3>
+                    <p>{{ item.text|trim_intro }}</p>
+                    {% if item.permalink %}<a class="cm-more" href="{{ item.permalink }}">Weiterlesen</a>{% endif %}
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="cm-empty">Noch keine Beiträge aus sozialen Netzwerken. <a href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">Soziale Netzwerke verwalten</a></p>
+        {% endif %}
+    </section>
+
+    {% if items|length > 0 or page > 1 %}
+        <nav class="cm-pagenav cm-narrow" aria-label="Seiten">
+            {% if page > 1 %}
+                <a class="cm-btn" href="{{ path('criticalmass_socialnetwork_city_list_items', { citySlug: city.slug, page: page - 1 }) }}">Neuere</a>
+            {% else %}
+                <span></span>
+            {% endif %}
+            {% if items|length > 0 %}
+                <a class="cm-btn" href="{{ path('criticalmass_socialnetwork_city_list_items', { citySlug: city.slug, page: page + 1 }) }}">Ältere</a>
+            {% endif %}
+        </nav>
+    {% endif %}
+{% endblock %}
