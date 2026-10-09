@@ -9,16 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Entscheidet, ob die aktuelle Anfrage die neue Ansicht bekommt.
- *
- * Die neue Ansicht ist ein freiwilliger Test: Wer sie einschaltet, sieht alle Seiten,
- * die es schon neu gibt, im neuen Design, alle anderen wie bisher. Die Wahl liegt bei
- * angemeldeten Nutzern am Konto (gilt dann auf jedem Gerät), sonst in einem Cookie.
- * Hat ein Konto noch nie gewählt, gilt das Cookie – so geht die Wahl eines Gastes beim
- * ersten Anmelden nicht verloren.
- *
- * Ohne den Schalter `design_v2` gibt es nur die bisherige Ansicht, gleich was Cookie
- * und Konto sagen.
+ * Neue Ansicht ja oder nein: Kontofeld vor Cookie, beides nur bei aktivem Flag.
  */
 class DesignChoice
 {
@@ -47,7 +38,6 @@ class DesignChoice
     {
         $request = $this->requestStack->getMainRequest();
 
-        // Ohne Anfrage (Konsole, Cache-Warmup, Messenger) immer die bisherige Ansicht.
         if (null === $request) {
             return false;
         }

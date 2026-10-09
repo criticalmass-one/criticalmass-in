@@ -1,6 +1,5 @@
-// Archivo, selbst gehostet (SIL OFL, Lizenz in assets/fonts/archivo/OFL.txt).
-// Bewusst als Dateien im Repo statt als npm-Paket: package-lock.json ist
-// eingefroren, jede neue Abhaengigkeit loest den Baum neu auf (siehe CLAUDE.md).
+// Archivo (SIL OFL). Als Dateien statt @fontsource, weil package-lock.json
+// eingefroren ist.
 
 $cm-archivo-weights: 400, 500, 600, 700;
 

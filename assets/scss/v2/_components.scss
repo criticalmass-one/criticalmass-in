@@ -1,6 +1,3 @@
-// Bausteine der neuen Ansicht. Praefix cm-, weil die 05b-Namen (.card, .btn,
-// .tabs …) mit Bootstrap kollidieren.
-
 // Karte
 .cm-card {
   background: var(--cm-card);
@@ -73,7 +70,6 @@
   }
 }
 
-// Unauffaelliger Textknopf, z. B. fuer den Ansichts-Umschalter
 .cm-link-btn {
   background: none;
   border: 0;
@@ -97,7 +93,7 @@
   }
 }
 
-// Avatare: Foto, sonst Initiale in der Profilfarbe
+// Avatare
 .cm-ava {
   width: 40px;
   height: 40px;
@@ -121,7 +117,7 @@
   text-decoration: none;
 }
 
-// Kennzahlen: Wert fett, Bezeichnung klein und grau darunter
+// Kennzahlen
 .cm-figures {
   display: flex;
   gap: 28px;
@@ -195,7 +191,7 @@
   }
 }
 
-// Zeile mit Uhrzeit, Ort und Treffpunkt
+// Tour-Zeile
 .cm-ride {
   display: grid;
   grid-template-columns: 44px 1fr;

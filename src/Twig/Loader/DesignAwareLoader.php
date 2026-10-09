@@ -7,26 +7,15 @@ use Twig\Loader\LoaderInterface;
 use Twig\Source;
 
 /**
- * Legt die neue Ansicht über die bisherige: Wer sie eingeschaltet hat, bekommt für
- * `Ride/show.html.twig` die Datei `v2/Ride/show.html.twig`, sofern es sie gibt. Gibt es
- * sie nicht, meldet sich dieser Loader nicht zuständig und der nächste in der Kette
- * liefert das bisherige Template.
+ * Liefert in der neuen Ansicht templates/v2/<name>, falls vorhanden.
  *
- * Die alten Layouts und die Mails sind ausgenommen. Eine noch nicht umgestellte Seite
- * erbt dadurch immer vom alten Rahmen und bekommt das alte Stylesheet – sie landet nie
- * halb im neuen Design. Neue Seiten erben ausdrücklich von `v2/Layout/…`.
- *
- * Der Cache-Schlüssel ist der des v2-Templates, alte und neue Fassung werden also
- * getrennt kompiliert.
+ * Die alten Layouts sind ausgenommen, damit eine nicht umgestellte Seite nie halb im
+ * neuen Rahmen landet.
  */
 class DesignAwareLoader implements LoaderInterface
 {
     public const string PREFIX = 'v2/';
 
-    /**
-     * Templates, die nie eine v2-Fassung bekommen dürfen. `V2TemplateRulesTest` prüft,
-     * dass unter templates/v2/ keine Datei sie überschattet.
-     */
     public const array EXCLUDED = [
         'Template/MasterTemplate.html.twig',
         'Template/StandardTemplate.html.twig',

@@ -15,8 +15,7 @@ flagception:
         status_posts:
             default: false
             env: FEATURE_STATUS_POSTS
-        # Umschalter auf die neue Ansicht (templates/v2/, Stylesheet app-v2). Aus, bis
-        # genug Seiten neu sind; einschalten mit FEATURE_DESIGN_V2=true in der .env.local.
+        # Umschalter auf die neue Ansicht (templates/v2/).
         design_v2:
             default: false
             env: FEATURE_DESIGN_V2

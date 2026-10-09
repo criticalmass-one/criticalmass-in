@@ -146,9 +146,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     protected int $forumPostCount = 0;
 
     /**
-     * Gewählte Ansicht, solange die neue noch ein Test ist: true = neu, false = bisher.
-     * null heißt, das Konto hat nie gewählt – dann gilt das Cookie des Geräts
-     * (siehe App\Design\DesignChoice).
+     * null: nie gewählt, dann gilt das Cookie (App\Design\DesignChoice).
      */
     #[ORM\Column(name: 'design_v2', type: 'boolean', nullable: true)]
     #[Ignore]

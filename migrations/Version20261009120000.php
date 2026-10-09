@@ -8,11 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Merkt sich am Konto, ob jemand die neue Ansicht testet. Bewusst ohne Vorgabewert:
- * NULL heißt „nie gewählt“, dann entscheidet das Cookie des Geräts. So geht die Wahl,
- * die jemand als Gast getroffen hat, beim ersten Anmelden nicht verloren.
- *
- * Fällt weg, sobald die neue Ansicht für alle gilt.
+ * NULL heißt „nie gewählt“, dann gilt das Cookie des Geräts.
  */
 final class Version20261009120000 extends AbstractMigration
 {

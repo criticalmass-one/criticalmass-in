@@ -6,10 +6,6 @@ use App\Twig\Loader\DesignAwareLoader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 
-/**
- * Hält die Regeln für templates/v2/ ein, die der Loader voraussetzt: Die alten Layouts
- * und die Mails bekommen nie eine v2-Fassung, und jede v2-Seite erbt von v2/Layout/.
- */
 final class V2TemplateRulesTest extends TestCase
 {
     private const string V2_DIR = __DIR__ . '/../../templates/v2';

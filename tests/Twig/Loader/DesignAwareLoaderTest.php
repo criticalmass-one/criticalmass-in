@@ -31,7 +31,6 @@ final class DesignAwareLoaderTest extends TestCase
 
         $inner = new ArrayLoader(self::TEMPLATES);
 
-        // Wie in config/services.yaml: der Design-Loader vor dem eigentlichen.
         return new Environment(new ChainLoader([new DesignAwareLoader($inner, $designChoice), $inner]));
     }
 
@@ -47,8 +46,6 @@ final class DesignAwareLoaderTest extends TestCase
 
     public function testPageWithoutV2VersionStaysCompletelyOld(): void
     {
-        // Die Seite selbst gibt es nicht neu, also bleibt auch ihr Rahmen alt – selbst
-        // wenn jemand versehentlich eine v2-Kopie des alten Rahmens anlegt.
         self::assertSame('alt-rahmen[neue-box]', $this->environment(true)->render('City/show.html.twig'));
     }
 

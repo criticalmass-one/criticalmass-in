@@ -1,6 +1,3 @@
-// Rahmen der neuen Ansicht: linke Navigation, Hauptspalte, rechte Spalte;
-// mobil Kopfzeile oben und Tab-Leiste unten. Vorlage: 05b/timeline.html.
-
 body.cm-v2 {
   background: var(--cm-bg);
   color: var(--cm-ink);
@@ -126,7 +123,7 @@ body.cm-v2 {
   overflow-y: auto;
 }
 
-// Fusszeile, unter der Hauptspalte
+// Fusszeile
 .cm-footer {
   margin-top: 32px;
   font-size: .82rem;
@@ -239,8 +236,7 @@ body.cm-v2 {
   }
 }
 
-// Suche in der linken Spalte. Der search-Controller blendet die Vorschlaege nur
-// ueber d-none ein und aus; .dropdown-menu ist ohne .show aber unsichtbar.
+// Suche. Der search-Controller schaltet nur d-none um, nie .show.
 .cm-search {
   position: relative;
   display: flex;

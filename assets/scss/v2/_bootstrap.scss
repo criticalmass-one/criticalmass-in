@@ -1,15 +1,10 @@
-// Bootstrap 5.3 fuer die neue Ansicht – ohne die BS3-Kompatibilitaetsschicht der
-// bisherigen (assets/scss/bootstrap5.scss). Gebraucht wird es fuer Formulare
-// (Form-Theme bootstrap_5_layout), Dropdowns, Modals und wiederverwendete Partials.
-
 @import "../../../node_modules/bootstrap/scss/functions";
 
 $primary: $cm-accent;
 $secondary: $cm-dim;
 $light: $cm-bg;
 $dark: $cm-ink;
-// Weiss auf dem Akzent-Orange erreicht 3,2:1; mit dem Standard 4,5 waehlte
-// Bootstrap schwarze Schrift auf den Knoepfen.
+// Sonst waehlt Bootstrap schwarze Schrift auf dem Akzent-Orange.
 $min-contrast-ratio: 3;
 
 $body-bg: $cm-bg;

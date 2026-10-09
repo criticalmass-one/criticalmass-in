@@ -24,9 +24,7 @@ class CachedTimeline extends Timeline
 
     public function execute(): TimelineInterface
     {
-        // Der Cache haelt fertiges HTML fuer alle Besucher. Ohne die Ansicht im
-        // Schluessel bestimmte, wer ihn zuerst fuellt, fuenf Minuten lang das
-        // Markup fuer alle anderen.
+        // Der Cache haelt fertiges HTML, je Ansicht ein eigenes.
         $cacheKey = 'criticalmass-timeline-content-' . ($this->designChoice->isV2() ? DesignChoice::V2 : DesignChoice::V1);
 
         if ($this->startDateTime) {

@@ -135,8 +135,6 @@ services:
         alias: App\Criticalmass\Timeline\CachedTimeline
         #alias: App\Criticalmass\Timeline\Timeline
 
-    # Neue Ansicht: steht in der Loader-Kette vor dem Dateisystem-Loader und liefert
-    # templates/v2/<name>, wenn es die Datei gibt und die neue Ansicht an ist.
     # autoconfigure aus, sonst haengt ein zweites twig.loader-Tag ohne Prioritaet dran.
     App\Twig\Loader\DesignAwareLoader:
         autoconfigure: false
