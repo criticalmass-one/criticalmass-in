@@ -1,27 +1,8 @@
-{#
-    Startseite in der neuen Ansicht. Daten wie im bisherigen Frontpage/index.html.twig
-    (FrontpageController::indexAction), Gestaltung nach Prototyp 05b/timeline.html.
-#}
 {% extends 'v2/Layout/standard.html.twig' %}
 
 {% block title %}criticalmass.in{% endblock %}
 
 {% block content %}
-    <div class="cm-page-head">
-        <h1>Timeline</h1>
-        <p>Was bei der Critical Mass zuletzt passiert ist: Touren, Tracks, Fotos und Schätzungen.</p>
-    </div>
-
-    {% if not app.user %}
-        <section class="cm-card cm-pad cm-intro">
-            <p>
-                In vielen Städten fahren Menschen einmal im Monat gemeinsam Rad. criticalmass.in sammelt
-                die Termine, Fotos, Tracks und Teilnehmerzahlen dieser Touren.
-            </p>
-            <a class="cm-btn" href="https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/">Mehr über criticalmass.in</a>
-        </section>
-    {% endif %}
-
     {% for teaser in frontpageTeaserList %}
         <section class="cm-card cm-teaser">
             {% if teaser.imageName %}
@@ -45,7 +26,7 @@
 
     {{ include('Timeline/timeline.html.twig') }}
 
-    <a class="cm-more" href="{{ path('caldera_criticalmass_timeline_index') }}">Ältere Einträge im Monatsarchiv</a>
+    <a class="cm-more" href="{{ path('caldera_criticalmass_timeline_index') }}">Ältere Einträge</a>
 {% endblock %}
 
 {% block rail %}

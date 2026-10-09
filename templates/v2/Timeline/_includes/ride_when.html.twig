@@ -1,4 +1,3 @@
-{# Ort und Zeit einer Tour in der Zeitzone ihrer Stadt, z. B. „Hamburg, Freitag, 25. September, 19:00 Uhr“. #}
 {%- if ride and ride.city -%}
     {%- set zone = ride.city.timezone -%}
     {{ ride.city.city }}{% if ride.dateTime %}, {{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM", timezone=zone) }}, {{ ride.dateTime|date('H:i', zone) }} Uhr{% endif %}

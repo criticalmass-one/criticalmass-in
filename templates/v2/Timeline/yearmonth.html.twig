@@ -1,4 +1,3 @@
-{# Monatsarchiv der Timeline (/timeline/{year}/{month}). #}
 {% extends 'v2/Layout/wide.html.twig' %}
 
 {% set monthName = startDateTime|format_datetime(pattern='MMMM yyyy') %}
@@ -9,7 +8,6 @@
     <div class="cm-page-head">
         <div class="cm-crumb"><a href="{{ path('caldera_criticalmass_frontpage') }}">Timeline</a> / {{ monthName }}</div>
         <h1>{{ monthName }}</h1>
-        <p>Was im {{ monthName }} bei der Critical Mass passiert ist.</p>
     </div>
 
     <div class="cm-narrow">

@@ -1,7 +1,3 @@
-{#
-    Reiter der Timeline: „Neuigkeiten“ und je einer pro sozialem Netzwerk.
-    Gleiche Logik wie Timeline/_includes/tabs.html.twig.
-#}
 {% set networkTabs = timelineContentList|keys|filter(tabName => tabName != 'standard') %}
 {% set hasStandardTab = timelineContentList.standard is defined %}
 

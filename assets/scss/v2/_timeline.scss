@@ -1,5 +1,3 @@
-// Timeline-Eintraege und Startseite der neuen Ansicht.
-
 .cm-post {
   padding: 14px 16px;
 }
@@ -117,7 +115,6 @@
   }
 }
 
-// Schmale Zeile fuer kleine Ereignisse
 .cm-post-compact {
   display: flex;
   gap: 12px;
@@ -141,10 +138,6 @@
 }
 
 // Startseite
-.cm-intro p {
-  margin-bottom: 10px;
-}
-
 .cm-teaser {
   overflow: hidden;
 

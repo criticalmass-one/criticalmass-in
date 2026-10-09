@@ -1,8 +1,3 @@
-{#
-    Rechte Spalte der Startseite: die naechsten Tourtage aus
-    FrontpageController::rideListAction (RideRepository::findFrontpageRides).
-    Gezeigt werden die ersten drei Tage ab heute, je hoechstens zehn Touren.
-#}
 {% set today = 'today'|date('Y-m-d') %}
 {% set shownDays = 0 %}
 
@@ -10,7 +5,6 @@
     {% for day in month %}
         {% if shownDays < 3 and day.dateTime|date('Y-m-d') >= today %}
             {% set shownDays = shownDays + 1 %}
-            {# Day ist ein Iterator; als Array laesst er sich zaehlen und schneiden. #}
             {% set rides = [] %}
             {% for ride in day %}{% if ride.enabled %}{% set rides = rides|merge([ride]) %}{% endif %}{% endfor %}
             <div class="cm-box">

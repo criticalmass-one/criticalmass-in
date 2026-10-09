@@ -1,7 +1,4 @@
-{#
-    Kopf eines Timeline-Eintrags: Avatar, Satz, Zeitpunkt.
-    Parameter: item, action (Satz als Markup, ohne Nutzernamen), where (optional)
-#}
+{# Parameter: item, action (ohne Nutzernamen), where (optional) #}
 <div class="cm-post-head">
     {% if item.user %}
         {% include 'v2/Layout/_avatar.html.twig' with { user: item.user } %}
