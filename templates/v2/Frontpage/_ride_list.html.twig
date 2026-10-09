@@ -1,0 +1,44 @@
+{#
+    Rechte Spalte der Startseite: die naechsten Tourtage aus
+    FrontpageController::rideListAction (RideRepository::findFrontpageRides).
+    Gezeigt werden die ersten drei Tage ab heute, je hoechstens zehn Touren.
+#}
+{% set today = 'today'|date('Y-m-d') %}
+{% set shownDays = 0 %}
+
+{% for month in rideList %}
+    {% for day in month %}
+        {% if shownDays < 3 and day.dateTime|date('Y-m-d') >= today %}
+            {% set shownDays = shownDays + 1 %}
+            {# Day ist ein Iterator; als Array laesst er sich zaehlen und schneiden. #}
+            {% set rides = [] %}
+            {% for ride in day %}{% if ride.enabled %}{% set rides = rides|merge([ride]) %}{% endif %}{% endfor %}
+            <div class="cm-box">
+                <h3>{{ day.dateTime|date('Y-m-d') == today ? 'Heute, ' }}{{ day.dateTime|format_datetime(pattern="EEEE, d. MMMM") }}</h3>
+                <div class="cm-sub">{{ rides|length }} {{ rides|length == 1 ? 'Tour' : 'Touren' }}</div>
+
+                {% for ride in rides|slice(0, 10) %}
+                    {% set zone = ride.city.timezone %}
+                    <a class="cm-ride" href="{{ object_path(ride) }}">
+                        <span class="cm-t">{{ ride.dateTime ? ride.dateTime|date('H:i', zone) }}</span>
+                        <span class="cm-c">{{ ride.city.city }}</span>
+                        {% if ride.location %}<span class="cm-p">{{ ride.location }}</span>{% endif %}
+                    </a>
+                {% endfor %}
+
+                {% if rides|length > 10 %}
+                    <a class="cm-more" href="{{ path('caldera_criticalmass_calendar') }}">Alle {{ rides|length }} im Kalender</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% if shownDays == 0 %}
+    <div class="cm-box">
+        <h3>Bald unterwegs</h3>
+        <p class="cm-dim mb-0">In den nächsten Wochen ist keine Tour eingetragen.</p>
+    </div>
+{% endif %}
+
+<a class="cm-more" href="{{ path('caldera_criticalmass_calendar') }}">Zum Kalender</a>
