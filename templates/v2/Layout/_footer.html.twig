@@ -1,0 +1,19 @@
+<footer class="cm-footer">
+    <p>
+        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'about' }) }}">Über die Critical Mass</a>,
+        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'faq' }) }}">Häufige Fragen</a>,
+        <a href="{{ path('caldera_criticalmass_statistic_overview') }}">Statistik</a>,
+        <a href="{{ app.environment in ['dev', 'test'] ? path('app.swagger_ui') : '#' }}">API</a>,
+        <a href="https://github.com/criticalmass-one/criticalmass-in">Quellcode</a>,
+        <a href="https://status.caldera.cc/">Status</a>
+    </p>
+    <p>
+        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}">Impressum</a>,
+        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}">Datenschutz</a>,
+        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}">Deine privaten Daten</a>
+    </p>
+    <p>Kartendaten: OpenStreetMap. Wetterdaten: OpenWeatherMap.</p>
+    {% if design_switch_available() %}
+        <p>Du siehst die neue Ansicht, sie ist noch ein Test. {% include 'v2/Layout/_design_switch.html.twig' %}</p>
+    {% endif %}
+</footer>

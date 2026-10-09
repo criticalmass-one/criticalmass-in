@@ -1,0 +1,16 @@
+{# Kopfzeile, nur mobil sichtbar. Die Suche fuehrt auf die bestehende Suchseite. #}
+<header class="cm-topbar">
+    <a class="cm-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
+        <svg width="24" height="24" aria-hidden="true"><use href="#i-bike"/></svg>criticalmass.in
+    </a>
+    <span class="cm-topbar-actions">
+        <a href="{{ path('caldera_criticalmass_search_query') }}" aria-label="Suche">
+            <svg width="21" height="21" aria-hidden="true"><use href="#i-search"/></svg>
+        </a>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('criticalmass_user_usermanagement') }}" aria-label="Profil">
+                {% include 'v2/Layout/_avatar.html.twig' with { user: app.user, small: true } %}
+            </a>
+        {% endif %}
+    </span>
+</header>

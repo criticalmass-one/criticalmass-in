@@ -1,0 +1,21 @@
+{% set route = app.request.attributes.get('_route') ?? '' %}
+<aside class="cm-sidenav">
+    <a class="cm-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
+        <svg width="26" height="26" aria-hidden="true"><use href="#i-bike"/></svg>criticalmass.in
+    </a>
+
+    <nav aria-label="Hauptnavigation">
+        {% include 'v2/Layout/_nav_items.html.twig' with { route: route } %}
+    </nav>
+
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a class="cm-upload" href="{{ path('caldera_criticalmass_unified_upload') }}">Hochladen</a>
+
+        <a class="cm-me" href="{{ path('criticalmass_user_usermanagement') }}">
+            {% include 'v2/Layout/_avatar.html.twig' with { user: app.user, small: true } %}
+            <span>{{ app.user.username }}</span>
+        </a>
+    {% else %}
+        <a class="cm-upload" href="{{ path('login') }}">Anmelden</a>
+    {% endif %}
+</aside>

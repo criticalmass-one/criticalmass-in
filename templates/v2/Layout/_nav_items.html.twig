@@ -1,0 +1,20 @@
+{# Eintraege der linken Navigation. Parameter: route (aktuelle Route) #}
+{% set items = [
+    { route: 'caldera_criticalmass_frontpage', label: 'Timeline', icon: 'i-home', active: route == 'caldera_criticalmass_frontpage' or route starts with 'caldera_criticalmass_timeline' },
+    { route: 'caldera_criticalmass_explore', label: 'Karte', icon: 'i-map', active: route starts with 'caldera_criticalmass_explore' },
+    { route: 'caldera_criticalmass_calendar', label: 'Kalender', icon: 'i-cal', active: route starts with 'caldera_criticalmass_calendar' },
+    { route: 'caldera_criticalmass_city_list', label: 'Städte', icon: 'i-pin', active: route starts with 'caldera_criticalmass_city' or route starts with 'caldera_criticalmass_region' },
+] %}
+{% if feature('photos') %}
+    {% set items = items|merge([{ route: 'caldera_criticalmass_photo_examplegallery', label: 'Fotos', icon: 'i-photo', active: route starts with 'caldera_criticalmass_photo' }]) %}
+{% endif %}
+{% set items = items|merge([{ route: 'caldera_criticalmass_board_overview', label: 'Forum', icon: 'i-forum', active: route starts with 'caldera_criticalmass_board' }]) %}
+{% if feature('status_posts') %}
+    {% set items = items|merge([{ route: 'caldera_criticalmass_status_feed', label: 'Beiträge', icon: 'i-note', active: route starts with 'caldera_criticalmass_status_feed' }]) %}
+{% endif %}
+
+{% for item in items %}
+    <a href="{{ path(item.route) }}"{% if item.active %} class="is-active" aria-current="page"{% endif %}>
+        <svg width="20" height="20" aria-hidden="true"><use href="#{{ item.icon }}"/></svg>{{ item.label }}
+    </a>
+{% endfor %}
