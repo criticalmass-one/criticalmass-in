@@ -90,8 +90,16 @@ class UploadedTrackCandidateFactory
             throw new \RuntimeException('Die Datei enthält keinen Track.');
         }
 
+        $trackPoints = [];
+
+        foreach ($gpxFile->tracks as $gpxTrack) {
+            foreach ($gpxTrack->getPoints() as $point) {
+                $trackPoints[] = $point;
+            }
+        }
+
         $points = array_values(array_filter(
-            $gpxFile->tracks[0]->getPoints(),
+            $trackPoints,
             static fn (Point $point): bool => $point->latitude !== null && $point->longitude !== null,
         ));
 

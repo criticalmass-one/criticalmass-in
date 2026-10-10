@@ -63,11 +63,58 @@ class UploadedTrackCandidateFactoryTest extends TestCase
         self::assertEqualsWithDelta(53.55, $candidate->getStartLatitude(), 0.05);
     }
 
+    public function testBuildsUploadCandidateAcrossSeveralTrackElements(): void
+    {
+        $gpxFile = $this->generateMultiTrackGpxFile();
+
+        try {
+            $parsed = $this->factory()->createFromUpload($gpxFile, 'two-parts.gpx', $this->createMock(User::class));
+        } finally {
+            @unlink($gpxFile);
+        }
+
+        $candidate = $parsed->getCandidate();
+
+        // Erster Punkt 10:00, letzter Punkt 11:02 — der zweite <trk> zählt also mit.
+        self::assertSame(3720, $candidate->getElapsedTime(), 'The candidate must span every <trk> element, not just the first one.');
+        self::assertEqualsWithDelta(52.0, $candidate->getStartLatitude(), 0.01);
+        self::assertEqualsWithDelta(52.502, $candidate->getEndLatitude(), 0.01, 'The last point of the last track ends the ride.');
+    }
+
     public function testUnsupportedFileTypeThrows(): void
     {
         $this->expectException(\RuntimeException::class);
 
         $this->factory()->createFromUpload(self::FIT_FIXTURE, 'notes.txt', $this->createMock(User::class));
+    }
+
+    private function generateMultiTrackGpxFile(): string
+    {
+        $gpx = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<gpx version="1.1" creator="test">' . "\n";
+
+        foreach ([[52.0, 10.0, '2026-09-01T10:00:00Z'], [52.5, 10.5, '2026-09-01T11:00:00Z']] as [$lat, $lon, $startTime]) {
+            $dateTime = new \DateTime($startTime);
+            $gpx .= '<trk><trkseg>' . "\n";
+
+            for ($i = 0; $i < 3; $i++) {
+                $gpx .= sprintf(
+                    '<trkpt lat="%.6f" lon="%.6f"><time>%s</time></trkpt>' . "\n",
+                    $lat + $i * 0.001,
+                    $lon + $i * 0.001,
+                    $dateTime->format('Y-m-d\TH:i:s\Z'),
+                );
+                $dateTime->modify('+1 minute');
+            }
+
+            $gpx .= '</trkseg></trk>' . "\n";
+        }
+
+        $gpx .= '</gpx>';
+
+        $tmpFile = tempnam(sys_get_temp_dir(), 'gpx_factory_') . '.gpx';
+        file_put_contents($tmpFile, $gpx);
+
+        return $tmpFile;
     }
 
     private function generateGpxFile(float $startLat, float $startLon, string $startTime, int $pointCount): string
