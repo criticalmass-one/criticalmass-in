@@ -10,7 +10,7 @@
     </div>
 
     <div class="cm-page-head">
-        <h1>Foto hochladen</h1>
+        <h1>Fotos hochladen</h1>
     </div>
 
     <section class="cm-card cm-pad cm-acc-form">
@@ -21,7 +21,7 @@
 
             <div class="cm-btn-row">
                 <button type="submit" class="cm-btn cm-btn-go">Datei hochladen</button>
-                <a class="cm-btn" href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}">Mehrere Fotos hochladen</a>
+                <a class="cm-btn" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">Zur Galerie ({{ ride.photos|filter(p => p.enabled and not p.deleted)|length }})</a>
             </div>
         {{ form_end(form) }}
     </section>

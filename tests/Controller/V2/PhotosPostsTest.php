@@ -88,7 +88,7 @@ class PhotosPostsTest extends AbstractControllerTestCase
         $client->request('GET', $this->path($ride, 'caldera_criticalmass_gallery_photos_upload_ride'));
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('body.cm-v2');
-        self::assertSelectorExists('[data-controller="unified-upload"]');
+        self::assertSelectorNotExists('[data-controller="unified-upload"]');
         self::assertSelectorExists('a[href$="/addphoto-legacy"]');
 
         $client->request('GET', $this->path($ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride'));
