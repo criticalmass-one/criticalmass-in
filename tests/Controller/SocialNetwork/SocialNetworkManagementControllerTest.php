@@ -58,6 +58,24 @@ class SocialNetworkManagementControllerTest extends AbstractControllerTestCase
         return $profile;
     }
 
+    public function testGuestsCannotEditProfiles(): void
+    {
+        $client = $this->createClientWithNetworks();
+        $profile = $this->getHamburgTwitterProfile();
+        $identifier = $profile->getIdentifier();
+
+        $client->request('GET', sprintf('/socialnetwork/%d/edit', $profile->getId()));
+        $this->assertResponseRedirects();
+        $this->assertStringContainsString('/login', (string) $client->getResponse()->headers->get('Location'));
+
+        $client->request('POST', sprintf('/socialnetwork/%d/edit', $profile->getId()), [
+            'social_network_profile_edit' => ['identifier' => 'https://example.org/fremd'],
+        ]);
+        $this->assertResponseRedirects();
+
+        $this->assertSame($identifier, $this->getHamburgTwitterProfile()->getIdentifier());
+    }
+
     public function testInvalidEditShowsFormAgain(): void
     {
         $client = $this->createClientWithNetworks();

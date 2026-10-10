@@ -20,6 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SocialNetworkManagementController extends AbstractController
 {
+    #[IsGranted('ROLE_USER')]
     #[Route(
         '/socialnetwork/{id}/edit',
         requirements: ['id' => '\d+'],
