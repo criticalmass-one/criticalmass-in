@@ -487,12 +487,6 @@ parameters:
 			path: src/Controller/Photo/PhotoManagementController.php
 
 		-
-			message: '#^Parameter \#4 \$trackRepository of method App\\Controller\\Photo\\PhotoManagementController\:\:placeSingleGetAction\(\) expects App\\Repository\\TrackRepository, Doctrine\\Persistence\\ManagerRegistry given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Controller/Photo/PhotoManagementController.php
-
-		-
 			message: '#^Instanceof between Symfony\\Component\\HttpFoundation\\File\\UploadedFile and Symfony\\Component\\HttpFoundation\\File\\UploadedFile will always evaluate to true\.$#'
 			identifier: instanceof.alwaysTrue
 			count: 1
@@ -681,12 +675,6 @@ parameters:
 		-
 			message: '#^Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface\:\:getFlashBag\(\)\.$#'
 			identifier: method.notFound
-			count: 1
-			path: src/Controller/SocialNetwork/SocialNetworkManagementController.php
-
-		-
-			message: '#^Variable \$socialNetworkProfile might not be defined\.$#'
-			identifier: variable.undefined
 			count: 1
 			path: src/Controller/SocialNetwork/SocialNetworkManagementController.php
 
