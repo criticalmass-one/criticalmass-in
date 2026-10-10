@@ -142,7 +142,7 @@ class TrackToolsTest extends AbstractControllerTestCase
         $client->request('GET', $this->path($this->hamburgRide(), 'caldera_criticalmass_strava_auth'));
 
         $this->assertV2Page('Track von Strava importieren');
-        self::assertSelectorExists('a.cm-btn-go[href*="strava.com"]');
+        self::assertSelectorExists('a.cm-strava-connect[href*="strava.com"]');
     }
 
     public function testSubridePages(): void
