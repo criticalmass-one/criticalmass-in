@@ -38,7 +38,8 @@ class ParticipationTable implements \Countable, \Iterator
     {
         $this->currentYear = $fromYear;
 
-        $untilYear = (new \DateTime())->format('Y');
+        // Zusagen für Touren im nächsten Jahr brauchen ebenfalls ein Jahr in der Liste.
+        $untilYear = max((int) (new \DateTime())->format('Y'), $fromYear);
 
         for ($year = $fromYear; $year <= $untilYear; ++$year) {
             if (!array_key_exists($year, $this->yearList)) {
