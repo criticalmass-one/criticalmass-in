@@ -10,8 +10,11 @@
             {% for profile in socialNetworkProfiles %}
                 {% set network = getNetwork(profile.network) %}
 
-                {% if network %}
-                    <a href="{{ profile.identifier }}"
+                {# Nur eine echte http(s)-Adresse wird zum Verweis; alles andere
+                   waere ein relativer Pfad oder Schlimmeres. Siehe
+                   SocialNetworkProfile::getSafeUrl(). #}
+                {% if network and profile.safeUrl %}
+                    <a href="{{ profile.safeUrl }}"
                        class="btn btn-sm"
                        style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};"
                        target="_blank"

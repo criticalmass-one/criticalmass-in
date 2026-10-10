@@ -3,9 +3,15 @@
     <span class="text-muted me-2"><i class="far fa-share-alt me-1"></i>Soziale Netzwerke:</span>
     {% for profile in socialNetworkProfiles %}
         {% set network = getNetwork(profile.network) %}
-        <a href="{{ profile.identifier }}" class="btn btn-sm me-1 mb-1" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};" target="_blank" rel="noopener">
-            <i class="{{ network.icon }} me-1"></i>{{ network.name }}
-        </a>
+        {# Wie auf der Stadtseite: kein Verweis ohne pruefbare Adresse, und die
+           Stadtseite prueft hier zusaetzlich auf ein bekanntes Netz -- ohne das
+           lief diese Vorlage bei einem unbekannten Netz in network.icon auf
+           null. #}
+        {% if network and profile.safeUrl %}
+            <a href="{{ profile.safeUrl }}" class="btn btn-sm me-1 mb-1" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};" target="_blank" rel="noopener">
+                <i class="{{ network.icon }} me-1"></i>{{ network.name }}
+            </a>
+        {% endif %}
     {% endfor %}
 </div>
 {% endif %}
