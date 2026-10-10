@@ -805,10 +805,16 @@ SQL;
         $qb = $this->createQueryBuilder('r');
         $expr = $qb->expr();
 
+        $qb
+            ->join('r.city', 'c')
+            ->where($expr->eq('r.enabled', ':enabled'))
+            ->andWhere($expr->eq('c.enabled', ':enabled'))
+            ->setParameter('enabled', true);
+
         if ($query !== '') {
             // LOWER() auf beiden Seiten, weil PostgreSQL LIKE im Gegensatz zu MySQL
             // schreibungsempfindlich vergleicht.
-            $qb->where(
+            $qb->andWhere(
                 $expr->orX(
                     $expr->like('LOWER(r.title)', ':q'),
                     $expr->like('LOWER(r.description)', ':q'),
@@ -816,6 +822,17 @@ SQL;
                 )
             )->setParameter('q', sprintf('%%%s%%', mb_strtolower($query)));
         }
+
+        // Kommende Touren aufsteigend zuerst, danach vergangene absteigend: Fuer
+        // vergangene ist der zweite Schluessel konstant, dort entscheidet der dritte.
+        $qb
+            ->addSelect('CASE WHEN r.dateTime >= :jetzt THEN 0 ELSE 1 END AS HIDDEN vergangen')
+            ->addSelect('CASE WHEN r.dateTime >= :jetzt THEN r.dateTime ELSE :jetzt END AS HIDDEN kommend')
+            ->setParameter('jetzt', \DateTime::createFromFormat('U', (string) time()))
+            ->orderBy('vergangen', 'ASC')
+            ->addOrderBy('kommend', 'ASC')
+            ->addOrderBy('r.dateTime', 'DESC')
+            ->addOrderBy('r.id', 'ASC');
 
         return $qb
             ->setMaxResults($maxResults)
