@@ -13,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -62,6 +63,7 @@ class ParticipationController extends AbstractController
         '/profile/participation/{id}/update',
         requirements: ['id' => '\d+'],
         name: 'criticalmass_user_participation_update',
+        methods: ['POST'],
         priority: 180
     )]
     public function updateAction(
@@ -70,7 +72,15 @@ class ParticipationController extends AbstractController
         EventDispatcherInterface $eventDispatcher,
         Participation $participation
     ): Response {
-        $status = $request->query->get('status', 'maybe');
+        if (!$this->isCsrfTokenValid('participation_update_' . $participation->getId(), (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
+        $status = $request->request->getString('status', 'maybe');
+
+        if (!in_array($status, ['yes', 'maybe', 'no'], true)) {
+            throw new BadRequestHttpException('Unbekannter Teilnahmestatus.');
+        }
 
         $participation
             ->setGoingYes($status === 'yes')
@@ -89,13 +99,19 @@ class ParticipationController extends AbstractController
         '/profile/participation/{id}/delete',
         requirements: ['id' => '\d+'],
         name: 'criticalmass_user_participation_delete',
+        methods: ['POST'],
         priority: 180
     )]
     public function deleteAction(
+        Request $request,
         ManagerRegistry $registry,
         EventDispatcherInterface $eventDispatcher,
         Participation $participation
     ): Response {
+        if (!$this->isCsrfTokenValid('participation_delete_' . $participation->getId(), (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $registry->getManager()->remove($participation);
         $registry->getManager()->flush();
 
