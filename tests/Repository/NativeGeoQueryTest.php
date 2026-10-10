@@ -100,6 +100,33 @@ class NativeGeoQueryTest extends KernelTestCase
         $this->entityManager->flush();
     }
 
+    /**
+     * Wie auf der Treffpunktseite: Der Ort kommt frisch aus der Datenbank, seine
+     * Stadt ist noch ein Proxy. Die Umkreissuche darf sie nicht halb befuellen.
+     */
+    public function testRidesForLocationLeavesTheCityComplete(): void
+    {
+        $locationId = $this->ortAnEinerFahrt()->getId();
+        $this->entityManager->clear();
+
+        $location = $this->entityManager->find(Location::class, $locationId);
+        self::assertInstanceOf(Location::class, $location);
+
+        $rides = $this->rideRepository()->findRidesForLocation($location, 5000.0, 10);
+
+        self::assertNotEmpty($rides);
+        self::assertSame('Hamburg', $location->getCity()->getCity());
+        self::assertSame('Europe/Berlin', $location->getCity()->getTimezone());
+        self::assertNotNull($location->getCity()->getTitle());
+
+        foreach ($rides as $ride) {
+            self::assertNotNull($ride->getCity()->getCity(), 'Auch die Stadt jeder Tour traegt ihren Namen.');
+        }
+
+        $this->entityManager->remove($location);
+        $this->entityManager->flush();
+    }
+
     public function testRidesForLocationRespectsTheRadius(): void
     {
         $location = $this->ortAnEinerFahrt();
