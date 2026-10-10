@@ -4,6 +4,7 @@ namespace Tests\Controller;
 
 use App\Entity\Photo;
 use App\Entity\Ride;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -249,5 +250,50 @@ class PhotoUploadControllerTest extends AbstractControllerTestCase
         // Verify ride page still loads correctly after photo upload
         $client->request('GET', $this->buildRideUrl($ride));
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testUploadPageReferencesSingleUploader(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getPastRideForCity('hamburg');
+        $this->assertNotNull($ride, 'Past Hamburg ride fixture should exist');
+
+        $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addphoto');
+
+        $this->assertResponseIsSuccessful();
+        // Seit dem Wegfall von PhotoUpload.js laedt nichts mehr die Dropzone.
+        $this->assertCount(0, $crawler->filter('#photo-dropzone'));
+        $this->assertGreaterThan(0, $crawler->filter(sprintf('a[href="%s/addphoto-legacy"]', $this->buildRideUrl($ride)))->count());
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function uploadLinkPageProvider(): iterable
+    {
+        yield 'Galerie' => ['/listphotos'];
+        yield 'Fotos verwalten' => ['/managephotos'];
+        yield 'Einzel-Uploader' => ['/addphoto-legacy'];
+    }
+
+    #[DataProvider('uploadLinkPageProvider')]
+    public function testUploadLinksPointToSingleUploader(string $suffix): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getPastRideForCity('hamburg');
+        $this->assertNotNull($ride, 'Past Hamburg ride fixture should exist');
+
+        $crawler = $client->request('GET', $this->buildRideUrl($ride) . $suffix);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(0, $crawler->filter('a[href$="/addphoto"]'), 'Kein Link darf auf den toten Mehrfach-Uploader zeigen.');
+
+        if ('/addphoto-legacy' !== $suffix) {
+            $this->assertGreaterThan(0, $crawler->filter('a[href$="/addphoto-legacy"]')->count());
+        }
     }
 }
