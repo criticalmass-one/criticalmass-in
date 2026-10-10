@@ -91,11 +91,14 @@ export default class extends Controller {
         const html = matches.map(item => this.renderSuggestion(item)).join('');
         this.resultsTarget.innerHTML = html;
         this.resultsTarget.classList.remove('d-none');
+        // Bootstrap blendet .dropdown-menu ohne .show per display: none aus
+        this.resultsTarget.classList.add('show');
     }
 
     hideResults() {
         if (this.hasResultsTarget) {
             this.resultsTarget.classList.add('d-none');
+            this.resultsTarget.classList.remove('show');
             this.resultsTarget.innerHTML = '';
         }
     }
