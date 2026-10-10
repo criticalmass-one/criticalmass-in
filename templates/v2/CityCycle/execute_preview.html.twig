@@ -1,0 +1,50 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set zone = cityCycle.city.timezone %}
+
+{% block title %}Turnus auslösen{% endblock %}
+
+{% block content %}
+    {% include 'v2/CityCycle/_head.html.twig' with { city: cityCycle.city, heading: 'Vorschau' } %}
+
+    <section class="cm-card cm-pad">
+        <h2 class="cm-adm-h">{{ executeable.fromDate|date('d.m.Y', 'UTC') }} bis {{ executeable.untilDate|date('d.m.Y', 'UTC') }}</h2>
+
+        {% if rideList|length > 0 %}
+            <div class="cm-tbl-wrap">
+                <table class="cm-tbl">
+                    <thead>
+                        <tr><th>Datum</th><th>Tour</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for ride in rideList %}
+                            <tr>
+                                <td class="cm-d">
+                                    {{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM y", timezone=zone, locale="de") }}
+                                    <span class="cm-sub">{{ ride.dateTime|date('H:i', zone) }} Uhr</span>
+                                </td>
+                                <td>
+                                    {{ ride.title }}
+                                    <span class="cm-sub">{{ ride.location ?: 'Treffpunkt nicht festgelegt' }}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="mb-0">Für deinen gewählten Zeitraum können keine Touren angelegt werden, weil entweder dieser Turnus für den gewählten Zeitraum noch nicht begonnen hat oder abgelaufen ist oder die anzulegenden Touren bereits existieren.</p>
+        {% endif %}
+    </section>
+
+    <form method="post" class="cm-adm-foot" action="{{ object_path(cityCycle, 'caldera_criticalmass_citycycle_execute_persist') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('citycycle_execute') }}">
+        <input type="hidden" name="fromDate" value="{{ executeable.fromDate|date('U') }}">
+        <input type="hidden" name="untilDate" value="{{ executeable.untilDate|date('U') }}">
+
+        <a class="cm-btn" href="{{ object_path(cityCycle, 'caldera_criticalmass_citycycle_execute') }}">Anderer Zeitraum</a>
+        {% if rideList|length > 0 %}
+            <button type="submit" class="cm-btn cm-btn-go">Touren speichern</button>
+        {% endif %}
+    </form>
+{% endblock %}

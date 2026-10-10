@@ -1,0 +1,173 @@
+// Verwaltung: Turnusse, soziale Netzwerke, Treffpunkte, Aktionen
+.cm-adm-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+
+  > .cm-btn {
+    flex: none;
+  }
+}
+
+.cm-adm-h {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.cm-adm-rows {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  > li {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--cm-line-soft);
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &.is-off {
+      color: var(--cm-dim);
+
+      b {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.cm-adm-rows.is-inline > li {
+  flex-direction: row;
+  align-items: center;
+}
+
+.cm-adm-main {
+  flex: 1;
+  min-width: 0;
+  font-size: .93rem;
+
+  > b {
+    display: block;
+  }
+
+  > span,
+  > a {
+    display: block;
+    color: var(--cm-dim);
+    font-size: .86rem;
+    overflow-wrap: anywhere;
+  }
+
+  > a:hover {
+    color: var(--cm-ink);
+  }
+}
+
+.cm-adm-acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  form {
+    margin: 0;
+  }
+}
+
+.cm-adm-summary {
+  .cm-dl {
+    grid-template-columns: 110px 1fr;
+  }
+}
+
+.cm-form-submit .cm-adm-aside {
+  margin-right: auto;
+  align-self: center;
+  font-size: .9rem;
+  color: var(--cm-dim);
+
+  &:hover {
+    color: var(--cm-ink);
+  }
+}
+
+.cm-adm-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.cm-adm-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 16px;
+  align-items: start;
+}
+
+.cm-adm-bigmap {
+  height: 350px;
+}
+
+.cm-tbl .cm-r .cm-btn {
+  font-size: .84rem;
+  padding: 4px 10px;
+}
+
+// Freigabe für eine fremde Anwendung
+.cm-consent {
+  p {
+    color: var(--cm-text);
+    margin: 0 0 10px;
+  }
+
+  .cm-list {
+    margin: 0 0 20px;
+  }
+}
+
+.cm-consent-acts {
+  display: flex;
+  gap: 10px;
+
+  .cm-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 9px 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .cm-adm-rows.is-inline > li {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cm-adm-cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cm-adm-bigmap {
+    height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cm-adm-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cm-form-submit .cm-adm-aside {
+    flex-basis: 100%;
+  }
+
+  .cm-form-submit:has(.cm-adm-aside) {
+    flex-wrap: wrap;
+  }
+}

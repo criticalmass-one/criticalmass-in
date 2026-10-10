@@ -1,0 +1,12 @@
+{# Parameter: posts, emptyText #}
+{% if posts|length == 0 %}
+    <p class="cm-card cm-pad cm-empty">{{ emptyText }}</p>
+{% else %}
+    <section class="cm-card cm-sect" data-controller="scroll-to-post">
+        {% for post in posts %}
+            {% include 'v2/Ride/Includes/_post.html.twig' with { post: post } %}
+        {% endfor %}
+    </section>
+
+    {% include 'v2/City/Includes/_pagenav.html.twig' with { pagination: posts } %}
+{% endif %}

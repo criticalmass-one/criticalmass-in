@@ -8,6 +8,9 @@
     {% set links = links|merge([{ route: 'caldera_criticalmass_photo_user_list', label: 'Deine Fotos' }]) %}
 {% endif %}
 {% set links = links|merge([{ route: 'criticalmass_user_profile_passkey_list', label: 'Passkeys' }]) %}
+{% if is_granted('ROLE_ADMIN') %}
+    {% set links = links|merge([{ route: 'caldera_criticalmass_moderation_reports', label: 'Gemeldete Beiträge' }]) %}
+{% endif %}
 
 <div class="cm-box cm-acc-nav">
     <h3>Dein Konto</h3>

@@ -1,0 +1,45 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Fotogalerie{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <h1>Fotos</h1>
+    </div>
+
+    {% if photos|length == 0 %}
+        <p class="cm-card cm-pad cm-empty">Noch keine Fotos.</p>
+    {% else %}
+        <div class="cm-masonry cm-pp-masonry">
+            {% for photo in photos %}
+                <figure>
+                    <a href="{{ object_path(photo) }}"><img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="" loading="lazy"></a>
+                    {% if photo.ride %}
+                        <figcaption>
+                            <a href="{{ object_path(photo.ride, 'caldera_criticalmass_photo_ride_list') }}"><b>{{ photo.ride.city.city }}</b></a>
+                            <span>{{ photo.ride.dateTime|format_datetime(pattern="d. MMM yyyy", timezone=photo.ride.city.timezone) }}</span>
+                        </figcaption>
+                    {% endif %}
+                </figure>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    {% if cities|length > 0 %}
+        <div class="cm-box">
+            <h3>Galerien</h3>
+            {% for city in cities|sort((a, b) => a.city <=> b.city) %}
+                <a class="cm-kv" href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}"><b>{{ city.city }}</b></a>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if app.user %}
+        <div class="cm-box">
+            <h3>Deine Fotos</h3>
+            <a class="cm-kv" href="{{ path('caldera_criticalmass_photo_user_list') }}"><b>Hochgeladene Fotos</b></a>
+            <a class="cm-kv" href="{{ path('caldera_criticalmass_unified_upload') }}"><b>Fotos hochladen</b></a>
+        </div>
+    {% endif %}
+{% endblock %}

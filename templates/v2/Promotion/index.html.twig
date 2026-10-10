@@ -1,0 +1,73 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}{{ promotion.title }}{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <h1>{{ promotion.title }}</h1>
+    </header>
+
+    {% if (rideList|length > 0 and promotion.hasMap) or promotion.description %}
+        <section class="cm-card cm-pad">
+            {% if promotion.description %}
+                <div class="cm-md">{{ promotion.description|markdown }}</div>
+            {% endif %}
+
+            {% if rideList|length > 0 and promotion.hasMap %}
+                <div class="cm-map cm-adm-bigmap"
+                     id="promotion-map"
+                     data-controller="map--query-map"
+                     data-map--query-map-popup-template-id-value="ride-popup"
+                     data-map--query-map-api-type-value="ride"
+                     data-map--query-map-api-query-value="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query }}&amp;extended=true"></div>
+            {% endif %}
+        </section>
+    {% endif %}
+
+    <section class="cm-card cm-pad">
+        {% if rideList|length > 0 %}
+            <div class="cm-tbl-wrap">
+                <table class="cm-tbl" id="ride-table" data-controller="datatable">
+                    <thead>
+                        <tr><th>Datum</th><th>Stadt</th><th>Tour</th><th class="cm-hide-s">Treffpunkt</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for ride in rideList %}
+                            {% set zone = ride.city.timezone %}
+                            <tr>
+                                <td class="cm-d" data-order="{{ ride.dateTime|date('U') }}">
+                                    {{ ride.dateTime|date('d.m.Y', zone) }}
+                                    <span class="cm-sub">{{ ride.dateTime|date('H:i', zone) }} Uhr</span>
+                                </td>
+                                <td><a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a></td>
+                                <td><a href="{{ object_path(ride) }}">{{ ride.title }}</a></td>
+                                <td class="cm-hide-s">{{ ride.location }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="cm-dim mb-0">Noch keine Touren.</p>
+        {% endif %}
+    </section>
+
+    {% verbatim %}
+<template id="ride-popup">
+  <div class="popup">
+    <h3 class="popup__title">{{title}}</h3>
+
+    <div class="popup__meta">
+      <div>{{formatDateLocal this}}, {{formatTimeLocal this}} Uhr</div>
+      {{#if location}}
+        <div>{{location}}</div>
+      {{/if}}
+    </div>
+
+    <div class="popup__actions">
+      <a class="cm-btn" href="{{rideUrl this}}">Tour anzeigen</a>
+    </div>
+  </div>
+</template>
+{% endverbatim %}
+{% endblock %}

@@ -94,16 +94,16 @@ class FrontpageDesignV2Test extends AbstractControllerTestCase
         static::getContainer()->get('doctrine')->getManager()->flush();
     }
 
-    public function testUnconvertedPageStaysOldInNewDesign(): void
+    public function testOldDesignChoiceKeepsConvertedPagesOld(): void
     {
         $client = static::createClient();
-        $client->getCookieJar()->set(new Cookie(DesignChoice::COOKIE, DesignChoice::V2));
+        $client->getCookieJar()->set(new Cookie(DesignChoice::COOKIE, DesignChoice::V1));
 
         $client->request('GET', '/city/gallery');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorNotExists('body.cm-v2');
         self::assertSelectorExists('#navigation');
-        self::assertSelectorTextContains('footer', 'Zur bisherigen Ansicht');
+        self::assertSelectorTextContains('footer', 'Neue Ansicht ausprobieren');
     }
 }

@@ -1,0 +1,23 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set city = ride.city %}
+
+{% block title %}Fotos hochladen{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb-link">
+        <a href="{{ object_path(city) }}">{{ city.city }}</a> / <a href="{{ object_path(ride) }}">{{ ride.dateTime|format_datetime(pattern="d. MMMM yyyy", timezone=city.timezone) }}</a>
+    </div>
+
+    <div class="cm-page-head">
+        <h1>Fotos hochladen</h1>
+    </div>
+
+    <section class="cm-card cm-pad">
+        <a class="cm-btn cm-btn-go" href="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}">Fotos hochladen</a>
+    </section>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/PhotoUpload/_rail.html.twig' with { ride: ride } %}
+{% endblock %}

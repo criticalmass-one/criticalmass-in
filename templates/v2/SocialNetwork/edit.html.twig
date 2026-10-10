@@ -1,0 +1,20 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Soziales Netzwerk bearbeiten{% endblock %}
+
+{% block content %}
+    {% include 'v2/SocialNetwork/_head.html.twig' with { heading: 'Soziales Netzwerk bearbeiten', withList: true } %}
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form' } }) }}
+        {{ form_errors(form) }}
+        <fieldset>
+            {{ form_row(form.identifier, { label: 'Adresse' }) }}
+            {{ form_row(form.network, { label: 'Soziales Netzwerk' }) }}
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ object_path(profileAble, 'criticalmass_socialnetwork_' ~ profileAbleType ~ '_list') }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

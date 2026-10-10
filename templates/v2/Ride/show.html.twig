@@ -136,7 +136,7 @@
             {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride })) }}
 
             {% if feature('photos') %}
-                {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
+                {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') %}
                 <section class="cm-card cm-sect">
                     <h2>Fotos{% if photos|length > 0 %} <span class="cm-cnt">{{ photos|length }}</span><a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">Galerie öffnen</a>{% endif %}</h2>
 

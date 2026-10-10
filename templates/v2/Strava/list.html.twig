@@ -1,0 +1,54 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set zone = ride.city.timezone %}
+
+{% block title %}Track von Strava importieren{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a> / <a href="{{ object_path(ride) }}">{{ ride.title }}</a>
+        </div>
+        <h1>Aktivität wählen</h1>
+        <p>Deine Strava-Aktivitäten vom {{ ride.dateTime|date('d.m.Y', zone) }}</p>
+    </div>
+
+    {% if activities is iterable and activities|length > 0 %}
+        <div class="cm-acc-tracks">
+            {% for activity in activities %}
+                <article class="cm-card cm-pad cm-acc-track">
+                    <div class="cm-map"
+                         id="map-{{ activity.id }}"
+                         data-controller="map--map"
+                         data-map--map-lock-map-value="true"
+                         data-map--map-polyline-value="{{ activity.map.summary_polyline }}"
+                         data-map--map-polyline-color-value="{{ app.user.color }}"></div>
+
+                    <h2>{{ activity.name }}</h2>
+
+                    <div class="cm-figures">
+                        <div><b>{{ (activity.distance / 1000)|number_format(1, ',', '.') }} km</b><small>Strecke</small></div>
+                        <div><b>{{ activity.start_date|date('H:i', zone) }}</b><small>Start</small></div>
+                        <div><b>{{ human_duration(activity.elapsed_time) }}</b><small>Dauer</small></div>
+                    </div>
+
+                    <div class="cm-btn-row">
+                        <a class="cm-btn cm-btn-go" href="{{ object_path(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">Importieren</a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% elseif activities is iterable %}
+        <section class="cm-card cm-pad">
+            <p class="cm-dim mb-0">Am {{ ride.dateTime|date('d.m.Y', zone) }} hast du mit Strava keine Touren aufgezeichnet.</p>
+        </section>
+    {% else %}
+        <div class="cm-flash cm-flash-error" role="alert"><span>Strava liefert gerade keine Aktivitäten. Versuch es später noch einmal.</span></div>
+    {% endif %}
+
+    <p><a class="cm-btn" href="{{ object_path(ride) }}">Abbrechen</a></p>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}
