@@ -13,6 +13,7 @@ class SocialNetworkProfileEditType extends SocialNetworkProfileType
         $builder
             ->add('identifier', TextType::class, [
                 'required' => true,
+                'empty_data' => '',
             ])
             ->add('network', ChoiceType::class, [
                 'choices' => $this->getNetworkList(),
