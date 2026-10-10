@@ -165,6 +165,20 @@ class ProfileParticipationControllerTest extends AbstractControllerTestCase
         $this->assertFalse($participation->getGoingYes());
     }
 
+    public function testUpdateWithUnknownStatusIsRejected(): void
+    {
+        $this->loginAs($this->client, 'testuser@criticalmass.in');
+        $this->storeCsrfToken('participation_update_' . $this->participationId, 'test_csrf_token');
+
+        $this->client->request('POST', sprintf('/profile/participation/%d/update', $this->participationId), [
+            'status' => 'quatsch',
+            '_token' => 'test_csrf_token',
+        ]);
+
+        $this->assertSame(400, $this->client->getResponse()->getStatusCode());
+        $this->assertTrue($this->findParticipation()->getGoingMaybe());
+    }
+
     public function testDeleteWithValidToken(): void
     {
         $this->loginAs($this->client, 'testuser@criticalmass.in');

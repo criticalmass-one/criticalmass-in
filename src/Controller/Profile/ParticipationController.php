@@ -13,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -75,7 +76,11 @@ class ParticipationController extends AbstractController
             throw $this->createAccessDeniedException('Invalid CSRF token.');
         }
 
-        $status = $request->request->get('status', 'maybe');
+        $status = $request->request->getString('status', 'maybe');
+
+        if (!in_array($status, ['yes', 'maybe', 'no'], true)) {
+            throw new BadRequestHttpException('Unbekannter Teilnahmestatus.');
+        }
 
         $participation
             ->setGoingYes($status === 'yes')
