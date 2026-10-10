@@ -23,6 +23,14 @@ framework:
             doctrine.result_cache_pool:
                 adapter: cache.adapter.filesystem
 
+            # Antworten von Nominatim, auch die leeren. Jeder unbekannte Pfad
+            # auf criticalmass.in fragt dort nach einer Stadt; ohne Gedaechtnis
+            # fragt derselbe Unsinn jedes Mal neu nach. Eine Woche ist
+            # reichlich: Staedte ziehen nicht um.
+            cache.nominatim:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 604800
+
     translator: { fallbacks: [de] }
     form: ~
     csrf_protection:
