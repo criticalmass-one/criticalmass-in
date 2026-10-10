@@ -417,10 +417,20 @@ SQL;
                 $expr->like('LOWER(c.description)', ':q'),
             );
             $conditions[] = $likeExpr;
-            $qb->setParameter('q', '%' . mb_strtolower($query) . '%');
+            $suchwort = mb_strtolower($query);
+            $qb->setParameter('q', '%' . $suchwort . '%');
+
+            // Wortanfang im Titel vor Wortinnerem, Treffer nur in der Beschreibung zuletzt.
+            $qb
+                ->addSelect('CASE WHEN LOWER(c.title) LIKE :anfang OR LOWER(c.title) LIKE :wortanfang THEN 0 WHEN LOWER(c.title) LIKE :q THEN 1 ELSE 2 END AS HIDDEN treffer')
+                ->setParameter('anfang', $suchwort . '%')
+                ->setParameter('wortanfang', '% ' . $suchwort . '%')
+                ->orderBy('treffer', 'ASC');
         }
 
         $qb->where(call_user_func_array([$expr, 'andX'], $conditions))
+            ->addOrderBy('c.city', 'ASC')
+            ->addOrderBy('c.id', 'ASC')
             ->setMaxResults($maxResults)
         ;
 

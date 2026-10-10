@@ -740,24 +740,11 @@ class RideRepository extends ServiceEntityRepository
 
         $latitude = $location->getLatitude();
         $longitude = $location->getLongitude();
+        // Die Umkreissuche liefert nur IDs; die Touren laedt danach DQL vollstaendig.
+        // Eine per ResultSetMapping halb gefuellte Stadt bliebe sonst in der Identity
+        // Map haengen und ersetzte auch location.city (#1574).
         $rsm = new ResultSetMapping();
-
-        $rsm->addEntityResult(Ride::class, 'r');
-        $rsm->addFieldResult('r', 'id', 'id');
-        // Durchgehend kleingeschriebene Aliase: PostgreSQL faltet unquotierte
-        // Bezeichner auf Kleinschreibung, ein "r.dateTime" waere dort also
-        // "r.datetime" und existierte nicht.
-        $rsm->addFieldResult('r', 'ride_date_time', 'dateTime');
-        $rsm->addFieldResult('r', 'latitude', 'latitude');
-        $rsm->addFieldResult('r', 'longitude', 'longitude');
-        $rsm->addFieldResult('r', 'title', 'title');
-
-        $rsm->addJoinedEntityResult(City::class, 'c', 'r', 'city');
-        $rsm->addFieldResult('c', 'c_id', 'id');
-
-        $rsm->addJoinedEntityResult(CitySlug::class, 'cs', 'c', 'mainSlug');
-        $rsm->addFieldResult('cs', 'cs_id', 'id');
-        $rsm->addFieldResult('cs', 'cs_slug', 'slug');
+        $rsm->addScalarResult('id', 'id', 'integer');
 
         // Der Spaltenname bleibt unquotiert. Doctrine legt die Spalte selbst
         // unquotiert an, PostgreSQL faltet sie also auf "datetime" — und
@@ -776,15 +763,7 @@ class RideRepository extends ServiceEntityRepository
         // Der Radius kommt bereits in Metern herein, und ueber geography rechnet
         // ST_DWithin ebenfalls in Metern.
         $sql = <<<SQL
-SELECT
-    r.id,
-    r.dateTime AS ride_date_time,
-    r.latitude,
-    r.longitude,
-    r.title,
-    c.id AS c_id,
-    cs.id AS cs_id,
-    cs.slug AS cs_slug
+SELECT r.id
 FROM ride r
 INNER JOIN city c ON r.city_id = c.id
 INNER JOIN cityslug cs ON cs.id = c.main_slug_id
@@ -804,7 +783,21 @@ SQL;
         $query->setParameter('radius', $radiusInMeters);
         $query->setParameter('limit', $limit, \Doctrine\DBAL\ParameterType::INTEGER);
 
-        return $query->getResult();
+        $ids = array_column($query->getScalarResult(), 'id');
+
+        if ([] === $ids) {
+            return [];
+        }
+
+        return $this->createQueryBuilder('r')
+            ->select('r', 'c', 'cs')
+            ->join('r.city', 'c')
+            ->join('c.mainSlug', 'cs')
+            ->where('r.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->orderBy('r.dateTime', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     public function searchByQuery(string $query, int $maxResults = 50): array
@@ -812,10 +805,16 @@ SQL;
         $qb = $this->createQueryBuilder('r');
         $expr = $qb->expr();
 
+        $qb
+            ->join('r.city', 'c')
+            ->where($expr->eq('r.enabled', ':enabled'))
+            ->andWhere($expr->eq('c.enabled', ':enabled'))
+            ->setParameter('enabled', true);
+
         if ($query !== '') {
             // LOWER() auf beiden Seiten, weil PostgreSQL LIKE im Gegensatz zu MySQL
             // schreibungsempfindlich vergleicht.
-            $qb->where(
+            $qb->andWhere(
                 $expr->orX(
                     $expr->like('LOWER(r.title)', ':q'),
                     $expr->like('LOWER(r.description)', ':q'),
@@ -823,6 +822,17 @@ SQL;
                 )
             )->setParameter('q', sprintf('%%%s%%', mb_strtolower($query)));
         }
+
+        // Kommende Touren aufsteigend zuerst, danach vergangene absteigend: Fuer
+        // vergangene ist der zweite Schluessel konstant, dort entscheidet der dritte.
+        $qb
+            ->addSelect('CASE WHEN r.dateTime >= :jetzt THEN 0 ELSE 1 END AS HIDDEN vergangen')
+            ->addSelect('CASE WHEN r.dateTime >= :jetzt THEN r.dateTime ELSE :jetzt END AS HIDDEN kommend')
+            ->setParameter('jetzt', \DateTime::createFromFormat('U', (string) time()))
+            ->orderBy('vergangen', 'ASC')
+            ->addOrderBy('kommend', 'ASC')
+            ->addOrderBy('r.dateTime', 'DESC')
+            ->addOrderBy('r.id', 'ASC');
 
         return $qb
             ->setMaxResults($maxResults)
