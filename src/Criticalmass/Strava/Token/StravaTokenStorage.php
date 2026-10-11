@@ -17,6 +17,10 @@ class StravaTokenStorage
 
     public static function createFromStravaResponse(\stdClass $response): self
     {
+        if (!isset($response->access_token, $response->refresh_token, $response->expires_at)) {
+            throw new \InvalidArgumentException('Strava did not return a token.');
+        }
+
         return new self(
             (string)$response->access_token,
             (string)$response->refresh_token,

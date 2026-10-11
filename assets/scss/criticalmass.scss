@@ -26,3 +26,13 @@ input[type="file"] {
 .captcha-input-group .input-group-text {
   padding: 0;
 }
+.strava-connect {
+  display: inline-block;
+  width: 172px;
+  height: 31px;
+  background: url("../images/strava/connect.png") no-repeat center / contain;
+
+  @media (min-resolution: 2dppx) {
+    background-image: url("../images/strava/connect@2x.png");
+  }
+}

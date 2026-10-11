@@ -11,7 +11,6 @@ use App\Entity\Ride;
 use App\Event\Track\TrackUploadedEvent;
 use Doctrine\Persistence\ManagerRegistry;
 use Iamstuartwilson\StravaApi;
-use Strava\API\OAuth;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,13 +55,14 @@ class StravaController extends AbstractController
     #[Route('/{citySlug}/{rideIdentifier}/stravatoken', name: 'caldera_criticalmass_strava_token', priority: 130)]
     public function tokenAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter, SessionInterface $session): Response
     {
-        $api = $this->createApi();
+        $code = $request->query->getString('code');
 
-        $code = $request->query->get('code');
-        $result = $api->tokenExchange($code);
+        if ('' === $code) {
+            return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_auth'));
+        }
 
         try {
-            $token = StravaTokenStorage::createFromStravaResponse($result);
+            $token = StravaTokenStorage::createFromStravaResponse($this->createApi()->tokenExchange($code));
 
             $session->set('strava_token', $token);
             return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_list'));
@@ -73,14 +73,20 @@ class StravaController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/{rideIdentifier}/stravalist', name: 'caldera_criticalmass_strava_list', priority: 130)]
-    public function listridesAction(Ride $ride, SessionInterface $session): Response
+    public function listridesAction(Ride $ride, SessionInterface $session, ObjectRouterInterface $objectRouter): Response
     {
+        $token = $session->get('strava_token');
+
+        if (!$token instanceof StravaTokenStorage) {
+            return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_auth'));
+        }
+
         $afterDateTime = DateTimeUtil::getDayStartDateTime($ride->getDateTime());
         $beforeDateTime = DateTimeUtil::getDayEndDateTime($ride->getDateTime());
 
         $api = $this->createApi();
 
-        StravaTokenStorage::setAccessToken($api, $session->get('strava_token'));
+        StravaTokenStorage::setAccessToken($api, $token);
 
         $activities = $api->get(
             '/athlete/activities', [
@@ -112,20 +118,6 @@ class StravaController extends AbstractController
         $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
 
         return $this->redirect($objectRouter->generate($track));
-    }
-
-    protected function initOauthForRide(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): OAuth
-    {
-        $redirectUri = $request->getUriForPath($objectRouter->generate($ride, 'caldera_criticalmass_strava_token'));
-
-        $oauthOptions = [
-            'clientId' => $this->stravaClientId,
-            'clientSecret' => $this->stravaSecret,
-            'redirectUri' => $redirectUri,
-            'scope' => 'read',
-        ];
-
-        return new OAuth($oauthOptions);
     }
 
     protected function createApi(): StravaApi
