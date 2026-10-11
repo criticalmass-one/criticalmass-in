@@ -1,0 +1,28 @@
+{% extends 'Template/MasterTemplate.html.twig' %}
+
+{% set entrypoint = 'app-v2' %}
+
+{% block bodyClass %}cm-v2{% endblock %}
+
+{% block masterContent %}
+    {% include 'v2/Layout/_icons.html.twig' %}
+    {% include 'v2/Layout/_topbar.html.twig' %}
+
+    <div class="cm-shell {% block shellClass %}{% endblock %}">
+        {% include 'v2/Layout/_sidenav.html.twig' %}
+
+        <main class="cm-main">
+            {{ render(controller('App\\Controller\\Template\\AlertController::showCurrentAlertsAction')) }}
+
+            {% include 'v2/Layout/_flashes.html.twig' %}
+
+            {% block content %}{% endblock %}
+
+            {% include 'v2/Layout/_footer.html.twig' %}
+        </main>
+
+        {% block railColumn %}{% endblock %}
+    </div>
+
+    {% include 'v2/Layout/_tabbar.html.twig' %}
+{% endblock %}
