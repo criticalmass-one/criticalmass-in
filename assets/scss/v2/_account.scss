@@ -150,6 +150,10 @@
 
   .cm-btn-row {
     margin-top: 16px;
+
+    &:has(> .cm-btn-go:last-child) {
+      justify-content: flex-end;
+    }
   }
 }
 

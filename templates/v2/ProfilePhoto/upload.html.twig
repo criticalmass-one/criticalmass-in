@@ -21,8 +21,8 @@
             {{ form_row(profilePhotoForm.imageFile, { label: 'Neues Foto' }) }}
 
             <div class="cm-btn-row">
-                {{ form_widget(profilePhotoForm.submit, { label: 'Speichern', attr: { class: 'cm-btn cm-btn-go' } }) }}
                 <a href="{{ path('criticalmass_user_usermanagement') }}" class="cm-btn">Abbrechen</a>
+                {{ form_widget(profilePhotoForm.submit, { label: 'Speichern', attr: { class: 'cm-btn cm-btn-go' } }) }}
             </div>
         {{ form_end(profilePhotoForm) }}
     </section>

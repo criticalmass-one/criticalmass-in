@@ -12,12 +12,12 @@
             <div>
                 {% if author %}
                     <b><a href="{{ path('caldera_criticalmass_forum_profile', { 'username': author.username }) }}">{{ author.username }}</a></b>
-                    <span class="cm-rank">{{ author.forumRank }}, {{ author.forumPostCount }} {{ author.forumPostCount == 1 ? 'Beitrag' : 'Beiträge' }}{% if author.createdAt %}, dabei seit {{ author.createdAt|date('m/Y', 'Europe/Berlin') }}{% endif %}</span>
+                    <span class="cm-entry-rank">{{ author.forumRank }}, {{ author.forumPostCount }} {{ author.forumPostCount == 1 ? 'Beitrag' : 'Beiträge' }}{% if author.createdAt %}, dabei seit {{ author.createdAt|date('m/Y', 'Europe/Berlin') }}{% endif %}</span>
                 {% else %}
                     <b>unbekannt</b>
                 {% endif %}
             </div>
-            <a class="cm-no" href="#post-{{ post.id }}" title="{{ post.dateTime|time_ago }}">#{{ postNumber }}, {{ post.dateTime|date('j.n.Y, H:i', 'Europe/Berlin') }}</a>
+            <a class="cm-no" href="#post-{{ post.id }}" title="{{ post.dateTime|time_ago }}">#{{ postNumber }}, {{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}</a>
         </div>
         <div class="cm-entry-text">{{ post.text|markdown }}</div>
         {% if post.isEdited %}
