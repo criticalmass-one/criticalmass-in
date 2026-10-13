@@ -281,7 +281,7 @@
     font-weight: 700;
   }
 
-  .cm-rank {
+  .cm-entry-rank {
     color: var(--cm-dim);
     font-size: .84rem;
     margin-left: 6px;
@@ -627,7 +627,7 @@
 
   > div {
     min-width: 0;
-    flex: 1;
+    flex: 1 1 180px;
   }
 }
 
@@ -715,10 +715,6 @@
   .cm-forum-head {
     flex-direction: column;
     gap: 10px;
-
-    h1 {
-      font-size: 1.3rem;
-    }
   }
 
   .cm-forum-btns {
@@ -762,7 +758,7 @@
     gap: 0;
     line-height: 1.35;
 
-    .cm-rank {
+    .cm-entry-rank {
       display: block;
       margin-left: 0;
     }

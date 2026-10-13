@@ -707,6 +707,10 @@
     display: none;
   }
 
+  .cm-stat-table :is(th, td):has(+ .cm-hide-m):not(.cm-hide-m) {
+    padding-right: 16px;
+  }
+
   .cm-ride-hits .cm-d {
     width: 82px;
   }

@@ -13,8 +13,8 @@
             {{ form_row(userEmailForm.email, { label: 'E-Mail-Adresse', help: 'Wird nicht öffentlich angezeigt. An diese Adresse geht künftig dein Anmeldelink.' }) }}
 
             <div class="cm-btn-row">
-                <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
                 <a href="{{ path('criticalmass_user_usermanagement') }}" class="cm-btn">Abbrechen</a>
+                <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
             </div>
         {{ form_end(userEmailForm) }}
     </section>

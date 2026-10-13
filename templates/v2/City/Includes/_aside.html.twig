@@ -1,13 +1,16 @@
 {# Parameter: city, socialNetworkProfiles, locations, nearCities #}
-{% if socialNetworkProfiles|length > 0 %}
+{% set profileLinks %}
+    {% for profile in socialNetworkProfiles %}
+        {% set network = getNetwork(profile.network) %}
+        {% if network %}
+            <a class="cm-kv" href="{{ profile.identifier }}" target="_blank" rel="noopener"><b>{{ network.name }}</b><span>{{ profile.identifier|replace({'https://': '', 'http://': '', 'www.': ''})|trim('/')|split('/')|last }}</span></a>
+        {% endif %}
+    {% endfor %}
+{% endset %}
+{% if profileLinks|trim %}
     <div class="cm-box">
         <h3>{{ city.city }} im Netz</h3>
-        {% for profile in socialNetworkProfiles %}
-            {% set network = getNetwork(profile.network) %}
-            {% if network %}
-            <a class="cm-kv" href="{{ profile.identifier }}" target="_blank" rel="noopener"><b>{{ network.name }}</b><span>{{ profile.identifier|replace({'https://': '', 'http://': '', 'www.': ''})|trim('/')|split('/')|last }}</span></a>
-            {% endif %}
-        {% endfor %}
+        {{ profileLinks }}
     </div>
 {% endif %}
 

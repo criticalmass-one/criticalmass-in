@@ -4,8 +4,9 @@
 
   > h2 {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
-    gap: 10px;
+    gap: 6px 10px;
     font-size: 1.02rem;
     font-weight: 700;
     margin: 0 0 8px;
@@ -71,9 +72,20 @@
 
 .cm-crumb-link {
   display: inline-block;
-  font-size: .9rem;
+  font-size: .86rem;
   color: var(--cm-dim);
   margin: 2px 0 10px;
+
+  // Vor einem Seitenkopf wie .cm-crumb im Kopf selbst
+  &:has(+ .cm-page-head, + .cm-ghead) {
+    display: block;
+    margin: 8px 0 4px;
+
+    + .cm-page-head,
+    + .cm-ghead {
+      margin-top: 0;
+    }
+  }
 
   a {
     color: var(--cm-dim);
@@ -360,6 +372,9 @@
 }
 
 .cm-cmt-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 4px;
   font-size: .9rem;
 
   a {
@@ -377,7 +392,6 @@
 
   .cm-cmt-time {
     white-space: nowrap;
-    margin-left: 4px;
   }
 }
 

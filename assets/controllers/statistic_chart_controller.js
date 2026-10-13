@@ -73,7 +73,8 @@ export default class extends Controller {
             data: {
                 labels: this.rideMonths,
                 datasets: datasets
-            }
+            },
+            options: this.chartOptions()
         });
     }
 
@@ -87,7 +88,8 @@ export default class extends Controller {
             data: {
                 labels: this.rideMonths,
                 datasets: datasets
-            }
+            },
+            options: this.chartOptions()
         });
     }
 
@@ -101,8 +103,14 @@ export default class extends Controller {
             data: {
                 labels: this.rideMonths,
                 datasets: datasets
-            }
+            },
+            options: this.chartOptions()
         });
+    }
+
+    // Auf schmalen Bildschirmen frisst die Legende sonst fast die ganze Zeichenflaeche.
+    chartOptions() {
+        return { aspectRatio: window.innerWidth < 600 ? 1 : 2 };
     }
 
     createDatasets(list) {
