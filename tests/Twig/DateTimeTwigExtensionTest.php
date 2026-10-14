@@ -4,6 +4,7 @@ namespace Tests\Twig;
 
 use App\Twig\Extension\DateTimeTwigExtension;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Clock\MockClock;
 
 class DateTimeTwigExtensionTest extends TestCase
 {
@@ -11,7 +12,8 @@ class DateTimeTwigExtensionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->extension = new DateTimeTwigExtension();
+        // 13.10.2026, 20:30 UTC: in Berlin 22:30, in New York 16:30, in Auckland 09:30 am 14.
+        $this->extension = new DateTimeTwigExtension(new MockClock('2026-10-13 20:30:00 UTC'));
     }
 
     public function testAddOneDay(): void
@@ -107,5 +109,28 @@ class DateTimeTwigExtensionTest extends TestCase
 
         $this->assertIsArray($functions);
         $this->assertNotEmpty($functions);
+    }
+
+    public function testTodayIsJudgedInTheGivenTimezone(): void
+    {
+        $ride = new \DateTime('2026-10-13 10:45:00', new \DateTimeZone('UTC'));
+
+        $this->assertTrue($this->extension->isToday($ride, 'Europe/Berlin'));
+        $this->assertTrue($this->extension->isToday($ride, 'America/New_York'));
+        $this->assertFalse($this->extension->isToday($ride, 'Pacific/Auckland'));
+    }
+
+    public function testAnEveningRideCanAlreadyBeTomorrowInItsCity(): void
+    {
+        $ride = new \DateTimeImmutable('2026-10-13 23:30:00', new \DateTimeZone('UTC'));
+
+        $this->assertFalse($this->extension->isToday($ride, 'Europe/Berlin'));
+        $this->assertTrue($this->extension->isToday($ride, 'UTC'));
+        $this->assertTrue($this->extension->isToday($ride, null));
+    }
+
+    public function testNoDateIsNeverToday(): void
+    {
+        $this->assertFalse($this->extension->isToday(null, 'Europe/Berlin'));
     }
 }
