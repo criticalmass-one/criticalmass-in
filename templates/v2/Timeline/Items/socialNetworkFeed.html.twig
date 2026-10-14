@@ -1,0 +1,11 @@
+<article class="cm-card cm-post">
+    <div class="cm-when">
+        <time datetime="{{ item.dateTime|date('c') }}" title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">{{ item.dateTime|time_ago_in_words }}</time>
+    </div>
+    {% if item.feedItem.title %}
+        <h3 class="cm-post-title"><a href="{{ item.feedItem.permalink }}">{{ item.feedItem.title }}</a></h3>
+    {% endif %}
+    <p class="cm-post-text">
+        <a class="cm-plain" href="{{ item.feedItem.permalink }}">{{ item.feedItem.text|striptags|trim_intro }}</a>
+    </p>
+</article>

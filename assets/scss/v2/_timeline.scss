@@ -1,0 +1,183 @@
+.cm-post {
+  padding: 14px 16px;
+}
+
+.cm-post-disabled {
+  opacity: .6;
+}
+
+.cm-post-head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cm-who {
+  line-height: 1.35;
+  min-width: 0;
+
+  b {
+    font-weight: 700;
+  }
+
+  a {
+    color: var(--cm-ink);
+    font-weight: 600;
+  }
+}
+
+.cm-when {
+  color: var(--cm-dim);
+  font-size: .86rem;
+}
+
+.cm-ava-anon {
+  background: var(--cm-line);
+}
+
+.cm-post-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin: 6px 0 0;
+}
+
+.cm-post-text {
+  margin: 10px 0 0;
+  color: var(--cm-text);
+  overflow-wrap: anywhere;
+}
+
+.cm-plain {
+  color: inherit;
+}
+
+.cm-map {
+  height: 220px;
+  border-radius: var(--cm-r-s);
+  margin-top: 12px;
+  overflow: hidden;
+  background: #e8eaed;
+  z-index: 0;
+}
+
+.cm-thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-top: 12px;
+
+  img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--cm-r-s);
+    display: block;
+  }
+
+  &.cm-thumbs-1 {
+    grid-template-columns: 1fr;
+
+    img {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  &.cm-thumbs-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cm-photo-comments {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+
+  li {
+    display: flex;
+    gap: 12px;
+    padding: 6px 0;
+    border-top: 1px solid var(--cm-line-soft);
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  img {
+    width: 96px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--cm-r-s);
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.cm-post-compact {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 16px;
+
+  p {
+    margin: 0;
+    line-height: 1.4;
+    font-size: .93rem;
+  }
+
+  a {
+    color: var(--cm-ink);
+    font-weight: 600;
+  }
+
+  .cm-when {
+    margin-left: 4px;
+  }
+}
+
+// Startseite
+.cm-teaser {
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+}
+
+.cm-btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+// Monatsarchiv
+.cm-narrow {
+  max-width: 640px;
+}
+
+.cm-pager {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+  .cm-map {
+    height: 180px;
+  }
+}

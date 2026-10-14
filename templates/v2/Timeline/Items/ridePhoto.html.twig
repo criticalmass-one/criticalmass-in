@@ -1,0 +1,12 @@
+{% set action %}hat <a href="{{ object_path(item.ride, 'caldera_criticalmass_photo_ride_list') }}">{{ item.counter }} {{ item.counter == 1 ? 'Foto' : 'Fotos' }}</a> von der <a href="{{ object_path(item.ride) }}">{{ item.ride.title }}</a> hochgeladen{% endset %}
+<article class="cm-card cm-post{% if not item.rideEnabled %} cm-post-disabled{% endif %}">
+    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: include('Timeline/_includes/ride_when.html.twig', { ride: item.ride }) } %}
+
+    <div class="cm-thumbs cm-thumbs-{{ item.previewPhotoList|length }}">
+        {% for previewPhoto in item.previewPhotoList %}
+            <a href="{{ object_path(previewPhoto) }}">
+                <img src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter(loop.first and item.previewPhotoList|length == 1 ? 'gallery_photo_standard' : 'gallery_photo_thumb') }}" alt="" loading="lazy">
+            </a>
+        {% endfor %}
+    </div>
+</article>

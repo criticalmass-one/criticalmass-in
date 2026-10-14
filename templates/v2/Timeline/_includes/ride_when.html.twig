@@ -1,0 +1,4 @@
+{%- if ride and ride.city -%}
+    {%- set zone = ride.city.timezone -%}
+    {{ ride.city.city }}{% if ride.dateTime %}, {{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM", timezone=zone) }}, {{ ride.dateTime|date('H:i', zone) }} Uhr{% endif %}
+{%- endif -%}

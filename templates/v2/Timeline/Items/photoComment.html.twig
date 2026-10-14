@@ -1,0 +1,16 @@
+{% set count = item.postList|length %}
+{% set action %}hat {{ count == 1 ? 'ein Foto' : count ~ ' Fotos' }} von der <a href="{{ object_path(item.ride) }}">{{ item.ride.title }}</a> kommentiert{% endset %}
+<article class="cm-card cm-post">
+    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: include('Timeline/_includes/ride_when.html.twig', { ride: item.ride }) } %}
+
+    <ul class="cm-photo-comments">
+        {% for post in item.postList %}
+            <li>
+                <a href="{{ object_path(post.photo) }}#post-{{ post.id }}">
+                    <img src="{{ vich_uploader_asset(post.photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="" loading="lazy">
+                </a>
+                <div>{{ post.text|markdown }}</div>
+            </li>
+        {% endfor %}
+    </ul>
+</article>

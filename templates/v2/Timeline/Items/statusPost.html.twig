@@ -1,0 +1,8 @@
+{% set action %}schreibt in <a href="{{ object_path(item.post.city) }}">{{ item.post.city.city }}</a>{% endset %}
+<article class="cm-card cm-post">
+    {% include 'Timeline/_includes/head.html.twig' with { action: action } %}
+
+    <p class="cm-post-text">
+        <a class="cm-plain" href="{{ object_path(item.post.city) }}#post-{{ item.post.id }}">{{ item.post.text|slice(0, 280) }}{% if item.post.text|length > 280 %}…{% endif %}</a>
+    </p>
+</article>
