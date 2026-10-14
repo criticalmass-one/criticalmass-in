@@ -171,3 +171,8 @@
     flex-wrap: wrap;
   }
 }
+
+// Treffpunktseite: Knopf unter der Karte
+.cm-map + .cm-btn-row {
+  margin-top: 12px;
+}
