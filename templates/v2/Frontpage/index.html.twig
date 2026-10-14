@@ -2,6 +2,9 @@
 
 {% block title %}criticalmass.in{% endblock %}
 
+{# Einmal gerendert, zweimal gezeigt: in der rechten Spalte und, wo die fehlt, über den Neuigkeiten. #}
+{% set rideList %}{{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}{% endset %}
+
 {% block content %}
     {% for teaser in frontpageTeaserList %}
         <section class="cm-card cm-teaser">
@@ -24,11 +27,13 @@
         </section>
     {% endfor %}
 
+    <div class="cm-rail-m">{{ rideList }}</div>
+
     {{ include('Timeline/timeline.html.twig') }}
 
     <a class="cm-more" href="{{ path('caldera_criticalmass_timeline_index') }}">Ältere Einträge</a>
 {% endblock %}
 
 {% block rail %}
-    {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
+    {{ rideList }}
 {% endblock %}
