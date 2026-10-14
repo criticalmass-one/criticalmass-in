@@ -2,11 +2,16 @@
 
 namespace App\Twig\Extension;
 
+use Symfony\Component\Clock\ClockInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class DateTimeTwigExtension extends AbstractExtension
 {
+    public function __construct(private readonly ClockInterface $clock)
+    {
+    }
+
     public function getFunctions(): array
     {
         return [
@@ -24,7 +29,7 @@ class DateTimeTwigExtension extends AbstractExtension
         }
 
         $zone = new \DateTimeZone($timezone ?: 'UTC');
-        $now = (new \DateTimeImmutable('@' . time()))->setTimezone($zone);
+        $now = $this->clock->now()->setTimezone($zone);
         $then = \DateTimeImmutable::createFromInterface($dateTime)->setTimezone($zone);
 
         return $now->format('Y-m-d') === $then->format('Y-m-d');
