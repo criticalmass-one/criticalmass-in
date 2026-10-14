@@ -1,0 +1,47 @@
+{% extends 'v2/Layout/plain.html.twig' %}
+
+{% block title %}Autorisierung{% endblock %}
+
+{% set scope_labels = {
+    'ride:read': 'Termine und Rides lesen',
+    'city:read': 'Städte, Orte und Cycles lesen',
+    'track:read': 'Tracks lesen',
+    'photo:read': 'Fotos lesen',
+    'post:read': 'Forenbeiträge lesen',
+    'track:write': 'Tracks erstellen und bearbeiten',
+    'participation:write': 'Teilnahme an Rides melden',
+    'estimate:write': 'Teilnehmerzahlen schätzen',
+    'weather:write': 'Wetterdaten zu Rides melden',
+    'ride:write': 'Rides anlegen und bearbeiten',
+    'city:write': 'Städte anlegen',
+    'cycle:write': 'Termin-Zyklen anlegen und bearbeiten',
+    'socialnetwork:write': 'Social-Network-Profile und -Feeds verwalten',
+    'activity:write': 'Aktivitäts-Scores von Städten melden',
+} %}
+
+{% block content %}
+    <section class="cm-card cm-login cm-consent">
+        <h1>Autorisierung</h1>
+
+        <p><strong>{{ client.name }}</strong> möchte auf dein Konto zugreifen.</p>
+
+        {% if scopes|length > 0 %}
+            <p>Folgende Berechtigungen werden angefragt:</p>
+            <ul class="cm-list">
+                {% for scope in scopes %}
+                    <li>{{ scope_labels[scope ~ '']|default(scope) }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="post" action="{{ path('oauth2_consent') }}">
+            <input type="hidden" name="client_id" value="{{ client.identifier }}">
+            <input type="hidden" name="authorize_url" value="{{ authorize_url }}">
+
+            <div class="cm-consent-acts">
+                <button type="submit" name="consent" value="deny" class="cm-btn">Ablehnen</button>
+                <button type="submit" name="consent" value="approve" class="cm-btn cm-btn-go">Erlauben</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

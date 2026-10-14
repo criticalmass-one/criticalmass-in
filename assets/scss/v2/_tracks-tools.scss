@@ -1,0 +1,127 @@
+// Track anzeigen
+.cm-tt-head p a {
+  color: var(--cm-accent-deep);
+}
+
+// Track bestaetigen
+.cm-tt-review {
+  p {
+    margin: 0 0 10px;
+  }
+}
+
+// Track beschneiden
+.cm-tt-range-map {
+  height: 50vh;
+  min-height: 280px;
+  max-height: 520px;
+  background: #e8eaed;
+  border-radius: var(--cm-r) var(--cm-r) 0 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.cm-tt-range-map + fieldset {
+  border-top: 1px solid var(--cm-line);
+}
+
+.cm-tt-slider {
+  padding: 4px 10px 14px;
+
+  .slider.slider-horizontal {
+    width: 100%;
+  }
+
+  .slider-track {
+    background: var(--cm-line);
+    box-shadow: none;
+    border-radius: var(--cm-r-s);
+  }
+
+  .slider-selection {
+    background: var(--cm-accent);
+    box-shadow: none;
+  }
+
+  .slider-handle,
+  .slider-handle.round {
+    background: var(--cm-card);
+    border: 2px solid var(--cm-accent);
+    border-radius: var(--cm-r-s);
+    box-shadow: none;
+  }
+}
+
+// Zeit anpassen
+.cm-tt-was {
+  margin: 0 0 14px;
+}
+
+// Mini-Mass
+.cm-tt-static {
+  background: #fafafb;
+  color: var(--cm-dim);
+}
+
+.cm-tt-subrides {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-top: 1px solid var(--cm-line);
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  b {
+    display: block;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: var(--cm-text);
+    font-size: .92rem;
+  }
+}
+
+.cm-tt-time {
+  flex: none;
+  width: 46px;
+  font-weight: 700;
+  font-feature-settings: "tnum";
+}
+
+.cm-tt-actions {
+  justify-content: flex-end;
+}
+
+// Social-Media-Vorschau
+.cm-tt-preview {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--cm-r-s);
+  margin-bottom: 12px;
+}
+
+.cm-tt-strava p {
+  margin: 0 0 12px;
+}
+
+// Offizieller Button, von Stravas Markenrichtlinien vorgeschrieben.
+.cm-strava-connect {
+  display: inline-block;
+  width: 193px;
+  height: 48px;
+  background: url("../../images/strava/connect.png") no-repeat center / contain;
+
+  @media (min-resolution: 2dppx) {
+    background-image: url("../../images/strava/connect@2x.png");
+  }
+}

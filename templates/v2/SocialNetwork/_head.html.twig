@@ -1,0 +1,10 @@
+{# Parameter: profileAble, profileAbleType, heading, withList #}
+{% set city = profileAbleType == 'ride' ? profileAble.city : profileAble %}
+<header class="cm-page-head">
+    <div class="cm-crumb">
+        <a href="{{ object_path(city) }}">{{ city.city }}</a>
+        {% if profileAbleType == 'ride' %} / <a href="{{ object_path(profileAble) }}">{{ profileAble.title }}</a>{% endif %}
+        {% if withList|default(false) %} / <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_' ~ profileAbleType ~ '_list') }}">Soziale Netzwerke</a>{% endif %}
+    </div>
+    <h1>{{ heading }}</h1>
+</header>

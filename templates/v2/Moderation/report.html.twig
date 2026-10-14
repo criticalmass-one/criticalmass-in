@@ -1,0 +1,44 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Beitrag melden{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb-link"><a href="{{ postUrl }}">Zurück zum Beitrag</a></div>
+    <div class="cm-forum-head"><h1>Beitrag melden</h1></div>
+
+    <section class="cm-card cm-pad">
+        <div class="cm-pp-report-head">
+            <div>
+                <b>{{ post.user.username|default('unbekannt') }}</b>
+                <span>{{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}</span>
+            </div>
+        </div>
+        <blockquote class="cm-md cm-pp-quote">{{ post.text|markdown }}</blockquote>
+    </section>
+
+    <section class="cm-card cm-forum-form cm-pp-report-form">
+        <p class="cm-dim">Jede Meldung liest ein Mensch aus unserem Team. Wer den Beitrag geschrieben hat, erfährt nicht, wer ihn gemeldet hat.</p>
+
+        {{ form_start(form, { attr: { id: 'form-post-report' } }) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.reason) }}
+        {{ form_row(form.explanation) }}
+
+        {% if form.reporterEmail is defined %}
+            {{ form_row(form.reporterEmail) }}
+        {% endif %}
+
+        {{ form_row(form.goodFaith) }}
+
+        {% if not app.user %}
+            <div class="frc-captcha" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
+        {% endif %}
+
+        <div class="cm-form-foot">
+            <a href="{{ postUrl }}" class="cm-btn">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go">Meldung abschicken</button>
+        </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

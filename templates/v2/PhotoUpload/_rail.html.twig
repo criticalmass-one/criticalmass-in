@@ -1,0 +1,8 @@
+{# Parameter: ride #}
+<div class="cm-box">
+    <h3>{{ ride.title }}</h3>
+    <div class="cm-sub">{{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=ride.city.timezone) }}</div>
+    <a class="cm-kv" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}"><b>Alle Fotos der Tour</b></a>
+    <a class="cm-kv" href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}"><b>Deine Fotos dieser Tour</b></a>
+    <a class="cm-kv" href="{{ object_path(ride) }}"><b>Zur Tour</b></a>
+</div>

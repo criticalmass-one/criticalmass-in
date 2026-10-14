@@ -1,0 +1,55 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Gemeldete Beiträge{% endblock %}
+
+{% block content %}
+    <div class="cm-forum-head">
+        <h1>Gemeldete Beiträge <span class="cm-pp-count">{{ groups|length }}</span></h1>
+    </div>
+
+    {% for group in groups %}
+        {% set post = group.post %}
+        <section class="cm-card cm-pp-report" id="report-post-{{ post.id }}">
+            <header class="cm-pp-report-head">
+                <div>
+                    <b>{{ post.user.username|default('unbekannt') }}</b>
+                    <span>{{ post.kind.label }}, {{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}{% if not post.enabled %}, bereits zurückgezogen{% endif %}</span>
+                </div>
+                <a href="{{ post_url(post) }}">Zum Beitrag</a>
+            </header>
+
+            <blockquote class="cm-md cm-pp-quote">{{ post.text|markdown }}</blockquote>
+
+            <h2>{{ group.reports|length }} {{ group.reports|length == 1 ? 'Meldung' : 'Meldungen' }}</h2>
+            <ul class="cm-list cm-pp-reasons">
+                {% for report in group.reports %}
+                    <li>
+                        <div>
+                            <b>{{ report.reason.label }}</b>
+                            <span class="cm-dim">{{ report.createdAt|date('d.m.Y, H:i', 'Europe/Berlin') }}, {{ report.reporter ? report.reporter.username : 'Gast (' ~ report.reporterEmail ~ ')' }}</span>
+                            {% if report.explanation %}<p>{{ report.explanation }}</p>{% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {# Der Controller liest reason und _token direkt aus dem Request, ein FormType existiert nicht. #}
+            <div class="cm-pp-decide">
+                <form method="post" action="{{ path('caldera_criticalmass_moderation_remove', { 'postId': post.id }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('post-moderation') }}">
+                    <label class="form-label" for="remove-reason-{{ post.id }}">Begründung an den Autor (Pflicht)</label>
+                    <textarea class="form-control" rows="2" name="reason" id="remove-reason-{{ post.id }}" required></textarea>
+                    <button type="submit" class="cm-btn cm-btn-go">Beitrag entfernen</button>
+                </form>
+                <form method="post" action="{{ path('caldera_criticalmass_moderation_dismiss', { 'postId': post.id }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('post-moderation') }}">
+                    <label class="form-label" for="dismiss-reason-{{ post.id }}">Notiz (optional, nur intern)</label>
+                    <textarea class="form-control" rows="2" name="reason" id="dismiss-reason-{{ post.id }}"></textarea>
+                    <button type="submit" class="cm-btn">Beitrag bleibt stehen</button>
+                </form>
+            </div>
+        </section>
+    {% else %}
+        <p class="cm-card cm-pad cm-empty">Keine offenen Meldungen.</p>
+    {% endfor %}
+{% endblock %}

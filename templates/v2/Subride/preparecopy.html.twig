@@ -1,0 +1,45 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Mini-Masses kopieren{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ object_path(newRide.city) }}">{{ newRide.city.city }}</a> / <a href="{{ object_path(newRide) }}">{{ newRide.title }}</a>
+        </div>
+        <h1>Mini-Masses kopieren</h1>
+    </div>
+
+    {% if not oldRide %}
+        <section class="cm-card cm-pad">
+            <p>In {{ newRide.city.city }} gibt es noch keine frühere Tour mit Mini-Masses.</p>
+            <div class="cm-btn-row">
+                <a class="cm-btn cm-btn-go" href="{{ object_path(newRide, 'caldera_criticalmass_subride_add') }}">Mini-Mass eintragen</a>
+                <a class="cm-btn" href="{{ object_path(newRide) }}">Zurück zur Tour</a>
+            </div>
+        </section>
+    {% else %}
+        {% set zone = oldRide.city.timezone %}
+        <section class="cm-card cm-sect">
+            <h2>{{ oldRide.title }}, {{ oldRide.dateTime|date('d.m.Y', zone) }} <a href="{{ object_path(oldRide) }}">Zur Tour</a></h2>
+
+            <ul class="cm-tt-subrides">
+                {% for subride in oldRide.subrides %}
+                    <li>
+                        <span class="cm-tt-time">{{ subride.dateTime.format('H:i') }}</span>
+                        <div>
+                            <b>{{ subride.title }}</b>
+                            {% if subride.location %}<span class="cm-dim">{{ subride.location }}</span>{% endif %}
+                            {% if subride.description %}<p>{{ subride.description|nl2br }}</p>{% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <div class="cm-btn-row cm-tt-actions">
+            <a class="cm-btn" href="{{ object_path(newRide) }}">Abbrechen</a>
+            <a class="cm-btn cm-btn-go" href="{{ object_path(oldRide, 'caldera_criticalmass_subride_copy', { newDate: newRide.dateTime|date('Y-m-d') }) }}">Kopieren</a>
+        </div>
+    {% endif %}
+{% endblock %}
