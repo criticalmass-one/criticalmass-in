@@ -32,6 +32,7 @@ class FrontpageDesignV2Test extends AbstractControllerTestCase
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('body.cm-v2');
         self::assertSelectorExists('.cm-sidenav');
+        self::assertSelectorExists('.cm-rail-m .cm-box', 'Die Tourenliste steht auch im Hauptteil, wo die rechte Spalte fehlt.');
         self::assertSelectorTextContains('.cm-sidenav a.is-active', 'Timeline');
         self::assertSelectorNotExists('#navigation');
     }
