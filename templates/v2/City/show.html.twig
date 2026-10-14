@@ -61,7 +61,7 @@
                     </span>
                     <span class="cm-up-t">
                         <b>{{ currentRide.title }}</b>
-                        <span>{{ currentRide.dateTime|date('H:i', zone) }} Uhr, {{ currentRide.location and currentRide.latitude and currentRide.longitude ? currentRide.location : 'Treffpunkt noch nicht bekannt' }}</span>
+                        <span>{% if is_today(currentRide.dateTime, zone) %}Heute, {% endif %}{{ currentRide.dateTime|date('H:i', zone) }} Uhr, {{ currentRide.location and currentRide.latitude and currentRide.longitude ? currentRide.location : 'Treffpunkt noch nicht bekannt' }}</span>
                     </span>
                 </a>
             {% else %}

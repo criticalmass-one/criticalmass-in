@@ -27,7 +27,7 @@
                 <h1 itemprop="name">{{ ride.title }}</h1>
                 <p class="cm-ride-when">
                     {% if ride.dateTime %}
-                        <span itemprop="startDate" content="{{ ride.dateTime|date('Y-m-d\\TH:i') }}">{{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=zone) }}, {{ ride.dateTime|date('H:i', zone) }} Uhr</span>
+                        <span itemprop="startDate" content="{{ ride.dateTime|date('Y-m-d\\TH:i') }}">{% if is_today(ride.dateTime, zone) %}Heute, {% endif %}{{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=zone) }}, {{ ride.dateTime|date('H:i', zone) }} Uhr</span>
                         <meta itemprop="endDate" content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-d\\TH:i') }}">
                     {% else %}
                         Uhrzeit unbekannt
@@ -76,6 +76,13 @@
                     {% endif %}
                     {% if ride.dateTime %}
                         <a class="cm-btn" href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}">In den Kalender</a>
+                    {% endif %}
+                    {% if not pastRide and ride.latitude and ride.longitude %}
+                        <a class="cm-btn" href="https://www.openstreetmap.org/?mlat={{ ride.latitude }}&amp;mlon={{ ride.longitude }}#map=17/{{ ride.latitude }}/{{ ride.longitude }}"
+                           data-controller="map-app"
+                           data-map-app-latitude-value="{{ ride.latitude }}"
+                           data-map-app-longitude-value="{{ ride.longitude }}"
+                           data-map-app-name-value="{{ ride.location }}">Navigation</a>
                     {% endif %}
                 </div>
             </div>

@@ -13,7 +13,7 @@
     <tr>
         <td class="cm-d">
             {% if ride.dateTime %}
-                <b>{{ ride.dateTime|format_datetime(pattern: withYear ? 'dd.MM.yyyy' : 'EE dd.MM.', timezone: ride.city.timezone) }}</b>{{ ride.dateTime|date('H:i', ride.city.timezone) }}
+                <b>{% if not withYear and is_today(ride.dateTime, ride.city.timezone) %}Heute{% else %}{{ ride.dateTime|format_datetime(pattern: withYear ? 'dd.MM.yyyy' : 'EE dd.MM.', timezone: ride.city.timezone) }}{% endif %}</b>{{ ride.dateTime|date('H:i', ride.city.timezone) }}
             {% endif %}
         </td>
         <td>
@@ -24,10 +24,11 @@
 {% endmacro %}
 
 {% block content %}
-    <form class="cm-q" action="{{ path('caldera_criticalmass_search_query') }}" method="get" role="search">
+    <form class="cm-q" action="{{ path('caldera_criticalmass_search_query') }}" method="get" role="search" data-controller="search">
         <svg width="20" height="20" aria-hidden="true"><use href="#i-search"/></svg>
-        <input type="search" name="query" value="{{ query }}" aria-label="Suchbegriff" placeholder="Stadt oder Tour suchen" autocomplete="off">
+        <input type="search" name="query" value="{{ query }}" aria-label="Suchbegriff" placeholder="Stadt oder Tour suchen" autocomplete="off" data-search-target="input"{% if query is empty %} autofocus{% endif %}>
         <button class="cm-btn" type="submit">Finden</button>
+        <div class="dropdown-menu d-none" data-search-target="results"></div>
     </form>
 
     {% if query is not empty %}

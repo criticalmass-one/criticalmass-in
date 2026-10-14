@@ -9,7 +9,7 @@
             <td><a href="{{ object_path(city) }}">{{ city.city }}</a></td>
             <td class="cm-cl-next">
                 {% if model.currentRide %}
-                    <a href="{{ object_path(model.currentRide) }}">{{ model.currentRide.dateTime|format_datetime(pattern=(model.currentRide.dateTime|date('Y') == 'now'|date('Y') ? 'EEE d.M., HH:mm' : 'd.M.yyyy, HH:mm'), timezone=city.timezone) }}</a>
+                    <a href="{{ object_path(model.currentRide) }}">{% if is_today(model.currentRide.dateTime, city.timezone) %}Heute, {{ model.currentRide.dateTime|date('H:i', city.timezone) }}{% else %}{{ model.currentRide.dateTime|format_datetime(pattern=(model.currentRide.dateTime|date('Y') == 'now'|date('Y') ? 'EEE d.M., HH:mm' : 'd.M.yyyy, HH:mm'), timezone=city.timezone) }}{% endif %}</a>
                 {% endif %}
             </td>
             <td class="cm-cl-cycle">

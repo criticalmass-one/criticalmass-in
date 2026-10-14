@@ -192,6 +192,7 @@
 
 // Suche
 .cm-q {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -219,6 +220,14 @@
 
   &:focus-within {
     border-color: #b9bdc4;
+  }
+
+  .dropdown-menu {
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
   }
 }
 
