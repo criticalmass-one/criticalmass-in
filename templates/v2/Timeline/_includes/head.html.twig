@@ -6,7 +6,7 @@
         <span class="cm-ava cm-ava-ini cm-ava-anon" aria-hidden="true"></span>
     {% endif %}
     <div class="cm-who">
-        {% if item.user %}<b>{{ item.user.username }}</b> {% endif %}{{ action }}
+        {% if item.user %}<b>{{ item.user.username }}</b>{% else %}Jemand{% endif %} {{ action }}
         <div class="cm-when">
             <time datetime="{{ item.dateTime|date('c') }}" title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">{{ item.dateTime|time_ago_in_words }}</time>{% if where is defined and where %}, {{ where }}{% endif %}
         </div>

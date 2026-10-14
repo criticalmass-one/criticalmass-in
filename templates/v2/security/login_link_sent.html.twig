@@ -1,0 +1,12 @@
+{% extends 'v2/Layout/plain.html.twig' %}
+
+{% block title %}Anmelden{% endblock %}
+
+{% block content %}
+    <section class="cm-card cm-login">
+        <h1>Schau in dein Postfach</h1>
+        <p class="cm-login-lead">Du hast eine E-Mail mit einem Link zum Einloggen bekommen.</p>
+        <a class="cm-big cm-big-line" href="{{ path('caldera_criticalmass_frontpage') }}">Zur Startseite</a>
+        <a class="cm-login-again" href="{{ path('login') }}">Keine Mail bekommen? Neu anfordern</a>
+    </section>
+{% endblock %}

@@ -1,6 +1,7 @@
 {% set action %}hat die <a href="{{ object_path(item.ride) }}">{{ item.rideTitle }}</a> geschätzt{% endset %}
 <article class="cm-card cm-post{% if not item.rideEnabled %} cm-post-disabled{% endif %}">
-    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: include('Timeline/_includes/ride_when.html.twig', { ride: item.ride }) } %}
+    {% set where %}{% include 'Timeline/_includes/ride_when.html.twig' with { ride: item.ride } %}{% endset %}
+    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: where } %}
 
     <div class="cm-figures">
         <div><b>{{ item.estimatedParticipants|number_format(0, ',', '.') }}</b><small>Teilnehmende geschätzt</small></div>

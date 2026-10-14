@@ -1,0 +1,26 @@
+{% extends 'v2/Layout/base.html.twig' %}
+
+{% block masterContent %}
+    {% include 'v2/Layout/_icons.html.twig' %}
+
+    <div class="cm-solo">
+        <a class="cm-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
+            <svg width="26" height="26" aria-hidden="true"><use href="#i-bike"/></svg>criticalmass.in
+        </a>
+
+        <main class="cm-solo-main">
+            {{ render(controller('App\\Controller\\Template\\AlertController::showCurrentAlertsAction')) }}
+
+            {% include 'v2/Layout/_flashes.html.twig' %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="cm-solo-foot">
+            <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}">Impressum</a>
+            <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}">Datenschutz</a>
+            <a href="{{ path('caldera_criticalmass_static_display', { slug: 'faq' }) }}">Häufige Fragen</a>
+            {% include 'v2/Layout/_design_switch.html.twig' %}
+        </footer>
+    </div>
+{% endblock %}

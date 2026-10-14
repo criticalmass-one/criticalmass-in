@@ -1,0 +1,38 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}{{ term ? 'Suche nach ' ~ term : 'Forum durchsuchen' }}{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb"><a href="{{ path('caldera_criticalmass_board_overview') }}">Forum</a></div>
+    <div class="cm-forum-head"><h1>Forum durchsuchen</h1></div>
+
+    <form class="cm-find" method="get" action="{{ path('caldera_criticalmass_board_search') }}" role="search">
+        <svg width="18" height="18" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" name="q" value="{{ term }}" placeholder="Wonach suchst du?" aria-label="Suchbegriff" autofocus>
+        <button type="submit">Suchen</button>
+    </form>
+
+    {% if term is empty %}
+    {% elseif results is null %}
+        <p class="cm-hits-count">Bitte gib mindestens {{ minimumLength }} Zeichen ein.</p>
+    {% elseif results|length == 0 %}
+        <div class="cm-card cm-forum-empty">
+            <h2>Nichts gefunden</h2>
+            <p>Zu „{{ term }}“ gibt es keine Beiträge.</p>
+        </div>
+    {% else %}
+        <p class="cm-hits-count">{{ results.getTotalItemCount }} Treffer für „{{ term }}“</p>
+        <section class="cm-card">
+            <ul class="cm-hits">
+                {% for post in results %}
+                    <li>
+                        <a href="{{ object_path(post.thread) }}#post-{{ post.id }}">{{ post.thread.title }}</a>
+                        <p>{{ post.text|search_snippet(term) }}</p>
+                        <small>{{ post.user ? post.user.username : 'unbekannt' }}, {{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% include 'v2/Board/_pager.html.twig' with { items: results } %}
+    {% endif %}
+{% endblock %}

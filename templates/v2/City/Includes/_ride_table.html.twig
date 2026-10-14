@@ -1,0 +1,27 @@
+{# Parameter: rides #}
+<div class="cm-tbl-wrap">
+    <table class="cm-tbl" id="ride-list-table">
+        <thead>
+            <tr><th>Datum</th><th>Tour</th><th class="cm-r">Teilnehmer</th><th class="cm-r cm-hide-s">Strecke</th><th class="cm-r cm-hide-s">Dauer</th></tr>
+        </thead>
+        <tbody>
+            {% for ride in rides %}
+                {% set zone = ride.city.timezone %}
+                {% set ridePath = object_path(ride) %}
+                <tr class="{{ not ride.enabled ? 'cm-off' }}">
+                    <td class="cm-d">
+                        {{ ride.dateTime ? ride.dateTime|date('d.m.Y', zone) : '–' }}
+                        {% if ride.dateTime %}<span class="cm-sub">{{ ride.dateTime|date('H:i', zone) }} Uhr</span>{% endif %}
+                    </td>
+                    <td>
+                        {% if ridePath %}<a href="{{ ridePath }}">{{ ride.title }}</a>{% else %}{{ ride.title }}{% endif %}
+                        {% if ride.location %}<span class="cm-sub">{{ ride.location }}</span>{% endif %}
+                    </td>
+                    <td class="cm-r{{ not ride.estimatedParticipants ? ' cm-na' }}">{{ ride.estimatedParticipants ? ride.estimatedParticipants|number_format(0, ',', '.') : '–' }}</td>
+                    <td class="cm-r cm-hide-s{{ not ride.estimatedDistance ? ' cm-na' }}">{{ ride.estimatedDistance ? ride.estimatedDistance|number_format(1, ',', '.') ~ ' km' : '–' }}</td>
+                    <td class="cm-r cm-hide-s{{ not ride.estimatedDuration ? ' cm-na' }}">{{ ride.estimatedDuration ? human_duration(ride.estimatedDurationInSeconds) : '–' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

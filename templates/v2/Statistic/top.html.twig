@@ -1,0 +1,41 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Top-Ten-Statistiken{% endblock %}
+
+{% macro ranking(title, rides, value) %}
+    <section class="cm-card cm-rank">
+        <h2>{{ title }}</h2>
+        {% if rides is empty %}
+            <p class="cm-dim">Noch keine Daten.</p>
+        {% else %}
+            <ol>
+                {% for ride in rides %}
+                    <li>
+                        <span class="cm-rank-n">{{ loop.index }}</span>
+                        <span class="cm-rank-what">
+                            <a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a>
+                            <a class="cm-rank-date" href="{{ object_path(ride) }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</a>
+                        </span>
+                        <b>{{ value == 'participants' ? ride.estimatedParticipants|number_format(0, ',', '.') : (value == 'distance' ? ride.estimatedDistance|number_format(1, ',', '.') ~ ' km' : human_duration(ride.getEstimatedDurationInSeconds())) }}</b>
+                    </li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+    </section>
+{% endmacro %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <h1>Statistik</h1>
+    </header>
+
+    {% include 'Statistic/_tabs.html.twig' %}
+
+    <div class="cm-rank-grid">
+        {{ _self.ranking('Teilnehmende', participationList, 'participants') }}
+        {{ _self.ranking('Strecke', distanceList, 'distance') }}
+        {{ _self.ranking('Dauer', durationList, 'duration') }}
+    </div>
+
+    <p class="cm-note">Fragen zur Statistik beantwortet die <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">Hilfeseite</a>.</p>
+{% endblock %}

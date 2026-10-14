@@ -1,0 +1,27 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% block title %}Fotos aus {{ city.city }}{% endblock %}
+
+{% block content %}
+    {% include 'v2/City/Includes/_head.html.twig' with { city: city, tab: 'galleries', heading: city.title } %}
+
+    <section class="cm-card cm-sect">
+        <h2>Galerien{% if result.rides|length > 0 %} <span class="cm-cnt">{{ result.rides|length }}</span>{% endif %}</h2>
+        {% if result.rides|length > 0 %}
+            <table class="cm-tbl" id="cityRideList">
+                <thead><tr><th>Datum</th><th>Tour</th><th class="cm-r">Fotos</th></tr></thead>
+                <tbody>
+                    {% for key, ride in result.rides %}
+                        <tr>
+                            <td class="cm-d">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</td>
+                            <td><a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">{{ ride.title }}</a></td>
+                            <td class="cm-r"><a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">{{ result.counter[key]|number_format(0, ',', '.') }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="cm-empty">Aus {{ city.city }} gibt es noch keine Fotos.</p>
+        {% endif %}
+    </section>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'v2/Layout/wide.html.twig' %}
+
+{% set monthName = dateTime|format_datetime(pattern='MMMM yyyy') %}
+
+{% block title %}Critical-Mass-Teilnehmerzahlen im {{ monthName }}{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <h1>Statistik</h1>
+    </header>
+
+    {% include 'Statistic/_tabs.html.twig' %}
+
+    <section class="cm-card cm-stat-table">
+        <div class="cm-month-nav">
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_statistic_ride_month', { year: previousDateTime|date('Y'), month: previousDateTime|date('n') }) }}" aria-label="Voriger Monat">{{ previousDateTime|format_datetime(pattern='MMMM') }}</a>
+            <h2>{{ monthName }}</h2>
+            {% if nextDateTime %}
+                <a class="cm-btn" href="{{ path('caldera_criticalmass_statistic_ride_month', { year: nextDateTime|date('Y'), month: nextDateTime|date('n') }) }}" aria-label="Nächster Monat">{{ nextDateTime|format_datetime(pattern='MMMM') }}</a>
+            {% else %}
+                <span></span>
+            {% endif %}
+        </div>
+
+        {% if rides is empty %}
+            <p class="cm-pad cm-dim">Für diesen Monat liegen keine Zahlen vor.</p>
+        {% else %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stadt</th>
+                        <th class="cm-n">Teilnehmende</th>
+                        <th class="cm-n">Strecke</th>
+                        <th class="cm-n cm-hide-m">Dauer</th>
+                        <th class="cm-n cm-hide-m">ø Tempo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ride in rides %}
+                        {% set ridePath = object_path(ride) %}
+                        <tr>
+                            <td>
+                                <a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a>
+                                <small>
+                                    {% if ride.dateTime %}
+                                        {% if ridePath %}<a href="{{ ridePath }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</a>{% else %}{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}{% endif %}
+                                    {% endif %}
+                                </small>
+                            </td>
+                            <td class="cm-n">{% if ride.estimatedParticipants %}<b>{{ ride.estimatedParticipants|number_format(0, ',', '.') }}</b>{% endif %}</td>
+                            <td class="cm-n">{% if ride.estimatedDistance %}{{ ride.estimatedDistance|number_format(1, ',', '.') }}&nbsp;km{% endif %}</td>
+                            <td class="cm-n cm-hide-m">{% if ride.estimatedDuration %}{{ human_duration(ride.getEstimatedDurationInSeconds()) }}{% endif %}</td>
+                            <td class="cm-n cm-hide-m">{% if ride.estimatedDuration and ride.estimatedDistance %}{{ ride.averageVelocity|number_format(1, ',', '.') }}&nbsp;km/h{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </section>
+
+    <p class="cm-note">Fragen zur Statistik beantwortet die <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">Hilfeseite</a>.</p>
+{% endblock %}

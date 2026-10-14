@@ -1,0 +1,19 @@
+{# Parameter: forum (Board oder City), name, description #}
+{% set threads = forum.threadNumber ?? 0 %}
+{% set posts = forum.postNumber ?? 0 %}
+{% set last = forum.lastThread and forum.lastThread.lastPost ? forum.lastThread : null %}
+<tr>
+    <td>
+        <a class="cm-t" href="{% include 'v2/Board/_forum_link.html.twig' with { forum: forum } %}">{{ name }}</a>
+        {% if description %}<div class="cm-d">{{ description }}</div>{% endif %}
+        <div class="cm-mob">
+            {{ threads }} {{ threads == 1 ? 'Thema' : 'Themen' }}, {{ posts }} {{ posts == 1 ? 'Beitrag' : 'Beiträge' }}.
+            {% if last %}Zuletzt <b>{{ last.lastPost.user ? last.lastPost.user.username : 'unbekannt' }}</b> {{ last.lastPost.dateTime|time_ago }}{% endif %}
+        </div>
+    </td>
+    <td class="cm-n{{ threads == 0 ? ' cm-zero' }}">{{ threads }}</td>
+    <td class="cm-n{{ posts == 0 ? ' cm-zero' }}">{{ posts }}</td>
+    <td class="cm-last">
+        {% if last %}{% include 'v2/Board/_last_post.html.twig' with { thread: last } %}{% endif %}
+    </td>
+</tr>

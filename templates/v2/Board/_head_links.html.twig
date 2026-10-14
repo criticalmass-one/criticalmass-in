@@ -1,0 +1,9 @@
+{# Parameter: items (Paginator) #}
+{% set route = app.request.attributes.get('_route') %}
+{% set params = app.request.attributes.get('_route_params') %}
+{% if items.currentPageNumber > 1 %}
+    <link rel="prev" href="{{ path(route, params|merge({ 'page': items.currentPageNumber - 1 })) }}"/>
+{% endif %}
+{% if items.currentPageNumber < items.pageCount %}
+    <link rel="next" href="{{ path(route, params|merge({ 'page': items.currentPageNumber + 1 })) }}"/>
+{% endif %}

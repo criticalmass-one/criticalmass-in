@@ -1,0 +1,48 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Häufig gestellte Fragen{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <h1>Häufig gestellte Fragen</h1>
+    </header>
+
+    <article class="cm-card cm-prose cm-faq">
+        <section>
+            <h2>Was ist die Critical Mass?</h2>
+            <p>Die Critical Mass ist eine weltweite Bewegung, bei der sich Radfahrerinnen und Radfahrer zu gemeinsamen Fahrradtouren durch ihre Stadt verabreden. Es gibt keine Veranstalter und keine feste Route, die Gruppe entscheidet spontan, wohin es geht.</p>
+            <p>Die Touren finden in den meisten Städten regelmäßig statt, oft am letzten Freitag im Monat.</p>
+        </section>
+
+        <section>
+            <h2>Wo und wann findet die Critical Mass in meiner Stadt statt?</h2>
+            <p>Suche deine Stadt in der <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a>. Dort findest du alle Informationen zu Terminen, Treffpunkten und Uhrzeiten.</p>
+        </section>
+
+        <section>
+            <h2>Muss ich mich anmelden?</h2>
+            <p>Nein. Für die Teilnahme an einer Critical Mass ist keine Anmeldung erforderlich. Du brauchst nur ein Fahrrad und musst zum richtigen Zeitpunkt am richtigen Ort sein.</p>
+        </section>
+
+        <section>
+            <h2>Wie kann ich Daten zu meiner Stadt eintragen oder korrigieren?</h2>
+            <p>criticalmass.in funktioniert ähnlich wie Wikipedia: Du kannst dich mit einem kostenlosen Benutzerkonto registrieren und anschließend direkt Informationen zu Städten und Touren eintragen, ergänzen oder korrigieren.</p>
+        </section>
+
+        <section>
+            <h2>Meine Stadt fehlt in der Liste. Was kann ich tun?</h2>
+            <p>Wenn deine Stadt noch nicht auf criticalmass.in gelistet ist, kannst du sie selbst hinzufügen. Registriere dich mit einem kostenlosen Benutzerkonto und trage die Daten ein. Falls du dabei Hilfe brauchst, schreibe eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>.</p>
+        </section>
+
+        <section>
+            <h2>Was sind GPS-Tracks und wie kann ich sie hochladen?</h2>
+            <p>GPS-Tracks sind aufgezeichnete Strecken im GPX-Format, die während einer Critical-Mass-Tour mit dem Smartphone oder einem GPS-Gerät aufgenommen wurden.</p>
+            <p>Nach dem Upload werden die Tracks auf der Karte der jeweiligen Tour angezeigt und fließen in die Statistiken zu Streckenlänge und Fahrtdauer ein.</p>
+        </section>
+
+        <section>
+            <h2>Ich habe einen Fehler gefunden oder eine Frage. An wen kann ich mich wenden?</h2>
+            <p>Schreibe eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> oder eröffne ein <a href="https://github.com/criticalmass-one/criticalmass-in/issues">Ticket auf GitHub</a>.</p>
+        </section>
+    </article>
+{% endblock %}

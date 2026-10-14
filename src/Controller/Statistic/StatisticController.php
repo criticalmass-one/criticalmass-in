@@ -37,10 +37,11 @@ class StatisticController extends AbstractController
         ]);
     }
 
+    // Vor /statistic/{year}/{month}: dessen optionale Parameter passen sonst auch auf /statistic.
     #[Route(
         '/statistic',
         name: 'caldera_criticalmass_statistic_overview',
-        priority: 140
+        priority: 150
     )]
     public function overviewAction(
         SeoPageInterface $seoPage,

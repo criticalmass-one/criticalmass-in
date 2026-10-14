@@ -1,2 +1,3 @@
 {% set action %}hat die <a href="{{ object_path(item.ride) }}">{{ item.rideTitle }}</a> bearbeitet{% endset %}
-{% include 'Timeline/_includes/compact.html.twig' with { action: action } %}
+{% set where %}{% include 'Timeline/_includes/ride_when.html.twig' with { ride: item.ride } %}{% endset %}
+{% include 'Timeline/_includes/compact.html.twig' with { action: action, where: where, disabled: not item.enabled } %}

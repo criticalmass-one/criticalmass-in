@@ -1,0 +1,10 @@
+<nav class="cm-tabs" aria-label="{{ city.city }}">
+    <a class="{{ tab == 'city' ? 'is-active' }}" href="{{ object_path(city) }}">Übersicht</a>
+    <a class="{{ tab == 'ride_list' ? 'is-active' }}" href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}">Touren</a>
+    <a class="{{ tab == 'statistic' ? 'is-active' }}" href="{{ object_path(city, 'caldera_criticalmass_statistic_city') }}">Statistik</a>
+    <a class="{{ tab == 'socialnetwork_city_list_items' ? 'is-active' }}" href="{{ object_path(city, 'criticalmass_socialnetwork_city_list_items') }}">Neuigkeiten</a>
+    {% if feature('photos') %}
+        <a class="{{ tab == 'galleries' ? 'is-active' }}" href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}">Fotos</a>
+    {% endif %}
+    <a class="{{ tab == 'tracks' ? 'is-active' }}" href="{{ object_path(city, 'caldera_criticalmass_city_listtracks') }}">Tracks</a>
+</nav>

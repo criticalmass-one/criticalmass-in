@@ -1,0 +1,82 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Dein Konto{% endblock %}
+
+{% block content %}
+    {% set user = app.user %}
+
+    <section class="cm-card cm-pad cm-acc-who">
+        <div class="cm-acc-who-top">
+            {% include 'v2/Layout/_avatar.html.twig' with { user: user } %}
+            <div>
+                <h1>{{ user.username }}</h1>
+                {% if user.createdAt %}
+                    <p>Mitglied seit {{ user.createdAt|format_datetime(pattern='MMMM yyyy') }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="cm-figures cm-acc-figures">
+            <a href="{{ path('criticalmass_user_participation_list') }}"><b>{{ participationCounter|number_format(0, ',', '.') }}</b><small>{{ participationCounter == 1 ? 'Tour' : 'Touren' }}</small></a>
+            <a href="{{ path('caldera_criticalmass_track_list') }}"><b>{{ trackCounter|number_format(0, ',', '.') }}</b><small>{{ trackCounter == 1 ? 'Track' : 'Tracks' }}</small></a>
+            {% if feature('photos') %}
+                <a href="{{ path('caldera_criticalmass_photo_user_list') }}"><b>{{ photoCounter|number_format(0, ',', '.') }}</b><small>{{ photoCounter == 1 ? 'Foto' : 'Fotos' }}</small></a>
+            {% endif %}
+        </div>
+
+        <div class="cm-btn-row">
+            <a class="cm-btn cm-btn-go" href="{{ path('caldera_criticalmass_unified_upload') }}">Hochladen</a>
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_unified_review') }}">Hochgeladenes prüfen</a>
+        </div>
+    </section>
+
+    <section class="cm-card cm-pad">
+        <h2 class="cm-acc-h">Konto und Einstellungen</h2>
+
+        <ul class="cm-acc-rows">
+            <li>
+                <div class="cm-acc-k">Profilfoto<span>{% include 'v2/Layout/_avatar.html.twig' with { user: user, small: true } %}</span></div>
+                <a class="cm-btn" href="{{ path('criticalmass_user_profile_photo') }}">Ändern</a>
+            </li>
+            <li>
+                <div class="cm-acc-k">Profilfarbe<span><i class="cm-acc-swatch" style="background: {{ user.color }}"></i>{{ user.color }}</span></div>
+                <a class="cm-btn" href="{{ path('criticalmass_user_profile_color') }}">Ändern</a>
+            </li>
+            <li>
+                <div class="cm-acc-k">Benutzername<span>{{ user.username }}</span></div>
+                <a class="cm-btn" href="{{ path('criticalmass_user_usermanagement_editusername') }}">Ändern</a>
+            </li>
+            <li>
+                <div class="cm-acc-k">E-Mail-Adresse<span>{{ user.email }}</span></div>
+                <a class="cm-btn" href="{{ path('criticalmass_user_usermanagement_editemail') }}">Ändern</a>
+            </li>
+            <li>
+                <div class="cm-acc-k">Passkeys<span>{% if passkeyCounter == 0 %}Noch keiner eingerichtet{% else %}{{ passkeyCounter }} {{ passkeyCounter == 1 ? 'Passkey' : 'Passkeys' }}{% endif %}</span></div>
+                <a class="cm-btn" href="{{ path('criticalmass_user_profile_passkey_list') }}">{{ passkeyCounter == 0 ? 'Einrichten' : 'Verwalten' }}</a>
+            </li>
+            {% if design_switch_available() %}
+                <li>
+                    <form method="post" action="{{ path('criticalmass_design_switch') }}"
+                          class="cm-acc-switch" data-controller="auto-submit">
+                        <input type="hidden" name="_token" value="{{ csrf_token('design-switch') }}">
+                        <input type="hidden" name="_target" value="{{ app.request.requestUri }}">
+                        <input type="hidden" name="design" value="v1">
+                        <label class="cm-acc-k" for="design-v2">Neue Ansicht</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                   id="design-v2" name="design" value="v2"
+                                   {{ design_v2() ? 'checked' : '' }}
+                                   data-action="change->auto-submit#submit">
+                        </div>
+                        <noscript>
+                            <button type="submit" class="cm-btn">Speichern</button>
+                        </noscript>
+                    </form>
+                </li>
+            {% endif %}
+            <li>
+                <a class="cm-btn" href="{{ path('logout') }}">Abmelden</a>
+            </li>
+        </ul>
+    </section>
+{% endblock %}

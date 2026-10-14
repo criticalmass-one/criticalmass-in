@@ -1,0 +1,167 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Hochgeladenes prüfen{% endblock %}
+
+{% macro ride_options(rides, selectedRide) %}
+    {% for ride in rides %}
+        <option value="{{ ride.id }}"{% if selectedRide and ride.id == selectedRide.id %} selected{% endif %}>{{ ride.city.city }}: {{ ride.title }}, {{ ride.dateTime|date('H:i') }} Uhr</option>
+    {% endfor %}
+{% endmacro %}
+
+{% macro track_card(candidate, reassignOptions, matched) %}
+    {% import _self as review %}
+    <article class="cm-card cm-pad cm-acc-cand">
+        <h3 title="{{ candidate.originalName }}">{{ candidate.originalName }}</h3>
+
+        <div class="cm-map"
+             data-controller="map--map"
+             data-map--map-lock-map-value="true"
+             data-map--map-polyline-color-value="#f4581c"
+             data-map--map-polyline-value="{{ candidate.polyline }}"></div>
+
+        <dl class="cm-acc-dl">
+            {% if matched %}
+                <dt>Tour</dt>
+                <dd><a href="{{ object_path(candidate.ride) }}">{{ candidate.ride.title }}</a></dd>
+            {% endif %}
+            <dt>Strecke</dt>
+            <dd>{{ (candidate.distance / 1000)|number_format(2, ',', '.') }}&nbsp;km</dd>
+            <dt>Start</dt>
+            <dd>{{ candidate.startDateTime|date('d.m.Y H:i') }}&nbsp;Uhr</dd>
+        </dl>
+
+        {% if matched %}
+            {% if reassignOptions|length > 1 %}
+                <form method="post" class="cm-acc-assign"
+                      action="{{ path('caldera_criticalmass_unified_review_track_reassign', {'id': candidate.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('unified_review') }}"/>
+                    <select name="rideId" class="form-select" aria-label="Tour">
+                        {{ review.ride_options(reassignOptions, candidate.ride) }}
+                    </select>
+                    <button type="submit" class="cm-btn">Umordnen</button>
+                </form>
+            {% endif %}
+
+            <div class="cm-btn-row">
+                <form method="post" action="{{ path('caldera_criticalmass_track_bulkupload_confirm', {'id': candidate.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('bulk_track_review') }}"/>
+                    <button type="submit" class="cm-btn cm-btn-go">Bestätigen</button>
+                </form>
+                <form method="post" action="{{ path('caldera_criticalmass_track_bulkupload_reject', {'id': candidate.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('bulk_track_review') }}"/>
+                    <button type="submit" class="cm-btn">Verwerfen</button>
+                </form>
+            </div>
+        {% else %}
+            {% if reassignOptions|length %}
+                <form method="post" class="cm-acc-assign"
+                      action="{{ path('caldera_criticalmass_unified_review_track_reassign', {'id': candidate.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('unified_review') }}"/>
+                    <select name="rideId" class="form-select" aria-label="Tour">
+                        {{ review.ride_options(reassignOptions, null) }}
+                    </select>
+                    <button type="submit" class="cm-btn cm-btn-go">Zuordnen</button>
+                </form>
+            {% else %}
+                <p class="cm-dim">Keine Tour an diesem Tag.</p>
+            {% endif %}
+
+            <form method="post" action="{{ path('caldera_criticalmass_track_bulkupload_reject', {'id': candidate.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('bulk_track_review') }}"/>
+                <button type="submit" class="cm-btn">Verwerfen</button>
+            </form>
+        {% endif %}
+    </article>
+{% endmacro %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb"><a href="{{ path('caldera_criticalmass_unified_upload') }}">Hochladen</a></div>
+        <h1>Hochgeladenes prüfen</h1>
+    </div>
+
+    <div class="cm-acc-sec-head">
+        <h2>Foto-Galerien <span class="cm-dim">{{ photoGalleries|length }}</span></h2>
+    </div>
+
+    {% if photoGalleries|length %}
+        {% for gallery in photoGalleries %}
+            <article class="cm-card cm-pad cm-acc-gallery">
+                <h3>
+                    {% if gallery.isDated %}{{ gallery.date|date('d.m.Y') }}{% else %}Ohne Datum{% endif %}
+                    <span class="cm-dim">{{ gallery.count }} Foto{{ gallery.count != 1 ? 's' }}</span>
+                </h3>
+
+                <div class="cm-acc-pics">
+                    {% for candidate in gallery.candidates|slice(0, 8) %}
+                        <img src="{{ path('caldera_criticalmass_unified_review_photo_preview', {'id': candidate.id}) }}"
+                             alt="{{ candidate.originalName }}" loading="lazy">
+                    {% endfor %}
+                    {% if gallery.count > 8 %}
+                        <span>+{{ gallery.count - 8 }}</span>
+                    {% endif %}
+                </div>
+
+                {% if gallery.canBeAssigned %}
+                    <form method="post" class="cm-acc-assign"
+                          action="{{ path('caldera_criticalmass_unified_review_photos_confirm', {'galleryKey': gallery.key}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('unified_review') }}"/>
+                        <select name="rideId" class="form-select" aria-label="Tour">
+                            {{ _self.ride_options(gallery.sameDateRides, gallery.suggestedRide) }}
+                        </select>
+                        <button type="submit" class="cm-btn cm-btn-go">Zuordnen</button>
+                    </form>
+                {% else %}
+                    <p class="cm-dim">Keine passende Tour an diesem Tag.</p>
+                {% endif %}
+
+                <form method="post"
+                      action="{{ path('caldera_criticalmass_unified_review_photos_reject', {'galleryKey': gallery.key}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('unified_review') }}"/>
+                    <button type="submit" class="cm-btn">Galerie verwerfen</button>
+                </form>
+            </article>
+        {% endfor %}
+    {% else %}
+        <p class="cm-dim cm-acc-empty">Keine Foto-Galerien zum Prüfen.</p>
+    {% endif %}
+
+    <div class="cm-acc-sec-head">
+        <h2>Zugeordnete Tracks <span class="cm-dim">{{ matchedTracks|length }}</span></h2>
+
+        {% if matchedTracks|length %}
+            <form method="post" action="{{ path('caldera_criticalmass_track_bulkupload_confirm_all') }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('bulk_track_review') }}"/>
+                <button type="submit" class="cm-btn cm-btn-go">Alle bestätigen</button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% if matchedTracks|length %}
+        <div class="cm-acc-cands">
+            {% for candidate in matchedTracks %}
+                {{ _self.track_card(candidate, trackReassignOptions[candidate.id], true) }}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="cm-dim cm-acc-empty">Keine zugeordneten Tracks.</p>
+    {% endif %}
+
+    <div class="cm-acc-sec-head">
+        <h2>Nicht zugeordnete Tracks <span class="cm-dim">{{ parkedTracks|length }}</span></h2>
+    </div>
+
+    {% if parkedTracks|length %}
+        <div class="cm-acc-cands">
+            {% for candidate in parkedTracks %}
+                {{ _self.track_card(candidate, trackReassignOptions[candidate.id], false) }}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="cm-dim cm-acc-empty">Keine nicht zugeordneten Tracks.</p>
+    {% endif %}
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

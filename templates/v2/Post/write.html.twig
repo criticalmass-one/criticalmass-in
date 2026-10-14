@@ -1,0 +1,50 @@
+{# Bei Themen inline, sonst als Dialog. #}
+{% if app.user %}
+    {% if post.thread %}
+        <section class="cm-card cm-forum-form cm-reply" id="antworten">
+            {{ form_start(form, { attr: { id: 'form-post' } }) }}
+                <div class="cm-reply-row">
+                    {% include 'v2/Layout/_avatar.html.twig' with { user: app.user } %}
+                    <div>
+                        {{ form_label(form.text, 'Antworten', { label_attr: { class: 'form-label' } }) }}
+                        {% include 'v2/Board/_editor.html.twig' with {
+                            field: form.text,
+                            editorId: 'markdown-editor-reply',
+                            rows: 6,
+                            placeholder: 'Deine Antwort'
+                        } %}
+                        <div class="cm-form-foot">
+                            <button type="submit" id="button-submit-post" class="cm-btn cm-btn-go">Antwort senden</button>
+                        </div>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </section>
+    {% else %}
+        {% set isStatus = post.kind.value == 'STATUS' %}
+        <div class="modal fade" id="modal-add-post" tabindex="-1" aria-labelledby="label-add-post" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    {{ form_start(form, { attr: { id: 'form-post' } }) }}
+                        <div class="modal-header border-0">
+                            <h2 class="modal-title fs-5" id="label-add-post">{{ isStatus ? 'Beitrag schreiben' : 'Kommentar schreiben' }}</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                        </div>
+                        <div class="modal-body">
+                            {% include 'v2/Board/_editor.html.twig' with {
+                                field: form.text,
+                                editorId: 'markdown-editor-reply',
+                                rows: 6,
+                                placeholder: isStatus ? 'Dein Beitrag' : 'Dein Kommentar'
+                            } %}
+                        </div>
+                        <div class="modal-footer border-0">
+                            <button type="button" class="cm-btn" data-bs-dismiss="modal">Abbrechen</button>
+                            <button type="submit" id="button-submit-post" class="cm-btn cm-btn-go">Speichern</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

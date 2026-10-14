@@ -1,0 +1,24 @@
+{% if app.user %}
+    <div class="modal fade cm-modal" id="disable-modal" tabindex="-1" aria-labelledby="disable-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                {{ form_start(disableForm) }}
+                <div class="modal-header border-0">
+                    <h2 class="modal-title" id="disable-modal-label">Tour deaktivieren</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="form-label">Grund</p>
+                    {{ form_widget(disableForm.disabledReason) }}
+                    <label class="form-label mt-3" for="{{ disableForm.disabledReasonMessage.vars.id }}">Kommentar (optional)</label>
+                    {{ form_widget(disableForm.disabledReasonMessage, { 'attr': { 'class': 'form-control', 'rows': 3 } }) }}
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="cm-btn" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="cm-btn cm-btn-go">Tour deaktivieren</button>
+                </div>
+                {{ form_end(disableForm) }}
+            </div>
+        </div>
+    </div>
+{% endif %}

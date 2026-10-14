@@ -1,0 +1,14 @@
+<section class="cm-card cm-pad">
+    {% if participationCityList|length > 0 %}
+        <ul class="cm-acc-rows cm-acc-count">
+            {% for participationCity in participationCityList %}
+                <li>
+                    <a href="{{ object_path(participationCity.city) }}">{{ participationCity.city.city }}</a>
+                    <span>{{ participationCity.counter }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="cm-dim mb-0">Für diese Liste wurden keine Datensätze gefunden.</p>
+    {% endif %}
+</section>

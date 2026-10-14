@@ -1,0 +1,73 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Passkeys verwalten{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb"><a href="{{ path('criticalmass_user_usermanagement') }}">Dein Konto</a></div>
+        <h1>Passkeys</h1>
+    </div>
+
+    <section class="cm-card cm-pad"
+             data-controller="passkey"
+             data-passkey-confirm-text-value="Diesen Passkey wirklich löschen?">
+        <h2 class="cm-acc-h">Neuen Passkey anlegen</h2>
+
+        <div class="cm-flash cm-flash-danger" data-passkey-target="status" hidden></div>
+
+        <button type="button"
+                class="cm-btn cm-btn-go"
+                data-action="passkey#register"
+                data-passkey-target="submit">
+            Passkey anlegen
+        </button>
+    </section>
+
+    <section class="cm-card cm-pad">
+        <h2 class="cm-acc-h">Deine Passkeys</h2>
+
+        {% if credentials is empty %}
+            <p class="cm-dim mb-0">Du hast noch keinen Passkey angelegt.</p>
+        {% else %}
+            <ul class="cm-acc-rows cm-acc-keys">
+                {% for credential in credentials %}
+                    <li data-controller="passkey"
+                        data-passkey-confirm-text-value="Den Passkey „{{ credential.name }}“ wirklich löschen?">
+                        <form method="post"
+                              action="{{ path('criticalmass_user_profile_passkey_rename', {'id': credential.id}) }}"
+                              class="cm-acc-rename">
+                            <input type="hidden" name="_token"
+                                   value="{{ csrf_token('passkey-rename-' ~ credential.id) }}">
+                            <label class="visually-hidden" for="passkey-name-{{ credential.id }}">Name des Passkeys</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="passkey-name-{{ credential.id }}"
+                                   name="name"
+                                   maxlength="255"
+                                   required
+                                   value="{{ credential.name }}">
+                            <button type="submit" class="cm-btn">Umbenennen</button>
+                        </form>
+
+                        <div class="cm-acc-keymeta">
+                            <span>Angelegt am {{ credential.createdAt|date('d.m.Y') }}</span>
+                            <span>{% if credential.lastUsedAt %}Zuletzt benutzt am {{ credential.lastUsedAt|date('d.m.Y') }}{% else %}Noch nicht benutzt{% endif %}</span>
+
+                            <form method="post"
+                                  action="{{ path('criticalmass_user_profile_passkey_delete', {'id': credential.id}) }}"
+                                  data-action="submit->passkey#confirmDelete">
+                                <input type="hidden" name="_token"
+                                       value="{{ csrf_token('passkey-delete-' ~ credential.id) }}">
+                                <button type="submit" class="cm-link-btn">Löschen</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

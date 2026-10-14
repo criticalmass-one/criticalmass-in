@@ -1,0 +1,92 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set isNew = city is null or city.id is null %}
+{% set title = isNew ? 'Stadt hinzufügen' : 'Stadt bearbeiten' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <header class="cm-page-head">
+        <div class="cm-crumb">
+            {% if city and city.mainSlug %}
+                <a href="{{ object_path(city) }}">{{ city.city }}</a>
+            {% else %}
+                <a href="{{ path('caldera_criticalmass_region_world') }}">Verzeichnis</a>
+                {% if region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld() %}
+                    / <a href="{{ object_path(region.parent.parent.parent) }}">{{ region.parent.parent.parent.name }}</a>
+                {% endif %}
+                {% if region.parent and region.parent.parent and not region.parent.parent.isWorld() %}
+                    / <a href="{{ object_path(region.parent.parent) }}">{{ region.parent.parent.name }}</a>
+                {% endif %}
+                {% if region.parent and not region.parent.isWorld() %}
+                    / <a href="{{ object_path(region.parent) }}">{{ region.parent.name }}</a>
+                {% endif %}
+                / <a href="{{ object_path(region) }}">{{ region.name }}</a>
+            {% endif %}
+        </div>
+        <h1>{{ title }}</h1>
+    </header>
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form' } }) }}
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>Stadt</legend>
+
+            {{ form_row(form.region, { label: 'Region', help: 'Bundesland, Kanton oder County' }) }}
+
+            <div class="mb-3">
+                {{ form_label(form.city, 'Name') }}
+                <div class="cm-with-btn">
+                    {{ form_widget(form.city) }}
+                    <button class="cm-btn" type="button"
+                            data-controller="geocoding"
+                            data-action="click->geocoding#search"
+                            data-geocoding-query-selector-value="#{{ form.city.vars.id }}"
+                            data-geocoding-query-part-selector-value="#{{ form.region.vars.id }}"
+                            aria-label="Auf der Karte suchen">
+                        <svg width="16" height="16" aria-hidden="true"><use href="#i-search"/></svg>
+                    </button>
+                </div>
+                {{ form_errors(form.city) }}
+            </div>
+
+            {{ form_row(form.title, { label: 'Titel', help: 'Zum Beispiel „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“' }) }}
+
+            <div class="cm-form-map"
+                 data-controller="map--form-map"
+                 data-map--form-map-center-latitude-value="{{ form.latitude.vars.value }}"
+                 data-map--form-map-center-longitude-value="{{ form.longitude.vars.value }}"
+                 data-map--form-map-zoom-value="10"
+                 data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                 data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                 data-map--form-map-marker-icon-value="fa-university"
+                 data-map--form-map-marker-color-value="blue"
+                 data-map--form-map-marker-shape-value="circle"
+                 data-map--form-map-marker-prefix-value="fas">
+            </div>
+            {{ form_widget(form.latitude) }}
+            {{ form_widget(form.longitude) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>Beschreibung</legend>
+
+            {{ form_row(form.punchLine, { label: 'Punchline', help: 'Ein einprägsamer Satz, etwa „We are traffic“' }) }}
+            {{ form_row(form.description, { label: 'Kurzbeschreibung', attr: { rows: 5 } }) }}
+            {{ form_row(form.longDescription, { label: 'Lange Beschreibung', attr: { rows: 8 } }) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>Einstellungen</legend>
+
+            {{ form_row(form.enableBoard, { label: 'Forum für diese Stadt anzeigen' }) }}
+            {{ form_row(form.imageFile, { label: 'Titelbild', help: 'Nur Bilder, an denen du die Rechte hast. Am besten 2.280 × 500 Pixel.' }) }}
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ city and city.mainSlug ? object_path(city) : object_path(region) }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

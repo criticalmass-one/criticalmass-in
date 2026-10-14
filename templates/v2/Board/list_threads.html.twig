@@ -1,0 +1,74 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set isCity = board.enableBoard is defined %}
+
+{% block title %}{{ board.title }}{% endblock %}
+
+{% block additionalHeaderElements %}
+    {{ parent() }}
+    {% include 'v2/Board/_head_links.html.twig' with { items: threads } %}
+{% endblock %}
+
+{% block content %}
+    <div class="cm-crumb"><a href="{{ path('caldera_criticalmass_board_overview') }}">Forum</a></div>
+    <div class="cm-forum-head">
+        <h1>{{ board.title }}</h1>
+        {% if app.user %}
+            <div class="cm-forum-btns">
+                <form method="post" action="{{ subscribeUrl }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('forum-subscribe') }}">
+                    <button type="submit" class="cm-btn">Forum abonnieren</button>
+                </form>
+                <a class="cm-btn cm-btn-go" href="{{ newThreadUrl }}">Neues Thema</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <section class="cm-card cm-boards">
+        {% if threads|length %}
+            <table>
+                <thead><tr><th>Thema</th><th class="cm-n">Antworten</th><th class="cm-last">Letzter Beitrag</th></tr></thead>
+                <tbody>
+                    {% for thread in threads %}
+                        {% set opener = thread.firstPost ? thread.firstPost.user : null %}
+                        <tr>
+                            <td>
+                                <a class="cm-t" href="{{ object_path(thread) }}">{{ thread.title }}</a>
+                                {%- if thread.sticky %}<span class="cm-flag">angeheftet</span>{% endif %}
+                                {%- if thread.locked %}<span class="cm-flag">geschlossen</span>{% endif %}
+                                <div class="cm-d">von {{ opener ? opener.username : 'unbekannt' }}</div>
+                                <div class="cm-mob">
+                                    {{ thread.postNumber }} {{ thread.postNumber == 1 ? 'Antwort' : 'Antworten' }}.
+                                    {% if thread.lastPost %}Zuletzt <b>{{ thread.lastPost.user ? thread.lastPost.user.username : 'unbekannt' }}</b> {{ thread.lastPost.dateTime|time_ago }}{% endif %}
+                                </div>
+                            </td>
+                            <td class="cm-n{{ thread.postNumber == 0 ? ' cm-zero' }}">{{ thread.postNumber }}</td>
+                            <td class="cm-last">
+                                {% if thread.lastPost %}{% include 'v2/Board/_last_post.html.twig' with { thread: thread } %}{% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="cm-forum-empty">Noch keine Themen.</p>
+        {% endif %}
+    </section>
+
+    {% include 'v2/Board/_pager.html.twig' with { items: threads } %}
+{% endblock %}
+
+{% block rail %}
+    <div class="cm-box">
+        <h3>{{ isCity ? board.city : board.title }}</h3>
+        {% set description = isCity ? board.punchline : board.description %}
+        {% if description %}<p class="cm-forum-desc">{{ description }}</p>{% endif %}
+        <div class="cm-figures">
+            <div><b>{{ board.threadNumber ?? 0 }}</b><small>Themen</small></div>
+            <div><b>{{ board.postNumber ?? 0 }}</b><small>Beiträge</small></div>
+        </div>
+        {% if isCity %}
+            <a class="cm-more" href="{{ object_path(board) }}">Zur Stadtseite</a>
+        {% endif %}
+    </div>
+{% endblock %}

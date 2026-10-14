@@ -1,0 +1,8 @@
+{# Parameter: city, tab, heading #}
+<div class="cm-crumb-link">
+    <a href="{{ path('caldera_criticalmass_city_list') }}">Städte</a> / <a href="{{ object_path(city) }}">{{ city.city }}</a>
+</div>
+<div class="cm-page-head">
+    <h1>{{ heading }}</h1>
+</div>
+{% include 'City/Includes/_tabs.html.twig' with { city: city, tab: tab } %}
