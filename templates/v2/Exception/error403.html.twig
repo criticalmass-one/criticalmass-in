@@ -1,0 +1,15 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Kein Zugriff{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head"><h1>Kein Zugriff</h1></div>
+    <div class="cm-card cm-pad">
+        <div class="cm-btn-row">
+            {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="cm-btn cm-btn-go" href="{{ path('login') }}">Anmelden</a>
+            {% endif %}
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_frontpage') }}">Zur Startseite</a>
+        </div>
+    </div>
+{% endblock %}

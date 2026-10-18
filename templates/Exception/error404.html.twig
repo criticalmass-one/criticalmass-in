@@ -1,0 +1,16 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Seite nicht gefunden{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center py-5">
+                <h1 class="h3 mb-4">Seite nicht gefunden</h1>
+                <a href="{{ path('caldera_criticalmass_frontpage') }}" class="btn btn-outline-secondary">Zur Startseite</a>
+                <a href="{{ path('caldera_criticalmass_city_list') }}" class="btn btn-outline-secondary">Städte</a>
+                <a href="{{ path('caldera_criticalmass_search_query') }}" class="btn btn-outline-secondary">Suche</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

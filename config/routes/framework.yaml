@@ -1,0 +1,13 @@
+# Vorschau der Fehlerseiten unter /_error/{code}, nur in dev und test: Mit
+# eingeschaltetem Debug zeigt der Kernel sonst die Ausnahme statt der Vorlage.
+when@dev:
+    _errors:
+        resource: '@FrameworkBundle/Resources/config/routing/errors.php'
+        type: php
+        prefix: /_error
+
+when@test:
+    _errors:
+        resource: '@FrameworkBundle/Resources/config/routing/errors.php'
+        type: php
+        prefix: /_error

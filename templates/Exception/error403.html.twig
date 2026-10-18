@@ -1,0 +1,17 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Kein Zugriff{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center py-5">
+                <h1 class="h3 mb-4">Kein Zugriff</h1>
+                {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ path('login') }}" class="btn btn-primary">Anmelden</a>
+                {% endif %}
+                <a href="{{ path('caldera_criticalmass_frontpage') }}" class="btn btn-outline-secondary">Zur Startseite</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

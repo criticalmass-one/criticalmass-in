@@ -241,6 +241,14 @@ Die neue Gestaltung ist ein **freiwilliger Test**, den Nutzer selbst einschalten
   `Subride.dateTime` enthält gemischte Daten (#1569) → unverändert `.format('H:i')`.
 - **Twig-Falle:** Einen gerenderten Ausschnitt nicht als `include()`-Wert weiterreichen
   (wird doppelt escapt), sondern `{% set x %}{% include … %}{% endset %}`.
+- **Fehlerseiten:** Bundle-Vorlagen (`@Twig/Exception/…`) kennt der Loader nicht. Deshalb erbt
+  `templates/bundles/TwigBundle/Exception/error404.html.twig` nur von `Exception/error404.html.twig`,
+  und erst dieser Name wählt zwischen `templates/Exception/` und `templates/v2/Exception/`. 404 und 403
+  stehen im jeweiligen Rahmen; alle anderen Codes rendert `error.html.twig` ohne Rahmen, Assets und
+  Datenbank, denn scheitert die Fehlervorlage selbst, bekommt der Nutzer die nackte Ausnahme (der
+  `ErrorListener` fängt das nicht ab). Vorschau in dev und test unter `/_error/{code}`
+  (`config/routes/framework.yaml`). Unter PHPUnit hält sich der Kernel für eine Kommandozeile und
+  nimmt den CLI-Renderer – `ErrorPagesTest` setzt darum `APP_RUNTIME_MODE=web=1`.
 - **Tests der v2-Seiten** (`tests/Controller/V2/`) setzen `$_ENV['FEATURE_DESIGN_V2']`
   und das Cookie selbst und dürfen nicht von gebauten Assets abhängen: Die CI baut keine,
   ohne `entrypoints.json` gibt Encore keine `<link>`-Tags aus.
