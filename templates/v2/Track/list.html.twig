@@ -33,32 +33,7 @@
                     </div>
 
                     {% if is_granted('edit', track) %}
-                        <div class="dropdown cm-acc-menu">
-                            <button type="button" class="cm-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Bearbeiten</button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_download') }}">Herunterladen</a></li>
-                                <li>
-                                    <form method="post" action="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('track_toggle_' ~ track.id) }}">
-                                        <button type="submit" class="dropdown-item">{{ track.enabled ? 'Deaktivieren' : 'Aktivieren' }}</button>
-                                    </form>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                {% if not track.isReviewed %}
-                                    <li><a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">Bestätigen</a></li>
-                                {% endif %}
-                                <li><a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">Beschneiden</a></li>
-                                <li><a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_time') }}">Zeit anpassen</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('caldera_criticalmass_rest_track_delete', { id: track.id }) }}"
-                                       data-controller="delete-modal"
-                                       data-action="click->delete-modal#open"
-                                       data-delete-modal-title-value="Track löschen"
-                                       data-delete-modal-text-value="Möchtest du diesen Track von der {{ track.ride.city.title }} vom {{ track.ride.dateTime|date('d.m.Y') }} wirklich löschen?">Löschen</a>
-                                </li>
-                            </ul>
-                        </div>
+                        {% include 'v2/Track/_options_menu.html.twig' with { track: track } %}
                     {% endif %}
                 </article>
             {% endfor %}
