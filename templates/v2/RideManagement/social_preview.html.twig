@@ -18,14 +18,13 @@
             {% if ride.imageName %}
                 <img class="cm-tt-preview" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}" alt="">
             {% endif %}
-            {{ form_row(form.imageFile, { label: 'Datei', help: 'Mindestens 1.200 × 630 Pixel. Lade nur Bilder hoch, an denen du die Rechte hast.' }) }}
+            {{ form_row(form.imageFile, { label: 'Datei' }) }}
         </fieldset>
 
         <fieldset>
             <legend>Beschreibung</legend>
             {{ form_widget(form.socialDescription, { attr: { rows: 4, 'aria-label': 'Beschreibung' } }) }}
             {{ form_errors(form.socialDescription) }}
-            <div class="form-text">Soziale Netzwerke zeigen meist nur die ersten 140 bis 160 Zeichen.</div>
         </fieldset>
 
         <div class="cm-form-submit">

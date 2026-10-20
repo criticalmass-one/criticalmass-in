@@ -1,7 +1,6 @@
 {% extends 'v2/Layout/standard.html.twig' %}
 
 {% set title = cityCycle.id ? 'Turnus bearbeiten' : 'Turnus hinzufügen' %}
-{% set fixedHelp = cityCycle.hasSpecialCalculator() ? 'Wird von einem speziellen Generator festgelegt.' : null %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -15,8 +14,8 @@
             <legend>Termin</legend>
 
             <div class="cm-form-row">
-                {{ form_row(form.dayOfWeek, { label: 'Wochentag', help: fixedHelp }) }}
-                {{ form_row(form.weekOfMonth, { label: 'Woche im Monat', help: fixedHelp }) }}
+                {{ form_row(form.dayOfWeek, { label: 'Wochentag' }) }}
+                {{ form_row(form.weekOfMonth, { label: 'Woche im Monat' }) }}
             </div>
 
             <div class="cm-form-row">
@@ -27,7 +26,7 @@
         <fieldset>
             <legend>Treffpunkt</legend>
 
-            {{ form_row(form.location, { label: 'Name des Treffpunkts', help: 'Den Marker auf der Karte auf den Treffpunkt ziehen.' }) }}
+            {{ form_row(form.location, { label: 'Name des Treffpunkts' }) }}
 
             <div class="cm-form-map"
                  data-controller="map--form-map"

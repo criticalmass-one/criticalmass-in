@@ -33,7 +33,7 @@
         <fieldset>
             <legend>Stadt</legend>
 
-            {{ form_row(form.region, { label: 'Region', help: 'Bundesland, Kanton oder County' }) }}
+            {{ form_row(form.region, { label: 'Region' }) }}
 
             <div class="mb-3">
                 {{ form_label(form.city, 'Name') }}
@@ -51,7 +51,7 @@
                 {{ form_errors(form.city) }}
             </div>
 
-            {{ form_row(form.title, { label: 'Titel', help: 'Zum Beispiel „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“' }) }}
+            {{ form_row(form.title, { label: 'Titel' }) }}
 
             <div class="cm-form-map"
                  data-controller="map--form-map"
@@ -72,7 +72,7 @@
         <fieldset>
             <legend>Beschreibung</legend>
 
-            {{ form_row(form.punchLine, { label: 'Punchline', help: 'Ein einprägsamer Satz, etwa „We are traffic“' }) }}
+            {{ form_row(form.punchLine, { label: 'Punchline' }) }}
             {{ form_row(form.description, { label: 'Kurzbeschreibung', attr: { rows: 5 } }) }}
             {{ form_row(form.longDescription, { label: 'Lange Beschreibung', attr: { rows: 8 } }) }}
         </fieldset>
@@ -81,7 +81,7 @@
             <legend>Einstellungen</legend>
 
             {{ form_row(form.enableBoard, { label: 'Forum für diese Stadt anzeigen' }) }}
-            {{ form_row(form.imageFile, { label: 'Titelbild', help: 'Nur Bilder, an denen du die Rechte hast. Am besten 2.280 × 500 Pixel.' }) }}
+            {{ form_row(form.imageFile, { label: 'Titelbild' }) }}
         </fieldset>
 
         <div class="cm-form-submit">
