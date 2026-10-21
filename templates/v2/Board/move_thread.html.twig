@@ -18,9 +18,7 @@
         {{ form_start(form) }}
         {{ form_errors(form) }}
 
-        <label class="form-label" for="{{ form.target.vars.id }}">Neues Forum</label>
-        {{ form_widget(form.target, { 'attr': { 'class': 'form-select' } }) }}
-        {{ form_errors(form.target) }}
+        {{ form_row(form.target, { label: 'Neues Forum' }) }}
 
         {{ form_rest(form) }}
 

@@ -37,8 +37,12 @@
 
             <div class="mb-3">
                 {{ form_label(form.city, 'Name') }}
+                {# form_widget setzt die Fehlerattribute nicht selbst, das macht sonst form_row. #}
+                {% set cityAttr = form.city.vars.errors|length > 0
+                    ? { 'aria-invalid': 'true', 'aria-describedby': form.city.vars.errors|map((_, i) => form.city.vars.id ~ '_error' ~ (i + 1))|join(' ') }
+                    : {} %}
                 <div class="cm-with-btn">
-                    {{ form_widget(form.city) }}
+                    {{ form_widget(form.city, { attr: cityAttr }) }}
                     <button class="cm-btn" type="button"
                             data-controller="geocoding"
                             data-action="click->geocoding#search"
