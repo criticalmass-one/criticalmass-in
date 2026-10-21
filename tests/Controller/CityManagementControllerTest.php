@@ -38,6 +38,18 @@ class CityManagementControllerTest extends AbstractControllerTestCase
         $this->assertEquals('Hamburg', $cityField->attr('value'));
     }
 
+    public function testCityEditImageFieldHasNoDownloadLink(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $client->request('GET', '/hamburg/edit');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSelectorExists('input[name="city[imageFile][file]"]');
+        $this->assertSelectorNotExists('a[download]');
+    }
+
     public function testAddRideAccessibleWhenLoggedIn(): void
     {
         $client = static::createClient();

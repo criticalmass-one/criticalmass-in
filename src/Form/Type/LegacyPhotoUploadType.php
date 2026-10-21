@@ -10,7 +10,11 @@ class LegacyPhotoUploadType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('imageFile', VichImageType::class);
+        $builder->add('imageFile', VichImageType::class, [
+            'download_uri' => false,
+            'image_uri' => false,
+            'delete_label' => 'Bild entfernen',
+        ]);
     }
 
     public function getName(): string
