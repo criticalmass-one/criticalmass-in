@@ -38,11 +38,13 @@ export default class extends Controller {
         const deleteButton = modalElement.querySelector('.btn-danger');
         deleteButton.addEventListener('click', (e) => {
             e.preventDefault();
-            this.performDeleteRequest(href, modalElement);
-        }, { once: true });
+            this.performDeleteRequest(href, modalElement, deleteButton);
+        });
     }
 
-    performDeleteRequest(url, modalElement) {
+    performDeleteRequest(url, modalElement, deleteButton) {
+        deleteButton.disabled = true;
+
         fetch(url, { method: 'DELETE' })
             .then(response => {
                 if (response.ok) {
@@ -52,8 +54,12 @@ export default class extends Controller {
                 }
 
                 this.showError(modalElement, `Löschen fehlgeschlagen (${response.status}).`);
+                deleteButton.disabled = false;
             })
-            .catch(() => this.showError(modalElement, 'Löschen fehlgeschlagen.'));
+            .catch(() => {
+                this.showError(modalElement, 'Löschen fehlgeschlagen.');
+                deleteButton.disabled = false;
+            });
     }
 
     showError(modalElement, message) {

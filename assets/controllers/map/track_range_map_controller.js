@@ -42,7 +42,14 @@ export default class extends BaseMapController {
             return false;
         }
 
-        this.latLngList = JSON.parse(latLngInput.value);
+        try {
+            this.latLngList = JSON.parse(latLngInput.value);
+        } catch (error) {
+            console.warn('[track-range] Punkte in #track_range_latLngList sind kein JSON', error);
+
+            return false;
+        }
+
         this.currentLatLngs = this.latLngList.slice();
 
         return true;
