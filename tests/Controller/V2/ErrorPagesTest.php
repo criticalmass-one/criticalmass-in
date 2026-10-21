@@ -47,6 +47,7 @@ class ErrorPagesTest extends AbstractControllerTestCase
         self::assertSelectorExists('body.cm-v2');
         self::assertSelectorTextContains('.cm-page-head h1', 'Seite nicht gefunden');
         self::assertSelectorExists('.cm-btn-row a[href="/"]');
+        self::assertSelectorExists('meta[name="robots"][content*="noindex"]');
     }
 
     public function testForbiddenInNewDesignOffersLogin(): void
@@ -59,6 +60,7 @@ class ErrorPagesTest extends AbstractControllerTestCase
         self::assertSelectorExists('body.cm-v2');
         self::assertSelectorTextContains('.cm-page-head h1', 'Kein Zugriff');
         self::assertSelectorExists('.cm-btn-row a[href="/login"]');
+        self::assertSelectorExists('meta[name="robots"][content*="noindex"]');
     }
 
     public function testForbiddenInNewDesignHidesLoginWhenSignedIn(): void
@@ -83,6 +85,44 @@ class ErrorPagesTest extends AbstractControllerTestCase
         self::assertSelectorNotExists('body.cm-v2');
         self::assertSelectorExists('nav.navbar');
         self::assertSelectorTextContains('h1', 'Seite nicht gefunden');
+        self::assertSelectorExists('meta[name="robots"][content*="noindex"]');
+    }
+
+    public function testForbiddenInOldDesignOffersLogin(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/_error/403');
+
+        self::assertResponseStatusCodeSame(403);
+        self::assertSelectorNotExists('body.cm-v2');
+        self::assertSelectorExists('nav.navbar');
+        self::assertSelectorTextContains('h1', 'Kein Zugriff');
+        self::assertSelectorExists('.card-body a[href="/login"]');
+        self::assertSelectorExists('meta[name="robots"][content*="noindex"]');
+    }
+
+    public function testForbiddenInOldDesignHidesLoginWhenSignedIn(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $client->request('GET', '/_error/403');
+
+        self::assertResponseStatusCodeSame(403);
+        self::assertSelectorNotExists('body.cm-v2');
+        self::assertSelectorNotExists('.card-body a[href="/login"]');
+    }
+
+    public function testMaintenanceErrorHasGermanText(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/_error/503');
+
+        self::assertResponseStatusCodeSame(503);
+        self::assertSelectorTextContains('h1', 'Fehler 503');
+        self::assertSelectorTextContains('main p', 'Die Seite wird gerade gewartet.');
     }
 
     public function testServerErrorStaysStandaloneInNewDesign(): void

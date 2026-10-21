@@ -1,5 +1,6 @@
 {# Alle übrigen Fehler, vor allem 5xx: ohne Rahmen, ohne Assets, ohne Datenbank.
-   Scheitert diese Vorlage, bleibt dem Nutzer nur die nackte Ausnahme. #}
+   Scheitert diese Vorlage, rendert Symfony sie für die neue Ausnahme (500) gleich
+   noch einmal; der ursprüngliche Status geht dabei verloren. #}
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -12,13 +13,27 @@
         main { background: #fff; border: 1px solid #dfe1e5; border-radius: 12px; padding: 28px 32px; margin: 16px; max-width: 420px; }
         h1 { margin: 0 0 8px; font-size: 1.5rem; color: #16181c; }
         p { margin: 0 0 16px; }
-        a { color: #d8450e; }
+        a { color: #c23e0d; }
     </style>
 </head>
 <body>
     <main>
         <h1>Fehler {{ status_code }}</h1>
-        <p>{{ status_text }}</p>
+        {% set texts = {
+            400: 'Die Anfrage war fehlerhaft.',
+            401: 'Dafür musst du angemeldet sein.',
+            405: 'Diese Anfrage ist hier nicht erlaubt.',
+            408: 'Die Anfrage hat zu lange gedauert.',
+            410: 'Diese Seite gibt es nicht mehr.',
+            429: 'Zu viele Anfragen.',
+            500: 'Auf dem Server ist ein Fehler aufgetreten.',
+            502: 'Der Server hat eine ungültige Antwort erhalten.',
+            503: 'Die Seite wird gerade gewartet.',
+            504: 'Der Server hat nicht rechtzeitig geantwortet.',
+        } %}
+        {% if texts[status_code] is defined %}
+            <p>{{ texts[status_code] }}</p>
+        {% endif %}
         <a href="{{ path('caldera_criticalmass_frontpage') }}">Zur Startseite</a>
     </main>
 </body>
