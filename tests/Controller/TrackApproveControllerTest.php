@@ -15,8 +15,11 @@ class TrackApproveControllerTest extends AbstractControllerTestCase
         if ($this->trackId !== null) {
             $em = $this->em();
             $track = $em->getRepository(Track::class)->find($this->trackId);
-            $track->setReviewed(true);
-            $em->flush();
+
+            if ($track !== null) {
+                $track->setReviewed(true);
+                $em->flush();
+            }
         }
 
         parent::tearDown();
@@ -89,7 +92,7 @@ class TrackApproveControllerTest extends AbstractControllerTestCase
     private function unreviewedTrack(): Track
     {
         $em = $this->em();
-        $track = $em->getRepository(Track::class)->findOneBy(['deleted' => false, 'enabled' => true]);
+        $track = $em->getRepository(Track::class)->findOneBy(['deleted' => false, 'enabled' => true], ['id' => 'ASC']);
         $track->setReviewed(false);
         $em->flush();
 
