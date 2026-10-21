@@ -54,16 +54,7 @@
             </div>
 
             <div class="cm-form-row">
-                <div class="mb-3">
-                    {{ form_label(form.rideType, 'Art der Tour') }}
-                    <select id="{{ form.rideType.vars.id }}" name="{{ form.rideType.vars.full_name }}" class="form-select" required>
-                        {% for choice in form.rideType.vars.choices %}
-                            <option value="{{ choice.value }}"{% if choice is selectedchoice(form.rideType.vars.value) %} selected{% endif %}>{{ choice.data.label }}</option>
-                        {% endfor %}
-                    </select>
-                    {{ form_errors(form.rideType) }}
-                    {% do form.rideType.setRendered() %}
-                </div>
+                {{ form_row(form.rideType, { label: 'Art der Tour' }) }}
                 {{ form_row(form.title, { label: 'Titel' }) }}
             </div>
 
