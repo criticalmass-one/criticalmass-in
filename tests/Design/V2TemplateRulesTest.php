@@ -49,4 +49,28 @@ final class V2TemplateRulesTest extends TestCase
             }
         }
     }
+
+    /**
+     * Ein Name ohne v2/-Präfix wird nur im v2-Modus unter templates/v2 gefunden.
+     * Gibt es ihn nicht auch unter templates/, gehört er präfixiert eingebunden.
+     */
+    public function testUnprefixedIncludesHaveAV1Template(): void
+    {
+        foreach ($this->v2Templates() as $name => $source) {
+            if (!preg_match_all("/\\b(?:include|embed|import)\\s*\\(?\\s*['\"]([^'\"]+\\.twig)['\"]/", $source, $matches)) {
+                continue;
+            }
+
+            foreach ($matches[1] as $included) {
+                if (str_starts_with($included, 'v2/') || str_starts_with($included, '@')) {
+                    continue;
+                }
+
+                self::assertFileExists(
+                    self::V2_DIR . '/../' . $included,
+                    sprintf('templates/v2/%s bindet %s ein, das nur unter templates/v2 existiert – mit v2/-Präfix einbinden.', $name, $included)
+                );
+            }
+        }
+    }
 }
