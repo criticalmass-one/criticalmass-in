@@ -173,7 +173,9 @@ class PhotoRepository extends ServiceEntityRepository
             ->from(Ride::class, 'ride')
             ->innerJoin('ride.photos', 'photo')
             ->where($builder->expr()->eq('photo.deleted', ':deleted'))
-            ->setParameter('deleted', false);
+            ->setParameter('deleted', false)
+            ->andWhere($builder->expr()->eq('photo.enabled', ':enabled'))
+            ->setParameter('enabled', true);
 
         if ($city) {
             $builder
@@ -223,6 +225,11 @@ class PhotoRepository extends ServiceEntityRepository
         ));
     }
 
+    /**
+     * Die öffentlich sichtbaren Fotos einer Tour. Deaktivierte bleiben draußen —
+     * die Einzelansicht verweigert sie ohnehin (#1585); fürs Verwalten gibt es
+     * buildQueryPhotosByUserAndRide().
+     */
     public function buildQueryPhotosByRide(Ride $ride): QueryBuilder
     {
         $builder = $this->createQueryBuilder('p');
@@ -230,6 +237,8 @@ class PhotoRepository extends ServiceEntityRepository
         $builder->select('p')
             ->where($builder->expr()->eq('p.ride', ':ride'))
             ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false)
             ->addOrderBy('p.exifCreationDate', 'ASC');

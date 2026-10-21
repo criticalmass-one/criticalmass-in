@@ -75,10 +75,12 @@ class RideController extends AbstractController
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ($ride->getDateTime() ? ' am ' . $ride->getDateTime()->format('d.m.Y') : ''))
             ->setCanonicalForObject($ride);
 
+        $featuredPhoto = $ride->getFeaturedPhoto();
+
         if ($ride->getImageName()) {
             $seoPage->setPreviewPhoto($ride);
-        } elseif ($ride->getFeaturedPhoto()) {
-            $seoPage->setPreviewPhoto($ride->getFeaturedPhoto());
+        } elseif ($featuredPhoto && $featuredPhoto->isEnabled() && !$featuredPhoto->isDeleted()) {
+            $seoPage->setPreviewPhoto($featuredPhoto);
         }
 
         if ($ride->getSocialDescription()) {

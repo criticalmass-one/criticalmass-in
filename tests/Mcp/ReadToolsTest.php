@@ -53,6 +53,25 @@ final class ReadToolsTest extends AbstractMcpTestCase
         self::assertIsArray($result['json']);
     }
 
+    public function testGetRideLeavesDisabledAndDeletedPhotosOut(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $active = $this->createPhoto($ride, $city);
+        $disabled = $this->createPhoto($ride, $city)->setEnabled(false);
+        $deleted = $this->createPhoto($ride, $city)->setDeleted(true);
+        $this->em()->flush();
+        $token = $this->obtainAccessToken('ride:read');
+
+        $result = $this->callTool($token, 'get_ride', ['citySlug' => $city->getMainSlugString(), 'rideIdentifier' => '2026-09-01']);
+
+        self::assertFalse($result['isError'], $result['text']);
+        $ids = array_column($result['json']['photos'], 'id');
+        self::assertContains($active->getId(), $ids);
+        self::assertNotContains($disabled->getId(), $ids);
+        self::assertNotContains($deleted->getId(), $ids);
+    }
+
     public function testGetRideUnknownIsError(): void
     {
         $token = $this->obtainAccessToken('ride:read');

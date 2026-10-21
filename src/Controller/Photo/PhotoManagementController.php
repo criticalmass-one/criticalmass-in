@@ -94,7 +94,7 @@ class PhotoManagementController extends AbstractController
     {
         $this->saveReferer($request);
 
-        $photo->setEnabled(!$photo->getEnabled());
+        $photo->setEnabled(!$photo->isEnabled());
 
         $registry->getManager()->flush();
 
