@@ -38,17 +38,36 @@ export default class extends Controller {
         const deleteButton = modalElement.querySelector('.btn-danger');
         deleteButton.addEventListener('click', (e) => {
             e.preventDefault();
-            this.performDeleteRequest(href);
+            this.performDeleteRequest(href, modalElement);
         }, { once: true });
     }
 
-    performDeleteRequest(url) {
+    performDeleteRequest(url, modalElement) {
         fetch(url, { method: 'DELETE' })
             .then(response => {
                 if (response.ok) {
                     location.reload();
+
+                    return;
                 }
-            });
+
+                this.showError(modalElement, `Löschen fehlgeschlagen (${response.status}).`);
+            })
+            .catch(() => this.showError(modalElement, 'Löschen fehlgeschlagen.'));
+    }
+
+    showError(modalElement, message) {
+        const body = modalElement.querySelector('.modal-body');
+        let note = body.querySelector('.delete-modal-error');
+
+        if (!note) {
+            note = document.createElement('p');
+            note.className = 'delete-modal-error text-danger mt-2 mb-0';
+            note.setAttribute('role', 'alert');
+            body.appendChild(note);
+        }
+
+        note.textContent = message;
     }
 
     getModalTemplate() {
@@ -58,7 +77,7 @@ export default class extends Controller {
             '    <div class="modal-content">' +
             '      <div class="modal-header">' +
             '        <h5 class="modal-title" id="delete-modal-label">{{ title }}</h5>' +
-            '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+            '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>' +
             '      </div>' +
             '      <div class="modal-body">{{ text }}</div>' +
             '      <div class="modal-footer">' +
