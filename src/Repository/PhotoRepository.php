@@ -173,7 +173,9 @@ class PhotoRepository extends ServiceEntityRepository
             ->from(Ride::class, 'ride')
             ->innerJoin('ride.photos', 'photo')
             ->where($builder->expr()->eq('photo.deleted', ':deleted'))
-            ->setParameter('deleted', false);
+            ->setParameter('deleted', false)
+            ->andWhere($builder->expr()->eq('photo.enabled', ':enabled'))
+            ->setParameter('enabled', true);
 
         if ($city) {
             $builder
