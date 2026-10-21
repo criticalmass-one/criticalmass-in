@@ -43,10 +43,12 @@
                                        href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
                                         <i class="far fa-cut me-1"></i><span class="d-none d-sm-inline">Track beschneiden</span>
                                     </a>
-                                    <a class="btn btn-outline-secondary btn-sm"
-                                       href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
-                                        <i class="far fa-check me-1"></i><span class="d-none d-sm-inline">Track bestätigen</span>
-                                    </a>
+                                    <form method="post" action="{{ object_path(track, 'caldera_criticalmass_track_approve') }}" class="d-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('track_approve_' ~ track.id) }}">
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                            <i class="far fa-check me-1"></i><span class="d-none d-sm-inline">Track bestätigen</span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
