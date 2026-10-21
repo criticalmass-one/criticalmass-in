@@ -3,6 +3,7 @@
 namespace Tests\Controller\V2;
 
 use App\Design\DesignChoice;
+use App\Entity\Track;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\BrowserKit\Cookie;
@@ -62,6 +63,29 @@ class AccountTest extends AbstractControllerTestCase
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('body.cm-v2');
         self::assertSelectorExists($selector);
+    }
+
+    public function testTrackListShowsMenuForOwner(): void
+    {
+        $client = $this->createV2Client();
+
+        $em = static::getContainer()->get('doctrine')->getManager();
+        $track = $em->getRepository(Track::class)->findOneBy(['username' => 'cyclist', 'enabled' => true, 'deleted' => false]);
+        self::assertInstanceOf(Track::class, $track);
+
+        $track->setReviewed(false);
+        $em->flush();
+
+        try {
+            $client->request('GET', '/track/list');
+
+            self::assertResponseIsSuccessful();
+            self::assertSelectorExists('.cm-acc-menu .dropdown-menu a[href*="/track/range/"]');
+            self::assertSelectorExists('.cm-acc-menu form[method="post"][action$="/approve"] input[name="_token"]');
+        } finally {
+            $track->setReviewed(true);
+            $em->flush();
+        }
     }
 
     public function testAccountPageKeepsDesignSwitch(): void

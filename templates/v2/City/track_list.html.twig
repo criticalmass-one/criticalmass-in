@@ -28,9 +28,7 @@
                         <div><b>{{ track.startDateTime|date('H:i', zone) }}</b><small>Beginn</small></div>
                         <div><b>{{ track.endDateTime|date('H:i', zone) }}</b><small>Ende</small></div>
                     </div>
-                    {% if is_granted('edit', track) %}
-                        {% include 'v2/Track/_options_menu.html.twig' with { track: track } %}
-                    {% endif %}
+                    {% include 'v2/Track/_options_menu.html.twig' with { track: track } %}
                 </article>
             {% endfor %}
         </div>

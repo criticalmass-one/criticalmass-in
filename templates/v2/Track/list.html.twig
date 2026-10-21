@@ -23,7 +23,7 @@
                     <h2><a href="{{ object_path(track.ride) }}">{{ track.ride.title }}</a></h2>
                     <p class="cm-acc-meta">
                         <a href="{{ object_path(track.ride.city) }}">{{ track.ride.city.city }}</a>,
-                        <a href="{{ object_path(track) }}">{{ track.ride.dateTime|date('d.m.Y') }}</a>
+                        <a href="{{ object_path(track) }}">{{ track.ride.dateTime|date('d.m.Y', timezone) }}</a>
                         {% if not track.enabled %}<br>Deaktiviert{% elseif not track.reviewed %}<br>Unbestätigt{% endif %}
                     </p>
 
@@ -32,9 +32,7 @@
                         <div><b>{{ track.startDateTime|date('H:i', timezone) }}–{{ track.endDateTime|date('H:i', timezone) }}</b><small>Start und Ende</small></div>
                     </div>
 
-                    {% if is_granted('edit', track) %}
-                        {% include 'v2/Track/_options_menu.html.twig' with { track: track } %}
-                    {% endif %}
+                    {% include 'v2/Track/_options_menu.html.twig' with { track: track } %}
                 </article>
             {% endfor %}
         </div>

@@ -115,7 +115,7 @@ class TrackToolsTest extends AbstractControllerTestCase
 
         try {
             if (!$track->isReviewed()) {
-                self::assertSelectorExists('.cm-tt-review a[href$="/approve"]');
+                self::assertSelectorExists('.cm-tt-review form[method="post"][action$="/approve"] input[name="_token"]');
             }
 
             $client->request('GET', $this->path($track, 'caldera_criticalmass_track_range'));
