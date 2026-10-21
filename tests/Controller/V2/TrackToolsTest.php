@@ -89,6 +89,14 @@ class TrackToolsTest extends AbstractControllerTestCase
     {
         $client = $this->client();
         $ride = $this->hamburgRide();
+        $rideId = $ride->getId();
+
+        // Alles, was der Upload an Tracks anlegt, wird im finally wieder entfernt –
+        // auch wenn Redirect oder Assertions vorher scheitern.
+        $knownTrackIds = array_map(
+            static fn (Track $track): ?int => $track->getId(),
+            $this->entityManager()->getRepository(Track::class)->findBy(['ride' => $rideId])
+        );
 
         $crawler = $client->request('GET', $this->path($ride, 'caldera_criticalmass_track_upload'));
         $this->assertV2Page('Track hochladen');
@@ -97,23 +105,23 @@ class TrackToolsTest extends AbstractControllerTestCase
         $gpx = sys_get_temp_dir() . '/v2-track-tools-' . uniqid() . '.gpx';
         copy(__DIR__ . '/../../PhotoGps/data/braunschweig.gpx', $gpx);
 
-        $form = $crawler->filter('form#track-upload-form')->form();
-        $fileField = $form['form[trackFile][file]'];
-        self::assertInstanceOf(FileFormField::class, $fileField);
-        $fileField->upload($gpx);
-        $client->submit($form);
-        @unlink($gpx);
-
-        self::assertResponseRedirects();
-        $client->followRedirect();
-        $this->assertV2Page($ride->getTitle());
-        self::assertSelectorExists('[data-controller="map--map"]');
-
-        $trackId = (int) preg_replace('#.*/track/view/(\d+).*#', '$1', (string) $client->getRequest()->getUri());
-        $track = $this->entityManager()->getRepository(Track::class)->find($trackId);
-        self::assertInstanceOf(Track::class, $track);
-
         try {
+            $form = $crawler->filter('form#track-upload-form')->form();
+            $fileField = $form['form[trackFile][file]'];
+            self::assertInstanceOf(FileFormField::class, $fileField);
+            $fileField->upload($gpx);
+            $client->submit($form);
+            @unlink($gpx);
+
+            self::assertResponseRedirects();
+            $client->followRedirect();
+            $this->assertV2Page($ride->getTitle());
+            self::assertSelectorExists('[data-controller="map--map"]');
+
+            $trackId = (int) preg_replace('#.*/track/view/(\d+).*#', '$1', (string) $client->getRequest()->getUri());
+            $track = $this->entityManager()->getRepository(Track::class)->find($trackId);
+            self::assertInstanceOf(Track::class, $track);
+
             if (!$track->isReviewed()) {
                 self::assertSelectorExists('.cm-tt-review form[method="post"][action$="/approve"] input[name="_token"]');
             }
@@ -130,8 +138,14 @@ class TrackToolsTest extends AbstractControllerTestCase
             self::assertSelectorExists('input[name="form[startDate]"]');
             self::assertSelectorExists('input[name="form[startTime]"]');
         } finally {
+            @unlink($gpx);
+
             $em = $this->entityManager();
-            $em->remove($em->getRepository(Track::class)->find($trackId));
+            foreach ($em->getRepository(Track::class)->findBy(['ride' => $rideId]) as $track) {
+                if (!in_array($track->getId(), $knownTrackIds, true)) {
+                    $em->remove($track);
+                }
+            }
             $em->flush();
         }
     }
