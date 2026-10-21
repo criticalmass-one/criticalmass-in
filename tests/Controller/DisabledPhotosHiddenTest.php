@@ -8,22 +8,33 @@ use App\Entity\Ride;
 use App\Repository\PhotoRepository;
 
 /**
- * Ein deaktiviertes Foto darf nirgends mehr verlinkt sein, wo die Einzelansicht
- * es anschließend mit 403 verweigert (#1585).
+ * Ein deaktiviertes Foto darf nirgends mehr verlinkt oder mitgezaehlt sein, wo die
+ * Einzelansicht es anschliessend mit 403 verweigert (#1585).
  */
 class DisabledPhotosHiddenTest extends AbstractControllerTestCase
 {
+    /** Das deaktivierte Foto aus PhotoFixtures, haengt an der vergangenen Berliner Tour. */
+    private const DISABLED_IMAGE_NAME = 'berlin_ride_disabled.jpg';
+
     private function disabledPhotoWithRide(): Photo
     {
-        $photo = static::getContainer()->get('doctrine')->getRepository(Photo::class)->findOneBy([
-            'enabled' => false,
-            'deleted' => false,
-        ]);
+        $photo = static::getContainer()->get('doctrine')->getRepository(Photo::class)->findOneBy(['imageName' => self::DISABLED_IMAGE_NAME]);
 
-        self::assertInstanceOf(Photo::class, $photo, 'Die Fixtures brauchen ein deaktiviertes Foto.');
+        self::assertInstanceOf(Photo::class, $photo, 'Die Fixtures brauchen das deaktivierte Foto.');
+        self::assertFalse($photo->isEnabled());
+        self::assertFalse($photo->isDeleted());
         self::assertInstanceOf(Ride::class, $photo->getRide());
 
         return $photo;
+    }
+
+    private function countVisiblePhotos(Ride $ride): int
+    {
+        return count(static::getContainer()->get('doctrine')->getRepository(Photo::class)->findBy([
+            'ride' => $ride,
+            'enabled' => true,
+            'deleted' => false,
+        ]));
     }
 
     public function testTheRepositoryLeavesDisabledPhotosOut(): void
@@ -37,19 +48,33 @@ class DisabledPhotosHiddenTest extends AbstractControllerTestCase
         self::assertNotEmpty(array_filter($photos, fn (Photo $p): bool => $p->isEnabled()), 'Aktive Fotos der Tour bleiben.');
     }
 
-    public function testGalleryAndRidePageDoNotLinkDisabledPhotos(): void
+    public function testTheGalleryDoesNotLinkTheDisabledPhoto(): void
     {
         $client = static::createClient();
         $photo = $this->disabledPhotoWithRide();
         $router = static::getContainer()->get(ObjectRouterInterface::class);
         $photoPath = $router->generate($photo);
 
-        foreach ([$router->generate($photo->getRide(), 'caldera_criticalmass_photo_ride_list'), $router->generate($photo->getRide())] as $path) {
-            $client->request('GET', $path);
+        $client->request('GET', $router->generate($photo->getRide(), 'caldera_criticalmass_photo_ride_list'));
 
-            self::assertResponseIsSuccessful($path);
-            self::assertSelectorNotExists(sprintf('a[href="%s"]', $photoPath), sprintf('%s verlinkt das deaktivierte Foto.', $path));
-        }
+        self::assertResponseIsSuccessful();
+        self::assertSelectorNotExists(sprintf('a[href="%s"]', $photoPath));
+    }
+
+    public function testTheRidePageCountsOnlyVisiblePhotos(): void
+    {
+        $client = static::createClient();
+        $photo = $this->disabledPhotoWithRide();
+        $ride = $photo->getRide();
+        $router = static::getContainer()->get(ObjectRouterInterface::class);
+        $visible = $this->countVisiblePhotos($ride);
+
+        $crawler = $client->request('GET', $router->generate($ride));
+
+        self::assertResponseIsSuccessful();
+        $badge = $crawler->filter(sprintf('a[href="%s"] .badge', $router->generate($ride, 'caldera_criticalmass_photo_ride_list')));
+        self::assertCount(1, $badge, 'Die Tourseite verlinkt die Galerie mit einem Zaehler.');
+        self::assertSame($visible, (int) trim($badge->text()));
     }
 
     public function testTheDisabledPhotoItselfIsRefused(): void
