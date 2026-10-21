@@ -27,7 +27,12 @@
             {% for photo in pagination %}
                 {% set featured = photo.ride.featuredPhoto == photo %}
                 <figure class="cm-card{{ photo.enabled ? '' : ' is-off' }}">
-                    <a href="{{ object_path(photo) }}"><img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="" loading="lazy"></a>
+                    {% set thumb %}<img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" alt="" loading="lazy">{% endset %}
+                    {% if photo.enabled %}
+                        <a href="{{ object_path(photo) }}">{{ thumb }}</a>
+                    {% else %}
+                        {{ thumb }}
+                    {% endif %}
                     <figcaption>
                         <span>
                             {% if photo.exifCreationDate %}{{ photo.exifCreationDate|date('d.m.Y, H:i:s', zone) }}{% endif %}
