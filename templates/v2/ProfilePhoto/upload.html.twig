@@ -18,7 +18,7 @@
         </div>
 
         {{ form_start(profilePhotoForm) }}
-            {{ form_row(profilePhotoForm.imageFile, { label: 'Neues Foto' }) }}
+            {{ form_row(profilePhotoForm.imageFile, { label: 'Neues Foto', attr: { 'aria-label': 'Neues Foto' } }) }}
 
             <div class="cm-btn-row">
                 <a href="{{ path('criticalmass_user_usermanagement') }}" class="cm-btn">Abbrechen</a>

@@ -15,7 +15,7 @@
 
     <section class="cm-card cm-pad cm-acc-form">
         {{ form_start(form, { action: object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride'), attr: { enctype: 'multipart/form-data' } }) }}
-            {{ form_row(form.imageFile, { label: 'Foto' }) }}
+            {{ form_row(form.imageFile, { label: 'Foto', attr: { 'aria-label': 'Foto' } }) }}
 
             <p class="cm-pp-legal">Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte lade keine Fotos hoch, an denen du keine Urheberrechte besitzt.</p>
 

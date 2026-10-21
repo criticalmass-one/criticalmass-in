@@ -81,7 +81,7 @@
             <legend>Einstellungen</legend>
 
             {{ form_row(form.enableBoard, { label: 'Forum für diese Stadt anzeigen' }) }}
-            {{ form_row(form.imageFile, { label: 'Titelbild' }) }}
+            {{ form_row(form.imageFile, { label: 'Titelbild', attr: { 'aria-label': 'Titelbild' } }) }}
         </fieldset>
 
         <div class="cm-form-submit">

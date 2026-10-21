@@ -18,7 +18,7 @@
             {% if ride.imageName %}
                 <img class="cm-tt-preview" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}" alt="">
             {% endif %}
-            {{ form_row(form.imageFile, { label: 'Datei' }) }}
+            {{ form_row(form.imageFile, { label: 'Datei', attr: { 'aria-label': 'Datei' } }) }}
         </fieldset>
 
         <fieldset>
