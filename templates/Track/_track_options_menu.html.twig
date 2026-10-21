@@ -33,9 +33,12 @@
 
         {% if not track.isReviewed %}
             <li>
-                <a class="dropdown-item" href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
-                    <i class="far fa-check me-2"></i>Bestätigen
-                </a>
+                <form method="post" action="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('track_approve_' ~ track.id) }}">
+                    <button type="submit" class="dropdown-item">
+                        <i class="far fa-check me-2"></i>Bestätigen
+                    </button>
+                </form>
             </li>
         {% endif %}
 

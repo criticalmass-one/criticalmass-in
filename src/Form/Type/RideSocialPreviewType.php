@@ -18,7 +18,8 @@ class RideSocialPreviewType extends AbstractType
             ->add('imageFile', VichFileType::class, [ // @TODO use VichImageType after getting liip filters working
                 'required' => false,
                 'allow_delete' => true,
-                'download_uri' => true,
+                'delete_label' => 'Bild entfernen',
+                'download_uri' => false,
             ]);
     }
 

@@ -77,7 +77,9 @@ class CityType extends AbstractType
             )
             ->add('imageFile',
                 VichFileType::class, [
-                    'required' => false
+                    'required' => false,
+                    'download_uri' => false,
+                    'delete_label' => 'Bild entfernen',
                 ]
             )
         ;
