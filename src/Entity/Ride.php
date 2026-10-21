@@ -23,8 +23,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Jsor\Doctrine\PostGIS\Types\PostGISType;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\Ignore;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
@@ -157,7 +158,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     protected Collection $posts;
 
     #[ORM\OneToMany(targetEntity: 'Photo', mappedBy: 'ride', fetch: 'LAZY')]
-    #[Groups(['extended-ride-list', 'ride-details'])]
+    #[Ignore]
     protected Collection $photos;
 
     #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'ride', cascade: ['persist', 'remove'])]
@@ -606,6 +607,21 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     public function getPhotos(): Collection
     {
         return $this->photos;
+    }
+
+    /**
+     * Was die API unter `photos` ausgibt: nur aktive, nicht geloeschte Fotos.
+     * Die Collection selbst traegt keine Gruppe mehr (#1585).
+     *
+     * @return list<Photo>
+     */
+    #[SerializedName('photos')]
+    #[Groups(['extended-ride-list', 'ride-details'])]
+    public function getVisiblePhotos(): array
+    {
+        return $this->photos
+            ->filter(fn (Photo $photo): bool => $photo->isEnabled() && !$photo->isDeleted())
+            ->getValues();
     }
 
     public function addSubride(Subride $subride): Ride
