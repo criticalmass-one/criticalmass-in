@@ -15,7 +15,6 @@
 
     {% if isNew and city.cycles|length > 0 %}
         <section class="cm-card cm-pad cm-form-cycles">
-            <p>Diese Touren werden jeden Monat automatisch angelegt. Schau bitte nach, ob deine Tour schon existiert.</p>
             <ul class="cm-list">
                 {% for cycle in city.cycles %}
                     <li>
@@ -42,8 +41,8 @@
                     {{ form_widget(form.dateTime.time) }}
                 </div>
             </div>
-            {% if form_errors(form.dateTime) %}
-                <div class="invalid-feedback d-block mb-3">{{ form_errors(form.dateTime) }}</div>
+            {% if form.dateTime.vars.errors|length > 0 %}
+                <div class="mb-3">{{ form_errors(form.dateTime) }}</div>
             {% endif %}
 
             <div class="cm-flash d-none mb-3" role="alert" data-ride-date-checker-target="doubleMonthMessage">
