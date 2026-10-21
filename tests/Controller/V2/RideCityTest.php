@@ -7,6 +7,7 @@ use App\Design\DesignChoice;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use App\Entity\Track;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\BrowserKit\Cookie;
@@ -123,6 +124,41 @@ class RideCityTest extends AbstractControllerTestCase
 
         $client->request('GET', $this->path($city));
         self::assertSelectorTextContains('h1', (string) $city->getTitle());
+    }
+
+    public function testCityTrackListShowsMenuForOwner(): void
+    {
+        $client = $this->client();
+        $this->loginAs($client, 'cyclist@criticalmass.in');
+        $city = $this->hamburg();
+
+        $em = $this->entityManager();
+        $track = $em->getRepository(Track::class)->createQueryBuilder('t')
+            ->join('t.ride', 'r')
+            ->where('r.city = :city')
+            ->andWhere('t.username = :username')
+            ->andWhere('t.enabled = true')
+            ->andWhere('t.deleted = false')
+            ->setParameter('city', $city)
+            ->setParameter('username', 'cyclist')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        self::assertInstanceOf(Track::class, $track);
+
+        $track->setReviewed(false);
+        $em->flush();
+
+        try {
+            $client->request('GET', $this->path($city, 'caldera_criticalmass_city_listtracks'));
+
+            self::assertResponseIsSuccessful();
+            self::assertSelectorExists('.cm-acc-menu .dropdown-menu a[href*="/track/range/"]');
+            self::assertSelectorExists('.cm-acc-menu form[method="post"][action$="/approve"] input[name="_token"]');
+        } finally {
+            $track->setReviewed(true);
+            $em->flush();
+        }
     }
 
     public function testRideGalleryAndPhoto(): void

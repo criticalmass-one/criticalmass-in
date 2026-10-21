@@ -1,0 +1,18 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Seite nicht gefunden{% endblock %}
+
+{% block additionalHeaderElements %}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head"><h1>Seite nicht gefunden</h1></div>
+    <div class="cm-card cm-pad">
+        <div class="cm-btn-row">
+            <a class="cm-btn cm-btn-go" href="{{ path('caldera_criticalmass_frontpage') }}">Zur Startseite</a>
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_city_list') }}">Städte</a>
+            <a class="cm-btn" href="{{ path('caldera_criticalmass_search_query') }}">Suche</a>
+        </div>
+    </div>
+{% endblock %}

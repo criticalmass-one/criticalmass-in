@@ -9,17 +9,15 @@ use Twig\Source;
 /**
  * Liefert in der neuen Ansicht templates/v2/<name>, falls vorhanden.
  *
- * Die alten Layouts sind ausgenommen, damit eine nicht umgestellte Seite nie halb im
- * neuen Rahmen landet.
+ * Der alte Rahmen (Template/ samt seinen Includes) und die Mails sind ausgenommen,
+ * damit eine nicht umgestellte Seite nie halb im neuen Rahmen landet; v2 hat v2/Layout.
  */
 class DesignAwareLoader implements LoaderInterface
 {
     public const string PREFIX = 'v2/';
 
     public const array EXCLUDED = [
-        'Template/MasterTemplate.html.twig',
-        'Template/StandardTemplate.html.twig',
-        'Template/FullscreenTemplate.html.twig',
+        'Template/',
         'email/',
     ];
 

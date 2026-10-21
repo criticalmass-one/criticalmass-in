@@ -73,6 +73,6 @@ final class DesignAwareLoaderTest extends TestCase
         self::assertFalse(DesignAwareLoader::isOverridable('Template/MasterTemplate.html.twig'));
         self::assertFalse(DesignAwareLoader::isOverridable('email/forum_post.html.twig'));
         self::assertTrue(DesignAwareLoader::isOverridable('Frontpage/index.html.twig'));
-        self::assertTrue(DesignAwareLoader::isOverridable('Template/Includes/_footer.html.twig'));
+        self::assertFalse(DesignAwareLoader::isOverridable('Template/Includes/_footer.html.twig'));
     }
 }

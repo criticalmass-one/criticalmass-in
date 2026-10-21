@@ -560,15 +560,6 @@
     font-size: .93rem;
     margin-bottom: 5px;
   }
-
-  .form-text {
-    color: var(--cm-dim);
-    font-size: .84rem;
-  }
-
-  fieldset > .form-text:last-child {
-    margin-bottom: 12px;
-  }
 }
 
 .cm-form-row {
@@ -610,13 +601,6 @@
   gap: 10px;
   padding: 14px 18px;
   border-top: 1px solid var(--cm-line);
-}
-
-.cm-form-cycles {
-  p {
-    margin: 0 0 6px;
-    color: var(--cm-text);
-  }
 }
 
 .cm-missing {

@@ -1,7 +1,7 @@
 {% set action %}hat die <a href="{{ object_path(item.ride) }}#post-{{ item.post.id }}">{{ item.rideTitle }}</a> kommentiert{% endset %}
 <article class="cm-card cm-post{% if not item.rideEnabled %} cm-post-disabled{% endif %}">
-    {% set where %}{% include 'Timeline/_includes/ride_when.html.twig' with { ride: item.ride } %}{% endset %}
-    {% include 'Timeline/_includes/head.html.twig' with { action: action, where: where } %}
+    {% set where %}{% include 'v2/Timeline/_includes/ride_when.html.twig' with { ride: item.ride } %}{% endset %}
+    {% include 'v2/Timeline/_includes/head.html.twig' with { action: action, where: where } %}
 
     <p class="cm-post-text">{{ item.post.text|slice(0, 400) }}{% if item.post.text|length > 400 %}…{% endif %}</p>
 </article>

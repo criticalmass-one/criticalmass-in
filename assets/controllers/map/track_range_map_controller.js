@@ -17,23 +17,45 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.min.css';
 /* stimulusFetch: 'lazy' */
 export default class extends BaseMapController {
     connect() {
-        super.connect();
+        // Der Schieberegler muss auch dann bedienbar sein, wenn die Karte nicht
+        // startet (fehlende Kacheln, WebGL aus): erst die Punkte, dann die Karte.
+        if (!this.readLatLngs()) {
+            return;
+        }
 
-        this.initTrackRange();
+        try {
+            super.connect();
+            this.initTrackRange();
+        } catch (error) {
+            console.warn('[track-range] Karte konnte nicht gestartet werden', error);
+        }
+
+        this.initSlider();
     }
 
-    initTrackRange() {
+    readLatLngs() {
         const latLngInput = document.getElementById('track_range_latLngList');
 
         if (!latLngInput) {
             console.warn('[track-range] #track_range_latLngList nicht gefunden');
 
-            return;
+            return false;
         }
 
-        this.latLngList = JSON.parse(latLngInput.value);
+        try {
+            this.latLngList = JSON.parse(latLngInput.value);
+        } catch (error) {
+            console.warn('[track-range] Punkte in #track_range_latLngList sind kein JSON', error);
+
+            return false;
+        }
+
         this.currentLatLngs = this.latLngList.slice();
 
+        return true;
+    }
+
+    initTrackRange() {
         this.trackLayer = L.polyline(this.latLngList, {
             color: 'red',
             weight: 4
@@ -42,8 +64,6 @@ export default class extends BaseMapController {
         this.fitTo(this.trackLayer);
 
         this.dispatchPolylineAdd(this.encodeLatLngs(this.latLngList));
-
-        this.initSlider();
     }
 
     initSlider() {
@@ -104,7 +124,9 @@ export default class extends BaseMapController {
 
             newLatLngs.splice(croppedEnd / 10, (newLatLngs.length - croppedEnd / 10) + 1);
 
-            this.trackLayer.setLatLngs(newLatLngs);
+            if (this.trackLayer) {
+                this.trackLayer.setLatLngs(newLatLngs);
+            }
 
             this.dispatchPolylineUpdate(this.encodeLatLngs(newLatLngs));
         });

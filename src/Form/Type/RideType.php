@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Ride;
+use App\Enum\RideTypeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -46,7 +47,8 @@ class RideType extends AbstractType
             ->add('latitude', HiddenType::class, ['required' => false])
             ->add('longitude', HiddenType::class, ['required' => false])
             ->add('rideType', EnumType::class, [
-                'class' => \App\Enum\RideTypeEnum::class,
+                'class' => RideTypeEnum::class,
+                'choice_label' => static fn (RideTypeEnum $t) => $t->label(),
                 'required' => true,
             ]);
 

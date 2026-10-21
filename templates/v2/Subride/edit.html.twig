@@ -1,0 +1,54 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{# Der Controller übergibt beim Bearbeiten teils subride = null, deshalb am Formular ablesen #}
+{% set isNew = form.vars.value.id is null %}
+{% set title = isNew ? 'Mini-Mass eintragen' : 'Mini-Mass bearbeiten' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ object_path(city) }}">{{ city.city }}</a> / <a href="{{ object_path(ride) }}">{{ ride.title }}</a>
+        </div>
+        <h1>{{ title }}</h1>
+    </div>
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form' } }) }}
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>Mini-Mass</legend>
+            {{ form_row(form.title, { label: 'Titel' }) }}
+            <div class="cm-form-row">
+                <div class="mb-3">
+                    <label class="form-label">Datum</label>
+                    <div class="form-control cm-tt-static">{{ ride.dateTime|format_datetime(pattern="d. MMMM yyyy", timezone=city.timezone) }}</div>
+                </div>
+                {{ form_row(form.time, { label: 'Uhrzeit' }) }}
+            </div>
+            {{ form_row(form.description, { label: 'Beschreibung', attr: { rows: 4 } }) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>Treffpunkt</legend>
+            {{ form_row(form.location, { label: 'Bezeichnung' }) }}
+
+            <div class="cm-form-map"
+                 data-controller="map--form-map"
+                 data-map--form-map-center-latitude-value="{{ form.latitude.vars.value ?: ride.latitude ?: city.latitude }}"
+                 data-map--form-map-center-longitude-value="{{ form.longitude.vars.value ?: ride.longitude ?: city.longitude }}"
+                 data-map--form-map-zoom-value="13"
+                 data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                 data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                 data-map--form-map-marker-color-value="green"></div>
+            {{ form_widget(form.latitude) }}
+            {{ form_widget(form.longitude) }}
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ object_path(ride) }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go">Speichern</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

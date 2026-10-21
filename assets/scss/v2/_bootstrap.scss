@@ -28,6 +28,10 @@ $box-shadow-sm: none;
 
 $btn-font-weight: 600;
 $input-border-color: $cm-line;
+// Deaktivierte Felder (Turnus-Formular) sichtbar vom Rest absetzen.
+$input-disabled-bg: $cm-hover;
+$input-disabled-color: $cm-dim;
+$input-disabled-border-color: $cm-line;
 $card-border-color: $cm-line;
 $card-border-radius: $cm-r;
 $card-cap-bg: $cm-card;
@@ -68,3 +72,8 @@ $breadcrumb-divider: quote("/");
 @import "../../../node_modules/bootstrap/scss/spinners";
 @import "../../../node_modules/bootstrap/scss/helpers";
 @import "../../../node_modules/bootstrap/scss/utilities/api";
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+}

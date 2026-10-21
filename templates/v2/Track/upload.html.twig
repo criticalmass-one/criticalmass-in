@@ -1,0 +1,37 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% set zone = ride.city.timezone %}
+
+{% block title %}Track hochladen{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a> / <a href="{{ object_path(ride) }}">{{ ride.title }}</a>
+        </div>
+        <h1>Track hochladen</h1>
+        <p>{{ ride.city.title }}, {{ ride.dateTime|format_datetime(pattern="EEEE, d. MMMM yyyy", timezone=zone) }}</p>
+    </div>
+
+    {{ form_start(form, { attr: { class: 'cm-card cm-form', id: 'track-upload-form' } }) }}
+        <fieldset>
+            {% if errorMessage %}
+                <div class="cm-flash cm-flash-error" role="alert"><span><b>Hochladen fehlgeschlagen.</b> {{ errorMessage }}</span></div>
+            {% endif %}
+
+            {{ form_row(form.trackFile, { label: 'GPX- oder FIT-Datei', attr: { accept: '.gpx,.fit' } }) }}
+        </fieldset>
+
+        <div class="cm-form-submit">
+            <a class="cm-btn" href="{{ object_path(ride) }}">Abbrechen</a>
+            <button type="submit" class="cm-btn cm-btn-go"
+                    data-controller="submit-disabler"
+                    data-action="click->submit-disabler#disable"
+                    data-submit-disabler-message-value="Bitte warten…">Hochladen</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}

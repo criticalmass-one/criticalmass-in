@@ -8,8 +8,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="form-label">Grund</p>
-                    {{ form_widget(disableForm.disabledReason) }}
+                    <fieldset>
+                        <legend class="form-label">Grund</legend>
+                        {{ form_widget(disableForm.disabledReason) }}
+                        {{ form_errors(disableForm.disabledReason) }}
+                    </fieldset>
                     <label class="form-label mt-3" for="{{ disableForm.disabledReasonMessage.vars.id }}">Kommentar (optional)</label>
                     {{ form_widget(disableForm.disabledReasonMessage, { 'attr': { 'class': 'form-control', 'rows': 3 } }) }}
                 </div>

@@ -15,7 +15,6 @@
 
     {% if isNew and city.cycles|length > 0 %}
         <section class="cm-card cm-pad cm-form-cycles">
-            <p>Diese Touren werden jeden Monat automatisch angelegt. Schau bitte nach, ob deine Tour schon existiert.</p>
             <ul class="cm-list">
                 {% for cycle in city.cycles %}
                     <li>
@@ -42,8 +41,8 @@
                     {{ form_widget(form.dateTime.time) }}
                 </div>
             </div>
-            {% if form_errors(form.dateTime) %}
-                <div class="invalid-feedback d-block mb-3">{{ form_errors(form.dateTime) }}</div>
+            {% if form.dateTime.vars.errors|length > 0 %}
+                <div class="mb-3">{{ form_errors(form.dateTime) }}</div>
             {% endif %}
 
             <div class="cm-flash d-none mb-3" role="alert" data-ride-date-checker-target="doubleMonthMessage">
@@ -54,16 +53,7 @@
             </div>
 
             <div class="cm-form-row">
-                <div class="mb-3">
-                    {{ form_label(form.rideType, 'Art der Tour') }}
-                    <select id="{{ form.rideType.vars.id }}" name="{{ form.rideType.vars.full_name }}" class="form-select" required>
-                        {% for choice in form.rideType.vars.choices %}
-                            <option value="{{ choice.value }}"{% if choice is selectedchoice(form.rideType.vars.value) %} selected{% endif %}>{{ choice.data.label }}</option>
-                        {% endfor %}
-                    </select>
-                    {{ form_errors(form.rideType) }}
-                    {% do form.rideType.setRendered() %}
-                </div>
+                {{ form_row(form.rideType, { label: 'Art der Tour' }) }}
                 {{ form_row(form.title, { label: 'Titel' }) }}
             </div>
 
@@ -92,7 +82,6 @@
                         <svg width="16" height="16" aria-hidden="true"><use href="#i-search"/></svg>
                     </button>
                 </div>
-                <div class="form-text">Ein Name, den auch Ortsfremde verstehen, ohne Wegbeschreibung. Leer lassen, wenn der Treffpunkt noch nicht feststeht.</div>
             </div>
 
             <div class="cm-form-map"
@@ -114,7 +103,6 @@
         <fieldset>
             <legend>Beschreibung</legend>
             {{ form_widget(form.description, { attr: { rows: 5, 'aria-label': 'Beschreibung' } }) }}
-            <div class="form-text">Nur was diese eine Tour betrifft. Alles Allgemeine gehört in die Beschreibung der Stadt.</div>
         </fieldset>
 
         <div class="cm-form-submit">

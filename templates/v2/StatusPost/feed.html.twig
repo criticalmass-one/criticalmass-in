@@ -1,0 +1,14 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Beiträge aus den Städten{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <h1>Beiträge</h1>
+    </div>
+
+    {% include 'v2/StatusPost/_list.html.twig' with {
+        posts: posts,
+        emptyText: 'Bislang hat noch niemand etwas geschrieben.'
+    } %}
+{% endblock %}

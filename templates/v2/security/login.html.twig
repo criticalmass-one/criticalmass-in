@@ -3,7 +3,7 @@
 {% block title %}Anmelden{% endblock %}
 
 {% block content %}
-    {% include 'security/_icons.html.twig' %}
+    {% include 'v2/security/_icons.html.twig' %}
 
     <section class="cm-card cm-login">
         <h1>Anmelden</h1>
@@ -23,7 +23,7 @@
         </div>
 
         {{ form_start(login_form) }}
-            {{ form_row(login_form.email) }}
+            {{ form_row(login_form.email, { help: null }) }}
             {{ form_row(login_form.remember_me, { help: null }) }}
             <div class="frc-captcha" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
             <button type="submit" class="cm-big cm-big-line" id="{{ login_form.submit.vars.id }}" name="{{ login_form.submit.vars.full_name }}">

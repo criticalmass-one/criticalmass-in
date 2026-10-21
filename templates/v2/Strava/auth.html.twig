@@ -1,0 +1,25 @@
+{% extends 'v2/Layout/standard.html.twig' %}
+
+{% block title %}Track von Strava importieren{% endblock %}
+
+{% block content %}
+    <div class="cm-page-head">
+        <div class="cm-crumb">
+            <a href="{{ object_path(ride.city) }}">{{ ride.city.city }}</a> / <a href="{{ object_path(ride) }}">{{ ride.title }}</a>
+        </div>
+        <h1>Track von Strava importieren</h1>
+    </div>
+
+    <section class="cm-card cm-pad cm-tt-strava">
+        <p>Strava fragt dich, ob criticalmass.in dein Profil und deine Aktivitäten lesen darf, auch die privaten. Danach siehst du hier deine Radtouren vom {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }} und wählst eine zum Importieren aus. Auf andere Aktivitäten oder dein Profil greifen wir nicht weiter zu.</p>
+
+        <div class="cm-btn-row">
+            <a class="cm-strava-connect" href="{{ authorizationUrl }}"><span class="visually-hidden">Connect with Strava</span></a>
+            <a class="cm-btn" href="{{ object_path(ride) }}">Abbrechen</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block rail %}
+    {% include 'v2/ProfileManagement/_rail.html.twig' %}
+{% endblock %}
