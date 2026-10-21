@@ -23,10 +23,10 @@
         {{ form_errors(form) }}
 
         {{ form_row(form.reason) }}
-        {{ form_row(form.explanation) }}
+        {{ form_row(form.explanation, { help: null }) }}
 
         {% if form.reporterEmail is defined %}
-            {{ form_row(form.reporterEmail) }}
+            {{ form_row(form.reporterEmail, { help: null }) }}
         {% endif %}
 
         {{ form_row(form.goodFaith) }}
