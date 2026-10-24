@@ -52,7 +52,10 @@ class RideRepositoryDisabledRidesTest extends KernelTestCase
 
     private function getRepository(): RideRepository
     {
-        return $this->entityManager->getRepository(Ride::class);
+        $repository = $this->entityManager->getRepository(Ride::class);
+        $this->assertInstanceOf(RideRepository::class, $repository);
+
+        return $repository;
     }
 
     public function testCurrentRideSkipsDisabledRide(): void
