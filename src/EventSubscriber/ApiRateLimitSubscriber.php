@@ -7,7 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Target;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 /**
  * Drosselt schreibende Zugriffe (POST/PUT/PATCH/DELETE) auf die anonyme
@@ -31,8 +32,8 @@ final class ApiRateLimitSubscriber implements EventSubscriberInterface
     public const TOKEN_HEADER = 'X-Criticalmass-Token';
 
     public function __construct(
-        private readonly RateLimiterFactory $apiWriteLimiter,
-        private readonly RateLimiterFactory $apiWriteTrustedLimiter,
+        #[Target] private readonly RateLimiterFactoryInterface $apiWriteLimiter,
+        #[Target] private readonly RateLimiterFactoryInterface $apiWriteTrustedLimiter,
         private readonly string $eigenerDienstToken = '',
     ) {
     }

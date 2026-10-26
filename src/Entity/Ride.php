@@ -23,8 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Jsor\Doctrine\PostGIS\Types\PostGISType;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
@@ -202,7 +202,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
     protected ?bool $restrictedPhotoAccess = false;
 
     #[ORM\OneToMany(targetEntity: 'Weather', mappedBy: 'ride', fetch: 'LAZY')]
-    #[ORM\OrderBy(['creationDateTime' => 'DESC'])]
+    #[ORM\OrderBy(['creationDateTime' => \SortDirection::Descending])]
     #[Ignore]
     protected Collection $weathers;
 
@@ -632,7 +632,7 @@ class Ride implements ParticipateableInterface, PhotoInterface, RouteableInterfa
         $totalMinutes = $this->estimatedDuration * 60.0;
 
         $hours = floor($totalMinutes / 60.0);
-        $minutes = $totalMinutes % 60.0;
+        $minutes = ((int) $totalMinutes) % 60;
 
         return new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
     }

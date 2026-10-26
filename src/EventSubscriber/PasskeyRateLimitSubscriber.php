@@ -6,7 +6,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Target;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 /**
  * Drosselt die vier Passkey-Endpunkte pro Client-IP. Die echte IP setzt trusted_proxies
@@ -24,7 +25,7 @@ use Symfony\Component\RateLimiter\RateLimiterFactory;
 final class PasskeyRateLimitSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly RateLimiterFactory $passkeyLimiter,
+        #[Target] private readonly RateLimiterFactoryInterface $passkeyLimiter,
     ) {
     }
 

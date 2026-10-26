@@ -15,7 +15,7 @@ class UserRoleCommandTest extends KernelTestCase
     /**
      * @param array<string, mixed> $input
      */
-    private function runCommand(array $input): CommandTester
+    private function runUserRoleCommand(array $input): CommandTester
     {
         $tester = new CommandTester((new Application(static::bootKernel()))->find('criticalmass:user:role'));
         $tester->execute($input);
@@ -33,9 +33,9 @@ class UserRoleCommandTest extends KernelTestCase
 
     public function testGrantsAndRevokesARoleByEmail(): void
     {
-        $this->runCommand(['user' => self::EMAIL, '--revoke' => true]);
+        $this->runUserRoleCommand(['user' => self::EMAIL, '--revoke' => true]);
 
-        $tester = $this->runCommand(['user' => self::EMAIL]);
+        $tester = $this->runUserRoleCommand(['user' => self::EMAIL]);
 
         self::assertSame(Command::SUCCESS, $tester->getStatusCode());
         self::assertTrue($this->user()->hasRole('ROLE_ADMIN'));
@@ -43,7 +43,7 @@ class UserRoleCommandTest extends KernelTestCase
         // Was schon da war, bleibt; ROLE_USER wird nie gespeichert.
         self::assertContains('ROLE_PHOTO_DOWNLOAD', $this->user()->getRoles());
 
-        $this->runCommand(['user' => self::EMAIL, '--revoke' => true]);
+        $this->runUserRoleCommand(['user' => self::EMAIL, '--revoke' => true]);
 
         self::assertFalse($this->user()->hasRole('ROLE_ADMIN'));
         self::assertContains('ROLE_PHOTO_DOWNLOAD', $this->user()->getRoles());
@@ -51,20 +51,20 @@ class UserRoleCommandTest extends KernelTestCase
 
     public function testFindsUsersById(): void
     {
-        $this->runCommand(['user' => self::EMAIL, '--revoke' => true]);
+        $this->runUserRoleCommand(['user' => self::EMAIL, '--revoke' => true]);
 
-        $tester = $this->runCommand(['user' => (string) $this->user()->getId(), 'role' => 'role_admin']);
+        $tester = $this->runUserRoleCommand(['user' => (string) $this->user()->getId(), 'role' => 'role_admin']);
 
         self::assertSame(Command::SUCCESS, $tester->getStatusCode());
         self::assertTrue($this->user()->hasRole('ROLE_ADMIN'));
 
-        $this->runCommand(['user' => self::EMAIL, '--revoke' => true]);
+        $this->runUserRoleCommand(['user' => self::EMAIL, '--revoke' => true]);
     }
 
     public function testRejectsUnknownUsersAndRoleUser(): void
     {
-        self::assertSame(Command::FAILURE, $this->runCommand(['user' => 'niemand@example.org'])->getStatusCode());
-        self::assertSame(Command::INVALID, $this->runCommand(['user' => self::EMAIL, 'role' => 'ROLE_USER'])->getStatusCode());
-        self::assertSame(Command::INVALID, $this->runCommand(['user' => self::EMAIL, 'role' => 'ADMIN'])->getStatusCode());
+        self::assertSame(Command::FAILURE, $this->runUserRoleCommand(['user' => 'niemand@example.org'])->getStatusCode());
+        self::assertSame(Command::INVALID, $this->runUserRoleCommand(['user' => self::EMAIL, 'role' => 'ROLE_USER'])->getStatusCode());
+        self::assertSame(Command::INVALID, $this->runUserRoleCommand(['user' => self::EMAIL, 'role' => 'ADMIN'])->getStatusCode());
     }
 }

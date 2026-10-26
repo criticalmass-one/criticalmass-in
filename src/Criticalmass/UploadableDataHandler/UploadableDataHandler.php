@@ -3,7 +3,7 @@
 namespace App\Criticalmass\UploadableDataHandler;
 
 use InvalidArgumentException;
-use Vich\UploaderBundle\Mapping\PropertyMapping;
+use Vich\UploaderBundle\Mapping\PropertyMappingInterface;
 
 class UploadableDataHandler extends AbstractUploadableDataHandler
 {
@@ -17,7 +17,7 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
     {
         $mappingList = $this->propertyMappingFactory->fromObject($entity);
 
-        /** @var PropertyMapping $mapping */
+        /** @var PropertyMappingInterface $mapping */
         foreach ($mappingList as $mapping) {
             $filename = $this->getFilename($mapping, $entity);
 
@@ -51,7 +51,7 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
 
         $list = [];
 
-        /** @var PropertyMapping $mapping */
+        /** @var PropertyMappingInterface $mapping */
         foreach ($mappingList as $mapping) {
             $list[] = $mapping->getFileNamePropertyName();
         }
@@ -59,12 +59,12 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
         return $list;
     }
 
-    protected function getFilenameGetMethod(PropertyMapping $propertyMapping): string
+    protected function getFilenameGetMethod(PropertyMappingInterface $propertyMapping): string
     {
         return sprintf('get%s', ucfirst($propertyMapping->getFileNamePropertyName()));
     }
 
-    protected function getFilename(PropertyMapping $propertyMapping, UploadableEntity $entity): ?string
+    protected function getFilename(PropertyMappingInterface $propertyMapping, UploadableEntity $entity): ?string
     {
         $getFilenameMethod = $this->getFilenameGetMethod($propertyMapping);
 

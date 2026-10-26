@@ -26,7 +26,7 @@ class WarmFeedsCacheCommandTest extends TestCase
         $this->profileRepository = $this->createMock(SocialNetworkProfileRepository::class);
 
         $application = new Application();
-        $application->add(new WarmFeedsCacheCommand($this->feedItemProvider, $this->profileRepository));
+        $application->addCommand(new WarmFeedsCacheCommand($this->feedItemProvider, $this->profileRepository));
 
         $this->commandTester = new CommandTester($application->find('criticalmass:social-network:warm-feeds-cache'));
     }

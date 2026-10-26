@@ -8,6 +8,7 @@ use League\Bundle\OAuth2ServerBundle\ValueObject\Grant;
 use League\Bundle\OAuth2ServerBundle\ValueObject\Scope;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 /**
  * Verifiziert die OAuth2-Resource-Server-Firewall auf `^/mcp`:
@@ -47,7 +48,7 @@ final class McpResourceServerTest extends WebTestCase
         /** @var ClientManagerInterface $clientManager */
         $clientManager = static::getContainer()->get(ClientManagerInterface::class);
 
-        $oauthClient = new Client('MCP Resource PoC', 'mcp-resource-poc', 'poc-secret');
+        $oauthClient = new Client('MCP Resource PoC', 'mcp-resource-poc', self::hashedSecret('poc-secret'));
         $oauthClient->setActive(true);
         $oauthClient->setGrants(new Grant('client_credentials'));
         $oauthClient->setScopes(new Scope('ride:read'));
@@ -68,5 +69,15 @@ final class McpResourceServerTest extends WebTestCase
         self::assertIsArray($payload);
 
         return (string) $payload['access_token'];
+    }
+
+    // Seit league/oauth2-server-bundle 2.0 liegen Client-Secrets nur noch gehasht vor;
+    // ein Klartext-Secret wird beim Token-Request nicht mehr akzeptiert.
+    private static function hashedSecret(string $secret): string
+    {
+        /** @var PasswordHasherInterface $hasher */
+        $hasher = static::getContainer()->get('league.oauth2_server.password_hasher');
+
+        return $hasher->hash($secret);
     }
 }

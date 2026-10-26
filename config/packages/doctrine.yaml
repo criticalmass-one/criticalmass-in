@@ -13,6 +13,7 @@ doctrine:
         # und Kollation waren ohnehin MySQL-eigen; DBAL setzt fuer MySQL von
         # sich aus utf8mb4.
         url: '%env(resolve:DATABASE_URL)%'
+        profiling_collect_backtrace: '%kernel.debug%'
 
         types:
             datetime: App\DBAL\Type\UTCDateTimeType
@@ -37,7 +38,6 @@ doctrine:
             _text: string
 
     orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.default
         auto_mapping: true
         mappings:

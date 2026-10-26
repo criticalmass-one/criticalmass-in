@@ -37,7 +37,7 @@ class PurgePhotoImportCandidatesCommandTest extends TestCase
         $command = new PurgePhotoImportCandidatesCommand($this->registry, $this->filesystem);
 
         $application = new Application();
-        $application->add($command);
+        $application->addCommand($command);
 
         $this->commandTester = new CommandTester($application->find('criticalmass:photos:purge-import-candidates'));
     }

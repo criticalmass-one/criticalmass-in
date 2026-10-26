@@ -33,7 +33,7 @@ class RideEstimateConverterTest extends TestCase
         $registry
             ->expects($this->exactly(2))
             ->method('getManager')
-            ->will($this->returnValue($manager));
+            ->willReturn($manager);
 
         $converter = new RideEstimateConverter($registry);
 

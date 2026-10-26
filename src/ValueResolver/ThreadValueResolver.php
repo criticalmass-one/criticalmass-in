@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ThreadValueResolver implements ValueResolverInterface
 {
+    use RequestParameterTrait;
+
     public function __construct(
         private readonly ManagerRegistry $registry
     ) {
@@ -24,7 +26,7 @@ class ThreadValueResolver implements ValueResolverInterface
             return [];
         }
 
-        $thread = $this->registry->getRepository(Thread::class)->findOneBySlug($request->get('threadSlug'));
+        $thread = $this->registry->getRepository(Thread::class)->findOneBySlug($this->getRequestParameter($request, 'threadSlug'));
 
         if (!$thread && !$argument->isNullable()) {
             throw new NotFoundHttpException('Thead not found');

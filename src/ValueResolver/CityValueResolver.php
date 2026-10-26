@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CityValueResolver implements ValueResolverInterface
 {
+    use RequestParameterTrait;
+
     public function __construct(
         private readonly ManagerRegistry $registry
     ) {
@@ -27,7 +29,7 @@ class CityValueResolver implements ValueResolverInterface
         }
 
         $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug(
-            $request->get('citySlug')
+            $this->getRequestParameter($request, 'citySlug')
         );
 
         if (!$citySlug && $argument->isNullable()) {

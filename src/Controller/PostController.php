@@ -26,7 +26,8 @@ use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Target;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -38,7 +39,7 @@ class PostController extends AbstractController
         private readonly ForumNotifier $forumNotifier,
         private readonly ForumSubscriptionRepository $subscriptionRepository,
         private readonly FeatureManagerInterface $featureManager,
-        private readonly RateLimiterFactory $statusPostLimiter
+        #[Target] private readonly RateLimiterFactoryInterface $statusPostLimiter
     ) {
         parent::__construct($managerRegistry);
     }

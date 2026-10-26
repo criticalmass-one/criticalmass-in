@@ -5,9 +5,7 @@ namespace App\Validator\Constraint;
 use App\Validator\ExecutorDateTimeValidator;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class ExecutorDateTime extends Constraint
 {
     public $message = 'Das Startdatum muss vor dem Enddatum liegen';

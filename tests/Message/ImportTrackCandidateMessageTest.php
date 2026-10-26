@@ -3,6 +3,7 @@
 namespace Tests\Message;
 
 use App\Message\ImportTrackCandidateMessage;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ImportTrackCandidateMessageTest extends TestCase
@@ -111,9 +112,7 @@ class ImportTrackCandidateMessageTest extends TestCase
         $this->assertSame('Test', $message->getName());
     }
 
-    /**
-     * @dataProvider activityTypeProvider
-     */
+    #[DataProvider('activityTypeProvider')]
     public function testDifferentActivityTypes(string $type): void
     {
         $message = new ImportTrackCandidateMessage(

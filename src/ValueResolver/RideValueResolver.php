@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RideValueResolver implements ValueResolverInterface
 {
+    use RequestParameterTrait;
+
     public function __construct(
         private readonly ManagerRegistry $registry
     ) {
@@ -53,14 +55,14 @@ class RideValueResolver implements ValueResolverInterface
 
     private function findRideById(Request $request): ?Ride
     {
-        $rideId = $request->get('rideId');
+        $rideId = $this->getRequestParameter($request, 'rideId');
         return $rideId ? $this->registry->getRepository(Ride::class)->find($rideId) : null;
     }
 
     private function findRideBySlugs(Request $request): ?Ride
     {
-        $citySlug = $request->get('citySlug');
-        $rideIdentifier = $request->get('rideIdentifier');
+        $citySlug = $this->getRequestParameter($request, 'citySlug');
+        $rideIdentifier = $this->getRequestParameter($request, 'rideIdentifier');
 
         if (!$citySlug || !$rideIdentifier) {
             return null;

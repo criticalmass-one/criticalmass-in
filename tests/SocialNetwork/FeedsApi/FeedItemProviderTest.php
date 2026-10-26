@@ -37,7 +37,7 @@ class FeedItemProviderTest extends TestCase
 
         $this->profileRepository = $this->getMockBuilder(SocialNetworkProfileRepository::class)
             ->disableOriginalConstructor()
-            ->addMethods(['findByCity'])
+            ->onlyMethods(['findByCity'])
             ->getMock();
 
         $this->provider = new FeedItemProvider(
