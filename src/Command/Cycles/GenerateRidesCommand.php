@@ -5,7 +5,7 @@ namespace App\Command\Cycles;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,7 +25,7 @@ class GenerateRidesCommand extends Command
     private string $rideGeneratorBaseUrl;
 
     public function __construct(
-        private readonly ManagerRegistry $registry,
+        private readonly EntityManagerInterface $entityManager,
         private readonly HttpClientInterface $httpClient,
         private readonly SerializerInterface $serializer,
         private readonly ValidatorInterface $validator,
@@ -125,7 +125,7 @@ class GenerateRidesCommand extends Command
                 }
 
                 if (!$dryRun) {
-                    $this->registry->getManager()->persist($ride);
+                    $this->entityManager->persist($ride);
                 }
 
                 ++$created;
@@ -135,7 +135,7 @@ class GenerateRidesCommand extends Command
             // the database, so rides of the previous city have to be written before the next
             // city is validated.
             if (!$dryRun && $created > 0) {
-                $this->registry->getManager()->flush();
+                $this->entityManager->flush();
             }
 
             $createdCount += $created;
@@ -189,7 +189,7 @@ class GenerateRidesCommand extends Command
      */
     private function fetchCities(?string $citySlug, \DateTime $fromDate, \DateTime $untilDate): array
     {
-        $queryBuilder = $this->registry->getManager()->createQueryBuilder()
+        $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('city')
             ->from(City::class, 'city')
             ->join(CityCycle::class, 'cycle', 'WITH', 'cycle.city = city')
@@ -241,7 +241,7 @@ class GenerateRidesCommand extends Command
 
         foreach ($rideList as $index => $ride) {
             $cycleId = $rawRideList[$index]['cycle']['id'] ?? null;
-            $cycle = $cycleId ? $this->registry->getRepository(CityCycle::class)->find($cycleId) : null;
+            $cycle = $cycleId ? $this->entityManager->getRepository(CityCycle::class)->find($cycleId) : null;
 
             $result[] = [$ride, $cycle];
         }
