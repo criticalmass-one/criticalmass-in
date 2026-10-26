@@ -21,6 +21,7 @@ class TrackTimeController extends AbstractController
     #[IsGranted('edit', 'track')]
     #[Route(
         '/track/time/{id}',
+        requirements: ['id' => '\d+'],
         name: 'caldera_criticalmass_track_time',
         priority: 270
     )]

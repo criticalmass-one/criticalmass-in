@@ -1,0 +1,28 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Was gibt’s Neues?{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.active('Neues aus den Städten') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+        <div class="mb-4">
+            <h1 class="h3 mb-1">
+                <i class="far fa-comments text-muted me-2"></i>
+                Was gibt’s Neues?
+            </h1>
+            <p class="text-muted mb-0">
+                Beiträge aus allen Städten. Selbst schreiben kannst du auf der Seite deiner Stadt.
+            </p>
+        </div>
+
+        {{ include('StatusPost/_list.html.twig', {
+            'emptyText': 'Bislang hat noch niemand etwas geschrieben.'
+        }) }}
+    </div>
+{% endblock %}

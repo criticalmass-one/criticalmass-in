@@ -6,7 +6,10 @@ use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
+use App\Entity\User;
+use App\Enum\PostKindEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 class PostRepository extends ServiceEntityRepository
@@ -50,6 +53,82 @@ class PostRepository extends ServiceEntityRepository
         return (int) $query->getSingleScalarResult();
     }
 
+    /**
+     * Statusbeitraege aus allen aktiven Staedten, juengster zuerst — oder nur
+     * die eines Nutzers.
+     */
+    public function queryStatusPosts(?User $user = null): Query
+    {
+        $builder = $this->createQueryBuilder('p')
+            ->join('p.city', 'c')
+            ->addSelect('c')
+            ->where('p.kind = :kind')
+            ->andWhere('p.enabled = true')
+            ->andWhere('c.enabled = true')
+            ->setParameter('kind', PostKindEnum::STATUS)
+            ->orderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.id', 'DESC');
+
+        if (null !== $user) {
+            $builder
+                ->andWhere('p.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        return $builder->getQuery();
+    }
+
+    /**
+     * @return Post[]
+     */
+    public function findForTimelineStatusPostCollector(
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null
+    ): array {
+        $builder = $this->createQueryBuilder('p')
+            ->join('p.city', 'c')
+            ->addSelect('c')
+            ->where('p.kind = :kind')
+            ->andWhere('p.enabled = true')
+            ->andWhere('c.enabled = true')
+            ->setParameter('kind', PostKindEnum::STATUS)
+            ->orderBy('p.dateTime', 'DESC');
+
+        if ($startDateTime) {
+            $builder
+                ->andWhere('p.dateTime >= :startDateTime')
+                ->setParameter('startDateTime', $startDateTime);
+        }
+
+        if ($endDateTime) {
+            $builder
+                ->andWhere('p.dateTime <= :endDateTime')
+                ->setParameter('endDateTime', $endDateTime);
+        }
+
+        return $builder->getQuery()->getResult();
+    }
+
+    /**
+     * Die neuesten Statusbeitraege einer Stadt, juengster zuerst.
+     *
+     * @return Post[]
+     */
+    public function findStatusPostsForCity(City $city, int $limit = 10): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.city = :city')
+            ->andWhere('p.kind = :kind')
+            ->andWhere('p.enabled = true')
+            ->setParameter('city', $city)
+            ->setParameter('kind', PostKindEnum::STATUS)
+            ->orderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getPostsForCityRides(City $city): array
     {
         $builder = $this->createQueryBuilder('p');
@@ -65,7 +144,72 @@ class PostRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findPostsForThread(Thread $thread): array
+    public function countPostsForThread(Thread $thread): int
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('COUNT(p.id)')
+            ->where($builder->expr()->eq('p.thread', ':thread'))
+            ->setParameter('thread', $thread)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true);
+
+        return (int) $builder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Sucht in Forenbeitraegen: im Text des Beitrags und im Titel seines Themas.
+     *
+     * LIKE statt Volltextindex — dasselbe Verfahren wie die vorhandene Seitensuche.
+     * Fuer die Groessenordnung dieses Forums reicht das; ein FULLTEXT-Index waere der
+     * naechste Schritt, wenn die Beitragszahl das noetig macht.
+     */
+    /**
+     * Die Forenbeitraege eines Nutzers, juengste zuerst.
+     */
+    public function queryForumPostsByUser(User $user): Query
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->innerJoin('p.thread', 't')
+            ->where($builder->expr()->eq('p.user', ':user'))
+            ->setParameter('user', $user)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->orderBy('p.dateTime', 'DESC');
+
+        return $builder->getQuery();
+    }
+
+    public function querySearchInForum(string $term): Query
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->innerJoin('p.thread', 't')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            // Beide Seiten kleingeschrieben: PostgreSQL vergleicht LIKE anders als
+            // MySQL schreibungsempfindlich, eine Suche nach "fahrrad" faende dort
+            // kein "Fahrrad".
+            ->andWhere($builder->expr()->orX(
+                $builder->expr()->like('LOWER(p.text)', ':term'),
+                $builder->expr()->like('LOWER(t.title)', ':term')
+            ))
+            // % und _ sind LIKE-Platzhalter: "100%" wuerde sonst jeden Beitrag treffen.
+            ->setParameter('term', '%' . addcslashes(mb_strtolower($term), '%_\\') . '%')
+            ->orderBy('p.dateTime', 'DESC');
+
+        return $builder->getQuery();
+    }
+
+    public function findLatestPostForThread(Thread $thread, ?Post $exclude = null): ?Post
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -75,11 +219,78 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('thread', $thread)
             ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->addOrderBy('p.dateTime', 'ASC');
+            ->orderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->setMaxResults(1);
 
-        $query = $builder->getQuery();
+        if (null !== $exclude && null !== $exclude->getId()) {
+            // Wie beim Thema: Der Beitrag wird gerade zurueckgezogen, steht aber noch
+            // als aktiviert in der Datenbank. Nach where(), das die Klausel ersetzt.
+            $builder
+                ->andWhere($builder->expr()->neq('p.id', ':exclude'))
+                ->setParameter('exclude', $exclude->getId());
+        }
 
-        return $query->getResult();
+        return $builder->getQuery()->getOneOrNullResult();
+    }
+
+    public function findPostsForThread(Thread $thread): array
+    {
+        return $this->queryPostsForThread($thread)->getResult();
+    }
+
+    /**
+     * Die Abfrage statt des Ergebnisses — der Paginator braucht sie, um selbst zu begrenzen.
+     */
+    public function queryPostsForThread(Thread $thread): Query
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.thread', ':thread'))
+            ->setParameter('thread', $thread)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->addOrderBy('p.dateTime', 'ASC')
+            // Gleiche Sekunde: ohne zweites Kriterium ist die Reihenfolge zufaellig,
+            // und die Seitenzahl eines Dauerlinks stimmt dann nicht mehr.
+            ->addOrderBy('p.id', 'ASC');
+
+        return $builder->getQuery();
+    }
+
+    /**
+     * Der wievielte Beitrag eines Themas ist das? Aus der Position folgt die Seite,
+     * auf der ein Dauerlink wie #post-42 tatsaechlich zu finden ist.
+     */
+    public function findPositionInThread(Post $post): int
+    {
+        $thread = $post->getThread();
+
+        if (null === $thread) {
+            return 1;
+        }
+
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('COUNT(p.id)')
+            ->where($builder->expr()->eq('p.thread', ':thread'))
+            ->setParameter('thread', $thread)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->orX(
+                $builder->expr()->lt('p.dateTime', ':dateTime'),
+                $builder->expr()->andX(
+                    $builder->expr()->eq('p.dateTime', ':dateTime'),
+                    $builder->expr()->lte('p.id', ':id')
+                )
+            ))
+            ->setParameter('dateTime', $post->getDateTime())
+            ->setParameter('id', $post->getId());
+
+        return max(1, (int) $builder->getQuery()->getSingleScalarResult());
     }
 
     public function findForTimelineThreadPostCollector(

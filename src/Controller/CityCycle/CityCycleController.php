@@ -26,7 +26,7 @@ class CityCycleController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/{citySlug}/cycles/{id}/list', name: 'caldera_criticalmass_citycycle_ride_list', priority: 80)]
+    #[Route('/{citySlug}/cycles/{id}/list', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_citycycle_ride_list', priority: 80)]
     public function listRidesAction(
         CityCycle $cityCycle,
         ManagerRegistry $registry

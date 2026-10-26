@@ -12,9 +12,12 @@ class DayFunction extends FunctionNode
 {
     private Node|string|null $arg = null;
 
+    /**
+     * EXTRACT gehoert zum SQL-Standard; DAY() kennt nur MySQL.
+     */
     public function getSql(SqlWalker $sqlWalker): string
     {
-        return sprintf('DAY(%s)', $this->arg->dispatch($sqlWalker));
+        return sprintf('EXTRACT(DAY FROM %s)', $this->arg->dispatch($sqlWalker));
     }
 
     public function parse(Parser $parser): void

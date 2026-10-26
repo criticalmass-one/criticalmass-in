@@ -4,6 +4,7 @@ namespace Tests\Controller;
 
 use App\Entity\Post;
 use App\Entity\Ride;
+use App\Enum\PostKindEnum;
 
 class PostControllerTest extends AbstractControllerTestCase
 {
@@ -59,7 +60,7 @@ class PostControllerTest extends AbstractControllerTestCase
         $crawler = $client->request('GET', sprintf('/post/write/ride/%d', $ride->getId()));
 
         $form = $crawler->selectButton('Speichern')->form();
-        $form['post[message]'] = 'Tolle Tour, hat Spaß gemacht!';
+        $form['post[text]'] = 'Tolle Tour, hat Spaß gemacht!';
 
         $client->submit($form);
 
@@ -78,14 +79,15 @@ class PostControllerTest extends AbstractControllerTestCase
         $crawler = $client->request('GET', sprintf('/post/write/ride/%d', $rideId));
 
         $form = $crawler->selectButton('Speichern')->form();
-        $form['post[message]'] = 'Einzigartiger Testkommentar 12345';
+        $form['post[text]'] = 'Einzigartiger Testkommentar 12345';
 
         $client->submit($form);
 
         $em = static::getContainer()->get('doctrine')->getManager();
-        $post = $em->getRepository(Post::class)->findOneBy(['message' => 'Einzigartiger Testkommentar 12345']);
+        $post = $em->getRepository(Post::class)->findOneBy(['text' => 'Einzigartiger Testkommentar 12345']);
 
         $this->assertNotNull($post, 'Post should exist in database after submission');
         $this->assertNotNull($post->getRide(), 'Post should be associated with a ride');
+        $this->assertSame(PostKindEnum::COMMENT, $post->getKind(), 'Comments on a ride stay comments');
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Region;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class CityRepository extends ServiceEntityRepository
@@ -157,7 +158,53 @@ class CityRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public const ACTIVITY_SCORE_THRESHOLD = 0.15;
+    /**
+     * Cities scoring below this are treated as inactive and disappear from
+     * public lists and the frontpage; a NULL score stays visible.
+     *
+     * Set just above zero on purpose. A measured run over all 739 cities
+     * (2026-08-18) produced 695 cities with a score of exactly 0.0 -- no ride
+     * participations, photos, tracks or feed items within six months -- while
+     * the lowest non-zero score was 0.0441. Anything in between therefore hides
+     * exactly the cities with no signal at all, which is what "inactive" is
+     * meant to mean, and leaves the cutoff insensitive to small data shifts.
+     * A higher threshold would also make visibility depend on the social_feed
+     * signal, which is worth up to 0.15 on its own.
+     */
+    public const ACTIVITY_SCORE_THRESHOLD = 0.01;
+
+    /**
+     * So lange gilt eine neu angelegte Stadt nie als inaktiv — genau das
+     * Messfenster des Scores, siehe City::isInactive().
+     */
+    public const ACTIVITY_GRACE_PERIOD = '-6 months';
+
+    public static function activityGraceStart(\DateTimeInterface $now): \DateTimeImmutable
+    {
+        return \DateTimeImmutable::createFromInterface($now)->modify(self::ACTIVITY_GRACE_PERIOD);
+    }
+
+    /**
+     * Schraenkt eine Abfrage auf Staedte ein, die nicht als inaktiv gelten:
+     * Score ab dem Schwellwert, noch kein Score, oder juenger als die
+     * Karenzzeit. Gleiche Regel wie City::isInactive() — beide zusammen aendern.
+     */
+    public static function addActiveCityCondition(QueryBuilder $builder, string $alias): QueryBuilder
+    {
+        // time() statt new DateTime(), damit ClockMock in Tests greift.
+        $now = (new \DateTimeImmutable())->setTimestamp(time());
+
+        return $builder
+            ->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->gte($alias . '.activityScore', ':activityThreshold'),
+                    $builder->expr()->isNull($alias . '.activityScore'),
+                    $builder->expr()->gt($alias . '.createdAt', ':activityGraceStart')
+                )
+            )
+            ->setParameter('activityThreshold', self::ACTIVITY_SCORE_THRESHOLD)
+            ->setParameter('activityGraceStart', \DateTime::createFromImmutable(self::activityGraceStart($now)));
+    }
 
     /** @return list<City> */
     public function findActiveCities(): array
@@ -167,15 +214,10 @@ class CityRepository extends ServiceEntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->eq('c.enabled', ':enabled'))
-            ->andWhere(
-                $builder->expr()->orX(
-                    $builder->expr()->gte('c.activityScore', ':threshold'),
-                    $builder->expr()->isNull('c.activityScore')
-                )
-            )
             ->orderBy('c.city', 'ASC')
-            ->setParameter('enabled', true)
-            ->setParameter('threshold', self::ACTIVITY_SCORE_THRESHOLD);
+            ->setParameter('enabled', true);
+
+        self::addActiveCityCondition($builder, 'c');
 
         $query = $builder->getQuery();
 
@@ -284,6 +326,13 @@ class CityRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Die Staedteliste im Footer, auf jeder Seite.
+     *
+     * Ohne Einwohnerzahl gehoert eine Stadt nicht hierher: PostgreSQL sortiert
+     * NULL bei DESC nach vorn (MySQL nach hinten). Seit dem Umzug standen im
+     * Footer deshalb Nice, Goiânia, Bratislava — 455 Staedte haben keine Zahl.
+     */
     public function findPopularCities(int $limit = 10): array
     {
         $builder = $this->createQueryBuilder('c');
@@ -291,9 +340,12 @@ class CityRepository extends ServiceEntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->andWhere($builder->expr()->gt('c.cityPopulation', 0))
             ->orderBy('c.cityPopulation', 'DESC')
             ->setParameter('enabled', true)
             ->setMaxResults($limit);
+
+        self::addActiveCityCondition($builder, 'c');
 
         $query = $builder->getQuery();
 
@@ -311,19 +363,28 @@ class CityRepository extends ServiceEntityRepository
         $rsm = new ResultSetMappingBuilder($em);
         $rsm->addRootEntityFromClassMetadata(City::class, 'c');
 
+        // ST_DWithin statt einer von Hand geschriebenen Haversine-Formel: Die
+        // Bedingung kann den GiST-Index auf coordinates nutzen, die Formel
+        // konnte das nicht — sie musste jede Zeile anfassen und durchrechnen.
+        //
+        // Ueber geography gerechnet, also auf dem WGS84-Ellipsoid und in Metern;
+        // die alte Formel nahm eine Kugel mit 6371 km Radius an. Die Ergebnisse
+        // weichen dadurch um Bruchteile eines Prozents ab — zugunsten der neuen.
         $sql = <<<SQL
 SELECT c.*
 FROM city c
-WHERE c.enabled = 1
+WHERE c.enabled = true
   AND c.id != :id
-  AND (6371 * acos(
-           cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +
-           sin(radians(:lat)) * sin(radians(c.latitude))
-       )) <= :distance
-ORDER BY (6371 * acos(
-             cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +
-             sin(radians(:lat)) * sin(radians(c.latitude))
-         )) ASC
+  AND c.coordinates IS NOT NULL
+  AND ST_DWithin(
+        c.coordinates::geography,
+        ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography,
+        :meter
+      )
+ORDER BY ST_Distance(
+        c.coordinates::geography,
+        ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography
+      ) ASC
 LIMIT :size
 SQL;
 
@@ -331,7 +392,8 @@ SQL;
         $query->setParameter('lat', $city->getLatitude());
         $query->setParameter('lon', $city->getLongitude());
         $query->setParameter('id', $city->getId());
-        $query->setParameter('distance', $distance);
+        // Die Methode nimmt Kilometer entgegen, ST_DWithin ueber geography Meter.
+        $query->setParameter('meter', $distance * 1000);
         $query->setParameter('size', $size, \Doctrine\DBAL\ParameterType::INTEGER);
 
         return $query->getResult();
@@ -347,12 +409,15 @@ SQL;
         $qb->setParameter('enabled', true);
 
         if ($query !== '') {
+            // Beide Seiten kleingeschrieben vergleichen: MySQL vergleicht mit der
+            // vorgegebenen Kollation ohnehin schreibungsblind, PostgreSQL dagegen
+            // nicht. Ohne LOWER() faende eine Suche nach "hamburg" dort nichts.
             $likeExpr = $expr->orX(
-                $expr->like('c.title', ':q'),
-                $expr->like('c.description', ':q'),
+                $expr->like('LOWER(c.title)', ':q'),
+                $expr->like('LOWER(c.description)', ':q'),
             );
             $conditions[] = $likeExpr;
-            $qb->setParameter('q', '%' . $query . '%');
+            $qb->setParameter('q', '%' . mb_strtolower($query) . '%');
         }
 
         $qb->where(call_user_func_array([$expr, 'andX'], $conditions))

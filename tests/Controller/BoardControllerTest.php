@@ -99,7 +99,7 @@ class BoardControllerTest extends AbstractControllerTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Speichern')->form();
-        $form['post[message]'] = 'Das ist eine Antwort auf das Thema.';
+        $form['post[text]'] = 'Das ist eine Antwort auf das Thema.';
         $client->submit($form);
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());

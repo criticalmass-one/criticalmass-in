@@ -14,8 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Target;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Security\Http\LoginLink\LoginLinkDetails;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
 class LoginController extends AbstractController
@@ -47,8 +49,8 @@ class LoginController extends AbstractController
         LoginLinkHandlerInterface $loginLinkHandler,
         UserRepository $userRepository,
         Request $request,
-        RateLimiterFactory $loginLimiter,
-        RateLimiterFactory $loginEmailLimiter,
+        #[Target] RateLimiterFactoryInterface $loginLimiter,
+        #[Target] RateLimiterFactoryInterface $loginEmailLimiter,
         #[Autowire('%notification.mail.sender_address%')] string $senderAddress
     ): Response {
         $limiter = $loginLimiter->create($request->getClientIp());
@@ -87,6 +89,10 @@ class LoginController extends AbstractController
 
             $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
 
+            if ($data['remember_me'] ?? false) {
+                $loginLinkDetails = $this->rememberLogin($loginLinkDetails);
+            }
+
             // create a notification based on the login link details
             $notification = new CriticalMassLoginLinkNotification(
                 $loginLinkDetails,
@@ -104,6 +110,19 @@ class LoginController extends AbstractController
         }
 
         return $this->redirectToRoute('login');
+    }
+
+    /**
+     * Der Magic Link wird per GET aufgerufen, es gibt also kein Formularfeld mehr, aus
+     * dem die Firewall den Wunsch ablesen könnte. Der Parameter reist deshalb in der
+     * Query des Links mit; consumeLoginLink() wertet nur user, expires und hash aus.
+     */
+    private function rememberLogin(LoginLinkDetails $loginLinkDetails): LoginLinkDetails
+    {
+        $url = $loginLinkDetails->getUrl();
+        $url .= (str_contains($url, '?') ? '&' : '?').'_remember_me=1';
+
+        return new LoginLinkDetails($url, $loginLinkDetails->getExpiresAt());
     }
 
     public function createNewUser(string $email): User

@@ -53,8 +53,8 @@ class StravaMassImportController extends AbstractController
     #[Route('/trackimport/stravatoken', name: 'caldera_criticalmass_trackmassimport_token', priority: 310)]
     public function tokenAction(Request $request, SessionInterface $session, RouterInterface $router, LoggerInterface $logger): Response
     {
-        $error = $request->get('error');
-        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+        $error = $request->query->get('error');
+        $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));
 
         if ($error) {
             $logger->warning('Strava authorization returned an error', ['error' => $error]);
@@ -66,7 +66,7 @@ class StravaMassImportController extends AbstractController
 
         try {
             $token = $oauth->getAccessToken('authorization_code', [
-                'code' => $request->get('code')
+                'code' => $request->query->get('code')
             ]);
 
             $session->set('strava_token', $token);
@@ -85,7 +85,7 @@ class StravaMassImportController extends AbstractController
     #[Route('/trackimport/stravamassimport', name: 'caldera_criticalmass_trackmassimport_massimport', priority: 310)]
     public function massImportAction(Request $request, MassTrackImporterInterface $massTrackImporter): Response
     {
-        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+        $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));
 
         $carbon = Carbon::createFromDate($year);
         $startCarbon = $carbon->startOfYear();
@@ -118,7 +118,7 @@ class StravaMassImportController extends AbstractController
     #[Route('/trackimport/reject', name: 'caldera_criticalmass_trackmassimport_reject', priority: 310)]
     public function rejectAction(Request $request, UserInterface $user, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
-        $activityId = (int)$request->get('activityId');
+        $activityId = (int)$request->query->get('activityId');
 
         /** @var TrackImportCandidate $proposal */
         $proposal = $registry->getRepository(TrackImportCandidate::class)->findOneByActivityId($activityId);
@@ -138,7 +138,7 @@ class StravaMassImportController extends AbstractController
     #[Route('/trackimport/stravaimport', name: 'caldera_criticalmass_trackmassimport_import', priority: 310)]
     public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
     {
-        $activityId = (int)$request->get('activityId');
+        $activityId = (int)$request->query->get('activityId');
 
         $track = $trackImporter
             ->setStravaActivityId($activityId)

@@ -22,9 +22,9 @@
 
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
+                <div class="form-group{% if form_errors(form.text) %} has-error has-feedback{% endif %}">
                     <label for="" class="control-label">Dein Kommentar:</label>
-                    {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+                    {{ form_widget(form.text, {'attr': {'class': 'form-control', 'rows': 10}}) }}
                 </div>
             </div>
         </div>

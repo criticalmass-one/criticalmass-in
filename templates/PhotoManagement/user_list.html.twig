@@ -29,31 +29,31 @@
                     </thead>
                     <tbody>
                     {% for row in result %}
-                        {% set photo = row[0] %}
+                        {% set ride = row[0] %}
                         {% set counter = row[1] %}
                         <tr>
                             <td>
-                                {{ photo.ride.dateTime.format('d. m. Y') }}
+                                {{ ride.dateTime.format('d. m. Y') }}
                             </td>
                             <td>
-                                <a href="{{ object_path(photo.ride.city) }}">
-                                    {{ photo.ride.city.city }}
+                                <a href="{{ object_path(ride.city) }}">
+                                    {{ ride.city.city }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ object_path(photo.ride) }}">
-                                    {{ photo.ride.title }}
+                                <a href="{{ object_path(ride) }}">
+                                    {{ ride.title }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ object_path(photo.ride, 'caldera_criticalmass_photo_manage') }}">
+                                <a href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}">
                                     {{ counter }}
                                 </a>
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="...">
                                     <a class="btn btn-secondary btn-xs" title="Herunterladen"
-                                       href="{{ object_path(photo.ride, 'caldera_criticalmass_photo_manage') }}">
+                                       href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}">
                                         <i class="far fa-images"></i>
                                     </a>
                                 </div>

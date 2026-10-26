@@ -5,8 +5,12 @@
 
             <div class="col-9 col-md-10">
                 <p class="mb-2">
-                    <strong>{{ item.user.username }}</strong>
-                    hat eine Tour editiert:
+                    {% if item.user %}
+                        <strong>{{ item.user.username }}</strong>
+                        hat eine Tour editiert:
+                    {% else %}
+                        Eine Tour wurde editiert:
+                    {% endif %}
                 </p>
 
                 <h5 class="mb-3">
@@ -30,6 +34,10 @@
                          data-map--map-vector-value="false">
                     </div>
                 {% endif %}
+
+                <div class="row g-3 mt-1">
+                    {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
+                </div>
             </div>
         </div>
     </div>

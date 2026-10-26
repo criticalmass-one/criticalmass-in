@@ -101,7 +101,7 @@ class StravaController extends AbstractController
     #[Route('/{citySlug}/{rideIdentifier}/stravaimport', name: 'caldera_criticalmass_strava_import', priority: 130)]
     public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
     {
-        $activityId = (int) $request->get('activityId');
+        $activityId = (int) $request->query->get('activityId');
 
         $track = $trackImporter
             ->setStravaActivityId($activityId)

@@ -5,8 +5,12 @@
 
             <div class="col-9 col-md-10">
                 <p class="mb-2">
-                    <strong>{{ item.user.username }}</strong>
-                    hat {{ item.postList|length }} Fotos kommentiert:
+                    {% if item.user %}
+                        <strong>{{ item.user.username }}</strong>
+                        hat {{ item.postList|length }} Fotos kommentiert:
+                    {% else %}
+                        {{ item.postList|length }} Fotos wurden kommentiert:
+                    {% endif %}
                 </p>
 
                 <h5 class="mb-3">
@@ -25,11 +29,15 @@
 
                         <div class="col-md-8">
                             <p class="mb-0">
-                                {{ post.message|markdown }}
+                                {{ post.text|markdown }}
                             </p>
                         </div>
                     </div>
                 {% endfor %}
+
+                <div class="row g-3 mt-1">
+                    {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
+                </div>
             </div>
         </div>
     </div>

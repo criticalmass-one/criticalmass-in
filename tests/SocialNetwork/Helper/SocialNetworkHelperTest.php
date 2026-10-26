@@ -157,14 +157,14 @@ class SocialNetworkHelperTest extends TestCase
             ->expects($this->once())
             ->method('__call')
             ->with($this->equalTo('findByCity'), $this->equalTo([$city]))
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
             ->with($this->equalTo(SocialNetworkProfile::class))
-            ->will($this->returnValue($repository));
+            ->willReturn($repository);
 
         $objectRouter = $this->createMock(ObjectRouterInterface::class);
 
@@ -181,14 +181,14 @@ class SocialNetworkHelperTest extends TestCase
             ->expects($this->once())
             ->method('__call')
             ->with($this->equalTo('findByRide'), $this->equalTo([$ride]))
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
             ->with($this->equalTo(SocialNetworkProfile::class))
-            ->will($this->returnValue($repository));
+            ->willReturn($repository);
 
         $objectRouter = $this->createMock(ObjectRouterInterface::class);
 
@@ -205,14 +205,14 @@ class SocialNetworkHelperTest extends TestCase
             ->expects($this->once())
             ->method('__call')
             ->with($this->equalTo('findBySubride'), $this->equalTo([$subride]))
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
             ->with($this->equalTo(SocialNetworkProfile::class))
-            ->will($this->returnValue($repository));
+            ->willReturn($repository);
 
         $objectRouter = $this->createMock(ObjectRouterInterface::class);
 
@@ -229,14 +229,14 @@ class SocialNetworkHelperTest extends TestCase
             ->expects($this->once())
             ->method('__call')
             ->with($this->equalTo('findByUser'), $this->equalTo([$user]))
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
             ->with($this->equalTo(SocialNetworkProfile::class))
-            ->will($this->returnValue($repository));
+            ->willReturn($repository);
 
         $objectRouter = $this->createMock(ObjectRouterInterface::class);
 

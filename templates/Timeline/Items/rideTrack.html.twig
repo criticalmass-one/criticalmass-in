@@ -5,8 +5,12 @@
 
             <div class="col-9 col-md-10">
                 <p class="mb-2">
-                    <strong>{{ item.user.username }}</strong>
-                    hat einen Track hochgeladen:
+                    {% if item.user %}
+                        <strong>{{ item.user.username }}</strong>
+                        hat einen Track hochgeladen:
+                    {% else %}
+                        Ein Track wurde hochgeladen:
+                    {% endif %}
                 </p>
 
                 <h5 class="mb-3">
@@ -31,20 +35,9 @@
                 {% endif %}
 
                 <div class="row g-3">
-                    <div class="col-4">
-                        <div class="d-flex align-items-center">
-                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
-                                 style="width: 36px; height: 36px; min-width: 36px;">
-                                <i class="far fa-calendar-alt text-primary"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block">Datum</small>
-                                <strong>{{ item.ride.dateTime|date('d.m.Y') }}</strong>
-                            </div>
-                        </div>
-                    </div>
+                    {{ include('Timeline/_includes/ride_meta.html.twig', {ride: item.ride}) }}
 
-                    <div class="col-4">
+                    <div class="col-6 col-md-4">
                         <div class="d-flex align-items-center">
                             <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
                                  style="width: 36px; height: 36px; min-width: 36px;">
@@ -57,7 +50,7 @@
                         </div>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-6 col-md-4">
                         <div class="d-flex align-items-center">
                             <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-2"
                                  style="width: 36px; height: 36px; min-width: 36px;">

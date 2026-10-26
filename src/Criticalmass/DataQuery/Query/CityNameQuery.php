@@ -46,15 +46,18 @@ class CityNameQuery extends AbstractQuery implements OrmQueryInterface, ElasticQ
         if (Ride::class === $this->entityFqcn) {
             $queryBuilder
                 ->join(sprintf('%s.city', $alias), 'c')
-                ->andWhere($queryBuilder->expr()->eq('c.city', ':city'))
+                ->andWhere($queryBuilder->expr()->eq('LOWER(c.city)', ':city'))
             ;
         }
 
         if (City::class === $this->entityFqcn) {
-            $queryBuilder->andWhere($queryBuilder->expr()->eq(sprintf('%s.city', $alias), ':city'));
+            $queryBuilder->andWhere($queryBuilder->expr()->eq(sprintf('LOWER(%s.city)', $alias), ':city'));
         }
 
-        $queryBuilder->setParameter('city', $this->name);
+        // Beide Seiten kleingeschrieben: MySQL vergleicht auch Gleichheit auf
+        // Text schreibungsblind, PostgreSQL nicht. Ohne das faende die
+        // API-Abfrage ?name=hamburg die Stadt "Hamburg" nicht mehr.
+        $queryBuilder->setParameter('city', mb_strtolower($this->name));
 
         return $queryBuilder;
     }

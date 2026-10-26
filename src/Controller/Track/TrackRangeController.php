@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class TrackRangeController extends AbstractController
 {
     #[IsGranted('edit', 'track')]
-    #[Route('/track/range/{id}', name: 'caldera_criticalmass_track_range', priority: 270)]
+    #[Route('/track/range/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_track_range', priority: 270)]
     public function rangeAction(
         Request $request,
         Track $track,

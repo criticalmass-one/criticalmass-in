@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CityCycleType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var CityCycle $cycle */
         $cycle = $builder->getData();

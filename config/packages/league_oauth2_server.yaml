@@ -32,6 +32,10 @@ league_oauth2_server:
             - cycle:write
             - socialnetwork:write
             - activity:write
+            - location:write
+            - subride:write
+            - post:write
+            - photo:write
         default:
             - ride:read
             - track:read
@@ -52,3 +56,11 @@ when@test:
             public_key: '%kernel.project_dir%/config/jwt/test/public.pem'
         persistence:
             in_memory: null
+
+    services:
+        # Seit 2.0 werden Client-Secrets gehasht. Im Test genügt die niedrigste
+        # bcrypt-Stufe, sonst kostet jeder Token-Request spürbar Zeit.
+        league.oauth2_server.password_hasher:
+            class: Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher
+            arguments:
+                $cost: 4

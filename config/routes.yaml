@@ -16,3 +16,10 @@ controllers:
   type: attribute
   exclude: ../src/Controller/Api/
 
+
+# Stellt /.well-known/webauthn bereit (Related Origin Requests). Die Route wird vom
+# Bundle erzeugt, sobald webauthn.allowed_origins gefüllt ist, und ohne diesen
+# Loader-Eintrag nie eingebunden.
+webauthn:
+  resource: .
+  type: webauthn

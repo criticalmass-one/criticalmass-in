@@ -40,7 +40,6 @@ class PhotoUploadControllerTest extends AbstractControllerTestCase
 
         $tmpFile = tempnam(sys_get_temp_dir(), 'photo_test_');
         imagejpeg($image, $tmpFile, 90);
-        imagedestroy($image);
 
         return $tmpFile;
     }

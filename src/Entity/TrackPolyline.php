@@ -5,8 +5,8 @@ namespace App\Entity;
 use App\Enum\PolylineResolution;
 use App\Repository\TrackPolylineRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Table(name: 'track_polyline')]
 #[ORM\UniqueConstraint(name: 'track_resolution_unique', fields: ['track', 'resolution'])]

@@ -25,7 +25,7 @@ class CityRepositoryTest extends KernelTestCase
 
         $cityNames = array_map(fn(City $city) => $city->getCity(), $activeCities);
 
-        $this->assertNotContains('Ghosttown', $cityNames, 'Inactive city (score < 0.15) should be excluded');
+        $this->assertNotContains('Ghosttown', $cityNames, 'Inactive city (score below the threshold) should be excluded');
     }
 
     public function testFindActiveCitiesIncludesHighScoreCities(): void
@@ -59,9 +59,72 @@ class CityRepositoryTest extends KernelTestCase
         $this->assertContains('Berlin', $cityNames);
     }
 
+    /**
+     * Eine neu angelegte Stadt hat noch keine Signale und damit Score 0 —
+     * sie darf deshalb nicht sofort verschwinden.
+     */
+    public function testFindActiveCitiesKeepsNewCitiesWithoutSignals(): void
+    {
+        $city = new City();
+        $city->setCity('Neugruendung');
+        $city->setTitle('Critical Mass Neugruendung');
+        $city->setEnabled(true);
+        $city->setTimezone('Europe/Berlin');
+        $city->setActivityScore(0.0);
+
+        $this->entityManager->persist($city);
+        $this->entityManager->flush();
+
+        try {
+            $cityNames = array_map(fn(City $city) => $city->getCity(), $this->repository->findActiveCities());
+
+            $this->assertContains('Neugruendung', $cityNames, 'A city younger than the grace period counts as active');
+            $this->assertNotContains('Ghosttown', $cityNames);
+        } finally {
+            $this->entityManager->remove($city);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function testFindPopularCitiesSkipsInactiveCities(): void
+    {
+        $cityNames = array_map(fn(City $city) => $city->getCity(), $this->repository->findPopularCities());
+
+        $this->assertNotContains('Ghosttown', $cityNames, 'The footer must not promote inactive cities');
+        $this->assertContains('Hamburg', $cityNames);
+        $this->assertContains('Kiel', $cityNames, 'An unscored city stays in the footer');
+    }
+
+    /**
+     * PostgreSQL sortiert NULL bei DESC nach vorn — eine Stadt ohne
+     * Einwohnerzahl wuerde sonst die Liste anfuehren.
+     */
+    public function testFindPopularCitiesSkipsCitiesWithoutPopulation(): void
+    {
+        $city = new City();
+        $city->setCity('Ohnezahl');
+        $city->setTitle('Critical Mass Ohnezahl');
+        $city->setEnabled(true);
+        $city->setTimezone('Europe/Berlin');
+
+        $this->entityManager->persist($city);
+        $this->entityManager->flush();
+
+        try {
+            $popular = $this->repository->findPopularCities();
+            $cityNames = array_map(fn(City $city) => $city->getCity(), $popular);
+
+            $this->assertNotContains('Ohnezahl', $cityNames);
+            $this->assertSame('Berlin', $cityNames[0] ?? null, 'The largest fixture city leads the list');
+        } finally {
+            $this->entityManager->remove($city);
+            $this->entityManager->flush();
+        }
+    }
+
     public function testActivityScoreThreshold(): void
     {
-        $this->assertEquals(0.15, CityRepository::ACTIVITY_SCORE_THRESHOLD);
+        $this->assertEquals(0.01, CityRepository::ACTIVITY_SCORE_THRESHOLD);
     }
 
     protected function tearDown(): void

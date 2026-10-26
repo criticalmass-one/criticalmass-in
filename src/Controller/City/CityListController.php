@@ -24,18 +24,28 @@ class CityListController extends AbstractController
 
         $now = new \DateTime();
         $cityList = [];
+        $inactiveCityList = [];
 
+        // Eingeschlafene Staedte bleiben erreichbar, stehen aber nicht mehr
+        // gleichrangig neben denen, in denen gefahren wird.
         foreach ($cityRepository->findEnabledCities() as $city) {
-            $cityList[] = new CityListModel(
+            $model = new CityListModel(
                 $city,
                 $rideRepository->findCurrentRideForCity($city),
                 $cityCycleRepository->findByCity($city, $now, $now),
                 $rideRepository->countRidesByCity($city),
             );
+
+            if ($city->isInactive()) {
+                $inactiveCityList[] = $model;
+            } else {
+                $cityList[] = $model;
+            }
         }
 
         return $this->render('CityList/list.html.twig', [
             'cityList' => $cityList,
+            'inactiveCityList' => $inactiveCityList,
         ]);
     }
 }

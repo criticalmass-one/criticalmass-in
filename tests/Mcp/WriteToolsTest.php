@@ -53,6 +53,57 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertStringContainsString('existiert bereits', $result['text']);
     }
 
+    public function testUpdateCityChangesTitle(): void
+    {
+        $city = $this->createCity('Alt-Stadt');
+        $token = $this->obtainAccessToken('city:write');
+
+        $result = $this->callTool($token, 'update_city', [
+            'citySlug' => $city->getMainSlugString(),
+            'city' => ['title' => 'Neuer Titel'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $cityId = $city->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\City::class)->find($cityId);
+        self::assertSame('Neuer Titel', $updated?->getTitle());
+    }
+
+    public function testSetCityEnabledDisablesCity(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('city:write');
+
+        $result = $this->callTool($token, 'set_city_enabled', [
+            'citySlug' => $city->getMainSlugString(),
+            'enabled' => false,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertFalse($result['json']['enabled']);
+
+        $cityId = $city->getId();
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(\App\Entity\City::class)->find($cityId);
+        self::assertFalse($reloaded?->isEnabled());
+    }
+
+    public function testSetCityEnabledRejectsNonBoolean(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('city:write');
+
+        $result = $this->callTool($token, 'set_city_enabled', [
+            'citySlug' => $city->getMainSlugString(),
+            'enabled' => 'nein',
+        ]);
+
+        self::assertTrue($result['isError']);
+        self::assertStringContainsString('Boolean', $result['text']);
+    }
+
     public function testCreateRidePersistsRide(): void
     {
         $city = $this->createCity();
@@ -87,6 +138,68 @@ final class WriteToolsTest extends AbstractMcpTestCase
         $this->em()->clear();
         $updated = $this->em()->getRepository(Ride::class)->find($rideId);
         self::assertSame('Neu', $updated?->getTitle());
+    }
+
+    public function testSetRideEnabledDisablesRide(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('ride:write');
+
+        $result = $this->callTool($token, 'set_ride_enabled', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'enabled' => false,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertFalse($result['json']['enabled']);
+
+        $rideId = $ride->getId();
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(Ride::class)->find($rideId);
+        self::assertFalse($reloaded?->isEnabled());
+    }
+
+    public function testDeleteCycleKeepsRides(): void
+    {
+        $city = $this->createCity();
+        $cycle = $this->createCityCycle($city);
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $ride->setCycle($cycle);
+        $this->em()->flush();
+
+        $cycleId = $cycle->getId();
+        $rideId = $ride->getId();
+        $token = $this->obtainAccessToken('cycle:write');
+
+        $result = $this->callTool($token, 'delete_cycle', [
+            'citySlug' => $city->getMainSlugString(),
+            'cycleId' => $cycleId,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(CityCycle::class)->find($cycleId));
+        $survivingRide = $this->em()->getRepository(Ride::class)->find($rideId);
+        self::assertNotNull($survivingRide, 'Ride must survive cycle deletion');
+        self::assertNull($survivingRide->getCycle());
+    }
+
+    public function testDeleteCycleRejectsForeignCity(): void
+    {
+        $city = $this->createCity();
+        $otherCity = $this->createCity('Andere-Stadt');
+        $cycle = $this->createCityCycle($otherCity);
+        $token = $this->obtainAccessToken('cycle:write');
+
+        $result = $this->callTool($token, 'delete_cycle', [
+            'citySlug' => $city->getMainSlugString(),
+            'cycleId' => $cycle->getId(),
+        ]);
+
+        self::assertTrue($result['isError']);
     }
 
     public function testSetParticipationPersistsForTokenUser(): void
@@ -139,6 +252,75 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertCount(1, $this->em()->getRepository(RideEstimate::class)->findBy(['ride' => $ride]));
     }
 
+    public function testListRideEstimatesReturnsIds(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $estimate = $this->createRideEstimate($ride, 123);
+        $token = $this->obtainAccessToken('ride:read');
+
+        $result = $this->callTool($token, 'list_ride_estimates', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        $ids = array_column($result['json']['estimates'], 'id');
+        self::assertContains($estimate->getId(), $ids);
+    }
+
+    public function testUpdateRideEstimateChangesEstimation(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $estimate = $this->createRideEstimate($ride, 100);
+        $token = $this->obtainAccessToken('estimate:write');
+
+        $result = $this->callTool($token, 'update_ride_estimate', [
+            'estimateId' => $estimate->getId(),
+            'estimation' => 555,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $estimateId = $estimate->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(RideEstimate::class)->find($estimateId);
+        self::assertSame(555, $updated?->getEstimatedParticipants());
+    }
+
+    public function testDeleteRideEstimateRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $estimate = $this->createRideEstimate($ride, 100);
+        $token = $this->obtainAccessToken('estimate:write');
+
+        $estimateId = $estimate->getId();
+
+        $result = $this->callTool($token, 'delete_ride_estimate', [
+            'estimateId' => $estimateId,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(RideEstimate::class)->find($estimateId));
+    }
+
+    public function testUpdateRideEstimateRejectsUnknownId(): void
+    {
+        $token = $this->obtainAccessToken('estimate:write');
+
+        $result = $this->callTool($token, 'update_ride_estimate', [
+            'estimateId' => 999999999,
+            'estimation' => 10,
+        ]);
+
+        self::assertTrue($result['isError']);
+        self::assertStringContainsString('ID', $result['text']);
+    }
+
     public function testSetWeatherPersists(): void
     {
         $city = $this->createCity();
@@ -183,6 +365,146 @@ final class WriteToolsTest extends AbstractMcpTestCase
         self::assertCount(1, $this->em()->getRepository(SocialNetworkProfile::class)->findBy(['city' => $city]));
     }
 
+    public function testCreateLocationPersists(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('location:write');
+
+        $result = $this->callTool($token, 'create_location', [
+            'citySlug' => $city->getMainSlugString(),
+            'location' => ['title' => 'Rathausmarkt', 'latitude' => 53.55, 'longitude' => 9.99],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\Location::class)->findBy(['city' => $city]));
+    }
+
+    public function testUpdateLocationChangesTitle(): void
+    {
+        $city = $this->createCity();
+        $location = $this->createLocation($city, 'treffpunkt');
+        $token = $this->obtainAccessToken('location:write');
+
+        $result = $this->callTool($token, 'update_location', [
+            'citySlug' => $city->getMainSlugString(),
+            'locationSlug' => 'treffpunkt',
+            'location' => ['title' => 'Neuer Treffpunkt'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $locationId = $location->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\Location::class)->find($locationId);
+        self::assertSame('Neuer Treffpunkt', $updated?->getTitle());
+    }
+
+    public function testDeleteLocationRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $location = $this->createLocation($city, 'treffpunkt');
+        $locationId = $location->getId();
+        $token = $this->obtainAccessToken('location:write');
+
+        $result = $this->callTool($token, 'delete_location', [
+            'citySlug' => $city->getMainSlugString(),
+            'locationSlug' => 'treffpunkt',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(\App\Entity\Location::class)->find($locationId));
+    }
+
+    public function testGetLocationReturnsIt(): void
+    {
+        $city = $this->createCity();
+        $this->createLocation($city, 'treffpunkt');
+        $token = $this->obtainAccessToken('city:read');
+
+        $result = $this->callTool($token, 'get_location', [
+            'citySlug' => $city->getMainSlugString(),
+            'locationSlug' => 'treffpunkt',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertSame('treffpunkt', $result['json']['slug']);
+    }
+
+    public function testCreateSubridePersists(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('subride:write');
+
+        $result = $this->callTool($token, 'create_subride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'subride' => ['title' => 'Anfahrt Süd', 'location' => 'Südbahnhof', 'dateTime' => '2026-09-01 18:00:00'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\Subride::class)->findBy(['ride' => $ride]));
+    }
+
+    public function testCreateSubrideRejectsMissingLocation(): void
+    {
+        $city = $this->createCity();
+        $this->createRide($city, '2026-09-01 19:00:00');
+        $token = $this->obtainAccessToken('subride:write');
+
+        $result = $this->callTool($token, 'create_subride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'subride' => ['title' => 'Ohne Ort', 'dateTime' => '2026-09-01 18:00:00'],
+        ]);
+
+        self::assertTrue($result['isError']);
+    }
+
+    public function testUpdateSubrideChangesTitle(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $subride = $this->createSubride($ride);
+        $token = $this->obtainAccessToken('subride:write');
+
+        $result = $this->callTool($token, 'update_subride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'subrideId' => $subride->getId(),
+            'subride' => ['title' => 'Anfahrt West'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $subrideId = $subride->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\Subride::class)->find($subrideId);
+        self::assertSame('Anfahrt West', $updated?->getTitle());
+    }
+
+    public function testDeleteSubrideRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $subride = $this->createSubride($ride);
+        $subrideId = $subride->getId();
+        $token = $this->obtainAccessToken('subride:write');
+
+        $result = $this->callTool($token, 'delete_subride', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+            'subrideId' => $subrideId,
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(\App\Entity\Subride::class)->find($subrideId));
+    }
+
     public function testCreateCityActivityPersistsAndUpdatesScore(): void
     {
         $city = $this->createCity();
@@ -223,6 +545,201 @@ final class WriteToolsTest extends AbstractMcpTestCase
 
         self::assertTrue($result['isError']);
         self::assertStringContainsString('Signaltyp', $result['text']);
+    }
+
+    public function testCreatePostPersists(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('post:write');
+
+        $result = $this->callTool($token, 'create_post', [
+            'citySlug' => $city->getMainSlugString(),
+            'post' => ['message' => 'Hallo Welt'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertCount(1, $this->em()->getRepository(\App\Entity\Post::class)->findBy(['city' => $city]));
+    }
+
+    public function testCreatePostRejectsBlankMessage(): void
+    {
+        $city = $this->createCity();
+        $token = $this->obtainAccessToken('post:write');
+
+        $result = $this->callTool($token, 'create_post', [
+            'citySlug' => $city->getMainSlugString(),
+            'post' => ['message' => ''],
+        ]);
+
+        self::assertTrue($result['isError']);
+    }
+
+    public function testUpdatePostChangesMessage(): void
+    {
+        $city = $this->createCity();
+        $post = $this->createPost($city, 'Alt');
+        $token = $this->obtainAccessToken('post:write');
+
+        $result = $this->callTool($token, 'update_post', [
+            'postId' => $post->getId(),
+            'post' => ['message' => 'Neu'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $postId = $post->getId();
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\Post::class)->find($postId);
+        self::assertSame('Neu', $updated?->getText());
+    }
+
+    public function testDeletePostRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $post = $this->createPost($city);
+        $postId = $post->getId();
+        $token = $this->obtainAccessToken('post:write');
+
+        $result = $this->callTool($token, 'delete_post', ['postId' => $postId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(\App\Entity\Post::class)->find($postId));
+    }
+
+    public function testGetPostReturnsIt(): void
+    {
+        $city = $this->createCity();
+        $post = $this->createPost($city, 'Sichtbar');
+        $token = $this->obtainAccessToken('post:read');
+
+        $result = $this->callTool($token, 'get_post', ['postId' => $post->getId()]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        self::assertSame('Sichtbar', $result['json']['message']);
+    }
+
+    public function testDeleteTrackSoftDeletes(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $track = $this->createTrack($ride);
+        $trackId = $track->getId();
+        $token = $this->obtainAccessToken('track:write');
+
+        $result = $this->callTool($token, 'delete_track', ['trackId' => $trackId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(\App\Entity\Track::class)->find($trackId);
+        self::assertTrue($reloaded?->getDeleted());
+    }
+
+    public function testUpdatePhotoChangesDescription(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $photo = $this->createPhoto($ride, $city);
+        $photoId = $photo->getId();
+        $token = $this->obtainAccessToken('photo:write');
+
+        $result = $this->callTool($token, 'update_photo', [
+            'photoId' => $photoId,
+            'photo' => ['description' => 'Schöner Ausblick'],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(\App\Entity\Photo::class)->find($photoId);
+        self::assertSame('Schöner Ausblick', $updated?->getDescription());
+    }
+
+    public function testDeletePhotoSoftDeletes(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $photo = $this->createPhoto($ride, $city);
+        $photoId = $photo->getId();
+        $token = $this->obtainAccessToken('photo:write');
+
+        $result = $this->callTool($token, 'delete_photo', ['photoId' => $photoId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        $reloaded = $this->em()->getRepository(\App\Entity\Photo::class)->find($photoId);
+        self::assertTrue($reloaded?->isDeleted());
+    }
+
+    public function testListRideWeatherReturnsIds(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $weather = $this->createWeather($ride);
+        $token = $this->obtainAccessToken('ride:read');
+
+        $result = $this->callTool($token, 'list_ride_weather', [
+            'citySlug' => $city->getMainSlugString(),
+            'rideIdentifier' => '2026-09-01',
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+        $ids = array_column($result['json'], 'id');
+        self::assertContains($weather->getId(), $ids);
+    }
+
+    public function testUpdateWeatherChangesTemperature(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $weather = $this->createWeather($ride);
+        $weatherId = $weather->getId();
+        $token = $this->obtainAccessToken('weather:write');
+
+        $result = $this->callTool($token, 'update_weather', [
+            'weatherId' => $weatherId,
+            'weather' => ['temperatureMax' => 28.5],
+        ]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        $updated = $this->em()->getRepository(Weather::class)->find($weatherId);
+        self::assertSame(28.5, $updated?->getTemperatureMax());
+    }
+
+    public function testDeleteWeatherRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $ride = $this->createRide($city, '2026-09-01 19:00:00');
+        $weather = $this->createWeather($ride);
+        $weatherId = $weather->getId();
+        $token = $this->obtainAccessToken('weather:write');
+
+        $result = $this->callTool($token, 'delete_weather', ['weatherId' => $weatherId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(Weather::class)->find($weatherId));
+    }
+
+    public function testDeleteSocialProfileRemovesIt(): void
+    {
+        $city = $this->createCity();
+        $profile = $this->createSocialProfile($city);
+        $profileId = $profile->getId();
+        $token = $this->obtainAccessToken('socialnetwork:write');
+
+        $result = $this->callTool($token, 'delete_social_profile', ['profileId' => $profileId]);
+
+        self::assertFalse($result['isError'], $result['text']);
+
+        $this->em()->clear();
+        self::assertNull($this->em()->getRepository(SocialNetworkProfile::class)->find($profileId));
     }
 
     public function testWriteToolRejectedWithoutScope(): void

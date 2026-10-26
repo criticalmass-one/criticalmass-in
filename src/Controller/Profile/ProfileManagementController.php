@@ -6,8 +6,10 @@ use App\Controller\AbstractController;
 use App\Entity\Participation;
 use App\Entity\Photo;
 use App\Entity\Track;
+use App\Entity\User;
 use App\Form\Type\UserEmailType;
 use App\Form\Type\UsernameType;
+use App\Repository\WebauthnCredentialRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\Form\FormError;
@@ -30,8 +32,10 @@ class ProfileManagementController extends AbstractController
         name: 'fos_user_profile_show',
         priority: 180
     )]
-    public function manageAction(?UserInterface $user = null): Response
-    {
+    public function manageAction(
+        WebauthnCredentialRepository $credentialRepository,
+        ?UserInterface $user = null
+    ): Response {
         $participationCounter = $this->managerRegistry->getRepository(Participation::class)->countByUser($user);
         $trackCounter = $this->managerRegistry->getRepository(Track::class)->countByUser($user);
         $photoCounter = $this->managerRegistry->getRepository(Photo::class)->countByUser($user);
@@ -40,6 +44,7 @@ class ProfileManagementController extends AbstractController
             'participationCounter' => $participationCounter,
             'trackCounter' => $trackCounter,
             'photoCounter' => $photoCounter,
+            'passkeyCounter' => $user instanceof User ? $credentialRepository->countForUser($user) : 0,
         ]);
     }
 

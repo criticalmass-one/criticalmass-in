@@ -96,8 +96,10 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
             $bayernRegion,
             $adminUser,
             $manager,
-            0.05
+            0.005
         );
+        // Aelter als die Karenzzeit, sonst gaelte sie als neu und damit als aktiv.
+        $inactiveCity->setCreatedAt(new \DateTime('-2 years'));
         $this->addReference(self::INACTIVE_CITY_REFERENCE, $inactiveCity);
 
         $manager->flush();

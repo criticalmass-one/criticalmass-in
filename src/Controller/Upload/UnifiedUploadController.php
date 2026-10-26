@@ -9,7 +9,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Target;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -33,7 +34,7 @@ class UnifiedUploadController extends AbstractController
     public function uploadFileAction(
         Request $request,
         UploadDispatcherInterface $uploadDispatcher,
-        RateLimiterFactory $uploadLimiter,
+        #[Target] RateLimiterFactoryInterface $uploadLimiter,
         #[CurrentUser] ?User $user = null,
     ): JsonResponse {
         if (!$this->isCsrfTokenValid('unified_upload', (string) $request->request->get('_token'))) {
@@ -52,6 +53,13 @@ class UnifiedUploadController extends AbstractController
 
         if (!$uploadedFile instanceof UploadedFile) {
             return $this->statusResponse('error', 'Es wurde keine Datei übertragen.', Response::HTTP_BAD_REQUEST);
+        }
+
+        // Ein Upload jenseits von upload_max_filesize kommt ohne temporäre Datei an:
+        // getPathname() ist dann leer, und der Normalizer würde daran mit einem 500er
+        // scheitern. Symfony kennt den Grund und formuliert ihn aus.
+        if (!$uploadedFile->isValid()) {
+            return $this->statusResponse('error', $uploadedFile->getErrorMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         try {

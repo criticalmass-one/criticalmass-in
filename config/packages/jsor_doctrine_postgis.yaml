@@ -1,0 +1,15 @@
+# Anbindung von PostGIS an Doctrine.
+#
+# Der Listener sorgt dafuer, dass Geometriespalten und raeumliche Indizes beim
+# Erzeugen des Schemas richtig herauskommen; das Middleware haengt sich in die
+# Verbindung, damit die Typen beim Auslesen des Schemas erkannt werden.
+#
+# Frueher registrierte man dafuer einen doctrine.event_subscriber — das
+# Event-System ist in DBAL 4 entfallen, deshalb der Listener.
+services:
+    Jsor\Doctrine\PostGIS\Event\ORMSchemaEventListener:
+        tags:
+            - { name: doctrine.event_listener, event: postGenerateSchemaTable, connection: default }
+
+    Jsor\Doctrine\PostGIS\Driver\Middleware:
+        tags: [ doctrine.middleware ]

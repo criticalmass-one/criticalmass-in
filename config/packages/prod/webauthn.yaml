@@ -1,0 +1,30 @@
+webauthn:
+    # Ein Passkey gehört zu genau einer Relying-Party-ID. criticalmass.one ist gesetzt,
+    # weil es die Plesk-Hauptdomain ist; criticalmass.in liefert dieselbe App unter einer
+    # anderen registrierbaren Domain aus und wäre damit nicht abgedeckt.
+    #
+    # Darum die Origin-Liste: Sie schaltet die Prüfung von „RP ID muss Suffix des Origin
+    # sein“ auf „Origin muss in dieser Liste stehen“ um und wird zusätzlich unter
+    # /.well-known/webauthn ausgeliefert (Related Origin Requests). Erst dadurch
+    # akzeptiert der Browser die RP ID criticalmass.one auch auf criticalmass.in.
+    #
+    # Die Liste MUSS literal dastehen: der Compiler-Pass des Bundles liest sie zur
+    # Container-Bauzeit aus und legt die /.well-known/webauthn-Route nur an, wenn er ein
+    # echtes Array sieht. Ein %env()%-Platzhalter wäre zu dem Zeitpunkt noch ein String
+    # und würde den Endpunkt kommentarlos verschwinden lassen.
+    #
+    # Eine Änderung der RP ID entwertet jeden bereits registrierten Passkey.
+    allowed_origins:
+        - 'https://criticalmass.one'
+        - 'https://criticalmass.in'
+        - 'https://www.criticalmass.in'
+    allow_subdomains: false
+
+    creation_profiles:
+        default:
+            rp:
+                id: 'criticalmass.one'
+
+    request_profiles:
+        default:
+            rp_id: 'criticalmass.one'

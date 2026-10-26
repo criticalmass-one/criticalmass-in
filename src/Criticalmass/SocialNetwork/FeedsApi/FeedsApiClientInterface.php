@@ -34,10 +34,11 @@ interface FeedsApiClientInterface
     ): array;
 
     /**
+     * @param list<int>|null $profileIds
      * @return FeedItem[]
      */
     public function getItems(
-        ?int $profileId = null,
+        ?array $profileIds = null,
         int $page = 1,
         string $orderDirection = 'desc',
     ): array;

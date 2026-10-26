@@ -22,6 +22,7 @@ class SocialNetworkManagementController extends AbstractController
 {
     #[Route(
         '/socialnetwork/{id}/edit',
+        requirements: ['id' => '\d+'],
         name: 'criticalmass_socialnetwork_edit',
         priority: 80
     )]
@@ -87,6 +88,7 @@ class SocialNetworkManagementController extends AbstractController
     #[IsGranted('ROLE_USER')]
     #[Route(
         '/socialnetwork/{id}/disable',
+        requirements: ['id' => '\d+'],
         name: 'criticalmass_socialnetwork_disable',
         methods: ['POST'],
         priority: 80

@@ -22,7 +22,7 @@ class RideEstimateHandlerTest extends TestCase
             ->expects($this->once())
             ->method('__call')
             ->with($this->equalTo('findByRide'))
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $objectManager = $this->createMock(ObjectManager::class);
         $objectManager
@@ -35,12 +35,12 @@ class RideEstimateHandlerTest extends TestCase
             ->expects($this->once())
             ->method('getRepository')
             ->with($this->equalTo(RideEstimate::class))
-            ->will($this->returnValue($repository));
+            ->willReturn($repository);
 
         $registry
             ->expects($this->once())
             ->method('getManager')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $rideEstimateCalculator = new RideEstimateCalculator();
         $rideEstimateHandler = new RideEstimateHandler($registry, $rideEstimateCalculator);
@@ -65,7 +65,7 @@ class RideEstimateHandlerTest extends TestCase
         $registry
             ->expects($this->once())
             ->method('getManager')
-            ->will($this->returnValue($objectManager));
+            ->willReturn($objectManager);
 
         $rideEstimateCalculator = new RideEstimateCalculator();
         $rideEstimateHandler = new RideEstimateHandler($registry, $rideEstimateCalculator);

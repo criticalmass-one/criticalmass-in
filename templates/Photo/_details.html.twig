@@ -6,19 +6,23 @@
     </div>
     <div class="card-body">
         <dl class="mb-0">
-            <dt>
-                <i class="far fa-user me-1"></i> Fotografïn
-            </dt>
-            <dd>
-                {{ photo.user.username }}
-            </dd>
+            {% if photo.user %}
+                <dt>
+                    <i class="far fa-user me-1"></i> Fotografïn
+                </dt>
+                <dd>
+                    {{ photo.user.username }}
+                </dd>
+            {% endif %}
 
             {% if photo.exifCreationDate %}
             <dt>
                 <i class="far fa-calendar-alt me-1"></i> Aufnahmedatum
             </dt>
             <dd>
-                {{ photo.exifCreationDate|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr
+                {# Die Zeitzone kommt von der Stadt des Fotos, nicht ueber die
+                   Tour: 139 Fotos haengen an keiner. #}
+                {{ photo.exifCreationDate|date('d.m.y H:i:s', photo.city ? photo.city.timezone : 'UTC') }} Uhr
             </dd>
             {% endif %}
 

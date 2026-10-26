@@ -1,0 +1,65 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Beitrag melden{% endblock %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.active('Beitrag melden') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+        <h1 class="h3 mb-4">
+            <i class="far fa-flag text-muted me-2"></i>
+            Beitrag melden
+        </h1>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+                <p class="text-muted small mb-2">
+                    Beitrag von <strong>{{ post.user.username|default('unbekannt') }}</strong>,
+                    {{ post.dateTime|date('d.m.Y, H:i', 'Europe/Berlin') }}
+                </p>
+                <div class="post-content border-start ps-3">
+                    {{ post.text|markdown }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <p class="text-muted">
+                    Jede Meldung liest ein Mensch aus unserem Team. Wer den Beitrag geschrieben hat,
+                    erfährt nicht, wer ihn gemeldet hat.
+                </p>
+
+                {{ form_start(form, {'attr': {'id': 'form-post-report'}}) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.reason) }}
+                {{ form_row(form.explanation) }}
+
+                {% if form.reporterEmail is defined %}
+                    {{ form_row(form.reporterEmail) }}
+                {% endif %}
+
+                {{ form_row(form.goodFaith) }}
+
+                {% if not app.user %}
+                    <div class="frc-captcha mb-3" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
+                {% endif %}
+
+                <div class="d-flex justify-content-end">
+                    <a href="{{ postUrl }}" class="btn btn-light me-2">Abbrechen</a>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="far fa-flag me-1"></i>Meldung abschicken
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

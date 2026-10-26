@@ -82,6 +82,43 @@ class CityControllerTest extends AbstractControllerTestCase
         $this->assertSelectorTextContains('html', 'Berlin');
     }
 
+    public function testCityListMovesInactiveCitiesIntoTheirOwnSection(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/citylist');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $active = $crawler->filter('#city-list-table')->text();
+        $inactive = $crawler->filter('#inactive-city-list')->text();
+
+        $this->assertStringNotContainsString('Ghosttown', $active);
+        $this->assertStringContainsString('Ghosttown', $inactive);
+        $this->assertStringContainsString('Hamburg', $active);
+        $this->assertStringNotContainsString('Hamburg', $inactive);
+    }
+
+    public function testInactiveCityPageShowsAHint(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/ghosttown');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertCount(1, $crawler->filter('#inactive-city-hint'));
+    }
+
+    public function testActiveCityPageShowsNoHint(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/hamburg');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertCount(0, $crawler->filter('#inactive-city-hint'));
+    }
+
     public function testCityPageContainsNavigationTabs(): void
     {
         $client = static::createClient();

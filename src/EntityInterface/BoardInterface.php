@@ -16,13 +16,17 @@ interface BoardInterface
 
     public function incThreadNumber(): BoardInterface;
 
+    public function decThreadNumber(): BoardInterface;
+
     public function getPostNumber();
 
     public function setPostNumber(int $postNumber): BoardInterface;
 
-    public function incPostNumber(): BoardInterface;
+    public function incPostNumber(int $amount = 1): BoardInterface;
+
+    public function decPostNumber(int $amount = 1): BoardInterface;
 
     public function getLastThread(): ?Thread;
 
-    public function setLastThread(Thread $thread): BoardInterface;
+    public function setLastThread(?Thread $thread): BoardInterface;
 }

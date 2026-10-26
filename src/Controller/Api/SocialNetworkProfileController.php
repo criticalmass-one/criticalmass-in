@@ -30,12 +30,12 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function listSocialNetworkProfilesAction(Request $request, ?City $city = null): JsonResponse
     {
-        $networkIdentifier = $request->get('networkIdentifier');
-        $autoFetch = (bool)$request->get('autoFetch');
+        $networkIdentifier = $request->query->get('networkIdentifier');
+        $autoFetch = (bool)$request->query->get('autoFetch');
         $page = max(0, $request->query->getInt('page', 0));
         $size = min(1000, max(1, $request->query->getInt('size', 100)));
 
-        if ($entities = $request->get('entities')) {
+        if ($entities = $request->query->get('entities')) {
             $entityClassNames = explode(',', $entities);
         } else {
             $entityClassNames = [];
@@ -65,7 +65,7 @@ class SocialNetworkProfileController extends BaseController
     /**
      * Update properties of a social network profile.
      */
-    #[Route(path: '/api/{citySlug}/socialnetwork-profiles/{id}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_update', methods: ['POST'], priority: 190)]
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles/{id}', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_rest_socialnetwork_profiles_update', methods: ['POST'], priority: 190)]
     #[OA\Tag(name: 'Social Network Profile')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the social network profile to update', required: true, schema: new OA\Schema(type: 'integer'))]
@@ -133,5 +133,24 @@ class SocialNetworkProfileController extends BaseController
         }
 
         return $this->createStandardResponse($newSocialNetworkProfile);
+    }
+
+    /**
+     * Deletes a social network profile.
+     */
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles/{id}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_delete', requirements: ['id' => '\d+'], methods: ['DELETE'], priority: 190)]
+    #[OA\Tag(name: 'Social Network Profile')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the social network profile to delete', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully deleted')]
+    public function deleteSocialNetworkProfileAction(SocialNetworkProfile $socialNetworkProfile): JsonResponse
+    {
+        $id = $socialNetworkProfile->getId();
+        $manager = $this->managerRegistry->getManager();
+
+        $manager->remove($socialNetworkProfile);
+        $manager->flush();
+
+        return new JsonResponse(['status' => 'ok', 'deletedProfileId' => $id]);
     }
 }

@@ -1,15 +1,17 @@
 <div class="col-3 col-md-2 text-center">
-    {% if item.user.imageName %}
-        <img class="rounded-circle img-fluid"
-             src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
-             alt="{{ item.user.username }}" />
-    {% endif %}
+    {% if item.user %}
+        {% if item.user.imageName %}
+            <img class="rounded-circle img-fluid"
+                 src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+                 alt="{{ item.user.username }}" />
+        {% endif %}
 
-    <p class="d-none d-sm-block mb-1">
-        <strong>
-            {{ item.user.username }}
-        </strong>
-    </p>
+        <p class="d-none d-sm-block mb-1">
+            <strong>
+                {{ item.user.username }}
+            </strong>
+        </p>
+    {% endif %}
 
     <p class="mb-0">
         <small class="text-muted">

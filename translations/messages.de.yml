@@ -84,6 +84,11 @@ hint_modal:
             title: Teilnehmerzahl schätzen
             text: '<p>Als angemeldeter Nutzer kannst du an dieser Stelle eine Schätzung abgeben, wie viele Radfahrer bei der Critical Mass in %city% teilgenommen haben.</p><p>Deine Schätzung wird unter anderem auf dieser Seite angezeigt und für unterschiedliche Statistiken mit einberechnet.</p>'
 
+    city:
+        status_post_button:
+            title: Beitrag schreiben
+            text: '<p>Fährst du am Freitag mit? Suchst du Leute für die Anreise, oder ist dir unterwegs etwas aufgefallen? Als angemeldeter Nutzer kannst du hier einen Beitrag für alle schreiben, die in %city% mitfahren.</p>'
+
     gallery:
         photo_upload_button:
             title: Fotos hochladen

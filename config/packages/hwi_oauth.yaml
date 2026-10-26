@@ -1,6 +1,4 @@
 hwi_oauth:
-    firewall_names: ['main']
-
     resource_owners:
         facebook:
             type:                facebook

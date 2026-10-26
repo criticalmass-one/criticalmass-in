@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **criticalmass.in** — web platform for coordinating and documenting Critical Mass bicycle rides worldwide. Manages cities, rides/events, participants, GPS tracks, photos, forums, and statistics.
 
-**Stack:** Symfony 7.4 (LTS), Doctrine ORM 3 / DBAL 4, PHP 8.2+, MariaDB 10.9+, Bootstrap 5, Webpack Encore with Stimulus
+**Stack:** Symfony 8.1 (kein LTS, Wartung bis 01/2027), Doctrine ORM 3 / DBAL 4 mit DoctrineBundle 3, PHP 8.5 (composer.json erlaubt >=8.4, maltehuebner/ordered-entities-bundle verlangt aber ^8.5), **PostgreSQL 17** (seit 05.09.2026; vorher MariaDB, siehe unten), Bootstrap 5, Webpack Encore with Stimulus
 
 ## Common Commands
 
@@ -17,10 +17,70 @@ composer test:run          # Just run PHPUnit (no DB reset)
 composer test:api          # Only API test suite
 vendor/bin/phpunit tests/Path/To/TestFile.php              # Single test file
 vendor/bin/phpunit --filter testMethodName                  # Single test method
-# Controller/DB tests need MariaDB up (docker-compose up); otherwise they fail with
-# "getaddrinfo for mysql failed". Pure unit tests (no DB) run standalone.
+# **Ein Suite-Lauf ist nur reproduzierbar, wenn vorher DREI Dinge weg sind.**
+# Sonst misst man die Vorgeschichte statt den Code — zwei Vergleiche zwischen
+# main und einem Branch lieferten so 341 Fehler gegen 35, obwohl beide Staende
+# vollstaendig gruen sind:
+#   1. die Testdatenbank (composer test:db:reset) — die Suite ueberschreibt
+#      ihren eigenen Bestand,
+#   2. var/cache/test — dort liegt der Zustand des API-Ratenbegrenzers. Die
+#      Suite schreibt mehr als 120 API-Anfragen je 15 Minuten und wirft sich
+#      beim zweiten Lauf selbst mit 429ern zurueck,
+#   3. der FilesystemAdapter von CachedTimeline in sys_get_temp_dir():
+#        find "$(php -r 'echo sys_get_temp_dir();')/symfony-cache" -maxdepth 1 \
+#          -name '*criticalmass-timeline*' -exec rm -rf {} +
+#      Er wird an der Cache-Konfiguration vorbei gebaut, ueberdauert Laeufe und
+#      laesst Startseiten-Tests gruen aussehen, ohne etwas zu pruefen.
+#      (In zsh scheitert das Glob-Muster ohne Treffer — deshalb `find`.)
+# Controller/DB tests brauchen eine laufende Datenbank; reine Unit-Tests laufen ohne.
+# Die CI faehrt PostgreSQL 17, wie die Produktion. Der Code ist portabel geblieben
+# und besteht die Suite auch gegen MariaDB — das ist aber nicht mehr die Zielplattform.
 # Use `php bin/console ...` (the bare `bin/console` may report "permission denied").
+# Console commands often need more memory: `php -d memory_limit=-1 bin/console ...`
 ```
+
+### Database Migrations
+
+```bash
+php bin/console doctrine:migrations:migrate       # apply
+php bin/console doctrine:migrations:status
+```
+
+**Die CI führt Migrationen nie aus.** `composer test:db:reset` baut das Schema mit
+`doctrine:schema:drop --full-database` → `schema:create` → `fixtures:load`. Ein grüner
+CI-Lauf sagt daher **nichts** über eine Migration aus — genau dadurch blieb jahrelang
+unbemerkt, dass 97 der bis dahin 119 Migrationen `getDatabasePlatform()->getName()` riefen,
+eine Methode, die DBAL 4 entfernt hat, und die Kette nicht mehr von null abspielbar war.
+
+**Jede neue Migration deshalb lokal gegen eine Wegwerf-Datenbank prüfen:** leere DB →
+`migrations:migrate` → `schema:update --dump-sql` muss „Nothing to update" melden, und
+`migrations:migrate prev` einmal zurück. Die echte Dev-DB dabei nie anfassen.
+
+Die Geschichte beginnt bei der Baseline `Version20260904120000` (31 Tabellen, 91
+Anweisungen). Die 119 Migrationen davor stehen in der Git-Historie. **Bestehende
+Datenbanken führen die Baseline nicht aus, sondern tragen sie als erledigt ein:**
+
+```bash
+php bin/console doctrine:migrations:version 'DoctrineMigrations\Version20260904120000' --add
+# danach die Altmeldungen entfernen:
+# DELETE FROM doctrine_migration_versions WHERE version <> 'DoctrineMigrations\\Version20260904120000';
+```
+
+**Die Baseline taugt nur fuer MySQL.** Sie enthaelt `ENGINE`, `AUTO_INCREMENT` und
+`LONGTEXT`; auf der Produktion ist sie als erledigt eingetragen, aber eine frische
+Installation gegen PostgreSQL scheitert daran. Entweder bekommt sie eine
+Plattformweiche, oder frische Installationen laufen ausdruecklich ueber
+`doctrine:schema:create`. Offener Punkt.
+
+**Spaltennamen sind in PostgreSQL kleingeschrieben.** Doctrine legt sie unquotiert an,
+PostgreSQL faltet sie: `dateTime` heisst dort `datetime`. In rohem SQL camelCase
+deshalb **nicht** quoten — `"dateTime"` greift ins Leere.
+
+**Vorsicht bei `schema:update`:** Das Produktivschema weicht in 18 Punkten vom Entity-Modell
+ab. 13 davon sind folgenlose `(DC2Type:…)`-Spaltenkommentare, aber vier Spalten kennt kein
+Entity mehr und sie enthalten Daten (`track.estimate_id`, `track.md5Hash`, `track.geoJson`,
+`social_network_profile.mainNetwork`). Ein `--force` gegen die Produktion würde sie
+unumkehrbar löschen — immer erst `--dump-sql` lesen.
 
 ### Static Analysis
 ```bash
@@ -32,6 +92,9 @@ vendor/bin/phpstan analyse                  # PHPStan level 6
 
 ### Frontend Assets
 ```bash
+# Braucht Node 20+. Liegt eine ältere Version im PATH, bricht encore mit
+# "SyntaxError: Unexpected token '?'" ab — dann z. B.
+# export PATH="$HOME/.nvm/versions/node/v20.18.1/bin:$PATH"
 yarn dev          # Build once for development
 yarn watch        # Dev build with file watching
 yarn build        # Production build
@@ -40,6 +103,11 @@ yarn build        # Production build
 ### Docker Services
 ```bash
 docker-compose up -d      # MariaDB (port 8002), Redis, Memcached, Mailcatcher (port 1080)
+# Achtung: docker-compose.yaml faehrt noch MariaDB. Fuer einen Lauf gegen die
+# Zielplattform stattdessen einen Wegwerf-Container nehmen:
+#   docker run -d --name pg -p 55432:5432 -e POSTGRES_PASSWORD=postgres \
+#     -e POSTGRES_DB=cm postgres:17
+# und in .env.test.local eine passende DATABASE_URL setzen.
 ```
 
 ## Architecture
@@ -99,9 +167,66 @@ Two traps in the generator, both of which the UI still has:
   controller then stamps the one clicked cycle onto every result. The command instead maps each
   ride back via `cycle.id` from the response.
 
+### Anmeldung: passwortlos, drei Wege
+
+Die App kennt **kein Passwort** — `User::getPassword()` gibt fest `''` zurück, es gibt kein
+Passwortfeld in der Datenbank. Angemeldet wird über **Magic Link** (`login_link`, Konten
+entstehen dabei implizit in `LoginController::createNewUser()`, einen `/register`-Endpunkt
+gibt es nicht), über **OAuth** (Facebook/Strava, HWIOAuthBundle) oder über einen
+**Passkey**.
+
+**Der Anmeldelink per Mail bleibt für jedes Konto verfügbar.** Passkeys kommen additiv
+dazu, sie ersetzen den Rückfallweg nicht — ein Opt-out („Konten mit genug Passkeys dürfen
+den Mail-Login abschalten") ist ausdrücklich **nicht** gewollt und soll auch nicht
+vorgeschlagen werden. Die bewusst akzeptierte Folge: Die Sicherheitsuntergrenze eines
+Kontos ist dauerhaft die Mailbox. Der Gegenwert ist, dass niemand sich aussperren kann.
+
+**Passkeys (WebAuthn)** laufen über `web-auth/webauthn-symfony-bundle`. Was daran nicht
+selbsterklärend ist:
+
+- **RP ID ist `criticalmass.one`.** `criticalmass.in`, `www.criticalmass.in` und
+  `criticalmass.one` liefern dieselbe App ohne Redirect aus, sind aber teils
+  verschiedene registrierbare Domains. Die `.in`-Domains sind über **Related Origin
+  Requests** abgedeckt: `webauthn.allowed_origins` wird unter `/.well-known/webauthn`
+  ausgeliefert. **Eine Änderung der RP ID entwertet jeden registrierten Passkey.**
+- `allowed_origins` **muss literal** in der Config stehen (deshalb Produktionswerte in
+  `config/packages/prod/webauthn.yaml`, dev/test in `config/packages/webauthn.yaml`).
+  Der Compiler-Pass liest die Liste zur Container-Bauzeit und legt die
+  `/.well-known/webauthn`-Route nur an, wenn er ein echtes Array sieht — ein `%env()%`
+  wäre dort noch ein String. Aus demselben Grund lässt sich die Liste nicht per
+  `when@dev` leeren: Config-Merge ergänzt Listen, er ersetzt sie nicht.
+- Der Loader-Eintrag `type: webauthn` in `config/routes.yaml` ist Pflicht, sonst
+  existieren weder `/.well-known/webauthn` noch die vier `/passkey/`-Endpunkte.
+- **Alle vier Endpunkte sind auf `/passkey/…` umgebogen.** Die Vorgaben des Bundles wären
+  `/login/options`, `POST /login`, `/register/options`, `POST /register` — und `POST /login`
+  gehört bereits `login_perform`.
+- **Sicherheitsrelevant:** Der Firewall-Authenticator verdrahtet für die Registrierung fest
+  den `RequestBodyUserEntityGuesser`, der den Benutzernamen aus dem Request-Body nimmt.
+  Der Service ist in `config/services.yaml` per Alias auf den sitzungsbasierten
+  `CurrentUserEntityGuesser` umgebogen — **diesen Alias nicht entfernen**, sonst kann sich
+  jeder einen Passkey auf ein fremdes Konto legen.
+- Der **User-Handle** ist `User::$webauthnUserHandle` (UUID, lazy erzeugt), bewusst **nicht**
+  die E-Mail: die lässt sich im Profil ohne Re-Verifikation ändern, und mit ihr als Handle
+  wären danach alle Passkeys des Kontos tot.
+- `App\Entity\WebauthnCredential` erbt von der Mapped Superclass `Webauthn\CredentialRecord`,
+  deren XML-Zuordnung aus dem Bundle als eigenes Doctrine-Mapping eingebunden ist. Die
+  Credential-ID liegt **base64-kodiert** in der Datenbank (`findOneByCredentialId()` muss
+  selbst kodieren) und ist ein `LONGTEXT`, ihr UNIQUE-Index braucht deshalb eine
+  Präfixlänge.
+- `WebauthnCredentialVoter` hat bewusst **keine `ROLE_ADMIN`-Ausnahme**, anders als
+  `TrackVoter`/`PhotoVoter`: Wer fremde Passkeys löschen könnte, sperrt Nutzer aus ihren
+  Konten aus.
+
 ### Frontend (`assets/`)
 
 Single Webpack Encore entry point (`assets/app.js`). Stimulus controllers in `assets/controllers/` — maps (Leaflet + MapLibre GL), charts (Chart.js), datatables, search, geocoding, ride date checking.
+
+`passkey_controller.js` ist bewusst **ohne** `@simplewebauthn/browser` geschrieben: Die
+base64url-Umrechnung können die Browser über `parseCreationOptionsFromJSON()` / `toJSON()`
+inzwischen selbst, und eine neue Frontend-Dependency würde die eingefrorene
+`package-lock.json` neu auflösen (siehe Frontend note oben). Die Conditional UI hängt an
+`autocomplete="username webauthn"` in `LoginType` und ist über
+`data-passkey-conditional-value` nur auf der Login-Seite aktiv.
 
 ### Tests (`tests/`)
 

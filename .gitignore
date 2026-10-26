@@ -54,6 +54,7 @@ public/users/
 /.env
 /.env.test
 /.env.local
+/.env.test.local
 /public/bundles/
 /var/
 /vendor/

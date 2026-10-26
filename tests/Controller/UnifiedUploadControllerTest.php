@@ -50,6 +50,25 @@ class UnifiedUploadControllerTest extends AbstractControllerTestCase
         }
     }
 
+    public function testOversizedUploadIsRejectedWithMessage(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $token = $this->uploadToken($client);
+
+        // PHP legt bei UPLOAD_ERR_INI_SIZE keine temporäre Datei an; der Pfad ist leer.
+        $tooLarge = new UploadedFile('', 'ride.jpg', 'image/jpeg', UPLOAD_ERR_INI_SIZE, true);
+
+        $client->request('POST', self::UPLOAD_URL, ['_token' => $token], ['file' => $tooLarge]);
+
+        $this->assertEquals(422, $client->getResponse()->getStatusCode());
+
+        $payload = json_decode((string) $client->getResponse()->getContent(), true);
+        $this->assertEquals('error', $payload['status']);
+        $this->assertStringContainsString('upload_max_filesize', $payload['message']);
+    }
+
     public function testGpxWithoutMatchingRideGetsParked(): void
     {
         $client = static::createClient();

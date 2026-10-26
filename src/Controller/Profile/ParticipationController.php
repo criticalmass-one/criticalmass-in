@@ -60,6 +60,7 @@ class ParticipationController extends AbstractController
     #[IsGranted('cancel', 'participation')]
     #[Route(
         '/profile/participation/{id}/update',
+        requirements: ['id' => '\d+'],
         name: 'criticalmass_user_participation_update',
         priority: 180
     )]
@@ -86,6 +87,7 @@ class ParticipationController extends AbstractController
     #[IsGranted('delete', 'participation')]
     #[Route(
         '/profile/participation/{id}/delete',
+        requirements: ['id' => '\d+'],
         name: 'criticalmass_user_participation_delete',
         priority: 180
     )]

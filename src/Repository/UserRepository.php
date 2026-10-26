@@ -35,6 +35,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
+     * Alle Konten mit der Rolle ROLE_ADMIN.
+     *
+     * Die Rollen liegen als JSON in einer Spalte, die DQL nicht durchsuchen kann;
+     * deshalb rohes SQL. `roles::text` ist PostgreSQL.
+     *
+     * @return list<User>
+     */
+    public function findAdmins(): array
+    {
+        $ids = $this->getEntityManager()->getConnection()->fetchFirstColumn(
+            "SELECT id FROM app_user WHERE roles::text LIKE '%\"ROLE_ADMIN\"%'"
+        );
+
+        if ([] === $ids) {
+            return [];
+        }
+
+        return $this->findBy(['id' => $ids]);
+    }
+
+    /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
