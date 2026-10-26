@@ -36,7 +36,7 @@ class PurgeTrackImportCandidatesCommandTest extends TestCase
         $command = new PurgeTrackImportCandidatesCommand($this->registry, $this->filesystem);
 
         $application = new Application();
-        $application->add($command);
+        $application->addCommand($command);
 
         $this->commandTester = new CommandTester($application->find('criticalmass:tracks:purge-import-candidates'));
     }

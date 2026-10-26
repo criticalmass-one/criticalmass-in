@@ -61,7 +61,7 @@ class FrontpageTeaser implements PhotoInterface
     protected ?\DateTime $validUntil = null;
 
     #[ORM\OneToMany(targetEntity: 'FrontpageTeaserButton', mappedBy: 'frontpageTeaser')]
-    #[ORM\OrderBy(['position' => 'ASC'])]
+    #[ORM\OrderBy(['position' => \SortDirection::Ascending])]
     protected Collection $buttons;
 
     public function __construct()

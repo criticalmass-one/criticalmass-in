@@ -7,6 +7,7 @@ use App\Criticalmass\Upload\Handler\TrackUploadHandler;
 use App\Criticalmass\Upload\UploadDispatcher;
 use App\Criticalmass\Upload\UploadResult;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class UploadDispatcherTest extends TestCase
@@ -34,9 +35,7 @@ class UploadDispatcherTest extends TestCase
         yield 'heif' => ['photo.heif'];
     }
 
-    /**
-     * @dataProvider trackExtensions
-     */
+    #[DataProvider('trackExtensions')]
     public function testTracksAreRoutedToTheTrackHandler(string $originalName): void
     {
         $expected = new UploadResult(UploadResult::KIND_TRACK, UploadResult::STATUS_PARKED, '…');
@@ -52,9 +51,7 @@ class UploadDispatcherTest extends TestCase
         self::assertSame($expected, $result);
     }
 
-    /**
-     * @dataProvider imageExtensions
-     */
+    #[DataProvider('imageExtensions')]
     public function testImagesAreRoutedToThePhotoHandler(string $originalName): void
     {
         $expected = new UploadResult(UploadResult::KIND_PHOTO, UploadResult::STATUS_STAGED, '…');

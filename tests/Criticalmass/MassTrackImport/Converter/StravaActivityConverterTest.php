@@ -4,6 +4,7 @@ namespace Tests\Criticalmass\MassTrackImport\Converter;
 
 use App\Criticalmass\MassTrackImport\Converter\StravaActivityConverter;
 use App\Entity\TrackImportCandidate;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class StravaActivityConverterTest extends TestCase
@@ -105,9 +106,7 @@ class StravaActivityConverterTest extends TestCase
         $this->assertSame(151.2193, $candidate->getEndLongitude());
     }
 
-    /**
-     * @dataProvider activityTypeProvider
-     */
+    #[DataProvider('activityTypeProvider')]
     public function testConvertDifferentActivityTypes(string $type): void
     {
         $activityData = [

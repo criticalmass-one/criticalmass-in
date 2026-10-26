@@ -30,12 +30,12 @@ class SocialNetworkProfileController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function listSocialNetworkProfilesAction(Request $request, ?City $city = null): JsonResponse
     {
-        $networkIdentifier = $request->get('networkIdentifier');
-        $autoFetch = (bool)$request->get('autoFetch');
+        $networkIdentifier = $request->query->get('networkIdentifier');
+        $autoFetch = (bool)$request->query->get('autoFetch');
         $page = max(0, $request->query->getInt('page', 0));
         $size = min(1000, max(1, $request->query->getInt('size', 100)));
 
-        if ($entities = $request->get('entities')) {
+        if ($entities = $request->query->get('entities')) {
             $entityClassNames = explode(',', $entities);
         } else {
             $entityClassNames = [];

@@ -4,11 +4,12 @@ namespace App\Security\Authorization\Voter;
 
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 abstract class AbstractVoter extends Voter
 {
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 
@@ -21,7 +22,7 @@ abstract class AbstractVoter extends Voter
         return $this->$canMethodName($subject, $user);
     }
 
-    protected function supports($attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         if (!in_array($attribute, $this->getAccessRightAttributes())) {
             return false;

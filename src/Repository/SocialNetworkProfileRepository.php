@@ -124,6 +124,17 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
         return new PaginatedResult(iterator_to_array($paginator), $page, $size, $totalItems);
     }
 
+    /**
+     * Ausdruecklich statt ueber __call(), damit Tests die Methode ohne das mit
+     * PHPUnit 12 entfallende MockBuilder::addMethods() doubeln koennen.
+     *
+     * @return array<SocialNetworkProfile>
+     */
+    public function findByCity(City $city): array
+    {
+        return $this->findByProfileable($city);
+    }
+
     public function findByProfileable(SocialNetworkProfileAble $profileAble): array
     {
         $reflection = new \ReflectionClass($profileAble);

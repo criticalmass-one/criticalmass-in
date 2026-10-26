@@ -2,13 +2,13 @@
 
 namespace App\Command\Upload;
 
-use Vich\UploaderBundle\Mapping\PropertyMapping;
-use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
+use Vich\UploaderBundle\Mapping\PropertyMappingInterface;
+use Vich\UploaderBundle\Mapping\PropertyMappingFactoryInterface;
 
 class UploadMappingResolver implements UploadMappingResolverInterface
 {
     public function __construct(
-        private readonly PropertyMappingFactory $propertyMappingFactory,
+        private readonly PropertyMappingFactoryInterface $propertyMappingFactory,
     ) {
     }
 
@@ -19,7 +19,7 @@ class UploadMappingResolver implements UploadMappingResolverInterface
 
         $result = [];
 
-        /** @var PropertyMapping $mapping */
+        /** @var PropertyMappingInterface $mapping */
         foreach ($mappings as $mapping) {
             $result[] = new UploadMappingInfo(
                 $mapping->getFileNamePropertyName(),

@@ -15,7 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Target;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
@@ -32,7 +33,7 @@ class PostReportController extends AbstractController
         private readonly PostUrlGenerator $postUrlGenerator,
         private readonly ModerationMailer $mailer,
         private readonly FriendlyCaptchaInterface $friendlyCaptcha,
-        private readonly RateLimiterFactory $postReportLimiter
+        #[Target] private readonly RateLimiterFactoryInterface $postReportLimiter
     ) {
         parent::__construct($managerRegistry);
     }

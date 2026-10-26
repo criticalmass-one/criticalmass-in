@@ -57,7 +57,7 @@ class PhotoController extends AbstractController
         Request $request,
         PhotoRepository $photoRepository
     ): Response {
-        $photoId = $request->get('photoId');
+        $photoId = $request->query->get('photoId');
 
         /** @var Photo|null $photo */
         $photo = $photoRepository->find($photoId);
