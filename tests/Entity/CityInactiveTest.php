@@ -38,6 +38,7 @@ class CityInactiveTest extends TestCase
         yield 'Score deutlich darueber' => [0.64, '2020-01-01', false];
         yield 'Score 0, alte Stadt' => [0.0, '2020-01-01', true];
         yield 'Score knapp unter dem Schwellwert, alte Stadt' => [0.005, '2020-01-01', true];
+        yield 'nur ein Social-Media-Beitrag, alte Stadt' => [0.0303, '2020-01-01', true];
         yield 'Score 0, vor zwei Tagen angelegt' => [0.0, '2026-09-09 10:00:00', false];
         yield 'Score 0, vor fuenf Monaten angelegt' => [0.0, '2026-04-11 12:00:00', false];
         yield 'Score 0, genau sechs Monate alt' => [0.0, '2026-03-11 12:00:00', true];

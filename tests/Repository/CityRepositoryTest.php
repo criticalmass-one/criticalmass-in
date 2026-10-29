@@ -124,7 +124,7 @@ class CityRepositoryTest extends KernelTestCase
 
     public function testActivityScoreThreshold(): void
     {
-        $this->assertEquals(0.01, CityRepository::ACTIVITY_SCORE_THRESHOLD);
+        $this->assertEquals(0.1, CityRepository::ACTIVITY_SCORE_THRESHOLD);
     }
 
     protected function tearDown(): void

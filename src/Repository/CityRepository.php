@@ -162,16 +162,14 @@ class CityRepository extends ServiceEntityRepository
      * Cities scoring below this are treated as inactive and disappear from
      * public lists and the frontpage; a NULL score stays visible.
      *
-     * Set just above zero on purpose. A measured run over all 739 cities
-     * (2026-08-18) produced 695 cities with a score of exactly 0.0 -- no ride
-     * participations, photos, tracks or feed items within six months -- while
-     * the lowest non-zero score was 0.0441. Anything in between therefore hides
-     * exactly the cities with no signal at all, which is what "inactive" is
-     * meant to mean, and leaves the cutoff insensitive to small data shifts.
-     * A higher threshold would also make visibility depend on the social_feed
-     * signal, which is worth up to 0.15 on its own.
+     * 0.01 originally hid only cities without any signal. In practice that
+     * kept cities whose whole activity was a single social media post in six
+     * months (score 0.03) on the frontpage. 0.10 requires roughly one post a
+     * month, or a little real activity on criticalmass.in (one participation
+     * alone scores 0.06). Measured 2026-10-29: of 136 cities with upcoming
+     * rides above 0.01, 97 stay visible.
      */
-    public const ACTIVITY_SCORE_THRESHOLD = 0.01;
+    public const ACTIVITY_SCORE_THRESHOLD = 0.1;
 
     /**
      * So lange gilt eine neu angelegte Stadt nie als inaktiv — genau das
