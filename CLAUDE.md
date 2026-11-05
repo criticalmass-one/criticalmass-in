@@ -127,6 +127,18 @@ docker-compose up -d      # MariaDB (port 8002), Redis, Memcached, Mailcatcher (
 
 Notable pattern: entities are annotated with `#[Routing\DefaultRoute]` and `#[Routing\RouteParameter]` attributes. The `DelegatedRouterManager` in `src/Criticalmass/Router/` generates canonical URLs for any entity by introspecting these attributes. Used extensively in Twig via `RouterTwigExtension`.
 
+### Zeitzonen
+
+PHP läuft in Prod mit `date.timezone = UTC`, Doctrine schreibt über `UTCDateTimeType`. Drei Konventionen, die
+man nicht verwechseln darf:
+
+- `ride.datetime` ist **UTC**; anzeigen mit `|date(…, ride.city.timezone)`.
+- `city_cycle.time` und `subride.datetime` sind **Ortszeit der Stadt ohne Umrechnung**; anzeigen mit
+  `|date('H:i', 'UTC')` bzw. `.format('H:i')`. Wer eine Mini-Mass aus einer Tour ableitet, rechnet deren
+  UTC-Zeit erst in Ortszeit um (`SubrideController::localWallTime()`). Alle Bestandsdaten folgen dem (#1569).
+- Daten von Hand per SQL eintragen: Ortszeit über `… at time zone c.timezone at time zone 'UTC'` nach UTC
+  bringen. Beim Alex-Pretti-Import (#1556) stand die Ortszeit als UTC in der Datenbank.
+
 ### Unified Upload (tracks + photos)
 
 Users upload GPX/FIT **tracks and photos through one form** at `/upload` (`UnifiedUploadController`, Uppy dashboard, one POST per file to `/upload/file`). The Strava data-import path is being retired: the API Agreement's retention/deletion rules (Policy §6.2/§6.3/§7.4) forbid permanently and publicly archiving API-sourced data (epic #1388). `UploadDispatcher` (`Criticalmass/Upload/`) routes each file by extension to a handler that parses it into a **candidate** and either matches it to a ride or parks it for review:
