@@ -114,7 +114,7 @@ class CityCycleExecuteController extends AbstractController
 
             $em->flush();
 
-            $session->getFlashBag()->add('success', sprintf('Es wurden <strong>%d Touren</strong> automatisch angelegt.', count($rideList)));
+            $session->getFlashBag()->add('success', sprintf('Es wurden %d Touren automatisch angelegt.', count($rideList)));
 
             return $this->redirectToRoute('caldera_criticalmass_city_listrides', [
                 'citySlug' => $cityCycle->getCity()->getMainSlug()->getSlug(),
