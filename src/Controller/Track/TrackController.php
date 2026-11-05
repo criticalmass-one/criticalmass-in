@@ -5,6 +5,7 @@ namespace App\Controller\Track;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -30,10 +31,15 @@ class TrackController extends AbstractController
         '/track/{id}/approve',
         requirements: ['id' => '\d+'],
         name: 'caldera_criticalmass_track_approve',
+        methods: ['POST'],
         priority: 150
     )]
-    public function approveAction(Track $track, ManagerRegistry $registry): Response
+    public function approveAction(Request $request, Track $track, ManagerRegistry $registry): Response
     {
+        if (!$this->isCsrfTokenValid('track_approve_' . $track->getId(), (string) $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token.');
+        }
+
         $track->setReviewed(true);
 
         $registry->getManager()->flush();

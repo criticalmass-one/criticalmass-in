@@ -16,6 +16,20 @@ class FrontpageControllerTest extends WebTestCase
         $this->assertSelectorTextContains('html h1', 'Hej, wir fahren Fahrrad!');
     }
 
+    public function testFrontpageDeclaresLanguageAndScalableViewport(): void
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/');
+
+        $this->assertSelectorExists('html[lang="de"]');
+        $viewport = $crawler->filter('meta[name="viewport"]');
+        $this->assertCount(1, $viewport);
+        $this->assertStringNotContainsString('user-scalable=no', (string) $viewport->attr('content'));
+        $this->assertStringNotContainsString('maximum-scale', (string) $viewport->attr('content'));
+        $this->assertStringContainsString('width=device-width', (string) $viewport->attr('content'));
+    }
+
     public function testMandatoryFrontpageFooterLinks(): void
     {
         $client = static::createClient();
