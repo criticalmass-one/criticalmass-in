@@ -105,16 +105,29 @@ class ParticipationRepository extends ServiceEntityRepository
             ->setParameter('user', $user)
             ->orderBy('r.dateTime', 'DESC');
 
+        // Der zweite Wert von expr()->eq() ist ein DQL-Bruchstueck, kein Wert:
+        // ein PHP-true wurde dabei zur Zeichenkette "1", und die Abfrage fragte
+        // "goingYes = 1". MySQL nahm das hin, PostgreSQL nicht --
+        // SQLSTATE[42883], "operator does not exist: boolean = integer". Seit
+        // dem Umzug am 05.09.2026 endete /profile/participation/list damit im
+        // 500er. Ein benannter Parameter traegt den Typ mit, so wie es die
+        // uebrigen Methoden dieser Klasse ohnehin halten.
         if ($yes) {
-            $builder->andWhere($builder->expr()->eq('p.goingYes', true));
+            $builder
+                ->andWhere($builder->expr()->eq('p.goingYes', ':goingYes'))
+                ->setParameter('goingYes', true);
         }
 
         if ($maybe) {
-            $builder->andWhere($builder->expr()->eq('p.goingMaybe', true));
+            $builder
+                ->andWhere($builder->expr()->eq('p.goingMaybe', ':goingMaybe'))
+                ->setParameter('goingMaybe', true);
         }
 
         if ($no) {
-            $builder->andWhere($builder->expr()->eq('p.goingNo', true));
+            $builder
+                ->andWhere($builder->expr()->eq('p.goingNo', ':goingNo'))
+                ->setParameter('goingNo', true);
         }
 
         $query = $builder->getQuery();
