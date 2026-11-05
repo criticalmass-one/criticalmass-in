@@ -1,0 +1,11 @@
+{# Parameter: user, small (optional) #}
+{% set avaClass = 'cm-ava' ~ (small|default(false) ? ' cm-ava-s' : '') %}
+{% if user.imageName %}
+    <img class="{{ avaClass }}"
+         src="{{ vich_uploader_asset(user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+         alt="">
+{% else %}
+    <span class="{{ avaClass }} cm-ava-ini"
+          style="background: rgb({{ user.colorRed|default(95) }}, {{ user.colorGreen|default(100) }}, {{ user.colorBlue|default(108) }})"
+          aria-hidden="true">{{ user.username|slice(0, 1)|upper }}</span>
+{% endif %}

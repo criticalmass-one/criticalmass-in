@@ -1,0 +1,26 @@
+{% set route = app.request.attributes.get('_route') ?? '' %}
+<nav class="cm-tabbar" aria-label="Hauptnavigation">
+    <a href="{{ path('caldera_criticalmass_frontpage') }}"{% if route == 'caldera_criticalmass_frontpage' or route starts with 'caldera_criticalmass_timeline' %} class="is-active"{% endif %}>
+        <svg width="22" height="22" aria-hidden="true"><use href="#i-home"/></svg>Timeline
+    </a>
+    <a href="{{ path('caldera_criticalmass_explore') }}"{% if route starts with 'caldera_criticalmass_explore' %} class="is-active"{% endif %}>
+        <svg width="22" height="22" aria-hidden="true"><use href="#i-map"/></svg>Karte
+    </a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a href="{{ path('caldera_criticalmass_unified_upload') }}"{% if route starts with 'caldera_criticalmass_unified' %} class="is-active"{% endif %}>
+            <svg width="22" height="22" aria-hidden="true"><use href="#i-plus"/></svg>Hochladen
+        </a>
+    {% endif %}
+    <a href="{{ path('caldera_criticalmass_calendar') }}"{% if route starts with 'caldera_criticalmass_calendar' %} class="is-active"{% endif %}>
+        <svg width="22" height="22" aria-hidden="true"><use href="#i-cal"/></svg>Kalender
+    </a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a href="{{ path('criticalmass_user_usermanagement') }}"{% if route starts with 'criticalmass_user' %} class="is-active"{% endif %}>
+            <svg width="22" height="22" aria-hidden="true"><use href="#i-user"/></svg>Profil
+        </a>
+    {% else %}
+        <a href="{{ path('login') }}"{% if route == 'login' %} class="is-active"{% endif %}>
+            <svg width="22" height="22" aria-hidden="true"><use href="#i-user"/></svg>Anmelden
+        </a>
+    {% endif %}
+</nav>

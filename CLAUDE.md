@@ -66,11 +66,11 @@ php bin/console doctrine:migrations:version 'DoctrineMigrations\Version202609041
 # DELETE FROM doctrine_migration_versions WHERE version <> 'DoctrineMigrations\\Version20260904120000';
 ```
 
-**Die Baseline taugt nur fuer MySQL.** Sie enthaelt `ENGINE`, `AUTO_INCREMENT` und
-`LONGTEXT`; auf der Produktion ist sie als erledigt eingetragen, aber eine frische
-Installation gegen PostgreSQL scheitert daran. Entweder bekommt sie eine
-Plattformweiche, oder frische Installationen laufen ausdruecklich ueber
-`doctrine:schema:create`. Offener Punkt.
+**Die Baseline ist reines PostgreSQL** und bricht auf anderen Plattformen per `abortIf` ab.
+Eine leere PostgreSQL-17-Datenbank laesst sich damit von null migrieren. Achtung bei
+`migrations:migrate prev`: `Version20260904130000` ueberspringt sich selbst und wird nie
+als ausgefuehrt eingetragen, `prev` laeuft deshalb vorwaerts statt zurueck. Einen Schritt
+zurueck geht es mit `doctrine:migrations:execute --down '<Version>'`.
 
 **Spaltennamen sind in PostgreSQL kleingeschrieben.** Doctrine legt sie unquotiert an,
 PostgreSQL faltet sie: `dateTime` heisst dort `datetime`. In rohem SQL camelCase
@@ -192,7 +192,8 @@ selbsterklärend ist:
 
 ### Frontend (`assets/`)
 
-Single Webpack Encore entry point (`assets/app.js`). Stimulus controllers in `assets/controllers/` — maps (Leaflet + MapLibre GL), charts (Chart.js), datatables, search, geocoding, ride date checking.
+Zwei Webpack-Encore-Entries: `app` (`assets/app.js`, bisheriges Design) und `app-v2`
+(`assets/app-v2.js`, neue Ansicht, siehe unten). Beide laden dieselben Stimulus controllers in `assets/controllers/` — maps (Leaflet + MapLibre GL), charts (Chart.js), datatables, search, geocoding, ride date checking.
 
 `passkey_controller.js` ist bewusst **ohne** `@simplewebauthn/browser` geschrieben: Die
 base64url-Umrechnung können die Browser über `parseCreationOptionsFromJSON()` / `toJSON()`
@@ -201,9 +202,55 @@ inzwischen selbst, und eine neue Frontend-Dependency würde die eingefrorene
 `autocomplete="username webauthn"` in `LoginType` und ist über
 `data-passkey-conditional-value` nur auf der Login-Seite aktiv.
 
+### Neue Ansicht (`templates/v2/`)
+
+Die neue Gestaltung ist ein **freiwilliger Test**, den Nutzer selbst einschalten. Ohne
+`FEATURE_DESIGN_V2=true` (Flagception-Flag `design_v2`) ändert sich für niemanden etwas.
+
+- **Wer was sieht:** `App\Design\DesignChoice`. Angemeldet zählt `app_user.design_v2`
+  (nullable), sonst – und bei `null` – das Cookie `cm_design` (`v1`/`v2`). Das Kontofeld
+  schlägt das Cookie; wer beim Testen angemeldet auf „bisherige Ansicht“ schaltet, setzt
+  `design_v2 = false` und sieht danach trotz Cookie das alte Design.
+- **Umschalten:** `POST /ansicht` (`DesignController`), CSRF zustandslos über
+  `framework.csrf_protection.stateless_token_ids`, damit Gäste dafür keine Sitzung bekommen.
+- **Template-Auflösung:** `App\Twig\Loader\DesignAwareLoader` steht in der Loader-Kette
+  vor dem Dateisystem und liefert `templates/v2/<name>`, wenn die Datei existiert. Eine Seite
+  wird neu, indem man zu dem Template, das ihr Controller rendert, eine Datei mit
+  **demselben Pfad** unter `templates/v2/` anlegt. Controller bleiben unverändert.
+- **Regeln, die `V2TemplateRulesTest` prüft:** v2-Seiten erben nur von `v2/Layout/…`;
+  `Template/MasterTemplate|StandardTemplate|FullscreenTemplate` und `email/*` bekommen nie
+  eine v2-Fassung. So landet eine noch alte Seite nie halb im neuen Rahmen.
+- **Kein Partial mit v2-Fassung, das eine alte Seite noch einbindet** – sie bekäme sonst
+  neues Markup mit altem Stylesheet. Deshalb bleibt `Template/Includes/_alerts.html.twig`
+  (über `AlertController` auch von alten Seiten gerendert) bewusst alt.
+- **`CachedTimeline`** hält fertiges HTML für alle Besucher; die Ansicht steht im
+  Cache-Schlüssel. Wer anderswo gerendertes HTML cacht, muss das ebenso tun.
+- **Stylesheet:** `assets/scss/v2/` – Bootstrap 5.3 ohne die BS3-Kompatibilitätsschicht,
+  Bausteine mit Präfix `cm-` (die Namen `.card`, `.btn` … gehören Bootstrap). Ein Akzent
+  (`--cm-accent`), Radien nur `--cm-r` (12 px) und `--cm-r-s` (6 px), keine
+  Großbuchstaben-Zeilen, keine Pillen, keine bunten Etiketten. Archivo liegt als woff2 in
+  `assets/fonts/archivo/` (OFL) – nicht als npm-Paket, `package-lock.json` ist eingefroren.
+- **Texte:** keine Erklär- oder Hinweistexte, keine Untertitel, die nur beschreiben, was
+  zu sehen ist. Beschriftungen, Leerzustände und Inhalte der alten Seite bleiben.
+- **Formulare** immer über die FormTypes der Controller rendern, nie Felder oder Tokens von
+  Hand nachbauen. Kommentarformulare kommen weiter über
+  `render(controller('…PostController::write…Action'))`; `v2/Post/write.html.twig` zeigt sie
+  bei Themen inline, sonst im Dialog `#modal-add-post`.
+- **Zeitzonen:** `Ride.dateTime` ist UTC → mit `ride.city.timezone` formatieren;
+  `CityCycle.time` ist Ortszeit, als UTC gespeichert → `|date('H:i', 'UTC')`;
+  `Subride.dateTime` enthält gemischte Daten (#1569) → unverändert `.format('H:i')`.
+- **Twig-Falle:** Einen gerenderten Ausschnitt nicht als `include()`-Wert weiterreichen
+  (wird doppelt escapt), sondern `{% set x %}{% include … %}{% endset %}`.
+- **Tests der v2-Seiten** (`tests/Controller/V2/`) setzen `$_ENV['FEATURE_DESIGN_V2']`
+  und das Cookie selbst und dürfen nicht von gebauten Assets abhängen: Die CI baut keine,
+  ohne `entrypoints.json` gibt Encore keine `<link>`-Tags aus.
+
 ### Tests (`tests/`)
 
 Mirror `src/` structure. Controller tests extend `AbstractControllerTestCase`. Domain tests cover entities, serializers, validators, ride namer, geo, participation, statistics, etc. PHPUnit 11, `APP_ENV=test`.
+
+Im dev-Modus meldet `/dev/login/{email}` (`DevLoginController`) ohne Mail an – praktisch, um angemeldete
+Seiten im Browser oder per headless Chrome anzusehen.
 
 ## Git-Workflow
 
