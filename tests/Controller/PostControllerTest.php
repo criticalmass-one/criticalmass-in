@@ -90,4 +90,23 @@ class PostControllerTest extends AbstractControllerTestCase
         $this->assertNotNull($post->getRide(), 'Post should be associated with a ride');
         $this->assertSame(PostKindEnum::COMMENT, $post->getKind(), 'Comments on a ride stay comments');
     }
+
+    public function testSubmitEmptyRidePostShowsFailurePage(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getFirstRideForCity('hamburg');
+        $this->assertNotNull($ride, 'Hamburg ride fixture should exist');
+
+        $crawler = $client->request('GET', sprintf('/post/write/ride/%d', $ride->getId()));
+
+        $form = $crawler->selectButton('Speichern')->form();
+        $form['post[text]'] = '';
+
+        $client->submit($form);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertStringContainsString('gar keinen Kommentar', $client->getResponse()->getContent());
+    }
 }

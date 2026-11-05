@@ -120,7 +120,8 @@ class PhotoManagementController extends AbstractController
         Request $request,
         Photo $photo,
         ObjectRouterInterface $objectRouter,
-        ManagerRegistry $registry
+        ManagerRegistry $registry,
+        TrackRepository $trackRepository
     ): Response {
         $form = $this->createForm(PhotoCoordType::class, $photo, [
             'action' => $objectRouter->generate($photo, 'caldera_criticalmass_photo_place_single')
@@ -130,7 +131,7 @@ class PhotoManagementController extends AbstractController
             return $this->placeSinglePostAction($request, $photo, $form, $registry);
         }
 
-        return $this->placeSingleGetAction($request, $photo, $form, $registry);
+        return $this->placeSingleGetAction($request, $photo, $form, $trackRepository);
     }
 
     protected function placeSingleGetAction(
@@ -255,7 +256,7 @@ class PhotoManagementController extends AbstractController
         return new Response($newFilename);
     }
 
-    protected function saveReferer(Request $request): string
+    protected function saveReferer(Request $request): ?string
     {
         $referer = $request->headers->get('referer');
 
