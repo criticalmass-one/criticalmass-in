@@ -26,6 +26,42 @@ export default class extends BaseMapController {
     connect() {
         super.connect();
         this.addDraggableMarker();
+
+        // geocoding_controller meldet seinen Treffer am document, nicht an dieser Karte
+        this.onGeocodingResult = this.onGeocodingResult.bind(this);
+        document.addEventListener('geocoding-result', this.onGeocodingResult);
+    }
+
+    disconnect() {
+        document.removeEventListener('geocoding-result', this.onGeocodingResult);
+        this.marker = null;
+        super.disconnect();
+    }
+
+    onGeocodingResult(event) {
+        const lat = parseFloat(event.detail?.lat);
+        const lng = parseFloat(event.detail?.lon);
+        if (!this.map || Number.isNaN(lat) || Number.isNaN(lng)) return;
+
+        if (this.marker) {
+            this.marker.setLatLng([lat, lng]);
+            this.updateInputs(lat, lng);
+        }
+
+        // Nominatim liefert boundingbox als [Süd, Nord, West, Ost]
+        const bbox = (event.detail.boundingbox || []).map(parseFloat);
+        if (bbox.length === 4 && !bbox.some(Number.isNaN)) {
+            this.map.fitBounds([[bbox[0], bbox[2]], [bbox[1], bbox[3]]], { maxZoom: 16 });
+        } else {
+            this.map.setView([lat, lng], Math.max(this.map.getZoom(), 15));
+        }
+    }
+
+    updateInputs(lat, lng) {
+        if (!this.latInput || !this.lngInput) return;
+
+        this.latInput.value = lat.toFixed(6);
+        this.lngInput.value = lng.toFixed(6);
     }
 
     addDraggableMarker() {
@@ -42,19 +78,20 @@ export default class extends BaseMapController {
             parseFloat(lngInput.value) ||
             (this.hasCenterLongitudeValue ? this.centerLongitudeValue : 10.4515);
 
-        const marker = L.marker([startLat, startLng], {
+        this.latInput = latInput;
+        this.lngInput = lngInput;
+
+        this.marker = L.marker([startLat, startLng], {
             draggable: true,
             autoPan: true,
             icon: this.buildIcon()
         }).addTo(this.map);
 
-        latInput.value = startLat.toFixed(6);
-        lngInput.value = startLng.toFixed(6);
+        this.updateInputs(startLat, startLng);
 
-        marker.on('moveend', (e) => {
+        this.marker.on('moveend', (e) => {
             const ll = e.target.getLatLng();
-            latInput.value = ll.lat.toFixed(6);
-            lngInput.value = ll.lng.toFixed(6);
+            this.updateInputs(ll.lat, ll.lng);
         });
     }
 
