@@ -305,4 +305,71 @@ class CalendarControllerTest extends AbstractControllerTestCase
         self::assertSame(0, $crawler->filter('.calendar-day__entry--inactive')->count());
         self::assertSame(0, $crawler->filter('.calendar-day__subheading')->count());
     }
+    private function tourInUtc(EntityManagerInterface $entityManager, string $zeitzone, string $utc): void
+    {
+        $stadt = $this->probestadt($entityManager);
+        $stadt->setTimezone($zeitzone);
+
+        $tour = new Ride();
+        $tour->setCity($stadt);
+        $tour->setTitle('Probefahrt Ortszeit');
+        $tour->setDateTime(new \DateTime($utc, new \DateTimeZone('UTC')));
+        $tour->setCreatedAt(new \DateTime());
+        $tour->setUpdatedAt(new \DateTime());
+        $tour->setEnabled(true);
+
+        $entityManager->persist($tour);
+        $entityManager->flush();
+    }
+
+    /**
+     * 30.05. 18:00 in San Francisco ist 31.05. 01:00 UTC — die Tour gehoert auf den 30.
+     */
+    public function testRidesAreFiledUnderTheLocalDayOfTheirCity(): void
+    {
+        $client = static::createClient();
+        $entityManager = static::getContainer()->get('doctrine')->getManager();
+
+        $this->tourInUtc($entityManager, 'America/Los_Angeles', '2031-05-31 01:00:00');
+
+        $crawler = $client->request('GET', $this->adresse(30));
+        self::assertSame(1, $crawler->filter('.calendar-day__entry')->count());
+
+        $crawler = $client->request('GET', $this->adresse(31));
+        self::assertSame(0, $crawler->filter('.calendar-day__entry')->count());
+    }
+
+    /**
+     * 31.05. 20:00 in San Francisco liegt in UTC schon im Juni und gehoert trotzdem in den Mai.
+     */
+    public function testARideOnTheLastLocalEveningStaysInTheMonth(): void
+    {
+        $client = static::createClient();
+        $entityManager = static::getContainer()->get('doctrine')->getManager();
+
+        $this->tourInUtc($entityManager, 'America/Los_Angeles', '2031-06-01 03:00:00');
+
+        $crawler = $client->request('GET', $this->adresse(31));
+        self::assertSame(1, $crawler->filter('.calendar-day__entry')->count());
+
+        $client->request('GET', sprintf('/calendar?year=%d&month=6&day=1', self::JAHR));
+        self::assertSame(0, $client->getCrawler()->filter('.calendar-day__entry')->count());
+    }
+
+    /**
+     * 01.05. 00:30 in Berlin ist 30.04. 22:30 UTC — die Tour gehoert in den Mai, nicht in den April.
+     */
+    public function testARideJustAfterLocalMidnightBelongsToTheNewMonth(): void
+    {
+        $client = static::createClient();
+        $entityManager = static::getContainer()->get('doctrine')->getManager();
+
+        $this->tourInUtc($entityManager, 'Europe/Berlin', '2031-04-30 22:30:00');
+
+        $crawler = $client->request('GET', $this->adresse(1));
+        self::assertSame(1, $crawler->filter('.calendar-day__entry')->count());
+
+        $client->request('GET', sprintf('/calendar?year=%d&month=4&day=30', self::JAHR));
+        self::assertSame(0, $client->getCrawler()->filter('.calendar-day__entry')->count());
+    }
 }
