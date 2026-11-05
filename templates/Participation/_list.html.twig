@@ -40,21 +40,32 @@
                         {{ participation.ride.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
                     </td>
 
-                    <td class="btn-group btn-group-xs">
-                        <a href="{{ path('criticalmass_user_participation_delete', { id: participation.id }) }}" class="btn btn-secondary" title="Diesen Eintrag komplett löschen">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
+                    <td class="text-nowrap">
+                        <form method="post" action="{{ path('criticalmass_user_participation_delete', { id: participation.id }) }}" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token('participation_delete_' ~ participation.id) }}">
+                            <button type="submit" class="btn btn-secondary btn-sm" title="Diesen Eintrag komplett löschen">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
 
                         {% if not participation.goingYes %}
-                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'yes' }) }}" class="btn btn-success" title="Deine Teilnahme speichern">
-                            <i class="far fa-check"></i>
-                        </a>
+                        <form method="post" action="{{ path('criticalmass_user_participation_update', { id: participation.id }) }}" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token('participation_update_' ~ participation.id) }}">
+                            <input type="hidden" name="status" value="yes">
+                            <button type="submit" class="btn btn-success btn-sm" title="Deine Teilnahme speichern">
+                                <i class="far fa-check"></i>
+                            </button>
+                        </form>
                         {% endif %}
 
                         {% if not participation.goingNo %}
-                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'no' }) }}" class="btn btn-danger" title="Deine Teilnahme zurückziehen">
-                            <i class="far fa-times"></i>
-                        </a>
+                        <form method="post" action="{{ path('criticalmass_user_participation_update', { id: participation.id }) }}" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token('participation_update_' ~ participation.id) }}">
+                            <input type="hidden" name="status" value="no">
+                            <button type="submit" class="btn btn-danger btn-sm" title="Deine Teilnahme zurückziehen">
+                                <i class="far fa-times"></i>
+                            </button>
+                        </form>
                         {% endif %}
                     </td>
                 </tr>
