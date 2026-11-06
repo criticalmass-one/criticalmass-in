@@ -37,7 +37,7 @@ class CityController extends AbstractController
     ): Response {
         return $this->render('City/ride_list.html.twig', [
             'city' => $city,
-            'rides' => $rideRepository->findRidesForCity($city),
+            'rides' => $rideRepository->findRidesForCity($city, onlyEnabled: true),
         ]);
     }
 
@@ -112,7 +112,7 @@ class CityController extends AbstractController
             'nearCities' => $cityRepository->findNearCities($city),
             'locations' => $locationRepository->findLocationsByCity($city),
             'photos' => $photoRepository->findSomePhotos(8, $city),
-            'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
+            'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6, onlyEnabled: true),
             'socialNetworkProfiles' => $socialNetworkProfileRepository->findByCity($city),
             'statusPosts' => $featureManager->isActive('status_posts') ? $postRepository->findStatusPostsForCity($city) : null,
         ]);

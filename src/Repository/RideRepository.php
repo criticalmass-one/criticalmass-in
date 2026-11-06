@@ -39,8 +39,11 @@ class RideRepository extends ServiceEntityRepository
             // unzuverlaessig gemacht (rot, gruen, rot bei identischem Stand),
             // aber es betrifft genauso die Seite selbst.
             ->addOrderBy('r.id', 'ASC')
+            // Abgesagte oder stillgelegte Touren nicht als naechsten Termin anbieten.
+            ->andWhere($builder->expr()->eq('r.enabled', ':enabled'))
             ->setParameter('dateTime', $dateTime)
-            ->setParameter('city', $city);
+            ->setParameter('city', $city)
+            ->setParameter('enabled', true);
 
         if ($cycleMandatory === true) {
             $builder->andWhere($builder->expr()->isNotNull('r.cycle'));
@@ -58,7 +61,11 @@ class RideRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function findRidesForCity(City $city, string $order = 'DESC', ?int $maxResults = null): array
+    /**
+     * Validator und Dublettensuche brauchen auch deaktivierte Touren, sonst legt der
+     * Generator sie neu an. Fuer die Anzeige deshalb $onlyEnabled setzen.
+     */
+    public function findRidesForCity(City $city, string $order = 'DESC', ?int $maxResults = null, bool $onlyEnabled = false): array
     {
         $builder = $this->createQueryBuilder('ride');
 
@@ -66,6 +73,12 @@ class RideRepository extends ServiceEntityRepository
             ->select('ride')
             ->where($builder->expr()->eq('ride.city', $city->getId()))
             ->addOrderBy('ride.dateTime', $order);
+
+        if ($onlyEnabled) {
+            $builder
+                ->andWhere($builder->expr()->eq('ride.enabled', ':enabled'))
+                ->setParameter('enabled', true);
+        }
 
         if ($maxResults) {
             $builder
