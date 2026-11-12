@@ -118,6 +118,12 @@
                         {{ tagDatum|format_datetime(pattern='EEEE, d. MMMM yyyy') }}
                     </h2>
 
+                    <a class="calendar-day__map"
+                       href="{{ path('caldera_criticalmass_ride_map', {date: tagDatum|date('Y-m-d')}) }}">
+                        <i class="far fa-map" aria-hidden="true"></i>
+                        Auf der Karte
+                    </a>
+
                     {% if touren is empty %}
                         <p class="text-muted calendar-day__count">
                             An diesem Tag ist keine Tour eingetragen.

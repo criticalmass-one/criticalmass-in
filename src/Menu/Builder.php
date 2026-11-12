@@ -42,6 +42,9 @@ class Builder extends AbstractBuilder
         $menu['Städte']
             ->addChild('Kalender', ['route' => 'caldera_criticalmass_calendar']);
 
+        $menu['Städte']
+            ->addChild('Übersichtskarte', ['route' => 'caldera_criticalmass_ride_map']);
+
         $menu->addChild('Statistik', ['uri' => '#'])
             ->setExtra('dropdown', true);
 
