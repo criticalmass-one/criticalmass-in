@@ -47,10 +47,16 @@ export default class extends Controller {
         }
     }
 
+    // Wo die Karte sitzt. Ueblicherweise ist das Controller-Element selbst die
+    // Karte; wer daneben noch eine Seitenleiste fuehrt, gibt hier das Feld an.
+    get mapElement() {
+        return this.element;
+    }
+
     initMap() {
         const locked = this.hasLockMapValue && this.lockMapValue === 'true';
 
-        this.map = L.map(this.element, {
+        this.map = L.map(this.mapElement, {
             zoomControl: !locked,
             maxBounds: [[180, -Infinity], [-180, Infinity]],
             maxBoundsViscosity: 1,

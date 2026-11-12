@@ -1,0 +1,97 @@
+{% extends 'Template/FullscreenTemplate.html.twig' %}
+
+{% block title %}Übersichtskarte{% endblock %}
+
+{% block content %}
+    {% set c = 'map--day-map' %}
+
+    <div class="day-map"
+         data-controller="{{ c }}"
+         data-{{ c }}-url-template-value="{{ path('caldera_criticalmass_ride_map_rides', {date: '0000-00-00'}) }}"
+         data-{{ c }}-zoom-value="6">
+
+        <aside class="day-map__sidebar">
+            {{ form_start(form, {
+                action: path('caldera_criticalmass_ride_map'),
+                attr: {class: 'day-map__filter', 'data-action': 'submit->' ~ c ~ '#submit'}
+            }) }}
+                <h1 class="day-map__title">Übersichtskarte</h1>
+
+                <div class="day-map__date">
+                    <button type="button" class="btn btn-outline-secondary"
+                            data-action="{{ c }}#previousDay" aria-label="Zurück">
+                        <i class="far fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+
+                    {{ form_label(form.date, null, {label_attr: {class: 'visually-hidden'}}) }}
+                    {{ form_widget(form.date, {attr: {
+                        'data-map--day-map-target': 'date',
+                        'data-action': 'change->' ~ c ~ '#changeDate'
+                    }}) }}
+
+                    <button type="button" class="btn btn-outline-secondary"
+                            data-action="{{ c }}#nextDay" aria-label="Weiter">
+                        <i class="far fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="day-map__range">
+                    {{ form_label(form.range, null, {label_attr: {class: 'visually-hidden'}}) }}
+                    {{ form_widget(form.range, {attr: {
+                        'data-map--day-map-target': 'range',
+                        'data-action': 'change->' ~ c ~ '#changeDate'
+                    }}) }}
+
+                    <span class="day-map__period" data-{{ c }}-target="period"></span>
+                </div>
+
+                {{ form_label(form.q, null, {label_attr: {class: 'visually-hidden'}}) }}
+                {{ form_widget(form.q, {attr: {
+                    placeholder: 'Stadt, Tour, Treffpunkt …',
+                    autocomplete: 'off',
+                    'data-map--day-map-target': 'search',
+                    'data-action': 'input->' ~ c ~ '#filter'
+                }}) }}
+
+                {{ form_widget(form.active, {attr: {
+                    'data-map--day-map-target': 'active',
+                    'data-action': 'change->' ~ c ~ '#filter'
+                }}) }}
+
+                <div class="dropdown day-map__types">
+                    <button type="button"
+                            class="btn btn-outline-secondary dropdown-toggle day-map__types-toggle"
+                            data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside"
+                            aria-expanded="false">
+                        <span data-{{ c }}-target="typeLabel"
+                              data-all="Alle Tourarten"
+                              data-many="Tourarten">{{ form.type.vars.label }}</span>
+                    </button>
+
+                    <div class="dropdown-menu day-map__types-menu" role="group" aria-label="{{ form.type.vars.label }}">
+                        {% for typ in form.type %}
+                            {{ form_widget(typ, {attr: {
+                                'data-map--day-map-target': 'type',
+                                'data-action': 'change->' ~ c ~ '#filter'
+                            }}) }}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <noscript>
+                    <button type="submit" class="btn btn-primary btn-sm">Anzeigen</button>
+                </noscript>
+            {{ form_end(form, {render_rest: false}) }}
+
+            <p class="day-map__count" aria-live="polite">
+                <strong data-{{ c }}-target="visible">0</strong>
+                von <span data-{{ c }}-target="total">0</span> Touren im Ausschnitt
+            </p>
+
+            <ol class="day-map__list" data-{{ c }}-target="list"></ol>
+        </aside>
+
+        <div class="day-map__map" data-{{ c }}-target="map"></div>
+    </div>
+{% endblock %}

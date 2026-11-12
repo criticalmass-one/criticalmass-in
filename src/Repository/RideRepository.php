@@ -301,6 +301,34 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Touren fuer die Übersichtskarte: alles in einem Zeitfenster, samt Stadt und
+     * Haupt-Slug in einer Abfrage.
+     *
+     * Deaktivierte Touren kommen bewusst mit — die Karte zeigt sie als
+     * abgesagt, wie der Kalender. Deaktivierte Staedte dagegen nicht.
+     *
+     * @return list<Ride>
+     */
+    public function findForMapBetween(\DateTimeInterface $from, \DateTimeInterface $until): array
+    {
+        $builder = $this->createQueryBuilder('ride');
+
+        $builder
+            ->select('ride', 'city', 'mainSlug')
+            ->join('ride.city', 'city')
+            ->leftJoin('city.mainSlug', 'mainSlug')
+            ->where($builder->expr()->eq('city.enabled', ':enabled'))
+            ->andWhere($builder->expr()->gte('ride.dateTime', ':from'))
+            ->andWhere($builder->expr()->lt('ride.dateTime', ':until'))
+            ->addOrderBy('ride.dateTime', 'ASC')
+            ->setParameter('enabled', true)
+            ->setParameter('from', $from)
+            ->setParameter('until', $until);
+
+        return $builder->getQuery()->getResult();
+    }
+
     public function findRidesByDateTimeMonth(\DateTime $dateTime): array
     {
         $startDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);

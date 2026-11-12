@@ -1,0 +1,238 @@
+// Die Übersichtskarte: schmale Seitenleiste mit Filtern und Liste, daneben die Karte.
+
+$day-map-navbar-height: 56px;
+$day-map-sidebar-width: 320px;
+
+.day-map {
+    display: flex;
+    height: calc(100vh - #{$day-map-navbar-height});
+    height: calc(100dvh - #{$day-map-navbar-height});
+    width: 100%;
+    overflow: hidden;
+}
+
+.day-map__map {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+}
+
+.day-map__sidebar {
+    width: $day-map-sidebar-width;
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-right: 1px solid #dee2e6;
+}
+
+.day-map__filter {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    padding: .9rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    background: #f8f9fa;
+    flex-shrink: 0;
+
+    .form-check {
+        margin: 0;
+        min-height: 0;
+    }
+}
+
+.day-map__title {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.day-map__date {
+    display: flex;
+    gap: .35rem;
+
+    input {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+.day-map__range {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+
+    select {
+        width: auto;
+        flex-shrink: 0;
+    }
+}
+
+.day-map__period {
+    font-size: .85rem;
+    color: #6c757d;
+    font-variant-numeric: tabular-nums;
+}
+
+.day-map__types-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    text-align: left;
+}
+
+.day-map__types-menu {
+    width: 100%;
+    padding: .4rem .75rem;
+    font-size: .9rem;
+
+    .form-check {
+        padding-top: .2rem;
+        padding-bottom: .2rem;
+    }
+
+    label {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        width: 100%;
+        cursor: pointer;
+    }
+}
+
+.day-map__dot {
+    display: inline-block;
+    width: .65rem;
+    height: .65rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.day-map__count {
+    margin: 0;
+    padding: .45rem 1rem;
+    font-size: .85rem;
+    color: #6c757d;
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.day-map__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.day-map__entry {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    column-gap: .5rem;
+    width: 100%;
+    padding: .5rem 1rem;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    background: none;
+    text-align: left;
+
+    &:hover,
+    &:focus-visible {
+        background: #f1f3f5;
+    }
+
+    &--inactive {
+        color: #868e96;
+    }
+
+    &--cancelled .day-map__entry-city {
+        text-decoration: line-through;
+    }
+}
+
+.day-map__entry-time {
+    font-variant-numeric: tabular-nums;
+    font-size: .85rem;
+    color: #6c757d;
+}
+
+.day-map__entry-city {
+    font-weight: 600;
+    font-size: .92rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.day-map__entry-detail {
+    grid-column: 3;
+    font-size: .8rem;
+    color: #868e96;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:empty {
+        display: none;
+    }
+}
+
+.day-map__popup-ride {
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+
+    & + & {
+        margin-top: .5rem;
+        padding-top: .5rem;
+        border-top: 1px solid #dee2e6;
+    }
+}
+
+.day-map__popup {
+    max-height: 16rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+    min-width: 11rem;
+}
+
+.day-map__locate {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+
+    &--busy {
+        color: #1c7ed6;
+    }
+}
+
+// Auf dem Telefon steht die Karte oben und die Liste darunter — beides
+// bleibt bedienbar, ohne dass eines das andere ueberdeckt.
+@media (max-width: 767px) {
+    .day-map {
+        flex-direction: column-reverse;
+        height: auto;
+        overflow: visible;
+    }
+
+    .day-map__map {
+        flex: none;
+        height: 55vh;
+    }
+
+    .day-map__sidebar {
+        width: 100%;
+        height: auto;
+        border-right: 0;
+    }
+
+    .day-map__list {
+        overflow: visible;
+    }
+}
