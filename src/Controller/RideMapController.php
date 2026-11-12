@@ -38,8 +38,11 @@ class RideMapController extends AbstractController
             'date' => $tag,
             'range' => in_array($anfrage['range'] ?? null, RideMapFilterType::ZEITRAEUME, true) ? $anfrage['range'] : 'day',
             'q' => $this->textAus($request, 'q'),
-            // Vorgabe ist „nur aktive“; abgewaehlt steht ausdruecklich active=0 in der Adresse.
-            'active' => '0' !== ($anfrage['active'] ?? null),
+            // Vorgabe ist „alle Staedte“. Der Aktivitaetswert misst nur, was auf
+            // criticalmass.in und in den Feeds ankommt: Am 27.11.2026 lagen 96 von
+            // 157 Touren in Staedten unter der Schwelle — darunter Nuernberg, das
+            // nachweislich jeden Monat faehrt. Vorbelegt verschwiege der Filter sie.
+            'active' => '1' === ($anfrage['active'] ?? null),
             'type' => $this->tourartenAus($request),
         ]);
 
