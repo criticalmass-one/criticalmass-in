@@ -535,8 +535,8 @@ export default class extends BaseMapController {
             params.set('q', search);
         }
 
-        if (!this.activeTarget.checked) {
-            params.set('active', '0');
+        if (this.activeTarget.checked) {
+            params.set('active', '1');
         }
 
         for (const box of this.typeTargets) {

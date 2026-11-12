@@ -95,7 +95,7 @@ class RideMapControllerTest extends AbstractControllerTestCase
     public function testThePageShowsTheFiltersForTheRequestedDay(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/map?date=2031-05-09&q=Hamburg&active=0&type[]=KIDICAL_MASS');
+        $crawler = $client->request('GET', '/map?date=2031-05-09&q=Hamburg&type[]=KIDICAL_MASS');
 
         self::assertResponseIsSuccessful();
         self::assertSame('2031-05-09', $crawler->filter('input[name="date"]')->attr('value'));
@@ -109,14 +109,22 @@ class RideMapControllerTest extends AbstractControllerTestCase
         self::assertCount(1, $crawler->filter('[data-controller="map--day-map"]'));
     }
 
-    public function testOnlyActiveCitiesIsTheDefault(): void
+    /**
+     * Vorbelegt verschwiege der Filter die Mehrheit der Touren: Der
+     * Aktivitaetswert sieht nur, was auf criticalmass.in ankommt, nicht, ob
+     * gefahren wird.
+     */
+    public function testAllCitiesAreShownByDefault(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/map');
 
         self::assertResponseIsSuccessful();
-        self::assertNotNull($crawler->filter('input[name="active"]')->attr('checked'));
+        self::assertNull($crawler->filter('input[name="active"]')->attr('checked'));
         self::assertSame(date('Y-m-d'), $crawler->filter('input[name="date"]')->attr('value'));
+
+        $crawler = $client->request('GET', '/map?active=1');
+        self::assertNotNull($crawler->filter('input[name="active"]')->attr('checked'));
     }
 
     public function testNonsenseInTheAddressFallsBackToToday(): void
