@@ -27,6 +27,8 @@ framework:
     form: ~
     csrf_protection:
         enabled: true
+        # Ohne Sitzung (Sec-Fetch-Site/Origin), das Formular steht auch fuer Gaeste in der Fusszeile.
+        stateless_token_ids: ['design-switch']
     validation:
         enable_attributes: true
     default_locale:  '%locale%'

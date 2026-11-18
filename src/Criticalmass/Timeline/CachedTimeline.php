@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Timeline;
 
+use App\Design\DesignChoice;
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -12,9 +13,19 @@ class CachedTimeline extends Timeline
 {
     private const int TTL = 300;
 
+    public function __construct(
+        ManagerRegistry $doctrine,
+        Environment $twigEnvironment,
+        FeatureManagerInterface $featureManager,
+        private readonly DesignChoice $designChoice,
+    ) {
+        parent::__construct($doctrine, $twigEnvironment, $featureManager);
+    }
+
     public function execute(): TimelineInterface
     {
-        $cacheKey = 'criticalmass-timeline-content';
+        // Der Cache haelt fertiges HTML, je Ansicht ein eigenes.
+        $cacheKey = 'criticalmass-timeline-content-' . ($this->designChoice->isV2() ? DesignChoice::V2 : DesignChoice::V1);
 
         if ($this->startDateTime) {
             $cacheKey .= '-start-' . $this->startDateTime->format('Y-m-d');

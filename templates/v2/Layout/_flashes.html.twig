@@ -1,0 +1,8 @@
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="cm-flash cm-flash-{{ type }} alert fade show" role="alert">
+            <span>{{ message }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Schlie&szlig;en"></button>
+        </div>
+    {% endfor %}
+{% endfor %}

@@ -135,6 +135,14 @@ services:
         alias: App\Criticalmass\Timeline\CachedTimeline
         #alias: App\Criticalmass\Timeline\Timeline
 
+    # autoconfigure aus, sonst haengt ein zweites twig.loader-Tag ohne Prioritaet dran.
+    App\Twig\Loader\DesignAwareLoader:
+        autoconfigure: false
+        arguments:
+            $inner: '@twig.loader.native_filesystem'
+        tags:
+            - { name: twig.loader, priority: 100 }
+
     App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
         arguments: ['@liip_imagine']
         tags:
