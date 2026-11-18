@@ -49,7 +49,7 @@
             <div role="tabpanel" class="tab-pane fade show active" id="participants" aria-labelledby="participants-tab">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table">
+                        <table class="table" data-controller="datatable">
                             <thead>
                             <tr>
                                 <th>
@@ -69,7 +69,7 @@
                             <tbody>
                             {% for ride in participationList %}
                                 <tr>
-                                    <td>
+                                    <td data-order="{{ ride.dateTime ? ride.dateTime|date('U') : 0 }}">
                                         <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
@@ -81,7 +81,7 @@
                                         </a>
                                     </td>
 
-                                    <td>
+                                    <td data-order="{{ ride.estimatedParticipants|default(0) }}">
                                         {{ ride.estimatedParticipants }}
                                     </td>
                                 </tr>
@@ -95,7 +95,7 @@
             <div role="tabpanel" class="tab-pane fade" id="distance" aria-labelledby="distance-tab">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table">
+                        <table class="table" data-controller="datatable">
                             <thead>
                             <tr>
                                 <th>
@@ -115,7 +115,7 @@
                             <tbody>
                             {% for ride in distanceList %}
                                 <tr>
-                                    <td>
+                                    <td data-order="{{ ride.dateTime ? ride.dateTime|date('U') : 0 }}">
                                         <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
@@ -127,7 +127,7 @@
                                         </a>
                                     </td>
 
-                                    <td>
+                                    <td data-order="{{ ride.estimatedDistance|default(0) }}">
                                         {{ ride.estimatedDistance|round(2) }}&nbsp;km
                                     </td>
                                 </tr>
@@ -141,7 +141,7 @@
             <div role="tabpanel" class="tab-pane fade" id="duration" aria-labelledby="duration-tab">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table">
+                        <table class="table" data-controller="datatable">
                             <thead>
                             <tr>
                                 <th>
@@ -161,7 +161,7 @@
                             <tbody>
                             {% for ride in durationList %}
                                 <tr>
-                                    <td>
+                                    <td data-order="{{ ride.dateTime ? ride.dateTime|date('U') : 0 }}">
                                         <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
@@ -173,7 +173,7 @@
                                         </a>
                                     </td>
 
-                                    <td>
+                                    <td data-order="{{ ride.getEstimatedDurationInSeconds()|default(0) }}">
                                         {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
                                     </td>
                                 </tr>
