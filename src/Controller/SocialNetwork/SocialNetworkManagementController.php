@@ -20,6 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SocialNetworkManagementController extends AbstractController
 {
+    #[IsGranted('ROLE_USER')]
     #[Route(
         '/socialnetwork/{id}/edit',
         requirements: ['id' => '\d+'],
@@ -52,19 +53,21 @@ class SocialNetworkManagementController extends AbstractController
     ): Response {
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var SocialNetworkProfile $socialNetworkProfile */
-            $socialNetworkProfile = $form->getData();
-
-            $this->managerRegistry->getManager()->persist($socialNetworkProfile);
-            $this->managerRegistry->getManager()->flush();
-
-            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->editGetAction($request, $form, $objectRouter, $socialNetworkHelper);
         }
 
-        return $this->redirect($objectRouter->generate(
-            $socialNetworkProfile->getCity(),
-            'criticalmass_socialnetwork_city_list'
+        /** @var SocialNetworkProfile $socialNetworkProfile */
+        $socialNetworkProfile = $form->getData();
+
+        $this->managerRegistry->getManager()->persist($socialNetworkProfile);
+        $this->managerRegistry->getManager()->flush();
+
+        $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+        return $this->redirect($socialNetworkHelper->getRouteName(
+            $socialNetworkHelper->getProfileAble($socialNetworkProfile),
+            'list'
         ));
     }
 

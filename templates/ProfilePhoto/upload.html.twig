@@ -19,11 +19,13 @@
             </div>
         </div>
 
+        {% if app.user.imageName %}
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
                 <img class="img-responsive img-thumbnail" src="{{ vich_uploader_asset(app.user, 'imageFile')|imagine_filter('user_profile_photo_medium') }}"/>
             </div>
         </div>
+        {% endif %}
 
         <div class="row margin-top-medium">
             <div class="col-md-6 col-md-offset-3 text-center">

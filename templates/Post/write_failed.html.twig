@@ -29,20 +29,7 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="form-group">
-                    <input type="checkbox" id="form-post-share-location" checked="checked"/> Wenn du diese Checkbox
-                    aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer
-                    Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares
-                    entfernen.
-                </div>
-            </div>
-        </div>
-
         {{ form_widget(form._token) }}
-        {{ form_widget(form.latitude) }}
-        {{ form_widget(form.longitude) }}
 
         <div class="row">
             <div class="col-md-6 col-md-offset-3">

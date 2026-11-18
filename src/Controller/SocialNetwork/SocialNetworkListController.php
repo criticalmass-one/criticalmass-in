@@ -57,7 +57,7 @@ class SocialNetworkListController extends AbstractController
         Ride $ride,
         SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory,
         SocialNetworkHelperInterface $socialNetworkHelper,
-        ?UserInterface $user = null
+        UserInterface $user
     ): Response {
         $addProfileForm = $this->getAddProfileForm(
             $router,
