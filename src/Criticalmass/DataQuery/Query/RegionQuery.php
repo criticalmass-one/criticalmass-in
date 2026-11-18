@@ -50,8 +50,18 @@ class RegionQuery extends AbstractQuery implements OrmQueryInterface, ElasticQue
     {
         $expr = $queryBuilder->expr();
 
+        // Staedte haengen am Bundesland; Land, Kontinent und Welt liegen ein bis drei Ebenen darueber.
         $queryBuilder
-            ->andWhere($expr->eq('e.region', ':region'))
+            ->leftJoin('e.region', 'regionQuery1')
+            ->leftJoin('regionQuery1.parent', 'regionQuery2')
+            ->leftJoin('regionQuery2.parent', 'regionQuery3')
+            ->leftJoin('regionQuery3.parent', 'regionQuery4')
+            ->andWhere($expr->orX(
+                $expr->eq('regionQuery1', ':region'),
+                $expr->eq('regionQuery2', ':region'),
+                $expr->eq('regionQuery3', ':region'),
+                $expr->eq('regionQuery4', ':region'),
+            ))
             ->setParameter('region', $this->region);
 
         return $queryBuilder;

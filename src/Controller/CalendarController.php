@@ -44,10 +44,17 @@ class CalendarController extends AbstractController
     {
         $monat = $this->monatAus($request);
 
+        // ride.dateTime ist UTC: einen Tag Rand abfragen, der Ortstag entscheidet erst danach.
         $touren = $this->rideRepository->findRides(
-            $monat,
-            $monat->modify('last day of this month')->setTime(23, 59, 59)
+            $monat->modify('-1 day'),
+            $monat->modify('first day of next month')->modify('+1 day')
         );
+
+        $touren = array_values(array_filter(
+            $touren,
+            fn (Ride $tour): bool => null !== ($ortszeit = $this->ortszeit($tour))
+                && $ortszeit->format('Y-m') === $monat->format('Y-m')
+        ));
 
         $nachTag = $this->nachTagOrdnen($touren);
         $gewaehlt = $this->gewaehlterTag($request, $monat, $nachTag);
@@ -112,7 +119,7 @@ class CalendarController extends AbstractController
         $nachTag = [];
 
         foreach ($touren as $tour) {
-            $zeitpunkt = $tour->getDateTime();
+            $zeitpunkt = $this->ortszeit($tour);
 
             if (null === $zeitpunkt) {
                 continue;
@@ -128,6 +135,22 @@ class CalendarController extends AbstractController
         ksort($nachTag);
 
         return $nachTag;
+    }
+
+    /**
+     * Der Zeitpunkt einer Tour in der Zeitzone ihrer Stadt.
+     */
+    private function ortszeit(Ride $tour): ?\DateTimeImmutable
+    {
+        $zeitpunkt = $tour->getDateTime();
+
+        if (null === $zeitpunkt) {
+            return null;
+        }
+
+        $zeitzone = $tour->getCity()?->getTimezone() ?: 'UTC';
+
+        return \DateTimeImmutable::createFromMutable($zeitpunkt)->setTimezone(new \DateTimeZone($zeitzone));
     }
 
     /**
