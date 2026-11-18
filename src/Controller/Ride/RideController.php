@@ -13,7 +13,6 @@ use App\Repository\BlockedCityRepository;
 use App\Repository\LocationRepository;
 use App\Repository\ParticipationRepository;
 use App\Repository\PhotoRepository;
-use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
@@ -22,23 +21,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RideController extends AbstractController
 {
-    public function listAction(
-        RideRepository $rideRepository
-    ): Response {
-        $ridesResult = $rideRepository->findRidesInInterval();
-
-        $rides = [];
-
-        /** @var Ride $ride */
-        foreach ($ridesResult as $ride) {
-            $rides[$ride->getDateTime()->format('Y-m-d')][] = $ride;
-        }
-
-        return $this->render('Ride/list.html.twig', [
-            'rides' => $rides,
-        ]);
-    }
-
     #[Route(
         '/{citySlug}/{rideIdentifier}',
         name: 'caldera_criticalmass_ride_show',

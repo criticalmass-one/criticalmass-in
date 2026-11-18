@@ -33,26 +33,6 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    public function ridelistAction(
-        Request $request,
-        PaginatorInterface $paginator,
-        PhotoRepository $photoRepository,
-        Ride $ride
-    ): Response {
-        $query = $photoRepository->buildQueryPhotosByRide($ride);
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            32
-        );
-
-        return $this->render('PhotoManagement/ride_list.html.twig', [
-            'ride' => $ride,
-            'pagination' => $pagination,
-        ]);
-    }
-
     #[IsGranted('edit', 'photo')]
     #[Route('/managephotos/{id}/delete', requirements: ['id' => '\d+'], name: 'caldera_criticalmass_photo_delete', priority: 170)]
     public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
