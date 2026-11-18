@@ -167,9 +167,17 @@ class Track
         return $this;
     }
 
+    /**
+     * Der erste Punkt des Zuschnitts, oder 0.
+     *
+     * Die Spalte ist nullbar, der Rueckgabetyp war es nicht — bei einem Track
+     * ohne gesetzten Zuschnitt **warf** dieser Aufruf einen TypeError, statt
+     * "kein Zuschnitt" zu sagen. Getroffen hat das jeden Weg ueber
+     * GpxService::getPointsInRange().
+     */
     public function getStartPoint(): int
     {
-        return $this->startPoint;
+        return $this->startPoint ?? 0;
     }
 
     public function setEndPoint(int $endPoint): Track
@@ -179,9 +187,12 @@ class Track
         return $this;
     }
 
+    /**
+     * Der letzte Punkt des Zuschnitts, oder 0 fuer "keiner gesetzt".
+     */
     public function getEndPoint(): int
     {
-        return $this->endPoint;
+        return $this->endPoint ?? 0;
     }
 
     public function setUpdatedAt(\DateTime $updatedAt): Track

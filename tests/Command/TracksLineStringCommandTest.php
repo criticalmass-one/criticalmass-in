@@ -28,6 +28,12 @@ class TracksLineStringCommandTest extends KernelTestCase
     {
         self::bootKernel();
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
+
+        // Jeder Test faengt bei null an. Ohne das bauen sie aufeinander auf:
+        // Der erste schreibt Geometrien, der zweite findet weniger offene
+        // Tracks vor als er erwartet, und welcher Test scheitert, haengt
+        // davon ab, in welcher Reihenfolge sie liefen.
+        $this->entityManager->createQuery('UPDATE App\Entity\Track t SET t.lineString = NULL')->execute();
     }
 
     /**
@@ -44,8 +50,12 @@ class TracksLineStringCommandTest extends KernelTestCase
             $punkte[] = $punkt;
         }
 
+        // Beide Wege bestuecken: Wo kein Zuschnitt gesetzt ist — und bei den
+        // Fixtures ist keiner gesetzt —, greift der Befehl auf getPoints()
+        // zurueck statt auf getPointsInRange().
         $stellvertreter = $this->createMock(GpxServiceInterface::class);
         $stellvertreter->method('getPointsInRange')->willReturn($punkte);
+        $stellvertreter->method('getPoints')->willReturn($punkte);
 
         static::getContainer()->set(GpxServiceInterface::class, $stellvertreter);
     }
