@@ -72,9 +72,20 @@
                                 {{ network ? network.name : profile.network }}
                             </td>
                             <td>
-                                <a href="{{ profile.identifier }}">
-                                    {{ profile.identifier }}
-                                </a>
+                                {# Die Verwaltungsliste zeigt die Kennung immer,
+                                   auch eine unbrauchbare -- nur wer sie sieht,
+                                   kann sie richtigstellen. Verwiesen wird aber
+                                   nur auf eine pruefbare Adresse. #}
+                                {% if profile.safeUrl %}
+                                    <a href="{{ profile.safeUrl }}" target="_blank" rel="noopener">
+                                        {{ profile.identifier }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-danger" title="Keine gültige http(s)-Adresse — dieser Eintrag verweist nirgendwohin.">
+                                        {{ profile.identifier }}
+                                        <i class="far fa-triangle-exclamation ms-1"></i>
+                                    </span>
+                                {% endif %}
                             </td>
                             <td>
                                 <div class="btn-group">
