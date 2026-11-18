@@ -120,7 +120,10 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     #[Groups(['subride-list', 'extended-subride-list'])]
     public function getTimestamp(): int
     {
-        return (int) $this->dateTime->format('U');
+        // dateTime ist Ortszeit der Stadt, gespeichert ohne Umrechnung.
+        $timezone = new \DateTimeZone($this->ride?->getCity()?->getTimezone() ?? 'Europe/Berlin');
+
+        return (int) (new \DateTime($this->dateTime->format('Y-m-d H:i:s'), $timezone))->format('U');
     }
 
     public function setDateTime(\DateTime $dateTime): Subride

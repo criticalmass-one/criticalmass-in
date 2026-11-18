@@ -27,7 +27,7 @@ class SubrideController extends AbstractController
     {
         $subride = new Subride();
         $subride
-            ->setDateTime($ride->getDateTime())
+            ->setDateTime($this->localWallTime($ride))
             ->setRide($ride)
             ->setUser($user);
 
@@ -177,7 +177,7 @@ class SubrideController extends AbstractController
             $newSubride->setUser($this->getUser());
             $newSubride->setRide($ride);
 
-            $newSubrideDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' ' . $oldSubride->getDateTime()->format('H:i:s'));
+            $newSubrideDateTime = new \DateTime($this->localWallTime($ride)->format('Y-m-d') . ' ' . $oldSubride->getDateTime()->format('H:i:s'));
             $newSubride->setDateTime($newSubrideDateTime);
 
             $em->persist($newSubride);
@@ -186,5 +186,15 @@ class SubrideController extends AbstractController
         $em->flush();
 
         return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_ride_show'));
+    }
+
+    /**
+     * Mini-Masses speichern die Ortszeit der Stadt ohne Umrechnung, Touren dagegen UTC.
+     */
+    private function localWallTime(Ride $ride): \DateTime
+    {
+        $local = (clone $ride->getDateTime())->setTimezone(new \DateTimeZone($ride->getCity()->getTimezone() ?? 'Europe/Berlin'));
+
+        return new \DateTime($local->format('Y-m-d H:i:s'));
     }
 }
