@@ -161,4 +161,39 @@ class ParticipationTableTest extends TestCase
 
         $this->assertCount(5, $table);
     }
+
+    public function testAddParticipationForNextYear(): void
+    {
+        $nextYear = (int) date('Y') + 1;
+        $table = new ParticipationTable();
+
+        $table->addParticipation($this->createParticipation('2023-06-28 19:00:00'));
+        $table->addParticipation($this->createParticipation(sprintf('%d-01-02 19:00:00', $nextYear)));
+
+        $this->assertCount(2, $table);
+        $this->assertArrayHasKey($nextYear, $table->getYearList());
+        $this->assertCount(1, $table->getYearList()[$nextYear]);
+
+        for ($year = 2023; $year <= $nextYear; ++$year) {
+            $this->assertArrayHasKey($year, $table->getYearList(), "Year $year should exist in the year list");
+        }
+
+        $table->rewind();
+        $this->assertSame($nextYear, $table->key());
+    }
+
+    public function testFirstParticipationInNextYear(): void
+    {
+        $nextYear = (int) date('Y') + 1;
+        $table = new ParticipationTable();
+
+        $table->addParticipation($this->createParticipation(sprintf('%d-01-02 19:00:00', $nextYear)));
+        $table->addParticipation($this->createParticipation('2024-06-28 19:00:00'));
+
+        $this->assertCount(2, $table);
+
+        for ($year = 2024; $year <= $nextYear; ++$year) {
+            $this->assertArrayHasKey($year, $table->getYearList(), "Year $year should exist in the year list");
+        }
+    }
 }
