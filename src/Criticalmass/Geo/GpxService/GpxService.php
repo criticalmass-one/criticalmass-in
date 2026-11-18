@@ -44,11 +44,15 @@ class GpxService implements GpxServiceInterface
     {
         $gpxFile = $this->loadFromTrack($track);
 
-        if (empty($gpxFile->tracks)) {
-            return [];
+        $points = [];
+
+        foreach ($gpxFile->tracks as $gpxTrack) {
+            foreach ($gpxTrack->getPoints() as $point) {
+                $points[] = $point;
+            }
         }
 
-        return $gpxFile->tracks[0]->getPoints();
+        return $points;
     }
 
     /**
@@ -281,18 +285,14 @@ class GpxService implements GpxServiceInterface
     {
         $gpxFile = $this->loadFromTrack($track);
 
-        if (empty($gpxFile->tracks)) {
-            return;
-        }
-
-        $gpxTrack = $gpxFile->tracks[0];
-
-        foreach ($gpxTrack->segments as $segment) {
-            foreach ($segment->points as $point) {
-                if ($point->time) {
-                    $newTime = clone $point->time;
-                    $newTime->add($interval);
-                    $point->time = $newTime;
+        foreach ($gpxFile->tracks as $gpxTrack) {
+            foreach ($gpxTrack->segments as $segment) {
+                foreach ($segment->points as $point) {
+                    if ($point->time) {
+                        $newTime = clone $point->time;
+                        $newTime->add($interval);
+                        $point->time = $newTime;
+                    }
                 }
             }
         }

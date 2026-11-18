@@ -77,6 +77,22 @@ class GpxServiceTest extends TestCase
         $this->assertEquals(10.539028, $points[0]->longitude);
     }
 
+    public function testGetPointsAggregatesEveryTrackElement(): void
+    {
+        $gpxService = new GpxService(new ParameterBag([
+            'upload_destination.track' => __DIR__ . '/fixtures',
+        ]));
+
+        $track = $this->createMock(Track::class);
+        $track->method('getTrackFilename')->willReturn('multi-track.gpx');
+
+        $points = $gpxService->getPoints($track);
+
+        $this->assertCount(6, $points, 'Points of every <trk> element belong to the track, not just the first one.');
+        $this->assertEquals(52.0, $points[0]->latitude);
+        $this->assertEquals(52.5, $points[3]->latitude, 'The second <trk> element follows the first one.');
+    }
+
     public function testGetPointsInRange(): void
     {
         $track = $this->createMock(Track::class);
