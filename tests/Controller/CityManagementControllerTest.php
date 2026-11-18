@@ -38,6 +38,32 @@ class CityManagementControllerTest extends AbstractControllerTestCase
         $this->assertEquals('Hamburg', $cityField->attr('value'));
     }
 
+    public function testCityEditImageFieldHasNoDownloadLink(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        // Ohne Bild baut VichFileType gar keinen Download-Link; erst mit Bild ist die Prüfung aussagekräftig.
+        $em = static::getContainer()->get('doctrine')->getManager();
+        $city = $em->getRepository(City::class)->findOneBy(['city' => 'Hamburg']);
+        $city->setImageName('hamburg-test.jpg');
+        $em->flush();
+
+        try {
+            $client->request('GET', '/hamburg/edit');
+
+            $this->assertEquals(200, $client->getResponse()->getStatusCode());
+            $this->assertSelectorExists('input[name="city[imageFile][file]"]');
+            $this->assertSelectorExists('input[name="city[imageFile][delete]"]');
+            $this->assertSelectorNotExists('a[download]');
+        } finally {
+            $em->clear();
+            $city = $em->getRepository(City::class)->findOneBy(['city' => 'Hamburg']);
+            $city->setImageName(null);
+            $em->flush();
+        }
+    }
+
     public function testAddRideAccessibleWhenLoggedIn(): void
     {
         $client = static::createClient();
